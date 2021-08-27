@@ -1,0 +1,9 @@
+*.bak
+*.o
+*.log
+*~
+*.qm
+*.pro.user
+build/*
+test/*
+/.project
