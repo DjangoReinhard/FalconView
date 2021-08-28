@@ -1,12 +1,12 @@
 QT       += core gui uitools testlib
 
-greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11 testcase no_testcase_installs
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH = src/model src/util src/view src
 
@@ -15,30 +15,33 @@ SOURCES += \
     src/mainwindow.cpp \
     src/model/positionmodel.cpp \
     src/model/valuemodel.cpp \
+    src/view/editordockable.cpp \
     src/view/labeladapter.cpp \
     src/view/gcodeeditor.cpp \
-    src/view/positionwidget.cpp \
-    src/view/speedinfowidget.cpp \
-    src/view/toolinfowidget.cpp \
+    src/view/positiondockable.cpp \
+    src/view/speedinfodockable.cpp \
     src/util/axismask.cpp \
     src/util/gcodehighlighter.cpp \
     src/test/testaxismask.cpp \
+    src/view/toolinfodockable.cpp
 
 HEADERS += \
     src/mainwindow.h \
     src/model/positionmodel.h \
     src/model/valuemodel.h \
+    src/view/editordockable.h \
     src/view/gcodeeditor.h \
     src/view/labeladapter.h \
-    src/view/positionwidget.h \
-    src/view/speedinfowidget.h \
-    src/view/toolinfowidget.h \
+    src/view/positiondockable.h \
+    src/view/speedinfodockable.h \
     src/util/axismask.h \
     src/util/gcodehighlighter.h \
     src/util/portable-file-dialogs.h \
     src/test/testaxismask.h \
+    src/view/toolinfodockable.h
 
 FORMS += \
+    src/UI/GCodeEditor.ui \
     src/UI/Position.ui \
     src/UI/SpeedInfo.ui \
     src/UI/ToolInfo.ui \

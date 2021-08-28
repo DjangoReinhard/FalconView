@@ -1,15 +1,17 @@
 #include "gcodeeditor.h"
 #include <QPainter>
 #include <QTextBlock>
+#include <QDebug>
 
 
 GCodeEditor::GCodeEditor(QWidget* parent)
- : QPlainTextEdit(parent) {
+ : QTextEdit(parent) {
   lineNumberArea = new LineNumberArea(this);
+  setAcceptRichText(true);
 
-  connect(this, &GCodeEditor::blockCountChanged,     this, &GCodeEditor::updateLineNumberAreaWidth);
-  connect(this, &GCodeEditor::updateRequest,         this, &GCodeEditor::updateLineNumberArea);
-  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine);
+  connect(document(), &QTextDocument::blockCountChanged, this, &GCodeEditor::updateLineNumberAreaWidth);
+//  connect(document(), &GCodeEditor::updateRequest,       this, &GCodeEditor::updateLineNumberArea);
+  connect(this, &GCodeEditor::cursorPositionChanged,     this, &GCodeEditor::highlightCurrentLine);
 
   updateLineNumberAreaWidth(0);
   highlightCurrentLine();
@@ -18,7 +20,7 @@ GCodeEditor::GCodeEditor(QWidget* parent)
 
 int GCodeEditor::lineNumberAreaWidth() {
   int digits = 1;
-  int max = qMax(1, blockCount());
+  int max = qMax(1, document()->blockCount());
 
   while (max >= 10) {
         max /= 10;
@@ -45,7 +47,7 @@ void GCodeEditor::updateLineNumberArea(const QRect& rect, int dy) {
 
 
 void GCodeEditor::resizeEvent(QResizeEvent *e) {
-  QPlainTextEdit::resizeEvent(e);
+  QTextEdit::resizeEvent(e);
   QRect cr = contentsRect();
 
   lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
@@ -57,7 +59,7 @@ void GCodeEditor::highlightCurrentLine() {
 
   if (!isReadOnly()) {
      QTextEdit::ExtraSelection selection;
-     QColor lineColor = QColor(Qt::yellow).lighter(160);
+     QColor lineColor = QColor(Qt::yellow).lighter(140);
 
      selection.format.setBackground(lineColor);
      selection.format.setProperty(QTextFormat::FullWidthSelection, true);
@@ -69,11 +71,18 @@ void GCodeEditor::highlightCurrentLine() {
   }
 
 
-void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
+void GCodeEditor::paintEvent(QPaintEvent *e) {
+  QTextEdit::paintEvent(e);
+  updateLineNumberArea(viewport()->rect(), 0);
+  }
+
+
+void GCodeEditor::paintLineNumbers(QPaintEvent *e) {    
   QPainter painter(lineNumberArea);
 
-  painter.fillRect(e->rect(), QColor(Qt::lightGray).lighter(120));
-  QTextBlock block    = firstVisibleBlock();        // lines == block?
+  painter.fillRect(e->rect(), QColor(239, 240, 241));
+#ifdef USE_QPLAIN_TEXT_EDIT
+  QTextBlock block    = document()->firstVisibleBlock();        // lines == block?
   int        blockNum = block.blockNumber();
   int        top      = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
   int        bottom   = top + qRound(blockBoundingRect(block).height());
@@ -82,7 +91,7 @@ void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
         if (block.isVisible() && bottom >= e->rect().top()) {
            QString lineNum = QString::number(blockNum + 1);
 
-           painter.setPen(Qt::black);
+           painter.setPen(Qt::darkBlue);
            painter.drawText(0
                           , top
                           , lineNumberArea->width()
@@ -95,4 +104,15 @@ void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
         bottom = top + qRound(blockBoundingRect(block).height());
         ++blockNum;
         }
+#else
+  QTextBlock block;
+
+  for (long i=0; i < document()->blockCount(); ++i) {
+      block = document()->findBlockByLineNumber(i);
+      if (!block.isVisible()) continue;
+      int blockNum = block.blockNumber();
+
+      qDebug() << "block #" << blockNum << " seems to be visible";
+      }
+#endif
   }

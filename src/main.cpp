@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   bool ok = translator.load(QLocale(QLocale::German, QLocale::Germany)
                           , "QtScreen"
                           , "_"
-                          , "../QtScreen");
+                          , "../QtScreen/src/i18n");
 
   qDebug() << "locale messages found: " << ok;
   a.installTranslator(&translator);

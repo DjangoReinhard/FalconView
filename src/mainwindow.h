@@ -8,9 +8,10 @@
 #include "gcodehighlighter.h"
 
 
-class PositionWidget;
-class ToolInfoWidget;
-class SpeedInfoWidget;
+class PositionDockable;
+class ToolInfoDockable;
+class SpeedInfoDockable;
+class EditorDockable;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -26,15 +27,18 @@ public:
 
 public slots:
   void count();
-  void loadFile();
+
+protected:
+  void createDockings();
 
 private:
-  Ui::MainWindow*   ui;
-  PositionWidget*   pos;
-  ToolInfoWidget*   ti;
-  SpeedInfoWidget*  si;
-  ValueModel        counter;
-  PositionModel     pm;
-  GCodeHighlighter* gh;
+  Ui::MainWindow*     ui;
+  PositionDockable*   pos;
+  ToolInfoDockable*   ti;
+  SpeedInfoDockable*  si;
+  EditorDockable*     ed;
+  ValueModel          counter;
+  PositionModel       pm;
+  GCodeHighlighter*   gh;
   };
 #endif // MAINWINDOW_H

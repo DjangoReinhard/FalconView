@@ -1,12 +1,12 @@
 #ifndef GCODEEDITOR_H
 #define GCODEEDITOR_H
 
-#include <QPlainTextEdit>
+#include <QTextEdit>
 
 class LineNumberArea;
 
 
-class GCodeEditor : public QPlainTextEdit
+class GCodeEditor : public QTextEdit
 {
   Q_OBJECT
 public:
@@ -17,6 +17,7 @@ public:
 
 protected:
   void resizeEvent(QResizeEvent* event) override;
+  void paintEvent(QPaintEvent *event) override;
 
 private slots:
   void updateLineNumberAreaWidth(int newBlockCount);

@@ -1,9 +1,10 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
 #include <axismask.h>
-#include <positionwidget.h>
-#include <toolinfowidget.h>
-#include <speedinfowidget.h>
+#include <positiondockable.h>
+#include <toolinfodockable.h>
+#include <speedinfodockable.h>
+#include <editordockable.h>
 #include <gcodehighlighter.h>
 #include <QTimer>
 #include <QDockWidget>
@@ -13,7 +14,6 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <math.h>
-#include <portable-file-dialogs.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -23,24 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
  , gh(nullptr) {
   // load widgets from ui-file
   ui->setupUi(this);
-
-  // load docking window
-  QFile posFile("../QtScreen/src/UI/Position.ui");
-
-  pos = new PositionWidget(posFile, AxisMask(0x01FF), this);
-  pos->setAllowedAreas(Qt::AllDockWidgetAreas);
-  addDockWidget(Qt::LeftDockWidgetArea, pos);
-
-  QFile tiFile("../QtScreen/src/UI/ToolInfo.ui");
-  ti = new ToolInfoWidget(tiFile, this);
-  ti->setAllowedAreas(Qt::AllDockWidgetAreas);
-  addDockWidget(Qt::LeftDockWidgetArea, ti);
-
-  QFile siFile("../QtScreen/src/UI/SpeedInfo.ui");
-  si = new SpeedInfoWidget(siFile, this);
-  si->setAllowedAreas(Qt::AllDockWidgetAreas);
-  addDockWidget(Qt::LeftDockWidgetArea, si);
-
+  createDockings();
 
   // connect model with view
   connect(&pm.getXAbs(), &ValueModel::valueChanged, pos->getXAbs(), &LabelAdapter::setValue);
@@ -66,18 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
   QAction* aYes = ui->actionoder_doch;
   QAction* aNo  = ui->actionnicht;
 
-  connect(aNo, &QAction::triggered, pos, &PositionWidget::setRelative);
-  connect(aYes, &QAction::triggered, pos, &PositionWidget::setAbsolute);
-  connect(ui->pbOpen, &QPushButton::clicked, this, &MainWindow::loadFile);
-
-  QFont font;
-
-  font.setFamily("Hack");
-  font.setFixedPitch(true);
-  font.setPointSize(10);
-
-  ui->tbCode->setFont(font);
-  gh = new GCodeHighlighter(ui->tbCode->document());
+  connect(aNo, &QAction::triggered, pos, &PositionDockable::setRelative);
+  connect(aYes, &QAction::triggered, pos, &PositionDockable::setAbsolute);
 
   // for testing purpose only!
   // start simple timer as base of changes
@@ -104,32 +77,33 @@ MainWindow::~MainWindow() {
   }
 
 
+void MainWindow::createDockings() {
+  QFile geFile("../QtScreen/src/UI/GCodeEditor.ui");
+  ed = new EditorDockable(geFile, this);
+  ed->setAllowedAreas(Qt::AllDockWidgetAreas);
+  addDockWidget(Qt::BottomDockWidgetArea, ed);
+
+  QFile posFile("../QtScreen/src/UI/Position.ui");
+  pos = new PositionDockable(posFile, AxisMask(0x01FF), this);
+  pos->setAllowedAreas(Qt::AllDockWidgetAreas);
+  addDockWidget(Qt::LeftDockWidgetArea, pos);
+
+  QFile tiFile("../QtScreen/src/UI/ToolInfo.ui");
+  ti = new ToolInfoDockable(tiFile, this);
+  ti->setAllowedAreas(Qt::AllDockWidgetAreas);
+  addDockWidget(Qt::LeftDockWidgetArea, ti);
+
+  QFile siFile("../QtScreen/src/UI/SpeedInfo.ui");
+  si = new SpeedInfoDockable(siFile, this);
+  si->setAllowedAreas(Qt::AllDockWidgetAreas);
+  addDockWidget(Qt::LeftDockWidgetArea, si);
+  }
+
+
 void MainWindow::count() {
   counter.setValue(counter.getValue().toDouble() + 0.001);
   pm.getXRel().setValue(2000 * sin(counter.getValue().toDouble()));
   pm.getYRel().setValue(2000 * cos(counter.getValue().toDouble()));
   pm.getXAbs().setValue(2000 * sin(counter.getValue().toDouble()));
   pm.getYAbs().setValue(2000 * cos(counter.getValue().toDouble()));
-  }
-
-
-void MainWindow::loadFile() {
-  if (!pfd::settings::available()){
-     std::cerr << "Portable File Dialogs are not available on this platform. \n"
-                  "On linux install zenity, $ sudo apt-get install zenity\n" << std::endl;
-     }
-  QDir dirStart("~/linuxcnc/nc_files");
-  auto f = pfd::open_file(tr("Choose file to open").toStdString()
-                        , dirStart.path().toStdString()
-                        , { "GCode Files (.ngc)", "*.ngc",
-                            "All Files", "*" }
-                        , pfd::opt::none);
-  if (f.result().size() > 0) {
-     QFile file(f.result().at(0).c_str());
-
-     if (file.open(QFile::ReadOnly | QFile::Text)) {
-        ui->tbCode->setPlainText(file.readAll());
-        ui->lName->setText(file.fileName());
-        }
-     }
   }
