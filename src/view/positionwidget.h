@@ -17,6 +17,7 @@ class PositionWidget : public QDockWidget
 public:
   PositionWidget(QFile& uiDesc, const AxisMask& axisMask, QWidget* parent = nullptr);
   PositionWidget(QFile& uiDesc, const AxisMask& axisMask, QWidget* parent, QString ledOn, QString ledOff);
+  virtual ~PositionWidget();
 
   void setRelStyles(QString styles);
   void setAbsStyles(QString styles);
@@ -67,7 +68,7 @@ public slots:
   void setRelative();
 
 protected:
-  virtual void resizeEvent(QResizeEvent *event);
+  virtual void resizeEvent(QResizeEvent* event);
   void initializeWidget(QFile& uiDesc);
   void updatePos();
   void setActive();

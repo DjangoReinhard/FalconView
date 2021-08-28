@@ -58,7 +58,7 @@ PositionWidget::PositionWidget(QFile& uiDesc, const AxisMask& am, QWidget* paren
  , ledOn("background: #0F0")
  , ledOff("background: red") {
   initializeWidget(uiDesc);
-}
+  }
 
 
 PositionWidget::PositionWidget(QFile& uiDesc, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
@@ -114,12 +114,44 @@ PositionWidget::PositionWidget(QFile& uiDesc, const AxisMask& am, QWidget* paren
  , ledOn(ledOnStyle)
  , ledOff(ledOffStyle) {
   initializeWidget(uiDesc);
-}
+  }
+
+
+PositionWidget::~PositionWidget() {
+  delete relX;
+  delete relY;
+  delete relZ;
+  delete relA;
+  delete relB;
+  delete relC;
+  delete relU;
+  delete relV;
+  delete relW;
+  delete absX;
+  delete absY;
+  delete absZ;
+  delete absA;
+  delete absB;
+  delete absC;
+  delete absU;
+  delete absV;
+  delete absW;
+  delete dtgX;
+  delete dtgY;
+  delete dtgZ;
+  delete dtgA;
+  delete dtgB;
+  delete dtgC;
+  delete dtgU;
+  delete dtgV;
+  delete dtgW;
+  }
 
 
 void PositionWidget::initializeWidget(QFile& uiDesc) {
   QUiLoader loader;
-  QWidget* w = loader.load(&uiDesc, this);
+  QWidget*  w = loader.load(&uiDesc, this);
+
   uiDesc.close();
   setWidget(w);
   relX = new LabelAdapter(findChild<QLabel*>("posX"));

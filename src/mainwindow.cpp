@@ -1,8 +1,10 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "axismask.h"
-#include "positionwidget.h"
-#include "gcodehighlighter.h"
+#include <mainwindow.h>
+#include <ui_mainwindow.h>
+#include <axismask.h>
+#include <positionwidget.h>
+#include <toolinfowidget.h>
+#include <speedinfowidget.h>
+#include <gcodehighlighter.h>
 #include <QTimer>
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
@@ -11,6 +13,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <math.h>
+#include <portable-file-dialogs.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -22,11 +25,22 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this);
 
   // load docking window
-  QFile file("../QtScreen/Position.ui");
+  QFile posFile("../QtScreen/src/UI/Position.ui");
 
-  pos = new PositionWidget(file, AxisMask(0x01FF), this);
+  pos = new PositionWidget(posFile, AxisMask(0x01FF), this);
   pos->setAllowedAreas(Qt::AllDockWidgetAreas);
   addDockWidget(Qt::LeftDockWidgetArea, pos);
+
+  QFile tiFile("../QtScreen/src/UI/ToolInfo.ui");
+  ti = new ToolInfoWidget(tiFile, this);
+  ti->setAllowedAreas(Qt::AllDockWidgetAreas);
+  addDockWidget(Qt::LeftDockWidgetArea, ti);
+
+  QFile siFile("../QtScreen/src/UI/SpeedInfo.ui");
+  si = new SpeedInfoWidget(siFile, this);
+  si->setAllowedAreas(Qt::AllDockWidgetAreas);
+  addDockWidget(Qt::LeftDockWidgetArea, si);
+
 
   // connect model with view
   connect(&pm.getXAbs(), &ValueModel::valueChanged, pos->getXAbs(), &LabelAdapter::setValue);
@@ -84,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
   delete ui;
   delete pos;
+  delete ti;
+  delete si;
   delete gh;
   }
 
@@ -98,19 +114,22 @@ void MainWindow::count() {
 
 
 void MainWindow::loadFile() {
-  QFileDialog fileDialog(this, tr("Open File..."));
+  if (!pfd::settings::available()){
+     std::cerr << "Portable File Dialogs are not available on this platform. \n"
+                  "On linux install zenity, $ sudo apt-get install zenity\n" << std::endl;
+     }
+  QDir dirStart("~/linuxcnc/nc_files");
+  auto f = pfd::open_file(tr("Choose file to open").toStdString()
+                        , dirStart.path().toStdString()
+                        , { "GCode Files (.ngc)", "*.ngc",
+                            "All Files", "*" }
+                        , pfd::opt::none);
+  if (f.result().size() > 0) {
+     QFile file(f.result().at(0).c_str());
 
-  fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
-  fileDialog.setFileMode(QFileDialog::ExistingFile);
-  fileDialog.setMimeTypeFilters(QStringList() << "text/plain");
-  int rv = fileDialog.exec();
-
-  if (rv != QDialog::Accepted) return;
-  const QString fn = fileDialog.selectedFiles().first();
-
-  qDebug() << "should load file: [" << fn << "]";
-  QFile file(fn);
-
-  if (file.open(QFile::ReadOnly | QFile::Text))
-     ui->tbCode->setText(file.readAll());
+     if (file.open(QFile::ReadOnly | QFile::Text)) {
+        ui->tbCode->setPlainText(file.readAll());
+        ui->lName->setText(file.fileName());
+        }
+     }
   }

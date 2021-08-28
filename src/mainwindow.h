@@ -5,10 +5,12 @@
 #include "valuemodel.h"
 #include "labeladapter.h"
 #include "positionmodel.h"
-#include "gcodemodel.h"
+#include "gcodehighlighter.h"
 
 
 class PositionWidget;
+class ToolInfoWidget;
+class SpeedInfoWidget;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -27,10 +29,12 @@ public slots:
   void loadFile();
 
 private:
-  Ui::MainWindow *ui;
-  PositionWidget* pos;
-  ValueModel counter;
-  PositionModel pm;
+  Ui::MainWindow*   ui;
+  PositionWidget*   pos;
+  ToolInfoWidget*   ti;
+  SpeedInfoWidget*  si;
+  ValueModel        counter;
+  PositionModel     pm;
   GCodeHighlighter* gh;
   };
 #endif // MAINWINDOW_H
