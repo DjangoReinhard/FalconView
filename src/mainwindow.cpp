@@ -78,22 +78,22 @@ MainWindow::~MainWindow() {
 
 
 void MainWindow::createDockings() {
-  QFile geFile("../QtScreen/src/UI/GCodeEditor.ui");
+  QFile geFile("../QtUi/src/UI/GCodeEditor.ui");
   ed = new EditorDockable(geFile, this);
   ed->setAllowedAreas(Qt::AllDockWidgetAreas);
   addDockWidget(Qt::BottomDockWidgetArea, ed);
 
-  QFile posFile("../QtScreen/src/UI/Position.ui");
+  QFile posFile("../QtUi/src/UI/Position.ui");
   pos = new PositionDockable(posFile, AxisMask(0x01FF), this);
   pos->setAllowedAreas(Qt::AllDockWidgetAreas);
   addDockWidget(Qt::LeftDockWidgetArea, pos);
 
-  QFile tiFile("../QtScreen/src/UI/ToolInfo.ui");
+  QFile tiFile("../QtUi/src/UI/ToolInfo.ui");
   ti = new ToolInfoDockable(tiFile, this);
   ti->setAllowedAreas(Qt::AllDockWidgetAreas);
   addDockWidget(Qt::LeftDockWidgetArea, ti);
 
-  QFile siFile("../QtScreen/src/UI/SpeedInfo.ui");
+  QFile siFile("../QtUi/src/UI/SpeedInfo.ui");
   si = new SpeedInfoDockable(siFile, this);
   si->setAllowedAreas(Qt::AllDockWidgetAreas);
   addDockWidget(Qt::LeftDockWidgetArea, si);

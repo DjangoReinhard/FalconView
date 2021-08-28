@@ -1,6 +1,6 @@
 QT       += core gui uitools testlib
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 CONFIG += c++11 testcase no_testcase_installs
 
@@ -48,7 +48,7 @@ FORMS += \
     src/UI/mainwindow.ui
 
 TRANSLATIONS += \
-    src/i18n/QtScreen_de_DE.ts
+    src/i18n/QtUi_de_DE.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -56,4 +56,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    src/i18n/QtScreen_de_DE.ts
+    src/i18n/QtUi_de_DE.ts

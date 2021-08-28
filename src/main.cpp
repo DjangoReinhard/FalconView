@@ -8,9 +8,9 @@ int main(int argc, char *argv[]) {
   QTranslator translator;
   QApplication a(argc, argv);
   bool ok = translator.load(QLocale(QLocale::German, QLocale::Germany)
-                          , "QtScreen"
+                          , "QtUi"
                           , "_"
-                          , "../QtScreen/src/i18n");
+                          , "../QtUi/src/i18n");
 
   qDebug() << "locale messages found: " << ok;
   a.installTranslator(&translator);
