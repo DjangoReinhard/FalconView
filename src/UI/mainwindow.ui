@@ -20,47 +20,43 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <layout class="QGridLayout" name="gridLayout">
-      <property name="spacing">
-       <number>0</number>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="tbd">
+      <property name="baseSize">
+       <size>
+        <width>800</width>
+        <height>600</height>
+       </size>
       </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="tbd">
-        <property name="baseSize">
-         <size>
-          <width>800</width>
-          <height>600</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-          <italic>false</italic>
-         </font>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Prototype for linuxcnc with dockable widgets.&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;Each dockable can be dragged to different position. See &lt;a href=&quot;https://doc.qt.io/qt-5/qdockwidget.html#details&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;QT documentation&lt;/span&gt;&lt;/a&gt; for further information.&lt;/p&gt;&lt;p&gt;The &lt;span style=&quot; font-weight:600;&quot;&gt;DRO dockable&lt;/span&gt; is special. It contains switchable dro for &lt;span style=&quot; font-style:italic;&quot;&gt;relative&lt;/span&gt; and &lt;span style=&quot; font-style:italic;&quot;&gt;absolute&lt;/span&gt; position. Furthermore the &lt;span style=&quot; font-style:italic;&quot;&gt;fontsize changes&lt;/span&gt; with the hight of the widget.&lt;/p&gt;&lt;p&gt;If it can't be dragged to the desired position, drop it at the desktop. Then shrink its size to minimum and then try again to drop to that location.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="textFormat">
-         <enum>Qt::MarkdownText</enum>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="margin">
-         <number>25</number>
-        </property>
-        <property name="textInteractionFlags">
-         <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <italic>false</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Prototype for linuxcnc with dockable widgets.&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;Each dockable can be dragged to different position. See &lt;a href=&quot;https://doc.qt.io/qt-5/qdockwidget.html#details&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;QT documentation&lt;/span&gt;&lt;/a&gt; for further information.&lt;/p&gt;&lt;p&gt;The &lt;span style=&quot; font-weight:600;&quot;&gt;DRO dockable&lt;/span&gt; is special. It contains switchable dro for &lt;span style=&quot; font-style:italic;&quot;&gt;relative&lt;/span&gt; and &lt;span style=&quot; font-style:italic;&quot;&gt;absolute&lt;/span&gt; position. Furthermore the &lt;span style=&quot; font-style:italic;&quot;&gt;fontsize changes&lt;/span&gt; with the hight of the widget.&lt;/p&gt;&lt;p&gt;If it can't be dragged to the desired position, drop it at the desktop. Then shrink its size to minimum and then try again to drop to that location.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::MarkdownText</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="margin">
+       <number>25</number>
+      </property>
+      <property name="textInteractionFlags">
+       <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -88,6 +84,11 @@
     <property name="title">
      <string>Extra</string>
     </property>
+    <addaction name="actionDefault"/>
+    <addaction name="actionBack01"/>
+    <addaction name="actionBack02"/>
+    <addaction name="actionBack03"/>
+    <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuFile">
@@ -112,26 +113,6 @@
     <string>open GCode file in editor</string>
    </property>
   </action>
-  <action name="actionBild">
-   <property name="text">
-    <string>Picture</string>
-   </property>
-  </action>
-  <action name="actionWand">
-   <property name="text">
-    <string>Wall</string>
-   </property>
-  </action>
-  <action name="actionnicht">
-   <property name="text">
-    <string>not</string>
-   </property>
-  </action>
-  <action name="actionoder_doch">
-   <property name="text">
-    <string>or after all?</string>
-   </property>
-  </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
@@ -146,6 +127,26 @@
    </property>
    <property name="statusTip">
     <string>choose whether to display absolute/relative Coordinates</string>
+   </property>
+  </action>
+  <action name="actionDefault">
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </action>
+  <action name="actionBack01">
+   <property name="text">
+    <string>Picture 01</string>
+   </property>
+  </action>
+  <action name="actionBack02">
+   <property name="text">
+    <string>Picture 02</string>
+   </property>
+  </action>
+  <action name="actionBack03">
+   <property name="text">
+    <string>Picture 03</string>
    </property>
   </action>
   <action name="actionSettings">

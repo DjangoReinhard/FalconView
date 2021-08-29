@@ -1,6 +1,5 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 /*
  * looks like there's no difference between QTimer and QBasicTimer
  */
@@ -19,7 +18,11 @@
 class PositionDockable;
 class ToolInfoDockable;
 class SpeedInfoDockable;
+class SettingsWidget;
 class EditorDockable;
+class Overlay;
+class QLabel;
+class QAction;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -35,9 +38,18 @@ public:
 
 public slots:
   void count();
+  void activateTbd();
+  void activateSettings();
+  void activateBg01();
+  void activateBg02();
+  void activateBg03();
 
 protected:
-  void createDockings();
+  void createActions();
+  void createToolBars();
+  void createDockables();
+  void createMainWidgets();
+  void createConnections();
 #ifndef USE_EVENTLOOP_TIMER
   void timerEvent(QTimerEvent* event) override;
 #endif
@@ -48,9 +60,23 @@ private:
   ToolInfoDockable*   ti;
   SpeedInfoDockable*  si;
   EditorDockable*     ed;
+  GCodeHighlighter*   gh;
+  SettingsWidget*     sw;
+  Overlay*            overlay;
+  QLabel*             bg01;
+  QLabel*             bg02;
+  QLabel*             bg03;
+  QAction*            startAction;
+  QAction*            pauseAction;
+  QAction*            stopAction;
+  QAction*            autoMode;
+  QAction*            mdiMode;
+  QAction*            editMode;
+  QAction*            jogMode;
+  QToolBar*           autoTB;
+  QToolBar*           modeTB;
   ValueModel          counter;
   PositionModel       pm;
-  GCodeHighlighter*   gh;
 #ifndef USE_EVENTLOOP_TIMER
   QBasicTimer         timer;
 #endif

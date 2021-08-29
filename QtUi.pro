@@ -1,4 +1,5 @@
-QT       += core gui uitools testlib
+QT       += core gui uitools testlib \
+    widgets
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
@@ -8,7 +9,10 @@ CONFIG += c++11 testcase no_testcase_installs
 # In order to do so, uncomment the following line.
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH = src/model src/util src/view src
+INCLUDEPATH += src/model \
+               src/util \
+               src/view \
+               src
 
 SOURCES += \
     src/main.cpp \
@@ -18,7 +22,9 @@ SOURCES += \
     src/view/editordockable.cpp \
     src/view/labeladapter.cpp \
     src/view/gcodeeditor.cpp \
+    src/view/overlay.cpp \
     src/view/positiondockable.cpp \
+    src/view/settingswidget.cpp \
     src/view/speedinfodockable.cpp \
     src/util/axismask.cpp \
     src/util/gcodehighlighter.cpp \
@@ -32,7 +38,9 @@ HEADERS += \
     src/view/editordockable.h \
     src/view/gcodeeditor.h \
     src/view/labeladapter.h \
+    src/view/overlay.h \
     src/view/positiondockable.h \
+    src/view/settingswidget.h \
     src/view/speedinfodockable.h \
     src/util/axismask.h \
     src/util/gcodehighlighter.h \
@@ -42,7 +50,9 @@ HEADERS += \
 
 FORMS += \
     src/UI/GCodeEditor.ui \
+    src/UI/Overlay.ui \
     src/UI/Position.ui \
+    src/UI/Settings.ui \
     src/UI/SpeedInfo.ui \
     src/UI/ToolInfo.ui \
     src/UI/mainwindow.ui
@@ -57,3 +67,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     src/i18n/QtUi_de_DE.ts
+
+RESOURCES += QtUi.qrc
+
