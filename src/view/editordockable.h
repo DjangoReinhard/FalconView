@@ -16,6 +16,7 @@ public:
 
 public slots:
   void loadFile();
+  void loadFileAlt();
 
 protected:
   void initializeWidget(QFile& uiDesc);

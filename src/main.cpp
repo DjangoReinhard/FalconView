@@ -5,13 +5,19 @@
 
 
 int main(int argc, char *argv[]) {
-  QTranslator translator;
-  QApplication a(argc, argv);
-  bool ok = translator.load(QLocale(QLocale::German, QLocale::Germany)
-                          , "QtUi"
-                          , "_"
-                          , "../QtUi/src/i18n");
+  QTranslator       translator;
+  QApplication      a(argc, argv);
+  QLocale           sysLocale;
+  QLocale::Language lang    = sysLocale.language();
+  QLocale::Country  country = sysLocale.country();
+  QLocale           curLocale(lang, country);
+  bool              ok = translator.load(curLocale
+                                       , "QtUi"
+                                       , "_"
+                                       , "../QtUi/src/i18n");
 
+  qDebug() << "current locale settings - lang: " << curLocale.language()
+           << "\tcountry: " << curLocale.country();
   qDebug() << "locale messages found: " << ok;
   a.installTranslator(&translator);
   MainWindow w;

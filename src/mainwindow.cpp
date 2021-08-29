@@ -46,25 +46,25 @@ MainWindow::MainWindow(QWidget *parent)
   connect(&pm.getVRel(), &ValueModel::valueChanged, pos->getVRel(), &LabelAdapter::setValue);
   connect(&pm.getWRel(), &ValueModel::valueChanged, pos->getWRel(), &LabelAdapter::setValue);
 
-  QAction* aYes = ui->actionoder_doch;
-  QAction* aNo  = ui->actionnicht;
+  // main menu actions ...
+  connect(ui->actionOpen, &QAction::triggered, ed, &EditorDockable::loadFile);
+//  connect(sender, &QObject::destroyed, this, [=](){ this->m_objects.remove(sender); });
+  connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(ui->actionAbsolute_Position->isChecked()); });
 
-  connect(aNo, &QAction::triggered, pos, &PositionDockable::setRelative);
-  connect(aYes, &QAction::triggered, pos, &PositionDockable::setAbsolute);
-
-  // for testing purpose only!
-  // start simple timer as base of changes
+  /*
+   * for testing purpose only
+   * start simple timer as base of changes
+   */
   QTimer* t = new QTimer(this);
 
   connect(t, &QTimer::timeout, this, &MainWindow::count);
   t->start(5);
 
-  // test data
+  // simulate homed axis
   pos->setXHomed();
   pos->setYHomed();
   pos->setZHomed();
-
-  this->setMinimumWidth(1200);
+  setMinimumWidth(1200);
   }
 
 

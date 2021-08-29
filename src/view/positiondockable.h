@@ -64,7 +64,7 @@ public:
   LabelAdapter* getWDtg() { return dtgX; }
 
 public slots:
-  void setAbsolute();
+  void setAbsolute(bool absoluteFlag = true);
   void setRelative();
 
 protected:

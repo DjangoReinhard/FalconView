@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>669</width>
-    <height>511</height>
+    <width>591</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,15 +36,27 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>20</pointsize>
-          <italic>true</italic>
+          <pointsize>10</pointsize>
+          <italic>false</italic>
          </font>
         </property>
         <property name="text">
-         <string>coming soon ...</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Prototype for linuxcnc with dockable widgets.&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;Each dockable can be dragged to different position. See &lt;a href=&quot;https://doc.qt.io/qt-5/qdockwidget.html#details&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;QT documentation&lt;/span&gt;&lt;/a&gt; for further information.&lt;/p&gt;&lt;p&gt;The &lt;span style=&quot; font-weight:600;&quot;&gt;DRO dockable&lt;/span&gt; is special. It contains switchable dro for &lt;span style=&quot; font-style:italic;&quot;&gt;relative&lt;/span&gt; and &lt;span style=&quot; font-style:italic;&quot;&gt;absolute&lt;/span&gt; position. Furthermore the &lt;span style=&quot; font-style:italic;&quot;&gt;fontsize changes&lt;/span&gt; with the hight of the widget.&lt;/p&gt;&lt;p&gt;If it can't be dragged to the desired position, drop it at the desktop. Then shrink its size to minimum and then try again to drop to that location.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::MarkdownText</enum>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="margin">
+         <number>25</number>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
         </property>
        </widget>
       </item>
@@ -57,32 +69,47 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>669</width>
+     <width>591</width>
      <height>42</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menumal">
+   <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string comment="what">what</string>
+     <string>Edit</string>
     </property>
-    <addaction name="actionZeit"/>
-    <addaction name="actionBild"/>
-    <addaction name="actionWand"/>
    </widget>
-   <widget class="QMenu" name="menuhier">
+   <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>here</string>
+     <string>View</string>
     </property>
-    <addaction name="actionnicht"/>
-    <addaction name="actionoder_doch"/>
+    <addaction name="actionAbsolute_Position"/>
    </widget>
-   <addaction name="menumal"/>
-   <addaction name="menuhier"/>
+   <widget class="QMenu" name="menuExtra">
+    <property name="title">
+     <string>Extra</string>
+    </property>
+    <addaction name="actionSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string comment="what">File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuExtra"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionZeit">
+  <action name="actionOpen">
    <property name="text">
-    <string>ever</string>
+    <string>open</string>
+   </property>
+   <property name="statusTip">
+    <string>open GCode file in editor</string>
    </property>
   </action>
   <action name="actionBild">
@@ -103,6 +130,27 @@
   <action name="actionoder_doch">
    <property name="text">
     <string>or after all?</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionAbsolute_Position">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Absolute Position</string>
+   </property>
+   <property name="statusTip">
+    <string>choose whether to display absolute/relative Coordinates</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

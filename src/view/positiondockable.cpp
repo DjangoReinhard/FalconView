@@ -247,16 +247,13 @@ void PositionDockable::initializeWidget(QFile& uiDesc) {
 
 
 void PositionDockable::setRelative() {
-  if (absolute) {
-     absolute = false;
-     updatePos();
-     }
+  setAbsolute(false);
   }
 
 
-void PositionDockable::setAbsolute() {
-  if (!absolute) {
-     absolute = true;
+void PositionDockable::setAbsolute(bool absoluteFlag) {
+  if (absoluteFlag != absolute)  {
+     absolute = absoluteFlag;
      updatePos();
      }
   }

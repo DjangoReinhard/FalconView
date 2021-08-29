@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QLineEdit>
+#include <QFileDialog>
 #include <portable-file-dialogs.h>
 #include <gcodehighlighter.h>
 
@@ -28,7 +29,7 @@ void EditorDockable::initializeWidget(QFile &uiDesc) {
   setWidget(w);
   QPushButton* pbOpen = w->findChild<QPushButton*>("pbOpen");
 
-  connect(pbOpen, &QPushButton::clicked, this, &EditorDockable::loadFile);
+  connect(pbOpen, &QPushButton::clicked, this, &EditorDockable::loadFileAlt);
   QFont font;
 
   font.setFamily("Hack");
@@ -42,12 +43,29 @@ void EditorDockable::initializeWidget(QFile &uiDesc) {
   }
 
 
+void EditorDockable::loadFileAlt() {
+  QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
+  QString name = QFileDialog::getOpenFileName(this
+                                                , tr("open GCode file")
+                                                , dirStart.absolutePath()
+                                                , tr("GCode Files (*.ngc *.nc)"));
+  if (name.size()) {
+     QFile file(name);
+
+     if (file.open(QFile::ReadOnly | QFile::Text)) {
+        editor->setPlainText(file.readAll());
+        fileName->setText(file.fileName());
+        }
+     }
+  }
+
+
 void EditorDockable::loadFile() {
   if (!pfd::settings::available()){
      std::cerr << "Portable File Dialogs are not available on this platform. \n"
                   "On linux install zenity, $ sudo apt-get install zenity\n" << std::endl;
      }
-  QDir dirStart("~/linuxcnc/nc_files");
+  QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
   auto f = pfd::open_file(tr("Choose file to open").toStdString()
                         , dirStart.path().toStdString()
                         , { "GCode Files (.ngc)", "*.ngc",
