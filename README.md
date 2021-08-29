@@ -3,5 +3,5 @@
 app to test Qt features using mvc
 
 ## Screenshot
-[![screenshot](sample/QtUi001s.jpg)](sample/QtUi001.png)
+[![screenshot](sample/QtUi002s.jpg)](sample/QtUi002.jpg)
 

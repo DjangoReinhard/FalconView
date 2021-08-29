@@ -10,6 +10,8 @@ int main(int argc, char *argv[]) {
   QLocale           sysLocale;
   QLocale::Language lang    = sysLocale.language();
   QLocale::Country  country = sysLocale.country();
+
+  lang = QLocale::English;
   QLocale           curLocale(lang, country);
   bool              ok = translator.load(curLocale
                                        , "QtUi"
