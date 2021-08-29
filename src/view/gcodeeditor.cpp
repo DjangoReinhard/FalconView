@@ -5,13 +5,12 @@
 
 
 GCodeEditor::GCodeEditor(QWidget* parent)
- : QTextEdit(parent) {
+ : QPlainTextEdit(parent) {
   lineNumberArea = new LineNumberArea(this);
-  setAcceptRichText(true);
 
-  connect(document(), &QTextDocument::blockCountChanged, this, &GCodeEditor::updateLineNumberAreaWidth);
-//  connect(document(), &GCodeEditor::updateRequest,       this, &GCodeEditor::updateLineNumberArea);
-  connect(this, &GCodeEditor::cursorPositionChanged,     this, &GCodeEditor::highlightCurrentLine);
+  connect(this, &GCodeEditor::blockCountChanged,     this, &GCodeEditor::updateLineNumberAreaWidth);
+  connect(this, &GCodeEditor::updateRequest,         this, &GCodeEditor::updateLineNumberArea);
+  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine);
 
   updateLineNumberAreaWidth(0);
   highlightCurrentLine();
@@ -47,7 +46,7 @@ void GCodeEditor::updateLineNumberArea(const QRect& rect, int dy) {
 
 
 void GCodeEditor::resizeEvent(QResizeEvent *e) {
-  QTextEdit::resizeEvent(e);
+  QPlainTextEdit::resizeEvent(e);
   QRect cr = contentsRect();
 
   lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
@@ -71,18 +70,11 @@ void GCodeEditor::highlightCurrentLine() {
   }
 
 
-void GCodeEditor::paintEvent(QPaintEvent *e) {
-  QTextEdit::paintEvent(e);
-  updateLineNumberArea(viewport()->rect(), 0);
-  }
-
-
 void GCodeEditor::paintLineNumbers(QPaintEvent *e) {    
   QPainter painter(lineNumberArea);
 
   painter.fillRect(e->rect(), QColor(239, 240, 241));
-#ifdef USE_QPLAIN_TEXT_EDIT
-  QTextBlock block    = document()->firstVisibleBlock();        // lines == block?
+  QTextBlock block    = firstVisibleBlock();        // lines == block
   int        blockNum = block.blockNumber();
   int        top      = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
   int        bottom   = top + qRound(blockBoundingRect(block).height());
@@ -104,15 +96,4 @@ void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
         bottom = top + qRound(blockBoundingRect(block).height());
         ++blockNum;
         }
-#else
-  QTextBlock block;
-
-  for (long i=0; i < document()->blockCount(); ++i) {
-      block = document()->findBlockByLineNumber(i);
-      if (!block.isVisible()) continue;
-      int blockNum = block.blockNumber();
-
-      qDebug() << "block #" << blockNum << " seems to be visible";
-      }
-#endif
   }

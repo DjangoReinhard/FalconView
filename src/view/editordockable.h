@@ -2,7 +2,7 @@
 #define EDITORDOCKABLE_H
 #include <QDockWidget>
 class QFile;
-class QTextEdit;
+class GCodeEditor;
 class GCodeHighlighter;
 class QLineEdit;
 
@@ -22,7 +22,7 @@ protected:
   void initializeWidget(QFile& uiDesc);
 
 private:
-  QTextEdit*        editor;
+  GCodeEditor*      editor;
   QLineEdit*        fileName;
   GCodeHighlighter* gh;
   };

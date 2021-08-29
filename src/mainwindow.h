@@ -1,11 +1,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+/*
+ * looks like there's no difference between QTimer and QBasicTimer
+ */
+#define USE_EVENTLOOP_TIMER
+
 #include <QMainWindow>
-#include "valuemodel.h"
-#include "labeladapter.h"
-#include "positionmodel.h"
-#include "gcodehighlighter.h"
+#ifndef USE_EVENTLOOP_TIMER
+# include <QBasicTimer>
+#endif
+#include <valuemodel.h>
+#include <labeladapter.h>
+#include <positionmodel.h>
+#include <gcodehighlighter.h>
 
 
 class PositionDockable;
@@ -30,6 +38,9 @@ public slots:
 
 protected:
   void createDockings();
+#ifndef USE_EVENTLOOP_TIMER
+  void timerEvent(QTimerEvent* event) override;
+#endif
 
 private:
   Ui::MainWindow*     ui;
@@ -40,5 +51,8 @@ private:
   ValueModel          counter;
   PositionModel       pm;
   GCodeHighlighter*   gh;
+#ifndef USE_EVENTLOOP_TIMER
+  QBasicTimer         timer;
+#endif
   };
 #endif // MAINWINDOW_H

@@ -6,7 +6,9 @@
 #include <speedinfodockable.h>
 #include <editordockable.h>
 #include <gcodehighlighter.h>
+#ifdef USE_EVENTLOOP_TIMER
 #include <QTimer>
+#endif
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
 #include <QFile>
@@ -47,18 +49,24 @@ MainWindow::MainWindow(QWidget *parent)
   connect(&pm.getWRel(), &ValueModel::valueChanged, pos->getWRel(), &LabelAdapter::setValue);
 
   // main menu actions ...
-  connect(ui->actionOpen, &QAction::triggered, ed, &EditorDockable::loadFile);
-//  connect(sender, &QObject::destroyed, this, [=](){ this->m_objects.remove(sender); });
+  connect(ui->actionOpen, &QAction::triggered, ed, &EditorDockable::loadFileAlt);
   connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(ui->actionAbsolute_Position->isChecked()); });
 
   /*
    * for testing purpose only
    * start simple timer as base of changes
    */
+#ifdef USE_EVENTLOOP_TIMER
+  /*
+   * drawback of this timer - timer stops with open-file-dialogs
+   */
   QTimer* t = new QTimer(this);
 
   connect(t, &QTimer::timeout, this, &MainWindow::count);
   t->start(5);
+#else
+  timer.start(5, this);
+#endif
 
   // simulate homed axis
   pos->setXHomed();
@@ -107,3 +115,15 @@ void MainWindow::count() {
   pm.getXAbs().setValue(2000 * sin(counter.getValue().toDouble()));
   pm.getYAbs().setValue(2000 * cos(counter.getValue().toDouble()));
   }
+
+
+#ifndef USE_EVENTLOOP_TIMER
+void MainWindow::timerEvent(QTimerEvent *e) {
+  if (e->timerId() == timer.timerId())  {
+     count();
+     }
+  else {
+     QMainWindow::timerEvent(e);
+     }
+  }
+#endif
