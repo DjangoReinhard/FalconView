@@ -1,7 +1,8 @@
 # QtUi
 
-app to test Qt features using mvc
+app to test Qt features using mvc.
+added Qt overlays
 
 ## Screenshot
-[![screenshot](sample/QtUi003s.jpg)](sample/QtUi003.jpg)
+[![screenshot](sample/QtUi004s.jpg)](sample/QtUi004.jpg)
 

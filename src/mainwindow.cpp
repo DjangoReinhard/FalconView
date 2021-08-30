@@ -120,6 +120,9 @@ void MainWindow::createConnections() {
   connect(&pm.getVRel(), &ValueModel::valueChanged, pos->getVRel(), &LabelAdapter::setValue);
   connect(&pm.getWRel(), &ValueModel::valueChanged, pos->getWRel(), &LabelAdapter::setValue);
 
+  connect(&pm.getXRel(), &ValueModel::valueChanged, overlay->relX, &LabelAdapter::setValue);
+  connect(&pm.getYRel(), &ValueModel::valueChanged, overlay->relY, &LabelAdapter::setValue);
+
   // main menu actions ...
   connect(ui->actionOpen, &QAction::triggered, ed, &EditorDockable::loadFileAlt);
   connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(ui->actionAbsolute_Position->isChecked()); });
@@ -191,11 +194,9 @@ void MainWindow::createMainWidgets() {
   ui->gridLayout->addWidget(bg03, 0, 0);
   bg03->hide();
 
-  /*
   QFile ovFile("../QtUi/src/UI/Overlay.ui");
   overlay = new Overlay(ovFile, this);
   ui->gridLayout->addWidget(overlay, 0, 0);
-  */
   }
 
 
