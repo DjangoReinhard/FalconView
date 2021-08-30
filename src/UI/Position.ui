@@ -10,10 +10,19 @@
     <height>483</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0" columnstretch="0,50,10,50,0">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetDefaultConstraint</enum>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -31,6 +40,12 @@
    </property>
    <item row="3" column="2">
     <widget class="QLabel" name="posA">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">0,000</string>
      </property>
@@ -44,6 +59,12 @@
    </item>
    <item row="6" column="4">
     <widget class="QLabel" name="dtgU">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -78,6 +99,12 @@
    </item>
    <item row="4" column="2">
     <widget class="QLabel" name="posB">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">0,000</string>
      </property>
@@ -91,6 +118,12 @@
    </item>
    <item row="0" column="2">
     <widget class="QLabel" name="posX">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="autoFillBackground">
       <bool>true</bool>
      </property>
@@ -142,6 +175,12 @@
    </item>
    <item row="4" column="4">
     <widget class="QLabel" name="dtgB">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -160,6 +199,12 @@
    </item>
    <item row="1" column="2">
     <widget class="QLabel" name="posY">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">0,000</string>
      </property>
@@ -173,6 +218,12 @@
    </item>
    <item row="0" column="4">
     <widget class="QLabel" name="dtgX">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -213,6 +264,12 @@
    </item>
    <item row="2" column="2">
     <widget class="QLabel" name="posZ">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">0,000</string>
      </property>
@@ -226,6 +283,12 @@
    </item>
    <item row="8" column="4">
     <widget class="QLabel" name="dtgW">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -266,6 +329,12 @@
    </item>
    <item row="1" column="4">
     <widget class="QLabel" name="dtgY">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -284,6 +353,12 @@
    </item>
    <item row="6" column="2">
     <widget class="QLabel" name="posU">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">0,000</string>
      </property>
@@ -423,6 +498,12 @@
    </item>
    <item row="2" column="4">
     <widget class="QLabel" name="dtgZ">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -463,6 +544,12 @@
    </item>
    <item row="7" column="4">
     <widget class="QLabel" name="dtgV">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -481,6 +568,12 @@
    </item>
    <item row="7" column="2">
     <widget class="QLabel" name="posV">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">0,000</string>
      </property>
@@ -516,6 +609,12 @@
    </item>
    <item row="8" column="2">
     <widget class="QLabel" name="posW">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">-4.000,000</string>
      </property>
@@ -529,6 +628,12 @@
    </item>
    <item row="5" column="2">
     <widget class="QLabel" name="posC">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true">0,000</string>
      </property>
@@ -558,6 +663,12 @@
    </item>
    <item row="3" column="4">
     <widget class="QLabel" name="dtgA">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
@@ -576,6 +687,12 @@
    </item>
    <item row="5" column="4">
     <widget class="QLabel" name="dtgC">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
