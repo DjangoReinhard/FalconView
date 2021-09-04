@@ -1,15 +1,16 @@
 #include "valuemodel.h"
 
 
-ValueModel::ValueModel(QVariant v)
+ValueModel::ValueModel(const QString& name, const QVariant& value)
  : QObject(nullptr)
- , value(v) {
+ , v(value)
+ , n(name) {
   }
 
 
-void ValueModel::setValue(QVariant v) {
+void ValueModel::setValue(const QVariant& value) {
   if (v != value) {
-     value = v;
+     v = value;
      emit valueChanged(v);
      }
   }

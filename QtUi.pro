@@ -1,5 +1,4 @@
-QT       += core gui uitools testlib \
-    widgets
+QT       += core gui uitools testlib widgets
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
@@ -12,13 +11,19 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 INCLUDEPATH += src/model \
                src/util \
                src/view \
-               src
+               src/nml  \
+               src      \
+               lc/include \
+               lc/src \
 
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/model/positionmodel.cpp \
+    src/model/gcodeinfo.cpp \
+    src/model/positioncalculator.cpp \
+    src/model/valuemanager.cpp \
     src/model/valuemodel.cpp \
+    src/nml/statusreader.cpp \
     src/view/editordockable.cpp \
     src/view/labeladapter.cpp \
     src/view/gcodeeditor.cpp \
@@ -33,8 +38,12 @@ SOURCES += \
 
 HEADERS += \
     src/mainwindow.h \
-    src/model/positionmodel.h \
+    src/model/gcodeinfo.h \
+    src/model/positioncalculator.h \
+    src/model/valuemanager.h \
     src/model/valuemodel.h \
+    src/nml/insulatePose.h \
+    src/nml/statusreader.h \
     src/view/editordockable.h \
     src/view/gcodeeditor.h \
     src/view/labeladapter.h \
@@ -56,6 +65,13 @@ FORMS += \
     src/UI/SpeedInfo.ui \
     src/UI/ToolInfo.ui \
     src/UI/mainwindow.ui
+
+unix:!mac {
+  LIBS += -Wl,-rpath=\$$ORIGIN/libs
+}
+LIBS += \
+  -Llc/lib \
+  -lm
 
 TRANSLATIONS += \
     src/i18n/QtUi_de_DE.ts

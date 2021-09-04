@@ -25,15 +25,15 @@ public:
   void setDtgStyles(QString styles);
   void setLedStyles(QString onStyle, QString offStyle);
   void setFontSize(int size);
-  void setXHomed(bool homed=true);
-  void setYHomed(bool homed=true);
-  void setZHomed(bool homed=true);
-  void setAHomed(bool homed=true);
-  void setBHomed(bool homed=true);
-  void setCHomed(bool homed=true);
-  void setUHomed(bool homed=true);
-  void setVHomed(bool homed=true);
-  void setWHomed(bool homed=true);
+  void setXHomed(QVariant arg = QVariant(true));
+  void setYHomed(QVariant arg = QVariant(true));
+  void setZHomed(QVariant arg = QVariant(true));
+  void setAHomed(QVariant arg = QVariant(true));
+  void setBHomed(QVariant arg = QVariant(true));
+  void setCHomed(QVariant arg = QVariant(true));
+  void setUHomed(QVariant arg = QVariant(true));
+  void setVHomed(QVariant arg = QVariant(true));
+  void setWHomed(QVariant arg = QVariant(true));
 
   LabelAdapter* getXRel() { return relX; }
   LabelAdapter* getYRel() { return relY; }
@@ -64,12 +64,13 @@ public:
   LabelAdapter* getWDtg() { return dtgX; }
 
 public slots:
-  void setAbsolute(bool absoluteFlag = true);
+  void setAbsolute(QVariant arg = QVariant(true));
   void setRelative();
 
 protected:
   virtual void resizeEvent(QResizeEvent* event);
   void initializeWidget(QFile& uiDesc);
+  void connectSignals();
   void updatePos();
   void setActive();
 

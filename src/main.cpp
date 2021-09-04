@@ -17,7 +17,9 @@ int main(int argc, char *argv[]) {
                                        , "../QtUi/src/i18n");
 
   qDebug() << "current locale settings - lang: " << curLocale.language()
-           << "\tcountry: " << curLocale.country();
+           << "\tcountry: " << curLocale.country()
+           << "\tname: " << curLocale.name();
+  qDebug() << "syslocale.name: " << sysLocale.name();
   qDebug() << "locale messages found: " << ok;
   a.installTranslator(&translator);
   MainWindow w;

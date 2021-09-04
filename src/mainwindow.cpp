@@ -7,9 +7,6 @@
 #include <editordockable.h>
 #include <gcodehighlighter.h>
 #include <settingswidget.h>
-#ifdef USE_EVENTLOOP_TIMER
-#include <QTimer>
-#endif
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
 #include <QFile>
@@ -23,42 +20,26 @@
 #include <QColorSpace>
 #include <QToolBar>
 #include <overlay.h>
+#include <valuemanager.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
  : QMainWindow(parent)
  , ui(new Ui::MainWindow)
  , gh(nullptr)
- , counter(0.0) {
-  // load our widgets from ui-file
-  ui->setupUi(this);
+ , statusReader(positionCalculator, gcodeInfo) {
+  ui->setupUi(this);    // moc generated
 
   createActions();
   createToolBars();
   createMainWidgets();
   createDockables();
+  createValueModels();
   createConnections();
 
-  /*
-   * for testing purpose only
-   * start simple timer as base of changes
-   */
-#ifdef USE_EVENTLOOP_TIMER
-  /*
-   * drawback of this timer - timer stops with open-file-dialogs
-   */
-  QTimer* t = new QTimer(this);
+  timer.start(10, this);
 
-  connect(t, &QTimer::timeout, this, &MainWindow::count);
-  t->start(5);
-#else
-  timer.start(5, this);
-#endif
-
-  // simulate homed axis
-  pos->setXHomed();
-  pos->setYHomed();
-  pos->setZHomed();
+  // application window
   setMinimumWidth(1200);
   }
 
@@ -87,45 +68,34 @@ MainWindow::~MainWindow() {
 
 
 void MainWindow::createActions() {
+  // gcode execution
   startAction = new QAction(QIcon(":/res/SK_AutoStart.png"), tr("Start"), this);
   pauseAction = new QAction(QIcon(":/res/SK_AutoPause.png"), tr("Pause"), this);
   stopAction  = new QAction(QIcon(":/res/SK_AutoStop.png"),  tr("Stop"),  this);
 
-  autoMode    = new QAction(QIcon(":/res/SK_Auto.png"),   tr("Auto-mode"),    this);
-  mdiMode     = new QAction(QIcon(":/res/SK_MDI.png"),    tr("MDI-mode"),     this);
-  editMode    = new QAction(QIcon(":/res/SK_Edit.png"),   tr("Edit-mode"),    this);
-  jogMode     = new QAction(QIcon(":/res/SK_Manual.png"), tr("Manual-mode"),  this);
+  // controller mode
+  autoMode    = new QAction(QIcon(":/res/SK_Auto.png"),   tr("Auto-mode"),   this);
+  mdiMode     = new QAction(QIcon(":/res/SK_MDI.png"),    tr("MDI-mode"),    this);
+  editMode    = new QAction(QIcon(":/res/SK_Edit.png"),   tr("Edit-mode"),   this);
+  jogMode     = new QAction(QIcon(":/res/SK_Manual.png"), tr("Manual-mode"), this);
+  }
+
+
+void MainWindow::createValueModels() {
+  ValueManager vm;
+
+  vm.setValue("showAbsolute", false);
   }
 
 
 void MainWindow::createConnections() {
-  // connect model with view
-  connect(&pm.getXAbs(), &ValueModel::valueChanged, pos->getXAbs(), &LabelAdapter::setValue);
-  connect(&pm.getYAbs(), &ValueModel::valueChanged, pos->getYAbs(), &LabelAdapter::setValue);
-  connect(&pm.getZAbs(), &ValueModel::valueChanged, pos->getZAbs(), &LabelAdapter::setValue);
-  connect(&pm.getAAbs(), &ValueModel::valueChanged, pos->getAAbs(), &LabelAdapter::setValue);
-  connect(&pm.getBAbs(), &ValueModel::valueChanged, pos->getBAbs(), &LabelAdapter::setValue);
-  connect(&pm.getCAbs(), &ValueModel::valueChanged, pos->getCAbs(), &LabelAdapter::setValue);
-  connect(&pm.getUAbs(), &ValueModel::valueChanged, pos->getUAbs(), &LabelAdapter::setValue);
-  connect(&pm.getVAbs(), &ValueModel::valueChanged, pos->getVAbs(), &LabelAdapter::setValue);
-  connect(&pm.getWAbs(), &ValueModel::valueChanged, pos->getWAbs(), &LabelAdapter::setValue);
+  ValueManager vm;
 
-  connect(&pm.getXRel(), &ValueModel::valueChanged, pos->getXRel(), &LabelAdapter::setValue);
-  connect(&pm.getYRel(), &ValueModel::valueChanged, pos->getYRel(), &LabelAdapter::setValue);
-  connect(&pm.getZRel(), &ValueModel::valueChanged, pos->getZRel(), &LabelAdapter::setValue);
-  connect(&pm.getARel(), &ValueModel::valueChanged, pos->getARel(), &LabelAdapter::setValue);
-  connect(&pm.getBRel(), &ValueModel::valueChanged, pos->getBRel(), &LabelAdapter::setValue);
-  connect(&pm.getCRel(), &ValueModel::valueChanged, pos->getCRel(), &LabelAdapter::setValue);
-  connect(&pm.getURel(), &ValueModel::valueChanged, pos->getURel(), &LabelAdapter::setValue);
-  connect(&pm.getVRel(), &ValueModel::valueChanged, pos->getVRel(), &LabelAdapter::setValue);
-  connect(&pm.getWRel(), &ValueModel::valueChanged, pos->getWRel(), &LabelAdapter::setValue);
-
-  connect(&pm.getXRel(), &ValueModel::valueChanged, overlay->relX, &LabelAdapter::setValue);
-  connect(&pm.getYRel(), &ValueModel::valueChanged, overlay->relY, &LabelAdapter::setValue);
+  // toggle between absolute and relative position ...
+  connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(ui->actionAbsolute_Position->isChecked()); });
 
   // main menu actions ...
   connect(ui->actionOpen, &QAction::triggered, ed, &EditorDockable::loadFileAlt);
-  connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(ui->actionAbsolute_Position->isChecked()); });
   connect(ui->actionDefault,  &QAction::triggered, this, &MainWindow::activateTbd);
   connect(ui->actionBack01,   &QAction::triggered, this, &MainWindow::activateBg01);
   connect(ui->actionBack02,   &QAction::triggered, this, &MainWindow::activateBg02);
@@ -245,22 +215,9 @@ void MainWindow::activateBg03() {
   }
 
 
-void MainWindow::count() {
-  counter.setValue(counter.getValue().toDouble() + 0.001);
-  pm.getXRel().setValue(2000 * sin(counter.getValue().toDouble()));
-  pm.getYRel().setValue(2000 * cos(counter.getValue().toDouble()));
-  pm.getXAbs().setValue(2000 * sin(counter.getValue().toDouble()));
-  pm.getYAbs().setValue(2000 * cos(counter.getValue().toDouble()));
-  }
-
-
-#ifndef USE_EVENTLOOP_TIMER
 void MainWindow::timerEvent(QTimerEvent *e) {
   if (e->timerId() == timer.timerId())  {
-     count();
+     statusReader.update();
      }
-  else {
-     QMainWindow::timerEvent(e);
-     }
+  else QMainWindow::timerEvent(e);
   }
-#endif

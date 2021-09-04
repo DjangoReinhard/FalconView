@@ -2,6 +2,7 @@
 #include <QtUiTools/QUiLoader>
 #include <QFontMetrics>
 #include <QGridLayout>
+#include <valuemanager.h>
 #include <iostream>
 
 
@@ -242,18 +243,66 @@ void PositionDockable::initializeWidget(QFile& uiDesc) {
   setWHomed(false);
 
   setRelative();
+  connectSignals();
   setFontSize(relX->label()->font().pointSize());
   }
 
 
-void PositionDockable::setRelative() {
-  setAbsolute(false);
+void PositionDockable::connectSignals() {
+  ValueManager vm;
+  ValueModel*  m = vm.getModel("showAbsolute");
+
+  if (!m) vm.setValue("showAbsolute", false);
+  connect(vm.getModel("showAbsolute"), &ValueModel::valueChanged, this, &PositionDockable::setAbsolute);
+  connect(vm.getModel("absX"), &ValueModel::valueChanged, absX, &LabelAdapter::setValue);
+  connect(vm.getModel("absY"), &ValueModel::valueChanged, absY, &LabelAdapter::setValue);
+  connect(vm.getModel("absZ"), &ValueModel::valueChanged, absZ, &LabelAdapter::setValue);
+  connect(vm.getModel("absA"), &ValueModel::valueChanged, absA, &LabelAdapter::setValue);
+  connect(vm.getModel("absB"), &ValueModel::valueChanged, absB, &LabelAdapter::setValue);
+  connect(vm.getModel("absC"), &ValueModel::valueChanged, absC, &LabelAdapter::setValue);
+  connect(vm.getModel("absU"), &ValueModel::valueChanged, absU, &LabelAdapter::setValue);
+  connect(vm.getModel("absV"), &ValueModel::valueChanged, absV, &LabelAdapter::setValue);
+  connect(vm.getModel("absW"), &ValueModel::valueChanged, absW, &LabelAdapter::setValue);
+  connect(vm.getModel("relX"), &ValueModel::valueChanged, relX, &LabelAdapter::setValue);
+  connect(vm.getModel("relY"), &ValueModel::valueChanged, relY, &LabelAdapter::setValue);
+  connect(vm.getModel("relZ"), &ValueModel::valueChanged, relZ, &LabelAdapter::setValue);
+  connect(vm.getModel("relA"), &ValueModel::valueChanged, relA, &LabelAdapter::setValue);
+  connect(vm.getModel("relB"), &ValueModel::valueChanged, relB, &LabelAdapter::setValue);
+  connect(vm.getModel("relC"), &ValueModel::valueChanged, relC, &LabelAdapter::setValue);
+  connect(vm.getModel("relU"), &ValueModel::valueChanged, relU, &LabelAdapter::setValue);
+  connect(vm.getModel("relV"), &ValueModel::valueChanged, relV, &LabelAdapter::setValue);
+  connect(vm.getModel("relW"), &ValueModel::valueChanged, relW, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgX"), &ValueModel::valueChanged, dtgX, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgY"), &ValueModel::valueChanged, dtgY, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgZ"), &ValueModel::valueChanged, dtgZ, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgA"), &ValueModel::valueChanged, dtgA, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgB"), &ValueModel::valueChanged, dtgB, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgC"), &ValueModel::valueChanged, dtgC, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgU"), &ValueModel::valueChanged, dtgU, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgV"), &ValueModel::valueChanged, dtgV, &LabelAdapter::setValue);
+  connect(vm.getModel("dtgW"), &ValueModel::valueChanged, dtgW, &LabelAdapter::setValue);
+  connect(vm.getModel("homedJoint0"), &ValueModel::valueChanged, this, &PositionDockable::setXHomed);
+  connect(vm.getModel("homedJoint1"), &ValueModel::valueChanged, this, &PositionDockable::setYHomed);
+  connect(vm.getModel("homedJoint2"), &ValueModel::valueChanged, this, &PositionDockable::setZHomed);
+  connect(vm.getModel("homedJoint3"), &ValueModel::valueChanged, this, &PositionDockable::setAHomed);
+  connect(vm.getModel("homedJoint4"), &ValueModel::valueChanged, this, &PositionDockable::setBHomed);
+  connect(vm.getModel("homedJoint5"), &ValueModel::valueChanged, this, &PositionDockable::setCHomed);
+  connect(vm.getModel("homedJoint6"), &ValueModel::valueChanged, this, &PositionDockable::setUHomed);
+  connect(vm.getModel("homedJoint7"), &ValueModel::valueChanged, this, &PositionDockable::setVHomed);
+  connect(vm.getModel("homedJoint8"), &ValueModel::valueChanged, this, &PositionDockable::setWHomed);
   }
 
 
-void PositionDockable::setAbsolute(bool absoluteFlag) {
-  if (absoluteFlag != absolute)  {
-     absolute = absoluteFlag;
+void PositionDockable::setRelative() {
+  setAbsolute(QVariant(false));
+  }
+
+
+void PositionDockable::setAbsolute(QVariant arg) {
+  bool abs = arg.toBool();
+
+  if (abs != absolute)  {
+     absolute = abs;
      updatePos();
      }
   }
@@ -529,46 +578,46 @@ void PositionDockable::resizeEvent(QResizeEvent* e) {
   }
 
 
-void PositionDockable::setXHomed(bool homed) {
-  ledX->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setXHomed(QVariant homed) {
+  ledX->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setYHomed(bool homed) {
-  ledY->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setYHomed(QVariant homed) {
+  ledY->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setZHomed(bool homed) {
-  ledZ->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setZHomed(QVariant homed) {
+  ledZ->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setAHomed(bool homed) {
-  ledA->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setAHomed(QVariant homed) {
+  ledA->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setBHomed(bool homed) {
-  ledB->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setBHomed(QVariant homed) {
+  ledB->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setCHomed(bool homed) {
-  ledC->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setCHomed(QVariant homed) {
+  ledC->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setUHomed(bool homed) {
-  ledU->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setUHomed(QVariant homed) {
+  ledU->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setVHomed(bool homed) {
-  ledV->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setVHomed(QVariant homed) {
+  ledV->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setWHomed(bool homed) {
-  ledW->setStyleSheet(homed ? ledOn : ledOff);
+void PositionDockable::setWHomed(QVariant homed) {
+  ledW->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }

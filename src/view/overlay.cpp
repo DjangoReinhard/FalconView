@@ -4,6 +4,8 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <labeladapter.h>
+#include <valuemanager.h>
+
 
 Overlay::Overlay(QFile& uiDesc, QWidget *parent)
  : QWidget(parent) {
@@ -50,4 +52,8 @@ void Overlay::initializeWidget(QFile &uiDesc) {
   ovDtgA->setStyleSheet(dtgStyles);
   ovDtgB->setStyleSheet(dtgStyles);
   xTitle->setStyleSheet(titleStyles);
+  ValueManager vm;
+
+  connect(vm.getModel("relX"), &ValueModel::valueChanged, relX, &LabelAdapter::setValue);
+  connect(vm.getModel("relY"), &ValueModel::valueChanged, relY, &LabelAdapter::setValue);
   }
