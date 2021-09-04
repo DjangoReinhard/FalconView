@@ -15,7 +15,6 @@ public:
   virtual ~ToolInfoDockable();
 
 protected:
-  virtual void resizeEvent(QResizeEvent* event);
   void initializeWidget(QFile& uiDesc);
 
 private:
@@ -24,6 +23,5 @@ private:
   LabelAdapter* tlLen;
   LabelAdapter* tlRad;
   LabelAdapter* tlNext;
-  int           height;
   };
 #endif // TOOLINFODOCKABLE_H

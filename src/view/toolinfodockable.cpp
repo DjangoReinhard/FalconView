@@ -1,5 +1,6 @@
-#include "toolinfodockable.h"
-#include "labeladapter.h"
+#include <toolinfodockable.h>
+#include <labeladapter.h>
+#include <valuemanager.h>
 #include <QUiLoader>
 #include <QFile>
 #include <QLabel>
@@ -13,8 +14,7 @@ ToolInfoDockable::ToolInfoDockable(QFile& uiDesc, QWidget* parent)
  , tlDesc(nullptr)
  , tlLen(nullptr)
  , tlRad(nullptr)
- , tlNext(nullptr)
- , height(-1) {
+ , tlNext(nullptr) {
   initializeWidget(uiDesc);
   }
 
@@ -40,24 +40,8 @@ void ToolInfoDockable::initializeWidget(QFile &uiDesc) {
   tlLen  = new LabelAdapter(findChild<QLabel*>("toolLen"));
   tlRad  = new LabelAdapter(findChild<QLabel*>("toolRadius"));
   tlNext = new LabelAdapter(findChild<QLabel*>("nextToolNum"));
-  }
+  ValueManager vm;
 
-
-void ToolInfoDockable::resizeEvent(QResizeEvent* /* e */) {
-    /*
-  int h = e->size().height();
-
-  if (h == height) return;
-  height = h;
-  QSize size = widget()->size();
-  int ns = int((double)size.height() / 5.8);
-  int cs = tlCur->label()->font().pointSize();
-
-  qDebug() << "TI: widget size: " << size.width() << "x" << size.height();
-  qDebug() << "current font size: " << cs << "\tnew size: " << ns;
-/ *
-  QFont font(tlCur->label()->font().family(), ns, QFont::Bold);
-
-  tlCur->label()->setFont(font);
-  */
+  connect(vm.getModel("toolInSpindle", 0),  &ValueModel::valueChanged, tlCur,  &LabelAdapter::setValue);
+  connect(vm.getModel("pocketPrepared", 0), &ValueModel::valueChanged, tlNext, &LabelAdapter::setValue);
   }
