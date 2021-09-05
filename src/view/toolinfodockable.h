@@ -2,6 +2,7 @@
 #define TOOLINFODOCKABLE_H
 #include <dockable.h>
 class LabelAdapter;
+class QLabel;
 
 
 class ToolInfoDockable : public Dockable
@@ -15,10 +16,10 @@ protected:
   void initializeWidget(QWidget* widget);
 
 private:
-  LabelAdapter* tlCur;
+  QLabel*       curTool;
+  QLabel*       nxtTool;
   LabelAdapter* tlDesc;
   LabelAdapter* tlLen;
   LabelAdapter* tlRad;
-  LabelAdapter* tlNext;
   };
 #endif // TOOLINFODOCKABLE_H

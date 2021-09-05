@@ -478,13 +478,6 @@ void PositionDockable::setDtgStyles(QString styles) {
 void PositionDockable::setFontSize(int size) {
   QFont f = relX->label()->font();
   QFont nf = QFont(f.family(), size, f.weight(), f.italic());
-  QFontMetrics fm(f);
-  QRect r = fm.boundingRect("-9.000,000");
-  QSize s = relX->label()->size();
-  int nw = int((double)r.width() * 1.2);
-
-  std::cout << "pos min-width: " << r.width() << "\tlabel: " << s.width() << std::endl;
-  std::cout << "new pos width: " << nw << std::endl;
 
   absX->label()->setFont(nf);
   absY->label()->setFont(nf);
@@ -504,24 +497,7 @@ void PositionDockable::setFontSize(int size) {
   relU->label()->setFont(nf);
   relV->label()->setFont(nf);
   relW->label()->setFont(nf);
-  absX->label()->setMinimumWidth(nw);
-  absY->label()->setMinimumWidth(nw);
-  absZ->label()->setMinimumWidth(nw);
-  absA->label()->setMinimumWidth(nw);
-  absB->label()->setMinimumWidth(nw);
-  absC->label()->setMinimumWidth(nw);
-  absU->label()->setMinimumWidth(nw);
-  absV->label()->setMinimumWidth(nw);
-  absW->label()->setMinimumWidth(nw);
-  relX->label()->setMinimumWidth(nw);
-  relY->label()->setMinimumWidth(nw);
-  relZ->label()->setMinimumWidth(nw);
-  relA->label()->setMinimumWidth(nw);
-  relB->label()->setMinimumWidth(nw);
-  relC->label()->setMinimumWidth(nw);
-  relU->label()->setMinimumWidth(nw);
-  relV->label()->setMinimumWidth(nw);
-  relW->label()->setMinimumWidth(nw);
+
   f = lblX->font();
   nf = QFont(f.family(), size, f.weight(), f.italic());
 
@@ -534,15 +510,22 @@ void PositionDockable::setFontSize(int size) {
   lblU->setFont(nf);
   lblV->setFont(nf);
   lblW->setFont(nf);
-  f = dtgX->label()->font();
-  nf = QFont(f.family(), size, f.weight(), f.italic());
-  fm = QFontMetrics(f);
-  r = fm.boundingRect("-9.000,000");
-  s = dtgX->label()->size();
-  nw = int((double)r.width() * 1.2);
 
-  std::cout << "dtg min-width: " << r.width() << "\tlabel: " << s.width() << std::endl;
-  std::cout << "new dtg width: " << nw << std::endl;
+  QFontMetrics fm = QFontMetrics(f);
+  int w = 3 + fm.horizontalAdvance('W');
+
+  lblX->setMinimumWidth(w);
+  lblY->setMinimumWidth(w);
+  lblZ->setMinimumWidth(w);
+  lblA->setMinimumWidth(w);
+  lblB->setMinimumWidth(w);
+  lblC->setMinimumWidth(w);
+  lblU->setMinimumWidth(w);
+  lblV->setMinimumWidth(w);
+  lblW->setMinimumWidth(w);
+
+  f = lblX->font();
+  nf = QFont(f.family(), size, f.weight(), f.italic());
 
   dtgX->label()->setFont(nf);
   dtgY->label()->setFont(nf);
@@ -553,15 +536,6 @@ void PositionDockable::setFontSize(int size) {
   dtgU->label()->setFont(nf);
   dtgV->label()->setFont(nf);
   dtgW->label()->setFont(nf);
-  dtgX->label()->setMinimumWidth(nw);
-  dtgY->label()->setMinimumWidth(nw);
-  dtgZ->label()->setMinimumWidth(nw);
-  dtgA->label()->setMinimumWidth(nw);
-  dtgB->label()->setMinimumWidth(nw);
-  dtgC->label()->setMinimumWidth(nw);
-  dtgU->label()->setMinimumWidth(nw);
-  dtgV->label()->setMinimumWidth(nw);
-  dtgW->label()->setMinimumWidth(nw);
   }
 
 

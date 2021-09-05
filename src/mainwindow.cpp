@@ -20,6 +20,7 @@
 #include <QImage>
 #include <QColorSpace>
 #include <QToolBar>
+#include <QVariant>
 #include <overlay.h>
 #include <valuemanager.h>
 
@@ -38,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
   createValueModels();
   createConnections();
 
-  timer.start(10, this);
+  timer.start(40, this);
 
   // application window
   setMinimumWidth(1200);
@@ -99,13 +100,22 @@ void MainWindow::createConnections() {
   connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsolute_Position->isChecked())); });
 
   // main menu actions ...
-  connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::loadFileAlt);
+  connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::openFileAlt);
   connect(ui->actionDefault,  &QAction::triggered, this, &MainWindow::activateTbd);
   connect(ui->actionBack01,   &QAction::triggered, this, &MainWindow::activateBg01);
   connect(ui->actionBack02,   &QAction::triggered, this, &MainWindow::activateBg02);
   connect(ui->actionBack03,   &QAction::triggered, this, &MainWindow::activateBg03);
   connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::activateSettings);
-}
+
+  connect(singleStep, &QAction::triggered, ed, [=](){ ed->setLine(QVariant(++line)); });
+  connect(stopAction, &QAction::triggered, this, &MainWindow::resetLine);
+  }
+
+
+void MainWindow::resetLine() {
+  line = 0;
+  ed->setLine(QVariant(0));
+  }
 
 
 void MainWindow::createToolBars() {
@@ -130,14 +140,14 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables() {
-  ed = new EditorDockable("../QtUi/src/UI/GCodeEditor.ui", this);
-  addDockWidget(Qt::BottomDockWidgetArea, ed);
   pos = new PositionDockable("../QtUi/src/UI/Position.ui", AxisMask(0x01FF), this);
   addDockWidget(Qt::LeftDockWidgetArea, pos);
   ti = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, ti);
   si = new SpeedInfoDockable("../QtUi/src/UI/SpeedInfo.ui", this);
-  addDockWidget(Qt::LeftDockWidgetArea, si);
+  addDockWidget(Qt::BottomDockWidgetArea, si);
+  ed = new EditorDockable("../QtUi/src/UI/GCodeEditor.ui", this);
+  addDockWidget(Qt::BottomDockWidgetArea, ed);
   }
 
 

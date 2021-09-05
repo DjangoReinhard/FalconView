@@ -14,6 +14,7 @@ public:
 
   void paintLineNumbers(QPaintEvent* event);
   int  lineNumberAreaWidth();
+  void loadFile(QVariant fileName);
 
 protected:
   void resizeEvent(QResizeEvent* event) override;

@@ -37,6 +37,7 @@ public slots:
   void activateBg01();
   void activateBg02();
   void activateBg03();
+  void resetLine();
 
 protected:
   void createActions();
@@ -71,6 +72,7 @@ private:
   QAction*            cfgMode;
   QToolBar*           autoTB;
   QToolBar*           modeTB;
+  int                 line;
   QBasicTimer         timer;
   GCodeInfo           gcodeInfo;
   PositionCalculator  positionCalculator;

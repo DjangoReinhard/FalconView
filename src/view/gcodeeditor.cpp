@@ -1,6 +1,8 @@
 #include "gcodeeditor.h"
 #include <QPainter>
 #include <QTextBlock>
+#include <QScrollBar>
+#include <QFile>
 #include <QDebug>
 
 
@@ -10,7 +12,7 @@ GCodeEditor::GCodeEditor(QWidget* parent)
 
   connect(this, &GCodeEditor::blockCountChanged,     this, &GCodeEditor::updateLineNumberAreaWidth);
   connect(this, &GCodeEditor::updateRequest,         this, &GCodeEditor::updateLineNumberArea);
-  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine);
+  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine); 
 
   updateLineNumberAreaWidth(0);
   highlightCurrentLine();
@@ -53,19 +55,24 @@ void GCodeEditor::resizeEvent(QResizeEvent *e) {
   }
 
 
+void GCodeEditor::loadFile(QVariant name) {
+  QFile file(name.toString());
+
+  if (file.open(QFile::ReadOnly | QFile::Text))
+     setPlainText(file.readAll());
+  }
+
+
 void GCodeEditor::highlightCurrentLine() {
   QList<QTextEdit::ExtraSelection> extraSelections;
+  QTextEdit::ExtraSelection selection;
+  QColor lineColor = QColor(Qt::yellow).lighter(140);
 
-  if (!isReadOnly()) {
-     QTextEdit::ExtraSelection selection;
-     QColor lineColor = QColor(Qt::yellow).lighter(140);
-
-     selection.format.setBackground(lineColor);
-     selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-     selection.cursor = textCursor();
-     selection.cursor.clearSelection();
-     extraSelections.append(selection);
-     }
+  selection.format.setBackground(lineColor);
+  selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+  selection.cursor = textCursor();
+  selection.cursor.clearSelection();
+  extraSelections.append(selection);
   setExtraSelections(extraSelections);
   }
 

@@ -27,6 +27,7 @@ SOURCES += \
     src/view/dockable.cpp \
     src/view/dynwidget.cpp \
     src/view/editordockable.cpp \
+    src/view/gcodeviewer.cpp \
     src/view/labeladapter.cpp \
     src/view/gcodeeditor.cpp \
     src/view/overlay.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     src/view/dynwidget.h \
     src/view/editordockable.h \
     src/view/gcodeeditor.h \
+    src/view/gcodeviewer.h \
     src/view/labeladapter.h \
     src/view/overlay.h \
     src/view/positiondockable.h \
@@ -64,6 +66,7 @@ HEADERS += \
     src/view/toolinfodockable.h
 
 FORMS += \
+    src/UI/CurCodes.ui \
     src/UI/GCodeEditor.ui \
     src/UI/Overlay.ui \
     src/UI/Position.ui \
@@ -93,5 +96,3 @@ DISTFILES += \
     src/i18n/QtUi_de_DE.ts
 
 RESOURCES += QtUi.qrc
-
-message($$_PRO_FILE_PWD_)

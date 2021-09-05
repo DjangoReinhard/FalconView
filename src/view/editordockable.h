@@ -1,8 +1,10 @@
 #ifndef EDITORDOCKABLE_H
 #define EDITORDOCKABLE_H
 #include <dockable.h>
+#include <QVariant>
 class QFile;
 class GCodeEditor;
+class GCodeViewer;
 class GCodeHighlighter;
 class QLineEdit;
 
@@ -15,14 +17,16 @@ public:
   virtual ~EditorDockable();
 
 public slots:
-  void loadFile();
-  void loadFileAlt();
+  void openFile();
+  void openFileAlt();
+  void setLine(QVariant line);
 
 protected:
   void initializeWidget();
+//void loadFile(QVariant fileName);
 
 private:
-  GCodeEditor*      editor;
+  GCodeViewer*      editor;
   QLineEdit*        fileName;
   GCodeHighlighter* gh;
   };

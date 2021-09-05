@@ -28,7 +28,7 @@ void SpeedInfoDockable::initializeWidget(QWidget* /* w */) {
   curSpeed    = new LabelAdapter(findChild<QLabel*>("curSpeed"));
   cmdFeed     = new LabelAdapter(findChild<QLabel*>("cmdFeed"));
   cmdFastFeed = new LabelAdapter(findChild<QLabel*>("cmdFastFeed"));
-  cmdSpeed    = new LabelAdapter(findChild<QLabel*>("cmdSpeed"));
+  cmdSpeed    = new LabelAdapter(findChild<QLabel*>("cmdSpeed"), 0);
   ValueManager vm;
 
   connect(vm.getModel("feedrate", 0),      &ValueModel::valueChanged, curFeed,     &LabelAdapter::setValue);
