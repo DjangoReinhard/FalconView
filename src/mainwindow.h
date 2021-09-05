@@ -6,6 +6,7 @@
 #include <labeladapter.h>
 #include <gcodehighlighter.h>
 #include <gcodeinfo.h>
+#include <curcodesdockable.h>
 #include <positioncalculator.h>
 #include <statusreader.h>
 
@@ -54,9 +55,9 @@ private:
   ToolInfoDockable*   ti;
   SpeedInfoDockable*  si;
   EditorDockable*     ed;
+  CurCodesDockable*   cc;
   GCodeHighlighter*   gh;
   SettingsWidget*     sw;
-  Overlay*            overlay;
   QLabel*             bg01;
   QLabel*             bg02;
   QLabel*             bg03;
@@ -70,8 +71,21 @@ private:
   QAction*            wheelMode;
   QAction*            jogMode;
   QAction*            cfgMode;
+  QAction*            power;
+  QAction*            mist;
+  QAction*            flood;
+  QAction*            spindleLeft;
+  QAction*            spindleRight;
+  QAction*            spindleOff;
+  QAction*            nop0;
+  QAction*            nop1;
+  QAction*            nop2;
+  QAction*            nop3;
+  QAction*            nop4;
   QToolBar*           autoTB;
   QToolBar*           modeTB;
+  QToolBar*           powerTB;
+  QToolBar*           switchTB;
   int                 line;
   QBasicTimer         timer;
   GCodeInfo           gcodeInfo;

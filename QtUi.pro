@@ -24,6 +24,7 @@ SOURCES += \
     src/model/valuemanager.cpp \
     src/model/valuemodel.cpp \
     src/nml/statusreader.cpp \
+    src/view/curcodesdockable.cpp \
     src/view/dockable.cpp \
     src/view/dynwidget.cpp \
     src/view/editordockable.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     src/model/valuemodel.h \
     src/nml/insulatePose.h \
     src/nml/statusreader.h \
+    src/view/curcodesdockable.h \
     src/view/dockable.h \
     src/view/dynwidget.h \
     src/view/editordockable.h \
