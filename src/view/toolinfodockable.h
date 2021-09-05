@@ -1,21 +1,18 @@
 #ifndef TOOLINFODOCKABLE_H
 #define TOOLINFODOCKABLE_H
-#include <QDockWidget>
+#include <dockable.h>
 class LabelAdapter;
-class QFile;
 
 
-class ToolInfoDockable : public QDockWidget
+class ToolInfoDockable : public Dockable
 {
   Q_OBJECT
-
-  const int DockingTitleHeight = 39;
 public:
-  ToolInfoDockable(QFile& uiDesc, QWidget* parent = nullptr);
+  ToolInfoDockable(const QString& fileName, QWidget* parent = nullptr);
   virtual ~ToolInfoDockable();
 
 protected:
-  void initializeWidget(QFile& uiDesc);
+  void initializeWidget(QWidget* widget);
 
 private:
   LabelAdapter* tlCur;

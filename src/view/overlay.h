@@ -1,37 +1,33 @@
 #ifndef OVERLAY_H
 #define OVERLAY_H
-
-#include <QWidget>
+#include <dynwidget.h>
 class QFile;
 class QLabel;
 class LabelAdapter;
 
 
-class Overlay : public QWidget
+class Overlay : public DynWidget
 {
   Q_OBJECT
 public:
-  LabelAdapter* relX;
-  LabelAdapter* relY;
-
-  explicit Overlay(QFile& uiDesc, QWidget *parent = nullptr);
-
-signals:
+  explicit Overlay(const QString& fileName, QWidget *parent = nullptr);
 
 protected:
-  void initializeWidget(QFile& uiDesc);
+  void initializeWidget();
 
 private:
-  QLabel*   ovRelX;
-  QLabel*   ovRelY;
-  QLabel*   ovRelZ;
-  QLabel*   ovRelA;
-  QLabel*   ovRelB;
-  QLabel*   ovDtgX;
-  QLabel*   ovDtgY;
-  QLabel*   ovDtgZ;
-  QLabel*   ovDtgA;
-  QLabel*   ovDtgB;
-  QLabel*   xTitle;
+  QLabel*       ovRelX;
+  QLabel*       ovRelY;
+  QLabel*       ovRelZ;
+  QLabel*       ovRelA;
+  QLabel*       ovRelB;
+  QLabel*       ovDtgX;
+  QLabel*       ovDtgY;
+  QLabel*       ovDtgZ;
+  QLabel*       ovDtgA;
+  QLabel*       ovDtgB;
+  QLabel*       xTitle;
+  LabelAdapter* relX;
+  LabelAdapter* relY;
   };
 #endif // OVERLAY_H

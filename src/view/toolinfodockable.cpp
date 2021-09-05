@@ -8,14 +8,14 @@
 #include <QDebug>
 
 
-ToolInfoDockable::ToolInfoDockable(QFile& uiDesc, QWidget* parent)
- : QDockWidget(tr("ToolInfo"), parent)
+ToolInfoDockable::ToolInfoDockable(const QString & fileName, QWidget* parent)
+ : Dockable(fileName, tr("ToolInfo"), parent)
  , tlCur(nullptr)
  , tlDesc(nullptr)
  , tlLen(nullptr)
  , tlRad(nullptr)
  , tlNext(nullptr) {
-  initializeWidget(uiDesc);
+  initializeWidget(widget());
   }
 
 
@@ -28,13 +28,7 @@ ToolInfoDockable::~ToolInfoDockable() {
   }
 
 
-void ToolInfoDockable::initializeWidget(QFile &uiDesc) {
-  QUiLoader loader;
-  QWidget*  w = loader.load(&uiDesc, this);
-
-  uiDesc.close();
-  setWidget(w);
-
+void ToolInfoDockable::initializeWidget(QWidget* /* w */) {
   tlCur  = new LabelAdapter(findChild<QLabel*>("curToolNum"));
   tlDesc = new LabelAdapter(findChild<QLabel*>("toolDesc"));
   tlLen  = new LabelAdapter(findChild<QLabel*>("toolLen"));
@@ -42,6 +36,7 @@ void ToolInfoDockable::initializeWidget(QFile &uiDesc) {
   tlNext = new LabelAdapter(findChild<QLabel*>("nextToolNum"));
   ValueManager vm;
 
+  tlCur->label()->setStyleSheet("background: white; ");
   connect(vm.getModel("toolInSpindle", 0),  &ValueModel::valueChanged, tlCur,  &LabelAdapter::setValue);
   connect(vm.getModel("pocketPrepared", 0), &ValueModel::valueChanged, tlNext, &LabelAdapter::setValue);
   }

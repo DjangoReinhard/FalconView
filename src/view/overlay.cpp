@@ -7,16 +7,13 @@
 #include <valuemanager.h>
 
 
-Overlay::Overlay(QFile& uiDesc, QWidget *parent)
- : QWidget(parent) {
-  initializeWidget(uiDesc);
+Overlay::Overlay(const QString& fileName, QWidget *parent)
+ : DynWidget(fileName, parent) {
+  initializeWidget();
   }
 
 
-void Overlay::initializeWidget(QFile &uiDesc) {
-  QUiLoader loader;
-  QWidget*  w = loader.load(&uiDesc, this);
-
+void Overlay::initializeWidget() {
   ovRelX = findChild<QLabel*>("ovRelX");
   ovRelY = findChild<QLabel*>("ovRelY");
   ovRelZ = findChild<QLabel*>("ovRelZ");
@@ -31,11 +28,6 @@ void Overlay::initializeWidget(QFile &uiDesc) {
 
   relX = new LabelAdapter(ovRelX);
   relY = new LabelAdapter(ovRelY);
-
-  uiDesc.close();
-  setLayout(new QGridLayout());
-  ((QGridLayout*)layout())->addWidget(w, 0, 0);
-  w->raise();
 
   QString relStyles("color: blue; background: rgba(220,220,255,200);");
   QString dtgStyles("color: orange; background: rgba(255,255,220,200);");
@@ -54,6 +46,6 @@ void Overlay::initializeWidget(QFile &uiDesc) {
   xTitle->setStyleSheet(titleStyles);
   ValueManager vm;
 
-  connect(vm.getModel("relX"), &ValueModel::valueChanged, relX, &LabelAdapter::setValue);
-  connect(vm.getModel("relY"), &ValueModel::valueChanged, relY, &LabelAdapter::setValue);
+  connect(vm.getModel("relX", 0), &ValueModel::valueChanged, relX, &LabelAdapter::setValue);
+  connect(vm.getModel("relY", 0), &ValueModel::valueChanged, relY, &LabelAdapter::setValue);
   }

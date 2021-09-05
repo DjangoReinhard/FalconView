@@ -1,6 +1,6 @@
-QT       += core gui uitools testlib widgets
+QT       += core gui uitools testlib
 
-greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11 testcase no_testcase_installs
 
@@ -24,6 +24,8 @@ SOURCES += \
     src/model/valuemanager.cpp \
     src/model/valuemodel.cpp \
     src/nml/statusreader.cpp \
+    src/view/dockable.cpp \
+    src/view/dynwidget.cpp \
     src/view/editordockable.cpp \
     src/view/labeladapter.cpp \
     src/view/gcodeeditor.cpp \
@@ -34,6 +36,7 @@ SOURCES += \
     src/util/axismask.cpp \
     src/util/gcodehighlighter.cpp \
     src/test/testaxismask.cpp \
+    src/view/splitwidget.cpp \
     src/view/toolinfodockable.cpp
 
 HEADERS += \
@@ -44,6 +47,8 @@ HEADERS += \
     src/model/valuemodel.h \
     src/nml/insulatePose.h \
     src/nml/statusreader.h \
+    src/view/dockable.h \
+    src/view/dynwidget.h \
     src/view/editordockable.h \
     src/view/gcodeeditor.h \
     src/view/labeladapter.h \
@@ -55,6 +60,7 @@ HEADERS += \
     src/util/gcodehighlighter.h \
     src/util/portable-file-dialogs.h \
     src/test/testaxismask.h \
+    src/view/splitwidget.h \
     src/view/toolinfodockable.h
 
 FORMS += \
@@ -67,11 +73,13 @@ FORMS += \
     src/UI/mainwindow.ui
 
 unix:!mac {
-  LIBS += -Wl,-rpath=\$$ORIGIN/libs
+  LIBS += -Wl,-rpath=$${_PRO_FILE_PWD_}/lc/lib
 }
 LIBS += \
-  -Llc/lib \
-  -lm
+  -L$${_PRO_FILE_PWD_}/lc/lib \
+  -lm \
+  -llinuxcnc \
+  -lnml
 
 TRANSLATIONS += \
     src/i18n/QtUi_de_DE.ts
@@ -86,3 +94,4 @@ DISTFILES += \
 
 RESOURCES += QtUi.qrc
 
+message($$_PRO_FILE_PWD_)

@@ -62,10 +62,13 @@ private:
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;
+  QAction*            singleStep;
   QAction*            autoMode;
   QAction*            mdiMode;
   QAction*            editMode;
+  QAction*            wheelMode;
   QAction*            jogMode;
+  QAction*            cfgMode;
   QToolBar*           autoTB;
   QToolBar*           modeTB;
   QBasicTimer         timer;

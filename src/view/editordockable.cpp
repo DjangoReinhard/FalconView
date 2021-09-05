@@ -11,9 +11,9 @@
 #include <gcodehighlighter.h>
 
 
-EditorDockable::EditorDockable(QFile& uiDesc, QWidget* parent)
- : QDockWidget(tr("Editor"), parent) {
-  initializeWidget(uiDesc);
+EditorDockable::EditorDockable(const QString& name, QWidget* parent)
+ : Dockable(name, tr("Editor"), parent) {
+  initializeWidget();
   }
 
 
@@ -22,26 +22,22 @@ EditorDockable::~EditorDockable() {
   }
 
 
-void EditorDockable::initializeWidget(QFile &uiDesc) {
-  QUiLoader loader;
-  QWidget*  w = loader.load(&uiDesc, this);
-
-  uiDesc.close();
-  setWidget(w);
-  QPushButton* pbOpen = w->findChild<QPushButton*>("pbOpen");
+void EditorDockable::initializeWidget() {
+  QPushButton* pbOpen = findChild<QPushButton*>("pbOpen");
 
   connect(pbOpen, &QPushButton::clicked, this, &EditorDockable::loadFile);
-  QGridLayout* layout = w->findChild<QGridLayout*>("gridLayout");
-  QWidget*     placeHolder = w->findChild<QWidget*>("widget");
+  QGridLayout* layout = findChild<QGridLayout*>("gridLayout");
+  QWidget*     placeHolder = findChild<QWidget*>("widget");
   QFont        font;
 
-  font.setFamily("Courier10 BT");   // this font works with bold and QPlainTextEdit
+//font.setFamily("Courier10 BT");   // this font works with bold and QPlainTextEdit
+  font.setFamily("Hack");
   font.setPointSize(11);
   editor = new GCodeEditor(this);
   editor->setFont(font);
   layout->addWidget(editor, 1, 0, 1, 2);
   placeHolder->hide();
-  fileName = w->findChild<QLineEdit*>("fileName");
+  fileName = findChild<QLineEdit*>("fileName");
   gh = new GCodeHighlighter(editor->document());
   }
 

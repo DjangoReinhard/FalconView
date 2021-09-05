@@ -1,19 +1,20 @@
 #ifndef SPEEDINFODOCKABLE_H
 #define SPEEDINFODOCKABLE_H
-#include <QDockWidget>
+#include <dockable.h>
 class LabelAdapter;
-class QFile;
+class QString;
+class QWidget;
 
 
-class SpeedInfoDockable : public QDockWidget
+class SpeedInfoDockable : public Dockable
 {
   Q_OBJECT
 public:
-  SpeedInfoDockable(QFile& uiDesc, QWidget* parent = nullptr);
+  SpeedInfoDockable(const QString& fileName, QWidget* parent = nullptr);
   virtual ~SpeedInfoDockable();
 
 protected:
-  void initializeWidget(QFile& uiDesc);
+  void initializeWidget(QWidget* widget);
 
 private:
   LabelAdapter* curFeed;

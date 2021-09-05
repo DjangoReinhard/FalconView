@@ -1,17 +1,17 @@
 #ifndef EDITORDOCKABLE_H
 #define EDITORDOCKABLE_H
-#include <QDockWidget>
+#include <dockable.h>
 class QFile;
 class GCodeEditor;
 class GCodeHighlighter;
 class QLineEdit;
 
 
-class EditorDockable : public QDockWidget
+class EditorDockable : public Dockable
 {
   Q_OBJECT
 public:
-  EditorDockable(QFile& uiDesc, QWidget* parent = nullptr);
+  EditorDockable(const QString& fileName, QWidget* parent = nullptr);
   virtual ~EditorDockable();
 
 public slots:
@@ -19,7 +19,7 @@ public slots:
   void loadFileAlt();
 
 protected:
-  void initializeWidget(QFile& uiDesc);
+  void initializeWidget();
 
 private:
   GCodeEditor*      editor;

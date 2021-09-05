@@ -1,22 +1,20 @@
 #ifndef POSITIONDOCKABLE_H
 #define POSITIONDOCKABLE_H
-
-#include "labeladapter.h"
-#include "axismask.h"
+#include <dockable.h>
+#include <labeladapter.h>
+#include <axismask.h>
 #include <QDockWidget>
-#include <QFile>
 #include <QLabel>
 #include <QResizeEvent>
+class QString;
 
 
-class PositionDockable : public QDockWidget
+class PositionDockable : public Dockable
 {
   Q_OBJECT
-
-  const int DockingTitleHeight = 39;
 public:
-  PositionDockable(QFile& uiDesc, const AxisMask& axisMask, QWidget* parent = nullptr);
-  PositionDockable(QFile& uiDesc, const AxisMask& axisMask, QWidget* parent, QString ledOn, QString ledOff);
+  PositionDockable(const QString& fileName, const AxisMask& axisMask, QWidget* parent = nullptr);
+  PositionDockable(const QString& fileName, const AxisMask& axisMask, QWidget* parent, QString ledOn, QString ledOff);
   virtual ~PositionDockable();
 
   void setRelStyles(QString styles);
@@ -65,11 +63,12 @@ public:
 
 public slots:
   void setAbsolute(QVariant arg = QVariant(true));
+  void setAxisMask(QVariant axisMask);
   void setRelative();
 
 protected:
   virtual void resizeEvent(QResizeEvent* event);
-  void initializeWidget(QFile& uiDesc);
+  void initializeWidget(QWidget* widget);
   void connectSignals();
   void updatePos();
   void setActive();

@@ -9,6 +9,7 @@
 #include <settingswidget.h>
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
+#include <QSplitter>
 #include <QFile>
 #include <QDir>
 #include <QDebug>
@@ -69,15 +70,18 @@ MainWindow::~MainWindow() {
 
 void MainWindow::createActions() {
   // gcode execution
-  startAction = new QAction(QIcon(":/res/SK_AutoStart.png"), tr("Start"), this);
-  pauseAction = new QAction(QIcon(":/res/SK_AutoPause.png"), tr("Pause"), this);
-  stopAction  = new QAction(QIcon(":/res/SK_AutoStop.png"),  tr("Stop"),  this);
+  startAction = new QAction(QIcon(":/res/SK_AutoStart.png"),  tr("Start"),       this);
+  pauseAction = new QAction(QIcon(":/res/SK_AutoPause.png"),  tr("Pause"),       this);
+  stopAction  = new QAction(QIcon(":/res/SK_AutoStop.png"),   tr("Stop"),        this);
+  singleStep  = new QAction(QIcon(":/res/SK_SingleStep.png"), tr("Single-Step"), this);
 
   // controller mode
-  autoMode    = new QAction(QIcon(":/res/SK_Auto.png"),   tr("Auto-mode"),   this);
-  mdiMode     = new QAction(QIcon(":/res/SK_MDI.png"),    tr("MDI-mode"),    this);
-  editMode    = new QAction(QIcon(":/res/SK_Edit.png"),   tr("Edit-mode"),   this);
-  jogMode     = new QAction(QIcon(":/res/SK_Manual.png"), tr("Manual-mode"), this);
+  autoMode    = new QAction(QIcon(":/res/SK_Auto.png"),     tr("Auto-mode"),   this);
+  mdiMode     = new QAction(QIcon(":/res/SK_MDI.png"),      tr("MDI-mode"),    this);
+  editMode    = new QAction(QIcon(":/res/SK_Edit.png"),     tr("Edit-mode"),   this);
+  jogMode     = new QAction(QIcon(":/res/SK_Manual.png"),   tr("Manual-mode"), this);
+  wheelMode   = new QAction(QIcon(":/res/SK_Wheel.png"),    tr("Wheel-mode"),  this);
+  cfgMode     = new QAction(QIcon(":/res/SK_Settings.png"), tr("Config-mode"), this);
   }
 
 
@@ -92,10 +96,10 @@ void MainWindow::createConnections() {
   ValueManager vm;
 
   // toggle between absolute and relative position ...
-  connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(ui->actionAbsolute_Position->isChecked()); });
+  connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsolute_Position->isChecked())); });
 
   // main menu actions ...
-  connect(ui->actionOpen, &QAction::triggered, ed, &EditorDockable::loadFileAlt);
+  connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::loadFileAlt);
   connect(ui->actionDefault,  &QAction::triggered, this, &MainWindow::activateTbd);
   connect(ui->actionBack01,   &QAction::triggered, this, &MainWindow::activateBg01);
   connect(ui->actionBack02,   &QAction::triggered, this, &MainWindow::activateBg02);
@@ -110,6 +114,7 @@ void MainWindow::createToolBars() {
   autoTB->addAction(startAction);
   autoTB->addAction(pauseAction);
   autoTB->addAction(stopAction);
+  autoTB->addAction(singleStep);
   addToolBar(Qt::BottomToolBarArea, autoTB);
 
   modeTB = new QToolBar(tr("Mode"), this);
@@ -118,36 +123,26 @@ void MainWindow::createToolBars() {
   modeTB->addAction(mdiMode);
   modeTB->addAction(editMode);
   modeTB->addAction(jogMode);
+  modeTB->addAction(wheelMode);
+  modeTB->addAction(cfgMode);
   addToolBar(Qt::BottomToolBarArea, modeTB);
   }
 
 
 void MainWindow::createDockables() {
-  QFile geFile("../QtUi/src/UI/GCodeEditor.ui");
-  ed = new EditorDockable(geFile, this);
-  ed->setAllowedAreas(Qt::AllDockWidgetAreas);
+  ed = new EditorDockable("../QtUi/src/UI/GCodeEditor.ui", this);
   addDockWidget(Qt::BottomDockWidgetArea, ed);
-
-  QFile posFile("../QtUi/src/UI/Position.ui");
-  pos = new PositionDockable(posFile, AxisMask(0x01FF), this);
-  pos->setAllowedAreas(Qt::AllDockWidgetAreas);
+  pos = new PositionDockable("../QtUi/src/UI/Position.ui", AxisMask(0x01FF), this);
   addDockWidget(Qt::LeftDockWidgetArea, pos);
-
-  QFile tiFile("../QtUi/src/UI/ToolInfo.ui");
-  ti = new ToolInfoDockable(tiFile, this);
-  ti->setAllowedAreas(Qt::AllDockWidgetAreas);
+  ti = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, ti);
-
-  QFile siFile("../QtUi/src/UI/SpeedInfo.ui");
-  si = new SpeedInfoDockable(siFile, this);
-  si->setAllowedAreas(Qt::AllDockWidgetAreas);
+  si = new SpeedInfoDockable("../QtUi/src/UI/SpeedInfo.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, si);
   }
 
 
 void MainWindow::createMainWidgets() {
-  QFile swFile("../QtUi/src/UI/Settings.ui");
-  sw = new SettingsWidget(swFile, this);
+  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", this);
   ui->gridLayout->addWidget(sw, 0, 0);
   sw->hide();
 
@@ -164,8 +159,7 @@ void MainWindow::createMainWidgets() {
   ui->gridLayout->addWidget(bg03, 0, 0);
   bg03->hide();
 
-  QFile ovFile("../QtUi/src/UI/Overlay.ui");
-  overlay = new Overlay(ovFile, this);
+  overlay = new Overlay("../QtUi/src/UI/Overlay.ui", this);
   ui->gridLayout->addWidget(overlay, 0, 0);
   }
 

@@ -6,9 +6,9 @@
 #include <QLabel>
 
 
-SpeedInfoDockable::SpeedInfoDockable(QFile& uiDesc, QWidget* parent)
- : QDockWidget(tr("SpeedInfo"), parent) {
-  initializeWidget(uiDesc);
+SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
+ : Dockable(fileName, tr("SpeedInfo"), parent) {
+  initializeWidget(widget());
   }
 
 
@@ -22,13 +22,7 @@ SpeedInfoDockable::~SpeedInfoDockable() {
   }
 
 
-void SpeedInfoDockable::initializeWidget(QFile &uiDesc) {
-  QUiLoader loader;
-  QWidget*  w = loader.load(&uiDesc, this);
-
-  uiDesc.close();
-  setWidget(w);
-
+void SpeedInfoDockable::initializeWidget(QWidget* /* w */) {
   curFeed     = new LabelAdapter(findChild<QLabel*>("curFeed"));
   curFastFeed = new LabelAdapter(findChild<QLabel*>("curFastFeed"));
   curSpeed    = new LabelAdapter(findChild<QLabel*>("curSpeed"));

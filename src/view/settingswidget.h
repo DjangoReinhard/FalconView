@@ -1,17 +1,12 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
-
-#include <QWidget>
-class QFile;
+#include <dynwidget.h>
 
 
-class SettingsWidget : public QWidget
+class SettingsWidget : public DynWidget
 {
   Q_OBJECT
 public:
-  SettingsWidget(QFile& uiDesc, QWidget* parent);
-
-protected:
-  void initializeWidget(QFile& uiDesc);
+  SettingsWidget(const QString& fileName, QWidget* parent = nullptr);
   };
 #endif // SETTINGSWIDGET_H

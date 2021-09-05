@@ -1,13 +1,15 @@
-#include "positiondockable.h"
+#include <positiondockable.h>
+#include <valuemanager.h>
 #include <QtUiTools/QUiLoader>
 #include <QFontMetrics>
 #include <QGridLayout>
-#include <valuemanager.h>
+#include <QString>
+#include <QFile>
 #include <iostream>
 
 
-PositionDockable::PositionDockable(QFile& uiDesc, const AxisMask& am, QWidget* parent)
- : QDockWidget(tr("Position"), parent)
+PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, QWidget* parent)
+ : Dockable(fileName, tr("Position"), parent)
  , lblX(nullptr)
  , lblY(nullptr)
  , lblZ(nullptr)
@@ -58,12 +60,12 @@ PositionDockable::PositionDockable(QFile& uiDesc, const AxisMask& am, QWidget* p
  , axisMask(am)
  , ledOn("background: #0F0")
  , ledOff("background: red") {
-  initializeWidget(uiDesc);
+  initializeWidget(widget());
   }
 
 
-PositionDockable::PositionDockable(QFile& uiDesc, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
- : QDockWidget(tr("Position"), parent)
+PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
+ : Dockable(fileName, tr("Position"), parent)
  , lblX(nullptr)
  , lblY(nullptr)
  , lblZ(nullptr)
@@ -114,7 +116,7 @@ PositionDockable::PositionDockable(QFile& uiDesc, const AxisMask& am, QWidget* p
  , axisMask(am)
  , ledOn(ledOnStyle)
  , ledOff(ledOffStyle) {
-  initializeWidget(uiDesc);
+  initializeWidget(widget());
   }
 
 
@@ -149,12 +151,7 @@ PositionDockable::~PositionDockable() {
   }
 
 
-void PositionDockable::initializeWidget(QFile& uiDesc) {
-  QUiLoader loader;
-  QWidget*  w = loader.load(&uiDesc, this);
-
-  uiDesc.close();
-  setWidget(w);
+void PositionDockable::initializeWidget(QWidget* /* w */) {
   relX = new LabelAdapter(findChild<QLabel*>("posX"));
   relY = new LabelAdapter(findChild<QLabel*>("posY"));
   relZ = new LabelAdapter(findChild<QLabel*>("posZ"));
@@ -252,6 +249,7 @@ void PositionDockable::connectSignals() {
   ValueManager vm;
 
   connect(vm.getModel("showAbsolute", false), &ValueModel::valueChanged, this, &PositionDockable::setAbsolute);
+  connect(vm.getModel("axisMask", 0x01FF), &ValueModel::valueChanged, this, &PositionDockable::setAxisMask);
   connect(vm.getModel("absX", 0), &ValueModel::valueChanged, absX, &LabelAdapter::setValue);
   connect(vm.getModel("absY", 0), &ValueModel::valueChanged, absY, &LabelAdapter::setValue);
   connect(vm.getModel("absZ", 0), &ValueModel::valueChanged, absZ, &LabelAdapter::setValue);
@@ -288,6 +286,14 @@ void PositionDockable::connectSignals() {
   connect(vm.getModel("homedJoint6", false), &ValueModel::valueChanged, this, &PositionDockable::setUHomed);
   connect(vm.getModel("homedJoint7", false), &ValueModel::valueChanged, this, &PositionDockable::setVHomed);
   connect(vm.getModel("homedJoint8", false), &ValueModel::valueChanged, this, &PositionDockable::setWHomed);
+  }
+
+
+void PositionDockable::setAxisMask(QVariant am) {
+  if (axisMask.toInt() != am.toInt())  {
+     axisMask = am.toInt();
+     updatePos();
+     }
   }
 
 

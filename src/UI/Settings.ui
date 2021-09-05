@@ -27,8 +27,36 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="bgColDroDtg">
+   <item row="0" column="0">
+    <widget class="QLabel" name="droAbsPreview">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>DRO abs 123,999</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="indent">
+      <number>20</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="bgColDroAbs">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -37,19 +65,6 @@
      </property>
      <property name="text">
       <string>Background</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="fgColDroAbs">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Text</string>
      </property>
     </widget>
    </item>
@@ -81,8 +96,8 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="fgColDroRel">
+   <item row="2" column="3">
+    <widget class="QPushButton" name="bgColDroDtg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -90,18 +105,19 @@
       </sizepolicy>
      </property>
      <property name="text">
+      <string>Background</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="fgColDroTitle">
+     <property name="text">
       <string>Text</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="droAbsPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="3" column="0">
+    <widget class="QLabel" name="droTitlePreview">
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
      </property>
@@ -112,17 +128,21 @@
       <number>3</number>
      </property>
      <property name="text">
-      <string>DRO abs 123,999</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <string>DRO Axis: X Y Z</string>
      </property>
      <property name="indent">
       <number>20</number>
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
+   <item row="3" column="3">
+    <widget class="QPushButton" name="bgColDroTitle">
+     <property name="text">
+      <string>Background</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
     <widget class="QPushButton" name="bgColDroRel">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -135,8 +155,21 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="bgColDroAbs">
+   <item row="4" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="fgColDroAbs">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -144,7 +177,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string>Text</string>
      </property>
     </widget>
    </item>
@@ -176,49 +209,44 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="fgColDroRel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="droTitlePreview">
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="text">
-      <string>DRO Axis: X Y Z</string>
-     </property>
-     <property name="indent">
-      <number>20</number>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QPushButton" name="fgColDroTitle">
      <property name="text">
       <string>Text</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="bgColDroTitle">
+   <item row="0" column="2">
+    <widget class="QPushButton" name="fontDroAbs">
      <property name="text">
-      <string>Background</string>
+      <string>Schrift</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="fontDroRel">
+     <property name="text">
+      <string>Schrift</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="fontDroDtg">
+     <property name="text">
+      <string>Schrift</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="fontDroTitle">
+     <property name="text">
+      <string>Schrift</string>
      </property>
     </widget>
    </item>

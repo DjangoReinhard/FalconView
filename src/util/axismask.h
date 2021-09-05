@@ -19,6 +19,11 @@ public:
   bool hasVAxis()  const { return axisMask & 0x080; }
   bool hasWAxis()  const { return axisMask & 0x100; }
 
+  AxisMask& operator =(const AxisMask& other);
+  AxisMask& operator =(int);
+
+  int toInt() const { return axisMask; }
+
 protected:
   void calcActive();
 
