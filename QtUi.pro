@@ -19,6 +19,7 @@ INCLUDEPATH += src/model \
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
+    src/model/config.cpp \
     src/model/gcodeinfo.cpp \
     src/model/positioncalculator.cpp \
     src/model/valuemanager.cpp \
@@ -43,6 +44,7 @@ SOURCES += \
 
 HEADERS += \
     src/mainwindow.h \
+    src/model/config.h \
     src/model/gcodeinfo.h \
     src/model/positioncalculator.h \
     src/model/valuemanager.h \

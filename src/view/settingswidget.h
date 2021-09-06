@@ -1,6 +1,7 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
 #include <dynwidget.h>
+#include <config.h>
 class QLabel;
 class QPushButton;
 
@@ -9,7 +10,7 @@ class SettingsWidget : public DynWidget
 {
   Q_OBJECT
 public:
-  SettingsWidget(const QString& fileName, QWidget* parent = nullptr);
+  SettingsWidget(const QString& uiFile, const QString& configFile, QWidget* parent = nullptr);
 
 public slots:
   void save();
@@ -21,17 +22,9 @@ protected:
   void changeFont(int i);
   void refresh();
 
-  class Settings
-  {
-  public:
-    QLabel* lbl;
-    QColor  fg;
-    QColor  bg;
-    QFont   f;
-    };
-
 private:
-  Settings          settings[12];
+  Config            cfg;
+  QLabel**          labels;
   QPushButton*      bgActCodes;
   QPushButton*      bgDroAbs;
   QPushButton*      bgDroDtg;

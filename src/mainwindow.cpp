@@ -198,7 +198,7 @@ void MainWindow::createDockables() {
 
 
 void MainWindow::createMainWidgets() {
-  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", this);
+  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", "QtUi.conf", this);
   ui->gridLayout->addWidget(sw, 0, 0);
   sw->hide();
 

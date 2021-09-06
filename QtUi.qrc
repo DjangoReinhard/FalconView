@@ -3,6 +3,9 @@
    <file>res/SampleBG01.jpg</file>
    <file>res/SampleBG02.jpg</file>
    <file>res/SampleBG03.jpg</file>
+   <file>res/colors.png</file>
+   <file>res/editor.png</file>
+   <file>res/font.png</file>
    <file>res/SK_Auto_active.png</file>
    <file>res/SK_AutoPause_active.png</file>
    <file>res/SK_AutoPause.png</file>

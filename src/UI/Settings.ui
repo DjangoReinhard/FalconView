@@ -61,7 +61,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -152,7 +162,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -165,7 +185,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -203,7 +233,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -216,7 +256,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -254,7 +304,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -292,7 +352,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -305,7 +375,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -318,7 +398,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -356,7 +446,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -369,7 +469,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -382,7 +492,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -395,7 +515,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -408,7 +538,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -421,7 +561,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -434,7 +584,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -475,7 +635,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -488,7 +658,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -501,7 +681,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -514,7 +704,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -527,7 +727,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -540,7 +750,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -553,7 +773,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -566,7 +796,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -579,7 +819,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -592,7 +842,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -630,7 +890,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -643,7 +913,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -656,7 +936,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -697,7 +987,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -735,7 +1035,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -748,7 +1058,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Text</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -761,7 +1081,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -774,7 +1104,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -787,7 +1127,17 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Font</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -800,12 +1150,24 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Background</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../QtUi.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../QtUi.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -8,26 +8,27 @@
 #include <QDebug>
 
 
-SettingsWidget::SettingsWidget(const QString& fileName, QWidget* parent)
- : DynWidget(fileName, parent) {
+SettingsWidget::SettingsWidget(const QString& uiFile, const QString& configFile, QWidget* parent)
+ : DynWidget(uiFile, parent)
+ , cfg(configFile) {
   initializeWidget();
   }
 
 
 void SettingsWidget::initializeWidget() {
-  settings[0].lbl  = findChild<QLabel*>("actCodesPreview");
-  settings[1].lbl  = findChild<QLabel*>("droAbsPreview");
-  settings[2].lbl  = findChild<QLabel*>("droDtgPreview");
-  settings[3].lbl  = findChild<QLabel*>("droRelPreview");
-  settings[4].lbl  = findChild<QLabel*>("droTitlePreview");
-  settings[5].lbl  = findChild<QLabel*>("feedPreview");
-  settings[6].lbl  = findChild<QLabel*>("filenamePreview");
-  settings[7].lbl  = findChild<QLabel*>("gcodePreview");
-  settings[8].lbl  = findChild<QLabel*>("speedPreview");
-  settings[9].lbl  = findChild<QLabel*>("toolDescPreview");
-  settings[10].lbl = findChild<QLabel*>("toolNumPreview");
-  settings[11].lbl = findChild<QLabel*>("toolNextPreview");
-  for (int i=0; i < 12; ++i) settings[i].bg = Qt::white;
+  labels = new QLabel*[Config::guiSettingEntries];
+  labels[0]  = findChild<QLabel*>("actCodesPreview");
+  labels[1]  = findChild<QLabel*>("droAbsPreview");
+  labels[2]  = findChild<QLabel*>("droDtgPreview");
+  labels[3]  = findChild<QLabel*>("droRelPreview");
+  labels[4]  = findChild<QLabel*>("droTitlePreview");
+  labels[5]  = findChild<QLabel*>("feedPreview");
+  labels[6]  = findChild<QLabel*>("filenamePreview");
+  labels[7]  = findChild<QLabel*>("gcodePreview");
+  labels[8]  = findChild<QLabel*>("speedPreview");
+  labels[9]  = findChild<QLabel*>("toolDescPreview");
+  labels[10] = findChild<QLabel*>("toolNumPreview");
+  labels[11] = findChild<QLabel*>("toolNextPreview");
 
   bgActCodes   = findChild<QPushButton*>("bgActCodes");
   bgDroAbs     = findChild<QPushButton*>("bgDroAbs");
@@ -112,7 +113,7 @@ void SettingsWidget::initializeWidget() {
 void SettingsWidget::changeBackgroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::white, this, "Select Background Color", QColorDialog::ShowAlphaChannel);
 
-  if (color.isValid()) settings[i].bg = color;
+  if (color.isValid()) cfg.setBackground(i, color);
   refresh();
   }
 
@@ -120,86 +121,31 @@ void SettingsWidget::changeBackgroundColor(int i) {
 void SettingsWidget::changeForegroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::black, this, "Select Foreground Color");
 
-  if (color.isValid()) settings[i].fg = color;
+  if (color.isValid()) cfg.setForeground(i, color);
   refresh();
   }
 
 
 void SettingsWidget::changeFont(int i) {
   bool  ok;
-  QFont font = QFontDialog::getFont(&ok, QFont(settings[i].lbl->text()), this, "Select Font", QFontDialog::ScalableFonts);
+  QFont font = QFontDialog::getFont(&ok, QFont(labels[i]->font().family()), this, "Select Font", QFontDialog::ScalableFonts);
 
-  if (ok) settings[i].f = font;
+  if (ok) cfg.setFont(i, font);
   refresh();
   }
 
 
 void SettingsWidget::refresh() {
   for (int i=0; i < 12; ++i) {
-      QString style = QString("color: #%1; background: #%2;").arg(settings[i].fg.rgb(),  0, 16)
-                                                             .arg(settings[i].bg.rgba(), 0, 16);
+      QString style = QString("color: #%1; background: #%2;").arg(cfg.getBackground(i).rgb(),  0, 16)
+                                                             .arg(cfg.getForeground(i).rgba(), 0, 16);
 
-      settings[i].lbl->setFont(settings[i].f);
-      settings[i].lbl->setStyleSheet(style);
+      labels[i]->setFont(cfg.getFont(i));
+      labels[i]->setStyleSheet(style);
       }
   }
 
 
-/*
- entry:  "actual Codes"
-    fg:  "#ff000000"
-    bg:  "#fff3f4f5"
-     f:  "Sans Serif,9,-1,5,50,0,0,0,0,0"
- entry:  "DRO abs 123,999"
-    fg:  "#ff0000ff"
-    bg:  "#ffddeeff"
-     f:  "Hack,20,-1,5,50,0,0,0,0,0,Regular"
- entry:  "DRO dtg 123,999"
-    fg:  "#ffffaa00"
-    bg:  "#ffffffdd"
-     f:  "Hack,20,-1,5,50,1,0,0,0,0,Italic"
- entry:  "DRO rel 123,999"
-    fg:  "#ff00aa00"
-    bg:  "#ffddffdd"
-     f:  "Hack,20,-1,5,50,0,0,0,0,0,Regular"
- entry:  "DRO Axis: X Y Z"
-    fg:  "#ff000000"
-    bg:  "#ffffffff"
-     f:  "Hack,20,-1,5,75,0,0,0,0,0,Bold"
- entry:  "Feed Info"
-    fg:  "#ff000000"
-    bg:  "#fff3f4f5"
-     f:  "Hack,14,-1,5,50,0,0,0,0,0,Regular"
- entry:  "Filename"
-    fg:  "#ff000000"
-    bg:  "#fff3f4f5"
-     f:  "Sans Serif,9,-1,5,50,0,0,0,0,0"
- entry:  "GCode Editor"
-    fg:  "#ff000000"
-    bg:  "#ffffffdd"
-     f:  "Hack,12,-1,5,50,0,0,0,0,0,Regular"
- entry:  "Speed Info"
-    fg:  "#ff000000"
-    bg:  "#fff3f4f5"
-     f:  "Hack,14,-1,5,50,0,0,0,0,0,Regular"
- entry:  "Tool Description"
-    fg:  "#ff000000"
-    bg:  "#fff3f4f5"
-     f:  "Sans Serif,9,-1,5,50,0,0,0,0,0"
- entry:  "Tool number"
-    fg:  "#ff000000"
-    bg:  "#ffffffff"
-     f:  "Hack,24,-1,5,75,0,0,0,0,0,Bold"
- entry:  "next Toolnum"
-    fg:  "#ff000000"
-    bg:  "#fff3f4f5"
-     f:  "Hack,14,-1,5,50,0,0,0,0,0,Regular"
- */
 void SettingsWidget::save() {
-  for (int i=0; i < 12; ++i) {
-      qDebug() << " entry: " << settings[i].lbl->text();
-      qDebug() << "    fg: " << QString("#%1").arg(settings[i].fg.rgb(), 0, 16);
-      qDebug() << "    bg: " << QString("#%1").arg(settings[i].bg.rgba(), 0, 16);
-      qDebug() << "     f: " << settings[i].f.key();
-      }
+  cfg.store();
   }
