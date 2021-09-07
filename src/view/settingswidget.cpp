@@ -107,6 +107,45 @@ void SettingsWidget::initializeWidget() {
   connect(fontToolDesc, &QPushButton::pressed, this, [=](){ changeFont(9); });
   connect(fontToolNum,  &QPushButton::pressed, this, [=](){ changeFont(10); });
   connect(fontToolNext, &QPushButton::pressed, this, [=](){ changeFont(11); });
+
+  setupLabels();
+  }
+
+
+void SettingsWidget::setupLabels() {
+  ValueManager vm;
+
+  for (int i=0; i < cfg.guiSettingEntries; ++i) {
+      connect(vm.getModel("cfgBg" + cfg.guiSettings[i], QColor(Qt::white))
+            , &ValueModel::valueChanged
+            , this
+            , [=](){
+                   QString arg = QString("color: #%1; background: #%2;")
+                                        .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[i]).value<QColor>().rgb(), 0, 16)
+                                        .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[i]).value<QColor>().rgba(), 0, 16);
+                   labels[i]->setStyleSheet(arg);
+//                   setLabelStyle(i, arg);
+                     });
+      connect(vm.getModel("cfgFg" + cfg.guiSettings[i], QColor(Qt::black))
+            , &ValueModel::valueChanged
+            , this
+            , [=](){
+                   QString arg = QString("color: #%1; background: #%2;")
+                                        .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[i]).value<QColor>().rgb(), 0, 16)
+                                        .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[i]).value<QColor>().rgba(), 0, 16);
+                   labels[i]->setStyleSheet(arg);
+//                     setLabelStyle(i, arg);
+                     });
+      connect(vm.getModel("cfgF" + cfg.guiSettings[i], labels[i]->font())
+            , &ValueModel::valueChanged
+            , this
+            , [=](){ labels[i]->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[i]).value<QFont>()); });
+      }
+  }
+
+
+void SettingsWidget::setLabelStyle(int index, const QString &style) {
+  labels[index]->setStyleSheet(style);
   }
 
 
@@ -114,7 +153,7 @@ void SettingsWidget::changeBackgroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::white, this, "Select Background Color", QColorDialog::ShowAlphaChannel);
 
   if (color.isValid()) cfg.setBackground(i, color);
-  refresh();
+//  refresh();
   }
 
 
@@ -122,7 +161,7 @@ void SettingsWidget::changeForegroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::black, this, "Select Foreground Color");
 
   if (color.isValid()) cfg.setForeground(i, color);
-  refresh();
+//  refresh();
   }
 
 
@@ -131,7 +170,7 @@ void SettingsWidget::changeFont(int i) {
   QFont font = QFontDialog::getFont(&ok, QFont(labels[i]->font().family()), this, "Select Font", QFontDialog::ScalableFonts);
 
   if (ok) cfg.setFont(i, font);
-  refresh();
+//  refresh();
   }
 
 

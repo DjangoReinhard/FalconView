@@ -17,10 +17,13 @@ public slots:
 
 protected:
   void initializeWidget();
+  void setupLabels();
   void changeForegroundColor(int i);
   void changeBackgroundColor(int i);
   void changeFont(int i);
   void refresh();
+
+  void setLabelStyle(int index, const QString& style);
 
 private:
   Config            cfg;
