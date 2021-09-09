@@ -31,7 +31,6 @@ private:
   QLabel* g14;
   QLabel* g15;
   QLabel* g16;
-  QLabel* g17;
   QLabel* m0;
   QLabel* m1;
   QLabel* m2;

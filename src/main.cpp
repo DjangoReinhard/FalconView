@@ -1,16 +1,18 @@
-#include "mainwindow.h"
+#include <mainwindow.h>
+#include <config.h>
 #include <QApplication>
 #include <QTranslator>
 #include <QDebug>
 
 
 int main(int argc, char *argv[]) {
+  QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::Ceil);
   QTranslator       translator;
   QApplication      a(argc, argv);
   QLocale           sysLocale;
   QLocale::Language lang    = sysLocale.language();
   QLocale::Country  country = sysLocale.country();
-  QLocale           curLocale; //(lang, country);
+  QLocale           curLocale(lang, country);
   bool              ok = translator.load(curLocale
                                        , "QtUi"
                                        , "_"

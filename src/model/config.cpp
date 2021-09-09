@@ -7,103 +7,130 @@
 #include <QDebug>
 
 
-Config::Config(const QString& fileName) {
-  file = new QFile(QDir::homePath() + "/." + fileName);
-  if (file && file->exists()) load();
-  else                        initialize();
-  }
-
-
-Config::~Config() {
-  delete file;
-  }
-
-
-void Config::initialize() {
-  QVariant v;
-
-  v = QColor(Qt::white);
-  for (int i=0; i < guiSettingEntries; ++i) vm.setValue("cfgBg" + guiSettings[i], v);
-  v = QColor(Qt::black);
-  for (int i=0; i < guiSettingEntries; ++i) vm.setValue("cfgFg" + guiSettings[i], v);
-  v = QFont("Hack", 12);
-  for (int i=0; i < guiSettingEntries; ++i) vm.setValue("cfgF" + guiSettings[i], v);
-  }
-
-
 QColor Config::getBackground(int index) {
+  return getInstance()->getBackground(index);
+  }
+
+
+QColor Config::getForeground(int index) {
+  return getInstance()->getForeground(index);
+  }
+
+
+QFont Config::getFont(int index) {
+  return getInstance()->getFont(index);
+  }
+
+
+QVariant Config::value(const QString& key, QVariant defaultValue) {
+  return getInstance()->value(key, defaultValue);
+  }
+
+
+void Config::setBackground(int index, const QColor& color) {
+  getInstance()->setBackground(index, color);
+  }
+
+
+void Config::setForeground(int index, const QColor& color) {
+  getInstance()->setForeground(index, color);
+  }
+
+
+void Config::setFont(int index, const QFont& font) {
+  getInstance()->setFont(index, font);
+  }
+
+
+Config::ConfigManager* Config::getInstance() {
+  if (!instance) instance = new ConfigManager();
+  return instance;
+  }
+
+
+Config::ConfigManager::ConfigManager()
+ : settings(QSettings::UserScope, "SRD", "QtUi") {
+  initialize();
+  }
+
+
+void Config::ConfigManager::initialize() {
+  for (int i=0; i < guiSettingEntries; ++i) {
+      QString  k = QString("cfgBg") + guiSettings[i];
+      QVariant v = settings.value(k, QColor(Qt::white));
+
+      qDebug() << "config key: " << k;
+      qDebug() << "background color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
+      vm.setValue(k, v);
+
+      k = QString("cfgFg") + guiSettings[i];
+      v = settings.value(k, QColor(Qt::black));
+      qDebug() << "config key: " << k;
+      qDebug() << "foreground color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
+      vm.setValue(k, v);
+
+      k = QString("cfgF") + guiSettings[i];
+      v = settings.value(k, QFont("Hack", 12));
+      qDebug() << "config key: " << k;
+      qDebug() << "font: " << v.value<QFont>().key();
+      vm.setValue(k, v);
+      }
+  }
+
+
+QColor Config::ConfigManager::getBackground(int index) {
   if (index < 0 || index >= guiSettingEntries)  return QColor(Qt::white);
   return vm.getValue("cfgBg" + guiSettings[index]).value<QColor>();
   }
 
 
-QColor Config::getForeground(int index) {
+QColor Config::ConfigManager::getForeground(int index) {
   if (index < 0 || index >= guiSettingEntries)  return QColor(Qt::black);
   return vm.getValue("cfgFg" + guiSettings[index]).value<QColor>();
   }
 
 
-QFont Config::getFont(int index) {
+QFont Config::ConfigManager::getFont(int index) {
   if (index < 0 || index >= guiSettingEntries)  return QFont();
   return vm.getValue("cfgF" + guiSettings[index]).value<QFont>();
   }
 
 
-void Config::load() {
-  if (!file || !file->exists()) return;
-  if (file->open(QIODevice::ReadOnly | QIODevice::Text)) {
-     QTextStream in(file);
-     QString line = in.readLine();
-
-     while (!line.isNull()) {
-           processConfigLine(line);
-           line = in.readLine();
-           }
-     file->close();
-     }
-  }
+QVariant Config::ConfigManager::value(const QString& key, QVariant defaultValue) {
+  return settings.value(key, defaultValue);
+}
 
 
-void Config::processConfigLine(const QString& line) {
-  qDebug() << "config: " << line;
-  }
-
-
-void Config::setBackground(int index, const QColor& color) {
+void Config::ConfigManager::setBackground(int index, const QColor& color) {
   if (index < 0 || index >= guiSettingEntries)  return;
-  vm.setValue("cfgBg" + guiSettings[index], color);
+  QString key = QString("cfgBg") + guiSettings[index];
+
+  vm.setValue(key, color);
+  settings.setValue(key, color);
   }
 
 
-void Config::setForeground(int index, const QColor& color) {
+void Config::ConfigManager::setForeground(int index, const QColor& color) {
   if (index < 0 || index > guiSettingEntries)  return;
-  vm.setValue("cfgFg" + guiSettings[index], color);
+  QString key = QString("cfgFg") + guiSettings[index];
+
+  vm.setValue(key, color);
+  settings.setValue(key, color);
   }
 
 
-void Config::setFont(int index, const QFont& font) {
+void Config::ConfigManager::setFont(int index, const QFont& font) {
   if (index < 0 || index > guiSettingEntries)  return;
-  vm.setValue("cfgF" + guiSettings[index], font);
+  QString key = QString("cfgF") + guiSettings[index];
+
+  vm.setValue(key, font);
+  settings.setValue(key, font);
   }
 
 
-void Config::store() {
-  if (file && file->open(QIODevice::WriteOnly | QIODevice::Text)) {
-     QTextStream out(file);
-
-     for (int i=0; i < guiSettingEntries; ++i) {
-         out << guiSettings[i] << "\t"
-             << "bg = " << vm.getValue("cfgBg" + guiSettings[i]).toString() << ", "
-             << "fg = " << vm.getValue("cfgFg" + guiSettings[i]).toString() << ", "
-             << "f = "  << vm.getValue("cfgF"  + guiSettings[i]).toString() << "\n";
-         }
-     file->close();
-     }
-  }
-
-
-const int Config::guiSettingEntries = 12;
-const QString Config::guiSettings[] = {
+Config::ConfigManager* Config::instance          = nullptr;
+const int              Config::guiSettingEntries = 12;
+const QString          Config::guiSettings[]     = {
   "ActCodes"
 , "DroAbs"
 , "DroDtg"

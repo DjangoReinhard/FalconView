@@ -28,10 +28,36 @@
 MainWindow::MainWindow(QWidget *parent)
  : QMainWindow(parent)
  , ui(new Ui::MainWindow)
+ , pos(nullptr)
+ , ti(nullptr)
+ , si(nullptr)
+ , ed(nullptr)
+ , cc(nullptr)
  , gh(nullptr)
+ , sw(nullptr)
+ , bg01(nullptr)
+ , bg02(nullptr)
+ , bg03(nullptr)
+ , startAction(nullptr)
+ , pauseAction(nullptr)
+ , stopAction(nullptr)
+ , singleStep(nullptr)
+ , autoMode(nullptr)
+ , mdiMode(nullptr)
+ , editMode(nullptr)
+ , wheelMode(nullptr)
+ , jogMode(nullptr)
+ , cfgMode(nullptr)
+ , autoTB(nullptr)
+ , modeTB(nullptr)
+ , powerTB(nullptr)
+ , switchTB(nullptr)
  , statusReader(positionCalculator, gcodeInfo) {
   ui->setupUi(this);    // moc generated
 
+  Config cfg;
+
+  cfg.value("whatEver");
   createActions();
   createToolBars();
   createMainWidgets();
@@ -47,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 MainWindow::~MainWindow() {
+    /*
   delete ui;
   delete pos;
   delete ti;
@@ -60,22 +87,30 @@ MainWindow::~MainWindow() {
   delete startAction;
   delete pauseAction;
   delete stopAction;
-  delete autoTB;
+  delete singleStep;
   delete autoMode;
   delete mdiMode;
   delete editMode;
+  delete wheelMode;
   delete jogMode;
+  delete cfgMode;
+  delete autoTB;
   delete modeTB;
+  delete powerTB;
+  delete switchTB;
+   */
   }
 
 
 void MainWindow::createActions() {
+  qDebug() << "start of createActions(gcode) ...";
   // gcode execution
   startAction = new QAction(QIcon(":/res/SK_AutoStart.png"),  tr("Start"),       this);
   pauseAction = new QAction(QIcon(":/res/SK_AutoPause.png"),  tr("Pause"),       this);
   stopAction  = new QAction(QIcon(":/res/SK_AutoStop.png"),   tr("Stop"),        this);
   singleStep  = new QAction(QIcon(":/res/SK_SingleStep.png"), tr("Single-Step"), this);
 
+  qDebug() << "start of createActions(mode) ...";
   // controller mode
   autoMode    = new QAction(QIcon(":/res/SK_Auto.png"),     tr("Auto-mode"),   this);
   mdiMode     = new QAction(QIcon(":/res/SK_MDI.png"),      tr("MDI-mode"),    this);
@@ -84,6 +119,7 @@ void MainWindow::createActions() {
   wheelMode   = new QAction(QIcon(":/res/SK_Wheel.png"),    tr("Wheel-mode"),  this);
   cfgMode     = new QAction(QIcon(":/res/SK_Settings.png"), tr("Config-mode"), this);
 
+  qDebug() << "start of createActions(switches) ...";
   // switches
   mist         = new QAction(QIcon(":/res/SK_Cool_Mist.png"),    tr("cool-Mist"),    this);
   flood        = new QAction(QIcon(":/res/SK_Cool_Flood.png"),   tr("cool-Flood"),  this);
@@ -91,6 +127,7 @@ void MainWindow::createActions() {
   spindleOff   = new QAction(QIcon(":/res/SK_Spindle_Stop.png"), tr("spindle-Off"), this);
   spindleRight = new QAction(QIcon(":/res/SK_Spindle_CW.png"),   tr("spindle-CW"),  this);
 
+  qDebug() << "start of createActions(nop) ...";
   nop0 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
   nop1 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
   nop2 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
@@ -102,6 +139,7 @@ void MainWindow::createActions() {
   nop3->setEnabled(false);
   nop4->setEnabled(false);
 
+  qDebug() << "start of createActions(power) ...";
   // power switch
   power       = new QAction(QIcon(":/res/SK_PowerOff.png"), tr("Powerooff"), this);
   }
@@ -117,17 +155,20 @@ void MainWindow::createValueModels() {
 void MainWindow::createConnections() {
   ValueManager vm;
 
+  qDebug() << " start of createConnections(view) ...";
   // toggle between absolute and relative position ...
   connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsolute_Position->isChecked())); });
 
+  qDebug() << " start of createConnections(file open) ...";
   // main menu actions ...
-  connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::openFileAlt);
-  connect(ui->actionSave,     &QAction::triggered, sw,   &SettingsWidget::save);
+  connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::openFile);
+  qDebug() << " start of createConnections(extra) ...";
   connect(ui->actionDefault,  &QAction::triggered, this, &MainWindow::activateTbd);
   connect(ui->actionBack01,   &QAction::triggered, this, &MainWindow::activateBg01);
   connect(ui->actionBack02,   &QAction::triggered, this, &MainWindow::activateBg02);
   connect(ui->actionBack03,   &QAction::triggered, this, &MainWindow::activateBg03);
   connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::activateSettings);
+  qDebug() << " start of createConnections(done) ...";
 /*
   connect(singleStep, &QAction::triggered, ed, [=](){ ed->setLine(QVariant(++line)); });
   connect(stopAction, &QAction::triggered, this, &MainWindow::resetLine);
@@ -142,6 +183,7 @@ void MainWindow::resetLine() {
 
 
 void MainWindow::createToolBars() {
+  qDebug() << "start of createToolBars() ...";
   QSize s(90, 90);
 
   autoTB = new QToolBar(tr("Auto"), this);
@@ -184,6 +226,7 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables() {
+  qDebug() << "start of createDockables()";
   ti = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, ti);
   cc = new CurCodesDockable("../QtUi/src/UI/CurCodes.ui", this);
@@ -198,10 +241,10 @@ void MainWindow::createDockables() {
 
 
 void MainWindow::createMainWidgets() {
-  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", "QtUi.conf", this);
+  qDebug() << "start of createMainWidgets() ...";
+  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", this);
   ui->gridLayout->addWidget(sw, 0, 0);
   sw->hide();
-
   bg01 = new QLabel(this);
   bg01->setPixmap(QPixmap(":/res/SampleBG01.jpg"));
   ui->gridLayout->addWidget(bg01, 0, 0);
@@ -264,6 +307,7 @@ void MainWindow::activateBg03() {
 
 
 void MainWindow::timerEvent(QTimerEvent *e) {
+//  qDebug() << "start of timerEvent ...";
   if (e->timerId() == timer.timerId())  {
      statusReader.update();
      }

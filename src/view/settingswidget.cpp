@@ -8,12 +8,16 @@
 #include <QDebug>
 
 
-SettingsWidget::SettingsWidget(const QString& uiFile, const QString& configFile, QWidget* parent)
+SettingsWidget::SettingsWidget(const QString& uiFile, QWidget* parent)
  : DynWidget(uiFile, parent)
- , cfg(configFile) {
+ , labels(nullptr) {
   initializeWidget();
   }
 
+
+SettingsWidget::~SettingsWidget() {
+  //delete labels;
+  }
 
 void SettingsWidget::initializeWidget() {
   labels = new QLabel*[Config::guiSettingEntries];
@@ -114,54 +118,62 @@ void SettingsWidget::initializeWidget() {
 
 void SettingsWidget::setupLabels() {
   ValueManager vm;
+  Config cfg;
+  QString keyBg, keyFg, keyF;
+  QColor colBg;
+  QColor colFg;
+  QFont font;
 
   for (int i=0; i < cfg.guiSettingEntries; ++i) {
-      connect(vm.getModel("cfgBg" + cfg.guiSettings[i], QColor(Qt::white))
+      keyBg = QString("cfgBg") + cfg.guiSettings[i];
+      colBg = cfg.value(keyBg, QColor(Qt::white)).value<QColor>();
+      keyFg = QString("cfgFg") + cfg.guiSettings[i];
+      colFg = cfg.value(keyFg, QColor(Qt::black)).value<QColor>();
+      keyF  = QString("cfgF") + cfg.guiSettings[i];
+      font  = cfg.value(keyF, QFont("Hack", 12)).value<QFont>();
+
+      connect(vm.getModel(keyBg, colBg)
             , &ValueModel::valueChanged
-            , this
+            , labels[i]
             , [=](){
                    QString arg = QString("color: #%1; background: #%2;")
                                         .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[i]).value<QColor>().rgb(), 0, 16)
                                         .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[i]).value<QColor>().rgba(), 0, 16);
                    labels[i]->setStyleSheet(arg);
-//                   setLabelStyle(i, arg);
                      });
-      connect(vm.getModel("cfgFg" + cfg.guiSettings[i], QColor(Qt::black))
+      connect(vm.getModel(keyFg, QColor(Qt::black))
             , &ValueModel::valueChanged
-            , this
+            , labels[i]
             , [=](){
                    QString arg = QString("color: #%1; background: #%2;")
                                         .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[i]).value<QColor>().rgb(), 0, 16)
                                         .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[i]).value<QColor>().rgba(), 0, 16);
                    labels[i]->setStyleSheet(arg);
-//                     setLabelStyle(i, arg);
                      });
       connect(vm.getModel("cfgF" + cfg.guiSettings[i], labels[i]->font())
             , &ValueModel::valueChanged
-            , this
+            , labels[i]
             , [=](){ labels[i]->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[i]).value<QFont>()); });
+
+      labels[i]->setStyleSheet(QString("color: #%1; background: #%2;")
+                               .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[i]).value<QColor>().rgb(), 0, 16)
+                               .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[i]).value<QColor>().rgba(), 0, 16));
+      labels[i]->setFont(font);
       }
-  }
-
-
-void SettingsWidget::setLabelStyle(int index, const QString &style) {
-  labels[index]->setStyleSheet(style);
   }
 
 
 void SettingsWidget::changeBackgroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::white, this, "Select Background Color", QColorDialog::ShowAlphaChannel);
 
-  if (color.isValid()) cfg.setBackground(i, color);
-//  refresh();
+  if (color.isValid()) Config().setBackground(i, color);
   }
 
 
 void SettingsWidget::changeForegroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::black, this, "Select Foreground Color");
 
-  if (color.isValid()) cfg.setForeground(i, color);
-//  refresh();
+  if (color.isValid()) Config().setForeground(i, color);
   }
 
 
@@ -169,22 +181,5 @@ void SettingsWidget::changeFont(int i) {
   bool  ok;
   QFont font = QFontDialog::getFont(&ok, QFont(labels[i]->font().family()), this, "Select Font", QFontDialog::ScalableFonts);
 
-  if (ok) cfg.setFont(i, font);
-//  refresh();
-  }
-
-
-void SettingsWidget::refresh() {
-  for (int i=0; i < 12; ++i) {
-      QString style = QString("color: #%1; background: #%2;").arg(cfg.getBackground(i).rgb(),  0, 16)
-                                                             .arg(cfg.getForeground(i).rgba(), 0, 16);
-
-      labels[i]->setFont(cfg.getFont(i));
-      labels[i]->setStyleSheet(style);
-      }
-  }
-
-
-void SettingsWidget::save() {
-  cfg.store();
+  if (ok) Config().setFont(i, font);
   }

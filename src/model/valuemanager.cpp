@@ -7,9 +7,7 @@ ValueManager::ValueManager() {
 
 
 ValueManager::ValueHolder* ValueManager::getInstance() {
-  if (!instance) {
-     instance = new ValueHolder();
-     }
+  if (!instance) instance = new ValueHolder();
   return ValueManager::instance;
   }
 

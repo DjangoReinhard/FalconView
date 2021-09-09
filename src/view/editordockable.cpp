@@ -22,7 +22,7 @@ EditorDockable::EditorDockable(const QString& name, QWidget* parent)
 
 
 EditorDockable::~EditorDockable() {
-  delete gh;
+  //delete gh;
   }
 
 
@@ -71,7 +71,7 @@ void EditorDockable::openFile() {
 
 /*
  * this file dialog blocks the timer as long as the dialog is open
- */
+ *
 void EditorDockable::openFileAlt() {
   if (!pfd::settings::available()){
      std::cerr << "Portable File Dialogs are not available on this platform. \n"
@@ -92,3 +92,4 @@ void EditorDockable::openFileAlt() {
         }
      }
   }
+*/

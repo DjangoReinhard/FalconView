@@ -4,7 +4,35 @@
 
 
 CurCodesDockable::CurCodesDockable(const QString& fileName, QWidget* parent)
- : Dockable(fileName, tr("actual Codes"), parent) {
+ : Dockable(fileName, tr("actual Codes"), parent)
+ , g0(nullptr)
+ , g1(nullptr)
+ , g2(nullptr)
+ , g3(nullptr)
+ , g4(nullptr)
+ , g5(nullptr)
+ , g6(nullptr)
+ , g7(nullptr)
+ , g8(nullptr)
+ , g9(nullptr)
+ , g10(nullptr)
+ , g11(nullptr)
+ , g12(nullptr)
+ , g13(nullptr)
+ , g14(nullptr)
+ , g15(nullptr)
+ , g16(nullptr)
+ , m0(nullptr)
+ , m1(nullptr)
+ , m2(nullptr)
+ , m3(nullptr)
+ , m4(nullptr)
+ , m5(nullptr)
+ , m6(nullptr)
+ , m7(nullptr)
+ , m8(nullptr)
+ , m9(nullptr)
+{
   g0  = findChild<QLabel*>("g0");
   g1  = findChild<QLabel*>("g1");
   g2  = findChild<QLabel*>("g2");
@@ -22,7 +50,6 @@ CurCodesDockable::CurCodesDockable(const QString& fileName, QWidget* parent)
   g14 = findChild<QLabel*>("g14");
   g15 = findChild<QLabel*>("g15");
   g16 = findChild<QLabel*>("g16");
-  g17 = findChild<QLabel*>("g17");
   m0  = findChild<QLabel*>("m0");
   m1  = findChild<QLabel*>("m1");
   m2  = findChild<QLabel*>("m2");
@@ -58,7 +85,6 @@ void CurCodesDockable::connectLabels() {
   connect(vm.getModel("GC14", " "), &ValueModel::valueChanged, g14, [=](QVariant arg){ g14->setText(arg.toString()); });
   connect(vm.getModel("GC15", " "), &ValueModel::valueChanged, g15, [=](QVariant arg){ g15->setText(arg.toString()); });
   connect(vm.getModel("GC16", " "), &ValueModel::valueChanged, g16, [=](QVariant arg){ g16->setText(arg.toString()); });
-  connect(vm.getModel("GC17", " "), &ValueModel::valueChanged, g17, [=](QVariant arg){ g17->setText(arg.toString()); });
   connect(vm.getModel("MC0", " "), &ValueModel::valueChanged, m0, [=](QVariant arg){ m0->setText(arg.toString()); });
   connect(vm.getModel("MC1", " "), &ValueModel::valueChanged, m1, [=](QVariant arg){ m1->setText(arg.toString()); });
   connect(vm.getModel("MC2", " "), &ValueModel::valueChanged, m2, [=](QVariant arg){ m2->setText(arg.toString()); });

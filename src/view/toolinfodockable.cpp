@@ -20,9 +20,11 @@ ToolInfoDockable::ToolInfoDockable(const QString & fileName, QWidget* parent)
 
 
 ToolInfoDockable::~ToolInfoDockable() {
+  /*
   delete tlDesc;
   delete tlLen;
   delete tlRad;
+   */
   }
 
 

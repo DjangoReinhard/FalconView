@@ -2,6 +2,7 @@
 #define CONFIG_H
 #include <valuemanager.h>
 #include <QString>
+#include <QSettings>
 class QColor;
 class QFont;
 class QFile;
@@ -9,9 +10,9 @@ class QFile;
 
 class Config
 {
-public:
-  Config(const QString& fileName);
- ~Config();
+public:    
+  static const int guiSettingEntries;
+  static const QString guiSettings[];
 
   QColor getBackground(int index);
   QColor getForeground(int index);
@@ -19,18 +20,31 @@ public:
   void setBackground(int index, const QColor& color);
   void setForeground(int index, const QColor& color);
   void setFont(int index, const QFont& font);
-  void store();
-
-  static const int guiSettingEntries;
-  static const QString guiSettings[];
+  QVariant value(const QString& key, QVariant defaultValue = QVariant());
 
 protected:
-  void initialize();
-  void load();
-  void processConfigLine(const QString& line);
-  ValueManager vm;
+  class ConfigManager {
+  public:
+    ConfigManager();
+
+    QColor getBackground(int index);
+    QColor getForeground(int index);
+    QFont getFont(int index);
+    void setBackground(int index, const QColor& color);
+    void setForeground(int index, const QColor& color);
+    void setFont(int index, const QFont& font);
+    QVariant value(const QString& key, QVariant defaultValue = QVariant());
+
+  protected:
+    void initialize();
+    void load();
+    ValueManager vm;
+    QSettings settings;
+    };
+
+  ConfigManager* getInstance();
 
 private:
-  QFile* file;
+  static ConfigManager* instance;
   };
 #endif // CONFIG_H

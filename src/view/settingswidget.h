@@ -10,10 +10,8 @@ class SettingsWidget : public DynWidget
 {
   Q_OBJECT
 public:
-  SettingsWidget(const QString& uiFile, const QString& configFile, QWidget* parent = nullptr);
-
-public slots:
-  void save();
+  SettingsWidget(const QString& uiFile, QWidget* parent = nullptr);
+ ~SettingsWidget();
 
 protected:
   void initializeWidget();
@@ -21,12 +19,8 @@ protected:
   void changeForegroundColor(int i);
   void changeBackgroundColor(int i);
   void changeFont(int i);
-  void refresh();
-
-  void setLabelStyle(int index, const QString& style);
 
 private:
-  Config            cfg;
   QLabel**          labels;
   QPushButton*      bgActCodes;
   QPushButton*      bgDroAbs;

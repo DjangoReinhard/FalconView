@@ -1,8 +1,8 @@
-QT       += core gui uitools testlib
+QT       += core gui uitools
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 testcase no_testcase_installs
+CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -38,7 +38,6 @@ SOURCES += \
     src/view/speedinfodockable.cpp \
     src/util/axismask.cpp \
     src/util/gcodehighlighter.cpp \
-    src/test/testaxismask.cpp \
     src/view/splitwidget.cpp \
     src/view/toolinfodockable.cpp
 
@@ -65,7 +64,6 @@ HEADERS += \
     src/util/axismask.h \
     src/util/gcodehighlighter.h \
     src/util/portable-file-dialogs.h \
-    src/test/testaxismask.h \
     src/view/splitwidget.h \
     src/view/toolinfodockable.h
 

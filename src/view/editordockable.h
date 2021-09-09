@@ -18,7 +18,6 @@ public:
 
 public slots:
   void openFile();
-  void openFileAlt();
   void setLine(QVariant line);
 
 protected:
