@@ -16,4 +16,5 @@ Dockable::Dockable(const QString& fileName, const QString& title, QWidget* paren
      uiDesc.close();
      setWidget(w);
      }
+  setObjectName(title);
   }

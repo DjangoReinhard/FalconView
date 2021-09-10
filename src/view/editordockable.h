@@ -6,6 +6,7 @@ class QFile;
 class GCodeEditor;
 class GCodeViewer;
 class GCodeHighlighter;
+class QPushButton;
 class QLineEdit;
 
 
@@ -18,15 +19,17 @@ public:
 
 public slots:
   void openFile();
-  void setLine(QVariant line);
+//  void setLine(QVariant line);
 
 protected:
   void initializeWidget();
-//void loadFile(QVariant fileName);
+  void connectSignals();
+  void updateStyles();
 
 private:
   GCodeViewer*      editor;
   QLineEdit*        fileName;
+  QPushButton*      pbOpen;
   GCodeHighlighter* gh;
   };
 

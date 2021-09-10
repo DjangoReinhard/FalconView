@@ -38,7 +38,7 @@ public slots:
   void activateBg01();
   void activateBg02();
   void activateBg03();
-  void resetLine();
+//void resetLine();
 
 protected:
   void createActions();
@@ -48,6 +48,7 @@ protected:
   void createConnections();
   void createValueModels();
   void timerEvent(QTimerEvent* event) override;
+  void closeEvent(QCloseEvent *event) override;
 
 private:
   Ui::MainWindow*     ui;
@@ -84,6 +85,7 @@ private:
   QAction*            nop4;
   QToolBar*           autoTB;
   QToolBar*           modeTB;
+  QToolBar*           nopTB;
   QToolBar*           powerTB;
   QToolBar*           switchTB;
   int                 line;

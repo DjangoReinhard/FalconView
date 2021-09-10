@@ -20,7 +20,8 @@ public:
   void setBackground(int index, const QColor& color);
   void setForeground(int index, const QColor& color);
   void setFont(int index, const QFont& font);
-  QVariant value(const QString& key, QVariant defaultValue = QVariant());
+  QVariant value(const QString& key, const QVariant& defaultValue = QVariant());
+  void setValue(const QString& key, const QVariant& value);
 
 protected:
   class ConfigManager {
@@ -33,7 +34,8 @@ protected:
     void setBackground(int index, const QColor& color);
     void setForeground(int index, const QColor& color);
     void setFont(int index, const QFont& font);
-    QVariant value(const QString& key, QVariant defaultValue = QVariant());
+    QVariant value(const QString& key, const QVariant& defaultValue = QVariant());
+    void setValue(const QString& key, const QVariant& value);
 
   protected:
     void initialize();

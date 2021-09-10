@@ -57,8 +57,17 @@
    </item>
    <item row="1" column="1" colspan="2">
     <widget class="QSlider" name="slFeed">
+     <property name="maximum">
+      <number>150</number>
+     </property>
+     <property name="sliderPosition">
+      <number>100</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::NoTicks</enum>
      </property>
     </widget>
    </item>
@@ -93,8 +102,23 @@
    </item>
    <item row="3" column="1" colspan="2">
     <widget class="QSlider" name="slFastFeed">
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="singleStep">
+      <number>1</number>
+     </property>
+     <property name="value">
+      <number>100</number>
+     </property>
+     <property name="sliderPosition">
+      <number>100</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::NoTicks</enum>
      </property>
     </widget>
    </item>
@@ -116,8 +140,17 @@
    </item>
    <item row="5" column="1" colspan="2">
     <widget class="QSlider" name="slSpeed">
+     <property name="maximum">
+      <number>150</number>
+     </property>
+     <property name="sliderPosition">
+      <number>100</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::NoTicks</enum>
      </property>
     </widget>
    </item>

@@ -2,6 +2,7 @@
 #include <gcodeeditor.h>
 #include <gcodeviewer.h>
 #include <valuemanager.h>
+#include <config.h>
 #include <QFile>
 #include <QDir>
 #include <QUiLoader>
@@ -27,33 +28,89 @@ EditorDockable::~EditorDockable() {
 
 
 void EditorDockable::initializeWidget() {
-  QPushButton* pbOpen = findChild<QPushButton*>("pbOpen");
   QGridLayout* layout = findChild<QGridLayout*>("gridLayout");
   QWidget*     placeHolder = findChild<QWidget*>("widget");
-  QFont        font;
-
-  font.setFamily("Courier10 BT");   // this font works with bold and QPlainTextEdit
-  font.setPointSize(10);
+//  QFont        font;
+//
+//  font.setFamily("Courier10 BT");   // this font works with bold and QPlainTextEdit
+//  font.setPointSize(10);
 //  editor = new GCodeEditor(this);
   editor = new GCodeViewer(this);
-  editor->setFont(font);
+//  editor->setFont(font);
   layout->addWidget(editor, 1, 0, 1, 2);
   placeHolder->hide();
   fileName = findChild<QLineEdit*>("fileName");
-  gh = new GCodeHighlighter(editor->document());
-  ValueManager vm;
-
-//connect(pbOpen, &QPushButton::clicked, this, &EditorDockable::openFile);
+  pbOpen   = findChild<QPushButton*>("pbOpen");
+  gh       = new GCodeHighlighter(editor->document());
   pbOpen->hide();
-  connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, fileName, [=](QVariant name){ fileName->setText(name.toString()); });
+
+  connectSignals();
+  updateStyles();
   }
 
 
+void EditorDockable::connectSignals() {
+  ValueManager vm;
+  Config       cfg;
+
+  connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, fileName, [=](QVariant name){ fileName->setText(name.toString()); });
+  connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[6]), QColor(Qt::white))
+        , &ValueModel::valueChanged
+        , fileName
+        , [=](){ QString arg = QString("color: #%1; background: #%2;")
+                                      .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16);
+                 fileName->setStyleSheet(arg);
+                 });
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[6]), QColor(Qt::black))
+        , &ValueModel::valueChanged
+        , fileName
+        , [=](){ QString arg = QString("color: #%1; background: #%2;")
+                                      .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16);
+                 fileName->setStyleSheet(arg);
+                 });
+  connect(vm.getModel(QString("cfgF" + cfg.guiSettings[6]), fileName->font())
+        , &ValueModel::valueChanged
+        , fileName
+        , [=](){ fileName->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[6]).value<QFont>());
+                 });
+
+  connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[7]), QColor(Qt::white))
+        , &ValueModel::valueChanged
+        , editor
+        , [=](){ QString arg = QString("background: #%2;")
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[7]).value<QColor>().rgba(), 0, 16);
+                 editor->setStyleSheet(arg);
+                 });
+  connect(vm.getModel(QString("cfgF" + cfg.guiSettings[7]), fileName->font())
+        , &ValueModel::valueChanged
+        , editor
+        , [=](){ editor->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[6]).value<QFont>());
+                 });
+  }
+
+
+void EditorDockable::updateStyles() {
+  ValueManager vm;
+  Config       cfg;
+
+  fileName->setStyleSheet(QString("color: #%1; background: #%2;")
+                                 .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
+                                 .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16));
+  fileName->setFont(vm.getValue("cfgF"  + cfg.guiSettings[6]).value<QFont>());
+  editor->setStyleSheet(QString("background: #%2;")
+                               .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[7]).value<QColor>().rgba(), 0, 16));
+  editor->setFont(vm.getValue("cfgF"  + cfg.guiSettings[7]).value<QFont>());
+
+  }
+
+/*
 void EditorDockable::setLine(QVariant line) {
   qDebug() << "should set editor to line #" << line.toInt();
   editor->verticalScrollBar()->setValue(line.toInt());
   }
-
+*/
 
 /*
  * this file dialog blocks the timer for the time of dialog creation only.
@@ -67,29 +124,3 @@ void EditorDockable::openFile() {
                                             , tr("GCode Files (*.ngc *.nc)"));
   if (name.size()) editor->loadFile(QVariant(name));
   }
-
-
-/*
- * this file dialog blocks the timer as long as the dialog is open
- *
-void EditorDockable::openFileAlt() {
-  if (!pfd::settings::available()){
-     std::cerr << "Portable File Dialogs are not available on this platform. \n"
-                  "On linux install zenity, $ sudo apt-get install zenity\n" << std::endl;
-     }
-  QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
-  auto f = pfd::open_file(tr("Choose file to open").toStdString()
-                        , dirStart.path().toStdString()
-                        , { "GCode Files (.ngc)", "*.ngc",
-                            "All Files", "*" }
-                        , pfd::opt::none);
-  if (f.result().size() > 0) {
-     QFile file(f.result().at(0).c_str());
-
-     if (file.open(QFile::ReadOnly | QFile::Text)) {
-        editor->setPlainText(file.readAll());
-        fileName->setText(file.fileName());
-        }
-     }
-  }
-*/

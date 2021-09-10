@@ -28,9 +28,9 @@ AxisMask& AxisMask::operator=(int axisMask) {
 
 
 void AxisMask::calcActive() {
-  std::cout << "axisMask: " << axisMask;
+//  std::cout << "axisMask: " << axisMask;
   for (int i=0; i < 9; ++i) {
       if (axisMask & (1 << i)) ++cntActive;
       }
-  std::cout << "\tfound " << cntActive << " active axis" << std::endl;
+//  std::cout << "\tfound " << cntActive << " active axis" << std::endl;
   }

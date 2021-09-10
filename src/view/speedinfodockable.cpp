@@ -46,7 +46,7 @@ void SpeedInfoDockable::initializeWidget(QWidget* /* w */) {
   slFeed      = findChild<QSlider*>("slFeed");
   slFastFeed  = findChild<QSlider*>("slFastFeed");
   slSpeed     = findChild<QSlider*>("slSpeed");
-  slFeed->setRange(0, 120);
+//  slFeed->setRange(0, 120);
 
   connectSignals();
   updateStyles();
@@ -212,11 +212,11 @@ void SpeedInfoDockable::updateStyles() {
   QString      style = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
 
   slFeed->setValue(int(vm.getValue("feedrate").toDouble() * 100));
-  slFastFeed->setValue(int(vm.getValue("fastfeedrate").toDouble() * 100));
+  slFastFeed->setValue(int(vm.getValue("rapidrate").toDouble() * 100));
   slSpeed->setValue(int(vm.getValue("spindle0Scale").toDouble() * 100));
 
-  qDebug() << "feed style: " << style;
-  qDebug() << "feed font:  " << font;
+//  qDebug() << "feed style: " << style;
+//  qDebug() << "feed font:  " << font;
 
   curFeed->label()->setStyleSheet(style);
   curFeed->label()->setFont(font);
@@ -232,8 +232,8 @@ void SpeedInfoDockable::updateStyles() {
   font  = vm.getValue("cfgF"  + cfg.guiSettings[8]).value<QFont>();
   style = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
 
-  qDebug() << "speed style: " << style;
-  qDebug() << "speed font:  " << font;
+//  qDebug() << "speed style: " << style;
+//  qDebug() << "speed font:  " << font;
 
   curSpeed->label()->setStyleSheet(style);
   cmdSpeed->label()->setStyleSheet(style);
