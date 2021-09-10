@@ -5,6 +5,7 @@
 #include <statusreader.h>
 #include <positioncalculator.h>
 #include <gcodeinfo.h>
+#include <QDebug>
 #include <iostream>
 #include <ctime>
 #include <ratio>
@@ -102,8 +103,13 @@ void StatusReader::update() {
 
   vm.setValue("feedrate",    status->motion.traj.scale);
   vm.setValue("rapidrate",   status->motion.traj.rapid_scale);
-  vm.setValue("maxVelocity", status->motion.traj.maxVelocity);
-  vm.setValue("curVelocity", status->motion.traj.current_vel);
+  vm.setValue("maxVelocity", status->motion.traj.maxVelocity * 60);
+  vm.setValue("cmdVelocity", status->motion.traj.current_vel * 60);
+  vm.setValue("curVelocity", status->motion.traj.current_vel * 60 * status->motion.traj.scale);
+  vm.setValue("curRapid",    status->motion.traj.maxVelocity * 60 * status->motion.traj.rapid_scale);
+  vm.setValue("curSpeed",    status->motion.spindle[0].speed * status->motion.spindle[0].spindle_scale);
+//  qDebug() << "feedrate: " << vm.getValue("feedrate")
+//           << "\trapid rate: " << vm.getValue("rapidrate");
 
   gi.update(status->task.activeGCodes
           , status->task.activeMCodes
@@ -119,6 +125,8 @@ void StatusReader::update() {
 
   vm.setValue("pocketPrepared", status->io.tool.pocketPrepped);
   vm.setValue("toolInSpindle",  status->io.tool.toolInSpindle);
+//  qDebug() << "tool #"   << vm.getValue("toolInSpindle")
+//           << "\tnext #" << vm.getValue("pocketPrepared");
 
   // signals:
   vm.setValue("enabledFeedOverride", status->motion.traj.feed_override_enabled);

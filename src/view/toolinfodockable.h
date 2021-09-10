@@ -14,6 +14,8 @@ public:
 
 protected:
   void initializeWidget(QWidget* widget);
+  void updateStyles();
+  void connectSignals();
 
 private:
   QLabel*       curTool;

@@ -33,7 +33,7 @@ void EditorDockable::initializeWidget() {
   QFont        font;
 
   font.setFamily("Courier10 BT");   // this font works with bold and QPlainTextEdit
-  font.setPointSize(11);
+  font.setPointSize(10);
 //  editor = new GCodeEditor(this);
   editor = new GCodeViewer(this);
   editor->setFont(font);

@@ -3,7 +3,6 @@
 #include <QObject>
 #include <valuemanager.h>
 #include <canon.hh>
-class EmcPose;
 
 
 class PositionCalculator : public QObject

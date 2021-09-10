@@ -4,6 +4,7 @@
 class LabelAdapter;
 class QString;
 class QWidget;
+class QSlider;
 
 
 class SpeedInfoDockable : public Dockable
@@ -15,6 +16,8 @@ public:
 
 protected:
   void initializeWidget(QWidget* widget);
+  void connectSignals();
+  void updateStyles();
 
 private:
   LabelAdapter* curFeed;
@@ -23,5 +26,8 @@ private:
   LabelAdapter* cmdFeed;
   LabelAdapter* cmdFastFeed;
   LabelAdapter* cmdSpeed;
+  QSlider*      slFeed;
+  QSlider*      slFastFeed;
+  QSlider*      slSpeed;
   };
 #endif // SPEEDINFODOCKABLE_H

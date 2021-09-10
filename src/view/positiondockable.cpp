@@ -100,6 +100,7 @@ void PositionDockable::initializeWidget(QWidget* /* w */) {
       droAbs[i] = new LabelAdapter(new QLabel("0.000", this));
 
       droAbs[i]->label()->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+      droAbs[i]->label()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
       gl->addWidget(droAbs[i]->label(), i, 2);
       }
   lblX = findChild<QLabel*>("lblX");
@@ -282,7 +283,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblX->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblX
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -303,7 +304,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblY->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblY
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -324,7 +325,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblZ->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblZ
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -345,7 +346,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblA->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblA
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -366,7 +367,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblB->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblB
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -387,7 +388,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblC->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblC
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -408,7 +409,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblU->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblU
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -429,7 +430,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblV->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblV
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -450,7 +451,7 @@ void PositionDockable::connectSignals() {
                                       .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[4]).value<QColor>().rgba(), 0, 16);
                  lblW->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[4]), QColor(Qt::black))
         , &ValueModel::valueChanged
         , lblW
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
@@ -492,8 +493,8 @@ void PositionDockable::setAbsolute(QVariant arg) {
 void PositionDockable::updatePos() {
   if (absolute) {
      for (int i=0; i < 9; ++i) {
-         droRel[i]->label()->hide();
          droAbs[i]->label()->show();
+         droRel[i]->label()->hide();
          }
      }
   else {

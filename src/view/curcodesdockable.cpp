@@ -1,98 +1,114 @@
 #include <curcodesdockable.h>
 #include <valuemanager.h>
+#include <config.h>
 #include <QLabel>
+#include <QColor>
+#include <QFont>
 
 
 CurCodesDockable::CurCodesDockable(const QString& fileName, QWidget* parent)
  : Dockable(fileName, tr("actual Codes"), parent)
- , g0(nullptr)
- , g1(nullptr)
- , g2(nullptr)
- , g3(nullptr)
- , g4(nullptr)
- , g5(nullptr)
- , g6(nullptr)
- , g7(nullptr)
- , g8(nullptr)
- , g9(nullptr)
- , g10(nullptr)
- , g11(nullptr)
- , g12(nullptr)
- , g13(nullptr)
- , g14(nullptr)
- , g15(nullptr)
- , g16(nullptr)
- , m0(nullptr)
- , m1(nullptr)
- , m2(nullptr)
- , m3(nullptr)
- , m4(nullptr)
- , m5(nullptr)
- , m6(nullptr)
- , m7(nullptr)
- , m8(nullptr)
- , m9(nullptr)
-{
-  g0  = findChild<QLabel*>("g0");
-  g1  = findChild<QLabel*>("g1");
-  g2  = findChild<QLabel*>("g2");
-  g3  = findChild<QLabel*>("g3");
-  g4  = findChild<QLabel*>("g4");
-  g5  = findChild<QLabel*>("g5");
-  g6  = findChild<QLabel*>("g6");
-  g7  = findChild<QLabel*>("g7");
-  g8  = findChild<QLabel*>("g8");
-  g9  = findChild<QLabel*>("g9");
-  g10 = findChild<QLabel*>("g10");
-  g11 = findChild<QLabel*>("g11");
-  g12 = findChild<QLabel*>("g12");
-  g13 = findChild<QLabel*>("g13");
-  g14 = findChild<QLabel*>("g14");
-  g15 = findChild<QLabel*>("g15");
-  g16 = findChild<QLabel*>("g16");
-  m0  = findChild<QLabel*>("m0");
-  m1  = findChild<QLabel*>("m1");
-  m2  = findChild<QLabel*>("m2");
-  m3  = findChild<QLabel*>("m3");
-  m4  = findChild<QLabel*>("m4");
-  m5  = findChild<QLabel*>("m5");
-  m6  = findChild<QLabel*>("m6");
-  m7  = findChild<QLabel*>("m7");
-  m8  = findChild<QLabel*>("m8");
-  m9  = findChild<QLabel*>("m9");
+ , labels(nullptr) {
+  labels = new QLabel*[27];
+  labels[0] = findChild<QLabel*>("g0");
+  labels[1] = findChild<QLabel*>("g1");
+  labels[2] = findChild<QLabel*>("g2");
+  labels[3] = findChild<QLabel*>("g3");
+  labels[4] = findChild<QLabel*>("g4");
+  labels[5] = findChild<QLabel*>("g5");
+  labels[6] = findChild<QLabel*>("g6");
+  labels[7] = findChild<QLabel*>("g7");
+  labels[8] = findChild<QLabel*>("g8");
+  labels[9] = findChild<QLabel*>("g9");
+  labels[10] = findChild<QLabel*>("g10");
+  labels[11] = findChild<QLabel*>("g11");
+  labels[12] = findChild<QLabel*>("g12");
+  labels[13] = findChild<QLabel*>("g13");
+  labels[14] = findChild<QLabel*>("g14");
+  labels[15] = findChild<QLabel*>("g15");
+  labels[16] = findChild<QLabel*>("g16");
+  labels[17] = findChild<QLabel*>("m0");
+  labels[18] = findChild<QLabel*>("m1");
+  labels[19] = findChild<QLabel*>("m2");
+  labels[20] = findChild<QLabel*>("m3");
+  labels[21] = findChild<QLabel*>("m4");
+  labels[22] = findChild<QLabel*>("m5");
+  labels[23] = findChild<QLabel*>("m6");
+  labels[24] = findChild<QLabel*>("m7");
+  labels[25] = findChild<QLabel*>("m8");
+  labels[26] = findChild<QLabel*>("m9");
 
-  connectLabels();
+  connectSignals();
+  updateStyles();
   }
 
 
-void CurCodesDockable::connectLabels() {
+void CurCodesDockable::connectSignals() {
   ValueManager vm;
 
-  connect(vm.getModel("GC0", " "), &ValueModel::valueChanged,  g0,  [=](QVariant arg){ g0->setText(arg.toString()); });
-  connect(vm.getModel("GC1", " "), &ValueModel::valueChanged,  g1,  [=](QVariant arg){ g1->setText(arg.toString()); });
-  connect(vm.getModel("GC2", " "), &ValueModel::valueChanged,  g2,  [=](QVariant arg){ g2->setText(arg.toString()); });
-  connect(vm.getModel("GC3", " "), &ValueModel::valueChanged,  g3,  [=](QVariant arg){ g3->setText(arg.toString()); });
-  connect(vm.getModel("GC4", " "), &ValueModel::valueChanged,  g4,  [=](QVariant arg){ g4->setText(arg.toString()); });
-  connect(vm.getModel("GC5", " "), &ValueModel::valueChanged,  g5,  [=](QVariant arg){ g5->setText(arg.toString()); });
-  connect(vm.getModel("GC6", " "), &ValueModel::valueChanged,  g6,  [=](QVariant arg){ g6->setText(arg.toString()); });
-  connect(vm.getModel("GC7", " "), &ValueModel::valueChanged,  g7,  [=](QVariant arg){ g7->setText(arg.toString()); });
-  connect(vm.getModel("GC8", " "), &ValueModel::valueChanged,  g8,  [=](QVariant arg){ g8->setText(arg.toString()); });
-  connect(vm.getModel("GC9", " "), &ValueModel::valueChanged,  g9,  [=](QVariant arg){ g9->setText(arg.toString()); });
-  connect(vm.getModel("GC10", " "), &ValueModel::valueChanged, g10, [=](QVariant arg){ g10->setText(arg.toString()); });
-  connect(vm.getModel("GC11", " "), &ValueModel::valueChanged, g11, [=](QVariant arg){ g11->setText(arg.toString()); });
-  connect(vm.getModel("GC12", " "), &ValueModel::valueChanged, g12, [=](QVariant arg){ g12->setText(arg.toString()); });
-  connect(vm.getModel("GC13", " "), &ValueModel::valueChanged, g13, [=](QVariant arg){ g13->setText(arg.toString()); });
-  connect(vm.getModel("GC14", " "), &ValueModel::valueChanged, g14, [=](QVariant arg){ g14->setText(arg.toString()); });
-  connect(vm.getModel("GC15", " "), &ValueModel::valueChanged, g15, [=](QVariant arg){ g15->setText(arg.toString()); });
-  connect(vm.getModel("GC16", " "), &ValueModel::valueChanged, g16, [=](QVariant arg){ g16->setText(arg.toString()); });
-  connect(vm.getModel("MC0", " "), &ValueModel::valueChanged, m0, [=](QVariant arg){ m0->setText(arg.toString()); });
-  connect(vm.getModel("MC1", " "), &ValueModel::valueChanged, m1, [=](QVariant arg){ m1->setText(arg.toString()); });
-  connect(vm.getModel("MC2", " "), &ValueModel::valueChanged, m2, [=](QVariant arg){ m2->setText(arg.toString()); });
-  connect(vm.getModel("MC3", " "), &ValueModel::valueChanged, m3, [=](QVariant arg){ m3->setText(arg.toString()); });
-  connect(vm.getModel("MC4", " "), &ValueModel::valueChanged, m4, [=](QVariant arg){ m4->setText(arg.toString()); });
-  connect(vm.getModel("MC5", " "), &ValueModel::valueChanged, m5, [=](QVariant arg){ m5->setText(arg.toString()); });
-  connect(vm.getModel("MC6", " "), &ValueModel::valueChanged, m6, [=](QVariant arg){ m6->setText(arg.toString()); });
-  connect(vm.getModel("MC7", " "), &ValueModel::valueChanged, m7, [=](QVariant arg){ m7->setText(arg.toString()); });
-  connect(vm.getModel("MC8", " "), &ValueModel::valueChanged, m8, [=](QVariant arg){ m8->setText(arg.toString()); });
-  connect(vm.getModel("MC9", " "), &ValueModel::valueChanged, m9, [=](QVariant arg){ m9->setText(arg.toString()); });
+  connect(vm.getModel("GC0", " "), &ValueModel::valueChanged,  labels[0],  [=](QVariant arg){ labels[0]->setText(arg.toString()); });
+  connect(vm.getModel("GC1", " "), &ValueModel::valueChanged,  labels[1],  [=](QVariant arg){ labels[1]->setText(arg.toString()); });
+  connect(vm.getModel("GC2", " "), &ValueModel::valueChanged,  labels[2],  [=](QVariant arg){ labels[2]->setText(arg.toString()); });
+  connect(vm.getModel("GC3", " "), &ValueModel::valueChanged,  labels[3],  [=](QVariant arg){ labels[3]->setText(arg.toString()); });
+  connect(vm.getModel("GC4", " "), &ValueModel::valueChanged,  labels[4],  [=](QVariant arg){ labels[4]->setText(arg.toString()); });
+  connect(vm.getModel("GC5", " "), &ValueModel::valueChanged,  labels[5],  [=](QVariant arg){ labels[5]->setText(arg.toString()); });
+  connect(vm.getModel("GC6", " "), &ValueModel::valueChanged,  labels[6],  [=](QVariant arg){ labels[6]->setText(arg.toString()); });
+  connect(vm.getModel("GC7", " "), &ValueModel::valueChanged,  labels[7],  [=](QVariant arg){ labels[7]->setText(arg.toString()); });
+  connect(vm.getModel("GC8", " "), &ValueModel::valueChanged,  labels[8],  [=](QVariant arg){ labels[8]->setText(arg.toString()); });
+  connect(vm.getModel("GC9", " "), &ValueModel::valueChanged,  labels[9],  [=](QVariant arg){ labels[9]->setText(arg.toString()); });
+  connect(vm.getModel("GC10", " "), &ValueModel::valueChanged, labels[10], [=](QVariant arg){ labels[10]->setText(arg.toString()); });
+  connect(vm.getModel("GC11", " "), &ValueModel::valueChanged, labels[11], [=](QVariant arg){ labels[11]->setText(arg.toString()); });
+  connect(vm.getModel("GC12", " "), &ValueModel::valueChanged, labels[12], [=](QVariant arg){ labels[12]->setText(arg.toString()); });
+  connect(vm.getModel("GC13", " "), &ValueModel::valueChanged, labels[13], [=](QVariant arg){ labels[13]->setText(arg.toString()); });
+  connect(vm.getModel("GC14", " "), &ValueModel::valueChanged, labels[14], [=](QVariant arg){ labels[14]->setText(arg.toString()); });
+  connect(vm.getModel("GC15", " "), &ValueModel::valueChanged, labels[15], [=](QVariant arg){ labels[15]->setText(arg.toString()); });
+  connect(vm.getModel("GC16", " "), &ValueModel::valueChanged, labels[16], [=](QVariant arg){ labels[16]->setText(arg.toString()); });
+  connect(vm.getModel("MC0", " "), &ValueModel::valueChanged, labels[17], [=](QVariant arg){ labels[17]->setText(arg.toString()); });
+  connect(vm.getModel("MC1", " "), &ValueModel::valueChanged, labels[18], [=](QVariant arg){ labels[18]->setText(arg.toString()); });
+  connect(vm.getModel("MC2", " "), &ValueModel::valueChanged, labels[19], [=](QVariant arg){ labels[19]->setText(arg.toString()); });
+  connect(vm.getModel("MC3", " "), &ValueModel::valueChanged, labels[20], [=](QVariant arg){ labels[20]->setText(arg.toString()); });
+  connect(vm.getModel("MC4", " "), &ValueModel::valueChanged, labels[21], [=](QVariant arg){ labels[21]->setText(arg.toString()); });
+  connect(vm.getModel("MC5", " "), &ValueModel::valueChanged, labels[22], [=](QVariant arg){ labels[22]->setText(arg.toString()); });
+  connect(vm.getModel("MC6", " "), &ValueModel::valueChanged, labels[23], [=](QVariant arg){ labels[23]->setText(arg.toString()); });
+  connect(vm.getModel("MC7", " "), &ValueModel::valueChanged, labels[24], [=](QVariant arg){ labels[24]->setText(arg.toString()); });
+  connect(vm.getModel("MC8", " "), &ValueModel::valueChanged, labels[25], [=](QVariant arg){ labels[25]->setText(arg.toString()); });
+  connect(vm.getModel("MC9", " "), &ValueModel::valueChanged, labels[26], [=](QVariant arg){ labels[26]->setText(arg.toString()); });
+  Config  cfg;
+  QString keyBg  = QString("cfgBg" + cfg.guiSettings[0]);
+  QString keyFg  = QString("cfgFg" + cfg.guiSettings[0]);
+  QString keyF   = QString("cfgF"  + cfg.guiSettings[0]);
+  QString mask   = QString("color: #%1; background: #%2;");
+
+  for (int i=0; i < 27; ++i) {
+      connect(vm.getModel(keyBg, QColor(Qt::white))
+            , &ValueModel::valueChanged
+            , labels[i]
+            , [=](){ QString arg = QString(mask)
+                                          .arg(ValueManager().getValue(keyFg).value<QColor>().rgb(), 0, 16)
+                                          .arg(ValueManager().getValue(keyBg).value<QColor>().rgba(), 0, 16);
+                     labels[i]->setStyleSheet(arg);
+                     });
+      connect(vm.getModel(keyFg, QColor(Qt::black)), &ValueModel::valueChanged
+            , labels[i], [=](){ QString arg = QString(mask)
+                                              .arg(ValueManager().getValue(keyFg).value<QColor>().rgb(), 0, 16)
+                                              .arg(ValueManager().getValue(keyBg).value<QColor>().rgba(), 0, 16);
+                         labels[i]->setStyleSheet(arg);
+                         });
+      connect(vm.getModel(keyF, labels[i]->font()), &ValueModel::valueChanged
+            , labels[i], [=](){ labels[i]->setFont(ValueManager().getValue(keyF).value<QFont>()); });
+      }
+  }
+
+
+void CurCodesDockable::updateStyles() {
+  Config  cfg;
+  QString styles = QString("color: #%1; background: #%2;")
+                          .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[0]).value<QColor>().rgb(),  0, 16)
+                          .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[0]).value<QColor>().rgba(), 0, 16);
+  QFont font = ValueManager().getValue("cfgF" + cfg.guiSettings[0]).value<QFont>();
+
+  for (int i=0; i < 27; ++i) {
+      labels[i]->setStyleSheet(styles);
+      labels[i]->setFont(font);
+      }
   }
