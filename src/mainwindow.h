@@ -6,7 +6,6 @@
 #include <labeladapter.h>
 #include <gcodehighlighter.h>
 #include <gcodeinfo.h>
-#include <curcodesdockable.h>
 #include <positioncalculator.h>
 #include <statusreader.h>
 
@@ -14,8 +13,9 @@
 class PositionDockable;
 class ToolInfoDockable;
 class SpeedInfoDockable;
+class CurCodesDockable;
+class MainDockable;
 class SettingsWidget;
-class EditorDockable;
 class Overlay;
 class QLabel;
 class QAction;
@@ -55,7 +55,7 @@ private:
   PositionDockable*   pos;
   ToolInfoDockable*   ti;
   SpeedInfoDockable*  si;
-  EditorDockable*     ed;
+  MainDockable*       md;
   CurCodesDockable*   cc;
   GCodeHighlighter*   gh;
   SettingsWidget*     sw;

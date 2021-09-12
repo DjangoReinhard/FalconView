@@ -27,7 +27,7 @@ protected:
   void updateStyles();
 
 private:
-  GCodeViewer*      editor;
+  GCodeEditor*      editor;
   QLineEdit*        fileName;
   QPushButton*      pbOpen;
   GCodeHighlighter* gh;

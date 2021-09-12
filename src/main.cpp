@@ -6,7 +6,6 @@
 
 
 int main(int argc, char *argv[]) {
-  QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::Ceil);
   QTranslator       translator;
   QApplication      a(argc, argv);
   QLocale           sysLocale;
@@ -17,7 +16,11 @@ int main(int argc, char *argv[]) {
                                        , "QtUi"
                                        , "_"
                                        , "../QtUi/src/i18n");
+  QStringList args = QCoreApplication::arguments();
+  Config      cfg;
 
+  if (args.length() > 1) cfg.setIniFile(args[1]);
+  cfg.value("whatEver");
   qDebug() << "current locale settings - lang: " << curLocale.language()
            << "\tcountry: " << curLocale.country()
            << "\tname: " << curLocale.name();

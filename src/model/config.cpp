@@ -22,6 +22,16 @@ QFont Config::getFont(int index) {
   }
 
 
+QVariant Config::getProperty(const QString &groupID, const QString &name) {
+  return getInstance()->getProperty(groupID, name);
+ }
+
+
+ToolEntry Config::getTool(int number) {
+  return getInstance()->getTool(number);
+  }
+
+
 QVariant Config::value(const QString& key, const QVariant& defaultValue) {
   return getInstance()->value(key, defaultValue);
   }
@@ -39,6 +49,11 @@ void Config::setForeground(int index, const QColor& color) {
 
 void Config::setFont(int index, const QFont& font) {
   getInstance()->setFont(index, font);
+  }
+
+
+void Config::setIniFile(const QString &fileName) {
+  getInstance()->setIniFile(fileName);
   }
 
 
@@ -83,6 +98,14 @@ void Config::ConfigManager::initialize() {
   }
 
 
+void Config::ConfigManager::setIniFile(const QString &fileName) {
+  properties = LcProperties(fileName);
+  QFile ttFN(properties.value("EMCIO", "TOOL_TABLE").toString());
+
+  if (ttFN.exists()) tools = ToolTable(ttFN);
+  }
+
+
 QColor Config::ConfigManager::getBackground(int index) {
   if (index < 0 || index >= guiSettingEntries)  return QColor(Qt::white);
   return vm.getValue("cfgBg" + guiSettings[index]).value<QColor>();
@@ -101,9 +124,19 @@ QFont Config::ConfigManager::getFont(int index) {
   }
 
 
+QVariant Config::ConfigManager::getProperty(const QString &groupID, const QString &name) {
+  return properties.value(groupID, name);
+  }
+
+
+ToolEntry Config::ConfigManager::getTool(int number) {
+  return tools.tool(number);
+  }
+
+
 QVariant Config::ConfigManager::value(const QString& key, const QVariant& defaultValue) {
   return settings.value(key, defaultValue);
-}
+  }
 
 
 void Config::ConfigManager::setBackground(int index, const QColor& color) {

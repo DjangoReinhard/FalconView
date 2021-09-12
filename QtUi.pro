@@ -11,6 +11,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 INCLUDEPATH += src/model \
                src/util \
                src/view \
+               src/view/dockable \
                src/nml  \
                src      \
                lc/include \
@@ -21,51 +22,68 @@ SOURCES += \
     src/mainwindow.cpp \
     src/model/config.cpp \
     src/model/gcodeinfo.cpp \
+    src/model/lcproperties.cpp \
     src/model/positioncalculator.cpp \
+    src/model/toolentry.cpp \
+    src/model/tooltable.cpp \
     src/model/valuemanager.cpp \
     src/model/valuemodel.cpp \
     src/nml/statusreader.cpp \
-    src/view/curcodesdockable.cpp \
-    src/view/dockable.cpp \
+    src/util/abstractcondition.cpp \
+    src/util/equalcondition.cpp \
+    src/util/greatercondition.cpp \
+    src/util/smallercondition.cpp \
     src/view/dynwidget.cpp \
-    src/view/editordockable.cpp \
     src/view/gcodeviewer.cpp \
     src/view/labeladapter.cpp \
     src/view/gcodeeditor.cpp \
+    src/view/micon.cpp \
     src/view/overlay.cpp \
-    src/view/positiondockable.cpp \
     src/view/settingswidget.cpp \
-    src/view/speedinfodockable.cpp \
     src/util/axismask.cpp \
     src/util/gcodehighlighter.cpp \
     src/view/splitwidget.cpp \
-    src/view/toolinfodockable.cpp
+    src/view/dockable/curcodesdockable.cpp \
+    src/view/dockable/dockable.cpp \
+    src/view/dockable/editordockable.cpp \
+    src/view/dockable/maindockable.cpp \
+    src/view/dockable/positiondockable.cpp \
+    src/view/dockable/speedinfodockable.cpp \
+    src/view/dockable/toolinfodockable.cpp
 
 HEADERS += \
     src/mainwindow.h \
     src/model/config.h \
     src/model/gcodeinfo.h \
+    src/model/lcproperties.h \
     src/model/positioncalculator.h \
+    src/model/toolentry.h \
+    src/model/tooltable.h \
     src/model/valuemanager.h \
     src/model/valuemodel.h \
     src/nml/insulatePose.h \
     src/nml/statusreader.h \
-    src/view/curcodesdockable.h \
-    src/view/dockable.h \
+    src/util/abstractcondition.h \
+    src/util/equalcondition.h \
+    src/util/greatercondition.h \
+    src/util/smallercondition.h \
     src/view/dynwidget.h \
-    src/view/editordockable.h \
     src/view/gcodeeditor.h \
     src/view/gcodeviewer.h \
     src/view/labeladapter.h \
+    src/view/micon.h \
     src/view/overlay.h \
-    src/view/positiondockable.h \
     src/view/settingswidget.h \
-    src/view/speedinfodockable.h \
     src/util/axismask.h \
     src/util/gcodehighlighter.h \
-    src/util/portable-file-dialogs.h \
     src/view/splitwidget.h \
-    src/view/toolinfodockable.h
+    src/view/dockable/curcodesdockable.h \
+    src/view/dockable/dockable.h \
+    src/view/dockable/editordockable.h \
+    src/view/dockable/maindockable.h \
+    src/view/dockable/positiondockable.h \
+    src/view/dockable/speedinfodockable.h \
+    src/view/dockable/toolinfodockable.h
 
 FORMS += \
     src/UI/CurCodes.ui \

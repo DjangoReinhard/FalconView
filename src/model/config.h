@@ -1,6 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 #include <valuemanager.h>
+#include <lcproperties.h>
+#include <tooltable.h>
 #include <QString>
 #include <QSettings>
 class QColor;
@@ -17,9 +19,12 @@ public:
   QColor getBackground(int index);
   QColor getForeground(int index);
   QFont getFont(int index);
+  QVariant getProperty(const QString& groupID, const QString& name);
+  ToolEntry getTool(int number);
   void setBackground(int index, const QColor& color);
   void setForeground(int index, const QColor& color);
   void setFont(int index, const QFont& font);
+  void setIniFile(const QString& fileName);
   QVariant value(const QString& key, const QVariant& defaultValue = QVariant());
   void setValue(const QString& key, const QVariant& value);
 
@@ -31,17 +36,23 @@ protected:
     QColor getBackground(int index);
     QColor getForeground(int index);
     QFont getFont(int index);
+    QVariant getProperty(const QString& groupID, const QString& name);
+    ToolEntry getTool(int number);
     void setBackground(int index, const QColor& color);
     void setForeground(int index, const QColor& color);
     void setFont(int index, const QFont& font);
+    void setIniFile(const QString& fileName);
     QVariant value(const QString& key, const QVariant& defaultValue = QVariant());
     void setValue(const QString& key, const QVariant& value);
 
   protected:
     void initialize();
     void load();
+    QString      iniFileName;
+    LcProperties properties;
+    ToolTable    tools;
     ValueManager vm;
-    QSettings settings;
+    QSettings    settings;
     };
 
   ConfigManager* getInstance();

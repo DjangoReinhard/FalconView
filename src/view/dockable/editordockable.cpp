@@ -11,7 +11,6 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QScrollBar>
-#include <portable-file-dialogs.h>
 #include <gcodehighlighter.h>
 #include <QDebug>
 
@@ -28,21 +27,17 @@ EditorDockable::~EditorDockable() {
 
 
 void EditorDockable::initializeWidget() {
-  QGridLayout* layout = findChild<QGridLayout*>("gridLayout");
+  QGridLayout* layout      = findChild<QGridLayout*>("gridLayout");
   QWidget*     placeHolder = findChild<QWidget*>("widget");
-//  QFont        font;
-//
-//  font.setFamily("Courier10 BT");   // this font works with bold and QPlainTextEdit
-//  font.setPointSize(10);
-//  editor = new GCodeEditor(this);
-  editor = new GCodeViewer(this);
-//  editor->setFont(font);
+
+  editor = new GCodeEditor(this);
+//  editor = new GCodeViewer(this);
   layout->addWidget(editor, 1, 0, 1, 2);
   placeHolder->hide();
   fileName = findChild<QLineEdit*>("fileName");
   pbOpen   = findChild<QPushButton*>("pbOpen");
   gh       = new GCodeHighlighter(editor->document());
-  pbOpen->hide();
+//  pbOpen->hide();
 
   connectSignals();
   updateStyles();

@@ -9,11 +9,24 @@ CONFIG += c++11 testcase no_testcase_installs
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-INCLUDEPATH += src/util
+INCLUDEPATH += src/util \
+               src/model
 
+SOURCES = \
+    src/test/testengine.cpp \
+    src/util/axismask.cpp \
+    src/model/valuemodel.cpp \
+    src/util/abstractcondition.cpp \
+    src/util/equalcondition.cpp \
+    src/util/greatercondition.cpp \
+    src/util/smallercondition.cpp
 
-SOURCES = src/test/testaxismask.cpp \
-          src/util/axismask.cpp
+HEADERS = \
+    src/model/valuemodel.h \
+    src/util/abstractcondition.h \
+    src/util/equalcondition.h \
+    src/util/greatercondition.h \
+    src/util/smallercondition.h 
 
 
 unix:!mac {

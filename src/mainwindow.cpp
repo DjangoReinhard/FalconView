@@ -5,8 +5,11 @@
 #include <toolinfodockable.h>
 #include <speedinfodockable.h>
 #include <editordockable.h>
+#include <curcodesdockable.h>
+#include <maindockable.h>
 #include <gcodehighlighter.h>
 #include <settingswidget.h>
+#include <micon.h>
 #include <config.h>
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
@@ -32,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
  , pos(nullptr)
  , ti(nullptr)
  , si(nullptr)
- , ed(nullptr)
+ , md(nullptr)
  , cc(nullptr)
  , gh(nullptr)
  , sw(nullptr)
@@ -57,9 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this);    // moc generated
   setObjectName("MainWindow");
   setDockNestingEnabled(true);
-  Config cfg;
 
-  cfg.value("whatEver");
   createActions();
   createToolBars();
   createMainWidgets();
@@ -71,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   // application window
   resize(QSize(1920, 1200));
+  Config cfg;
 
   restoreGeometry(cfg.value("geometry").toByteArray());
   restoreState(cfg.value("windowState").toByteArray());
@@ -83,7 +85,7 @@ MainWindow::~MainWindow() {
   delete pos;
   delete ti;
   delete si;
-  delete ed;
+  delete md;
   delete gh;
   delete sw;
   delete bg01;
@@ -110,27 +112,59 @@ MainWindow::~MainWindow() {
 void MainWindow::createActions() {
 //  qDebug() << "start of createActions(gcode) ...";
   // gcode execution
-  startAction = new QAction(QIcon(":/res/SK_AutoStart.png"),  tr("Start"),       this);
-  pauseAction = new QAction(QIcon(":/res/SK_AutoPause.png"),  tr("Pause"),       this);
-  stopAction  = new QAction(QIcon(":/res/SK_AutoStop.png"),   tr("Stop"),        this);
-  singleStep  = new QAction(QIcon(":/res/SK_SingleStep.png"), tr("Single-Step"), this);
+  MIcon::setDisabledFileName(":/res/SK_DisabledIcon.png");
+  startAction = new QAction(MIcon(":/res/SK_AutoStart.png"
+                                , ":/res/SK_AutoStart_active.png"),  tr("Start"),       this);
+  startAction->setCheckable(true);
+  pauseAction = new QAction(MIcon(":/res/SK_AutoPause.png"
+                                , ":/res/SK_AutoPause_active.png"),  tr("Pause"),       this);
+  pauseAction->setCheckable(true);
+  stopAction  = new QAction(MIcon(":/res/SK_AutoStop.png"
+                                , ":/res/SK_AutoStop_active.png"),   tr("Stop"),        this);
+  stopAction->setCheckable(true);
+  singleStep  = new QAction(MIcon(":/res/SK_SingleStep.png"
+                                , ":/res/SK_SingleStep_active.png"), tr("Single-Step"), this);
+  singleStep->setCheckable(true);
 
 //  qDebug() << "start of createActions(mode) ...";
   // controller mode
-  autoMode    = new QAction(QIcon(":/res/SK_Auto.png"),     tr("Auto-mode"),   this);
-  mdiMode     = new QAction(QIcon(":/res/SK_MDI.png"),      tr("MDI-mode"),    this);
-  editMode    = new QAction(QIcon(":/res/SK_Edit.png"),     tr("Edit-mode"),   this);
-  jogMode     = new QAction(QIcon(":/res/SK_Manual.png"),   tr("Manual-mode"), this);
-  wheelMode   = new QAction(QIcon(":/res/SK_Wheel.png"),    tr("Wheel-mode"),  this);
-  cfgMode     = new QAction(QIcon(":/res/SK_Settings.png"), tr("Config-mode"), this);
+  autoMode    = new QAction(MIcon(":/res/SK_Auto.png"
+                                , ":/res/SK_Auto_active.png"),     tr("Auto-mode"),   this);
+  autoMode->setCheckable(true);
+  mdiMode     = new QAction(MIcon(":/res/SK_MDI.png"
+                                , ":/res/SK_MDI_active.png"),      tr("MDI-mode"),    this);
+  mdiMode->setCheckable(true);
+  editMode    = new QAction(MIcon(":/res/SK_Edit.png"
+                                , ":/res/SK_Edit_active.png"),     tr("Edit-mode"),   this);
+  editMode->setCheckable(true);
+  jogMode     = new QAction(MIcon(":/res/SK_Manual.png"
+                                , ":/res/SK_Manual_active.png"),   tr("Manual-mode"), this);
+  jogMode->setCheckable(true);
+  wheelMode   = new QAction(MIcon(":/res/SK_Wheel.png"
+                                , ":/res/SK_Wheel_active.png"),    tr("Wheel-mode"),  this);
+  wheelMode->setCheckable(true);
+//  wheelMode->setEnabled(false);
+  cfgMode     = new QAction(MIcon(":/res/SK_Settings.png"
+                                , ":/res/SK_Settings_active.png"), tr("Config-mode"), this);
+  cfgMode->setCheckable(true);
 
 //  qDebug() << "start of createActions(switches) ...";
   // switches
-  mist         = new QAction(QIcon(":/res/SK_Cool_Mist.png"),    tr("cool-Mist"),    this);
-  flood        = new QAction(QIcon(":/res/SK_Cool_Flood.png"),   tr("cool-Flood"),  this);
-  spindleLeft  = new QAction(QIcon(":/res/SK_Spindle_CCW.png"),  tr("spindle-CCW"), this);
-  spindleOff   = new QAction(QIcon(":/res/SK_Spindle_Stop.png"), tr("spindle-Off"), this);
-  spindleRight = new QAction(QIcon(":/res/SK_Spindle_CW.png"),   tr("spindle-CW"),  this);
+  mist         = new QAction(MIcon(":/res/SK_Cool_Mist.png"
+                                 , ":/res/SK_Cool_Mist_active.png"),    tr("cool-Mist"),    this);
+  mist->setCheckable(true);
+  flood        = new QAction(MIcon(":/res/SK_Cool_Flood.png"
+                                 , ":/res/SK_Cool_Flood_active.png"),   tr("cool-Flood"),  this);
+  flood->setCheckable(true);
+  spindleLeft  = new QAction(MIcon(":/res/SK_Spindle_CCW.png"
+                                 , ":/res/SK_Spindle_CCW_active.png"),  tr("spindle-CCW"), this);
+  spindleLeft->setCheckable(true);
+  spindleOff   = new QAction(MIcon(":/res/SK_Spindle_Stop.png"
+                                 , ":/res/SK_Spindle_Stop_active.png"), tr("spindle-Off"), this);
+  spindleOff->setCheckable(true);
+  spindleRight = new QAction(MIcon(":/res/SK_Spindle_CW.png"
+                                 , ":/res/SK_Spindle_CW_active.png"),   tr("spindle-CW"),  this);
+  spindleRight->setCheckable(true);
 
 //  qDebug() << "start of createActions(nop) ...";
   nop0 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
@@ -146,7 +180,9 @@ void MainWindow::createActions() {
 
 //  qDebug() << "start of createActions(power) ...";
   // power switch
-  power       = new QAction(QIcon(":/res/SK_PowerOff.png"), tr("Powerooff"), this);
+  power       = new QAction(MIcon(":/res/SK_PowerOff.png"
+                                , ":/res/SK_PowerOn.png"), tr("Powerooff"), this);
+  power->setCheckable(true);
   }
 
 
@@ -166,7 +202,7 @@ void MainWindow::createConnections() {
 
 //  qDebug() << " start of createConnections(file open) ...";
   // main menu actions ...
-  connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::openFile);
+//connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::openFile);
 //  qDebug() << " start of createConnections(extra) ...";
   connect(ui->actionDefault,  &QAction::triggered, this, &MainWindow::activateTbd);
   connect(ui->actionBack01,   &QAction::triggered, this, &MainWindow::activateBg01);
@@ -174,37 +210,27 @@ void MainWindow::createConnections() {
   connect(ui->actionBack03,   &QAction::triggered, this, &MainWindow::activateBg03);
   connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::activateSettings);
 //  qDebug() << " start of createConnections(done) ...";
-/*
-  connect(singleStep, &QAction::triggered, ed, [=](){ ed->setLine(QVariant(++line)); });
-  connect(stopAction, &QAction::triggered, this, &MainWindow::resetLine);
- */
   }
 
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-  Config cfg;
+  QMessageBox::StandardButton reply;
 
-  cfg.setValue("geometry", saveGeometry());
-  cfg.setValue("windowState", saveState());
-  QMainWindow::closeEvent(event);
-/*
-    if (maybeSave()) {
-     writeSettings();
-     event->accept();
+  reply = QMessageBox::question(this
+                              , tr("close application?")
+                              , tr("<p>closing the application means shutting down "
+                                   "the backend and stopping all services IF ui "
+                                   "has been started by linuxcnc start-helper</p>")
+                              , QMessageBox::Yes | QMessageBox::Cancel);
+  if (reply == QMessageBox::Yes) {
+     Config cfg;
+
+     cfg.setValue("geometry", saveGeometry());
+     cfg.setValue("windowState", saveState());
+     QMainWindow::closeEvent(event);
      }
-  else {
-     event->ignore();
-     }
- */
+  else event->ignore();
   }
-
-
-/*
-void MainWindow::resetLine() {
-  line = 0;
-  ed->setLine(QVariant(0));
-  }
-*/
 
 
 void MainWindow::createToolBars() {
@@ -260,25 +286,36 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables() {
+//ui->menuView->addAction();
 //  qDebug() << "start of createDockables()";
   ti = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, ti);
+  ui->menuView->addAction(ti->toggleViewAction());
   cc = new CurCodesDockable("../QtUi/src/UI/CurCodes.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, cc);
+  ui->menuView->addAction(cc->toggleViewAction());
   pos = new PositionDockable("../QtUi/src/UI/Position.ui", AxisMask(0x01FF), this);
   addDockWidget(Qt::LeftDockWidgetArea, pos);
+  ui->menuView->addAction(pos->toggleViewAction());
   si = new SpeedInfoDockable("../QtUi/src/UI/SpeedInfo.ui", this);
   addDockWidget(Qt::BottomDockWidgetArea, si);
+  ui->menuView->addAction(si->toggleViewAction());
+  /*
   ed = new EditorDockable("../QtUi/src/UI/GCodeEditor.ui", this);
   addDockWidget(Qt::BottomDockWidgetArea, ed);
+  ui->menuView->addAction(ed->toggleViewAction());
+   */
+  //TODO:
+  md = new MainDockable(this);
+  addDockWidget(Qt::BottomDockWidgetArea, md);
+  ui->menuView->addAction(md->toggleViewAction());
+  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", this);
+  md->addPage(tr("Settings"), sw);
   }
 
 
 void MainWindow::createMainWidgets() {
-//  qDebug() << "start of createMainWidgets() ...";
-  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", this);
-  ui->gridLayout->addWidget(sw, 0, 0);
-  sw->hide();
+  //TODO:
   bg01 = new QLabel(this);
   bg01->setPixmap(QPixmap(":/res/SampleBG01.jpg"));
   ui->gridLayout->addWidget(bg01, 0, 0);

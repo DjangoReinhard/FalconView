@@ -17,4 +17,5 @@ Dockable::Dockable(const QString& fileName, const QString& title, QWidget* paren
      setWidget(w);
      }
   setObjectName(title);
+  setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
   }
