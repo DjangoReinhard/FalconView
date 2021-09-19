@@ -8,7 +8,10 @@
 #include <curcodesdockable.h>
 #include <maindockable.h>
 #include <gcodehighlighter.h>
+#include <gcodeviewer.h>
+#include <pweditor.h>
 #include <settingswidget.h>
+#include <filemanager.h>
 #include <micon.h>
 #include <config.h>
 #include <QDockWidget>
@@ -57,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
  , powerTB(nullptr)
  , switchTB(nullptr)
  , statusReader(positionCalculator, gcodeInfo) {
-  ui->setupUi(this);    // moc generated
+  ui->setupUi(this);
   setObjectName("MainWindow");
   setDockNestingEnabled(true);
 
@@ -80,32 +83,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 MainWindow::~MainWindow() {
-    /*
-  delete ui;
-  delete pos;
-  delete ti;
-  delete si;
-  delete md;
-  delete gh;
-  delete sw;
-  delete bg01;
-  delete bg02;
-  delete bg03;
-  delete startAction;
-  delete pauseAction;
-  delete stopAction;
-  delete singleStep;
-  delete autoMode;
-  delete mdiMode;
-  delete editMode;
-  delete wheelMode;
-  delete jogMode;
-  delete cfgMode;
-  delete autoTB;
-  delete modeTB;
-  delete powerTB;
-  delete switchTB;
-   */
   }
 
 
@@ -305,25 +282,39 @@ void MainWindow::createDockables() {
   addDockWidget(Qt::BottomDockWidgetArea, ed);
   ui->menuView->addAction(ed->toggleViewAction());
    */
+
   //TODO:
   md = new MainDockable(this);
   addDockWidget(Qt::BottomDockWidgetArea, md);
   ui->menuView->addAction(md->toggleViewAction());
   sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", this);
   md->addPage(tr("Settings"), sw);
+
+  FileManager* fm = new FileManager(QDir::homePath() + "/linuxcnc/nc_files", this);
+  md->addPage(tr("FileManager"), fm);
   }
 
 
 void MainWindow::createMainWidgets() {
-  //TODO:
+//  spH  = new QSplitter(Qt::Vertical, this);
+//  spH->addWidget(ui->tbd);
+
+//  cv = new GCodeViewer(this);
+//  spH->addWidget(cv);
+  ui->tbd->hide();
+  pwe = new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", this);
+  ui->gridLayout->addWidget(pwe, 0, 0);
+
   bg01 = new QLabel(this);
   bg01->setPixmap(QPixmap(":/res/SampleBG01.jpg"));
   ui->gridLayout->addWidget(bg01, 0, 0);
   bg01->hide();
+
   bg02 = new QLabel(this);
   bg02->setPixmap(QPixmap(":/res/SampleBG02.jpg"));
   ui->gridLayout->addWidget(bg02, 0, 0);
   bg02->hide();
+
   bg03 = new QLabel(this);
   bg03->setPixmap(QPixmap(":/res/SampleBG03.jpg"));
   ui->gridLayout->addWidget(bg03, 0, 0);
@@ -332,7 +323,7 @@ void MainWindow::createMainWidgets() {
 
 
 void MainWindow::activateTbd() {
-  ui->tbd->show();
+//  ui->tbd->show();
   sw->hide();
   bg01->hide();
   bg02->hide();

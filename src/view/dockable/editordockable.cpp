@@ -81,7 +81,7 @@ void EditorDockable::connectSignals() {
   connect(vm.getModel(QString("cfgF" + cfg.guiSettings[7]), fileName->font())
         , &ValueModel::valueChanged
         , editor
-        , [=](){ editor->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[6]).value<QFont>());
+        , [=](){ editor->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[7]).value<QFont>());
                  });
   }
 

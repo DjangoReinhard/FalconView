@@ -5,18 +5,22 @@
 #include <QUiLoader>
 #include <QStackedLayout>
 
-
 DynWidget::DynWidget(const QString& fileName, QWidget* parent)
- : QFrame(parent) {
+ : QWidget(parent) {
+  setLayout(new QVBoxLayout);
+  layout()->addWidget(loadFromUI(fileName));
+  }
+
+
+QWidget* DynWidget::loadFromUI(const QString& fileName) {
   QFile     uiDesc(fileName);
+  QWidget*  rv = nullptr;
 
   if (uiDesc.exists()) {
      QUiLoader loader;
-     QWidget* w = loader.load(&uiDesc, this);
-     QStackedLayout* layout = new QStackedLayout;
+     rv = loader.load(&uiDesc, this);
 
      uiDesc.close();
-     layout->addWidget(w);
-     setLayout(layout);
      }
+  return rv;
   }

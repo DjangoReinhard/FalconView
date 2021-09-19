@@ -14,6 +14,18 @@
    <string>Frame</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item row="1" column="3">
     <widget class="QLabel" name="g9">
      <property name="sizePolicy">
@@ -23,7 +35,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G9</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -42,7 +54,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G0</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -61,7 +73,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G5</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -80,7 +92,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G16</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -99,7 +111,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G4</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -118,7 +130,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G11</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -137,7 +149,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G6</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -156,7 +168,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G1</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -175,7 +187,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G10</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -194,7 +206,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G12</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -213,7 +225,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G8</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -232,7 +244,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G14</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -251,7 +263,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G7</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -270,7 +282,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G3</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -289,7 +301,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G13</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -308,7 +320,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G2</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -327,7 +339,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">G15</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -346,7 +358,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M9</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -368,7 +380,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M8</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -387,7 +399,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M7</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -406,7 +418,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M6</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -425,7 +437,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M5</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -444,7 +456,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M4</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -463,7 +475,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M3</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -482,26 +494,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M2</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-     <property name="margin">
-      <number>5</number>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="5">
-    <widget class="QLabel" name="m1">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string notr="true">M1</string>
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -520,7 +513,26 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">M0</string>
+      <string notr="true"/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="margin">
+      <number>5</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="6">
+    <widget class="QLabel" name="m1">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string notr="true"/>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
