@@ -2,7 +2,7 @@
 #include <gcodeeditor.h>
 #include <gcodeviewer.h>
 #include <valuemanager.h>
-#include <config.h>
+#include <configacc.h>
 #include <QFile>
 #include <QDir>
 #include <QUiLoader>
@@ -10,7 +10,6 @@
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QFileDialog>
-#include <QScrollBar>
 #include <gcodehighlighter.h>
 #include <QDebug>
 
@@ -81,7 +80,7 @@ void EditorDockable::connectSignals() {
   connect(vm.getModel(QString("cfgF" + cfg.guiSettings[7]), fileName->font())
         , &ValueModel::valueChanged
         , editor
-        , [=](){ editor->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[6]).value<QFont>());
+        , [=](){ editor->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[7]).value<QFont>());
                  });
   }
 

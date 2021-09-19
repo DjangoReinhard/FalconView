@@ -26,7 +26,7 @@ HEADERS = \
     src/util/abstractcondition.h \
     src/util/equalcondition.h \
     src/util/greatercondition.h \
-    src/util/smallercondition.h 
+    src/util/smallercondition.h
 
 
 unix:!mac {

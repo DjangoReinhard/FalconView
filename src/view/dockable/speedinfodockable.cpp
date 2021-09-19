@@ -1,7 +1,7 @@
 #include <speedinfodockable.h>
 #include <labeladapter.h>
 #include <valuemanager.h>
-#include <config.h>
+#include <configacc.h>
 #include <QFile>
 #include <QSlider>
 #include <QUiLoader>
@@ -17,6 +17,9 @@ SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
  , cmdFeed(nullptr)
  , cmdFastFeed(nullptr)
  , cmdSpeed(nullptr)
+ , feedFactor(nullptr)
+ , fastfeedFactor(nullptr)
+ , speedFactor(nullptr)
  , slFeed(nullptr)
  , slFastFeed(nullptr)
  , slSpeed(nullptr) {
@@ -37,16 +40,24 @@ SpeedInfoDockable::~SpeedInfoDockable() {
 
 
 void SpeedInfoDockable::initializeWidget(QWidget* /* w */) {
-  curFeed     = new LabelAdapter(findChild<QLabel*>("curFeed"), 0);
-  curFastFeed = new LabelAdapter(findChild<QLabel*>("curFastFeed"), 0);
-  curSpeed    = new LabelAdapter(findChild<QLabel*>("curSpeed"), 0);
-  cmdFeed     = new LabelAdapter(findChild<QLabel*>("cmdFeed"), 0);
-  cmdFastFeed = new LabelAdapter(findChild<QLabel*>("cmdFastFeed"), 0);
-  cmdSpeed    = new LabelAdapter(findChild<QLabel*>("cmdSpeed"), 0);
-  slFeed      = findChild<QSlider*>("slFeed");
-  slFastFeed  = findChild<QSlider*>("slFastFeed");
-  slSpeed     = findChild<QSlider*>("slSpeed");
-//  slFeed->setRange(0, 120);
+  curFeed        = new LabelAdapter(findChild<QLabel*>("curFeed"), 0);
+  curFastFeed    = new LabelAdapter(findChild<QLabel*>("curFastFeed"), 0);
+  curSpeed       = new LabelAdapter(findChild<QLabel*>("curSpeed"), 0);
+  cmdFeed        = new LabelAdapter(findChild<QLabel*>("cmdFeed"), 0);
+  cmdFastFeed    = new LabelAdapter(findChild<QLabel*>("cmdFastFeed"), 0);
+  cmdSpeed       = new LabelAdapter(findChild<QLabel*>("cmdSpeed"), 0);
+  feedFactor     = new LabelAdapter(findChild<QLabel*>("feedFactor"), 0);
+  fastfeedFactor = new LabelAdapter(findChild<QLabel*>("fastfeedFactor"), 0);
+  speedFactor    = new LabelAdapter(findChild<QLabel*>("speedFactor"), 0);
+  slFeed         = findChild<QSlider*>("slFeed");
+  slFeed->setTickInterval(10);
+  slFeed->setTickPosition(QSlider::TicksRight);
+  slFastFeed     = findChild<QSlider*>("slFastFeed");
+  slFastFeed->setTickInterval(10);
+  slFastFeed->setTickPosition(QSlider::TicksRight);
+  slSpeed        = findChild<QSlider*>("slSpeed");
+  slSpeed->setTickInterval(10);
+  slSpeed->setTickPosition(QSlider::TicksRight);
 
   connectSignals();
   updateStyles();
@@ -61,12 +72,15 @@ void SpeedInfoDockable::connectSignals() {
   connect(vm.getModel("rapidrate", 100),     &ValueModel::valueChanged, slFastFeed, [=](QVariant v){ slFastFeed->setValue(int(v.toDouble() * 100.0)); });
   connect(vm.getModel("spindle0Scale", 100), &ValueModel::valueChanged, slSpeed,    [=](QVariant v){ slSpeed->setValue(int(v.toDouble() * 100.0)); });
 
-  connect(vm.getModel("cmdVelocity", 0),   &ValueModel::valueChanged, cmdFeed,     &LabelAdapter::setValue);
-  connect(vm.getModel("maxVelocity", 0),   &ValueModel::valueChanged, cmdFastFeed, &LabelAdapter::setValue);
-  connect(vm.getModel("spindle0Speed", 0), &ValueModel::valueChanged, cmdSpeed,    &LabelAdapter::setValue);
-  connect(vm.getModel("curVelocity", 0),   &ValueModel::valueChanged, curFeed,     &LabelAdapter::setValue);
-  connect(vm.getModel("curRapid", 0),      &ValueModel::valueChanged, curFastFeed, &LabelAdapter::setValue);
-  connect(vm.getModel("curSpeed", 0),      &ValueModel::valueChanged, curSpeed,    &LabelAdapter::setValue);
+  connect(vm.getModel("cmdVelocity", 0),     &ValueModel::valueChanged, cmdFeed,     &LabelAdapter::setValue);
+  connect(vm.getModel("maxVelocity", 0),     &ValueModel::valueChanged, cmdFastFeed, &LabelAdapter::setValue);
+  connect(vm.getModel("spindle0Speed", 0),   &ValueModel::valueChanged, cmdSpeed,    &LabelAdapter::setValue);
+  connect(vm.getModel("curVelocity", 0),     &ValueModel::valueChanged, curFeed,     &LabelAdapter::setValue);
+  connect(vm.getModel("curRapid", 0),        &ValueModel::valueChanged, curFastFeed, &LabelAdapter::setValue);
+  connect(vm.getModel("curSpeed", 0),        &ValueModel::valueChanged, curSpeed,    &LabelAdapter::setValue);
+  connect(slFeed,     &QSlider::valueChanged, feedFactor,     [=](QVariant v){ feedFactor->setValue(v.toDouble()); });
+  connect(slFastFeed, &QSlider::valueChanged, fastfeedFactor, [=](QVariant v){ fastfeedFactor->setValue(v.toDouble()); });
+  connect(slSpeed,    &QSlider::valueChanged, speedFactor,    [=](QVariant v){ speedFactor->setValue(v.toDouble()); });
 
 
   connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[5]), QColor(Qt::white))

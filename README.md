@@ -1,9 +1,10 @@
-# QtUi
+# FalconView
 
-app to test Qt features together with linuxcnc using mvc.
-Configuration works on the fly and application state is saved on exit.
+**Work in progress!**
+
+Controlcenter for machines controlled by linuxcnc. Subwindows like position or speed override can arranged anywhere around the central preview pane.
 
 ## Screenshot
-[![vertical](sample/QtUi_vertical_01s.jpg)](sample/QtUi_vertical_01.jpg)
-[![horizontal](sample/QtUi_horizontal_01s.jpg)](sample/QtUi_horizontal_01.jpg)
+[![vertical](sample/FalconView_V01s.jpg)](sample/FalconView_V01.jpg)
+[![horizontal](sample/FalconView_H01s.jpg)](sample/FalconView_H01.jpg)
 

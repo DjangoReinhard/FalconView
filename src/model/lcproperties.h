@@ -1,11 +1,17 @@
 #ifndef LCPROPERTIES_H
 #define LCPROPERTIES_H
 #include <QVariant>
+#include <QString>
+#include <QDir>
+#include <QFileInfo>
 #include <QMap>
-class QString;
 class QFile;
 
 
+/**
+ * @brief The LcProperties class
+ * process ini-files from linuxcnc
+ */
 class LcProperties
 {
 public:
@@ -13,8 +19,12 @@ public:
   explicit LcProperties(const LcProperties&& other);
 
   LcProperties& operator = (const LcProperties&& other);
-  QVariant value(const QString& groupID, const QString& name);
-  void     dump();
+  QVariant      value(const QString& groupID, const QString& name) const;
+  QString       fileName() const { return fn.absoluteFilePath(); }
+  QString       parameterFileName() const;
+  QString       toolTableFileName() const;
+  QString       baseDir() const  { return fn.absoluteDir().path(); }
+  void          dump();
 
 protected:
   void processFile(QFile& file);
@@ -25,5 +35,6 @@ protected:
 private:
   QMap<QString, QMap<QString, QVariant>> properties;
   QMap<QString, QVariant>*               curMap;
+  QFileInfo                              fn;
   };
 #endif // LCPROPERTIES_H

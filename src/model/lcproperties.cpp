@@ -1,12 +1,14 @@
 #include <lcproperties.h>
 #include <QFile>
 #include <QTextStream>
+#include <QMetaType>
 #include <QRegularExpression>
 #include <QDebug>
 
 
 LcProperties::LcProperties(const QString& fileName)
- : curMap(nullptr) {
+ : curMap(nullptr)
+ , fn(fileName) {
   QFile file(fileName);
 
   if (file.exists()) processFile(file);
@@ -28,7 +30,7 @@ LcProperties& LcProperties::operator=(const LcProperties&& other) {
 
 
 void LcProperties::addGroup(const QString &groupID) {
-  qDebug() << "\nadd group with ID: " << groupID;
+//  qDebug() << "\nadd group with ID: " << groupID;
   if (!properties.contains(groupID))
      properties.insert(groupID, QMap<QString, QVariant>());
   curMap = &properties[groupID];
@@ -37,14 +39,22 @@ void LcProperties::addGroup(const QString &groupID) {
 
 void LcProperties::addValue(const QString& name, const QVariant& value) {
   if (!curMap) return;
-  qDebug() << "\t\tadd property [" << name << "] => {" << value << "}";
+//  qDebug() << "\t\tadd property [" << name << "] => {" << value << "}";
   if (curMap->contains(name)) {
      QVariant v = curMap->value(name);
 
-     if (v.type() == QMetaType::QStringList) {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+     if (v.typeId() == QMetaType::QStringList) {
+#else
+     if (v.type() == QVariant::StringList) {
+#endif
         v.toStringList().append(value.toString());
         }
-     else if (v.type() == QMetaType::QVariantList) {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+     else if (v.typeId() == QMetaType::QVariantList) {
+#else
+     else if (v.type() == QVariant::List) {
+#endif
         v.toList().append(value);
         }
      else {
@@ -58,10 +68,38 @@ void LcProperties::addValue(const QString& name, const QVariant& value) {
   }
 
 
-QVariant LcProperties::value(const QString &groupID, const QString &name) {
-  QMap<QString, QVariant>& m = properties[groupID];
+/*
+ * gui settings:
+ *    "DISPLAY", "MAX_FEED_OVERRIDE"
+ *    "DISPLAY", "MAX_SPINDLE_OVERRIDE"
+ *    "DISPLAY", "MIN_SPINDLE_OVERRIDE"
+ *
+ *    "RS274NGC", "PARAMETER_FILE"
+ *    "RS274NGC", "RS274NGC_STARTUP_CODE"
+ *    "RS274NGC", "SUBROUTINE_PATH"
+ *
+ *    "TRAJ", "ANGULAR_UNITS"
+ *    "TRAJ", "LINEAR_UNITS"
+ *    "TRAJ", "POSITION_FILE"
+ */
+QVariant LcProperties::value(const QString &groupID, const QString &name) const {
+  return properties[groupID][name];
+  }
 
-  return m[name];
+
+QString LcProperties::parameterFileName() const {
+  const QString& name = value("RS274NGC", "PARAMETER_FILE").toString();
+
+  if (name.startsWith("/")) return name;
+  return baseDir() + "/" + name;
+  }
+
+
+QString LcProperties::toolTableFileName() const {
+  const QString& name = value("EMCIO", "TOOL_TABLE").toString();
+
+  if (name.startsWith("/")) return name;
+  return baseDir() + "/" + name;
   }
 
 
@@ -100,7 +138,7 @@ void LcProperties::processLine(const QString &input) {
          qlonglong lv = value.toLongLong(&ok, 0);
 
          if (ok) {             
-            qDebug() << "\tadd value as integer [" << name << "] => " << lv << "\twas: " << value;
+//            qDebug() << "\tadd value as integer [" << name << "] => " << lv << "\twas: " << value;
 
             if (lv > INT_MIN && lv < INT_MAX) {
                QVariant v(static_cast<int>(lv));
@@ -117,34 +155,34 @@ void LcProperties::processLine(const QString &input) {
             double dv = value.toDouble(&ok);
 
             if (ok) {                
-               qDebug() << "\tadd value as double  [" << name << "] => " << dv << "\twas: " << value;
+//               qDebug() << "\tadd value as double  [" << name << "] => " << dv << "\twas: " << value;
                QVariant v(dv);
 
                addValue(name, v);
                }
             else if (!value.compare("NO") || !value.compare("no")) {
-               qDebug() << "\tadd boolean false [" << name << "]\twas: " << value;
+//               qDebug() << "\tadd boolean false [" << name << "]\twas: " << value;
                QVariant v(false);
 
                addValue(name, v);
                }
             else if (!value.compare("YES") || !value.compare("yes")) {
-               qDebug() << "\tadd boolean true [" << name << "]\twas: " << value;
+//               qDebug() << "\tadd boolean true [" << name << "]\twas: " << value;
                QVariant v(true);
 
                addValue(name, v);
                }
             else {
                if (value.indexOf(",") > 0) {
-                  qDebug() << "\ttreat value as list ... [" << name << "] => " << value;
+//                  qDebug() << "\ttreat value as list ... [" << name << "] => " << value;
                   QStringList l = value.split(QRegularExpression("\\s*,\\s*"));
                   QVariant v(l);
 
-                  qDebug() << "\tlist has #" << l.size() << " entries";
+//                  qDebug() << "\tlist has #" << l.size() << " entries";
                   addValue(name, v);
                   }
                else {
-                  qDebug() << "\tadd value as string [" << name << "] => " << value;
+//                  qDebug() << "\tadd value as string [" << name << "] => " << value;
                   QVariant v(value);
 
                   addValue(name, v);

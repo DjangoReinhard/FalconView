@@ -1,5 +1,6 @@
 #include <equalcondition.h>
 #include <valuemodel.h>
+#include <QVariant>
 #include <QDebug>
 
 

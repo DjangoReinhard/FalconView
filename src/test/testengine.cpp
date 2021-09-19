@@ -20,6 +20,12 @@ public slots:
     };
 
 private slots:
+  void test3Axis();
+  void test5Axis();
+  void test9Axis();
+  void tellStdPaths();
+  void writeSettings();
+  void readSettings();
   void testEqualCondition();
   void testSmallerCondition();
   void testGreaterCondition();
@@ -73,6 +79,55 @@ void TestEngine::testGreaterCondition() {
 
   QCOMPARE(result, true);
   this->disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+  }
+
+
+void TestEngine::test3Axis() {
+  AxisMask am(0x07);
+
+  QCOMPARE(am.activeAxis(), 3);
+  }
+
+
+void TestEngine::test5Axis() {
+  AxisMask am(0x01F);
+
+  QCOMPARE(am.activeAxis(), 5);
+  }
+
+
+void TestEngine::test9Axis() {
+  AxisMask am(0x01FF);
+
+  QCOMPARE(am.activeAxis(), 9);
+  }
+
+
+void TestEngine::tellStdPaths() {
+  QStringList sl = QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation);
+
+  for (QString s : sl) {
+      qDebug() << "app config location: " << s;
+      }
+  sl = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+  for (QString s : sl) {
+      qDebug() << "home location: " << s;
+      }
+  }
+
+
+void TestEngine::writeSettings() {
+  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
+
+  cfg.setValue("whatEver", "hello world");
+  }
+
+
+void TestEngine::readSettings() {
+  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
+  QVariant we = cfg.value("whatEver");
+
+  QCOMPARE(we.toString(), "hello world");
   }
 
 

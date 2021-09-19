@@ -1,5 +1,6 @@
 #include <positiondockable.h>
 #include <valuemanager.h>
+#include <configacc.h>
 #include <QtUiTools/QUiLoader>
 #include <QFontMetrics>
 #include <QGridLayout>
@@ -468,7 +469,7 @@ void PositionDockable::connectSignals() {
 
 
 void PositionDockable::setAxisMask(QVariant am) {
-  if (axisMask.toInt() != am.toInt())  {
+  if (axisMask.mask() != am.toInt())  {
      axisMask = am.toInt();
      updatePos();
      }

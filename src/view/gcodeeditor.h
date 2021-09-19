@@ -35,6 +35,7 @@ public:
   LineNumberArea(GCodeEditor *editor)
    : QWidget(editor)
    , editor(editor) {
+    setFont(editor->font());
     }
   QSize sizeHint() const override {
     return QSize(editor->lineNumberAreaWidth(), 0);
