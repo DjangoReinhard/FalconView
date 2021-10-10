@@ -74,4 +74,4 @@ void ValueManager::ValueHolder::dump() {
   }
 
 
-ValueManager::ValueHolder* ValueManager::instance;
+ValueManager::ValueHolder* ValueManager::instance = nullptr;

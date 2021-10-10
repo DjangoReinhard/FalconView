@@ -69,7 +69,7 @@ Config::ConfigManager* Config::getInstance() {
 
 
 Config::ConfigManager::ConfigManager()
- : settings(QSettings::UserScope, "SRD", "QtUi") {
+ : settings(QSettings::UserScope, "SRD", "Falcon-View") {
   initialize();
   }
 

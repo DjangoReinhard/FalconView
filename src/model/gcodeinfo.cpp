@@ -5,12 +5,12 @@
 
 
 GCodeInfo::GCodeInfo() {
-  for (int i=0; i < ACTIVE_G_CODES; ++i) {
+  for (int i=1; i < ACTIVE_G_CODES; ++i) {
       QString k = QString("GC%1").arg(i);
 
       vm.setValue(k, " ");
       }
-  for (int i=0; i < ACTIVE_M_CODES; ++i) {
+  for (int i=1; i < ACTIVE_M_CODES; ++i) {
       QString k = QString("MC%1").arg(i);
 
       vm.setValue(k, " ");

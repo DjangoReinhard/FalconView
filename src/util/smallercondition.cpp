@@ -11,7 +11,7 @@ SmallerCondition::SmallerCondition(ValueModel* model, const QVariant& value, QOb
 
 bool SmallerCondition::eval() {
 //  qDebug() << "SmallerCondition::eval() ...";
-  switch (model()->getValue().type()) {
+  switch (model()->getValue().typeId()) {
     case QMetaType::Char:
     case QMetaType::Short:
     case QMetaType::Int:

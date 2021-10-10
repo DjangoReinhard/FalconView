@@ -4,7 +4,9 @@
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
 #include <QSplitter>
+#include <QFileDialog>
 #include <QLabel>
+#include <QDir>
 #include <QVariant>
 #include <QLineEdit>
 #include <QPlainTextEdit>
@@ -14,10 +16,11 @@
 
 PreViewEditor::PreViewEditor(const QString& fileName, QWidget* parent)
  : DynWidget(parent) {
+  setObjectName("PreViewEditor");
   this->setStyleSheet("background: 0xFF0000;");
   setLayout(new QHBoxLayout);
   spV = new QSplitter(Qt::Vertical);
-  QLabel* dummy = new QLabel(tr("Platzhalter"));
+  QLabel* dummy = new QLabel(tr("Platzhalter für Vorschau"));
 
   dummy->setTextFormat(Qt::MarkdownText);
   dummy->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -27,9 +30,10 @@ PreViewEditor::PreViewEditor(const QString& fileName, QWidget* parent)
                                | Qt::TextBrowserInteraction
                                | Qt::TextSelectableByKeyboard
                                | Qt::TextSelectableByMouse);
+  dummy->setMinimumSize(400, 400);
   QWidget* w = loadFromUI(fileName);
 
-//  dummy->setMargin(25);
+  dummy->setMargin(25);
   spV->addWidget(dummy);
   spV->addWidget(w);
   fn     = w->findChild<QLineEdit*>("fileName");
@@ -40,9 +44,13 @@ PreViewEditor::PreViewEditor(const QString& fileName, QWidget* parent)
 
   ed     = new GCodeEditor(this);
   gh     = new GCodeHighlighter(ed->document());
+  ed->setReadOnly(true);
+  ed->setFocusPolicy(Qt::NoFocus);
   gl->addWidget(ed, 1, 0, 1, 3);
   placeHolder->hide();
   layout()->addWidget(spV);
+  pbOpen->hide();
+  pbSave->hide();
   connectSignals();
   updateStyles();
   }
@@ -87,6 +95,16 @@ void PreViewEditor::connectSignals() {
           , ed
           , [=](){ ed->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[7]).value<QFont>());
                    });
+  }
+
+
+void PreViewEditor::openFile() {
+  QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
+  QString name = QFileDialog::getOpenFileName(this
+                                            , tr("open GCode file")
+                                            , dirStart.absolutePath()
+                                            , tr("GCode Files (*.ngc *.nc)"));
+  if (name.size()) loadFile(QVariant(name));
   }
 
 

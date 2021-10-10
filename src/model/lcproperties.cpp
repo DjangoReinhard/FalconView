@@ -41,10 +41,10 @@ void LcProperties::addValue(const QString& name, const QVariant& value) {
   if (curMap->contains(name)) {
      QVariant v = curMap->value(name);
 
-     if (v.type() == QMetaType::QStringList) {
+     if (v.typeId() == QMetaType::QStringList) {
         v.toStringList().append(value.toString());
         }
-     else if (v.type() == QMetaType::QVariantList) {
+     else if (v.typeId() == QMetaType::QVariantList) {
         v.toList().append(value);
         }
      else {

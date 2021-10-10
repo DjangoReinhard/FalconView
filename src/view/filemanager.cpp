@@ -27,20 +27,23 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
  , fileModel(new FileModel())
  , pxDirs(new QSortFilterProxyModel(this))
  , pxFiles(new QSortFilterProxyModel(this)) {
+  setObjectName("FileManager");
   pxDirs->setSourceModel(dirModel);
   dirs->setModel(pxDirs);
   dirs->setTabKeyNavigation(false);
   dirs->setSortingEnabled(true);
+  dirs->header()->setSortIndicator(0, Qt::AscendingOrder);
 
   pxFiles->setSourceModel(fileModel);
   files->setModel(pxFiles);
   files->setSelectionBehavior(QAbstractItemView::SelectRows);
-  files->horizontalHeader()->setStretchLastSection(true);
   files->verticalHeader()->hide();
   files->setEditTriggers(QAbstractItemView::NoEditTriggers);
   files->setSelectionMode(QAbstractItemView::SingleSelection);
   files->setTabKeyNavigation(false);
   files->setSortingEnabled(true);
+  files->horizontalHeader()->setStretchLastSection(true);
+  files->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 
   preView->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   preView->setReadOnly(true);
@@ -60,7 +63,7 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
 
 
 void FileManager::toggleView() {
-  qDebug() << "Hi, toggleView triggered ...";
+//  qDebug() << "Hi, toggleView triggered ...";
   if (dirs->hasFocus()) files->setFocus();
   else                  dirs->setFocus();
   }
@@ -87,6 +90,12 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
   if (event->key() == 16777220) {
      qDebug() << "hit ENTER?";
      QModelIndexList    mi       = files->selectionModel()->selection().indexes();
+
+     if (!mi.size()) {
+        event->setAccepted(true);
+
+        return;
+        }
      const QModelIndex& index    = mi.at(0);
      const QModelIndex& srcIndex = pxFiles->mapToSource(index);
      const QFileInfo&   fi       = fileModel->fileInfo(srcIndex.row());
@@ -102,6 +111,8 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
 void FileManager::selectionChanged(const QItemSelection& selected, const QItemSelection&) {
   qDebug() << "selected: "     << selected;
   QModelIndexList    mi       = selected.indexes();
+
+  if (!mi.size()) return;
   const QModelIndex& index    = mi.at(0);
   const QModelIndex& srcIndex = pxFiles->mapToSource(index);
   const QFileInfo&   fi       = fileModel->fileInfo(srcIndex.row());
@@ -111,6 +122,7 @@ void FileManager::selectionChanged(const QItemSelection& selected, const QItemSe
   qDebug() << "preview path: " << path;
   if (file.open(QFile::ReadOnly | QFile::Text)) {
      preView->setPlainText(file.read(1024));
+     file.close();
      }
   else {
      preView->setPlainText(tr("<p>no textfile</p>"));

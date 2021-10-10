@@ -11,6 +11,7 @@
 SettingsWidget::SettingsWidget(const QString& uiFile, QWidget* parent)
  : DynWidget(uiFile, parent)
  , labels(nullptr) {
+  setObjectName("SettingsWidget");
   initializeWidget();
   }
 

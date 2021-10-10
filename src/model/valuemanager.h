@@ -17,7 +17,8 @@ public:
 protected:
   class ValueHolder
   {
-  public:
+    friend class ValueManager;
+
     ValueHolder();
 
     void dump();

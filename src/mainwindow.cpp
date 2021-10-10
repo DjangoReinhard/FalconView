@@ -1,5 +1,6 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
+#include <mainview.h>
 #include <axismask.h>
 #include <positiondockable.h>
 #include <toolinfodockable.h>
@@ -12,6 +13,7 @@
 #include <pweditor.h>
 #include <settingswidget.h>
 #include <filemanager.h>
+#include <toolmanager.h>
 #include <micon.h>
 #include <config.h>
 #include <QDockWidget>
@@ -38,10 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
  , pos(nullptr)
  , ti(nullptr)
  , si(nullptr)
- , md(nullptr)
  , cc(nullptr)
  , gh(nullptr)
- , sw(nullptr)
+ , mainView(nullptr)
  , bg01(nullptr)
  , bg02(nullptr)
  , bg03(nullptr)
@@ -61,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
  , switchTB(nullptr)
  , statusReader(positionCalculator, gcodeInfo) {
   ui->setupUi(this);
-  setObjectName("MainWindow");
+  setObjectName("Falcon-View");
   setDockNestingEnabled(true);
 
   createActions();
@@ -175,18 +176,18 @@ void MainWindow::createConnections() {
 
 //  qDebug() << " start of createConnections(view) ...";
   // toggle between absolute and relative position ...
-  connect(ui->actionAbsolute_Position, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsolute_Position->isChecked())); });
+  connect(ui->actionAbsPos,      &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
+  connect(ui->actionFileManager, &QAction::triggered, this, [=](){ selectPage("FileManager"); });
+  connect(ui->actionToolManager, &QAction::triggered, this, [=](){ selectPage("ToolManager"); });
+  connect(ui->actionSettings,    &QAction::triggered, this, [=](){ selectPage("Settings"); });
+  connect(ui->actionPreview,     &QAction::triggered, this, [=](){ selectPage("Preview"); });
+  connect(ui->actionOffsets,     &QAction::triggered, this, [=](){ selectPage("Offsets"); });
 
-//  qDebug() << " start of createConnections(file open) ...";
+  qDebug() << " start of createConnections(file open) ...";
   // main menu actions ...
-//connect(ui->actionOpen,     &QAction::triggered, ed,   &EditorDockable::openFile);
-//  qDebug() << " start of createConnections(extra) ...";
-  connect(ui->actionDefault,  &QAction::triggered, this, &MainWindow::activateTbd);
-  connect(ui->actionBack01,   &QAction::triggered, this, &MainWindow::activateBg01);
-  connect(ui->actionBack02,   &QAction::triggered, this, &MainWindow::activateBg02);
-  connect(ui->actionBack03,   &QAction::triggered, this, &MainWindow::activateBg03);
-  connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::activateSettings);
-//  qDebug() << " start of createConnections(done) ...";
+//  connect(ui->actionOpen,     &QAction::triggered, pwe,  &PreViewEditor::openFile);
+//  connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::activateSettings);
+  qDebug() << " start of createConnections(done) ...";
   }
 
 
@@ -263,110 +264,39 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables() {
-//ui->menuView->addAction();
-//  qDebug() << "start of createDockables()";
   ti = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, ti);
   ui->menuView->addAction(ti->toggleViewAction());
+
   cc = new CurCodesDockable("../QtUi/src/UI/CurCodes.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, cc);
   ui->menuView->addAction(cc->toggleViewAction());
+
+  //TODO: read from ini-file
   pos = new PositionDockable("../QtUi/src/UI/Position.ui", AxisMask(0x01FF), this);
-  addDockWidget(Qt::LeftDockWidgetArea, pos);
+  addDockWidget(Qt::LeftDockWidgetArea, pos);  
   ui->menuView->addAction(pos->toggleViewAction());
+
   si = new SpeedInfoDockable("../QtUi/src/UI/SpeedInfo.ui", this);
   addDockWidget(Qt::BottomDockWidgetArea, si);
   ui->menuView->addAction(si->toggleViewAction());
-  /*
-  ed = new EditorDockable("../QtUi/src/UI/GCodeEditor.ui", this);
-  addDockWidget(Qt::BottomDockWidgetArea, ed);
-  ui->menuView->addAction(ed->toggleViewAction());
-   */
-
-  //TODO:
-  md = new MainDockable(this);
-  addDockWidget(Qt::BottomDockWidgetArea, md);
-  ui->menuView->addAction(md->toggleViewAction());
-  sw = new SettingsWidget("../QtUi/src/UI/Settings.ui", this);
-  md->addPage(tr("Settings"), sw);
-
-  FileManager* fm = new FileManager(QDir::homePath() + "/linuxcnc/nc_files", this);
-  md->addPage(tr("FileManager"), fm);
   }
 
 
 void MainWindow::createMainWidgets() {
-//  spH  = new QSplitter(Qt::Vertical, this);
-//  spH->addWidget(ui->tbd);
-
-//  cv = new GCodeViewer(this);
-//  spH->addWidget(cv);
-  ui->tbd->hide();
-  pwe = new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", this);
-  ui->gridLayout->addWidget(pwe, 0, 0);
-
-  bg01 = new QLabel(this);
-  bg01->setPixmap(QPixmap(":/res/SampleBG01.jpg"));
-  ui->gridLayout->addWidget(bg01, 0, 0);
-  bg01->hide();
-
-  bg02 = new QLabel(this);
-  bg02->setPixmap(QPixmap(":/res/SampleBG02.jpg"));
-  ui->gridLayout->addWidget(bg02, 0, 0);
-  bg02->hide();
-
-  bg03 = new QLabel(this);
-  bg03->setPixmap(QPixmap(":/res/SampleBG03.jpg"));
-  ui->gridLayout->addWidget(bg03, 0, 0);
-  bg03->hide();
+  mainView = new MainView(this);
+  mainView->addPage("Preview", new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", this));
+  mainView->addPage("FileManager", new FileManager(QDir::homePath() + "/linuxcnc", this));
+  mainView->addPage("ToolManager", new ToolManager(this));
+  mainView->addPage("Settings", new SettingsWidget("../QtUi/src/UI/Settings.ui", this));
+  this->setCentralWidget(mainView);
   }
 
 
-void MainWindow::activateTbd() {
-//  ui->tbd->show();
-  sw->hide();
-  bg01->hide();
-  bg02->hide();
-  bg03->hide();
+void MainWindow::selectPage(const QString& name) {
+  qDebug() << "page to select: " << name;
+  mainView->activatePage(name);
   }
-
-
-void MainWindow::activateSettings() {
-  sw->show();
-  ui->tbd->hide();
-  bg01->hide();
-  bg02->hide();
-  bg03->hide();
-  ui->actionSave->setEnabled(true);
-  }
-
-
-void MainWindow::activateBg01() {
-  bg01->show();
-  sw->hide();
-  ui->tbd->hide();
-  bg02->hide();
-  bg03->hide();
-  }
-
-
-void MainWindow::activateBg02() {
-  bg02->show();
-  sw->hide();
-  ui->tbd->hide();
-  bg01->hide();
-  bg03->hide();
-  }
-
-
-void MainWindow::activateBg03() {
-  bg03->show();
-  sw->hide();
-  ui->tbd->hide();
-  bg01->hide();
-  bg02->hide();
-  }
-
 
 void MainWindow::timerEvent(QTimerEvent *e) {
 //  qDebug() << "start of timerEvent ...";

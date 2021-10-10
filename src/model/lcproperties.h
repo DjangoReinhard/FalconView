@@ -13,8 +13,8 @@ public:
   explicit LcProperties(const LcProperties&& other);
 
   LcProperties& operator = (const LcProperties&& other);
-  QVariant value(const QString& groupID, const QString& name);
-  void     dump();
+  QVariant      value(const QString& groupID, const QString& name);
+  void          dump();
 
 protected:
   void processFile(QFile& file);

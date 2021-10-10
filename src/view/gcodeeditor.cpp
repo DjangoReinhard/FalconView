@@ -81,6 +81,7 @@ void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
   QPainter painter(lineNumberArea);
 
   painter.fillRect(e->rect(), QColor(239, 240, 241));
+  painter.setFont(font());
   QTextBlock block    = firstVisibleBlock();        // lines == block
   int        blockNum = block.blockNumber();
   int        top      = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());

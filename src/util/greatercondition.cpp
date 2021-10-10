@@ -11,7 +11,7 @@ GreaterCondition::GreaterCondition(ValueModel* model, const QVariant& value, QOb
 
 bool GreaterCondition::eval() {
 //  qDebug() << "GreaterCondition::eval() ...";
-  switch (model()->getValue().type()) {
+  switch (model()->getValue().typeId()) {
     case QMetaType::Char:
     case QMetaType::Short:
     case QMetaType::Int:

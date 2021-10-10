@@ -16,6 +16,9 @@ class PreViewEditor : public DynWidget
 public:
   PreViewEditor(const QString& fileName, QWidget* parent);
 
+public slots:
+  void openFile();
+
 protected:
   void initializeWidget();
   void connectSignals();

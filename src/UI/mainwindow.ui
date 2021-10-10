@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string notr="true">Falcon-View</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
@@ -96,16 +96,17 @@
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionAbsolute_Position"/>
+    <addaction name="actionAbsPos"/>
+    <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuExtra">
+   <widget class="QMenu" name="menuMain">
     <property name="title">
-     <string>Extra</string>
+     <string>Main</string>
     </property>
-    <addaction name="actionDefault"/>
-    <addaction name="actionBack01"/>
-    <addaction name="actionBack02"/>
-    <addaction name="actionBack03"/>
+    <addaction name="actionPreview"/>
+    <addaction name="actionFileManager"/>
+    <addaction name="actionToolManager"/>
+    <addaction name="actionOffsets"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -121,12 +122,15 @@
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
-   <addaction name="menuExtra"/>
+   <addaction name="menuMain"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
     <string>open</string>
+   </property>
+   <property name="toolTip">
+    <string>open gcode file</string>
    </property>
    <property name="statusTip">
     <string>open GCode file in editor</string>
@@ -136,41 +140,54 @@
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="toolTip">
+    <string>exit application and shutdown backend</string>
+   </property>
   </action>
-  <action name="actionAbsolute_Position">
+  <action name="actionAbsPos">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Absolute Position</string>
    </property>
+   <property name="toolTip">
+    <string>toggle between absolute and relative position</string>
+   </property>
    <property name="statusTip">
     <string>choose whether to display absolute/relative Coordinates</string>
    </property>
   </action>
-  <action name="actionDefault">
+  <action name="actionPreview">
    <property name="text">
-    <string>Default</string>
+    <string>Preview</string>
+   </property>
+   <property name="toolTip">
+    <string>view toolpath and gcode</string>
    </property>
   </action>
-  <action name="actionBack01">
+  <action name="actionFileManager">
    <property name="text">
-    <string>Picture 01</string>
+    <string>FileManager</string>
+   </property>
+   <property name="toolTip">
+    <string>manage files and directories</string>
    </property>
   </action>
-  <action name="actionBack02">
+  <action name="actionToolManager">
    <property name="text">
-    <string>Picture 02</string>
+    <string>ToolManager</string>
+   </property>
+   <property name="toolTip">
+    <string>manage your tools</string>
    </property>
   </action>
-  <action name="actionBack03">
+  <action name="actionOffsets">
    <property name="text">
-    <string>Picture 03</string>
+    <string>Offsets</string>
    </property>
-  </action>
-  <action name="actionSettings">
-   <property name="text">
-    <string>Settings</string>
+   <property name="toolTip">
+    <string>manage workpiece offsets</string>
    </property>
   </action>
   <action name="actionSave">
@@ -179,6 +196,17 @@
    </property>
    <property name="text">
     <string>save</string>
+   </property>
+   <property name="toolTip">
+    <string>save gcode file</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+   <property name="toolTip">
+    <string>change colors and fonts</string>
    </property>
   </action>
  </widget>

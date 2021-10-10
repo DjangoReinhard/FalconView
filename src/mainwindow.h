@@ -15,9 +15,7 @@ class ToolInfoDockable;
 class SpeedInfoDockable;
 class CurCodesDockable;
 class GCodeViewer;
-class MainDockable;
-class SettingsWidget;
-class PreViewEditor;
+class MainView;
 class QSplitter;
 class Overlay;
 class QLabel;
@@ -36,11 +34,11 @@ public:
  ~MainWindow();
 
 public slots:
-  void activateTbd();
-  void activateSettings();
-  void activateBg01();
-  void activateBg02();
-  void activateBg03();
+//  void activateTbd();
+//  void activateSettings();
+//  void activateBg01();
+//  void activateBg02();
+//  void activateBg03();
 //void resetLine();
 
 protected:
@@ -53,17 +51,17 @@ protected:
   void timerEvent(QTimerEvent* event) override;
   void closeEvent(QCloseEvent *event) override;
 
+protected slots:
+  void selectPage(const QString& name);
+
 private:
   Ui::MainWindow*     ui;
   PositionDockable*   pos;
   ToolInfoDockable*   ti;
   SpeedInfoDockable*  si;
-  MainDockable*       md;
   CurCodesDockable*   cc;
   GCodeHighlighter*   gh;
-  GCodeViewer*        cv;
-  SettingsWidget*     sw;
-  PreViewEditor*      pwe;
+  MainView*           mainView;
   QLabel*             bg01;
   QLabel*             bg02;
   QLabel*             bg03;

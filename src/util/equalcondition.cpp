@@ -12,7 +12,7 @@ EqualCondition::EqualCondition(ValueModel* model, const QVariant& value, QObject
 
 bool EqualCondition::eval() {
 //  qDebug() << "EqualCondition::eval() ...";
-  if (model()->getValue().type() == value().type())
+  if (model()->getValue().typeId() == value().typeId())
      return model()->getValue() == value();
   else return false;
   }
