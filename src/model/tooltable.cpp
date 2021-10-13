@@ -1,11 +1,13 @@
-#include <tooltable.h>
-#include <toolentry.h>
 #include <QFile>
 #include <QTextStream>
 #include <QRegularExpression>
+#include <QDebug>
+#include <tooltable.h>
+#include <toolentry.h>
 
 
-ToolTable::ToolTable(const QString& fileName) {
+ToolTable::ToolTable(const QString& fileName)
+ : fn(fileName) {
   QFile file(fileName);
 
   if (file.exists()) processFile(file);
@@ -17,13 +19,22 @@ ToolTable::ToolTable(QFile& file) {
   }
 
 
-ToolTable::ToolTable(const ToolTable&& other) {
-  tools = other.tools;
+ToolTable::ToolTable(const ToolTable&& other)
+ : mappedTools(other.mappedTools)
+ , tools(other.tools)
+ , curTool(other.curTool)
+ , fn(other.fn) {
   }
 
+ToolTable::~ToolTable() {
+  //TODO:
+  }
 
 ToolTable& ToolTable::operator=(const ToolTable &&other) {
-  tools = other.tools;
+  mappedTools = other.mappedTools;
+  tools       = other.tools;
+  curTool     = other.curTool;
+  fn          = other.fn;
 
   return *this;
   }
@@ -32,17 +43,18 @@ ToolTable& ToolTable::operator=(const ToolTable &&other) {
 void ToolTable::processFile(QFile &file) {
   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
      QTextStream in(&file);
-     QString line = in.readLine();
+     QString line    = in.readLine();
+     int     lineNum = 0;
 
      while (!line.isNull()) {
-           processLine(line);
+           processLine(++lineNum, line);
            line = in.readLine();
            }
      }
   }
 
 
-void ToolTable::processLine(const QString &input) {
+void ToolTable::processLine(int lineNum, const QString &input) {
   QString line = input.trimmed();
   QString desc;
 
@@ -56,6 +68,7 @@ void ToolTable::processLine(const QString &input) {
      }
   QStringList parts = line.split(QRegularExpression("\\s+"));
   int    number     = 0;
+  int    slot       = 0;
   int    quadrant   = 0;
   double length     = 0;
   double diameter   = 0;
@@ -67,6 +80,10 @@ void ToolTable::processLine(const QString &input) {
       switch (part[0].toLatin1()) {
         case 'T':
              number = part.mid(1).toInt(&ok);
+             if (!ok) number = -1;
+             break;
+        case 'P':
+             slot = part.mid(1).toInt(&ok);
              if (!ok) number = -1;
              break;
         case 'Z':
@@ -91,23 +108,46 @@ void ToolTable::processLine(const QString &input) {
              break;
         }
       }
-  tools.insert(number, ToolEntry(number
-                               , length
-                               , diameter
-                               , quadrant
-                               , frontAngle
-                               , backAngle
-                               , desc));
+  ToolEntry* te = new ToolEntry(number
+                              , length
+                              , diameter
+                              , quadrant
+                              , frontAngle
+                              , backAngle
+                              , desc
+                              , slot
+                              , lineNum);
+  tools.append(te);
+  mappedTools.insert(number, te);
   }
 
 
-ToolEntry ToolTable::tool(int number) {
+void ToolTable::setCurrent(int slot) {
+  qDebug() << "activate tool with slot #" << slot;
+  for (const ToolEntry* te : tools) {
+      qDebug() << "tool" << te->number() << "has line number" << te->lineNum() << "and slot" << te->slot();
+      if (te->slot() == slot) {
+         curTool = *te;
+         break;
+         }
+      }
+  }
+
+
+const ToolEntry* ToolTable::tool(int number) const {
+  if (number < 0 || number >= tools.size()) return nullptr;
   return tools[number];
   }
 
 
 void ToolTable::dump() {
-  for (const ToolEntry& te : tools) {
-      te.dump();
+  qDebug() << "dump tools as list ...";
+  for (const ToolEntry* te : tools) {
+      te->dump();
+      }
+  qDebug() << "dump tools by mapped keys ...";
+  for (int n : mappedTools.keys()) {
+      qDebug() << "key #" << n;
+      mappedTools[n]->dump();
       }
   }

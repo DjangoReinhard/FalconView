@@ -5,10 +5,12 @@
 class AxisMask
 {
 public:
-  AxisMask(int mask);
+  AxisMask(int mask = 0);
   AxisMask(const AxisMask& other);
+  AxisMask(bool hasX, bool hasY, bool hasZ, bool hasA, bool hasB, bool hasC, bool hasU, bool hasV, bool hasW);
 
   int activeAxis() const { return cntActive; }
+  int  mask()      const { return axisMask;  }
   bool hasXAxis()  const { return axisMask & 0x001; }
   bool hasYAxis()  const { return axisMask & 0x002; }
   bool hasZAxis()  const { return axisMask & 0x004; }
@@ -18,11 +20,6 @@ public:
   bool hasUAxis()  const { return axisMask & 0x040; }
   bool hasVAxis()  const { return axisMask & 0x080; }
   bool hasWAxis()  const { return axisMask & 0x100; }
-
-  AxisMask& operator =(const AxisMask& other);
-  AxisMask& operator =(int);
-
-  int toInt() const { return axisMask; }
 
 protected:
   void calcActive();

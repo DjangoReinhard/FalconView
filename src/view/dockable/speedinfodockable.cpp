@@ -1,7 +1,7 @@
 #include <speedinfodockable.h>
 #include <labeladapter.h>
 #include <valuemanager.h>
-#include <config.h>
+#include <configmgr.h>
 #include <QFile>
 #include <QSlider>
 #include <QUiLoader>

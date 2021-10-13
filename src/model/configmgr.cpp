@@ -1,4 +1,4 @@
-#include <config.h>
+#include <configmgr.h>
 #include <QVariant>
 #include <QColor>
 #include <QFont>
@@ -27,7 +27,7 @@ QVariant Config::getProperty(const QString &groupID, const QString &name) {
  }
 
 
-ToolEntry Config::getTool(int number) {
+const ToolEntry* Config::getTool(int number) {
   return getInstance()->getTool(number);
   }
 
@@ -129,7 +129,7 @@ QVariant Config::ConfigManager::getProperty(const QString &groupID, const QStrin
   }
 
 
-ToolEntry Config::ConfigManager::getTool(int number) {
+const ToolEntry* Config::ConfigManager::getTool(int number) {
   return tools.tool(number);
   }
 

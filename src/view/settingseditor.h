@@ -1,17 +1,17 @@
-#ifndef SETTINGSWIDGET_H
-#define SETTINGSWIDGET_H
+#ifndef SETTINGSEDITOR_H
+#define SETTINGSEDITOR_H
 #include <dynwidget.h>
-#include <config.h>
+#include <configmgr.h>
 class QLabel;
 class QPushButton;
 
 
-class SettingsWidget : public DynWidget
+class SettingsEditor : public DynWidget
 {
   Q_OBJECT
 public:
-  SettingsWidget(const QString& uiFile, QWidget* parent = nullptr);
- ~SettingsWidget();
+  SettingsEditor(const QString& uiFile, QWidget* parent = nullptr);
+ ~SettingsEditor();
 
 protected:
   void initializeWidget();
@@ -61,4 +61,4 @@ private:
   QPushButton*      fontToolNext;
   QPushButton*      fontToolNum;
   };
-#endif // SETTINGSWIDGET_H
+#endif // SETTINGSEDITOR_H

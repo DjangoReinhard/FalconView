@@ -6,7 +6,8 @@ CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
-DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+# DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES *= QT_USE_QSTRINGBUILDER
 
 TARGET = QtUi
 
@@ -14,16 +15,24 @@ INCLUDEPATH += \
     src      \
     src/model \
     src/nml  \
+    src/rs274 \
     src/util \
     src/view \
     src/view/dockable \
+    /usr/include/python3.9 \
     lc/include \
+    lc/src/emc/rs274ngc \
+    lc/src/emc/tooldata \
     lc/src \
+    /usr/local/src/build-occt-Desktop_5_15_opt-Debug/include/opencascade
+
+#    /opt/opencascade/oce-upstream-V7_5_0beta.build/include/opencascade
+
 
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/model/config.cpp \
+    src/model/configmgr.cpp \
     src/model/dbconnection.cpp \
     src/model/direntry.cpp \
     src/model/dirmodel.cpp \
@@ -40,11 +49,15 @@ SOURCES += \
     src/model/valuemanager.cpp \
     src/model/valuemodel.cpp \
     src/nml/statusreader.cpp \
+    src/rs274/canonif.cpp \
+    src/rs274/linecodes.cpp \
+    src/rs274/stupidtoolchangerif.cpp \
     src/util/abstractcondition.cpp \
     src/util/axismask.cpp \
     src/util/equalcondition.cpp \
     src/util/gcodehighlighter.cpp \
     src/util/greatercondition.cpp \
+    src/util/LCInter.cpp \
     src/util/smallercondition.cpp \
     src/view/dockable/curcodesdockable.cpp \
     src/view/dockable/dockable.cpp \
@@ -53,23 +66,29 @@ SOURCES += \
     src/view/dockable/positiondockable.cpp \
     src/view/dockable/speedinfodockable.cpp \
     src/view/dockable/toolinfodockable.cpp \
+    src/view/DocumentCommon.cxx \
     src/view/dynwidget.cpp \
     src/view/filemanager.cpp \
     src/view/gcodeeditor.cpp \
     src/view/gcodeviewer.cpp \
+    src/view/GeomWidget.cxx \
+    src/view/graphicfactory.cpp \
     src/view/labeladapter.cpp \
     src/view/mainview.cpp \
     src/view/micon.cpp \
+    src/view/OcctWindow.cxx \
+    src/view/OcctWindow.h \
     src/view/overlay.cpp \
     src/view/pweditor.cpp \
-    src/view/settingswidget.cpp \
+    src/view/settingseditor.cpp \
     src/view/splitwidget.cpp \
     src/view/tooleditor.cpp \
     src/view/toolmanager.cpp \
+    src/view/View.cxx \
 
 HEADERS += \
     src/mainwindow.h \
-    src/model/config.h \
+    src/model/configmgr.h \
     src/model/dbconnection.h \
     src/model/direntry.h \
     src/model/dirmodel.h \
@@ -87,12 +106,16 @@ HEADERS += \
     src/model/valuemodel.h \
     src/nml/insulatePose.h \
     src/nml/statusreader.h \
+    src/rs274/canonif.h \
+    src/rs274/linecodes.h \
+    src/rs274/stupidtoolchangerif.h \
     src/util/abstractcondition.h \
     src/util/axismask.h \
     src/util/equalcondition.h \
     src/util/gcodehighlighter.h \
     src/util/greatercondition.h \
     src/util/KeyCodes.h \
+    src/util/LCInter.h \
     src/util/smallercondition.h \
     src/view/dockable/curcodesdockable.h \
     src/view/dockable/dockable.h \
@@ -101,19 +124,24 @@ HEADERS += \
     src/view/dockable/positiondockable.h \
     src/view/dockable/speedinfodockable.h \
     src/view/dockable/toolinfodockable.h \
+    src/view/DocumentCommon.h \
     src/view/dynwidget.h \
     src/view/filemanager.h \
     src/view/gcodeeditor.h \
     src/view/gcodeviewer.h \
+    src/view/GeomWidget.h \
+    src/view/graphicfactory.h \
     src/view/labeladapter.h \
     src/view/mainview.h \
     src/view/micon.h \
     src/view/overlay.h \
     src/view/pweditor.h \
-    src/view/settingswidget.h \
+    src/view/settingseditor.h \
     src/view/splitwidget.h \
     src/view/tooleditor.h \
     src/view/toolmanager.h \
+    src/view/View.h \
+
 
 FORMS += \
     src/UI/CurCodes.ui \
@@ -134,9 +162,31 @@ unix:!mac {
 
 LIBS += \
   -L$${_PRO_FILE_PWD_}/lc/lib \
+  -L/usr/lib \
   -lm \
   -llinuxcnc \
-  -lnml
+  -lposemath \
+  -lnml \
+  -lrs274 \
+  -llinuxcncini \
+  -lpyplugin \
+  -llinuxcnchal \
+  -ltooldata \
+  -lstdc++ \
+  -lboost_python39 \
+  -lpython3.9 \
+  -lcrypt \
+  -lpthread \
+  -ldl \
+  -lutil
+
+LIBS += -L/usr/local/src/build-occt-Desktop_5_15_opt-Debug/lin64/gcc/libd
+LIBS += -lTKernel -lTKMath -lTKService -lTKV3d -lTKOpenGl \
+        -lTKBRep -lTKIGES -lTKSTL -lTKVRML -lTKSTEP -lTKSTEPAttr -lTKSTEP209 \
+        -lTKSTEPBase -lTKGeomBase -lTKGeomAlgo -lTKG3d -lTKG2d \
+        -lTKXSBase -lTKShHealing -lTKHLR -lTKTopAlgo -lTKMesh -lTKPrim \
+        -lTKCDF -lTKBool -lTKBO -lTKFillet -lTKOffset -lTKLCAF -lTKCAF -lTKVCAF \
+        -lTKBin -lTKXml
 
 TRANSLATIONS += \
     src/i18n/QtUi_de_DE.ts

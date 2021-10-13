@@ -1,8 +1,9 @@
 #include <pweditor.h>
 #include <valuemanager.h>
-#include <config.h>
+#include <configmgr.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
+#include <View.h>
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -14,27 +15,18 @@
 #include <QPushButton>
 
 
-PreViewEditor::PreViewEditor(const QString& fileName, QWidget* parent)
- : DynWidget(parent) {
+PreViewEditor::PreViewEditor(const QString& fileName, View* view, QWidget* parent)
+ : DynWidget(parent)
+ , view(view) {
   setObjectName("PreViewEditor");
   this->setStyleSheet("background: 0xFF0000;");
   setLayout(new QHBoxLayout);
   spV = new QSplitter(Qt::Vertical);
-  QLabel* dummy = new QLabel(tr("Platzhalter für Vorschau"));
-
-  dummy->setTextFormat(Qt::MarkdownText);
-  dummy->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-  dummy->setWordWrap(true);
-  dummy->setTextInteractionFlags(Qt::LinksAccessibleByKeyboard
-                               | Qt::LinksAccessibleByMouse
-                               | Qt::TextBrowserInteraction
-                               | Qt::TextSelectableByKeyboard
-                               | Qt::TextSelectableByMouse);
-  dummy->setMinimumSize(400, 400);
   QWidget* w = loadFromUI(fileName);
 
-  dummy->setMargin(25);
-  spV->addWidget(dummy);
+  view->setMinimumSize(400, 400);
+  view->setParent(this);
+  spV->addWidget(view);
   spV->addWidget(w);
   fn     = w->findChild<QLineEdit*>("fileName");
   pbOpen = w->findChild<QPushButton*>("pbOpen");

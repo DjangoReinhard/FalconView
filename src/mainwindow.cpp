@@ -11,11 +11,13 @@
 #include <gcodehighlighter.h>
 #include <gcodeviewer.h>
 #include <pweditor.h>
-#include <settingswidget.h>
+#include <settingseditor.h>
 #include <filemanager.h>
 #include <toolmanager.h>
 #include <micon.h>
-#include <config.h>
+#include <configmgr.h>
+#include <DocumentCommon.h>
+#include <View.h>
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
 #include <QSplitter>
@@ -64,6 +66,9 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this);
   setObjectName("Falcon-View");
   setDockNestingEnabled(true);
+//  setFocusPolicy(Qt::StrongFocus);
+
+  doc3D = createNewDocument();
 
   createActions();
   createToolBars();
@@ -168,6 +173,11 @@ void MainWindow::createValueModels() {
   ValueManager vm;
 
   vm.setValue("showAbsolute", false);
+  }
+
+
+DocumentCommon* MainWindow::createNewDocument() {
+  return new DocumentCommon(this);
   }
 
 
@@ -285,10 +295,12 @@ void MainWindow::createDockables() {
 
 void MainWindow::createMainWidgets() {
   mainView = new MainView(this);
-  mainView->addPage("Preview", new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", this));
-  mainView->addPage("FileManager", new FileManager(QDir::homePath() + "/linuxcnc", this));
-  mainView->addPage("ToolManager", new ToolManager(this));
-  mainView->addPage("Settings", new SettingsWidget("../QtUi/src/UI/Settings.ui", this));
+  view3D = new View(doc3D->getContext(), this);
+  doc3D->setView(view3D);
+  mainView->addPage("FileManager", new FileManager(QDir(QDir::homePath() + "/linuxcnc"), mainView));
+  mainView->addPage("ToolManager", new ToolManager(mainView));
+  mainView->addPage("Settings", new SettingsEditor("../QtUi/src/UI/Settings.ui", mainView));
+  mainView->addPage("Preview", new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", view3D, mainView));
   this->setCentralWidget(mainView);
   }
 

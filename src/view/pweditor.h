@@ -6,6 +6,7 @@ class QLineEdit;
 class QVariant;
 class QPlainTextEdit;
 class QPushButton;
+class View;
 class GCodeEditor;
 class GCodeHighlighter;
 
@@ -14,7 +15,7 @@ class PreViewEditor : public DynWidget
 {
   Q_OBJECT
 public:
-  PreViewEditor(const QString& fileName, QWidget* parent);
+  PreViewEditor(const QString& fileName, View* view, QWidget* parent);
 
 public slots:
   void openFile();
@@ -30,6 +31,7 @@ private:
   QLineEdit*        fn;
   GCodeEditor*      ed;
   GCodeHighlighter* gh;
+  View*             view;
   QPushButton*      pbOpen;
   QPushButton*      pbSave;
   };

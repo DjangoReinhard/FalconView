@@ -1,4 +1,4 @@
-#include <settingswidget.h>
+#include <settingseditor.h>
 #include <QLabel>
 #include <QColor>
 #include <QFont>
@@ -8,7 +8,7 @@
 #include <QDebug>
 
 
-SettingsWidget::SettingsWidget(const QString& uiFile, QWidget* parent)
+SettingsEditor::SettingsEditor(const QString& uiFile, QWidget* parent)
  : DynWidget(uiFile, parent)
  , labels(nullptr) {
   setObjectName("SettingsWidget");
@@ -16,11 +16,11 @@ SettingsWidget::SettingsWidget(const QString& uiFile, QWidget* parent)
   }
 
 
-SettingsWidget::~SettingsWidget() {
+SettingsEditor::~SettingsEditor() {
   //delete labels;
   }
 
-void SettingsWidget::initializeWidget() {
+void SettingsEditor::initializeWidget() {
   labels = new QLabel*[Config::guiSettingEntries];
   labels[0]  = findChild<QLabel*>("actCodesPreview");
   labels[1]  = findChild<QLabel*>("droAbsPreview");
@@ -117,7 +117,7 @@ void SettingsWidget::initializeWidget() {
   }
 
 
-void SettingsWidget::setupLabels() {
+void SettingsEditor::setupLabels() {
   ValueManager vm;
   Config cfg;
   QString keyBg, keyFg, keyF;
@@ -164,21 +164,21 @@ void SettingsWidget::setupLabels() {
   }
 
 
-void SettingsWidget::changeBackgroundColor(int i) {
+void SettingsEditor::changeBackgroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::white, this, "Select Background Color", QColorDialog::ShowAlphaChannel);
 
   if (color.isValid()) Config().setBackground(i, color);
   }
 
 
-void SettingsWidget::changeForegroundColor(int i) {
+void SettingsEditor::changeForegroundColor(int i) {
   const QColor color = QColorDialog::getColor(Qt::black, this, "Select Foreground Color");
 
   if (color.isValid()) Config().setForeground(i, color);
   }
 
 
-void SettingsWidget::changeFont(int i) {
+void SettingsEditor::changeFont(int i) {
   bool  ok;
   QFont font = QFontDialog::getFont(&ok, QFont(labels[i]->font().family()), this, "Select Font", QFontDialog::ScalableFonts);
 

@@ -1,6 +1,6 @@
 #include <curcodesdockable.h>
 #include <valuemanager.h>
-#include <config.h>
+#include <configmgr.h>
 #include <QLabel>
 #include <QColor>
 #include <QFont>

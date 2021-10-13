@@ -1,33 +1,40 @@
 #ifndef TOOLENTRY_H
 #define TOOLENTRY_H
 #include <QString>
+#include <emctool.h>
+#ifdef toLine
+#undef toLine
+#endif
 
 
+/**
+ * @brief The ToolEntry class
+ * entry of linuxcnc tooltable file
+ */
 class ToolEntry
 {
 public:
   ToolEntry();
-  ToolEntry(int num, double length, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description);
+  ToolEntry(int num, double length, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum);
   ToolEntry(const ToolEntry& other);
 
   ToolEntry& operator = (const ToolEntry& other);
 
-  int     number()      { return num;  }
-  QString description() { return desc; }
-  double  length()      { return len;  }
-  double  diameter()    { return diam; }
-  double  frontAngle()  { return fa;   }
-  double  backAngle()   { return ba;   }
-  int     quadrant()    { return quad; }
-  void    dump() const;
+  int              number() const      { return canon.toolno;  }
+  QString          description() const { return desc; }
+  double           length() const      { return canon.offset.tran.z; }
+  double           diameter() const    { return canon.diameter; }
+  double           frontAngle() const  { return canon.frontangle;  }
+  double           backAngle() const   { return canon.backangle;   }
+  int              quadrant() const    { return canon.orientation; }
+  int              slot() const        { return canon.pocketno; }
+  int              lineNum() const     { return serial; }
+  CANON_TOOL_TABLE toCanon() const     { return canon; }
+  void             dump() const;
 
 private:
-  int     num;
-  QString desc;
-  double  len;
-  double  diam;
-  double  fa;
-  double  ba;
-  int     quad;
+  QString          desc;
+  int              serial;
+  CANON_TOOL_TABLE canon;
   };
 #endif // TOOLENTRY_H

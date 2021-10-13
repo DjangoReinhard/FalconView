@@ -14,12 +14,15 @@ class PositionDockable;
 class ToolInfoDockable;
 class SpeedInfoDockable;
 class CurCodesDockable;
+class DocumentCommon;
 class GCodeViewer;
 class MainView;
+class View;
 class QSplitter;
 class Overlay;
 class QLabel;
 class QAction;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -32,6 +35,9 @@ class MainWindow : public QMainWindow
 public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
+
+  DocumentCommon* createNewDocument();
+  DocumentCommon* doc3D;
 
 public slots:
 //  void activateTbd();
@@ -61,6 +67,7 @@ private:
   SpeedInfoDockable*  si;
   CurCodesDockable*   cc;
   GCodeHighlighter*   gh;
+  View*               view3D;
   MainView*           mainView;
   QLabel*             bg01;
   QLabel*             bg02;

@@ -3,7 +3,7 @@
 #include <dockable.h>
 #include <labeladapter.h>
 #include <axismask.h>
-#include <config.h>
+#include <configmgr.h>
 #include <QDockWidget>
 #include <QLabel>
 #include <QResizeEvent>
