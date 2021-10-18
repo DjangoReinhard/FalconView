@@ -1,5 +1,6 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
+#include <dbconnection.h>
 #include <mainview.h>
 #include <axismask.h>
 #include <positiondockable.h>
@@ -69,11 +70,14 @@ MainWindow::MainWindow(QWidget *parent)
 //  setFocusPolicy(Qt::StrongFocus);
 
   doc3D = createNewDocument();
+  DBConnection conn("../ToolManager/db/toolTable");
+
+  if (!conn.connect()) qDebug() << "failed to connect to Database!";
 
   createActions();
   createToolBars();
-  createMainWidgets();
-  createDockables();
+  createMainWidgets(conn);
+  createDockables(conn);
   createValueModels();
   createConnections();
 
@@ -273,7 +277,7 @@ void MainWindow::createToolBars() {
   }
 
 
-void MainWindow::createDockables() {
+void MainWindow::createDockables(DBConnection&) {
   ti = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, ti);
   ui->menuView->addAction(ti->toggleViewAction());
@@ -293,12 +297,12 @@ void MainWindow::createDockables() {
   }
 
 
-void MainWindow::createMainWidgets() {
+void MainWindow::createMainWidgets(DBConnection& conn) {
   mainView = new MainView(this);
   view3D = new View(doc3D->getContext(), this);
   doc3D->setView(view3D);
   mainView->addPage("FileManager", new FileManager(QDir(QDir::homePath() + "/linuxcnc"), mainView));
-  mainView->addPage("ToolManager", new ToolManager(mainView));
+  mainView->addPage("ToolManager", new ToolManager(conn));
   mainView->addPage("Settings", new SettingsEditor("../QtUi/src/UI/Settings.ui", mainView));
   mainView->addPage("Preview", new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", view3D, mainView));
   this->setCentralWidget(mainView);

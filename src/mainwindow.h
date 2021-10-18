@@ -15,6 +15,7 @@ class ToolInfoDockable;
 class SpeedInfoDockable;
 class CurCodesDockable;
 class DocumentCommon;
+class DBConnection;
 class GCodeViewer;
 class MainView;
 class View;
@@ -50,8 +51,8 @@ public slots:
 protected:
   void createActions();
   void createToolBars();
-  void createDockables();
-  void createMainWidgets();
+  void createDockables(DBConnection& conn);
+  void createMainWidgets(DBConnection& conn);
   void createConnections();
   void createValueModels();
   void timerEvent(QTimerEvent* event) override;

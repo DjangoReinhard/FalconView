@@ -101,7 +101,7 @@ View::View (const Handle(AIS_InteractiveContext)& theContext, QWidget* theParent
   setAttribute(Qt::WA_NativeWindow);
 
   myDefaultGestures = myMouseGestureMap;
-  myCurrentMode = CurrentAction3d::Nothing;
+  myCurrentMode     = CurrentAction3d::Nothing;
   setMouseTracking(true);
   initViewActions();
   initCursors();
@@ -110,7 +110,6 @@ View::View (const Handle(AIS_InteractiveContext)& theContext, QWidget* theParent
   setAttribute(Qt::WA_PaintOnScreen);
   setAttribute(Qt::WA_NoSystemBackground);
   init();
-  timer.start(200, this);
   }
 
 

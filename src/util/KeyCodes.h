@@ -4,11 +4,14 @@
 class KeyCodes
 {
 public:
-  static const int TabKey      = 0x1000001;
-  static const int BackTabKey  = 0x1000002;     // aka Shift+Tab
+  static const int Space       = 0x020;
+
+  static const int Escape      = 0x1000000;
+  static const int Tab         = 0x1000001;
+  static const int BackTab     = 0x1000002;     // aka Shift+Tab
   static const int Enter       = 0x1000004;
-  static const int InsertKey   = 0x1000006;
-  static const int DeleteKey   = 0x1000007;
+  static const int Insert      = 0x1000006;
+  static const int Delete      = 0x1000007;
   static const int CursorLeft  = 0x1000012;
   static const int CursorUp    = 0x1000013;
   static const int CursorRight = 0x1000014;

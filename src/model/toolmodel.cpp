@@ -3,6 +3,7 @@
 #include <QSqlRecord>
 #include <QSqlField>
 #include <QSqlError>
+#include <QSqlQuery>
 #include <QDebug>
 
 
@@ -12,6 +13,7 @@ ToolModel::ToolModel(QObject *parent)
      throw new QSqlError("failed to open database!");
      }
   setTable("Tools");
+  this->setEditStrategy(QSqlTableModel::OnManualSubmit);
   select();
   }
 
@@ -105,4 +107,73 @@ QVariant ToolModel::promptData(int column, int role) const {
        }
      }
   return QVariant();
+  }
+
+
+int ToolModel::tools4Category(int categoryId) {
+  QString   qs = QString("SELECT count(id) FROM Tools WHERE type=%1").arg(categoryId);
+  QSqlQuery q(qs);
+
+  if (!q.exec()) {
+     qDebug() << "failed to query tools 4 cat" << categoryId << q.lastError().text();
+     return -1;
+     }
+  int count = 0;
+
+  if (q.next()) count = q.value(0).toInt();
+  revertAll();
+
+  return count;
+  }
+
+
+int ToolModel::maxToolNum() {
+  QString   qs = QString("SELECT max(num) FROM Tools");
+  QSqlQuery q(qs);
+
+  if (!q.exec()) {
+     qDebug() << "failed to query max toolnum" << q.lastError().text();
+     return -1;
+     }
+  int tNum = 0;
+
+  if (q.next()) tNum = q.value(0).toInt();
+  revertAll();
+
+  return tNum;
+  }
+
+
+
+int ToolModel::nextId() {
+  QString   qs = QString("SELECT max(id) FROM Tools");
+  QSqlQuery q(qs);
+
+  if (!q.exec()) {
+     qDebug() << "failed to query max id" << q.lastError().text();
+     return -1;
+     }
+  int tNum = 0;
+
+  if (q.next()) tNum = q.value(0).toInt();
+  revertAll();
+
+  return tNum + 1;
+  }
+
+
+bool ToolModel::existsToolNum(int toolNum) {
+  QString   qs = QString("SELECT count(id) FROM Tools WHERE num=%1").arg(toolNum);
+  QSqlQuery q(qs);
+
+  if (!q.exec()) {
+     qDebug() << "failed to query existance of toolNum" << q.lastError().text();
+     return true;   // signals error
+     }
+  int count = 0;
+
+  if (q.next()) count = q.value(0).toInt();
+  revertAll();
+
+  return count > 0;
   }

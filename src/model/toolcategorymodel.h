@@ -1,28 +1,15 @@
 #ifndef TOOLCATEGORYMODEL_H
 #define TOOLCATEGORYMODEL_H
-#include <QAbstractItemModel>
-class ToolCategory;
+#include <QSqlTableModel>
 
 
-class ToolCategoryModel : public QAbstractItemModel
+class ToolCategoryModel : public QSqlTableModel
 {
   Q_OBJECT
 public:
   explicit ToolCategoryModel(QObject *parent = nullptr);
-  ~ToolCategoryModel();
 
-  QVariant      data(const QModelIndex& index, int role) const override;
-  Qt::ItemFlags flags(const QModelIndex&index) const override;
-  QVariant      headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-  QModelIndex   index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
-  QModelIndex   parent(const QModelIndex& index) const override;
-  int           rowCount(const QModelIndex& parent = QModelIndex()) const override;
-  int           columnCount(const QModelIndex& parent = QModelIndex()) const override;
-
-private:
-  void          setupModelData(ToolCategory* parent);
-
-  ToolCategory*                 rootItem;
-  static QVector<ToolCategory*> categories;
+  int      nextId() const;
+  QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   };
 #endif // TOOLCATEGORYMODEL_H

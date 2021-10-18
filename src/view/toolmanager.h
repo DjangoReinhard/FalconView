@@ -7,8 +7,11 @@ class QTreeView;
 class QTableView;
 class QPlainTextEdit;
 class QSortFilterProxyModel;
+class CategoryTreeModel;
 class ToolCategoryModel;
 class ToolModel;
+class ToolEditor;
+class DBConnection;
 class QItemSelection;
 class QKeyEvent;
 
@@ -17,24 +20,34 @@ class ToolManager : public QWidget
 {
   Q_OBJECT
 public:
-  explicit ToolManager(QWidget *parent = nullptr);
+  explicit ToolManager(DBConnection& conn, QWidget *parent = nullptr);
 
 public slots:
   void currentChanged(const QModelIndex& index);
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-  void toggleView();
 
 protected:
   void keyReleaseEvent(QKeyEvent *event);
+  void createCategory();
+  void createTool();
+  void deleteCategory();
+  void deleteTool();
+  void editTool();
+  void renameCategory();
+  void saveToolChanges();
 
 private:
+  DBConnection&          conn;
   QSplitter*             spH;
   QSplitter*             spV;
   QTreeView*             categories;
   QTableView*            tools;
-  QPlainTextEdit*        preView;
-  ToolCategoryModel*     categoryModel;
+  CategoryTreeModel*     categoryTreeModel;
+  ToolCategoryModel*     categoryTableModel;
   ToolModel*             toolModel;
+  ToolEditor*            tEdit;
+  QSize                  edSize;
+  int                    tool2Edit;
   QSortFilterProxyModel* pxCat;
   QSortFilterProxyModel* pxTools;
   };

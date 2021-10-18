@@ -33,6 +33,8 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/model/configmgr.cpp \
+    src/model/category.cpp \
+    src/model/CategoryTreeModel.cpp \
     src/model/dbconnection.cpp \
     src/model/direntry.cpp \
     src/model/dirmodel.cpp \
@@ -89,6 +91,8 @@ SOURCES += \
 HEADERS += \
     src/mainwindow.h \
     src/model/configmgr.h \
+    src/model/category.h \
+    src/model/CategoryTreeModel.h \
     src/model/dbconnection.h \
     src/model/direntry.h \
     src/model/dirmodel.h \

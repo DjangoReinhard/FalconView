@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>807</width>
+    <width>744</width>
     <height>723</height>
    </rect>
   </property>
@@ -25,7 +25,14 @@
     </widget>
    </item>
    <item row="5" column="2">
-    <widget class="QLineEdit" name="eLenFree"/>
+    <widget class="QLineEdit" name="eLenFree">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="3" column="2">
     <widget class="QLineEdit" name="eDiaTip">
@@ -38,7 +45,14 @@
     </widget>
    </item>
    <item row="8" column="4">
-    <widget class="QLineEdit" name="eAngMaxRamp"/>
+    <widget class="QLineEdit" name="eAngMaxRamp">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="4" column="2">
     <widget class="QLineEdit" name="eAngCut">
@@ -98,16 +112,44 @@
     </widget>
    </item>
    <item row="9" column="4">
-    <widget class="QLineEdit" name="eLoad"/>
+    <widget class="QLineEdit" name="eLoad">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="11" column="0" colspan="5">
-    <widget class="QPlainTextEdit" name="eComment"/>
+    <widget class="QPlainTextEdit" name="eComment">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="5" column="4">
-    <widget class="QLineEdit" name="eAngSlope"/>
+    <widget class="QLineEdit" name="eAngSlope">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="9" column="2">
-    <widget class="QLineEdit" name="eDiaColl"/>
+    <widget class="QLineEdit" name="eDiaColl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="1" column="3">
     <widget class="QLabel" name="label">
@@ -123,7 +165,14 @@
     </widget>
    </item>
    <item row="8" column="2">
-    <widget class="QLineEdit" name="eAngHelix"/>
+    <widget class="QLineEdit" name="eAngHelix">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="9" column="3">
     <widget class="QLabel" name="label_19">
@@ -146,7 +195,14 @@
     </widget>
    </item>
    <item row="10" column="2">
-    <widget class="QLineEdit" name="eLenColl"/>
+    <widget class="QLineEdit" name="eLenColl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="2" column="4">
     <widget class="QLineEdit" name="eDiaFlute">
@@ -206,10 +262,16 @@
    <item row="1" column="4">
     <widget class="QLineEdit" name="eLenTool">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -296,7 +358,14 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="3">
-    <widget class="QComboBox" name="cbType"/>
+    <widget class="QComboBox" name="cbType">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="10" column="3">
     <widget class="QLabel" name="label_14">
@@ -306,7 +375,14 @@
     </widget>
    </item>
    <item row="10" column="4">
-    <widget class="QLineEdit" name="ePartCode"/>
+    <widget class="QLineEdit" name="ePartCode">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="6" column="3">
     <widget class="QLabel" name="label_6">
@@ -316,7 +392,14 @@
     </widget>
    </item>
    <item row="6" column="4">
-    <widget class="QLineEdit" name="eDiaShank"/>
+    <widget class="QLineEdit" name="eDiaShank">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="6" column="0" colspan="2">
     <widget class="QLabel" name="label_10">
@@ -326,7 +409,14 @@
     </widget>
    </item>
    <item row="6" column="2">
-    <widget class="QLineEdit" name="eMaterial"/>
+    <widget class="QLineEdit" name="eMaterial">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="7" column="0" colspan="2">
     <widget class="QLabel" name="label_15">
@@ -336,10 +426,80 @@
     </widget>
    </item>
    <item row="7" column="2">
-    <widget class="QLineEdit" name="eCoating"/>
+    <widget class="QLineEdit" name="eCoating">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
   </layout>
+  <zorder>eAngCut</zorder>
+  <zorder>eLenCut</zorder>
+  <zorder>eLenFree</zorder>
+  <zorder>eDiaTip</zorder>
+  <zorder>eAngMaxRamp</zorder>
+  <zorder>eLenFlute</zorder>
+  <zorder>label_13</zorder>
+  <zorder>eFlutes</zorder>
+  <zorder>label_16</zorder>
+  <zorder>label_7</zorder>
+  <zorder>eLoad</zorder>
+  <zorder>eComment</zorder>
+  <zorder>eAngSlope</zorder>
+  <zorder>eDiaColl</zorder>
+  <zorder>label</zorder>
+  <zorder>eAngHelix</zorder>
+  <zorder>label_19</zorder>
+  <zorder>label_3</zorder>
+  <zorder>eLenColl</zorder>
+  <zorder>eDiaFlute</zorder>
+  <zorder>label_8</zorder>
+  <zorder>toolNum</zorder>
+  <zorder>eLenTool</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_5</zorder>
+  <zorder>label_9</zorder>
+  <zorder>label_11</zorder>
+  <zorder>label_12</zorder>
+  <zorder>label_17</zorder>
+  <zorder>eName</zorder>
+  <zorder>cbType</zorder>
+  <zorder>label_14</zorder>
+  <zorder>ePartCode</zorder>
+  <zorder>label_6</zorder>
+  <zorder>eDiaShank</zorder>
+  <zorder>label_10</zorder>
+  <zorder>eMaterial</zorder>
+  <zorder>label_15</zorder>
+  <zorder>eCoating</zorder>
  </widget>
+ <tabstops>
+  <tabstop>eName</tabstop>
+  <tabstop>cbType</tabstop>
+  <tabstop>eLenTool</tabstop>
+  <tabstop>eFlutes</tabstop>
+  <tabstop>eDiaFlute</tabstop>
+  <tabstop>eDiaTip</tabstop>
+  <tabstop>eLenFlute</tabstop>
+  <tabstop>eAngCut</tabstop>
+  <tabstop>eLenCut</tabstop>
+  <tabstop>eLenFree</tabstop>
+  <tabstop>eAngSlope</tabstop>
+  <tabstop>eMaterial</tabstop>
+  <tabstop>eDiaShank</tabstop>
+  <tabstop>eCoating</tabstop>
+  <tabstop>eAngHelix</tabstop>
+  <tabstop>eAngMaxRamp</tabstop>
+  <tabstop>eDiaColl</tabstop>
+  <tabstop>eLoad</tabstop>
+  <tabstop>eLenColl</tabstop>
+  <tabstop>ePartCode</tabstop>
+  <tabstop>eComment</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
