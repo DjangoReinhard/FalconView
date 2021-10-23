@@ -3,7 +3,7 @@
 #include <configmgr.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
-#include <View.h>
+#include <occtviewer.h>
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -15,7 +15,7 @@
 #include <QPushButton>
 
 
-PreViewEditor::PreViewEditor(const QString& fileName, View* view, QWidget* parent)
+PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent)
  : DynWidget(parent)
  , view(view) {
   setObjectName("PreViewEditor");

@@ -18,10 +18,10 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
-
+#ifdef REDNOSE
 #include <DocumentCommon.h>
 #include <mainwindow.h>
-#include <View.h>
+#include <occtviewer.h>
 #include <lcproperties.h>
 #include <cmath>
 
@@ -80,9 +80,9 @@ DocumentCommon::DocumentCommon(MainWindow* theApp)
  , myContextIsEmpty(true) {
   TCollection_ExtendedString a3DName("Visu3D");
 
-  myViewer = Viewer(a3DName.ToExtString(), "", 1000.0, V3d_XposYnegZpos, Standard_True, Standard_True);
-  myViewer->SetDefaultLights();
-  myViewer->SetLightOn();
+//  myViewer = Viewer(a3DName.ToExtString(), "", 1000.0, V3d_XposYnegZpos, Standard_True, Standard_True);
+//  myViewer->SetDefaultLights();
+//  myViewer->SetLightOn();
   myContext = new AIS_InteractiveContext(myViewer);
   }
 
@@ -134,7 +134,6 @@ void DocumentCommon::setObjects(const QList<Handle(AIS_InteractiveObject)>& tool
          cMax.SetZ(fmax(cMax.Z(), p.Z()));
          }
       }
-
   myView3d->setLimits(cMin, cMax);
   myView3d->setCone(cone);
   myView3d->fitAll();
@@ -145,3 +144,4 @@ void DocumentCommon::Clear() {
   myContext->RemoveAll(Standard_True);
   myContextIsEmpty = true;
   }
+#endif

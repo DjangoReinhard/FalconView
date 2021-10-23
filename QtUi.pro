@@ -73,20 +73,17 @@ SOURCES += \
     src/view/filemanager.cpp \
     src/view/gcodeeditor.cpp \
     src/view/gcodeviewer.cpp \
-    src/view/GeomWidget.cxx \
     src/view/graphicfactory.cpp \
     src/view/labeladapter.cpp \
     src/view/mainview.cpp \
     src/view/micon.cpp \
-    src/view/OcctWindow.cxx \
-    src/view/OcctWindow.h \
+    src/view/occtviewer.cpp \
     src/view/overlay.cpp \
     src/view/pweditor.cpp \
     src/view/settingseditor.cpp \
     src/view/splitwidget.cpp \
     src/view/tooleditor.cpp \
     src/view/toolmanager.cpp \
-    src/view/View.cxx \
 
 HEADERS += \
     src/mainwindow.h \
@@ -133,18 +130,17 @@ HEADERS += \
     src/view/filemanager.h \
     src/view/gcodeeditor.h \
     src/view/gcodeviewer.h \
-    src/view/GeomWidget.h \
     src/view/graphicfactory.h \
     src/view/labeladapter.h \
     src/view/mainview.h \
     src/view/micon.h \
     src/view/overlay.h \
+    src/view/occtviewer.h \
     src/view/pweditor.h \
     src/view/settingseditor.h \
     src/view/splitwidget.h \
     src/view/tooleditor.h \
     src/view/toolmanager.h \
-    src/view/View.h \
 
 
 FORMS += \

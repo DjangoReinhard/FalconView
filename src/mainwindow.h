@@ -18,7 +18,7 @@ class DocumentCommon;
 class DBConnection;
 class GCodeViewer;
 class MainView;
-class View;
+class OcctQtViewer;
 class QSplitter;
 class Overlay;
 class QLabel;
@@ -37,8 +37,10 @@ public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
-  DocumentCommon* createNewDocument();
-  DocumentCommon* doc3D;
+//  DocumentCommon* createNewDocument();
+//  DocumentCommon* doc3D;
+  OcctQtViewer* preView() { return view3D; }
+  void          updatePath();
 
 public slots:
 //  void activateTbd();
@@ -68,7 +70,7 @@ private:
   SpeedInfoDockable*  si;
   CurCodesDockable*   cc;
   GCodeHighlighter*   gh;
-  View*               view3D;
+  OcctQtViewer*       view3D;
   MainView*           mainView;
   QLabel*             bg01;
   QLabel*             bg02;

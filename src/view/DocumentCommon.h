@@ -18,7 +18,7 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
-
+#ifdef REDNOSE
 #ifndef DOCUMENT_COMMON_OVERVIEW_H
 #define DOCUMENT_COMMON_OVERVIEW_H
 
@@ -32,7 +32,7 @@
 
 class MainWindow;
 class LcProperties;
-class View;
+class OcctQtViewer;
 
 
 //! Implements visualization of samples content
@@ -46,10 +46,10 @@ public:
 
   const Handle(AIS_InteractiveContext)& getContext()    { return myContext; }
   const Handle(V3d_Viewer)&             getViewer()     { return myViewer; }
-  View* view()                                          { return myView3d; }
+  OcctQtViewer*                         view()          { return myView3d; }
   void  setLimits(LcProperties& cfg);
   void  setViewer (const Handle(V3d_Viewer)& theViewer) { myViewer = theViewer; }
-  void  setView(View* view)                             { myView3d = view; }
+  void  setView(OcctQtViewer* view)                     { myView3d = view; }
   void  setObjects(const QList<Handle(AIS_InteractiveObject)>& toolPath, bool shaded=false);
   void  Clear();
   bool  IsEmpty() const { return myContextIsEmpty; }
@@ -59,18 +59,19 @@ signals:
   void sendCloseDocument( DocumentCommon* );
 
 private:
-  Handle(V3d_Viewer) Viewer(const Standard_ExtString theName
-                          , const Standard_CString theDomain
-                          , const Standard_Real theViewSize
-                          , const V3d_TypeOfOrientation theViewProj
-                          , const Standard_Boolean theComputedMode
-                          , const Standard_Boolean theDefaultComputedMode );
+//  Handle(V3d_Viewer) Viewer(const Standard_ExtString theName
+//                          , const Standard_CString theDomain
+//                          , const Standard_Real theViewSize
+//                          , const V3d_TypeOfOrientation theViewProj
+//                          , const Standard_Boolean theComputedMode
+//                          , const Standard_Boolean theDefaultComputedMode );
 
 private:
   Handle(V3d_Viewer)             myViewer;
   Handle(AIS_InteractiveContext) myContext;
   bool                           myContextIsEmpty;
-  View*                          myView3d;
+  OcctQtViewer*                  myView3d;
   Bnd_Box                        myWorkSpace;
   };
+#endif
 #endif

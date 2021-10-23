@@ -72,8 +72,7 @@ int main(int argc, char *argv[]) {
 
      qDebug() << "parsing of " << gcFile.fileName() << " took: " << delta << "ms";
 
-     w.doc3D->setObjects(CanonIF().toolPath());
-     w.doc3D->setLimits(ir);
+     w.updatePath();
      }
   w.show();
 

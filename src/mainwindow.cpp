@@ -16,9 +16,10 @@
 #include <filemanager.h>
 #include <toolmanager.h>
 #include <micon.h>
+#include <canonif.h>
 #include <configmgr.h>
 #include <DocumentCommon.h>
-#include <View.h>
+#include <occtviewer.h>
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
 #include <QSplitter>
@@ -45,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
  , si(nullptr)
  , cc(nullptr)
  , gh(nullptr)
+ , view3D(nullptr)
  , mainView(nullptr)
  , bg01(nullptr)
  , bg02(nullptr)
@@ -69,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
   setDockNestingEnabled(true);
 //  setFocusPolicy(Qt::StrongFocus);
 
-  doc3D = createNewDocument();
+//  doc3D = createNewDocument();
   DBConnection conn("../ToolManager/db/toolTable");
 
   if (!conn.connect()) qDebug() << "failed to connect to Database!";
@@ -180,9 +182,9 @@ void MainWindow::createValueModels() {
   }
 
 
-DocumentCommon* MainWindow::createNewDocument() {
-  return new DocumentCommon(this);
-  }
+//DocumentCommon* MainWindow::createNewDocument() {
+//  return new DocumentCommon(this);
+//  }
 
 
 void MainWindow::createConnections() {
@@ -299,13 +301,22 @@ void MainWindow::createDockables(DBConnection&) {
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
   mainView = new MainView(this);
-  view3D = new View(doc3D->getContext(), this);
-  doc3D->setView(view3D);
+  view3D = new OcctQtViewer();
+//view3D = new View(doc3D->getContext(), this);
+//  doc3D->setView(view3D);
   mainView->addPage("FileManager", new FileManager(QDir(QDir::homePath() + "/linuxcnc"), mainView));
   mainView->addPage("ToolManager", new ToolManager(conn));
   mainView->addPage("Settings", new SettingsEditor("../QtUi/src/UI/Settings.ui", mainView));
   mainView->addPage("Preview", new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", view3D, mainView));
   this->setCentralWidget(mainView);
+  }
+
+
+void MainWindow::updatePath() {
+  for (auto shape : CanonIF().toolPath()) {
+      view3D->Context()->Display(shape, AIS_WireFrame, 0, false);
+      }
+//     w.doc3D->setLimits(ir);
   }
 
 
