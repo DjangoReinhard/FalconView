@@ -103,12 +103,6 @@
     <property name="title">
      <string>Main</string>
     </property>
-    <addaction name="actionPreview"/>
-    <addaction name="actionFileManager"/>
-    <addaction name="actionToolManager"/>
-    <addaction name="actionOffsets"/>
-    <addaction name="separator"/>
-    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -156,57 +150,6 @@
    </property>
    <property name="statusTip">
     <string>choose whether to display absolute/relative Coordinates</string>
-   </property>
-  </action>
-  <action name="actionPreview">
-   <property name="text">
-    <string>Preview</string>
-   </property>
-   <property name="toolTip">
-    <string>view toolpath and gcode</string>
-   </property>
-  </action>
-  <action name="actionFileManager">
-   <property name="text">
-    <string>FileManager</string>
-   </property>
-   <property name="toolTip">
-    <string>manage files and directories</string>
-   </property>
-  </action>
-  <action name="actionToolManager">
-   <property name="text">
-    <string>ToolManager</string>
-   </property>
-   <property name="toolTip">
-    <string>manage your tools</string>
-   </property>
-  </action>
-  <action name="actionOffsets">
-   <property name="text">
-    <string>Offsets</string>
-   </property>
-   <property name="toolTip">
-    <string>manage workpiece offsets</string>
-   </property>
-  </action>
-  <action name="actionSave">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>save</string>
-   </property>
-   <property name="toolTip">
-    <string>save gcode file</string>
-   </property>
-  </action>
-  <action name="actionSettings">
-   <property name="text">
-    <string>Settings</string>
-   </property>
-   <property name="toolTip">
-    <string>change colors and fonts</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,6 @@
 #include <positiondockable.h>
 #include <valuemanager.h>
+#include <configacc.h>
 #include <QtUiTools/QUiLoader>
 #include <QFontMetrics>
 #include <QGridLayout>

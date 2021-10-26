@@ -1,14 +1,27 @@
 #include <dynwidget.h>
 #include <QString>
 #include <QWidget>
+#include <QAction>
 #include <QFile>
 #include <QUiLoader>
 #include <QStackedLayout>
 
 DynWidget::DynWidget(const QString& fileName, QWidget* parent)
- : QWidget(parent) {
+ : QWidget(parent)
+ , vAction(nullptr) {
   setLayout(new QVBoxLayout);
   layout()->addWidget(loadFromUI(fileName));
+  }
+
+
+QAction* DynWidget::viewAction() {
+  if (!vAction) {
+     vAction = new QAction(this);
+
+     vAction->setMenuRole(QAction::NoRole);
+     vAction->setText(objectName());
+     }
+  return vAction;
   }
 
 

@@ -25,7 +25,7 @@
 
 
 ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
- : QWidget(parent)
+ : DynWidget(parent)
  , conn(conn)
  , spH(new QSplitter(Qt::Horizontal, this))
  , spV(new QSplitter(Qt::Vertical, this))
@@ -37,6 +37,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  , tEdit(new ToolEditor(this))
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
+  setObjectName("ToolManager");
   pxCat->setSourceModel(categoryTreeModel);
   categories->setModel(pxCat);
   categories->setTabKeyNavigation(false);
@@ -63,6 +64,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
 
   tEdit->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   tEdit->setEnabled(false);  
+
   sa->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   sa->setWidget(tEdit);
 

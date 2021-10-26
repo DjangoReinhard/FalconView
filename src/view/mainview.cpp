@@ -1,5 +1,8 @@
 #include <mainview.h>
-#include <QStackedLayout>
+#include <dynwidget.h>
+#include <QAction>
+#include <QGridLayout>
+//#include <QStackedLayout>
 
 
 MainView::MainView(QWidget* parent)
@@ -25,10 +28,15 @@ void MainView::activatePage(const QString& name) {
   }
 
 
-void MainView::addPage(const QString& name, QWidget *page) {
+void MainView::addPage(const QString& name, DynWidget *page) {
   pages.insert(name, page);
   QGridLayout* gl = static_cast<QGridLayout*>(layout());
 
-  if (gl) gl->addWidget(page, 0, 0);
+  if (gl) {
+     gl->addWidget(page, 0, 0);
+     connect(page->viewAction(), &QAction::triggered, this, [=]() {
+       activatePage(page->objectName());
+       });
+     }
   activatePage(name);
   }

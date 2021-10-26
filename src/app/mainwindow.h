@@ -39,8 +39,8 @@ public:
 
 //  DocumentCommon* createNewDocument();
 //  DocumentCommon* doc3D;
-  OcctQtViewer* preView() { return view3D; }
-  void          updatePath();
+//  OcctQtViewer* preView() { return view3D; }
+//  void          updatePath();
 
 public slots:
 //  void activateTbd();
@@ -66,11 +66,11 @@ protected slots:
 private:
   Ui::MainWindow*     ui;
   PositionDockable*   pos;
-  ToolInfoDockable*   ti;
-  SpeedInfoDockable*  si;
-  CurCodesDockable*   cc;
+//  ToolInfoDockable*   ti;
+//  SpeedInfoDockable*  si;
+//  CurCodesDockable*   cc;
   GCodeHighlighter*   gh;
-  OcctQtViewer*       view3D;
+//  OcctQtViewer*       view3D;
   MainView*           mainView;
   QLabel*             bg01;
   QLabel*             bg02;

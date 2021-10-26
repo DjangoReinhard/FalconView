@@ -1,7 +1,7 @@
 #include <toolinfodockable.h>
 #include <labeladapter.h>
 #include <valuemanager.h>
-#include <configmgr.h>
+#include <configacc.h>
 #include <QUiLoader>
 #include <QFile>
 #include <QLabel>

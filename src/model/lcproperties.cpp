@@ -82,10 +82,24 @@ void LcProperties::addValue(const QString& name, const QVariant& value) {
  *    "TRAJ", "LINEAR_UNITS"
  *    "TRAJ", "POSITION_FILE"
  */
-QVariant LcProperties::value(const QString &groupID, const QString &name) {
-  QMap<QString, QVariant>& m = properties[groupID];
+QVariant LcProperties::value(const QString &groupID, const QString &name) const {
+  return properties[groupID][name];
+  }
 
-  return m[name];
+
+QString LcProperties::parameterFileName() const {
+  const QString& name = value("RS274NGC", "PARAMETER_FILE").toString();
+
+  if (name.startsWith("/")) return name;
+  return baseDir() + "/" + name;
+  }
+
+
+QString LcProperties::toolTableFileName() const {
+  const QString& name = value("EMCIO", "TOOL_TABLE").toString();
+
+  if (name.startsWith("/")) return name;
+  return baseDir() + "/" + name;
   }
 
 

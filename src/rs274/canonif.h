@@ -3,10 +3,10 @@
 #include <QObject>
 #include <QColor>
 #include <graphicfactory.h>
+#include <lcproperties.h>
 #include <axismask.h>
 #include <stupidtoolchangerif.h>
 #include <canon.hh>
-class LcProperties;
 class ToolTable;
 struct CanonConfig_t;
 
@@ -62,6 +62,7 @@ public:
   CANON_DIRECTION   spindleDir(int spindle) const   { return instance->spindleDir(spindle); }
   CANON_POSITION    toolOffset() const              { return instance->toolOffset(); }
   CANON_POSITION    endPoint() const                { return instance->endPoint(); }
+  QString           parameterFilename() const       { return instance->properties.parameterFileName(); }
   double            convert(double v);
   QList<Handle(AIS_InteractiveObject)>& toolPath()  { return instance->toolPath; }
   void changeTool(int ttIndex)       { instance->changeTool(ttIndex); }
@@ -72,6 +73,7 @@ public:
   void setEndPoint(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
     instance->setEndPoint(CANON_POSITION(x, y, z, a, b, c, u, v, w));
     }
+  void setEndPoint(const CANON_POSITION& p) { instance->setEndPoint(p); }
   void setG5xOffset(int i, double x, double y, double z, double a, double b, double c, double u, double v, double w) {
     instance->setG5xOffset(i, CANON_POSITION(x, y, z, a, b, c, u, v, w));
     }

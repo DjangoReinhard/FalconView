@@ -1,11 +1,7 @@
 #include <mainwindow.h>
-#include <configmgr.h>
-#include <LCInter.h>
-#include <canonif.h>
-#include <DocumentCommon.h>
+#include <core.h>
 #include <QApplication>
 #include <QTranslator>
-#include <QTime>
 #include <QDebug>
 
 
@@ -21,11 +17,12 @@ int main(int argc, char *argv[]) {
                                        , "_"
                                        , "../QtUi/src/i18n");
   QStringList args = QCoreApplication::arguments();
-  Config      cfg;
+  QString iniFileName = getenv("INI_FILE_NAME");
 
 //  a.setFont(QFont("Noto Sans", 15));  // needed with Qt > 6xx
-  if (args.length() > 1) cfg.setIniFile(args[1]);
-  cfg.value("whatEver");
+  if (args.length() > 1) iniFileName = args[1];
+  Core appCore(iniFileName, "Falcon-View");
+
   qDebug() << "current locale settings - lang: " << curLocale.language()
            << "\tcountry: " << curLocale.country()
            << "\tname: " << curLocale.name();
@@ -33,8 +30,10 @@ int main(int argc, char *argv[]) {
   qDebug() << "locale messages found: " << ok;
   a.installTranslator(&translator);
   MainWindow w;
-  QString   gc = "";
+
+#ifdef REDNOSE
   QString name = "foo";
+  QString   gc = "";
   QString ttFN = "bar";
 
   if (args.length() > 1) name = args[1];
@@ -72,8 +71,9 @@ int main(int argc, char *argv[]) {
 
      qDebug() << "parsing of " << gcFile.fileName() << " took: " << delta << "ms";
 
-     w.updatePath();
+//     w.updatePath();
      }
+#endif
   w.show();
 
   return a.exec();

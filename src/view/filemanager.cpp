@@ -17,7 +17,7 @@
 
 
 FileManager::FileManager(const QDir& baseDir, QWidget *parent)
- : QWidget(parent)
+ : DynWidget(parent)
  , spH(new QSplitter(Qt::Horizontal, this))
  , spV(new QSplitter(Qt::Vertical, this))
  , dirs(new QTreeView(spV))
@@ -47,6 +47,7 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
 
   preView->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   preView->setReadOnly(true);
+  preView->setWordWrapMode(QTextOption::NoWrap);
 
   this->setLayout(new QVBoxLayout(this));
   spH->addWidget(dirs);

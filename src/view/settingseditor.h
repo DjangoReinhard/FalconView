@@ -1,7 +1,6 @@
 #ifndef SETTINGSEDITOR_H
 #define SETTINGSEDITOR_H
 #include <dynwidget.h>
-#include <configmgr.h>
 class QLabel;
 class QPushButton;
 

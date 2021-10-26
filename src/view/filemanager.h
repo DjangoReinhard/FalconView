@@ -1,6 +1,6 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
-#include <QWidget>
+#include <dynwidget.h>
 class QDir;
 class QSplitter;
 class QTreeView;
@@ -13,7 +13,7 @@ class QItemSelection;
 class QKeyEvent;
 
 
-class FileManager : public QWidget
+class FileManager : public DynWidget
 {
   Q_OBJECT
 public:

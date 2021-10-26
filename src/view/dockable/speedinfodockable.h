@@ -26,6 +26,9 @@ private:
   LabelAdapter* cmdFeed;
   LabelAdapter* cmdFastFeed;
   LabelAdapter* cmdSpeed;
+  LabelAdapter* feedFactor;
+  LabelAdapter* fastfeedFactor;
+  LabelAdapter* speedFactor;
   QSlider*      slFeed;
   QSlider*      slFastFeed;
   QSlider*      slSpeed;

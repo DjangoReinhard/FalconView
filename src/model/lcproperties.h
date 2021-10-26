@@ -19,8 +19,10 @@ public:
   explicit LcProperties(const LcProperties&& other);
 
   LcProperties& operator = (const LcProperties&& other);
-  QVariant      value(const QString& groupID, const QString& name);
+  QVariant      value(const QString& groupID, const QString& name) const;
   QString       fileName() const { return fn.absoluteFilePath(); }
+  QString       parameterFileName() const;
+  QString       toolTableFileName() const;
   QString       baseDir() const  { return fn.absoluteDir().path(); }
   void          dump();
 

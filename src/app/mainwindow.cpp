@@ -3,6 +3,8 @@
 #include <dbconnection.h>
 #include <mainview.h>
 #include <axismask.h>
+#include <dockable.h>
+#include <core.h>
 #include <positiondockable.h>
 #include <toolinfodockable.h>
 #include <speedinfodockable.h>
@@ -12,12 +14,13 @@
 #include <gcodehighlighter.h>
 #include <gcodeviewer.h>
 #include <pweditor.h>
+#include <patheditor.h>
 #include <settingseditor.h>
 #include <filemanager.h>
 #include <toolmanager.h>
 #include <micon.h>
 #include <canonif.h>
-#include <configmgr.h>
+#include <configacc.h>
 #include <DocumentCommon.h>
 #include <occtviewer.h>
 #include <QDockWidget>
@@ -41,12 +44,12 @@
 MainWindow::MainWindow(QWidget *parent)
  : QMainWindow(parent)
  , ui(new Ui::MainWindow)
- , pos(nullptr)
- , ti(nullptr)
- , si(nullptr)
- , cc(nullptr)
+// , pos(nullptr)
+// , ti(nullptr)
+// , si(nullptr)
+// , cc(nullptr)
  , gh(nullptr)
- , view3D(nullptr)
+// , view3D(nullptr)
  , mainView(nullptr)
  , bg01(nullptr)
  , bg02(nullptr)
@@ -192,17 +195,11 @@ void MainWindow::createConnections() {
 
 //  qDebug() << " start of createConnections(view) ...";
   // toggle between absolute and relative position ...
-  connect(ui->actionAbsPos,      &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
-  connect(ui->actionFileManager, &QAction::triggered, this, [=](){ selectPage("FileManager"); });
-  connect(ui->actionToolManager, &QAction::triggered, this, [=](){ selectPage("ToolManager"); });
-  connect(ui->actionSettings,    &QAction::triggered, this, [=](){ selectPage("Settings"); });
-  connect(ui->actionPreview,     &QAction::triggered, this, [=](){ selectPage("Preview"); });
-  connect(ui->actionOffsets,     &QAction::triggered, this, [=](){ selectPage("Offsets"); });
+  connect(ui->actionAbsPos, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
 
   qDebug() << " start of createConnections(file open) ...";
   // main menu actions ...
-//  connect(ui->actionOpen,     &QAction::triggered, pwe,  &PreViewEditor::openFile);
-//  connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::activateSettings);
+//  connect(ui->actionOpen, &QAction::triggered, pwe,  &PreViewEditor::openFile);
   qDebug() << " start of createConnections(done) ...";
   }
 
@@ -280,44 +277,66 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables(DBConnection&) {
-  ti = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
-  addDockWidget(Qt::LeftDockWidgetArea, ti);
-  ui->menuView->addAction(ti->toggleViewAction());
+  Dockable* d = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
 
-  cc = new CurCodesDockable("../QtUi/src/UI/CurCodes.ui", this);
-  addDockWidget(Qt::LeftDockWidgetArea, cc);
-  ui->menuView->addAction(cc->toggleViewAction());
+  addDockWidget(Qt::LeftDockWidgetArea, d);
+  ui->menuView->addAction(d->toggleViewAction());
+
+  d = new CurCodesDockable("../QtUi/src/UI/CurCodes.ui", this);
+  addDockWidget(Qt::LeftDockWidgetArea, d);
+  ui->menuView->addAction(d->toggleViewAction());
 
   //TODO: read from ini-file
   pos = new PositionDockable("../QtUi/src/UI/Position.ui", AxisMask(0x01FF), this);
-  addDockWidget(Qt::LeftDockWidgetArea, pos);  
-  ui->menuView->addAction(pos->toggleViewAction());
+  d   = pos;
+  addDockWidget(Qt::LeftDockWidgetArea, d);
+  ui->menuView->addAction(d->toggleViewAction());
 
-  si = new SpeedInfoDockable("../QtUi/src/UI/SpeedInfo.ui", this);
-  addDockWidget(Qt::BottomDockWidgetArea, si);
-  ui->menuView->addAction(si->toggleViewAction());
+  d = new SpeedInfoDockable("../QtUi/src/UI/SpeedInfo.ui", this);
+  addDockWidget(Qt::BottomDockWidgetArea, d);
+  ui->menuView->addAction(d->toggleViewAction());
   }
 
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
   mainView = new MainView(this);
-  view3D = new OcctQtViewer();
-//view3D = new View(doc3D->getContext(), this);
-//  doc3D->setView(view3D);
-  mainView->addPage("FileManager", new FileManager(QDir(QDir::homePath() + "/linuxcnc"), mainView));
-  mainView->addPage("ToolManager", new ToolManager(conn));
-  mainView->addPage("Settings", new SettingsEditor("../QtUi/src/UI/Settings.ui", mainView));
-  mainView->addPage("Preview", new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", view3D, mainView));
+
+  DynWidget* page = new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", Core().view3D(), mainView);
+
+  mainView->addPage(page->objectName(), page);
+  ui->menuMain->addAction(page->viewAction());
+
+  page = new FileManager(QDir(QDir::homePath() + "/linuxcnc"), mainView);
+  mainView->addPage(page->objectName(), page);
+  ui->menuMain->addAction(page->viewAction());
+
+  page = new ToolManager(conn);
+  mainView->addPage(page->objectName(), page);
+  ui->menuMain->addAction(page->viewAction());
+
+  page = new SettingsEditor("../QtUi/src/UI/Settings.ui", mainView);
+  mainView->addPage(page->objectName(), page);
+  ui->menuMain->addAction(page->viewAction());
+
+  page = new PathEditor("../QtUi/src/UI/GCodeEditor.ui", mainView);
+  mainView->addPage(page->objectName(), page);
+  ui->menuMain->addAction(page->viewAction());
+
+  page = new PathEditor("../QtUi/src/UI/GCodeEditor.ui", mainView);
+  page->setObjectName("TestEditor");
+  mainView->addPage(page->objectName(), page);
+  ui->menuMain->addAction(page->viewAction());
+
   this->setCentralWidget(mainView);
   }
 
 
-void MainWindow::updatePath() {
-  for (auto shape : CanonIF().toolPath()) {
-      view3D->Context()->Display(shape, AIS_WireFrame, 0, false);
-      }
-//     w.doc3D->setLimits(ir);
-  }
+//void MainWindow::updatePath() {
+//  for (auto shape : CanonIF().toolPath()) {
+//      view3D->Context()->Display(shape, AIS_WireFrame, 0, false);
+//      }
+////     w.doc3D->setLimits(ir);
+//  }
 
 
 void MainWindow::selectPage(const QString& name) {

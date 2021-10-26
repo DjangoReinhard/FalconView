@@ -1,17 +1,13 @@
-#include <pweditor.h>
+#include <patheditor.h>
 #include <valuemanager.h>
 #include <configacc.h>
-#include <core.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
-#include <AIS_ViewCube.hxx>
-#include <AIS_InteractiveContext.hxx>
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
 #include <QDir>
-#include <QTime>
 #include <QVariant>
 #include <QLineEdit>
 #include <QPlainTextEdit>
@@ -19,19 +15,15 @@
 #include <QPushButton>
 
 
-PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent)
+PathEditor::PathEditor(const QString& fileName, QWidget* parent)
  : DynWidget(parent)
- , view(view) {
-  setObjectName("PreViewEditor");
+ , fn(nullptr) {
+  setObjectName("PathEditor");
   this->setStyleSheet("background: 0xFF0000;");
   setLayout(new QHBoxLayout);
-  spV = new QSplitter(Qt::Vertical);
   QWidget* w = loadFromUI(fileName);
 
-  view->setMinimumSize(400, 400);
-  view->setParent(this);
-  spV->addWidget(view);
-  spV->addWidget(w);
+  layout()->addWidget(w);
   fn     = w->findChild<QLineEdit*>("fileName");
   pbOpen = w->findChild<QPushButton*>("pbOpen");
   pbSave = w->findChild<QPushButton*>("pbSave");
@@ -44,19 +36,17 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidge
   ed->setFocusPolicy(Qt::NoFocus);
   gl->addWidget(ed, 1, 0, 1, 3);
   placeHolder->hide();
-  layout()->addWidget(spV);
-  pbOpen->hide();
-  pbSave->hide();
   connectSignals();
   updateStyles();
   }
 
 
-void PreViewEditor::connectSignals() {
+void PathEditor::connectSignals() {
     ValueManager vm;
     Config       cfg;
 
-    connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::loadFile);
+//  connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::loadFile);
+    connect(pbOpen, &QPushButton::clicked, this, &PathEditor::openFile);
     connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[6]), QColor(Qt::white))
           , &ValueModel::valueChanged
           , fn
@@ -94,7 +84,7 @@ void PreViewEditor::connectSignals() {
   }
 
 
-void PreViewEditor::openFile() {
+void PathEditor::openFile() {
   QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
   QString name = QFileDialog::getOpenFileName(this
                                             , tr("open GCode file")
@@ -104,47 +94,14 @@ void PreViewEditor::openFile() {
   }
 
 
-void PreViewEditor::loadFile(const QVariant& fileName) {
+void PathEditor::loadFile(const QVariant& fileName) {
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
-  Core().parseGCFile(fileName.toString());
+  ValueManager().getModel("fileName", " ")->setValue(fileName.toString());
   }
 
 
-void PreViewEditor::genPreview(const QString &fileName) {
-  QFile        gcFile(fileName);
-
-//  if (gcFile.exists()) {
-//     LcProperties lcProps(getenv("INI_FILE_NAME"));
-//     ToolTable    tt(lcProps.toolTableFileName());
-//     CanonIF      ci(lcProps, tt);
-//     LCInterface  lcIF(lcProps, tt);
-
-//     ci.setTraverseColor(QColor(Qt::cyan));
-//     ci.setFeedColor(QColor(Qt::white));
-//     ci.setLimitsColor(QColor(150, 255, 150));
-//     lcIF.setupToolTable();
-
-//     qDebug() << "gonna parse gcode-file: " << gcFile.fileName();
-//     QTime       start = QTime::currentTime();
-
-//     lcIF.parseInline(gcFile.fileName());
-//     QTime end  = QTime::currentTime();
-//     long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
-
-//     qDebug() << "parsing of " << gcFile.fileName() << " took: " << delta << "ms";
-
-//     view->Context()->RemoveAll(false);
-//     for (auto shape : CanonIF().toolPath()) {
-//         view->Context()->Display(shape, AIS_WireFrame, 0, false);
-//         }
-//     view->Context()->Display(view->Cube(), 0, 0, false);
-//     view->View()->FitAll(0.01, false);
-//     }
-  }
-
-
-void PreViewEditor::updateStyles() {
+void PathEditor::updateStyles() {
     ValueManager vm;
     Config       cfg;
 

@@ -2,7 +2,7 @@
 #include <gcodeeditor.h>
 #include <gcodeviewer.h>
 #include <valuemanager.h>
-#include <configmgr.h>
+#include <configacc.h>
 #include <QFile>
 #include <QDir>
 #include <QUiLoader>

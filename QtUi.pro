@@ -12,7 +12,7 @@ DEFINES *= QT_USE_QSTRINGBUILDER
 TARGET = QtUi
 
 INCLUDEPATH += \
-    src      \
+    src/app \
     src/model \
     src/nml  \
     src/rs274 \
@@ -26,12 +26,12 @@ INCLUDEPATH += \
     lc/src \
     /usr/local/src/build-occt-Desktop_5_15_opt-Debug/include/opencascade
 
-#    /opt/opencascade/oce-upstream-V7_5_0beta.build/include/opencascade
-
 
 SOURCES += \
-    src/main.cpp \
-    src/mainwindow.cpp \
+    src/app/main.cpp \
+    src/app/mainwindow.cpp \
+    src/app/core.cpp \
+    src/model/configacc.cpp \
     src/model/configmgr.cpp \
     src/model/category.cpp \
     src/model/CategoryTreeModel.cpp \
@@ -80,13 +80,17 @@ SOURCES += \
     src/view/occtviewer.cpp \
     src/view/overlay.cpp \
     src/view/pweditor.cpp \
+    src/view/patheditor.cpp \
     src/view/settingseditor.cpp \
     src/view/splitwidget.cpp \
     src/view/tooleditor.cpp \
     src/view/toolmanager.cpp \
 
 HEADERS += \
-    src/mainwindow.h \
+    src/app/core_p.h \
+    src/app/mainwindow.h \
+    src/app/core.h \
+    src/model/configacc.h \
     src/model/configmgr.h \
     src/model/category.h \
     src/model/CategoryTreeModel.h \
@@ -137,6 +141,7 @@ HEADERS += \
     src/view/overlay.h \
     src/view/occtviewer.h \
     src/view/pweditor.h \
+    src/view/patheditor.h \
     src/view/settingseditor.h \
     src/view/splitwidget.h \
     src/view/tooleditor.h \

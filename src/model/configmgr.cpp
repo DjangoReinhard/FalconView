@@ -1,4 +1,6 @@
 #include <configmgr.h>
+#include <configacc.h>
+#include <core.h>
 #include <QVariant>
 #include <QColor>
 #include <QFont>
@@ -7,89 +9,28 @@
 #include <QDebug>
 
 
-QColor Config::getBackground(int index) {
-  return getInstance()->getBackground(index);
-  }
-
-
-QColor Config::getForeground(int index) {
-  return getInstance()->getForeground(index);
-  }
-
-
-QFont Config::getFont(int index) {
-  return getInstance()->getFont(index);
-  }
-
-
-QVariant Config::getProperty(const QString &groupID, const QString &name) {
-  return getInstance()->getProperty(groupID, name);
- }
-
-
-const ToolEntry* Config::getTool(int number) {
-  return getInstance()->getTool(number);
-  }
-
-
-QVariant Config::value(const QString& key, const QVariant& defaultValue) {
-  return getInstance()->value(key, defaultValue);
-  }
-
-
-void Config::setBackground(int index, const QColor& color) {
-  getInstance()->setBackground(index, color);
-  }
-
-
-void Config::setForeground(int index, const QColor& color) {
-  getInstance()->setForeground(index, color);
-  }
-
-
-void Config::setFont(int index, const QFont& font) {
-  getInstance()->setFont(index, font);
-  }
-
-
-void Config::setIniFile(const QString &fileName) {
-  getInstance()->setIniFile(fileName);
-  }
-
-
-void Config::setValue(const QString& key, const QVariant& value) {
-  getInstance()->setValue(key, value);
-  }
-
-
-Config::ConfigManager* Config::getInstance() {
-  if (!instance) instance = new ConfigManager();
-  return instance;
-  }
-
-
-Config::ConfigManager::ConfigManager()
- : settings(QSettings::UserScope, "SRD", "Falcon-View") {
+ConfigManager::ConfigManager(const QString& appName, const QString& group)
+ : settings(QSettings::UserScope, group, appName) {
   initialize();
   }
 
 
-void Config::ConfigManager::initialize() {
-  for (int i=0; i < guiSettingEntries; ++i) {
-      QString  k = QString("cfgBg") + guiSettings[i];
+void ConfigManager::initialize() {
+  for (int i=0; i < Config::guiSettingEntries; ++i) {
+      QString  k = QString("cfgBg") + Config::guiSettings[i];
       QVariant v = settings.value(k, QColor(Qt::white));
 
 //      qDebug() << "config key: " << k;
 //      qDebug() << "background color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
       vm.setValue(k, v);
 
-      k = QString("cfgFg") + guiSettings[i];
+      k = QString("cfgFg") + Config::guiSettings[i];
       v = settings.value(k, QColor(Qt::black));
 //      qDebug() << "config key: " << k;
 //      qDebug() << "foreground color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
       vm.setValue(k, v);
 
-      k = QString("cfgF") + guiSettings[i];
+      k = QString("cfgF") + Config::guiSettings[i];
       v = settings.value(k, QFont("Hack", 12));
 //      qDebug() << "config key: " << k;
 //      qDebug() << "font: " << v.value<QFont>().key();
@@ -98,92 +39,56 @@ void Config::ConfigManager::initialize() {
   }
 
 
-void Config::ConfigManager::setIniFile(const QString &fileName) {
-  properties = LcProperties(fileName);
-  QFile ttFN(properties.value("EMCIO", "TOOL_TABLE").toString());
-
-  if (ttFN.exists()) tools = ToolTable(ttFN);
+QColor ConfigManager::getBackground(int index) {
+  if (index < 0 || index >= Config::guiSettingEntries)  return QColor(Qt::white);
+  return vm.getValue("cfgBg" + Config::guiSettings[index]).value<QColor>();
   }
 
 
-QColor Config::ConfigManager::getBackground(int index) {
-  if (index < 0 || index >= guiSettingEntries)  return QColor(Qt::white);
-  return vm.getValue("cfgBg" + guiSettings[index]).value<QColor>();
+QColor ConfigManager::getForeground(int index) {
+  if (index < 0 || index >= Config::guiSettingEntries)  return QColor(Qt::black);
+  return vm.getValue("cfgFg" + Config::guiSettings[index]).value<QColor>();
   }
 
 
-QColor Config::ConfigManager::getForeground(int index) {
-  if (index < 0 || index >= guiSettingEntries)  return QColor(Qt::black);
-  return vm.getValue("cfgFg" + guiSettings[index]).value<QColor>();
+QFont ConfigManager::getFont(int index) {
+  if (index < 0 || index >= Config::guiSettingEntries)  return QFont();
+  return vm.getValue("cfgF" + Config::guiSettings[index]).value<QFont>();
   }
 
 
-QFont Config::ConfigManager::getFont(int index) {
-  if (index < 0 || index >= guiSettingEntries)  return QFont();
-  return vm.getValue("cfgF" + guiSettings[index]).value<QFont>();
-  }
-
-
-QVariant Config::ConfigManager::getProperty(const QString &groupID, const QString &name) {
-  return properties.value(groupID, name);
-  }
-
-
-const ToolEntry* Config::ConfigManager::getTool(int number) {
-  return tools.tool(number);
-  }
-
-
-QVariant Config::ConfigManager::value(const QString& key, const QVariant& defaultValue) {
+QVariant ConfigManager::value(const QString& key, const QVariant& defaultValue) const {
   return settings.value(key, defaultValue);
   }
 
 
-void Config::ConfigManager::setBackground(int index, const QColor& color) {
-  if (index < 0 || index >= guiSettingEntries)  return;
-  QString key = QString("cfgBg") + guiSettings[index];
+void ConfigManager::setBackground(int index, const QColor& color) {
+  if (index < 0 || index >= Config::guiSettingEntries)  return;
+  QString key = QString("cfgBg") + Config::guiSettings[index];
 
   vm.setValue(key, color);
   settings.setValue(key, color);
   }
 
 
-void Config::ConfigManager::setForeground(int index, const QColor& color) {
-  if (index < 0 || index > guiSettingEntries)  return;
-  QString key = QString("cfgFg") + guiSettings[index];
+void ConfigManager::setForeground(int index, const QColor& color) {
+  if (index < 0 || index > Config::guiSettingEntries)  return;
+  QString key = QString("cfgFg") + Config::guiSettings[index];
 
   vm.setValue(key, color);
   settings.setValue(key, color);
   }
 
 
-void Config::ConfigManager::setFont(int index, const QFont& font) {
-  if (index < 0 || index > guiSettingEntries)  return;
-  QString key = QString("cfgF") + guiSettings[index];
+void ConfigManager::setFont(int index, const QFont& font) {
+  if (index < 0 || index > Config::guiSettingEntries)  return;
+  QString key = QString("cfgF") + Config::guiSettings[index];
 
   vm.setValue(key, font);
   settings.setValue(key, font);
   }
 
 
-void Config::ConfigManager::setValue(const QString& key, const QVariant& value) {
+void ConfigManager::setValue(const QString& key, const QVariant& value) {
   settings.setValue(key, value);
   }
-
-
-Config::ConfigManager* Config::instance          = nullptr;
-const int              Config::guiSettingEntries = 12;
-const QString          Config::guiSettings[]     = {
-  "ActCodes"        /*  0 */
-, "DroAbs"          /*  1 */
-, "DroDtg"          /*  2 */
-, "DroRel"          /*  3 */
-, "DroTitle"        /*  4 */
-, "Feed"            /*  5 */
-, "Filename"        /*  6 */
-, "GCode"           /*  7 */
-, "Speed"           /*  8 */
-, "ToolDesc"        /*  9 */
-, "ToolNum"         /* 10 */
-, "ToolNext"        /* 11 */
-  };

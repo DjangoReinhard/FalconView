@@ -1,6 +1,6 @@
 #ifndef TOOLMANAGER_H
 #define TOOLMANAGER_H
-#include <QWidget>
+#include <dynwidget.h>
 class QDir;
 class QSplitter;
 class QTreeView;
@@ -16,7 +16,7 @@ class QItemSelection;
 class QKeyEvent;
 
 
-class ToolManager : public QWidget
+class ToolManager : public DynWidget
 {
   Q_OBJECT
 public:

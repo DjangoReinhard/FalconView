@@ -44,6 +44,7 @@ public:
   const Handle(V3d_Viewer)&             Viewer() const  { return myViewer; }
   const Handle(V3d_View)&               View() const    { return myView; }
   const Handle(AIS_InteractiveContext)& Context() const { return myContext; }
+  const Handle(AIS_ViewCube)&           Cube() const    { return myViewCube; }
 
   const QString& getGlInfo() const                { return myGlInfo; }
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }

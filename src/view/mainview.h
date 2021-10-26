@@ -2,6 +2,7 @@
 #define MAINVIEW_H
 #include <QWidget>
 #include <QMap>
+class DynWidget;
 
 
 class MainView : public QWidget
@@ -11,9 +12,9 @@ public:
   MainView(QWidget* parent = nullptr);
 
   void activatePage(const QString& name);
-  void addPage(const QString& name, QWidget* page);
+  void addPage(const QString& name, DynWidget* page);
 
 private:
-  QMap<QString, QWidget*> pages;
+  QMap<QString, DynWidget*> pages;
   };
 #endif // MAINVIEW_H

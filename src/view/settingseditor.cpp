@@ -1,4 +1,5 @@
 #include <settingseditor.h>
+#include <configacc.h>
 #include <QLabel>
 #include <QColor>
 #include <QFont>

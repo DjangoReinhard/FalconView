@@ -1,21 +1,20 @@
-#ifndef PWEDITOR_H
-#define PWEDITOR_H
+#ifndef PATHEDITOR_H
+#define PATHEDITOR_H
 #include <dynwidget.h>
 class QSplitter;
 class QLineEdit;
 class QVariant;
 class QPlainTextEdit;
 class QPushButton;
-class OcctQtViewer;
 class GCodeEditor;
 class GCodeHighlighter;
 
 
-class PreViewEditor : public DynWidget
+class PathEditor : public DynWidget
 {
   Q_OBJECT
 public:
-  PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent);
+  PathEditor(const QString& fileName, QWidget* parent = nullptr);
 
 public slots:
   void openFile();
@@ -25,14 +24,11 @@ protected:
   void connectSignals();
   void updateStyles();
   void loadFile(const QVariant& fileName);
-  void genPreview(const QString& fileName);
 
 private:
-  QSplitter*        spV;
   QLineEdit*        fn;
   GCodeEditor*      ed;
   GCodeHighlighter* gh;
-  OcctQtViewer*     view;
   QPushButton*      pbOpen;
   QPushButton*      pbSave;
   };
