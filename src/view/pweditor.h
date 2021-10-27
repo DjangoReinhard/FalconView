@@ -1,6 +1,6 @@
 #ifndef PWEDITOR_H
 #define PWEDITOR_H
-#include <dynwidget.h>
+#include <testEdit.h>
 class QSplitter;
 class QLineEdit;
 class QVariant;
@@ -11,29 +11,18 @@ class GCodeEditor;
 class GCodeHighlighter;
 
 
-class PreViewEditor : public DynWidget
+class PreViewEditor : public TestEdit
 {
   Q_OBJECT
 public:
   PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent);
 
-public slots:
-  void openFile();
-
 protected:
-  void initializeWidget();
-  void connectSignals();
-  void updateStyles();
-  void loadFile(const QVariant& fileName);
-  void genPreview(const QString& fileName);
+  virtual void loadFile(const QVariant& fileName) override;
+  virtual void connectSignals() override;
 
 private:
   QSplitter*        spV;
-  QLineEdit*        fn;
-  GCodeEditor*      ed;
-  GCodeHighlighter* gh;
   OcctQtViewer*     view;
-  QPushButton*      pbOpen;
-  QPushButton*      pbSave;
   };
 #endif // PWEDITOR_H

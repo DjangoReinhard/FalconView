@@ -1,4 +1,5 @@
 #include <filemanager.h>
+#include <KeyCodes.h>
 #include <dirmodel.h>
 #include <direntry.h>
 #include <filemodel.h>
@@ -55,11 +56,19 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
   spV->addWidget(files);
   spV->addWidget(preView);
   layout()->addWidget(spH);
+  }
 
+
+
+void FileManager::connectSignals() {
   connect(dirs->selectionModel(), &QItemSelectionModel::currentChanged
         , this, &FileManager::currentChanged);
   connect(files->selectionModel(), &QItemSelectionModel::selectionChanged
         , this, &FileManager::selectionChanged);
+  }
+
+
+void FileManager::updateStyles() {
   }
 
 
@@ -88,12 +97,12 @@ void FileManager::currentChanged(const QModelIndex& index) {
 void FileManager::keyReleaseEvent(QKeyEvent *event) {
   qDebug() << "released key: " << event->key();
 
-  if (event->key() == 16777220) {
+  if (event->key() == KeyCodes::Enter) {
      qDebug() << "hit ENTER?";
      QModelIndexList    mi       = files->selectionModel()->selection().indexes();
 
      if (!mi.size()) {
-        event->setAccepted(true);
+        event->accept();
 
         return;
         }
@@ -104,8 +113,11 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
      QFile file(path);
 
      qDebug() << "selected file: " << file.fileName();
+
+     //TODO: change view-stack to caller page!
+     emit fileSelected(file.fileName());
      }
-  event->setAccepted(true);
+  event->accept();
   }
 
 

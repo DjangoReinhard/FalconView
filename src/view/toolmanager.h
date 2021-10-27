@@ -22,6 +22,9 @@ class ToolManager : public DynWidget
 public:
   explicit ToolManager(DBConnection& conn, QWidget *parent = nullptr);
 
+  virtual void connectSignals();
+  virtual void updateStyles();
+
 public slots:
   void currentChanged(const QModelIndex& index);
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);

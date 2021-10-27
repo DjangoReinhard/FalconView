@@ -31,13 +31,17 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QDebug>
+#include <core.h>
+#include <canonif.h>
 #include <Standard_WarningsRestore.hxx>
 
 #include <AIS_Shape.hxx>
 #include <AIS_ViewCube.hxx>
+#include <AIS_ColoredShape.hxx>
 #include <Aspect_DisplayConnection.hxx>
 #include <Aspect_NeutralWindow.hxx>
 #include <BRepPrimAPI_MakeBox.hxx>
+#include <BRepPrimAPI_MakeCone.hxx>
 #include <Message.hxx>
 #include <OpenGl_GraphicDriver.hxx>
 #include <OpenGl_FrameBuffer.hxx>
@@ -186,7 +190,7 @@ OcctQtViewer::OcctQtViewer(QWidget* theParent)
 
   // create viewer
   myViewer = new V3d_Viewer(aDriver);
-  myViewer->SetDefaultBackgroundColor(Quantity_NOC_BLACK);
+  myViewer->SetDefaultBackgroundColor(Quantity_NOC_GRAY);
   myViewer->SetDefaultLights();
   myViewer->SetLightOn();
   myViewer->ActivateGrid(Aspect_GT_Rectangular, Aspect_GDM_Lines);
@@ -197,13 +201,13 @@ OcctQtViewer::OcctQtViewer(QWidget* theParent)
   myViewCube->SetViewAnimation(myViewAnimation);
   myViewCube->SetFixedAnimationLoop(false);
   myViewCube->SetAutoStartAnimation(true);
-  myViewCube->TransformPersistence()->SetOffset2d(Graphic3d_Vec2i(100, 150));
+  myViewCube->TransformPersistence()->SetOffset2d(Graphic3d_Vec2i(100, 100));
 
   // note - window will be created later within initializeGL() callback!
   myView = myViewer->CreateView();
   myView->SetImmediateUpdate(false);
   myView->ChangeRenderingParams().NbMsaaSamples  = 4; // warning - affects performance
-  myView->ChangeRenderingParams().ToShowStats    = true;
+  myView->ChangeRenderingParams().ToShowStats    = false;
   myView->ChangeRenderingParams().CollectedStats = (Graphic3d_RenderingParams::PerfCounters)
                                                    (Graphic3d_RenderingParams::PerfCounters_FrameRate
                                                   | Graphic3d_RenderingParams::PerfCounters_Triangles);
@@ -340,6 +344,116 @@ void OcctQtViewer::initializeGL() {
 
 
 // ================================================================
+// Function : showPath
+// Purpose  :
+// ================================================================
+void OcctQtViewer::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
+  myContext->RemoveAll(false);
+  gp_Pnt  cMin, cMax, p;
+  Bnd_Box bb;
+  gp_Dir  axis = gp::DZ();
+  gp_Ax2  aplace(gp_Pnt(0, 0, 0), axis);
+  Quantity_Color    col;
+  Quantity_Color    tc = CanonIF().feedColor();
+  TopoDS_Shape      topo_cone = BRepPrimAPI_MakeCone(aplace, 0.001, 10, 20).Shape();
+
+  myCone = new AIS_Shape(topo_cone);
+  for (const Handle(AIS_InteractiveObject)& anObject : path) {
+      myContext->Display(anObject, AIS_Shaded, 0, false);
+      const Handle(AIS_ColoredShape) shape = Handle(AIS_ColoredShape)::DownCast(anObject);
+
+      if (!shape.IsNull()) {
+         shape->Color(col);
+         if (col != tc) continue;
+         bb = shape->BoundingBox();
+         p = bb.CornerMin();
+         cMin.SetX(fmin(cMin.X(), p.X()));
+         cMin.SetY(fmin(cMin.Y(), p.Y()));
+         cMin.SetZ(fmin(cMin.Z(), p.Z()));
+         p = bb.CornerMax();
+         cMax.SetX(fmax(cMax.X(), p.X()));
+         cMax.SetY(fmax(cMax.Y(), p.Y()));
+         cMax.SetZ(fmax(cMax.Z(), p.Z()));
+         }
+      }
+  myContext->Display(myViewCube, AIS_Shaded, 0, false);
+  myContext->Display(myCone, AIS_Shaded, 0, false);
+  myBounds = Bnd_Box(cMin, cMax);
+  showLimits();
+  myView->FitAll(myBounds, false);
+  }
+
+
+void OcctQtViewer::showLimits() {
+  CanonIF ci;
+
+  gp_Pnt cMin(Core().lcProperties().value("AXIS_X", "MIN_LIMIT").toDouble()
+            , Core().lcProperties().value("AXIS_Y", "MIN_LIMIT").toDouble()
+            , Core().lcProperties().value("AXIS_Z", "MIN_LIMIT").toDouble());
+  gp_Pnt cMax(Core().lcProperties().value("AXIS_X", "MAX_LIMIT").toDouble()
+            , Core().lcProperties().value("AXIS_Y", "MAX_LIMIT").toDouble()
+            , Core().lcProperties().value("AXIS_Z", "MAX_LIMIT").toDouble());
+
+  Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                                                         , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                                       , gp_Pnt(cMin.X(), cMax.Y(), cMin.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                                       , gp_Pnt(cMin.X(), cMin.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
+                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
+                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
+                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
+                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
+                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMin.Y(), cMax.Z())
+                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
+                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMax.Y(), cMax.Z())
+                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  shape->SetColor(ci.limitColor());
+  myContext->Display(shape, AIS_Shaded, 0, false);
+  }
+
+
+// ================================================================
 // Function : closeEvent
 // Purpose  :
 // ================================================================
@@ -361,8 +475,9 @@ void OcctQtViewer::keyPressEvent (QKeyEvent* theEvent) {
          return;
          }
     case Aspect_VKey_F: {
-         myView->FitAll(0.01, false);
+         myView->FitAll(myBounds, false);
          update();
+         theEvent->accept();
          return;
          }
     }

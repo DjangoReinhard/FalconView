@@ -12,7 +12,6 @@
 #include <cassert>
 
 
-
 Core::Core(const QString& iniFileName, const QString& appName, const QString& group) {
   if (!kernel)
      kernel = new Kernel(iniFileName, appName, group);
@@ -25,6 +24,11 @@ void Core::parseGCFile(const QString &fileName) {
   if (gcFile.exists()) {
      core()->parseGCode(gcFile);
      }
+  }
+
+
+LcProperties& Core::lcProperties() {
+  return core()->lcProps;
   }
 
 
@@ -46,7 +50,11 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , lcIF(lcProps, tt)
  , view3D(new OcctQtViewer()) {
   CanonIF ci(lcProps, tt);
+
   lcIF.setupToolTable();
+  ci.setTraverseColor(QColor(Qt::cyan));
+  ci.setFeedColor(QColor(Qt::white));
+  ci.setLimitsColor(QColor(150, 255, 150));
   }
 
 

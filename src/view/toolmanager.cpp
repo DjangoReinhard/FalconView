@@ -74,11 +74,18 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
   spV->addWidget(tools);
   spV->addWidget(sa);
   layout()->addWidget(spH);
+  }
 
+
+void ToolManager::connectSignals() {
   connect(categories->selectionModel(), &QItemSelectionModel::currentChanged
         , this, &ToolManager::currentChanged);
   connect(tools->selectionModel(), &QItemSelectionModel::selectionChanged
         , this, &ToolManager::selectionChanged);
+  }
+
+
+void ToolManager::updateStyles() {
   }
 
 

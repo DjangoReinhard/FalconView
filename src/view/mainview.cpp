@@ -33,7 +33,8 @@ void MainView::addPage(const QString& name, DynWidget *page) {
   QGridLayout* gl = static_cast<QGridLayout*>(layout());
 
   if (gl) {
-     gl->addWidget(page, 0, 0);
+     page->init();
+     gl->addWidget(page, 0, 0);     
      connect(page->viewAction(), &QAction::triggered, this, [=]() {
        activatePage(page->objectName());
        });

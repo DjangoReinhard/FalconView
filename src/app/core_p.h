@@ -4,6 +4,7 @@
 #include <lcproperties.h>
 #include <tooltable.h>
 #include <LCInter.h>
+#include <mainview.h>
 class OcctQtViewer;
 class QString;
 class QFile;
@@ -20,6 +21,7 @@ private:
   ToolTable     tt;
   LCInterface   lcIF;
   OcctQtViewer* view3D;
+  MainView*     mainView;
 
   friend class Core;
   friend class Config;

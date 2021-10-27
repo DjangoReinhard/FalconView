@@ -37,19 +37,6 @@ public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
-//  DocumentCommon* createNewDocument();
-//  DocumentCommon* doc3D;
-//  OcctQtViewer* preView() { return view3D; }
-//  void          updatePath();
-
-public slots:
-//  void activateTbd();
-//  void activateSettings();
-//  void activateBg01();
-//  void activateBg02();
-//  void activateBg03();
-//void resetLine();
-
 protected:
   void createActions();
   void createToolBars();
@@ -66,12 +53,7 @@ protected slots:
 private:
   Ui::MainWindow*     ui;
   PositionDockable*   pos;
-//  ToolInfoDockable*   ti;
-//  SpeedInfoDockable*  si;
-//  CurCodesDockable*   cc;
   GCodeHighlighter*   gh;
-//  OcctQtViewer*       view3D;
-  MainView*           mainView;
   QLabel*             bg01;
   QLabel*             bg02;
   QLabel*             bg03;

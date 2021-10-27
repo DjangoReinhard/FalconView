@@ -12,8 +12,8 @@ class Overlay : public DynWidget
 public:
   explicit Overlay(const QString& fileName, QWidget *parent = nullptr);
 
-protected:
-  void initializeWidget();
+  virtual void connectSignals();
+  virtual void updateStyles();
 
 private:
   QLabel*       ovRelX;

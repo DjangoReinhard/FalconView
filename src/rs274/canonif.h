@@ -64,7 +64,7 @@ public:
   CANON_POSITION    endPoint() const                { return instance->endPoint(); }
   QString           parameterFilename() const       { return instance->properties.parameterFileName(); }
   double            convert(double v);
-  QList<Handle(AIS_InteractiveObject)>& toolPath()  { return instance->toolPath; }
+  QList<Handle(AIS_InteractiveObject)>& toolPath() { return instance->toolPath; }
   void changeTool(int ttIndex)       { instance->changeTool(ttIndex); }
   void selectTool(int tool)          { instance->selectTool(tool); }
   void setLengthUnits(CANON_UNITS u) { instance->setJobUnits(u); }

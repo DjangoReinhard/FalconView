@@ -286,7 +286,7 @@ void MainWindow::createDockables(DBConnection&) {
   addDockWidget(Qt::LeftDockWidgetArea, d);
   ui->menuView->addAction(d->toggleViewAction());
 
-  //TODO: read from ini-file
+  //TODO: read axisMask from ini-file
   pos = new PositionDockable("../QtUi/src/UI/Position.ui", AxisMask(0x01FF), this);
   d   = pos;
   addDockWidget(Qt::LeftDockWidgetArea, d);
@@ -299,10 +299,10 @@ void MainWindow::createDockables(DBConnection&) {
 
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
-  mainView = new MainView(this);
+  MainView*  mainView = new MainView(this);
+  DynWidget* page     = new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", Core().view3D(), mainView);
 
-  DynWidget* page = new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", Core().view3D(), mainView);
-
+  Core().setViewStack(mainView);
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
@@ -322,8 +322,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new PathEditor("../QtUi/src/UI/GCodeEditor.ui", mainView);
-  page->setObjectName("TestEditor");
+  page = new TestEdit("../QtUi/src/UI/GCodeEditor.ui", mainView);
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
@@ -331,17 +330,9 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   }
 
 
-//void MainWindow::updatePath() {
-//  for (auto shape : CanonIF().toolPath()) {
-//      view3D->Context()->Display(shape, AIS_WireFrame, 0, false);
-//      }
-////     w.doc3D->setLimits(ir);
-//  }
-
-
 void MainWindow::selectPage(const QString& name) {
   qDebug() << "page to select: " << name;
-  mainView->activatePage(name);
+  Core().viewStack()->activatePage(name);
   }
 
 void MainWindow::timerEvent(QTimerEvent *e) {

@@ -9,11 +9,10 @@
 
 Overlay::Overlay(const QString& fileName, QWidget *parent)
  : DynWidget(fileName, parent) {
-  initializeWidget();
   }
 
 
-void Overlay::initializeWidget() {
+void Overlay::connectSignals() {
   ovRelX = findChild<QLabel*>("ovRelX");
   ovRelY = findChild<QLabel*>("ovRelY");
   ovRelZ = findChild<QLabel*>("ovRelZ");
@@ -25,10 +24,16 @@ void Overlay::initializeWidget() {
   ovDtgA = findChild<QLabel*>("ovDtgA");
   ovDtgB = findChild<QLabel*>("ovDtgB");
   xTitle = findChild<QLabel*>("xTitle");
+  relX   = new LabelAdapter(ovRelX);
+  relY   = new LabelAdapter(ovRelY);
+  ValueManager vm;
 
-  relX = new LabelAdapter(ovRelX);
-  relY = new LabelAdapter(ovRelY);
+  connect(vm.getModel("relX", 0), &ValueModel::valueChanged, relX, &LabelAdapter::setValue);
+  connect(vm.getModel("relY", 0), &ValueModel::valueChanged, relY, &LabelAdapter::setValue);
+  }
 
+
+void Overlay::updateStyles() {
   QString relStyles("color: blue; background: rgba(220,220,255,200);");
   QString dtgStyles("color: orange; background: rgba(255,255,220,200);");
   QString titleStyles("color: blue; background: rgba(255,255,255,200);");
@@ -44,8 +49,4 @@ void Overlay::initializeWidget() {
   ovDtgA->setStyleSheet(dtgStyles);
   ovDtgB->setStyleSheet(dtgStyles);
   xTitle->setStyleSheet(titleStyles);
-  ValueManager vm;
-
-  connect(vm.getModel("relX", 0), &ValueModel::valueChanged, relX, &LabelAdapter::setValue);
-  connect(vm.getModel("relY", 0), &ValueModel::valueChanged, relY, &LabelAdapter::setValue);
   }

@@ -19,6 +19,12 @@ class FileManager : public DynWidget
 public:
   explicit FileManager(const QDir& baseDir, QWidget *parent = nullptr);
 
+  virtual void connectSignals();
+  virtual void updateStyles();
+
+signals:
+  void fileSelected(QVariant filePath);
+
 public slots:
   void currentChanged(const QModelIndex& index);
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);

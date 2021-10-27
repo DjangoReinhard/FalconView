@@ -83,6 +83,7 @@ SOURCES += \
     src/view/patheditor.cpp \
     src/view/settingseditor.cpp \
     src/view/splitwidget.cpp \
+    src/view/testEdit.cpp \
     src/view/tooleditor.cpp \
     src/view/toolmanager.cpp \
 
@@ -144,6 +145,7 @@ HEADERS += \
     src/view/patheditor.h \
     src/view/settingseditor.h \
     src/view/splitwidget.h \
+    src/view/testEdit.h \
     src/view/tooleditor.h \
     src/view/toolmanager.h \
 

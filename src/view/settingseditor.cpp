@@ -21,6 +21,7 @@ SettingsEditor::~SettingsEditor() {
   //delete labels;
   }
 
+
 void SettingsEditor::initializeWidget() {
   labels = new QLabel*[Config::guiSettingEntries];
   labels[0]  = findChild<QLabel*>("actCodesPreview");
@@ -74,7 +75,10 @@ void SettingsEditor::initializeWidget() {
   fontToolDesc = findChild<QPushButton*>("fontToolDesc");
   fontToolNum  = findChild<QPushButton*>("fontToolNum");
   fontToolNext = findChild<QPushButton*>("fontToolNext");
+  }
 
+
+void SettingsEditor::connectSignals() {
   connect(bgActCodes, &QPushButton::pressed, this, [=](){ changeBackgroundColor(0); });
   connect(bgDroAbs,   &QPushButton::pressed, this, [=](){ changeBackgroundColor(1); });
   connect(bgDroDtg,   &QPushButton::pressed, this, [=](){ changeBackgroundColor(2); });
@@ -113,7 +117,10 @@ void SettingsEditor::initializeWidget() {
   connect(fontToolDesc, &QPushButton::pressed, this, [=](){ changeFont(9); });
   connect(fontToolNum,  &QPushButton::pressed, this, [=](){ changeFont(10); });
   connect(fontToolNext, &QPushButton::pressed, this, [=](){ changeFont(11); });
+  }
 
+
+void SettingsEditor::updateStyles() {
   setupLabels();
   }
 

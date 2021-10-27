@@ -14,6 +14,12 @@ DynWidget::DynWidget(const QString& fileName, QWidget* parent)
   }
 
 
+void DynWidget::init() {
+  connectSignals();
+  updateStyles();
+  }
+
+
 QAction* DynWidget::viewAction() {
   if (!vAction) {
      vAction = new QAction(this);

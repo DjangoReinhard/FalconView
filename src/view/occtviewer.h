@@ -27,6 +27,8 @@
 
 #include <AIS_InteractiveContext.hxx>
 #include <AIS_ViewController.hxx>
+#include <AIS_InteractiveObject.hxx>
+#include <AIS_Shape.hxx>
 #include <V3d_View.hxx>
 
 class AIS_ViewCube;
@@ -49,10 +51,14 @@ public:
   const QString& getGlInfo() const                { return myGlInfo; }
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
   virtual QSize  sizeHint()        const override { return QSize(720, 480); }
+  void showPath(const QList<Handle(AIS_InteractiveObject)>& path);
 
-protected:     // OpenGL events
+protected:
+  void showLimits();
+
+  // OpenGL events
   virtual void initializeGL() override;
-  virtual void paintGL() override;
+  virtual void paintGL() override;  
 
 protected:     // user input events
   virtual void closeEvent       (QCloseEvent*  theEvent) override;
@@ -75,6 +81,8 @@ private:
   Handle(V3d_View)               myView;
   Handle(AIS_InteractiveContext) myContext;
   Handle(AIS_ViewCube)           myViewCube;
+  Handle(AIS_Shape)              myCone;
+  Bnd_Box                        myBounds;
 
   QString myGlInfo;
   bool    myIsCoreProfile;

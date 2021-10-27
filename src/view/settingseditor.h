@@ -12,6 +12,9 @@ public:
   SettingsEditor(const QString& uiFile, QWidget* parent = nullptr);
  ~SettingsEditor();
 
+  virtual void connectSignals();
+  virtual void updateStyles();
+
 protected:
   void initializeWidget();
   void setupLabels();
