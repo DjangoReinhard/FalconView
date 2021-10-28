@@ -245,6 +245,13 @@ OcctQtViewer::OcctQtViewer(QWidget* theParent)
   QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
   //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
+  Handle(Prs3d_Drawer) hlStyle = myContext->HighlightStyle();
+
+  hlStyle->SetMethod(Aspect_TOHM_COLOR);
+  hlStyle->SetColor(Quantity_NOC_BLUE);
+  hlStyle->SetDisplayMode(1);
+  hlStyle->SetTransparency(0.2f);
+  myContext->SetHighlightStyle(hlStyle);
   }
 
 
@@ -327,19 +334,6 @@ void OcctQtViewer::initializeGL() {
 
      myContext->Display(myViewCube, 0, 0, false);
      }
-//  {
-//    // dummy shape for testing
-//    TopoDS_Shape      aBox    = BRepPrimAPI_MakeBox(20.0, 20.0, 20.0).Shape();
-//    Handle(AIS_Shape) aBigBox = new AIS_Shape(aBox);
-//    Handle(AIS_Shape) aHelix  = Helix::makeCylindrical(20, 1, 2);
-
-//    aBox = BRepPrimAPI_MakeBox(10, 10, 10).Shape();
-//    Handle(AIS_Shape) aSmallBox = new AIS_Shape(aBox);
-
-//    myContext->Display(aSmallBox, AIS_WireFrame, 0, false);
-//    myContext->Display(aBigBox, AIS_WireFrame, 0, false);
-//    myContext->Display(aHelix, AIS_Shaded, 0, false);
-//    }
   }
 
 
@@ -376,7 +370,7 @@ void OcctQtViewer::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
          cMax.SetZ(fmax(cMax.Z(), p.Z()));
          }
       }
-  myContext->Display(myViewCube, AIS_Shaded, 0, false);
+  myContext->Display(myViewCube, 0, 0, false);
   myContext->Display(myCone, AIS_Shaded, 0, false);
   myBounds = Bnd_Box(cMin, cMax);
   showLimits();

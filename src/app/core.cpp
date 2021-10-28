@@ -37,6 +37,16 @@ OcctQtViewer* Core::view3D() {
   }
 
 
+void Core::setViewStack(MainView *v) {
+  core()->mainView = v;
+  }
+
+
+MainView* Core::viewStack() {
+  return core()->mainView;
+  }
+
+
 Kernel* Core::core() {
   assert(kernel != nullptr);
   return kernel;

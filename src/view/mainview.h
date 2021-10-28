@@ -11,8 +11,9 @@ class MainView : public QWidget
 public:
   MainView(QWidget* parent = nullptr);
 
-  void activatePage(const QString& name);
-  void addPage(const QString& name, DynWidget* page);
+  QWidget* activatePage(const QString& name);
+  QWidget* page(const QString& name);
+  void     addPage(const QString& name, DynWidget* page);
 
 private:
   QMap<QString, DynWidget*> pages;

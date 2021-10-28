@@ -11,6 +11,7 @@ class DirModel;
 class FileModel;
 class QItemSelection;
 class QKeyEvent;
+class FileManagerClient;
 
 
 class FileManager : public DynWidget
@@ -21,14 +22,15 @@ public:
 
   virtual void connectSignals();
   virtual void updateStyles();
+  void setClient(FileManagerClient* c);
 
 signals:
-  void fileSelected(QVariant filePath);
+  void fileSelected(const QString& filePath /*, bool switchPage = true*/);
 
 public slots:
   void currentChanged(const QModelIndex& index);
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-  void toggleView();
+//  void toggleView();
 
 protected:
   void keyReleaseEvent(QKeyEvent *event);
@@ -43,5 +45,6 @@ private:
   FileModel*             fileModel;
   QSortFilterProxyModel* pxDirs;
   QSortFilterProxyModel* pxFiles;
+  FileManagerClient*     client;
   };
 #endif // FILEMANAGER_H

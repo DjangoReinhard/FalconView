@@ -41,12 +41,12 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidge
 
 
 void PreViewEditor::connectSignals() {
-  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::loadFile);
+  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::genPreView);
   TestEdit::connectSignals();
   }
 
 
-void PreViewEditor::loadFile(const QVariant& fileName) {
+void PreViewEditor::genPreView(const QVariant& fileName) {
   qDebug() << "PreViewEditor::loadFile" << fileName;
   CanonIF().toolPath().clear();
   ed->loadFile(fileName);

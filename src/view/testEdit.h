@@ -1,6 +1,7 @@
 #ifndef TESTEDIT_H
 #define TESTEDIT_H
 #include <dynwidget.h>
+#include <filemanagerclient.h>
 class QSplitter;
 class QLineEdit;
 class QVariant;
@@ -10,14 +11,17 @@ class GCodeEditor;
 class GCodeHighlighter;
 
 
-class TestEdit : public DynWidget
+class TestEdit : public DynWidget, FileManagerClient
 {
   Q_OBJECT
 public:
   TestEdit(const QString& fileName, QWidget* parent = nullptr);
 
+  QString pageName() override;
+
 public slots:
   void         openFile();
+  virtual void fileSelected(const QString& filePath) override;
 
 protected:
   void         initializeWidget();

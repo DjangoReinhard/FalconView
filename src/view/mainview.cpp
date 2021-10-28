@@ -1,6 +1,7 @@
 #include <mainview.h>
 #include <dynwidget.h>
 #include <QAction>
+#include <QDebug>
 #include <QGridLayout>
 //#include <QStackedLayout>
 
@@ -11,20 +12,34 @@ MainView::MainView(QWidget* parent)
   }
 
 
-void MainView::activatePage(const QString& name) {
+QWidget* MainView::page(const QString& name) {
+  qDebug() << "request page \"" << name << "\"";
+
+  if (pages.contains(name)) return pages[name];
+  return nullptr;
+  }
+
+
+QWidget* MainView::activatePage(const QString& name) {
+  qDebug() << "activatePage \""  << name << "\"";
+
   if (pages.contains(name)) {
      QWidget*     w  = pages[name];
      QGridLayout* gl = static_cast<QGridLayout*>(layout());
 
      if (gl) {
+        qDebug() << "ok, found widget. Gonna switch view";
         w->setVisible(true);
         for (auto k = pages.keyBegin(); k != pages.keyEnd(); ++k) {
             if (!k->compare(name)) continue;
             pages[*k]->setVisible(false);
             }
         w->repaint();
+
+        return w;
         }
      }
+  return nullptr;
   }
 
 

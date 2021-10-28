@@ -14,7 +14,7 @@ public:
   Core(const QString& iniFileName, const QString& appName, const QString& group = "SRD");
   Core() {}
   void          parseGCFile(const QString& fileName);
-  void          setViewStack(MainView* widget);
+  void          setViewStack(MainView* v);
   OcctQtViewer* view3D();
   ToolTable&    toolTable();
   LcProperties& lcProperties();

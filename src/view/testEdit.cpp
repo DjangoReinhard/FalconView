@@ -4,6 +4,9 @@
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
+#include <mainview.h>
+#include <filemanager.h>
+#include <core.h>
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -84,13 +87,38 @@ void TestEdit::connectSignals() {
   }
 
 
-void TestEdit::openFile() {
+void TestEdit::openFile() {    
+#ifdef USE_SYS_FILE_DIALOG
   QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
   QString name = QFileDialog::getOpenFileName(this
                                             , tr("open GCode file")
                                             , dirStart.absolutePath()
                                             , tr("GCode Files (*.ngc *.nc)"));
   if (name.size()) loadFile(QVariant(name));
+#else
+  QWidget*     w = Core().viewStack()->page("FileManager");
+  FileManager* fm = static_cast<FileManager*>(w);
+
+  if (fm) {
+//     connect(fm, &FileManager::fileSelected, this, &TestEdit::fileSelected);
+     fm->setClient(this);
+     Core().viewStack()->activatePage("FileManager");
+     }
+#endif
+  }
+
+
+QString TestEdit::pageName() {
+  return objectName();
+  }
+
+
+void TestEdit::fileSelected(const QString &filePath) {
+//  QWidget*     w = Core().viewStack()->page("FileManager");
+//  FileManager* fm = static_cast<FileManager*>(w);
+//
+//  disconnect(fm, &FileManager::fileSelected, this, &TestEdit::loadFile);
+  loadFile(filePath);
   }
 
 
@@ -98,6 +126,7 @@ void TestEdit::loadFile(const QVariant& fileName) {
   qDebug() << "TestEdit::loadFile" << fileName;
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
+  Core().viewStack()->activatePage(objectName());
   }
 
 

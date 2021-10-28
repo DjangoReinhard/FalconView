@@ -1,4 +1,8 @@
 #include <filemanager.h>
+#include <filemanagerclient.h>
+#include <testEdit.h>
+#include <mainview.h>
+#include <core.h>
 #include <KeyCodes.h>
 #include <dirmodel.h>
 #include <direntry.h>
@@ -27,7 +31,8 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
  , dirModel(new DirModel(baseDir.absolutePath()))
  , fileModel(new FileModel())
  , pxDirs(new QSortFilterProxyModel(this))
- , pxFiles(new QSortFilterProxyModel(this)) {
+ , pxFiles(new QSortFilterProxyModel(this))
+ , client(nullptr) {
   setObjectName("FileManager");
   pxDirs->setSourceModel(dirModel);
   dirs->setModel(pxDirs);
@@ -72,11 +77,16 @@ void FileManager::updateStyles() {
   }
 
 
-void FileManager::toggleView() {
-//  qDebug() << "Hi, toggleView triggered ...";
-  if (dirs->hasFocus()) files->setFocus();
-  else                  dirs->setFocus();
+void FileManager::setClient(FileManagerClient *c) {
+  client = c;
   }
+
+
+//void FileManager::toggleView() {
+////  qDebug() << "Hi, toggleView triggered ...";
+//  if (dirs->hasFocus()) files->setFocus();
+//  else                  dirs->setFocus();
+//  }
 
 
 void FileManager::currentChanged(const QModelIndex& index) {
@@ -88,8 +98,6 @@ void FileManager::currentChanged(const QModelIndex& index) {
      qDebug() << "path for detail-view: " << item->path();
      fileModel->setupModel(item->path());
      files->resizeColumnsToContents();
-//     for (int i=1; i < fileModel->columnCount(QModelIndex()); ++i)
-//         files->resizeColumnToContents(i);
      }
   }
 
@@ -101,11 +109,8 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
      qDebug() << "hit ENTER?";
      QModelIndexList    mi       = files->selectionModel()->selection().indexes();
 
-     if (!mi.size()) {
-        event->accept();
-
-        return;
-        }
+     event->accept();
+     if (!mi.size()) return;
      const QModelIndex& index    = mi.at(0);
      const QModelIndex& srcIndex = pxFiles->mapToSource(index);
      const QFileInfo&   fi       = fileModel->fileInfo(srcIndex.row());
@@ -114,8 +119,11 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
 
      qDebug() << "selected file: " << file.fileName();
 
-     //TODO: change view-stack to caller page!
-     emit fileSelected(file.fileName());
+     if (client) {
+        client->fileSelected(file.fileName());
+        client = nullptr;
+        }
+//     emit fileSelected(file.fileName());
      }
   event->accept();
   }

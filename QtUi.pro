@@ -118,6 +118,7 @@ HEADERS += \
     src/util/abstractcondition.h \
     src/util/axismask.h \
     src/util/equalcondition.h \
+    src/util/filemanagerclient.h \
     src/util/gcodehighlighter.h \
     src/util/greatercondition.h \
     src/util/KeyCodes.h \

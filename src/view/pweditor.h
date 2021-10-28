@@ -18,7 +18,7 @@ public:
   PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent);
 
 protected:
-  virtual void loadFile(const QVariant& fileName) override;
+  void genPreView(const QVariant& fileName);
   virtual void connectSignals() override;
 
 private:

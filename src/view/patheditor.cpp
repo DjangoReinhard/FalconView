@@ -1,5 +1,7 @@
 #include <patheditor.h>
 #include <valuemanager.h>
+#include <mainview.h>
+#include <core.h>
 #include <configacc.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
@@ -8,6 +10,7 @@
 #include <QFileDialog>
 #include <QLabel>
 #include <QDir>
+#include <QDebug>
 #include <QVariant>
 #include <QLineEdit>
 #include <QPlainTextEdit>
@@ -22,7 +25,9 @@ PathEditor::PathEditor(const QString& fileName, QWidget* parent)
 
 
 void PathEditor::loadFile(const QVariant& fileName) {
+  qDebug() << "PathEditor::loadFile" << fileName;
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
   ValueManager().getModel("fileName", " ")->setValue(fileName.toString());
+  Core().viewStack()->activatePage("PreViewEditor");
   }
