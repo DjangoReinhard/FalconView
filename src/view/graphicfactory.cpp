@@ -36,7 +36,6 @@ Handle(AIS_Shape) GraphicFactory::createArc(const gp_Pnt& from, const gp_Pnt& to
   double r1 =center.Distance(to);
 
   assert(abs(r0 - r1) < MIN_DELTA);
-//gp_Dir       dir = gce_MakeDir(from, center);
   gp_Dir       dir(0, 0, 1);
   gp_Circ      rawCircle(gp_Ax2(center, dir), r0);
   TopoDS_Edge  edge;
@@ -45,8 +44,6 @@ Handle(AIS_Shape) GraphicFactory::createArc(const gp_Pnt& from, const gp_Pnt& to
      edge = BRepBuilderAPI_MakeEdge(rawCircle);
      }
   else {
-//     gp_Elips elem = gce_MakeElips(from, to, center);
-//     Handle(Geom_TrimmedCurve) arc = GC_MakeArcOfEllipse(elem, from, to, 0);
      Handle(Geom_TrimmedCurve) arc = GC_MakeArcOfCircle(rawCircle, from, to, ccw);
      edge = BRepBuilderAPI_MakeEdge(arc);
      }
