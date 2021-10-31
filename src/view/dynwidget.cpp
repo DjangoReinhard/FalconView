@@ -6,11 +6,13 @@
 #include <QUiLoader>
 #include <QStackedLayout>
 
-DynWidget::DynWidget(const QString& fileName, QWidget* parent)
+DynWidget::DynWidget(const QString& fileName, QWidget* parent, int margin)
  : QWidget(parent)
  , vAction(nullptr) {
   setLayout(new QVBoxLayout);
-  layout()->addWidget(loadFromUI(fileName));
+  layout()->setContentsMargins(0, 0, 0, 0);
+  w = loadFromUI(fileName);
+  if (w) layout()->addWidget(w);
   }
 
 

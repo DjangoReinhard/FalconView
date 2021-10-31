@@ -9,7 +9,6 @@
 #include <positioncalculator.h>
 #include <statusreader.h>
 
-
 class PositionDockable;
 class ToolInfoDockable;
 class SpeedInfoDockable;

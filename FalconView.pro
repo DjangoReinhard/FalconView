@@ -1,4 +1,4 @@
-QT       += core gui uitools sql
+QT += core gui uitools sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -6,10 +6,10 @@ CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
-# DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
 
-TARGET = QtUi
+TARGET = FalconView
 
 INCLUDEPATH += \
     src/app \
@@ -60,6 +60,7 @@ SOURCES += \
     src/util/gcodehighlighter.cpp \
     src/util/greatercondition.cpp \
     src/util/LCInter.cpp \
+    src/util/flowlayout.cpp \
     src/util/smallercondition.cpp \
     src/view/dockable/curcodesdockable.cpp \
     src/view/dockable/dockable.cpp \
@@ -71,6 +72,7 @@ SOURCES += \
     src/view/DocumentCommon.cxx \
     src/view/dynwidget.cpp \
     src/view/filemanager.cpp \
+    src/view/fixturemanager.cpp \
     src/view/gcodeeditor.cpp \
     src/view/gcodeviewer.cpp \
     src/view/graphicfactory.cpp \
@@ -81,6 +83,7 @@ SOURCES += \
     src/view/overlay.cpp \
     src/view/pweditor.cpp \
     src/view/patheditor.cpp \
+    src/view/fixtureedit.cpp \
     src/view/settingseditor.cpp \
     src/view/splitwidget.cpp \
     src/view/testEdit.cpp \
@@ -123,6 +126,7 @@ HEADERS += \
     src/util/greatercondition.h \
     src/util/KeyCodes.h \
     src/util/LCInter.h \
+    src/util/flowlayout.h \
     src/util/smallercondition.h \
     src/view/dockable/curcodesdockable.h \
     src/view/dockable/dockable.h \
@@ -134,6 +138,7 @@ HEADERS += \
     src/view/DocumentCommon.h \
     src/view/dynwidget.h \
     src/view/filemanager.h \
+    src/view/fixturemanager.h \
     src/view/gcodeeditor.h \
     src/view/gcodeviewer.h \
     src/view/graphicfactory.h \
@@ -144,6 +149,7 @@ HEADERS += \
     src/view/occtviewer.h \
     src/view/pweditor.h \
     src/view/patheditor.h \
+    src/view/fixtureedit.h \
     src/view/settingseditor.h \
     src/view/splitwidget.h \
     src/view/testEdit.h \
@@ -156,6 +162,7 @@ FORMS += \
     src/UI/GCodeEditor.ui \
     src/UI/mainwindow.old.ui \
     src/UI/mainwindow.ui \
+    src/UI/Fixture.ui \
     src/UI/Overlay.ui \
     src/UI/Position.ui \
     src/UI/Settings.ui \
@@ -197,7 +204,7 @@ LIBS += -lTKernel -lTKMath -lTKService -lTKV3d -lTKOpenGl \
         -lTKBin -lTKXml
 
 TRANSLATIONS += \
-    src/i18n/QtUi_de_DE.ts
+    src/i18n/FalconView_de_DE.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -205,6 +212,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    src/i18n/QtUi_de_DE.ts
+    src/i18n/FalconView_de_DE.ts
 
-RESOURCES += QtUi.qrc
+RESOURCES += FalconView.qrc

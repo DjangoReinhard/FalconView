@@ -9,6 +9,8 @@
 MainView::MainView(QWidget* parent)
  : QWidget(parent) {
   setLayout(new QGridLayout);
+  layout()->setContentsMargins(0, 0, 0, 0);
+  qDebug() << "mainView has margins:" << layout()->contentsMargins();
   }
 
 
@@ -25,7 +27,7 @@ QWidget* MainView::activatePage(const QString& name) {
 
   if (pages.contains(name)) {
      QWidget*     w  = pages[name];
-     QGridLayout* gl = static_cast<QGridLayout*>(layout());
+     QGridLayout* gl = qobject_cast<QGridLayout*>(layout());
 
      if (gl) {
         qDebug() << "ok, found widget. Gonna switch view";
@@ -45,7 +47,7 @@ QWidget* MainView::activatePage(const QString& name) {
 
 void MainView::addPage(const QString& name, DynWidget *page) {
   pages.insert(name, page);
-  QGridLayout* gl = static_cast<QGridLayout*>(layout());
+  QGridLayout* gl = qobject_cast<QGridLayout*>(layout());
 
   if (gl) {
      page->init();

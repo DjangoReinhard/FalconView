@@ -13,15 +13,15 @@ int main(int argc, char *argv[]) {
   QLocale::Country  country = sysLocale.country();
   QLocale           curLocale(lang, country);
   bool              ok = translator.load(curLocale
-                                       , "QtUi"
-                                       , "_"
-                                       , "../QtUi/src/i18n");
+                                      , "FalconView"
+                                      , "_"
+                                      , "../FalconView/src/i18n");
   QStringList args = QCoreApplication::arguments();
   QString iniFileName = getenv("INI_FILE_NAME");
 
 //  a.setFont(QFont("Noto Sans", 15));  // needed with Qt > 6xx
   if (args.length() > 1) iniFileName = args[1];
-  Core appCore(iniFileName, "Falcon-View");
+  Core appCore(iniFileName, "FalconView");
 
   qDebug() << "current locale settings - lang: " << curLocale.language()
            << "\tcountry: " << curLocale.country()

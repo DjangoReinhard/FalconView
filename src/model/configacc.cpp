@@ -57,4 +57,8 @@ const QString  Config::guiSettings[]     = {
 , "ToolDesc"        /*  9 */
 , "ToolNum"         /* 10 */
 , "ToolNext"        /* 11 */
+, "EdLinNum"        /* 12 */
+, "Fixture"         /* 13 */
+, "FixTitle"        /* 14 */
+, "FixFrame"        /* 15 */
   };

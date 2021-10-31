@@ -16,6 +16,7 @@
 #include <pweditor.h>
 #include <patheditor.h>
 #include <settingseditor.h>
+#include <fixturemanager.h>
 #include <filemanager.h>
 #include <toolmanager.h>
 #include <micon.h>
@@ -44,13 +45,7 @@
 MainWindow::MainWindow(QWidget *parent)
  : QMainWindow(parent)
  , ui(new Ui::MainWindow)
-// , pos(nullptr)
-// , ti(nullptr)
-// , si(nullptr)
-// , cc(nullptr)
  , gh(nullptr)
-// , view3D(nullptr)
-// , mainView(nullptr)
  , bg01(nullptr)
  , bg02(nullptr)
  , bg03(nullptr)
@@ -72,9 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setupUi(this);
   setObjectName("Falcon-View");
   setDockNestingEnabled(true);
-//  setFocusPolicy(Qt::StrongFocus);
-
-//  doc3D = createNewDocument();
   DBConnection conn("../ToolManager/db/toolTable");
 
   if (!conn.connect()) qDebug() << "failed to connect to Database!";
@@ -173,7 +165,7 @@ void MainWindow::createActions() {
 //  qDebug() << "start of createActions(power) ...";
   // power switch
   power       = new QAction(MIcon(":/res/SK_PowerOff.png"
-                                , ":/res/SK_PowerOn.png"), tr("Powerooff"), this);
+                                , ":/res/SK_PowerOn.png"), tr("Poweroff"), this);
   power->setCheckable(true);
   }
 
@@ -183,11 +175,6 @@ void MainWindow::createValueModels() {
 
   vm.setValue("showAbsolute", false);
   }
-
-
-//DocumentCommon* MainWindow::createNewDocument() {
-//  return new DocumentCommon(this);
-//  }
 
 
 void MainWindow::createConnections() {
@@ -277,22 +264,22 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables(DBConnection&) {
-  Dockable* d = new ToolInfoDockable("../QtUi/src/UI/ToolInfo.ui", this);
+  Dockable* d = new ToolInfoDockable(":/src/UI/ToolInfo.ui", this);
 
   addDockWidget(Qt::LeftDockWidgetArea, d);
   ui->menuView->addAction(d->toggleViewAction());
 
-  d = new CurCodesDockable("../QtUi/src/UI/CurCodes.ui", this);
+  d = new CurCodesDockable(":/src/UI/CurCodes.ui", this);
   addDockWidget(Qt::LeftDockWidgetArea, d);
   ui->menuView->addAction(d->toggleViewAction());
 
   //TODO: read axisMask from ini-file
-  pos = new PositionDockable("../QtUi/src/UI/Position.ui", AxisMask(0x01FF), this);
+  pos = new PositionDockable(":/src/UI/Position.ui", AxisMask(0x01FF), this);
   d   = pos;
   addDockWidget(Qt::LeftDockWidgetArea, d);
   ui->menuView->addAction(d->toggleViewAction());
 
-  d = new SpeedInfoDockable("../QtUi/src/UI/SpeedInfo.ui", this);
+  d = new SpeedInfoDockable(":/src/UI/SpeedInfo.ui", this);
   addDockWidget(Qt::BottomDockWidgetArea, d);
   ui->menuView->addAction(d->toggleViewAction());
   }
@@ -300,7 +287,7 @@ void MainWindow::createDockables(DBConnection&) {
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
   MainView*  mainView = new MainView(this);
-  DynWidget* page     = new PreViewEditor("../QtUi/src/UI/GCodeEditor.ui", Core().view3D(), mainView);
+  DynWidget* page     = new PreViewEditor(":/src/UI/GCodeEditor.ui", Core().view3D(), mainView);
 
   Core().setViewStack(mainView);
   mainView->addPage(page->objectName(), page);
@@ -314,15 +301,19 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new SettingsEditor("../QtUi/src/UI/Settings.ui", mainView);
+  page = new FixtureManager(":/src/UI/Fixture.ui");
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new PathEditor("../QtUi/src/UI/GCodeEditor.ui", mainView);
+  page = new SettingsEditor(":/src/UI/Settings.ui", mainView);
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new TestEdit("../QtUi/src/UI/GCodeEditor.ui", mainView);
+  page = new PathEditor(":/src/UI/GCodeEditor.ui", mainView);
+  mainView->addPage(page->objectName(), page);
+  ui->menuMain->addAction(page->viewAction());
+
+  page = new TestEdit(":/src/UI/GCodeEditor.ui", mainView);
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
@@ -334,6 +325,7 @@ void MainWindow::selectPage(const QString& name) {
   qDebug() << "page to select: " << name;
   Core().viewStack()->activatePage(name);
   }
+
 
 void MainWindow::timerEvent(QTimerEvent *e) {
 //  qDebug() << "start of timerEvent ...";

@@ -38,6 +38,8 @@ protected:
   void editTool();
   void renameCategory();
   void saveToolChanges();
+  long timeStamp();
+//  bool eventFilter(QObject* o, QEvent* e);
 
 private:
   DBConnection&          conn;
@@ -51,6 +53,7 @@ private:
   ToolEditor*            tEdit;
   QSize                  edSize;
   int                    tool2Edit;
+  long                   tsMsgBox;
   QSortFilterProxyModel* pxCat;
   QSortFilterProxyModel* pxTools;
   };

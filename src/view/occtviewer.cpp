@@ -451,8 +451,8 @@ void OcctQtViewer::showLimits() {
 // Function : closeEvent
 // Purpose  :
 // ================================================================
-void OcctQtViewer::closeEvent(QCloseEvent* theEvent) {
-  theEvent->accept();
+void OcctQtViewer::closeEvent(QCloseEvent* e) {
+  e->accept();
   }
 
 
@@ -460,8 +460,8 @@ void OcctQtViewer::closeEvent(QCloseEvent* theEvent) {
 // Function : keyPressEvent
 // Purpose  :
 // ================================================================
-void OcctQtViewer::keyPressEvent (QKeyEvent* theEvent) {
-  Aspect_VKey aKey = qtKey2VKey (theEvent->key());
+void OcctQtViewer::keyPressEvent (QKeyEvent* e) {
+  Aspect_VKey aKey = qtKey2VKey (e->key());
 
   switch (aKey) {
     case Aspect_VKey_Escape: {
@@ -471,11 +471,11 @@ void OcctQtViewer::keyPressEvent (QKeyEvent* theEvent) {
     case Aspect_VKey_F: {
          myView->FitAll(myBounds, false);
          update();
-         theEvent->accept();
+         e->accept();
          return;
          }
     }
-  QOpenGLWidget::keyPressEvent(theEvent);
+  QOpenGLWidget::keyPressEvent(e);
   }
 
 
@@ -483,15 +483,15 @@ void OcctQtViewer::keyPressEvent (QKeyEvent* theEvent) {
 // Function : mousePressEvent
 // Purpose  :
 // ================================================================
-void OcctQtViewer::mousePressEvent(QMouseEvent* theEvent) {
-  QOpenGLWidget::mousePressEvent(theEvent);
+void OcctQtViewer::mousePressEvent(QMouseEvent* e) {
+  QOpenGLWidget::mousePressEvent(e);
 
-  const Graphic3d_Vec2i  aPnt(theEvent->pos().x(), theEvent->pos().y());
-  const Aspect_VKeyFlags aFlags = qtMouseModifiers2VKeys(theEvent->modifiers());
+  const Graphic3d_Vec2i  aPnt(e->pos().x(), e->pos().y());
+  const Aspect_VKeyFlags aFlags = qtMouseModifiers2VKeys(e->modifiers());
 
   if (!myView.IsNull()
     && UpdateMouseButtons(aPnt
-                        , qtMouseButtons2VKeys(theEvent->buttons())
+                        , qtMouseButtons2VKeys(e->buttons())
                         , aFlags
                         , false)) {
      updateView();
@@ -503,15 +503,15 @@ void OcctQtViewer::mousePressEvent(QMouseEvent* theEvent) {
 // Function : mouseReleaseEvent
 // Purpose  :
 // ================================================================
-void OcctQtViewer::mouseReleaseEvent(QMouseEvent* theEvent) {
-  QOpenGLWidget::mouseReleaseEvent(theEvent);
+void OcctQtViewer::mouseReleaseEvent(QMouseEvent* e) {
+  QOpenGLWidget::mouseReleaseEvent(e);
 
-  const Graphic3d_Vec2i  aPnt(theEvent->pos().x(), theEvent->pos().y());
-  const Aspect_VKeyFlags aFlags = qtMouseModifiers2VKeys(theEvent->modifiers());
+  const Graphic3d_Vec2i  aPnt(e->pos().x(), e->pos().y());
+  const Aspect_VKeyFlags aFlags = qtMouseModifiers2VKeys(e->modifiers());
 
   if (!myView.IsNull()
     && UpdateMouseButtons(aPnt
-                        , qtMouseButtons2VKeys(theEvent->buttons())
+                        , qtMouseButtons2VKeys(e->buttons())
                         , aFlags
                         , false)) {
      updateView();
@@ -523,15 +523,15 @@ void OcctQtViewer::mouseReleaseEvent(QMouseEvent* theEvent) {
 // Function : mouseMoveEvent
 // Purpose  :
 // ================================================================
-void OcctQtViewer::mouseMoveEvent(QMouseEvent* theEvent) {
-  QOpenGLWidget::mouseMoveEvent(theEvent);
+void OcctQtViewer::mouseMoveEvent(QMouseEvent* e) {
+  QOpenGLWidget::mouseMoveEvent(e);
 
-  const Graphic3d_Vec2i aNewPos (theEvent->pos().x(), theEvent->pos().y());
+  const Graphic3d_Vec2i aNewPos (e->pos().x(), e->pos().y());
 
   if (!myView.IsNull()
     && UpdateMousePosition(aNewPos
-                         , qtMouseButtons2VKeys(theEvent->buttons())
-                         , qtMouseModifiers2VKeys(theEvent->modifiers())
+                         , qtMouseButtons2VKeys(e->buttons())
+                         , qtMouseModifiers2VKeys(e->modifiers())
                          , false)) {
      updateView();
      }
@@ -542,13 +542,13 @@ void OcctQtViewer::mouseMoveEvent(QMouseEvent* theEvent) {
 // function : wheelEvent
 // purpose  :
 // ==============================================================================
-void OcctQtViewer::wheelEvent (QWheelEvent* theEvent) {
-  QOpenGLWidget::wheelEvent (theEvent);
+void OcctQtViewer::wheelEvent (QWheelEvent* e) {
+  QOpenGLWidget::wheelEvent(e);
 
-  const Graphic3d_Vec2i aPos(theEvent->pos().x(), theEvent->pos().y());
+  const Graphic3d_Vec2i aPos(e->position().x(), e->position().y());
 
   if (!myView.IsNull()
-    && UpdateZoom(Aspect_ScrollDelta(aPos, theEvent->delta() / 8))) {
+    && UpdateZoom(Aspect_ScrollDelta(aPos, e->angleDelta().y() / 8))) {
      updateView();
      }
   }

@@ -4,6 +4,7 @@
 #include <tooleditor.h>
 #include <toolmodel.h>
 #include <KeyCodes.h>
+#include <QAbstractButton>
 #include <QTreeView>
 #include <QTableView>
 #include <QSplitter>
@@ -11,6 +12,7 @@
 #include <QFileSystemModel>
 #include <QSortFilterProxyModel>
 #include <QItemSelection>
+#include <QDateTime>
 #include <QScrollArea>
 #include <QInputDialog>
 #include <QPlainTextEdit>
@@ -21,6 +23,7 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QSqlField>
+#include <QThread>
 #include <QDebug>
 
 
@@ -35,6 +38,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  , categoryTableModel(new ToolCategoryModel())
  , toolModel(new ToolModel())
  , tEdit(new ToolEditor(this))
+ , tsMsgBox(timeStamp())
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
   setObjectName("ToolManager");
@@ -74,6 +78,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
   spV->addWidget(tools);
   spV->addWidget(sa);
   layout()->addWidget(spH);
+  layout()->setContentsMargins(0, 0, 0, 0);
   }
 
 
@@ -197,6 +202,45 @@ void ToolManager::deleteCategory() {
   }
 
 
+//bool ToolManager::eventFilter(QObject* o, QEvent* e) {
+//  if (e->type() == QEvent::KeyRelease) {
+//     QKeyEvent *ke = static_cast<QKeyEvent*>(e);
+
+//     qDebug("Filter sees key release %d - ts: %d", ke->key(), ke->timestamp());
+
+//     return true;
+//     }
+//  else if (e->type() == QEvent::KeyPress) {
+//     QKeyEvent *ke = static_cast<QKeyEvent*>(e);
+
+//     qDebug("Filter sees key press %d - ts: %d", ke->key(), ke->timestamp());
+
+//     return true;
+//     }
+//  else {
+//     // standard event processing
+//     return QObject::eventFilter(o, e);
+//     }
+//  }
+
+
+long ToolManager::timeStamp() {
+  QFile sysTime("/proc/uptime");
+
+  if (sysTime.open(QIODevice::ReadOnly | QIODevice::Text)) {
+     QTextStream in(&sysTime);
+     QStringList parts = in.readLine().split(" ");
+     bool   ok = false;
+     double ts = 0;
+
+     sysTime.close();
+     if (parts.size()) ts = parts[0].toDouble(&ok);
+     if (ok) return ts * 1000;
+     }
+  return 0;
+  }
+
+
 void ToolManager::deleteTool() {
   qDebug() << "delete tool: " << toolModel->record(tool2Edit).value("num");
   QMessageBox::StandardButton reply;
@@ -205,6 +249,8 @@ void ToolManager::deleteTool() {
                               , tr("QMessageBox::question()")
                               , tr("Should this tool be deleted?")
                               , QMessageBox::Yes | QMessageBox::No);
+  tsMsgBox = timeStamp();
+
   if (reply == QMessageBox::No) return;
   if (!toolModel->removeRows(tool2Edit, 1)) qDebug() << toolModel->lastError().text();
   if (!toolModel->submitAll())              qDebug() << toolModel->lastError().text();
@@ -277,10 +323,16 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
 //  qDebug() << "released key: " << event->key();
 //  qDebug() << "\tmodifiers: "  << event->modifiers();
 
-  switch (event->key()) {
-    case KeyCodes::Enter:
-         if (tools->hasFocus()) editTool();
-         break;
+  switch (event->key()) {    
+    case KeyCodes::Enter: {
+         qDebug() << "TM: enter (" << event->key() << ") has ts: " << event->timestamp();
+         long now = timeStamp();
+
+         qDebug() << "TM: time-delta" << (now - tsMsgBox);
+         if (tools->hasFocus() && (now - tsMsgBox) > 400) {
+            editTool();
+            }
+         } break;
     case KeyCodes::Escape:
          if (tEdit->isEnabled()) {  // abort editing
             tEdit->setEnabled(false);

@@ -30,10 +30,10 @@ signals:
 public slots:
   void currentChanged(const QModelIndex& index);
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-//  void toggleView();
 
 protected:
   void keyReleaseEvent(QKeyEvent *event);
+  void showEvent(QShowEvent *event);
 
 private:
   QSplitter*             spH;

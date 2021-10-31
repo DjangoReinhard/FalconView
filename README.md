@@ -1,7 +1,8 @@
-# QtUi
+# FalconView
 
-app to test Qt features together with linuxcnc using mvc.
-Configuration works on the fly and application state is saved on exit.
+**Work in progress!**
+
+Controlcenter for machines controlled by linuxcnc
 
 ## Screenshot
 [![vertical](sample/QtUi_vertical_01s.jpg)](sample/QtUi_vertical_01.jpg)

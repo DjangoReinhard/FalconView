@@ -61,8 +61,8 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
   spV->addWidget(files);
   spV->addWidget(preView);
   layout()->addWidget(spH);
+  layout()->setContentsMargins(0, 0, 0, 0);
   }
-
 
 
 void FileManager::connectSignals() {
@@ -77,16 +77,14 @@ void FileManager::updateStyles() {
   }
 
 
-void FileManager::setClient(FileManagerClient *c) {
-  client = c;
+void FileManager::showEvent(QShowEvent* e) {
+  if (e->type() == QEvent::Show) dirs->setFocus();
   }
 
 
-//void FileManager::toggleView() {
-////  qDebug() << "Hi, toggleView triggered ...";
-//  if (dirs->hasFocus()) files->setFocus();
-//  else                  dirs->setFocus();
-//  }
+void FileManager::setClient(FileManagerClient* c) {
+  client = c;
+  }
 
 
 void FileManager::currentChanged(const QModelIndex& index) {

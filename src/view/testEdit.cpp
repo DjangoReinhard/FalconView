@@ -30,6 +30,7 @@ TestEdit::TestEdit(const QString& fileName, QWidget* parent)
   qDebug() << "object name of top-widget from UI-file:" << w->objectName();
 
   layout()->addWidget(w);
+  layout()->setContentsMargins(0, 0, 0, 0);
   fn     = w->findChild<QLineEdit*>("fileName");
   pbOpen = w->findChild<QPushButton*>("pbOpen");
   pbSave = w->findChild<QPushButton*>("pbSave");
@@ -97,10 +98,9 @@ void TestEdit::openFile() {
   if (name.size()) loadFile(QVariant(name));
 #else
   QWidget*     w = Core().viewStack()->page("FileManager");
-  FileManager* fm = static_cast<FileManager*>(w);
+  FileManager* fm = qobject_cast<FileManager*>(w);
 
   if (fm) {
-//     connect(fm, &FileManager::fileSelected, this, &TestEdit::fileSelected);
      fm->setClient(this);
      Core().viewStack()->activatePage("FileManager");
      }
@@ -114,10 +114,6 @@ QString TestEdit::pageName() {
 
 
 void TestEdit::fileSelected(const QString &filePath) {
-//  QWidget*     w = Core().viewStack()->page("FileManager");
-//  FileManager* fm = static_cast<FileManager*>(w);
-//
-//  disconnect(fm, &FileManager::fileSelected, this, &TestEdit::loadFile);
   loadFile(filePath);
   }
 

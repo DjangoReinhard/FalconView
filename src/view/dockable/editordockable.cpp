@@ -10,7 +10,6 @@
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QFileDialog>
-#include <QScrollBar>
 #include <gcodehighlighter.h>
 #include <QDebug>
 

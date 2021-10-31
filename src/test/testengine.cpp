@@ -117,17 +117,17 @@ void TestEngine::tellStdPaths() {
 
 
 void TestEngine::writeSettings() {
-  QSettings cfg(QSettings::UserScope, "SRD", "QtUi");
+  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
 
-  cfg.setValue("whatEver", "ich bin ein Nasenbär");
+  cfg.setValue("whatEver", "hello world");
   }
 
 
 void TestEngine::readSettings() {
-  QSettings cfg(QSettings::UserScope, "SRD", "QtUi");
+  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
   QVariant we = cfg.value("whatEver");
 
-  QCOMPARE(we.toString(), "ich bin ein Nasenbär");
+  QCOMPARE(we.toString(), "hello world");
   }
 
 
