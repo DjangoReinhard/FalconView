@@ -2,6 +2,7 @@
 #include <core_p.h>
 #include <QTime>
 #include <QString>
+#include <QVector3D>
 #include <core.h>
 #include <lcproperties.h>
 #include <tooltable.h>
@@ -60,11 +61,24 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , lcIF(lcProps, tt)
  , view3D(new OcctQtViewer()) {
   CanonIF ci(lcProps, tt);
+  ValueManager().setValue("conePos", QVector3D());
 
   lcIF.setupToolTable();
   ci.setTraverseColor(QColor(Qt::cyan));
   ci.setFeedColor(QColor(Qt::white));
   ci.setLimitsColor(QColor(150, 255, 150));
+  connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);
+  }
+
+
+Kernel::~Kernel() {
+  }
+
+
+void Kernel::updateView(const QVariant &v) {
+  QVector3D p = v.value<QVector3D>();
+
+  view3D->moveCone(p.x(), p.y(), p.z());
   }
 
 

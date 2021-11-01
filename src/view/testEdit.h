@@ -27,6 +27,7 @@ protected:
   void         initializeWidget();
   virtual void connectSignals() override;
   virtual void updateStyles() override;
+  virtual void showEvent(QShowEvent *event) override;
   virtual void loadFile(const QVariant& fileName);
 
   QLineEdit*        fn;

@@ -39,7 +39,6 @@ protected:
   void renameCategory();
   void saveToolChanges();
   long timeStamp();
-//  bool eventFilter(QObject* o, QEvent* e);
 
 private:
   DBConnection&          conn;

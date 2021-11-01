@@ -9,12 +9,15 @@ class OcctQtViewer;
 class QString;
 class QFile;
 
-class Kernel
+class Kernel : public QObject
 {
+  Q_OBJECT
 private:
   Kernel(const QString& iniFilename, const QString& appName, const QString& group = "SRD");
+  virtual ~Kernel();
 
   void parseGCode(QFile& file);
+  void updateView(const QVariant& v);
 
   ConfigManager cfg;
   LcProperties  lcProps;

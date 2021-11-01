@@ -23,6 +23,7 @@
 
 #include <Standard_WarningsDisable.hxx>
 #include <QOpenGLWidget>
+#include <QVariant>
 #include <Standard_WarningsRestore.hxx>
 
 #include <AIS_InteractiveContext.hxx>
@@ -52,6 +53,8 @@ public:
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
   virtual QSize  sizeHint()        const override { return QSize(720, 480); }
   void showPath(const QList<Handle(AIS_InteractiveObject)>& path);
+  void fitAll();
+  void moveCone(double x, double y, double z);
 
 protected:
   void showLimits();

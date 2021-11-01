@@ -20,6 +20,7 @@ public:
 protected:
   void genPreView(const QVariant& fileName);
   virtual void connectSignals() override;
+  virtual void showEvent(QShowEvent *event) override;
 
 private:
   QSplitter*        spV;

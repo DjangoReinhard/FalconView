@@ -2,7 +2,9 @@
 #include <insulatePose.h>
 #include <positioncalculator.h>
 #include <cmath>
-
+#include <QVector3D>
+#include <QVariant>
+#include <QDebug>
 
 PositionCalculator::PositionCalculator(QObject *parent)
  : QObject(parent) {
@@ -63,22 +65,25 @@ void PositionCalculator::update(EmcPose* actPos, EmcPose* /* relPos */, EmcPose*
   double w = actPos->w      - g5x->w      - toolOffset->w;
 
   if (rotXY != 0) {
-     double ang = rotXY * -3.14159265 / 180.0;
+     double ang = rotXY * M_PI / 180.0;
      double xr  = x * cos(ang) - sin(ang);
      double yr  = y * sin(ang) + acos(ang);
 
      x = xr;
      y = yr;
      }
-  x -= g92->tran.x;
-  y -= g92->tran.y;
-  z -= g92->tran.z;
-  a -= g92->a;
-  b -= g92->b;
-  c -= g92->c;
-  u -= g92->u;
-  v -= g92->v;
-  w -= g92->w;
+  x = convertUnit(x - g92->tran.x, units);
+  y = convertUnit(y - g92->tran.y, units);
+  z = convertUnit(z - g92->tran.z, units);
+  a = convertUnit(a - g92->a, units);
+  b = convertUnit(b - g92->b, units);
+  c = convertUnit(c - g92->c, units);
+  u = convertUnit(u - g92->u, units);
+  v = convertUnit(v - g92->v, units);
+  w = convertUnit(w - g92->w, units);
+
+  QVector3D cp(x, y, z);
+//  qDebug() << "posCalc: " << x << "/" << y << "/" << z;
 
   vm.setValue("absX", convertUnit(actPos->tran.x, units));
   vm.setValue("absY", convertUnit(actPos->tran.y, units));
@@ -89,15 +94,16 @@ void PositionCalculator::update(EmcPose* actPos, EmcPose* /* relPos */, EmcPose*
   vm.setValue("absU", convertUnit(actPos->u, units));
   vm.setValue("absV", convertUnit(actPos->v, units));
   vm.setValue("absW", convertUnit(actPos->w, units));
-  vm.setValue("relX", convertUnit(x, units));
-  vm.setValue("relY", convertUnit(y, units));
-  vm.setValue("relZ", convertUnit(z, units));
-  vm.setValue("relA", convertUnit(a, units));
-  vm.setValue("relB", convertUnit(b, units));
-  vm.setValue("relC", convertUnit(c, units));
-  vm.setValue("relU", convertUnit(u, units));
-  vm.setValue("relV", convertUnit(v, units));
-  vm.setValue("relW", convertUnit(w, units));
+  vm.setValue("conePos", cp);
+  vm.setValue("relX", x);
+  vm.setValue("relY", y);
+  vm.setValue("relZ", z);
+  vm.setValue("relA", a);
+  vm.setValue("relB", b);
+  vm.setValue("relC", c);
+  vm.setValue("relU", u);
+  vm.setValue("relV", v);
+  vm.setValue("relW", w);
   vm.setValue("dtgX", convertUnit(dtg->tran.x, units));
   vm.setValue("dtgY", convertUnit(dtg->tran.y, units));
   vm.setValue("dtgZ", convertUnit(dtg->tran.z, units));

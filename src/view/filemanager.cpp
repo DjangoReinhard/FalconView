@@ -104,7 +104,6 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
 //  qDebug() << "released key: " << event->key();
 
   if (event->key() == KeyCodes::Enter) {
-//     qDebug() << "hit ENTER?";
      QModelIndexList    mi       = files->selectionModel()->selection().indexes();
 
      event->accept();
@@ -115,15 +114,11 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
      const QString      path     = fi.absoluteFilePath();
      QFile file(path);
 
-//     qDebug() << "selected file: " << file.fileName();
-
      if (client) {
         client->fileSelected(file.fileName());
         client = nullptr;
         }
-//     emit fileSelected(file.fileName());
      }
-  event->accept();
   }
 
 

@@ -78,14 +78,14 @@ MainWindow::MainWindow(QWidget *parent)
   createValueModels();
   createConnections();
 
-  timer.start(40, this);
-
   // application window
   resize(QSize(1920, 1200));
   Config cfg;
 
   restoreGeometry(cfg.value("geometry").toByteArray());
   restoreState(cfg.value("windowState").toByteArray());
+
+  timer.start(40, this);
   }
 
 
@@ -328,9 +328,6 @@ void MainWindow::selectPage(const QString& name) {
 
 
 void MainWindow::timerEvent(QTimerEvent *e) {
-//  qDebug() << "start of timerEvent ...";
-  if (e->timerId() == timer.timerId())  {
-     statusReader.update();
-     }
+  if (e->timerId() == timer.timerId()) statusReader.update();
   else QMainWindow::timerEvent(e);
   }

@@ -3,6 +3,7 @@
 #include <configacc.h>
 #include <core.h>
 #include <gcodeeditor.h>
+#include <mainview.h>
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
 #include <canonif.h>
@@ -33,6 +34,7 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidge
   spV->addWidget(view);
   spV->addWidget(w);
   ed->setWordWrapMode(QTextOption::NoWrap);
+  ed->setReadOnly(true);
   layout()->addWidget(spV);
   pbOpen->hide();
   pbSave->hide();
@@ -46,6 +48,14 @@ void PreViewEditor::connectSignals() {
   }
 
 
+void PreViewEditor::showEvent(QShowEvent* e) {
+  if (e->type() == QEvent::Show) {
+     view->setFocus();
+     view->fitAll();
+     }
+  }
+
+
 void PreViewEditor::genPreView(const QVariant& fileName) {
   qDebug() << "PreViewEditor::loadFile" << fileName;
   CanonIF().toolPath().clear();
@@ -53,4 +63,5 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   fn->setText(fileName.toString());
   Core().parseGCFile(fileName.toString());
   view->showPath(CanonIF().toolPath());
+  Core().viewStack()->activatePage("PreviewEditor");
   }

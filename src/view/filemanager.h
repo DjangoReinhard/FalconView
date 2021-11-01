@@ -20,8 +20,8 @@ class FileManager : public DynWidget
 public:
   explicit FileManager(const QDir& baseDir, QWidget *parent = nullptr);
 
-  virtual void connectSignals();
-  virtual void updateStyles();
+  virtual void connectSignals() override;
+  virtual void updateStyles() override;
   void setClient(FileManagerClient* c);
 
 signals:
@@ -32,8 +32,8 @@ public slots:
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 protected:
-  void keyReleaseEvent(QKeyEvent *event);
-  void showEvent(QShowEvent *event);
+  virtual void keyReleaseEvent(QKeyEvent *event) override;
+  virtual void showEvent(QShowEvent *event) override;
 
 private:
   QSplitter*             spH;

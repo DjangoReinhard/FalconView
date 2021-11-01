@@ -15,6 +15,7 @@ public:
   void paintLineNumbers(QPaintEvent* event);
   int  lineNumberAreaWidth();
   void loadFile(QVariant fileName);
+  int  numLines() const { return document()->blockCount(); }
 
 protected:
   void resizeEvent(QResizeEvent* event) override;

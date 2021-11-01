@@ -39,7 +39,6 @@ TestEdit::TestEdit(const QString& fileName, QWidget* parent)
 
   ed     = new GCodeEditor(this);
   gh     = new GCodeHighlighter(ed->document());
-  ed->setReadOnly(true);
   ed->setFocusPolicy(Qt::NoFocus);
   gl->addWidget(ed, 1, 0, 1, 3);
   placeHolder->hide();
@@ -95,6 +94,14 @@ void TestEdit::openFile() {
   if (fm) {
      fm->setClient(this);
      Core().viewStack()->activatePage("FileManager");
+     }
+  }
+
+
+void TestEdit::showEvent(QShowEvent* e) {
+  if (e->type() == QEvent::Show) {
+     if (ed->numLines() > 1) ed->setFocus();
+     else                    pbOpen->setFocus();
      }
   }
 

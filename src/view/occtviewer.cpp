@@ -30,7 +30,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QMouseEvent>
-#include <QDebug>
+#include <QVector3D>
 #include <core.h>
 #include <canonif.h>
 #include <Standard_WarningsRestore.hxx>
@@ -372,6 +372,7 @@ void OcctQtViewer::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
       }
   myContext->Display(myViewCube, 0, 0, false);
   myContext->Display(myCone, AIS_Shaded, 0, false);
+//  myCone->SetLocalTransformation()
   myBounds = Bnd_Box(cMin, cMax);
   showLimits();
   myView->FitAll(myBounds, false);
@@ -455,6 +456,19 @@ void OcctQtViewer::showLimits() {
   }
 
 
+void OcctQtViewer::moveCone(double x, double y, double z) {
+  gp_Trsf   move;
+
+  qDebug() << "moveCone: " << x << "/" << y << "/" << z;
+
+  move.SetValues (1, 0, 0, x
+                , 0, 1, 0, y
+                , 0, 0, 1, z);
+  myContext->SetLocation(myCone, move);
+  update();
+  }
+
+
 // ================================================================
 // Function : closeEvent
 // Purpose  :
@@ -468,7 +482,7 @@ void OcctQtViewer::closeEvent(QCloseEvent* e) {
 // Function : keyPressEvent
 // Purpose  :
 // ================================================================
-void OcctQtViewer::keyPressEvent (QKeyEvent* e) {
+void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
   Aspect_VKey aKey = qtKey2VKey (e->key());
 
   switch (aKey) {
@@ -484,6 +498,16 @@ void OcctQtViewer::keyPressEvent (QKeyEvent* e) {
          }
     }
   QOpenGLWidget::keyPressEvent(e);
+  }
+
+
+// ================================================================
+// Function : fitAll
+// Purpose  : zoom to workpath
+// ================================================================
+void OcctQtViewer::fitAll() {
+  myView->FitAll(myBounds, false);
+  update();
   }
 
 

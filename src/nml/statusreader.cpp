@@ -32,16 +32,16 @@ StatusReader::StatusReader(PositionCalculator& posCalc, GCodeInfo& gcodeInfo)
 
 
 void StatusReader::createModels() {
-  vm.setValue("taskMode",    0);
-  vm.setValue("taskState",   0);
-  vm.setValue("execState",   0);
-  vm.setValue("interpState", 0);
-  vm.setValue("axisMask",    0x1F);
-  vm.setValue("units",       0);
-  vm.setValue("feedrate",    1);
-  vm.setValue("rapidrate",   1);
-  vm.setValue("maxVelocity", 2);
-  vm.setValue("curVelocity", 2);
+  vm.setValue("taskMode",      0);
+  vm.setValue("taskState",     0);
+  vm.setValue("execState",     0);
+  vm.setValue("interpState",   0);
+  vm.setValue("axisMask",      0x10);
+  vm.setValue("units",         0);
+  vm.setValue("feedrate",      1);
+  vm.setValue("rapidrate",     1);
+  vm.setValue("maxVelocity",   2);
+  vm.setValue("curVelocity",   2);
   vm.setValue("spindle0Speed", 0);
   vm.setValue("spindle0Scale", 1);
   vm.setValue("spindle0Dir",   0);
@@ -83,7 +83,7 @@ void StatusReader::update() {
 #ifdef WANT_BENCH
   std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 #endif
-  cStatus->peek();
+  cStatus->peek();  // get a copy :(
   vm.setValue("taskMode",    status->task.mode);
   vm.setValue("taskState",   status->task.state);
   vm.setValue("execState",   status->task.execState);
