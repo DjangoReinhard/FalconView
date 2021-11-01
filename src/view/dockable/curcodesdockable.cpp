@@ -60,9 +60,9 @@ void CurCodesDockable::connectSignals() {
   connect(vm.getModel("MC9", " "), &ValueModel::valueChanged,  labels[18], [=](QVariant arg){ labels[18]->setText(arg.toString()); });
   connect(vm.getModel("MC10", " "), &ValueModel::valueChanged, labels[19], [=](QVariant arg){ labels[19]->setText(arg.toString()); });
   Config  cfg;
-  QString keyBg  = QString("cfgBg" + cfg.guiSettings[0]);
-  QString keyFg  = QString("cfgFg" + cfg.guiSettings[0]);
-  QString keyF   = QString("cfgF"  + cfg.guiSettings[0]);
+  QString keyBg  = QString("cfgBg" + cfg.nameOf(Config::GuiElem::ActCodes));
+  QString keyFg  = QString("cfgFg" + cfg.nameOf(Config::GuiElem::ActCodes));
+  QString keyF   = QString("cfgF"  + cfg.nameOf(Config::GuiElem::ActCodes));
   QString mask   = QString("color: #%1; background: #%2;");
 
   for (int i=0; i < 20; ++i) {
@@ -89,9 +89,9 @@ void CurCodesDockable::connectSignals() {
 void CurCodesDockable::updateStyles() {
   Config  cfg;
   QString styles = QString("color: #%1; background: #%2;")
-                          .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[0]).value<QColor>().rgb(),  0, 16)
-                          .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[0]).value<QColor>().rgba(), 0, 16);
-  QFont font = ValueManager().getValue("cfgF" + cfg.guiSettings[0]).value<QFont>();
+                          .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::ActCodes)).value<QColor>().rgb(),  0, 16)
+                          .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::ActCodes)).value<QColor>().rgba(), 0, 16);
+  QFont font = ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::ActCodes)).value<QFont>();
 
   for (int i=0; i < 20; ++i) {
       labels[i]->setStyleSheet(styles);

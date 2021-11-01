@@ -18,7 +18,7 @@
 #include <QVBoxLayout>
 #include <QShortcut>
 #include <QKeyEvent>
-#include <QDebug>
+//#include <QDebug>
 
 
 FileManager::FileManager(const QDir& baseDir, QWidget *parent)
@@ -88,12 +88,12 @@ void FileManager::setClient(FileManagerClient* c) {
 
 
 void FileManager::currentChanged(const QModelIndex& index) {
-  qDebug() << "currentChanged - " << index;
+//  qDebug() << "currentChanged - " << index;
   const QModelIndex& srcIndex = pxDirs->mapToSource(index);
   DirEntry* item = static_cast<DirEntry*>(srcIndex.internalPointer());
 
   if (item) {
-     qDebug() << "path for detail-view: " << item->path();
+//     qDebug() << "path for detail-view: " << item->path();
      fileModel->setupModel(item->path());
      files->resizeColumnsToContents();
      }
@@ -101,10 +101,10 @@ void FileManager::currentChanged(const QModelIndex& index) {
 
 
 void FileManager::keyReleaseEvent(QKeyEvent *event) {
-  qDebug() << "released key: " << event->key();
+//  qDebug() << "released key: " << event->key();
 
   if (event->key() == KeyCodes::Enter) {
-     qDebug() << "hit ENTER?";
+//     qDebug() << "hit ENTER?";
      QModelIndexList    mi       = files->selectionModel()->selection().indexes();
 
      event->accept();
@@ -115,7 +115,7 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
      const QString      path     = fi.absoluteFilePath();
      QFile file(path);
 
-     qDebug() << "selected file: " << file.fileName();
+//     qDebug() << "selected file: " << file.fileName();
 
      if (client) {
         client->fileSelected(file.fileName());
@@ -128,7 +128,7 @@ void FileManager::keyReleaseEvent(QKeyEvent *event) {
 
 
 void FileManager::selectionChanged(const QItemSelection& selected, const QItemSelection&) {
-  qDebug() << "selected: "     << selected;
+//  qDebug() << "selected: "     << selected;
   QModelIndexList    mi       = selected.indexes();
 
   if (!mi.size()) return;
@@ -138,7 +138,7 @@ void FileManager::selectionChanged(const QItemSelection& selected, const QItemSe
   const QString      path     = fi.absoluteFilePath();
   QFile file(path);
 
-  qDebug() << "preview path: " << path;
+//  qDebug() << "preview path: " << path;
   if (file.open(QFile::ReadOnly | QFile::Text)) {
      preView->setPlainText(file.read(1024));
      file.close();

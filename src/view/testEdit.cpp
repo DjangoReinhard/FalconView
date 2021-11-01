@@ -51,52 +51,44 @@ void TestEdit::connectSignals() {
     Config       cfg;
 
     connect(pbOpen, &QPushButton::clicked, this, &TestEdit::openFile);
-    connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[6]), QColor(Qt::white))
+    connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::white))
           , &ValueModel::valueChanged
           , fn
           , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                        .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16);
+                                        .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
                    fn->setStyleSheet(arg);
                    });
-    connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[6]), QColor(Qt::black))
+    connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::black))
           , &ValueModel::valueChanged
           , fn
           , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                        .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16);
+                                        .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
                    fn->setStyleSheet(arg);
                    });
-    connect(vm.getModel(QString("cfgF" + cfg.guiSettings[6]), fn->font())
+    connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Filename)), fn->font())
           , &ValueModel::valueChanged
           , fn
-          , [=](){ fn->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[6]).value<QFont>());
+          , [=](){ fn->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
                    });
 
-    connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[7]), QColor(Qt::white))
+    connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)), QColor(Qt::white))
           , &ValueModel::valueChanged
           , ed
           , [=](){ QString arg = QString("background: #%2;")
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[7]).value<QColor>().rgba(), 0, 16);
+                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16);
                    ed->setStyleSheet(arg);
                    });
-    connect(vm.getModel(QString("cfgF" + cfg.guiSettings[7]), ed->font())
+    connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::GCode)), ed->font())
           , &ValueModel::valueChanged
           , ed
-          , [=](){ ed->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[7]).value<QFont>());
+          , [=](){ ed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
                    });
   }
 
 
 void TestEdit::openFile() {    
-#ifdef USE_SYS_FILE_DIALOG
-  QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
-  QString name = QFileDialog::getOpenFileName(this
-                                            , tr("open GCode file")
-                                            , dirStart.absolutePath()
-                                            , tr("GCode Files (*.ngc *.nc)"));
-  if (name.size()) loadFile(QVariant(name));
-#else
   QWidget*     w = Core().viewStack()->page("FileManager");
   FileManager* fm = qobject_cast<FileManager*>(w);
 
@@ -104,7 +96,6 @@ void TestEdit::openFile() {
      fm->setClient(this);
      Core().viewStack()->activatePage("FileManager");
      }
-#endif
   }
 
 
@@ -131,10 +122,10 @@ void TestEdit::updateStyles() {
     Config       cfg;
 
     fn->setStyleSheet(QString("color: #%1; background: #%2;")
-                                   .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
-                                   .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16));
-    fn->setFont(vm.getValue("cfgF"  + cfg.guiSettings[6]).value<QFont>());
+                                   .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                   .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16));
+    fn->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
     ed->setStyleSheet(QString("background: #%2;")
-                                 .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[7]).value<QColor>().rgba(), 0, 16));
-    ed->setFont(vm.getValue("cfgF"  + cfg.guiSettings[7]).value<QFont>());
+                                 .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
+    ed->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
   }

@@ -380,13 +380,21 @@ void OcctQtViewer::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
 
 void OcctQtViewer::showLimits() {
   CanonIF ci;
+  CANON_POSITION g5xO = ci.g5xOffset(ci.selectedOffset());
+  CANON_POSITION g92O = ci.g92Offset();
+  double         rot  = ci.xyRotation();  //TODO!
+  LcProperties&  lcp  = Core().lcProperties();
 
-  gp_Pnt cMin(Core().lcProperties().value("AXIS_X", "MIN_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Y", "MIN_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Z", "MIN_LIMIT").toDouble());
-  gp_Pnt cMax(Core().lcProperties().value("AXIS_X", "MAX_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Y", "MAX_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Z", "MAX_LIMIT").toDouble());
+  qDebug() << "showLimits() - g5x:" << g5xO.x << "/" << g5xO.y << "/" << g5xO.z
+           << "\tg92: " << g92O.x << "/" << g92O.y << "/" << g92O.z
+           << "\trot: " << rot;
+
+  gp_Pnt cMin(lcp.value("AXIS_X", "MIN_LIMIT").toDouble() - g5xO.x - g92O.x
+            , lcp.value("AXIS_Y", "MIN_LIMIT").toDouble() - g5xO.y - g92O.y
+            , lcp.value("AXIS_Z", "MIN_LIMIT").toDouble() - g5xO.z - g92O.z);
+  gp_Pnt cMax(lcp.value("AXIS_X", "MAX_LIMIT").toDouble() - g5xO.x - g92O.x
+            , lcp.value("AXIS_Y", "MAX_LIMIT").toDouble() - g5xO.y - g92O.y
+            , lcp.value("AXIS_Z", "MAX_LIMIT").toDouble() - g5xO.z - g92O.z);
 
   Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
                                                          , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));

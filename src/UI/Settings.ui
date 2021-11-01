@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Frame</class>
- <widget class="QFrame" name="Frame">
+ <widget class="QWidget" name="SettingsEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>779</width>
-    <height>605</height>
+    <height>941</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,46 +26,8 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="9" column="0">
-    <widget class="QLabel" name="speedPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="text">
-      <string>Speed Info</string>
-     </property>
-     <property name="indent">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="8" column="2">
-    <widget class="QPushButton" name="fontFeed">
+   <item row="1" column="1">
+    <widget class="QPushButton" name="fgDroRel">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -76,179 +38,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0">
-    <widget class="QLabel" name="filenamePreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="text">
-      <string>Filename</string>
-     </property>
-     <property name="indent">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="droDtgPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="text">
-      <string>DRO dtg 123,999</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-     <property name="indent">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="toolDescPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="text">
-      <string>Tool Description</string>
-     </property>
-     <property name="indent">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="2">
-    <widget class="QPushButton" name="fontToolDesc">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QPushButton" name="bgDroAbs">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="toolNumPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="text">
-      <string>Tool number</string>
-     </property>
-     <property name="indent">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="fgDroAbs">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
      </property>
      <property name="iconSize">
@@ -259,8 +49,8 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="2">
-    <widget class="QPushButton" name="fontToolNext">
+   <item row="10" column="2">
+    <widget class="QPushButton" name="fontFilename">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -271,7 +61,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
      </property>
      <property name="iconSize">
@@ -282,33 +72,8 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="actCodesPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="text">
-      <string>actual Codes</string>
-     </property>
-     <property name="indent">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3">
-    <widget class="QPushButton" name="bgDroTitle">
+   <item row="2" column="2">
+    <widget class="QPushButton" name="fontDroDtg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -319,8 +84,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -331,9 +96,9 @@
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="QLabel" name="toolNextPreview">
+    <widget class="QLabel" name="lToolNext">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -355,8 +120,8 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="fgToolDesc">
+   <item row="5" column="2">
+    <widget class="QPushButton" name="fontToolNum">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -367,8 +132,31 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="3">
+    <widget class="QPushButton" name="bgToolNext">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -390,7 +178,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
      </property>
      <property name="iconSize">
@@ -413,7 +201,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
      </property>
      <property name="iconSize">
@@ -424,10 +212,152 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="droTitlePreview">
+   <item row="1" column="2">
+    <widget class="QPushButton" name="fontDroRel">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="lFeed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>Feed Info</string>
+     </property>
+     <property name="indent">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="fgToolNum">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="fontDroTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="lGCode">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>GCode Editor</string>
+     </property>
+     <property name="indent">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="fgToolDesc">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lDroTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -449,6 +379,393 @@
      </property>
     </widget>
    </item>
+   <item row="11" column="3">
+    <widget class="QPushButton" name="bgGCode">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="lToolDesc">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>Tool Description</string>
+     </property>
+     <property name="indent">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="fgDroTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="lSpeed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>Speed Info</string>
+     </property>
+     <property name="indent">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3">
+    <widget class="QPushButton" name="bgFeed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="fontToolNext">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="fontToolDesc">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="2">
+    <widget class="QPushButton" name="fontGCode">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
+    <widget class="QPushButton" name="bgActCodes">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QPushButton" name="bgDroRel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="bgDroAbs">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="17" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="3">
+    <widget class="QPushButton" name="bgDroTitle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="QPushButton" name="fgGCode">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="lToolNum">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>Tool number</string>
+     </property>
+     <property name="indent">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QPushButton" name="fgActCodes">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="2">
+    <widget class="QPushButton" name="fontSpeed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="6" column="1">
     <widget class="QPushButton" name="fgToolNext">
      <property name="sizePolicy">
@@ -461,7 +778,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
      </property>
      <property name="iconSize">
@@ -472,8 +789,8 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="3">
-    <widget class="QPushButton" name="bgDroDtg">
+   <item row="7" column="2">
+    <widget class="QPushButton" name="fontActCodes">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -484,8 +801,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -507,7 +824,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
      </property>
      <property name="iconSize">
@@ -518,8 +835,8 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
-    <widget class="QPushButton" name="fgFeed">
+   <item row="0" column="1">
+    <widget class="QPushButton" name="fgDroAbs">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -530,7 +847,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
      </property>
      <property name="iconSize">
@@ -553,7 +870,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
      </property>
      <property name="iconSize">
@@ -564,8 +881,8 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="3">
-    <widget class="QPushButton" name="bgToolNext">
+   <item row="2" column="3">
+    <widget class="QPushButton" name="bgDroDtg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -576,7 +893,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
      </property>
      <property name="iconSize">
@@ -587,8 +904,8 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="3">
-    <widget class="QPushButton" name="bgFeed">
+   <item row="10" column="3">
+    <widget class="QPushButton" name="bgFilename">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -599,7 +916,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
      </property>
      <property name="iconSize">
@@ -607,13 +924,107 @@
        <width>24</width>
        <height>24</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="fontDroAbs">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QPushButton" name="fgFilename">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QPushButton" name="fgFeed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="lActCodes">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>actual Codes</string>
+     </property>
+     <property name="indent">
+      <number>10</number>
      </property>
     </widget>
    </item>
    <item row="0" column="0">
-    <widget class="QLabel" name="droAbsPreview">
+    <widget class="QLabel" name="lDroAbs">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -638,8 +1049,8 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="fontDroDtg">
+   <item row="8" column="2">
+    <widget class="QPushButton" name="fontFeed">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -650,7 +1061,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
      </property>
      <property name="iconSize">
@@ -661,217 +1072,10 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="3">
-    <widget class="QPushButton" name="bgDroRel">
+   <item row="2" column="0">
+    <widget class="QLabel" name="lDroDtg">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="fontDroTitle">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="fgDroRel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="fontDroRel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="fgDroDtg">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="fgToolNum">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QPushButton" name="fgDroTitle">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="fontDroAbs">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
-    <widget class="QPushButton" name="fontActCodes">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="feedPreview">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -886,86 +1090,45 @@
       <number>3</number>
      </property>
      <property name="text">
-      <string>Feed Info</string>
+      <string>DRO dtg 123,999</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
      <property name="indent">
       <number>10</number>
      </property>
     </widget>
    </item>
-   <item row="5" column="2">
-    <widget class="QPushButton" name="fontToolNum">
+   <item row="10" column="0">
+    <widget class="QLabel" name="lFilename">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="text">
-      <string/>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
      </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
      </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <widget class="QPushButton" name="fgActCodes">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+     <property name="lineWidth">
+      <number>3</number>
      </property>
      <property name="text">
-      <string/>
+      <string>Filename</string>
      </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="2">
-    <widget class="QPushButton" name="fontSpeed">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
+     <property name="indent">
+      <number>10</number>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="droRelPreview">
+    <widget class="QLabel" name="lDroRel">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -990,8 +1153,8 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
-    <widget class="QPushButton" name="bgActCodes">
+   <item row="2" column="1">
+    <widget class="QPushButton" name="fgDroDtg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -1002,8 +1165,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1013,10 +1176,95 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="gcodePreview">
+   <item row="12" column="1">
+    <widget class="QPushButton" name="fgEdLinNum">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="1">
+    <widget class="QPushButton" name="fgLineHL">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1">
+    <widget class="QPushButton" name="fgFixture">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="1">
+    <widget class="QPushButton" name="fgFixTitle">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="1">
+    <widget class="QPushButton" name="fgFixFrame">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="lEdLinNum">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -1031,95 +1279,120 @@
       <number>3</number>
      </property>
      <property name="text">
-      <string>GCode Editor</string>
+      <string>Editor Line Number 109</string>
      </property>
      <property name="indent">
       <number>10</number>
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
-    <widget class="QPushButton" name="fgFilename">
+   <item row="13" column="0">
+    <widget class="QLabel" name="lLineHL">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
      <property name="text">
-      <string/>
+      <string>Line Highlight</string>
      </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
+     <property name="indent">
+      <number>10</number>
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
-    <widget class="QPushButton" name="fgGCode">
+   <item row="14" column="0">
+    <widget class="QLabel" name="lFixture">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
      <property name="text">
-      <string/>
+      <string>Fixture</string>
      </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
+     <property name="indent">
+      <number>10</number>
      </property>
     </widget>
    </item>
-   <item row="10" column="2">
-    <widget class="QPushButton" name="fontFilename">
+   <item row="15" column="0">
+    <widget class="QLabel" name="lFixTitle">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
      <property name="text">
-      <string/>
+      <string>Fixture Title</string>
      </property>
-     <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
+     <property name="indent">
+      <number>10</number>
      </property>
     </widget>
    </item>
-   <item row="10" column="3">
-    <widget class="QPushButton" name="bgFilename">
+   <item row="16" column="0">
+    <widget class="QLabel" name="lFixFrame">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
+     <property name="text">
+      <string>Fixture Frame</string>
+     </property>
+     <property name="indent">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="3">
+    <widget class="QPushButton" name="bgEdLinNum">
      <property name="text">
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
      </property>
      <property name="iconSize">
@@ -1130,19 +1403,81 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="2">
-    <widget class="QPushButton" name="fontGCode">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="13" column="3">
+    <widget class="QPushButton" name="bgLineHL">
      <property name="text">
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="3">
+    <widget class="QPushButton" name="bgFixture">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="3">
+    <widget class="QPushButton" name="bgFixTitle">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="3">
+    <widget class="QPushButton" name="bgFixFrame">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="2">
+    <widget class="QPushButton" name="fontFixture">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
        <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
      </property>
      <property name="iconSize">
@@ -1153,20 +1488,14 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="3">
-    <widget class="QPushButton" name="bgGCode">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="15" column="2">
+    <widget class="QPushButton" name="fontFixTitle">
      <property name="text">
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../QtUi.qrc">
-       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/font.png</normaloff>:/res/font.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1179,7 +1508,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../QtUi.qrc"/>
+  <include location="../../FalconView.qrc"/>
  </resources>
  <connections/>
 </ui>

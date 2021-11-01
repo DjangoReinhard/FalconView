@@ -14,16 +14,36 @@ class QFile;
 class Config
 {
 public:
-  static const int     guiSettingEntries;
-  static const QString guiSettings[];
+  enum GuiElem {
+    ActCodes        /*  0 */
+  , DroAbs          /*  1 */
+  , DroDtg          /*  2 */
+  , DroRel          /*  3 */
+  , DroTitle        /*  4 */
+  , Feed            /*  5 */
+  , Filename        /*  6 */
+  , GCode           /*  7 */
+  , Speed           /*  8 */
+  , ToolDesc        /*  9 */
+  , ToolNum         /* 10 */
+  , ToolNext        /* 11 */
+  , EdLinNum        /* 12 */
+  , LineHL          /* 13 */
+  , Fixture         /* 14 */
+  , FixTitle        /* 15 */
+  , FixFrame        /* 16 */
+  , LastKey
+    };
 
-  QColor           getBackground(int index);
-  QColor           getForeground(int index);
-  QFont            getFont(int index);
-  void             setBackground(int index, const QColor& color);
-  void             setForeground(int index, const QColor& color);
-  void             setFont(int index, const QFont& font);
+  QColor           getBackground(GuiElem key) const;
+  QColor           getForeground(GuiElem key) const;
+  QFont            getFont(GuiElem key) const;
+  void             setBackground(GuiElem key, const QColor& color);
+  void             setForeground(GuiElem key, const QColor& color);
+  void             setFont(GuiElem key, const QFont& font);
   QVariant         value(const QString& key, const QVariant& defaultValue = QVariant()) const;
   void             setValue(const QString& key, const QVariant& value);
+  QString          nameOf(GuiElem key) const;
+  int              numGuiElements() const { return LastKey; }
   };
 #endif // CONFIG_H

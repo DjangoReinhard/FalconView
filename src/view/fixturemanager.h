@@ -7,6 +7,7 @@ class FixtureEdit;
 
 class FixtureManager : public DynWidget
 {
+  Q_OBJECT
 public:
   FixtureManager(const QString& fileName, QWidget* parent = nullptr);
 

@@ -212,6 +212,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    src/i18n/FalconView_de_DE.ts
+    i18n/FalconView_de_DE.ts
 
 RESOURCES += FalconView.qrc

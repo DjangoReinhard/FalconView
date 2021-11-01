@@ -84,8 +84,31 @@ CanonIF::IFSettings::IFSettings(LcProperties& lcProperties, ToolTable& toolTable
      }
   }
 
+/**
+ * @brief CanonIF::IFSettings::lengthUnits
+ * @return factor to convert jobUnits into machineUnits
+ */
 double CanonIF::IFSettings::lengthUnits() const {
-  return 1;
+   switch (machineUnits) {
+     case CANON_UNITS_CM:
+          switch (canon.lengthUnits) {
+            case CANON_UNITS_CM: return 1;
+            case CANON_UNITS_MM: return 10;
+            default:             return 2.54;
+            } break;
+     case CANON_UNITS_MM:
+          switch (canon.lengthUnits) {
+            case CANON_UNITS_CM: return 0.1;
+            case CANON_UNITS_MM: return 1;
+            default:             return 25.4;
+            } break;
+     default:
+          switch (canon.lengthUnits) {
+            case CANON_UNITS_CM: return 1/2.54;
+            case CANON_UNITS_MM: return 1/25.4;
+            default:             return 1;
+            } break;
+     }
   }
 
 
@@ -97,7 +120,15 @@ int CanonIF::IFSettings::axisMask() const {
 void CanonIF::IFSettings::setG5xOffset(int i, const CANON_POSITION &p) {
   if (i < 0)      i = 0;
   else if (i > 8) i = 8;
+  selectedOffset    = i;
   g5xOffsets[i] = p;
+  }
+
+
+CANON_POSITION CanonIF::IFSettings::g5xOffset(int i) const {
+  if (i < 0)      i = 0;
+  else if (i > 8) i = 8;
+  return g5xOffsets[i];
   }
 
 
@@ -116,12 +147,30 @@ double CanonIF::IFSettings::spindleSpeed(int spindle) const {
 
 
 CANON_TOOL_TABLE CanonIF::IFSettings::toolEntry(int ttIndex) const {
-  return toolTable.current().toCanon();
+  if (!ttIndex) {
+     qDebug() << "CIF: tool in spindle: " << changer.slot4ToolInSpindle();
+     qDebug() << "CIF: next tool selected: " << changer.nextTool();
+     return toolTable.current().toCanon();
+     }
+  const ToolEntry* te = toolTable.tool(ttIndex);
+
+  if (!te) return ToolEntry().toCanon();
+  return te->toCanon();
   }
 
 
 void CanonIF::IFSettings::changeTool(int slot) {
+  toolTable.setCurrent(slot);
+  changer.setCurrentTool(slot);
+  ToolEntry ct = toolTable.current();
+
   qDebug() << "CIF: change tool to slot #" << slot;
+  qDebug() << "CIF: tool num #" << ct.number()
+           << "  slot #" << ct.slot()
+           << " diameter: " << ct.diameter()
+           << " len: " << ct.length();
+  canon.toolOffset = ct.toCanon().offset;
+  qDebug() << "CIF: canon z-offset: " << canon.toolOffset.tran.z;
   }
 
 
@@ -129,20 +178,401 @@ void CanonIF::IFSettings::setEndPoint(const CANON_POSITION &p) {
   canon.endPoint = p;
   }
 
-void CanonIF::IFSettings::setTraverseColor(const QColor &c) {
+
+static Quantity_Color convertColor(const QColor& c) {
+  return Quantity_Color((double)(c.red()   / 255.0)
+                      , (double)(c.green() / 255.0)
+                      , (double)(c.blue()  / 255.0), Quantity_TOC_RGB);
   }
+
+
+void CanonIF::IFSettings::setTraverseColor(const QColor &c) {
+  colTraverse = convertColor(c);
+  }
+
 
 void CanonIF::IFSettings::setFeedColor(const QColor &c) {
+  colFeed = convertColor(c);
   }
 
+
 void CanonIF::IFSettings::setLimitsColor(const QColor &c) {
+  colLimits = convertColor(c);
   }
+
 
 void CanonIF::IFSettings::setMotionMode(CANON_MOTION_MODE mode, double tolerance) {
   canon.motionMode      = mode;
   }
 
 CanonIF::IFSettings* CanonIF::instance = nullptr;
+
+#ifdef REDNOSE
+///////////////////////////////////////////////////////////////////////////////
+/// Interpreter helper functions
+///////////////////////////////////////////////////////////////////////////////
+// converted macros into inline fuctions!
+inline double TO_EXT_LEN(double l)    { return l * GET_EXTERNAL_LENGTH_UNITS(); }
+inline double TO_EXT_ANG(double a)    { return a * GET_EXTERNAL_ANGLE_UNITS(); }
+inline double FROM_EXT_LEN(double l)  { return l / GET_EXTERNAL_LENGTH_UNITS(); }
+inline double FROM_EXT_ANG(double a)  { return a / GET_EXTERNAL_ANGLE_UNITS(); }
+inline double TO_PROG_LEN(double l)   { return l / CanonIF().lengthUnits(); }
+inline double TO_PROG_ANG(double a)   { return a; }
+inline double FROM_PROG_LEN(double l) { return l * CanonIF().lengthUnits(); }
+inline double FROM_PROG_ANG(double a) { return a; }
+
+static void rotate(double& x, double& y, double angle) {
+  double xx, yy;
+  double t = angle * M_PI / 180.0;
+
+  xx = x;
+  yy = y;
+  x = xx * cos(t) - yy * sin(t);
+  y = xx * sin(t) + yy * cos(t);
+  }
+
+
+static void to_rotated(PM_CARTESIAN &vec) {
+  rotate(vec.x, vec.y, CanonIF().xyRotation());
+  }
+
+
+static void rotate_and_offset(CANON_POSITION & pos) {
+  CanonIF ci;
+
+  pos += ci.g92Offset();
+  rotate(pos.x, pos.y, ci.xyRotation());
+  pos += ci.g5xOffset();
+  pos += ci.toolOffset();
+  }
+
+
+static void rotate_and_offset_xyz(PM_CARTESIAN & xyz) {
+  CanonIF ci;
+
+  xyz += ci.g92Offset().xyz();
+  rotate(xyz.x, xyz.y, ci.xyRotation());
+  xyz += ci.g5xOffset().xyz();
+  xyz += PM_CARTESIAN(ci.toolOffset().x
+                    , ci.toolOffset().y
+                    , ci.toolOffset().z);
+  }
+
+
+static CANON_POSITION unoffset_and_unrotate_pos(const CANON_POSITION pos) {
+  CANON_POSITION res;
+  CanonIF ci;
+
+  res = pos;
+  res -= ci.toolOffset();
+  res -= ci.g5xOffset();
+
+  rotate(res.x, res.y, -ci.xyRotation());
+
+  res -= ci.g92Offset();
+
+  return res;
+  }
+
+
+static void rotate_and_offset_pos(double& x, double& y, double& z, double& a, double& b, double& c, double& u, double& v, double& w) {
+  CanonIF ci;
+
+  x += ci.g92Offset().x;
+  y += ci.g92Offset().y;
+  z += ci.g92Offset().z;
+  a += ci.g92Offset().a;
+  b += ci.g92Offset().b;
+  c += ci.g92Offset().c;
+  u += ci.g92Offset().u;
+  v += ci.g92Offset().v;
+  w += ci.g92Offset().w;
+
+  rotate(x, y, ci.xyRotation());
+
+  x += ci.g5xOffset().x;
+  y += ci.g5xOffset().y;
+  z += ci.g5xOffset().z;
+  a += ci.g5xOffset().a;
+  b += ci.g5xOffset().b;
+  c += ci.g5xOffset().c;
+  u += ci.g5xOffset().u;
+  v += ci.g5xOffset().v;
+  w += ci.g5xOffset().w;
+
+  x += ci.toolOffset().x;
+  y += ci.toolOffset().y;
+  z += ci.toolOffset().z;
+  a += ci.toolOffset().a;
+  b += ci.toolOffset().b;
+  c += ci.toolOffset().c;
+  u += ci.toolOffset().u;
+  v += ci.toolOffset().v;
+  w += ci.toolOffset().w;
+  }
+
+
+static CANON_POSITION unoffset_and_unrotate_pos(const EmcPose pos) {
+  CANON_POSITION res(pos);
+
+  return unoffset_and_unrotate_pos(res);
+  }
+
+
+static void from_prog(double& x, double& y, double& z, double& a, double& b, double& c, double& u, double& v, double& w) {
+  x = FROM_PROG_LEN(x);
+  y = FROM_PROG_LEN(y);
+  z = FROM_PROG_LEN(z);
+  a = FROM_PROG_ANG(a);
+  b = FROM_PROG_ANG(b);
+  c = FROM_PROG_ANG(c);
+  u = FROM_PROG_LEN(u);
+  v = FROM_PROG_LEN(v);
+  w = FROM_PROG_LEN(w);
+  }
+
+
+static void from_prog(CANON_POSITION& pos) {
+  pos.x = FROM_PROG_LEN(pos.x);
+  pos.y = FROM_PROG_LEN(pos.y);
+  pos.z = FROM_PROG_LEN(pos.z);
+  pos.a = FROM_PROG_ANG(pos.a);
+  pos.b = FROM_PROG_ANG(pos.b);
+  pos.c = FROM_PROG_ANG(pos.c);
+  pos.u = FROM_PROG_LEN(pos.u);
+  pos.v = FROM_PROG_LEN(pos.v);
+  pos.w = FROM_PROG_LEN(pos.w);
+  }
+
+
+static void from_prog_len(PM_CARTESIAN& vec) {
+  vec.x = FROM_PROG_LEN(vec.x);
+  vec.y = FROM_PROG_LEN(vec.y);
+  vec.z = FROM_PROG_LEN(vec.z);
+  }
+
+
+static PM_CARTESIAN to_ext_len(const PM_CARTESIAN& pos) {
+  PM_CARTESIAN ret;
+
+  ret.x = TO_EXT_LEN(pos.x);
+  ret.y = TO_EXT_LEN(pos.y);
+  ret.z = TO_EXT_LEN(pos.z);
+
+  return ret;
+  }
+
+
+static EmcPose to_ext_pose(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
+  EmcPose result;
+
+  result.tran.x = TO_EXT_LEN(x);
+  result.tran.y = TO_EXT_LEN(y);
+  result.tran.z = TO_EXT_LEN(z);
+  result.a = TO_EXT_ANG(a);
+  result.b = TO_EXT_ANG(b);
+  result.c = TO_EXT_ANG(c);
+  result.u = TO_EXT_LEN(u);
+  result.v = TO_EXT_LEN(v);
+  result.w = TO_EXT_LEN(w);
+
+  return result;
+  }
+
+
+static EmcPose to_ext_pose(const CANON_POSITION& pos) {
+  EmcPose result;
+
+  result.tran.x = TO_EXT_LEN(pos.x);
+  result.tran.y = TO_EXT_LEN(pos.y);
+  result.tran.z = TO_EXT_LEN(pos.z);
+  result.a = TO_EXT_ANG(pos.a);
+  result.b = TO_EXT_ANG(pos.b);
+  result.c = TO_EXT_ANG(pos.c);
+  result.u = TO_EXT_LEN(pos.u);
+  result.v = TO_EXT_LEN(pos.v);
+  result.w = TO_EXT_LEN(pos.w);
+
+  return result;
+  }
+
+
+static void to_prog(CANON_POSITION& e) {
+  e.x = TO_PROG_LEN(e.x);
+  e.y = TO_PROG_LEN(e.y);
+  e.z = TO_PROG_LEN(e.z);
+  e.a = TO_PROG_ANG(e.a);
+  e.b = TO_PROG_ANG(e.b);
+  e.c = TO_PROG_ANG(e.c);
+  e.u = TO_PROG_LEN(e.u);
+  e.v = TO_PROG_LEN(e.v);
+  e.w = TO_PROG_LEN(e.w);
+  }
+
+
+static double chord_deviation(double sx, double sy, double ex, double ey, double cx, double cy, int rotation, double& mx, double& my) {
+  double th1 = atan2(sy - cy, sx - cx),
+         th2 = atan2(ey - cy, ex - cx),
+         r   = hypot(sy - cy, sx - cx),
+         dth = th2 - th1;
+
+  if (rotation < 0) {
+     if (dth >= -1e-5) th2 -= 2 * M_PI;
+     // in the edge case where atan2 gives you -pi and pi, a second iteration is needed
+     // to get these in the right order
+     dth = th2 - th1;
+     if (dth >= -1e-5) th2 -= 2 * M_PI;
+     }
+  else {
+     if (dth <= 1e-5)  th2 += 2 * M_PI;
+     dth = th2 - th1;
+     if (dth <= 1e-5)  th2 += 2 * M_PI;
+     }
+  double included = fabs(th2 - th1);
+  double mid      = (th2 + th1) / 2;
+
+  mx = cx + r * cos(mid);
+  my = cy + r * sin(mid);
+  double dev = r * (1 - cos(included / 2));
+
+  return dev;
+  }
+
+
+/**
+ * Simple circular shift function for PM_CARTESIAN type.
+ * Cycle around axes without changing the individual values. A circshift of -1
+ * makes the X value become the new Y, Y become the Z, and Z become the new X.
+ */
+static PM_CARTESIAN circshift(PM_CARTESIAN& vec, int steps) {
+  int X = 0
+    , Y = 1
+    , Z = 2;
+  int s = 3;
+
+  // Use mod to cycle indices around by steps
+  X = (X + steps + s) % s;
+  Y = (Y + steps + s) % s;
+  Z = (Z + steps + s) % s;
+
+  return PM_CARTESIAN(vec[X], vec[Y], vec[Z]);
+  }
+
+
+static void unrotate(double &x, double &y, double c, double s) {
+  double tx = x * c + y * s;
+
+  y = -x * s + y * c;
+  x = tx;
+  }
+
+
+static void rotate(double &x, double &y, double c, double s) {
+  double tx = x * c - y * s;
+
+  y = x * s + y * c;
+  x = tx;
+  }
+
+
+static void rs274_arc_to_segments(int lineno, double x1, double y1, double cx, double cy
+                                , int rot, double z1
+                                , double a, double b, double c
+                                , double u, double v, double w
+                                , int max_segments) {
+  CanonIF ci;
+//  double x1, y1, cx, cy, z1, a, b, c, u, v, w;
+//  int    rot = ci.xyRotation();
+//  int    max_segments = 128;
+  double o[9], n[9];
+  CANON_POSITION g5xoffset = ci.g5xOffset();
+  CANON_POSITION g92offset = ci.g92Offset();
+  int    plane = ci.activePlane();
+  int    X, Y, Z;
+  double rotation_cos, rotation_sin;
+
+//    if(!PyArg_ParseTuple(args, "Oddddiddddddd|i:arcs_to_segments",
+//        &canon, &x1, &y1, &cx, &cy, &rot, &z1, &a, &b, &c, &u, &v, &w, &max_segments)) return NULL;
+
+//    if(!get_attr(canon, "lo", "ddddddddd:arcs_to_segments lo", &o[0], &o[1], &o[2],
+//                    &o[3], &o[4], &o[5], &o[6], &o[7], &o[8]))
+//        return NULL;
+
+//    if(!get_attr(canon, "plane", &plane)) return NULL;
+
+//    if(!get_attr(canon, "rotation_cos", &rotation_cos)) return NULL;
+//    if(!get_attr(canon, "rotation_sin", &rotation_sin)) return NULL;
+
+  if (plane == 1)     { X=0; Y=1; Z=2; }
+  else if(plane == 3) { X=2; Y=0; Z=1; }
+  else                { X=1; Y=2; Z=0; }
+  n[X] = x1;
+  n[Y] = y1;
+  n[Z] = z1;
+  n[3] = a;
+  n[4] = b;
+  n[5] = c;
+  n[6] = u;
+  n[7] = v;
+  n[8] = w;
+  for(int ax=0; ax<9; ax++) o[ax] -= g5xoffset[ax];
+  unrotate(o[0], o[1], rotation_cos, rotation_sin);
+  for(int ax=0; ax<9; ax++) o[ax] -= g92offset[ax];
+
+  double theta1 = atan2(o[Y]-cy, o[X]-cx);
+  double theta2 = atan2(n[Y]-cy, n[X]-cx);
+
+  if (rot < 0) {
+     while (theta2 - theta1 > -CIRCLE_FUZZ) theta2 -= 2*M_PI;
+     }
+  else {
+     while (theta2 - theta1 < CIRCLE_FUZZ) theta2 += 2*M_PI;
+     }
+  // if multi-turn, add the right number of full circles
+  if (rot < -1) theta2 += 2 * M_PI * (rot + 1);
+  if (rot > 1)  theta2 += 2 * M_PI * (rot - 1);
+  int    steps  = std::max(3, int(max_segments * fabs(theta1 - theta2) / M_PI));
+  double rsteps = 1. / steps;
+  double dtheta = theta2 - theta1;
+  double d[9]   = {0, 0, 0, n[3]-o[3], n[4]-o[4], n[5]-o[5], n[6]-o[6], n[7]-o[7], n[8]-o[8]};
+
+  d[Z] = n[Z] - o[Z];
+  double tx = o[X] - cx
+       , ty = o[Y] - cy
+       , dc = cos(dtheta * rsteps)
+       , ds = sin(dtheta * rsteps);
+
+  for (int i = 0; i < steps - 1; i++) {
+      double f = (i+1) * rsteps;
+      double p[9];
+
+      rotate(tx, ty, dc, ds);
+      p[X] = tx + cx;
+      p[Y] = ty + cy;
+      p[Z] = o[Z] + d[Z] * f;
+      p[3] = o[3] + d[3] * f;
+      p[4] = o[4] + d[4] * f;
+      p[5] = o[5] + d[5] * f;
+      p[6] = o[6] + d[6] * f;
+      p[7] = o[7] + d[7] * f;
+      p[8] = o[8] + d[8] * f;
+      for (int ax=0; ax<9; ax++) p[ax] += g92offset[ax];
+      rotate(p[0], p[1], rotation_cos, rotation_sin);
+      for (int ax=0; ax<9; ax++) p[ax] += g5xoffset[ax];
+      STRAIGHT_FEED(lineno, p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]);
+      }
+  for (int ax = 0; ax < 9; ++ax) n[ax] += g92offset[ax];
+  rotate(n[0], n[1], rotation_cos, rotation_sin);
+  for (int ax = 0; ax < 9; ++ax) n[ax] += g5xoffset[ax];
+  STRAIGHT_FEED(lineno, n[0], n[1], n[2], n[3], n[4], n[5], n[6], n[7], n[8]);
+  }
+#endif
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * capitalized old style c-functions, the interpreter callbacks :(
+ */
+///////////////////////////////////////////////////////////////////////////////
+
 
 void INIT_CANON() {
   qDebug() << "NCanon: init Canon() ...";
@@ -166,6 +596,7 @@ void SET_G5X_OFFSET(int fixture, double x, double y, double z, double a, double 
            << " -> " << x << "/" << y << "/" << z
            << "\t" << a << "/" << b << "/" << c
            << "\t" << u << "/" << v << "/" << w;
+  CanonIF().setG5xOffset(fixture, x, y, z, a, b, c, u, v, w);
   }
 
 void SET_G92_OFFSET(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
@@ -173,10 +604,12 @@ void SET_G92_OFFSET(double x, double y, double z, double a, double b, double c, 
            << " -> " << x << "/" << y << "/" << z
            << "\t" << a << "/" << b << "/" << c
            << "\t" << u << "/" << v << "/" << w;
+  CanonIF().setG92Offset(x, y, z, a, b, c, u, v, w);
   }
 
 void SET_XY_ROTATION(double t) {
   qDebug() << "NCanon: set XY-Rotation to " << t;
+  CanonIF().setXYRotation(t);
   }
 
 int GET_EXTERNAL_AXIS_MASK() {
@@ -232,12 +665,19 @@ double GET_EXTERNAL_MOTION_CONTROL_NAIVECAM_TOLERANCE() {
   }
 
 int GET_EXTERNAL_TOOL_SLOT() {
-  qDebug() << "NCanon: get external Tool-Slot for tool in spindle";
-  return 0;
+  int slot = CanonIF().lastSlot();
+
+  qDebug() << "NCanon: get external Tool-Slot for tool in spindle (" << slot << ")";
+
+  return slot;
   }
 
 int GET_EXTERNAL_SELECTED_TOOL_SLOT() {
-  return 0;
+  int slotOrWhatever = CanonIF().nextSlot();
+
+  qDebug() << "NCanon: get external Tool-Slot for next tool to use (" << slotOrWhatever << ")";
+
+  return slotOrWhatever;
   }
 
 double GET_EXTERNAL_FEED_RATE() {
@@ -285,14 +725,25 @@ CANON_DIRECTION GET_EXTERNAL_SPINDLE(int spindle) {
   }
 
 CANON_TOOL_TABLE GET_EXTERNAL_TOOL_TABLE(int ttIndex) {
-  qDebug() << "NCanon: get external tool table entry #" << ttIndex << " (msg limited to 10)";
-  return CanonIF().toolEntry(ttIndex);
+  if (ttIndex < 10) {
+     qDebug() << "NCanon: get external tool table entry #" << ttIndex << " (msg limited to 10)";
+     }
+  CANON_TOOL_TABLE tool = CanonIF().toolEntry(ttIndex);
+
+  if (tool.offset.tran.z > 0) tool.offset.tran.z *= -1;
+  return tool;
   }
 
+// return the value of iocontrol's toolchanger-fault pin
+// bullshit-bingo part II - another function that get called
+// thousand times without any sense :(
 int GET_EXTERNAL_TC_FAULT() {
   return 0;
   }
 
+// return the value of iocontrol's toolchanger-reason pin
+// bullshit-bingo part II - another function that get called
+// thousand times without any sense :(
 int GET_EXTERNAL_TC_REASON() {
   return 0;
   }
@@ -305,10 +756,14 @@ void UPDATE_TAG(StateTag) {
   }
 
 double GET_EXTERNAL_TOOL_LENGTH_XOFFSET() {
+  qDebug() << "NCanon: get external tool length X-offset: " << CanonIF().toolOffset().x;
+
   return CanonIF().toolOffset().x;
   }
 
 double GET_EXTERNAL_TOOL_LENGTH_YOFFSET() {
+  qDebug() << "NCanon: get external tool length Y-offset: " << CanonIF().toolOffset().y;
+
   return CanonIF().toolOffset().y;
   }
 
@@ -342,8 +797,8 @@ double GET_EXTERNAL_TOOL_LENGTH_WOFFSET() {
   return CanonIF().toolOffset().w;
   }
 
-void COMMENT(const char*) {
-//  qDebug() << "NCanon: comment <" << s << "> ...";
+void COMMENT(const char* s) {
+  qDebug() << "NCanon: comment <" << s << "> ...";
   }
 
 void USE_TOOL_LENGTH_OFFSET(EmcPose offset) {
@@ -398,6 +853,7 @@ void CHANGE_TOOL_NUMBER(int number) {
   qDebug() << "NCanon: change tool number to #" << number << " ...";
   }
 
+// WTF?
 void START_CHANGE(void) {
   qDebug() << "NCanon: start change ...";
   }
@@ -412,50 +868,287 @@ void SELECT_PLANE(CANON_PLANE pl) {
 void STRAIGHT_TRAVERSE(int lineno, double x, double y, double z
                                  , double a, double b, double c
                                  , double u, double v, double w) {
+//  from_prog(x,y,z,a,b,c,u,v,w);
+//  rotate_and_offset_pos(x,y,z,a,b,c,u,v,w);
+
+  CanonIF        ci;
+  CANON_POSITION sp = ci.endPoint();
+  CANON_POSITION ep(x, y, z, a, b, c, u, v, w);
+
+//  to_ext_pose(ep);
+
+  if (lineno > 0)   {
+     Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(sp.x, sp.y, sp.z)
+                                                            , gp_Pnt(ep.x, ep.y, ep.z));
+     shape->SetColor(ci.traverseColor());
+     ci.toolPath().append(shape);
+     }
   qDebug() << QString("NCanon: rapid move #%1  -  (%2/%3/%4) -> (%5/%6/%7)")
                      .arg(lineno)
-                     .arg(x, 0, 'f', 3)
-                     .arg(y, 0, 'f', 3)
-                     .arg(z, 0, 'f', 3)
-                     .arg(a, 0, 'f', 3)
-                     .arg(b, 0, 'f', 3)
-                     .arg(c, 0, 'f', 3)
+                     .arg(sp.x, 0, 'f', 3)
+                     .arg(sp.y, 0, 'f', 3)
+                     .arg(sp.z, 0, 'f', 3)
+                     .arg(ep.x, 0, 'f', 3)
+                     .arg(ep.y, 0, 'f', 3)
+                     .arg(ep.z, 0, 'f', 3)
                      .toStdString().c_str();
+  ci.setEndPoint(ep);
   }
 
 
 void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
                         , double second_axis, int rotation, double axis_end_point
                         , double a, double b, double c, double u, double v, double w) {
+#ifdef REDNOSE
+  int arcdivision = 64;
+//    def arc_feed(self, x1, y1, cx, cy, rot, z1, a, b, c, u, v, w):
+  rs274_arc_to_segments(lineno, x1, y1, cx, cy, rot, z1, a, b, c, u, v, w, arcdivision);
+//        self.straight_arcsegments(segs)
+#else
+#ifndef MOTION_LIKE
+    CanonIF        ci;
+//    double unused = 0;
+//    double fe = FROM_PROG_LEN(first_end)
+//         , se = FROM_PROG_LEN(second_end)
+//         , ae = FROM_PROG_LEN(axis_end_point);
+//    double fa = FROM_PROG_LEN(first_axis)
+//         , sa = FROM_PROG_LEN(second_axis);
+
+//    rotate_and_offset_pos(fe, se, ae, unused, unused, unused, unused, unused, unused);
+//    rotate_and_offset_pos(fa, sa, unused, unused, unused, unused, unused, unused, unused);
+
+    CANON_POSITION ep     = ci.endPoint();
+    gp_Pnt         start  = gp_Pnt(ep.x, ep.y, ep.z);
+    gp_Pnt         end    = gp_Pnt(first_end, second_end, axis_end_point);
+    gp_Pnt         center = gp_Pnt(first_axis, second_axis, ep.z);
+
+//    qDebug() << "rotation" << rotation << "at line #" << lineno;
     qDebug() << QString("NCanon: arc move #%1  -  (%2/%3/%4) -> (%5/%6/%7) CENTER (%8/%9/%10)")
                        .arg(lineno)
+                       .arg(ep.x, 0, 'f', 3)
+                       .arg(ep.y, 0, 'f', 3)
+                       .arg(ep.z, 0, 'f', 3)
                        .arg(first_end, 0, 'f', 3)
                        .arg(second_end, 0, 'f', 3)
+                       .arg(axis_end_point, 0, 'f', 3)
                        .arg(first_axis, 0, 'f', 3)
                        .arg(second_axis, 0, 'f', 3)
-                       .arg(axis_end_point, 0, 'f', 3)
-                       .arg(a, 0, 'f', 3)
-                       .arg(b, 0, 'f', 3)
-                       .arg(c, 0, 'f', 3)
-                       .arg(u, 0, 'f', 3)
+                       .arg(ep.z, 0, 'f', 3)
                        .toStdString().c_str();
+    Handle(AIS_Shape) shape;
+
+    if (rotation > 0) shape = ci.graphicFactory().createArc(start, end, center, true);
+    else              shape = ci.graphicFactory().createArc(end, start, center, false);
+    shape->SetColor(ci.feedColor());
+    ci.toolPath().append(shape);
+    ci.setEndPoint(first_end, second_end, axis_end_point, a, b, c, u, v, w);
+#else
+  CanonIF        ci;
+  CANON_POSITION lp = ci.endPoint();
+
+  if (1 /*ci.activePlane() == CANON_PLANE_XY && ci.motionMode() == CANON_CONTINUOUS*/) {
+     double mx, my;
+     double unused = 0;
+     double fe = FROM_PROG_LEN(first_end)
+          , se = FROM_PROG_LEN(second_end)
+          , ae = FROM_PROG_LEN(axis_end_point);
+     double fa = FROM_PROG_LEN(first_axis)
+          , sa = FROM_PROG_LEN(second_axis);
+
+     rotate_and_offset_pos(fe, se, ae, unused, unused, unused, unused, unused, unused);
+     rotate_and_offset_pos(fa, sa, unused, unused, unused, unused, unused, unused, unused);
+
+     if (chord_deviation(lp.x, lp.y, fe, se, fa, sa, rotation, mx, my)
+       < ci.naiveTolerance()) {
+        a = FROM_PROG_ANG(a);
+        b = FROM_PROG_ANG(b);
+        c = FROM_PROG_ANG(c);
+        u = FROM_PROG_LEN(u);
+        v = FROM_PROG_LEN(v);
+        w = FROM_PROG_LEN(w);
+
+        rotate_and_offset_pos(unused, unused, unused, a, b, c, u, v, w);
+
+        gp_Pnt sp     = gp_Pnt(lp.x, lp.y, lp.z);
+        gp_Pnt ep     = gp_Pnt(fe, se, ae);
+        gp_Pnt center = gp_Pnt(fa, sa, (sp.Z() + ae) / 2);
+
+        qDebug() << "rotation" << rotation << "at line #" << lineno;
+        qDebug() << QString("NCanon: arc move #%1  -  (%2/%3/%4) -> (%5/%6/%7) CENTER (%8/%9/%10)")
+                           .arg(lineno)
+                           .arg(sp.X(), 0, 'f', 3)
+                           .arg(sp.Y(), 0, 'f', 3)
+                           .arg(sp.Z(), 0, 'f', 3)
+                           .arg(ep.X(), 0, 'f', 3)
+                           .arg(ep.Y(), 0, 'f', 3)
+                           .arg(ep.Z(), 0, 'f', 3)
+                           .arg(center.X(), 0, 'f', 3)
+                           .arg(center.Y(), 0, 'f', 3)
+                           .arg(center.Z(), 0, 'f', 3)
+                           .toStdString().c_str();
+        Handle(AIS_Shape) shape;
+
+        if (rotation > 0) shape = ci.graphicFactory().createArc(sp, ep, center, true);
+        else              shape = ci.graphicFactory().createArc(ep, sp, center, false);
+        shape->SetColor(ci.feedColor());
+        ci.toolPath().append(shape);
+        ci.setEndPoint(ep.X(), ep.Y(), ep.Z(), a, b, c, u, v, w);
+
+        return;
+        }
+     }
+  PM_CARTESIAN endPoint(lp.x, lp.y, lp.z);
+  // Start by defining 3D points for the motion end and center.
+  PM_CARTESIAN end_cart(first_end, second_end, axis_end_point);
+  PM_CARTESIAN center_cart(first_axis, second_axis, axis_end_point);
+  PM_CARTESIAN normal_cart(0.0,0.0,1.0);
+  PM_CARTESIAN plane_x(1.0,0.0,0.0);
+  PM_CARTESIAN plane_y(0.0,1.0,0.0);
+
+  qDebug("start = %f %f %f", lp.x, lp.y, lp.z);
+  qDebug("end = %f %f %f", end_cart.x, end_cart.y, end_cart.z);
+  qDebug("center = %f %f %f", center_cart.x, center_cart.y, center_cart.z);
+
+  // Rearrange the X Y Z coordinates in the correct order based on the active plane (XY, YZ, or XZ)
+  // KLUDGE CANON_PLANE is 1-indexed, hence the subtraction here to make a 0-index value
+  int shift_ind = 0;
+
+  switch (ci.activePlane()) {
+    case CANON_PLANE_XY:
+         shift_ind = 0;
+         break;
+    case CANON_PLANE_XZ:
+         shift_ind = -2;
+         break;
+    case CANON_PLANE_YZ:
+         shift_ind = -1;
+         break;
+    case CANON_PLANE_UV:
+    case CANON_PLANE_VW:
+    case CANON_PLANE_UW:
+         CANON_ERROR("Can't set plane in UVW axes, assuming XY");
+         break;
+    }
+  qDebug("active plane is %d, shift_ind is %d", ci.activePlane(), shift_ind);
+
+  end_cart    = circshift(end_cart, shift_ind);
+  center_cart = circshift(center_cart, shift_ind);
+  normal_cart = circshift(normal_cart, shift_ind);
+  plane_x     = circshift(plane_x, shift_ind);
+  plane_y     = circshift(plane_y, shift_ind);
+
+  qDebug("normal = %f %f %f",
+          normal_cart.x,
+          normal_cart.y,
+          normal_cart.z);
+  qDebug("plane_x = %f %f %f",
+          plane_x.x,
+          plane_x.y,
+          plane_x.z);
+  qDebug("plane_y = %f %f %f",
+          plane_y.x,
+          plane_y.y,
+          plane_y.z);
+
+  // Define end point in PROGRAM units and convert to CANON
+  CANON_POSITION endpt(0,0,0,a,b,c,u,v,w);
+
+  from_prog(endpt);
+  // Store permuted XYZ end position
+  from_prog_len(end_cart);
+  endpt.set_xyz(end_cart);
+
+  // Convert to CANON units
+  from_prog_len(center_cart);
+
+  // Rotate and offset the new end point to be in the same coordinate system as the current end point
+  rotate_and_offset(endpt);
+  rotate_and_offset_xyz(center_cart);
+  rotate_and_offset_xyz(end_cart);
+
+  // Also rotate the basis vectors
+  to_rotated(plane_x);
+  to_rotated(plane_y);
+  to_rotated(normal_cart);
+
+  qDebug("end = %f %f %f",
+          end_cart.x,
+          end_cart.y,
+          end_cart.z);
+  qDebug("endpt = %f %f %f",
+          endpt.x,
+          endpt.y,
+          endpt.z);
+  qDebug("center = %f %f %f",
+          center_cart.x,
+          center_cart.y,
+          center_cart.z);
+  qDebug("normal = %f %f %f",
+          normal_cart.x,
+          normal_cart.y,
+          normal_cart.z);
+  // Note that the "start" point is already rotated and offset
+
+  Handle(AIS_Shape) shape;
+
+  if (rotation == 0) {
+     shape = ci.graphicFactory().createLine(gp_Pnt(lp.x, lp.y, lp.z)
+                                          , gp_Pnt(endpt.x, endpt.y, endpt.z));
+     }
+  else {
+     //TODO: howto create shape this way?
+//     circularMoveMsg.end    = to_ext_pose(endpt);
+//     // Convert internal center and normal to external units
+//     circularMoveMsg.center = to_ext_len(center_cart);
+//     circularMoveMsg.normal = to_ext_len(normal_cart);
+
+//     if (rotation > 0) shape = ci.graphicFactory().createArc(sp, ep, center, true);
+//     else              shape = ci.graphicFactory().createArc(ep, sp, center, false);
+     qDebug() << "TODO: have to create 3D-arc from"
+              << "start: " << lp.x << "/" << lp.y << "/" << lp.z
+              << "\tend: " << endpt.x << "/" << endpt.y << "/" << endpt.z
+              << "\tcenter: " << center_cart.x << "/" << center_cart.y << "/" << center_cart.z
+              << "\tnormal: " << normal_cart.x << "/" << normal_cart.y << "/" << normal_cart.z;
+     }
+  shape->SetColor(ci.feedColor());
+  ci.toolPath().append(shape);
+  ci.setEndPoint(endpt);
+#endif
+#endif
   }
 
 
 void STRAIGHT_FEED(int lineno, double x, double y, double z
                              , double a, double b, double c
                              , double u, double v, double w) {
+//  from_prog(x,y,z,a,b,c,u,v,w);
+//  rotate_and_offset_pos(x,y,z,a,b,c,u,v,w);
+
+  CanonIF        ci;
+  CANON_POSITION sp = ci.endPoint();
+  CANON_POSITION ep(x, y, z, a, b, c, u, v, w);
+
+  Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(sp.x, sp.y, sp.z)
+                                                         , gp_Pnt(ep.x, ep.y, ep.z));
+  shape->SetColor(ci.feedColor());
   qDebug() << QString("NCanon: feed move #%1  -  (%2/%3/%4) -> (%5/%6/%7)")
                      .arg(lineno)
-                     .arg(x, 0, 'f', 3)
-                     .arg(y, 0, 'f', 3)
-                     .arg(z, 0, 'f', 3)
-                     .arg(x, 0, 'f', 3)
-                     .arg(y, 0, 'f', 3)
-                     .arg(z, 0, 'f', 3)
+                     .arg(sp.x, 0, 'f', 3)
+                     .arg(sp.y, 0, 'f', 3)
+                     .arg(sp.z, 0, 'f', 3)
+                     .arg(ep.x, 0, 'f', 3)
+                     .arg(ep.y, 0, 'f', 3)
+                     .arg(ep.z, 0, 'f', 3)
                      .toStdString().c_str();
+  ci.toolPath().append(shape);
+  ci.setEndPoint(ep);
   }
 
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 void CANON_UPDATE_END_POINT(double x, double y, double z, double a, double b, double c, double u, double v, double w) {    
   qDebug() << "Canon: update end point: " << x << "/" << y << "/" << z
@@ -502,8 +1195,106 @@ void STOP_SPEED_FEED_SYNCH() {
   qDebug() << "NCanon: stop speed feed synch ...";
   }
 
+/// nurbs stuff taken from linuxcnc (task/emccanon.cc)
+static int biarc(int lineno, double p0x, double p0y
+                           , double tsx, double tsy
+                           , double p4x, double p4y
+                           , double tex, double tey, double r=1.0);
+
+
+static void unit(double* x, double* y) {
+  double h = hypot(*x, *y);
+
+  if(h != 0) { *x /= h; *y /= h; }
+  }
+
+
+static void arc(int lineno, double x0, double y0
+                          , double x1, double y1
+                          , double dx, double dy) {
+  double small = 0.000001;
+  double x     = x1 - x0, y = y1 - y0;
+  double den   = 2 * (y*dx - x*dy);
+  CANON_POSITION p = CanonIF().endPoint();
+
+//  to_prog(p);
+  if (fabs(den) > small) {
+     double r  = -(x * x + y * y) / den;
+     double i  = dy * r, j  = -dx * r;
+     double cx = x0 + i, cy = y0 + j;
+
+     ARC_FEED(lineno, x1, y1, cx, cy, r<0 ? 1 : -1,
+                      p.z, p.a, p.b, p.c, p.u, p.v, p.w);
+     }
+  else {
+     STRAIGHT_FEED(lineno, x1, y1, p.z, p.a, p.b, p.c, p.u, p.v, p.w);
+     }
+  }
+
+
+static int biarc(int lineno, double p0x, double p0y
+                           , double tsx, double tsy
+                           , double p4x, double p4y
+                           , double tex, double tey, double r) {
+  unit(&tsx, &tsy);
+  unit(&tex, &tey);
+
+  double vx = p0x - p4x, vy = p0y - p4y;
+  double c  = vx * vx + vy * vy;
+  double b  = 2 * (vx * (r * tsx + tex) + vy * (r * tsy + tey));
+  double a  = 2 * r * (tsx * tex + tsy * tey - 1);
+  double discr = b * b - 4 * a * c;
+
+  if (discr < 0) return 0;
+
+  double disq  = sqrt(discr);
+  double beta1 = (-b - disq) / 2 / a;
+  double beta2 = (-b + disq) / 2 / a;
+
+  if (beta1 > 0 && beta2 > 0) return 0;
+
+  double beta  = fmax(beta1, beta2);
+  double alpha = beta * r;
+  double ab  = alpha + beta;
+  double p1x = p0x + alpha * tsx, p1y = p0y + alpha * tsy,
+         p3x = p4x - beta * tex,  p3y = p4y - beta * tey,
+         p2x = (p1x * beta + p3x * alpha) / ab,
+         p2y = (p1y * beta + p3y * alpha) / ab;
+  double tmx = p3x - p2x, tmy = p3y - p2y;
+
+  unit(&tmx, &tmy);
+
+  arc(lineno, p0x, p0y, p2x, p2y, tsx, tsy);
+  arc(lineno, p2x, p2y, p4x, p4y, tmx, tmy);
+
+  return 1;
+  }
+
+
 void NURBS_FEED(int lineno, std::vector<CONTROL_POINT> nurbs_control_points, unsigned int k) {
   qDebug() << "NCanon: nurbs feed - begin ...";
+
+  unsigned int n    = nurbs_control_points.size() - 1;
+  double       umax = n - k + 2;
+  unsigned int div  = nurbs_control_points.size()*4;
+  std::vector<unsigned int> knot_vector = knot_vector_creator(n, k);
+  PLANE_POINT P0, P0T, P1, P1T;
+
+  P0  = nurbs_point(0,k,nurbs_control_points,knot_vector);
+  P0T = nurbs_tangent(0, k, nurbs_control_points, knot_vector);
+
+  for (unsigned int i=1; i<=div; i++) {
+      double u = umax * i / div;
+      P1  = nurbs_point(u,k,nurbs_control_points,knot_vector);
+      P1T = nurbs_tangent(u,k,nurbs_control_points,knot_vector);
+
+      biarc(lineno, P0.X,P0.Y, P0T.X,P0T.Y, P1.X,P1.Y, P1T.X,P1T.Y);
+
+      P0  = P1;
+      P0T = P1T;
+      }
+  knot_vector.clear();
+  qDebug() << "NCanon: nurbs feed - ... done!";
   }
 
 
