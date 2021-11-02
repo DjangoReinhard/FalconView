@@ -197,18 +197,30 @@ void PositionDockable::connectSignals() {
   Config cfg;
 
   connect(vm.getModel("showAbsolute", false), &ValueModel::valueChanged, this, &PositionDockable::setAbsolute);
-  connect(vm.getModel("axisMask", 0x01FF),    &ValueModel::valueChanged, this, &PositionDockable::setAxisMask);
-  connect(vm.getModel("homedJoint0", false),  &ValueModel::valueChanged, this, &PositionDockable::setXHomed);
-  connect(vm.getModel("homedJoint1", false),  &ValueModel::valueChanged, this, &PositionDockable::setYHomed);
-  connect(vm.getModel("homedJoint2", false),  &ValueModel::valueChanged, this, &PositionDockable::setZHomed);
-  connect(vm.getModel("homedJoint3", false),  &ValueModel::valueChanged, this, &PositionDockable::setAHomed);
-  connect(vm.getModel("homedJoint4", false),  &ValueModel::valueChanged, this, &PositionDockable::setBHomed);
-  connect(vm.getModel("homedJoint5", false),  &ValueModel::valueChanged, this, &PositionDockable::setCHomed);
-  connect(vm.getModel("homedJoint6", false),  &ValueModel::valueChanged, this, &PositionDockable::setUHomed);
-  connect(vm.getModel("homedJoint7", false),  &ValueModel::valueChanged, this, &PositionDockable::setVHomed);
-  connect(vm.getModel("homedJoint8", false),  &ValueModel::valueChanged, this, &PositionDockable::setWHomed);
-
+//  connect(vm.getModel("axisMask", 0x0),       &ValueModel::valueChanged, this, &PositionDockable::setAxisMask);
   for (int i=0; i < 9; ++i) {
+      QString modelKey = QString("homedJoint%1").arg(axisMask.joint4Axis(i));
+
+      switch (i) {
+        case 0: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setXHomed); break;
+        case 1: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setYHomed); break;
+        case 2: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setZHomed); break;
+        case 3: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setAHomed); break;
+        case 4: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setBHomed); break;
+        case 5: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setCHomed); break;
+        case 6: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setUHomed); break;
+        case 7: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setVHomed); break;
+        case 8: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+                      , this, &PositionDockable::setWHomed); break;
+        }
       connect(vm.getModel(QString("abs") + a[i], 0), &ValueModel::valueChanged, droAbs[i], &LabelAdapter::setValue);
       connect(vm.getModel(QString("rel") + a[i], 0), &ValueModel::valueChanged, droRel[i], &LabelAdapter::setValue);
       connect(vm.getModel(QString("dtg") + a[i], 0), &ValueModel::valueChanged, droDtg[i], &LabelAdapter::setValue);
@@ -468,12 +480,12 @@ void PositionDockable::connectSignals() {
   }
 
 
-void PositionDockable::setAxisMask(QVariant am) {
-  if (axisMask.mask() != am.toInt())  {
-     axisMask = am.toInt();
-     updatePos();
-     }
-  }
+//void PositionDockable::setAxisMask(QVariant am) {
+//  if (axisMask.mask() != am.toInt())  {
+//     axisMask = am.toInt();
+//     updatePos();
+//     }
+//  }
 
 
 void PositionDockable::setRelative() {

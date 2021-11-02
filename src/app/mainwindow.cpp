@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
  , autoMode(nullptr)
  , mdiMode(nullptr)
  , editMode(nullptr)
+ , testEditMode(nullptr)
  , wheelMode(nullptr)
  , jogMode(nullptr)
  , cfgMode(nullptr)
@@ -121,6 +122,12 @@ void MainWindow::createActions() {
   editMode    = new QAction(MIcon(":/res/SK_Edit.png"
                                 , ":/res/SK_Edit_active.png"),     tr("Edit-mode"),   this);
   editMode->setCheckable(true);
+  testEditMode = new QAction(MIcon(":/res/SK_TestEdit.png"
+                                 , ":/res/SK_TestEdit_active.png"), tr("TestEdit-mode"), this);
+  testEditMode->setCheckable(true);
+  cfgMode     = new QAction(MIcon(":/res/SK_Settings.png"
+                                , ":/res/SK_Settings_active.png"), tr("Settings-mode"), this);
+  cfgMode->setCheckable(true);
   jogMode     = new QAction(MIcon(":/res/SK_Manual.png"
                                 , ":/res/SK_Manual_active.png"),   tr("Manual-mode"), this);
   jogMode->setCheckable(true);
@@ -128,10 +135,6 @@ void MainWindow::createActions() {
                                 , ":/res/SK_Wheel_active.png"),    tr("Wheel-mode"),  this);
   wheelMode->setCheckable(true);
 //  wheelMode->setEnabled(false);
-  cfgMode     = new QAction(MIcon(":/res/SK_Settings.png"
-                                , ":/res/SK_Settings_active.png"), tr("Config-mode"), this);
-  cfgMode->setCheckable(true);
-
 //  qDebug() << "start of createActions(switches) ...";
   // switches
   mist         = new QAction(MIcon(":/res/SK_Cool_Mist.png"
@@ -149,18 +152,27 @@ void MainWindow::createActions() {
   spindleRight = new QAction(MIcon(":/res/SK_Spindle_CW.png"
                                  , ":/res/SK_Spindle_CW_active.png"),   tr("spindle-CW"),  this);
   spindleRight->setCheckable(true);
+  homeAll     = new QAction(MIcon(":/res/SK_HomeAll.png"
+                                , ":/res/SK_HomeAll_active.png"), tr("Home-all"), this);
+  homeAll->setCheckable(true);
+  touchMode   = new QAction(MIcon(":/res/SK_Touch.png"
+                                , ":/res/SK_Touch_active.png"), tr("Touch-mode"), this);
+  touchMode->setCheckable(true);
+  posAbsolute = new QAction(MIcon(":/res/SK_PosAbsolute.png"
+                                , ":/res/SK_PosRelative.png"), tr("Pos-Type"), this);
+  posAbsolute->setCheckable(true);
+  tools       = new QAction(MIcon(":/res/SK_Tools.png"
+                                , ":/res/SK_Tools_active.png"), tr("Tools-mode"), this);
+  tools->setCheckable(true);
+  offsets     = new QAction(MIcon(":/res/SK_Offsets.png"
+                                , ":/res/SK_Offsets_active.png"), tr("Offset-mode"), this);
+  offsets->setCheckable(true);
 
 //  qDebug() << "start of createActions(nop) ...";
-  nop0 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
-  nop1 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
-  nop2 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
-  nop3 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
-  nop4 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
-  nop0->setEnabled(false);
-  nop1->setEnabled(false);
-  nop2->setEnabled(false);
-  nop3->setEnabled(false);
-  nop4->setEnabled(false);
+//  nop1 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
+//  nop2 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
+//  nop1->setEnabled(false);
+//  nop2->setEnabled(false);
 
 //  qDebug() << "start of createActions(power) ...";
   // power switch
@@ -232,17 +244,32 @@ void MainWindow::createToolBars() {
   modeTB->addAction(editMode);
   modeTB->addAction(jogMode);
   modeTB->addAction(wheelMode);
+#ifdef REDNOSE
+  cfgTB = new QToolBar(tr("Config"), this);
+  cfgTB->setObjectName("ConfigTB");
+  cfgTB->setIconSize(s);
+  cfgTB->addAction(testEditMode);
+  cfgTB->addAction(offsets);
+  cfgTB->addAction(cfgMode);
+  cfgTB->addAction(tools);
+  cfgTB->addAction(touchMode);
+  addToolBar(Qt::BottomToolBarArea, cfgTB);
+#else
+  modeTB->addAction(testEditMode);
+  modeTB->addAction(offsets);
   modeTB->addAction(cfgMode);
+  modeTB->addAction(tools);
+  modeTB->addAction(touchMode);
+#endif
   addToolBar(Qt::BottomToolBarArea, modeTB);
 
   nopTB = new QToolBar(tr("NOP"), this);
   nopTB->setObjectName("NopTB");
   nopTB->setIconSize(s);
-  nopTB->addAction(nop0);
-  nopTB->addAction(nop1);
-  nopTB->addAction(nop2);
-  nopTB->addAction(nop3);
-  nopTB->addAction(nop4);
+  nopTB->addAction(homeAll);
+  nopTB->addAction(posAbsolute);
+//  nopTB->addAction(nop1);
+//  nopTB->addAction(nop2);
   addToolBar(Qt::RightToolBarArea, nopTB);
 
   switchTB = new QToolBar(tr("Switch"), this);
@@ -274,7 +301,7 @@ void MainWindow::createDockables(DBConnection&) {
   ui->menuView->addAction(d->toggleViewAction());
 
   //TODO: read axisMask from ini-file
-  pos = new PositionDockable(":/src/UI/Position.ui", AxisMask(0x01FF), this);
+  pos = new PositionDockable(":/src/UI/Position.ui", Core().axisMask(), this);
   d   = pos;
   addDockWidget(Qt::LeftDockWidgetArea, d);
   ui->menuView->addAction(d->toggleViewAction());
@@ -323,7 +350,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
 
 void MainWindow::selectPage(const QString& name) {
   qDebug() << "page to select: " << name;
-  Core().viewStack()->activatePage(name);
+  Core().activatePage(name);
   }
 
 

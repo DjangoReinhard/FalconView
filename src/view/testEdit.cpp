@@ -88,12 +88,12 @@ void TestEdit::connectSignals() {
 
 
 void TestEdit::openFile() {    
-  QWidget*     w = Core().viewStack()->page("FileManager");
+  QWidget*     w = Core().stackedPage("FileManager");
   FileManager* fm = qobject_cast<FileManager*>(w);
 
   if (fm) {
      fm->setClient(this);
-     Core().viewStack()->activatePage("FileManager");
+     Core().activatePage("FileManager");
      }
   }
 
@@ -120,7 +120,7 @@ void TestEdit::loadFile(const QVariant& fileName) {
   qDebug() << "TestEdit::loadFile" << fileName;
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
-  Core().viewStack()->activatePage(objectName());
+  Core().activatePage(objectName());
   }
 
 

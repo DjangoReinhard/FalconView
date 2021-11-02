@@ -465,6 +465,7 @@ void OcctQtViewer::moveCone(double x, double y, double z) {
                 , 0, 1, 0, y
                 , 0, 0, 1, z);
   myContext->SetLocation(myCone, move);
+  myView->Invalidate();
   update();
   }
 

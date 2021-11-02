@@ -2,6 +2,7 @@
 #define CORE_P_H
 #include <configmgr.h>
 #include <lcproperties.h>
+#include <axismask.h>
 #include <tooltable.h>
 #include <LCInter.h>
 #include <mainview.h>
@@ -23,6 +24,7 @@ private:
   LcProperties  lcProps;
   ToolTable     tt;
   LCInterface   lcIF;
+  AxisMask      mAxis;
   OcctQtViewer* view3D;
   MainView*     mainView;
 

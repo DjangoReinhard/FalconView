@@ -25,7 +25,7 @@ public:
 
   CANON_UNITS       machineUnits() const            { return instance->machineUnits; }
   double            lengthUnits() const             { return instance->lengthUnits(); }
-  int               axisMask() const                { return instance->axisMask(); }
+//  int               axisMask() const                { return instance->axisMask(); }
   double            feedRate() const                { return instance->canon.linearFeedRate; }
   double            traverseRate() const            { return instance->iTraverseRate; }
   bool              isFeedOverrideEnabled() const   { return instance->feedOverride; }
@@ -96,7 +96,7 @@ private:
   private:
     IFSettings(LcProperties& lcProperties, ToolTable& toolTable);
 
-    int               axisMask() const;
+//    int               axisMask() const;
     double            lengthUnits() const;
     bool              isSpeedOverrideEnabled(int) const  {
       //TODO !
@@ -128,7 +128,7 @@ private:
     CanonConfig_t                        canon;
     CANON_POSITION                       g5xOffsets[9];
     CANON_UNITS                          machineUnits;
-    AxisMask                             axisPresent;
+//    AxisMask                             axisPresent;
     StupidToolChangerIF                  changer;
     GraphicFactory                       gf;
     QList<Handle(AIS_InteractiveObject)> toolPath;

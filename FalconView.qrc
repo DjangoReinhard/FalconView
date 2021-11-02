@@ -45,6 +45,8 @@
    <file>res/SK_Spindle_CW.png</file>
    <file>res/SK_Spindle_Stop_active.png</file>
    <file>res/SK_Spindle_Stop.png</file>
+   <file>res/SK_TestEdit_active.png</file>
+   <file>res/SK_TestEdit.png</file>
    <file>res/SK_Tools_active.png</file>
    <file>res/SK_Tools.png</file>
    <file>res/SK_Touch_active.png</file>

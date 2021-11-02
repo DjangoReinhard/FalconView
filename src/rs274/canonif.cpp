@@ -5,6 +5,8 @@
 #include <canonif.h>
 #include <tooltable.h>
 #include <lcproperties.h>
+#include <core.h>
+#include <axismask.h>
 #include <AIS_Shape.hxx>
 #include <gce_MakeDir.hxx>
 #include <QDebug>
@@ -37,15 +39,15 @@ CanonIF::IFSettings::IFSettings(LcProperties& lcProperties, ToolTable& toolTable
   canon.motionTolerance   = 0.01;
   canon.naivecamTolerance = 0.01;
   canon.feed_mode         = CANON_SYNCHED;
-  axisPresent = AxisMask(properties.value("AXIS_X", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_Y", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_Z", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_A", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_B", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_C", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_U", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_V", "MAX_VELOCITY").toBool()
-                       , properties.value("AXIS_W", "MAX_VELOCITY").toBool());
+//  axisPresent = AxisMask(properties.value("AXIS_X", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_Y", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_Z", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_A", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_B", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_C", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_U", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_V", "MAX_VELOCITY").toBool()
+//                       , properties.value("AXIS_W", "MAX_VELOCITY").toBool());
   iTraverseRate = properties.value("AXIS_X", "MAX_VELOCITY").toDouble();
   canon.linearFeedRate = iTraverseRate / 4;
 
@@ -112,9 +114,9 @@ double CanonIF::IFSettings::lengthUnits() const {
   }
 
 
-int CanonIF::IFSettings::axisMask() const {
-  return axisPresent.mask();
-  }
+//int CanonIF::IFSettings::axisMask() const {
+//  return axisPresent.mask();
+//  }
 
 
 void CanonIF::IFSettings::setG5xOffset(int i, const CANON_POSITION &p) {
@@ -613,7 +615,7 @@ void SET_XY_ROTATION(double t) {
   }
 
 int GET_EXTERNAL_AXIS_MASK() {
-  return CanonIF().axisMask();
+  return Core().axisMask().mask();
   }
 
 double GET_EXTERNAL_POSITION_A() {

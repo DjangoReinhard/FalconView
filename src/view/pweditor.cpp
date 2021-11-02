@@ -3,7 +3,6 @@
 #include <configacc.h>
 #include <core.h>
 #include <gcodeeditor.h>
-#include <mainview.h>
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
 #include <canonif.h>
@@ -63,5 +62,5 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   fn->setText(fileName.toString());
   Core().parseGCFile(fileName.toString());
   view->showPath(CanonIF().toolPath());
-  Core().viewStack()->activatePage("PreviewEditor");
+  Core().activatePage("PreviewEditor");
   }

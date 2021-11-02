@@ -43,12 +43,28 @@ void Core::setViewStack(MainView *v) {
   }
 
 
-MainView* Core::viewStack() {
-  return core()->mainView;
+QWidget* Core::stackedPage(const QString &pageName) {
+  return core()->mainView->page(pageName);
+  }
+
+
+void Core::activatePage(const QString &pageName) {
+  core()->mainView->activatePage(pageName);
+  }
+
+
+const AxisMask& Core::axisMask() const {
+  return core()->mAxis;
   }
 
 
 Kernel* Core::core() {
+  assert(kernel != nullptr);
+  return kernel;
+  }
+
+
+const Kernel* Core::core() const {
   assert(kernel != nullptr);
   return kernel;
   }
@@ -59,9 +75,13 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , lcProps(iniFileName)
  , tt(lcProps.toolTableFileName())
  , lcIF(lcProps, tt)
+ , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
  , view3D(new OcctQtViewer()) {
   CanonIF ci(lcProps, tt);
   ValueManager().setValue("conePos", QVector3D());
+
+  lcProps.dump();
+  mAxis.dump();
 
   lcIF.setupToolTable();
   ci.setTraverseColor(QColor(Qt::cyan));

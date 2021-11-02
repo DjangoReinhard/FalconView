@@ -2,13 +2,14 @@
 #include <dynwidget.h>
 #include <QAction>
 #include <QDebug>
-#include <QGridLayout>
-//#include <QStackedLayout>
+//#include <QGridLayout>
+#include <QStackedLayout>
 
 
 MainView::MainView(QWidget* parent)
  : QWidget(parent) {
-  setLayout(new QGridLayout);
+//  setLayout(new QGridLayout);
+  setLayout(new QStackedLayout);
   layout()->setContentsMargins(0, 0, 0, 0);
   qDebug() << "mainView has margins:" << layout()->contentsMargins();
   }
@@ -27,16 +28,18 @@ QWidget* MainView::activatePage(const QString& name) {
 
   if (pages.contains(name)) {
      QWidget*     w  = pages[name];
-     QGridLayout* gl = qobject_cast<QGridLayout*>(layout());
+//     QGridLayout* gl = qobject_cast<QGridLayout*>(layout());
+     QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
-     if (gl) {
+     if (l) {
         qDebug() << "ok, found widget. Gonna switch view";
-        w->setVisible(true);
-        for (auto k = pages.keyBegin(); k != pages.keyEnd(); ++k) {
-            if (!k->compare(name)) continue;
-            pages[*k]->setVisible(false);
-            }
-        w->repaint();
+        l->setCurrentWidget(w);
+//        w->setVisible(true);
+//        for (auto k = pages.keyBegin(); k != pages.keyEnd(); ++k) {
+//            if (!k->compare(name)) continue;
+//            pages[*k]->setVisible(false);
+//            }
+//        w->repaint();
 
         return w;
         }
@@ -47,11 +50,12 @@ QWidget* MainView::activatePage(const QString& name) {
 
 void MainView::addPage(const QString& name, DynWidget *page) {
   pages.insert(name, page);
-  QGridLayout* gl = qobject_cast<QGridLayout*>(layout());
+//  QGridLayout* l = qobject_cast<QGridLayout*>(layout());
+  QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
-  if (gl) {
+  if (l) {
      page->init();
-     gl->addWidget(page, 0, 0);     
+     l->addWidget(page);
      connect(page->viewAction(), &QAction::triggered, this, [=]() {
        activatePage(page->objectName());
        });

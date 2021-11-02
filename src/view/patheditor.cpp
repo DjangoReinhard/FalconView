@@ -29,5 +29,5 @@ void PathEditor::loadFile(const QVariant& fileName) {
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
   ValueManager().getModel("fileName", " ")->setValue(fileName.toString());
-  Core().viewStack()->activatePage("PreViewEditor");
+  Core().activatePage("PreViewEditor");
   }

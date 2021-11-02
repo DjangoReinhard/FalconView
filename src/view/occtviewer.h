@@ -44,10 +44,11 @@ public:
   OcctQtViewer(QWidget* theParent = nullptr);
   virtual ~OcctQtViewer();
 
-  const Handle(V3d_Viewer)&             Viewer() const  { return myViewer; }
-  const Handle(V3d_View)&               View() const    { return myView; }
-  const Handle(AIS_InteractiveContext)& Context() const { return myContext; }
-  const Handle(AIS_ViewCube)&           Cube() const    { return myViewCube; }
+  const Handle(V3d_Viewer)&             viewer() const  { return myViewer; }
+  const Handle(V3d_View)&               view() const    { return myView; }
+  const Handle(AIS_InteractiveContext)& context() const { return myContext; }
+  const Handle(AIS_ViewCube)&           cube() const    { return myViewCube; }
+  Handle(AIS_Shape)                     cone()          { return myCone; }
 
   const QString& getGlInfo() const                { return myGlInfo; }
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
