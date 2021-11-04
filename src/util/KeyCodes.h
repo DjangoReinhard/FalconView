@@ -10,6 +10,7 @@ public:
   static const int Tab         = 0x1000001;
   static const int BackTab     = 0x1000002;     // aka Shift+Tab
   static const int Enter       = 0x1000004;
+  static const int NB_Enter    = 0x1000005;
   static const int Insert      = 0x1000006;
   static const int Delete      = 0x1000007;
   static const int CursorLeft  = 0x1000012;

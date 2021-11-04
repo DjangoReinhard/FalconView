@@ -6,7 +6,7 @@
 #include <QDebug>
 
 
-FixtureManager::FixtureManager(const QString& fileName, QWidget* parent)
+FixtureManager::FixtureManager(QWidget* parent)
  : DynWidget(parent)
  , client(nullptr) {
   setObjectName(tr("FixtureManager"));
@@ -14,22 +14,13 @@ FixtureManager::FixtureManager(const QString& fileName, QWidget* parent)
   QScrollArea* sa = new QScrollArea;
   QLayout*     fl = new FlowLayout;
 
-#ifdef REDNOSE
-  client = new QWidget();
-  client->setLayout(fl);
-  for (int i=0; i < 9; ++i) {
-      if (i < 7) fl->addWidget(new FixtureEdit(QString("G%1").arg(53 + i), fileName));
-      else       fl->addWidget(new FixtureEdit(QString("G59.%1").arg(i - 6), fileName));
-      }
-  sa->setWidget(client);
-#else
   sa->setLayout(fl);
+  sa->setWidgetResizable(true);
   client = sa;
   for (int i=0; i < 9; ++i) {
-      if (i < 7) fl->addWidget(new FixtureEdit(QString("G%1").arg(53 + i), fileName));
-      else       fl->addWidget(new FixtureEdit(QString("G59.%1").arg(i - 6), fileName));
+      if (i < 7) fl->addWidget(new FixtureEdit(QString("G%1").arg(53 + i)));
+      else       fl->addWidget(new FixtureEdit(QString("G59.%1").arg(i - 6)));
       }
-#endif
   this->layout()->addWidget(sa);
   this->layout()->setContentsMargins(0, 0, 0, 0);
   }

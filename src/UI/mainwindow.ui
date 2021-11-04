@@ -98,6 +98,7 @@
     </property>
     <addaction name="actionAbsPos"/>
     <addaction name="separator"/>
+    <addaction name="actionDockables"/>
    </widget>
    <widget class="QMenu" name="menuMain">
     <property name="title">
@@ -109,7 +110,6 @@
      <string comment="what">File</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -150,6 +150,17 @@
    </property>
    <property name="statusTip">
     <string>choose whether to display absolute/relative Coordinates</string>
+   </property>
+  </action>
+  <action name="actionDockables">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Dockables</string>
    </property>
   </action>
  </widget>

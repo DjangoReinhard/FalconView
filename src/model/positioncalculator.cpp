@@ -53,7 +53,7 @@ double PositionCalculator::convertUnit(double value, CANON_UNITS unit) {
   }
 
 
-void PositionCalculator::update(EmcPose* actPos, EmcPose* /* relPos */, EmcPose* dtg, CANON_UNITS units, EmcPose* g5x, EmcPose* g92, double rotXY, EmcPose* toolOffset) {
+void PositionCalculator::update(EmcPose* actPos, EmcPose* relPos, EmcPose* dtg, CANON_UNITS units, EmcPose* g5x, EmcPose* g92, double rotXY, EmcPose* toolOffset) {
   double x = actPos->tran.x - g5x->tran.x - toolOffset->tran.x;
   double y = actPos->tran.y - g5x->tran.y - toolOffset->tran.y;
   double z = actPos->tran.z - g5x->tran.z - toolOffset->tran.z;
@@ -63,6 +63,12 @@ void PositionCalculator::update(EmcPose* actPos, EmcPose* /* relPos */, EmcPose*
   double u = actPos->u      - g5x->u      - toolOffset->u;
   double v = actPos->v      - g5x->v      - toolOffset->v;
   double w = actPos->w      - g5x->w      - toolOffset->w;
+
+
+//  qDebug() << "act. Pos: " << actPos->tran.x << "/" << actPos->tran.y << "/" << actPos->tran.z
+//           << "rel. Pos: " << relPos->tran.x << "/" << relPos->tran.y << "/" << relPos->tran.z
+//           << "dtg.: " << dtg->tran.x << "/" << dtg->tran.y << "/" << dtg->tran.z;
+
 
   if (rotXY != 0) {
      double ang = rotXY * M_PI / 180.0;

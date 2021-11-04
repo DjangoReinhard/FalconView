@@ -9,7 +9,7 @@ class FixtureManager : public DynWidget
 {
   Q_OBJECT
 public:
-  FixtureManager(const QString& fileName, QWidget* parent = nullptr);
+  FixtureManager(QWidget* parent = nullptr);
 
   virtual void connectSignals() override;
   virtual void updateStyles()   override;

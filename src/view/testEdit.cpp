@@ -20,17 +20,17 @@
 
 
 TestEdit::TestEdit(const QString& fileName, QWidget* parent)
- : DynWidget(parent)
+ : DynWidget(fileName, parent)
  , fn(nullptr) {
   setObjectName("TestEdit");
   this->setStyleSheet("background: 0xFF0000;");
-  setLayout(new QHBoxLayout);
-  QWidget* w = loadFromUI(fileName);
+//  setLayout(new QHBoxLayout);
+//  QWidget* w = loadFromUI(fileName);
 
-  qDebug() << "object name of top-widget from UI-file:" << w->objectName();
+//  qDebug() << "object name of top-widget from UI-file:" << w->objectName();
 
-  layout()->addWidget(w);
-  layout()->setContentsMargins(0, 0, 0, 0);
+//  layout()->addWidget(w);
+//  layout()->setContentsMargins(0, 0, 0, 0);
   fn     = w->findChild<QLineEdit*>("fileName");
   pbOpen = w->findChild<QPushButton*>("pbOpen");
   pbSave = w->findChild<QPushButton*>("pbSave");

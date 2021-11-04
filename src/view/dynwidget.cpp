@@ -1,18 +1,23 @@
 #include <dynwidget.h>
 #include <QString>
-#include <QWidget>
+#include <QFrame>
 #include <QAction>
 #include <QFile>
 #include <QUiLoader>
 #include <QStackedLayout>
 
-DynWidget::DynWidget(const QString& fileName, QWidget* parent, int margin)
- : QWidget(parent)
+
+DynWidget::DynWidget(const QString& fileName, QWidget* parent)
+ : QFrame(parent)
  , vAction(nullptr) {
-  setLayout(new QVBoxLayout);
-  layout()->setContentsMargins(0, 0, 0, 0);
-  w = loadFromUI(fileName);
-  if (w) layout()->addWidget(w);
+  QFile     uiDesc(fileName);
+
+  if (uiDesc.exists()) {
+     setLayout(new QVBoxLayout);
+     w = loadFromUI(uiDesc);
+     layout()->setContentsMargins(0, 0, 0, 0);
+     if (w) layout()->addWidget(w);
+     }
   }
 
 
@@ -33,15 +38,14 @@ QAction* DynWidget::viewAction() {
   }
 
 
-QWidget* DynWidget::loadFromUI(const QString& fileName) {
-  QFile     uiDesc(fileName);
+QWidget* DynWidget::loadFromUI(QFile& uiFile) {
   QWidget*  rv = nullptr;
 
-  if (uiDesc.exists()) {
+  if (uiFile.exists()) {
      QUiLoader loader;
-     rv = loader.load(&uiDesc, this);
+     rv = loader.load(&uiFile, this);
 
-     uiDesc.close();
+     uiFile.close();
      }
   return rv;
   }

@@ -14,6 +14,7 @@ class ToolInfoDockable;
 class SpeedInfoDockable;
 class CurCodesDockable;
 class DocumentCommon;
+class Dockable;
 class DBConnection;
 class GCodeViewer;
 class MainView;
@@ -45,9 +46,11 @@ protected:
   void createValueModels();
   void timerEvent(QTimerEvent* event) override;
   void closeEvent(QCloseEvent *event) override;
+  void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
 
 protected slots:
   void selectPage(const QString& name);
+  void toggleDockables(bool visible);
 
 private:
   Ui::MainWindow*     ui;
@@ -78,8 +81,6 @@ private:
   QAction*            spindleOff;
   QAction*            tools;
   QAction*            offsets;
-//  QAction*            nop1;
-//  QAction*            nop2;
   QToolBar*           autoTB;
   QToolBar*           modeTB;
   QToolBar*           cfgTB;
@@ -91,5 +92,6 @@ private:
   GCodeInfo           gcodeInfo;
   PositionCalculator  positionCalculator;
   StatusReader        statusReader;
+  QList<Dockable*>    dockables;
   };
 #endif // MAINWINDOW_H

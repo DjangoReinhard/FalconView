@@ -7,6 +7,7 @@
 #include <QString>
 #include <QFont>
 #include <QFile>
+#include <QDebug>
 #include <iostream>
 
 
@@ -496,6 +497,7 @@ void PositionDockable::setRelative() {
 void PositionDockable::setAbsolute(QVariant arg) {
   bool abs = arg.toBool();
 
+  qDebug() << "PosDock::setAbsolute(" << (abs ? "yes" : "no") << ")";
   if (abs != absolute)  {
      absolute = abs;
      updatePos();

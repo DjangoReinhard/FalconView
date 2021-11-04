@@ -94,6 +94,16 @@ MainWindow::~MainWindow() {
   }
 
 
+void MainWindow::addDockable(Qt::DockWidgetArea area, Dockable* d) {
+  dockables.append(d);
+  QMainWindow::addDockWidget(area, d);
+  QAction* a = d->toggleViewAction();
+
+  a->setEnabled(true);
+  ui->menuView->addAction(a);
+  }
+
+
 void MainWindow::createActions() {
 //  qDebug() << "start of createActions(gcode) ...";
   // gcode execution
@@ -168,12 +178,6 @@ void MainWindow::createActions() {
                                 , ":/res/SK_Offsets_active.png"), tr("Offset-mode"), this);
   offsets->setCheckable(true);
 
-//  qDebug() << "start of createActions(nop) ...";
-//  nop1 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
-//  nop2 = new QAction(QIcon(":/res/SK_NOP.png"), tr("nop"), this);
-//  nop1->setEnabled(false);
-//  nop2->setEnabled(false);
-
 //  qDebug() << "start of createActions(power) ...";
   // power switch
   power       = new QAction(MIcon(":/res/SK_PowerOff.png"
@@ -194,12 +198,22 @@ void MainWindow::createConnections() {
 
 //  qDebug() << " start of createConnections(view) ...";
   // toggle between absolute and relative position ...
-  connect(ui->actionAbsPos, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
+  connect(ui->actionAbsPos,    &QAction::triggered, pos,  [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
+  connect(ui->actionDockables, &QAction::triggered, this, [=](){ toggleDockables(ui->actionDockables->isChecked()); });
 
   qDebug() << " start of createConnections(file open) ...";
   // main menu actions ...
 //  connect(ui->actionOpen, &QAction::triggered, pwe,  &PreViewEditor::openFile);
   qDebug() << " start of createConnections(done) ...";
+  }
+
+
+void MainWindow::toggleDockables(bool visible) {
+  qDebug() << "toggle Dockables triggered ... list size: " << dockables.size();
+  for (Dockable* d : dockables) {
+      qDebug() << "toggleDockables (" << (visible ? "on" : "off") << ") d:" << d->objectName();
+      d->setVisible(visible);
+      }
   }
 
 
@@ -268,8 +282,6 @@ void MainWindow::createToolBars() {
   nopTB->setIconSize(s);
   nopTB->addAction(homeAll);
   nopTB->addAction(posAbsolute);
-//  nopTB->addAction(nop1);
-//  nopTB->addAction(nop2);
   addToolBar(Qt::RightToolBarArea, nopTB);
 
   switchTB = new QToolBar(tr("Switch"), this);
@@ -291,24 +303,10 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables(DBConnection&) {
-  Dockable* d = new ToolInfoDockable(":/src/UI/ToolInfo.ui", this);
-
-  addDockWidget(Qt::LeftDockWidgetArea, d);
-  ui->menuView->addAction(d->toggleViewAction());
-
-  d = new CurCodesDockable(":/src/UI/CurCodes.ui", this);
-  addDockWidget(Qt::LeftDockWidgetArea, d);
-  ui->menuView->addAction(d->toggleViewAction());
-
-  //TODO: read axisMask from ini-file
-  pos = new PositionDockable(":/src/UI/Position.ui", Core().axisMask(), this);
-  d   = pos;
-  addDockWidget(Qt::LeftDockWidgetArea, d);
-  ui->menuView->addAction(d->toggleViewAction());
-
-  d = new SpeedInfoDockable(":/src/UI/SpeedInfo.ui", this);
-  addDockWidget(Qt::BottomDockWidgetArea, d);
-  ui->menuView->addAction(d->toggleViewAction());
+  addDockable(Qt::LeftDockWidgetArea,   new ToolInfoDockable(":/src/UI/ToolInfo.ui", this));
+  addDockable(Qt::LeftDockWidgetArea,   new CurCodesDockable(":/src/UI/CurCodes.ui", this));
+  addDockable(Qt::LeftDockWidgetArea,   pos = new PositionDockable(":/src/UI/Position.ui", Core().axisMask(), this));
+  addDockable(Qt::BottomDockWidgetArea, new SpeedInfoDockable(":/src/UI/SpeedInfo.ui", this));
   }
 
 
@@ -328,7 +326,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new FixtureManager(":/src/UI/Fixture.ui");
+  page = new FixtureManager();
   mainView->addPage(page->objectName(), page);
   ui->menuMain->addAction(page->viewAction());
 

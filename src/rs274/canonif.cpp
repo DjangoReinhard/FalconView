@@ -39,15 +39,6 @@ CanonIF::IFSettings::IFSettings(LcProperties& lcProperties, ToolTable& toolTable
   canon.motionTolerance   = 0.01;
   canon.naivecamTolerance = 0.01;
   canon.feed_mode         = CANON_SYNCHED;
-//  axisPresent = AxisMask(properties.value("AXIS_X", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_Y", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_Z", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_A", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_B", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_C", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_U", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_V", "MAX_VELOCITY").toBool()
-//                       , properties.value("AXIS_W", "MAX_VELOCITY").toBool());
   iTraverseRate = properties.value("AXIS_X", "MAX_VELOCITY").toDouble();
   canon.linearFeedRate = iTraverseRate / 4;
 
@@ -203,7 +194,7 @@ void CanonIF::IFSettings::setLimitsColor(const QColor &c) {
   }
 
 
-void CanonIF::IFSettings::setMotionMode(CANON_MOTION_MODE mode, double tolerance) {
+void CanonIF::IFSettings::setMotionMode(CANON_MOTION_MODE mode, double) {
   canon.motionMode      = mode;
   }
 

@@ -1,5 +1,6 @@
 #include "graphicfactory.h"
 #include <cassert>
+#include <QDebug>
 #include <AIS_ColoredShape.hxx>
 #include <gp_Circ.hxx>
 #include <Geom_Line.hxx>
@@ -35,6 +36,7 @@ Handle(AIS_Shape) GraphicFactory::createArc(const gp_Pnt& from, const gp_Pnt& to
   double r0 =center.Distance(from);
   double r1 =center.Distance(to);
 
+  qDebug() << "createArc: r1 - r0" << (r1 - r0);
   assert(abs(r0 - r1) < MIN_DELTA);
   gp_Dir       dir(0, 0, 1);
   gp_Circ      rawCircle(gp_Ax2(center, dir), r0);
