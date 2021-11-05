@@ -37,6 +37,8 @@ public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
+  void showAllButCenter(bool visible = true);
+
 protected:
   void createActions();
   void createToolBars();
@@ -50,7 +52,6 @@ protected:
 
 protected slots:
   void selectPage(const QString& name);
-  void toggleDockables(bool visible);
 
 private:
   Ui::MainWindow*     ui;
@@ -83,7 +84,7 @@ private:
   QAction*            offsets;
   QToolBar*           autoTB;
   QToolBar*           modeTB;
-  QToolBar*           cfgTB;
+//  QToolBar*           cfgTB;
   QToolBar*           nopTB;
   QToolBar*           powerTB;
   QToolBar*           switchTB;

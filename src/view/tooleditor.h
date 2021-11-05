@@ -24,6 +24,7 @@ public:
 
 protected:
   void selectCBEntry(QComboBox* cb, const QString& name);
+  virtual void changeEvent(QEvent *event) override;
   void dumpModel();
 
   Ui::Form*       ui;

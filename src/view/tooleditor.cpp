@@ -94,7 +94,14 @@ void ToolEditor::getChanges(QSqlRecord& r) {
   }
 
 
-void ToolEditor::selectCBEntry(QComboBox* cb, const QString &name) {
+void ToolEditor::changeEvent(QEvent* e) {
+  if (e->type() == QEvent::EnabledChange && this->isEnabled()) {
+     ui->eName->setFocus();
+     }
+  }
+
+
+void ToolEditor::selectCBEntry(QComboBox* cb, const QString& name) {
   for (int i=0; i < cb->count(); ++i) {
       qDebug() << "cb-entry: " << cb->itemText(i) << " <> name:" << name;
       if (!cb->itemText(i).compare(name)) cb->setCurrentIndex(i);

@@ -199,21 +199,26 @@ void MainWindow::createConnections() {
 //  qDebug() << " start of createConnections(view) ...";
   // toggle between absolute and relative position ...
   connect(ui->actionAbsPos,    &QAction::triggered, pos,  [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
-  connect(ui->actionDockables, &QAction::triggered, this, [=](){ toggleDockables(ui->actionDockables->isChecked()); });
+  connect(ui->actionDockables, &QAction::triggered, this, [=](){ showAllButCenter(ui->actionDockables->isChecked()); });
 
-  qDebug() << " start of createConnections(file open) ...";
+//  qDebug() << " start of createConnections(file open) ...";
   // main menu actions ...
 //  connect(ui->actionOpen, &QAction::triggered, pwe,  &PreViewEditor::openFile);
-  qDebug() << " start of createConnections(done) ...";
+//  qDebug() << " start of createConnections(done) ...";
   }
 
 
-void MainWindow::toggleDockables(bool visible) {
-  qDebug() << "toggle Dockables triggered ... list size: " << dockables.size();
-  for (Dockable* d : dockables) {
-      qDebug() << "toggleDockables (" << (visible ? "on" : "off") << ") d:" << d->objectName();
-      d->setVisible(visible);
+void MainWindow::showAllButCenter(bool visible) {
+//  qDebug() << "toggle Dockables triggered ... list size: " << dockables.size();
+  for (int i=0; i < dockables.size(); ++i) {
+//      qDebug() << "toggleDockables (" << (visible ? "on" : "off") << ") d:" << d->objectName();
+      dockables.at(i)->setVisible(visible);
       }
+  autoTB->setVisible(visible);
+  modeTB->setVisible(visible);
+  nopTB->setVisible(visible);
+  powerTB->setVisible(visible);
+  switchTB->setVisible(visible);
   }
 
 

@@ -22,15 +22,16 @@ class ToolManager : public DynWidget
 public:
   explicit ToolManager(DBConnection& conn, QWidget *parent = nullptr);
 
-  virtual void connectSignals();
-  virtual void updateStyles();
+  virtual void connectSignals() override;
+  virtual void updateStyles() override;
 
 public slots:
   void currentChanged(const QModelIndex& index);
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 protected:
-  void keyReleaseEvent(QKeyEvent *event);
+  virtual void keyReleaseEvent(QKeyEvent *event) override;
+  virtual void showEvent(QShowEvent *event) override;
   void createCategory();
   void createTool();
   void deleteCategory();

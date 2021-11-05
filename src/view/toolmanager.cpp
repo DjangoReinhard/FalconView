@@ -260,6 +260,7 @@ void ToolManager::deleteTool() {
 void ToolManager::editTool() {
   categories->hide();
   tools->hide();
+  //TODO: hide all others!
   tEdit->setEnabled(true);
 
   qDebug() << "default size: " << edSize;
@@ -335,6 +336,7 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
          } break;
     case KeyCodes::Escape:
          if (tEdit->isEnabled()) {  // abort editing
+            //TODO: sync changes with start editing
             tEdit->setEnabled(false);
             categories->show();
             tools->show();
@@ -367,6 +369,11 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
          break;
     }
   event->setAccepted(true);
+  }
+
+
+void ToolManager::showEvent(QShowEvent* e) {
+  if (e->type() == QEvent::Show) categories->setFocus();
   }
 
 

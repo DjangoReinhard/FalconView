@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
   a.installTranslator(&translator);
   MainWindow w;
 
+  appCore.setMainWindow(&w);
   w.show();
 
   return a.exec();

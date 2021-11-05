@@ -7,6 +7,7 @@
 #include <LCInter.h>
 #include <mainview.h>
 class OcctQtViewer;
+class MainWindow;
 class QString;
 class QFile;
 
@@ -27,6 +28,7 @@ private:
   AxisMask      mAxis;
   OcctQtViewer* view3D;
   MainView*     mainView;
+  MainWindow*   mainWindow;
 
   friend class Core;
   friend class Config;

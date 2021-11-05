@@ -53,11 +53,11 @@ int AxisMask::assembleMask(bool hasX, bool hasY, bool hasZ, bool hasA, bool hasB
 
 
 void AxisMask::calcActive() {
-  std::cout << "axisMask: " << axisMask;
+  qDebug() << "axisMask: " << axisMask;
   for (int i=0; i < 9; ++i) {
       if (axisMask & (1 << i)) ++cntActive;
       }
-  std::cout << "\tfound " << cntActive << " active axis" << std::endl;
+  qDebug() << "\tfound " << cntActive << " active axis";
 }
 
 
@@ -85,31 +85,37 @@ void AxisMask::dump() const {
 
 
 void AxisMask::parseIni(const QString& iniValue) {
-  bool axisSeen[9] = {0};
+  qDebug() << "parseIni(" << iniValue << ") - check for '='";
 
   if (!iniValue.isEmpty() && iniValue.contains("=")) {
      QStringList parts = iniValue.split(QRegularExpression("\\s*=\\s*"));
 
-     if (parts.size() > 1) {
-        const QString& pattern = parts[1];
-        int mx = pattern.size();
-
-        qDebug() << "AxisMask initialized with pattern: " << pattern;
-
-        // i is sequence number of axis
-        for (int i=0; i < 9; ++i) {
-            // n is index of letters in inifile-pattern, which equals to joint number
-            for (int n=0; n < mx; ++n) {
-                const char axisLetter = pattern[n].toUpper().toLatin1();
-
-                if (axisLetter == axisLetters[i]) {
-                   joint2Axis[i] = n;   // i is axis-, n is joint number
-                   axisSeen[i]   = true;
-                   }
-                }
-            }
-        }
+     if (parts.size() > 1) setup(parts[1]);
      }
+  }
+
+
+void AxisMask::setup(const QString &iniValue) {
+  QString pattern(iniValue);
+
+  pattern.remove(' ');
+  int mx = pattern.size();
+  bool axisSeen[9] = {0};
+
+  qDebug() << "AxisMask initialized with pattern: " << pattern;
+
+  // i is sequence number of axis
+  for (int i=0; i < 9; ++i) {
+      // n is index of letters in inifile-pattern, which equals to joint number
+      for (int n=0; n < mx; ++n) {
+          const char axisLetter = pattern[n].toUpper().toLatin1();
+
+          if (axisLetter == axisLetters[i]) {
+             joint2Axis[i] = n;   // i is axis-, n is joint number
+             axisSeen[i]   = true;
+             }
+          }
+      }
   axisMask = assembleMask(axisSeen[0]
                         , axisSeen[1]
                         , axisSeen[2]
@@ -119,6 +125,8 @@ void AxisMask::parseIni(const QString& iniValue) {
                         , axisSeen[6]
                         , axisSeen[7]
                         , axisSeen[8]);
+  calcActive();
   }
+
 
 const char AxisMask::axisLetters[] = "XYZABCUVW";

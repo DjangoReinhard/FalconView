@@ -46,9 +46,9 @@
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="../view/filemanager.cpp" line="147"/>
+        <location filename="../view/filemanager.cpp" line="142"/>
         <source>&lt;p&gt;no textfile&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>keine Textdatei</translation>
     </message>
 </context>
 <context>
@@ -221,47 +221,47 @@
         <location filename="../UI/Overlay.ui" line="380"/>
         <location filename="../UI/Position.ui" line="778"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="96"/>
         <source>A</source>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="156"/>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation>B</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="172"/>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="425"/>
         <source>W</source>
-        <translation type="unfinished"></translation>
+        <translation>W</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="714"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="794"/>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="810"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../UI/Position.ui" line="826"/>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="471"/>
@@ -296,27 +296,27 @@
     <message>
         <location filename="../UI/Settings.ui" line="1282"/>
         <source>Editor Line Number 109</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor Zeile 109</translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="1307"/>
         <source>Line Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>akt. Zeile</translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="1332"/>
         <source>Fixture</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="1357"/>
         <source>Fixture Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullpunkt Titel</translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="1382"/>
         <source>Fixture Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullpunkt Rahmen</translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="116"/>
@@ -326,12 +326,12 @@
     <message>
         <location filename="../UI/Settings.ui" line="375"/>
         <source>DRO Axis: X Y Z</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="1042"/>
         <source>DRO abs 123,999</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../UI/Settings.ui" line="256"/>
@@ -404,7 +404,7 @@
     </message>
     <message>
         <location filename="../UI/mainwindow.old.ui" line="96"/>
-        <location filename="../UI/mainwindow.ui" line="109"/>
+        <location filename="../UI/mainwindow.ui" line="110"/>
         <source>File</source>
         <comment>what</comment>
         <translation>Datei</translation>
@@ -465,7 +465,7 @@
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../UI/mainwindow.ui" line="104"/>
+        <location filename="../UI/mainwindow.ui" line="105"/>
         <source>Main</source>
         <translation>Haupt</translation>
     </message>
@@ -485,126 +485,161 @@
         <translation>wechseln zwischen absoluter und relativer Positionsanzeige</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="101"/>
+        <location filename="../UI/mainwindow.ui" line="163"/>
+        <source>Dockables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="112"/>
         <source>Start</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="104"/>
+        <location filename="../app/mainwindow.cpp" line="115"/>
         <source>Pause</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="107"/>
+        <location filename="../app/mainwindow.cpp" line="118"/>
         <source>Stop</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="110"/>
+        <location filename="../app/mainwindow.cpp" line="121"/>
         <source>Single-Step</source>
         <translation>Einzelschritt</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="116"/>
+        <location filename="../app/mainwindow.cpp" line="127"/>
         <source>Auto-mode</source>
         <translation>Ablauf</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="119"/>
+        <location filename="../app/mainwindow.cpp" line="130"/>
         <source>MDI-mode</source>
         <translation>manuelle Eingabe</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="122"/>
+        <location filename="../app/mainwindow.cpp" line="133"/>
         <source>Edit-mode</source>
         <translation>Datei bearbeiten</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="125"/>
+        <location filename="../app/mainwindow.cpp" line="136"/>
+        <source>TestEdit-mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="139"/>
+        <source>Settings-mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="142"/>
         <source>Manual-mode</source>
         <translation>händische Bedienung</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="128"/>
+        <location filename="../app/mainwindow.cpp" line="145"/>
         <source>Wheel-mode</source>
         <translation>Handrad</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="132"/>
-        <source>Config-mode</source>
-        <translation>Einstellungen</translation>
+        <location filename="../app/mainwindow.cpp" line="166"/>
+        <source>Home-all</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="138"/>
+        <location filename="../app/mainwindow.cpp" line="169"/>
+        <source>Touch-mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="172"/>
+        <source>Pos-Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="175"/>
+        <source>Tools-mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="178"/>
+        <source>Offset-mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Config-mode</source>
+        <translation type="vanished">Einstellungen</translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="151"/>
         <source>cool-Mist</source>
         <translation>MinimalmengenKühlung</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="141"/>
+        <location filename="../app/mainwindow.cpp" line="154"/>
         <source>cool-Flood</source>
         <translation>Flutkühlung</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="144"/>
+        <location filename="../app/mainwindow.cpp" line="157"/>
         <source>spindle-CCW</source>
         <translation>Spindel gegen Uhrzeigersinn</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="147"/>
+        <location filename="../app/mainwindow.cpp" line="160"/>
         <source>spindle-Off</source>
         <translation>Spindel anhalten</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="150"/>
+        <location filename="../app/mainwindow.cpp" line="163"/>
         <source>spindle-CW</source>
         <translation>Spindel im Uhrzeigersinn</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="154"/>
-        <location filename="../app/mainwindow.cpp" line="155"/>
-        <location filename="../app/mainwindow.cpp" line="156"/>
-        <location filename="../app/mainwindow.cpp" line="157"/>
-        <location filename="../app/mainwindow.cpp" line="158"/>
-        <source>nop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../app/mainwindow.cpp" line="168"/>
+        <location filename="../app/mainwindow.cpp" line="184"/>
         <source>Poweroff</source>
         <translation>Ausschalten</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="198"/>
+        <location filename="../app/mainwindow.cpp" line="229"/>
         <source>close application?</source>
         <translation>Anwendung beenden?</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="199"/>
+        <location filename="../app/mainwindow.cpp" line="230"/>
         <source>&lt;p&gt;closing the application means shutting down the backend and stopping all services IF ui has been started by linuxcnc start-helper&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="218"/>
+        <location filename="../app/mainwindow.cpp" line="249"/>
         <source>Auto</source>
         <translation>Automatisch</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="227"/>
+        <location filename="../app/mainwindow.cpp" line="258"/>
         <source>Mode</source>
         <translation>Modus</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="238"/>
+        <location filename="../app/mainwindow.cpp" line="267"/>
+        <source>Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/mainwindow.cpp" line="285"/>
         <source>NOP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="248"/>
+        <location filename="../app/mainwindow.cpp" line="292"/>
         <source>Switch</source>
         <translation>Schalter</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="258"/>
+        <location filename="../app/mainwindow.cpp" line="302"/>
         <source>Power</source>
         <translation>Hauptschalter</translation>
     </message>
@@ -612,8 +647,8 @@
 <context>
     <name>PositionDockable</name>
     <message>
-        <location filename="../view/dockable/positiondockable.cpp" line="14"/>
-        <location filename="../view/dockable/positiondockable.cpp" line="46"/>
+        <location filename="../view/dockable/positiondockable.cpp" line="15"/>
+        <location filename="../view/dockable/positiondockable.cpp" line="47"/>
         <source>Position</source>
         <translation></translation>
     </message>
@@ -664,7 +699,7 @@
     <message>
         <location filename="../view/toolmanager.cpp" line="100"/>
         <location filename="../view/toolmanager.cpp" line="140"/>
-        <location filename="../view/toolmanager.cpp" line="290"/>
+        <location filename="../view/toolmanager.cpp" line="291"/>
         <source>QInputDialog::getText()</source>
         <translation>Eingabe</translation>
     </message>
@@ -680,7 +715,7 @@
     </message>
     <message>
         <location filename="../view/toolmanager.cpp" line="194"/>
-        <location filename="../view/toolmanager.cpp" line="275"/>
+        <location filename="../view/toolmanager.cpp" line="276"/>
         <source>QMessageBox::information()</source>
         <translation type="unfinished"></translation>
     </message>
@@ -700,12 +735,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../view/toolmanager.cpp" line="276"/>
+        <location filename="../view/toolmanager.cpp" line="277"/>
         <source>To finish tool editing press F10 to save changes or ESC to abort.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../view/toolmanager.cpp" line="291"/>
+        <location filename="../view/toolmanager.cpp" line="292"/>
         <source>new Category name:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -924,65 +959,52 @@
 <context>
     <name>frame</name>
     <message>
-        <location filename="../UI/Fixture.ui" line="53"/>
+        <location filename="../UI/Fixture.ui" line="63"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="79"/>
+        <location filename="../UI/Fixture.ui" line="167"/>
         <source>Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="89"/>
-        <location filename="../UI/Fixture.ui" line="112"/>
-        <location filename="../UI/Fixture.ui" line="119"/>
-        <location filename="../UI/Fixture.ui" line="146"/>
-        <location filename="../UI/Fixture.ui" line="153"/>
-        <location filename="../UI/Fixture.ui" line="234"/>
-        <location filename="../UI/Fixture.ui" line="316"/>
-        <location filename="../UI/Fixture.ui" line="359"/>
-        <location filename="../UI/Fixture.ui" line="366"/>
-        <source>Set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/Fixture.ui" line="102"/>
+        <location filename="../UI/Fixture.ui" line="135"/>
         <source>X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="166"/>
+        <location filename="../UI/Fixture.ui" line="235"/>
         <source>B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="182"/>
+        <location filename="../UI/Fixture.ui" line="193"/>
         <source>V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="198"/>
+        <location filename="../UI/Fixture.ui" line="271"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="214"/>
+        <location filename="../UI/Fixture.ui" line="209"/>
         <source>U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="267"/>
+        <location filename="../UI/Fixture.ui" line="99"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="306"/>
+        <location filename="../UI/Fixture.ui" line="300"/>
         <source>G54</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Fixture.ui" line="329"/>
+        <location filename="../UI/Fixture.ui" line="151"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>

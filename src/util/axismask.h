@@ -22,6 +22,7 @@ public:
   bool hasUAxis()   const { return axisMask & 0x040; }
   bool hasVAxis()   const { return axisMask & 0x080; }
   bool hasWAxis()   const { return axisMask & 0x100; }
+  void setup(const QString& axisLetters);
   int  joint4Axis(int axis) const;
   void dump() const;
 

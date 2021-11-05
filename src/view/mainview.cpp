@@ -1,5 +1,6 @@
 #include <mainview.h>
 #include <dynwidget.h>
+#include <core.h>
 #include <QAction>
 #include <QDebug>
 //#include <QGridLayout>
@@ -57,7 +58,7 @@ void MainView::addPage(const QString& name, DynWidget *page) {
      page->init();
      l->addWidget(page);
      connect(page->viewAction(), &QAction::triggered, this, [=]() {
-       activatePage(page->objectName());
+       Core().activatePage(page->objectName());
        });
      }
   activatePage(name);

@@ -5,6 +5,7 @@
 #include <QVector3D>
 #include <core.h>
 #include <lcproperties.h>
+#include <mainwindow.h>
 #include <tooltable.h>
 #include <LCInter.h>
 #include <canonif.h>
@@ -38,18 +39,28 @@ OcctQtViewer* Core::view3D() {
   }
 
 
-void Core::setViewStack(MainView *v) {
+void Core::setViewStack(MainView* v) {
   core()->mainView = v;
   }
 
 
-QWidget* Core::stackedPage(const QString &pageName) {
+void Core::setMainWindow(MainWindow* mw) {
+  core()->mainWindow = mw;
+  }
+
+
+void Core::showAllButCenter(bool visible) {
+  core()->mainWindow->showAllButCenter(visible);
+  }
+
+QWidget* Core::stackedPage(const QString& pageName) {
   return core()->mainView->page(pageName);
   }
 
 
-void Core::activatePage(const QString &pageName) {
-  core()->mainView->activatePage(pageName);
+void Core::activatePage(const QString& pageName) {
+  auto page = core()->mainView->activatePage(pageName);
+  core()->mainWindow->setWindowTitle(core()->mainWindow->objectName() + " - " + page->objectName());
   }
 
 
@@ -81,6 +92,8 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
   ValueManager().setValue("conePos", QVector3D());
 
   lcProps.dump();
+  if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
+
   mAxis.dump();
 
   lcIF.setupToolTable();
