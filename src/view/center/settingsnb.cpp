@@ -21,6 +21,8 @@ SettingsNotebook::~SettingsNotebook() {
 
 
 void SettingsNotebook::addPage(DynWidget* page) {
+  assert(page);
+  page->init();
   tw->addTab(page, page->objectName());
   }
 

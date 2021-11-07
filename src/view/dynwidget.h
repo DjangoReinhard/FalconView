@@ -7,6 +7,8 @@ class QAction;
 class QFile;
 
 
+/*! loads widgets from uiFile and allows late initialization at page usage
+ */
 class DynWidget : public QFrame // QWidget
 {
   Q_OBJECT
@@ -17,9 +19,12 @@ public:
   QAction*     viewAction();
 
 protected:
-  DynWidget(const QString& fileName, QWidget* parent = nullptr);
+  DynWidget(const QString& fileName, bool addScrollArea = false, QWidget* parent = nullptr);
 
+  /*! connect signals/slots offline - called by addPage */
   virtual void connectSignals() = 0;
+
+  /*! style the child widgets offline - called by addPage */
   virtual void updateStyles()   = 0;
   QWidget*     loadFromUI(QFile& uiFile);
   QWidget*     w;

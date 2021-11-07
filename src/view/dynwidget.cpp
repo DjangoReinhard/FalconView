@@ -4,10 +4,13 @@
 #include <QAction>
 #include <QFile>
 #include <QUiLoader>
+#include <QScrollArea>
 #include <QStackedLayout>
 
 
-DynWidget::DynWidget(const QString& fileName, QWidget* parent)
+/*! loads widgets from uiFile and allows late initialization at page usage
+ */
+DynWidget::DynWidget(const QString& fileName, bool addScrollArea, QWidget* parent)
  : QFrame(parent)
  , vAction(nullptr) {
   QFile     uiDesc(fileName);
@@ -16,11 +19,21 @@ DynWidget::DynWidget(const QString& fileName, QWidget* parent)
      setLayout(new QVBoxLayout);
      w = loadFromUI(uiDesc);
      layout()->setContentsMargins(0, 0, 0, 0);
-     if (w) layout()->addWidget(w);
+     if (w) {
+        if (addScrollArea) {
+           QScrollArea* sa = new QScrollArea(this);
+
+           sa->setWidget(w);
+           sa->setWidgetResizable(true);
+           layout()->addWidget(sa);
+           }
+        else layout()->addWidget(w);
+        }
      }
   }
 
 
+// called by MainView::addPage
 void DynWidget::init() {
   connectSignals();
   updateStyles();

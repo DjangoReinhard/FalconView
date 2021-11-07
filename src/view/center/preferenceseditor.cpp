@@ -10,7 +10,7 @@
 
 
 PreferencesEditor::PreferencesEditor(const QString& fileName, QWidget* parent)
- : DynWidget(fileName, parent) {
+ : DynWidget(fileName, true, parent) {
   setObjectName(tr("SettingsEditor"));
   initializeWidget();
   }
