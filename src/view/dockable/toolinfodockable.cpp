@@ -35,6 +35,7 @@ void ToolInfoDockable::initializeWidget(QWidget* /* w */) {
   tlRad   = new LabelAdapter(findChild<QLabel*>("toolRadius"));
   curTool = findChild<QLabel*>("curToolNum");
   nxtTool = findChild<QLabel*>("nextToolNum");
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
   connectSignals();
   updateStyles();
 }

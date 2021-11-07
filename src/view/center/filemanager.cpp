@@ -33,7 +33,7 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
  , pxDirs(new QSortFilterProxyModel(this))
  , pxFiles(new QSortFilterProxyModel(this))
  , client(nullptr) {
-  setObjectName("FileManager");
+  setObjectName(tr("FileManager"));
   pxDirs->setSourceModel(dirModel);
   dirs->setModel(pxDirs);
   dirs->setTabKeyNavigation(false);
@@ -100,13 +100,14 @@ void FileManager::currentChanged(const QModelIndex& index) {
   }
 
 
-void FileManager::keyReleaseEvent(QKeyEvent *event) {
+void FileManager::keyReleaseEvent(QKeyEvent* e) {
 //  qDebug() << "released key: " << event->key();
 
-  if (event->key() == KeyCodes::Enter) {
+  if (e->key() == Qt::Key_Enter
+   || e->key() == Qt::Key_Return) {
      QModelIndexList    mi       = files->selectionModel()->selection().indexes();
 
-     event->accept();
+     e->accept();
      if (!mi.size()) return;
      const QModelIndex& index    = mi.at(0);
      const QModelIndex& srcIndex = pxFiles->mapToSource(index);

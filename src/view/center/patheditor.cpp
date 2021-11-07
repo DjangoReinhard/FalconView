@@ -20,14 +20,12 @@
 
 PathEditor::PathEditor(const QString& fileName, QWidget* parent)
  : TestEdit(fileName, parent) {
-  setObjectName("PathEditor");
+  setObjectName(tr("PathEditor"));
   }
 
 
 void PathEditor::loadFile(const QVariant& fileName) {
   qDebug() << "PathEditor::loadFile" << fileName;
-  ed->loadFile(fileName);
-  fn->setText(fileName.toString());
-  ValueManager().getModel("fileName", " ")->setValue(fileName.toString());
-  Core().activatePage("PreViewEditor");
+  TestEdit::loadFile(fileName);
+  if (!Core().isBackendActive()) ValueManager().setValue("fileName", fileName);
   }

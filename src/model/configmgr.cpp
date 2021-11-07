@@ -21,20 +21,20 @@ void ConfigManager::initialize() {
       QString  k = QString("cfgBg") + geToString(i);
       QVariant v = settings.value(k, QColor(Qt::white));
 
-      qDebug() << "config key: " << k;
-      qDebug() << "background color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
+//      qDebug() << "config key: " << k;
+//      qDebug() << "background color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
       vm.setValue(k, v);
 
       k = QString("cfgFg") + geToString(i);
       v = settings.value(k, QColor(Qt::black));
-      qDebug() << "config key: " << k;
-      qDebug() << "foreground color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
+//      qDebug() << "config key: " << k;
+//      qDebug() << "foreground color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
       vm.setValue(k, v);
 
       k = QString("cfgF") + geToString(i);
       v = settings.value(k, QFont("Hack", 12));
-      qDebug() << "config key: " << k;
-      qDebug() << "font: " << v.value<QFont>().key();
+//      qDebug() << "config key: " << k;
+//      qDebug() << "font: " << v.value<QFont>().key();
       vm.setValue(k, v);
       }
   }

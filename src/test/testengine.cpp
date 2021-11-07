@@ -2,6 +2,11 @@
 #include <equalcondition.h>
 #include <smallercondition.h>
 #include <greatercondition.h>
+#include <notcondition.h>
+#include <andcondition.h>
+#include <and3condition.h>
+#include <and4condition.h>
+#include <orcondition.h>
 #include <valuemodel.h>
 #include <QObject>
 #include <QDebug>
@@ -15,20 +20,21 @@ class TestEngine : public QObject
   Q_OBJECT
 public slots:
   void updateCondition(bool result) {
-//    qDebug() << "TEST --- updateCondition to " << (result ? "true" : "false");
+    qDebug() << "TEST <<<--- updateCondition to -->>" << (result ? "true" : "false") << "<<";
     this->result = result;
     };
 
 private slots:
-  void test3Axis();
-  void test5Axis();
-  void test9Axis();
-  void tellStdPaths();
-  void writeSettings();
-  void readSettings();
+//  void tellStdPaths();
+//  void writeSettings();
+//  void readSettings();
   void testEqualCondition();
   void testSmallerCondition();
   void testGreaterCondition();
+  void testAndCondition();
+  void testAnd3Condition();
+  void testAnd4Condition();
+  void testOrCondition();
 
   void init() { result = true; }
 
@@ -48,7 +54,7 @@ void TestEngine::testEqualCondition() {
   v.setValue(7);
 
   QCOMPARE(result, true);
-  this->disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+  disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 
@@ -63,7 +69,7 @@ void TestEngine::testSmallerCondition() {
   v.setValue(1.15);
 
   QCOMPARE(result, true);
-  this->disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+  disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 
@@ -78,57 +84,158 @@ void TestEngine::testGreaterCondition() {
   v.setValue(120);
 
   QCOMPARE(result, true);
-  this->disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+  disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 
-void TestEngine::test3Axis() {
-  AxisMask am(0x07);
+void TestEngine::testAndCondition() {
+  ValueModel v0("left", 13);
+  ValueModel v1("right", 3);
+  GreaterCondition gc(&v0, 20);
+  NotCondition     nc(&v1, 3);
+  AndCondition     ac(gc, nc);
 
-  QCOMPARE(am.activeAxis(), 3);
+  connect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+
+  QCOMPARE(result = ac.result(), false);
+
+  qDebug() << "set v0 to 32";
+  v0.setValue(32);
+
+  QCOMPARE(result, false);
+
+  qDebug() << "set v1 to 5";
+  v1.setValue(5);
+
+  QCOMPARE(result, true);
+  disconnect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 
-void TestEngine::test5Axis() {
-  AxisMask am(0x01F);
+void TestEngine::testAnd3Condition() {
+  ValueModel v0("left", 13);
+  ValueModel v1("middle", 1);
+  ValueModel v2("right", 3);
+  GreaterCondition gc(&v0, 20);
+  NotCondition     nc(&v1, 1);
+  SmallerCondition sc(&v2, 0);
+  And3Condition    ac(gc, nc, sc);
 
-  QCOMPARE(am.activeAxis(), 5);
+  connect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+
+  QCOMPARE(result = ac.result(), false);
+
+  qDebug() << "set v0 to 32";
+  v0.setValue(32);
+
+  QCOMPARE(result, false);
+
+  qDebug() << "set v1 to 9";
+  v1.setValue(9);
+
+  QCOMPARE(result, false);
+
+  qDebug() << "set v2 to -5";
+  v2.setValue(-5);
+
+  QCOMPARE(result, true);
+  disconnect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 
-void TestEngine::test9Axis() {
-  AxisMask am(0x01FF);
+void TestEngine::testAnd4Condition() {
+  ValueModel v0("left", 3);
+  ValueModel v1("midl", 5);
+  ValueModel v2("midr", 9);
+  ValueModel v3("right", 13);
+  GreaterCondition g0c(&v0, 13);
+  NotCondition     nc(&v1, 5);
+  SmallerCondition sc(&v2, 1);
+  GreaterCondition g1c(&v3, 33);
+  And4Condition    ac(g0c, nc, sc, g1c);
 
-  QCOMPARE(am.activeAxis(), 9);
+  connect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+
+  QCOMPARE(result = ac.result(), false);
+
+  qDebug() << "set v0 to 15";
+  v0.setValue(15);
+
+  QCOMPARE(result, false);
+
+  qDebug() << "set v1 to 0";
+  v1.setValue(0);
+
+  QCOMPARE(result, false);
+
+  qDebug() << "set v2 to -2";
+  v2.setValue(-2);
+
+  QCOMPARE(result, false);
+
+  qDebug() << "set v3 to 35";
+  v3.setValue(35);
+
+  QCOMPARE(result, true);
+  disconnect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 
-void TestEngine::tellStdPaths() {
-  QStringList sl = QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation);
+void TestEngine::testOrCondition() {
+  ValueModel v0("left", 13);
+  ValueModel v1("right", 3);
+  GreaterCondition gc(&v0, 20);
+  NotCondition     nc(&v1, 3);
+  OrCondition      oc(gc, nc);
 
-  for (QString s : sl) {
-      qDebug() << "app config location: " << s;
-      }
-  sl = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-  for (QString s : sl) {
-      qDebug() << "home location: " << s;
-      }
+  connect(&oc, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+
+  QCOMPARE(result = oc.result(), false);
+
+  qDebug() << "set v0 to 32";
+  v0.setValue(32);
+
+  QCOMPARE(result, true);
+
+  qDebug() << "set v0 to 17";
+  v0.setValue(17);
+
+  QCOMPARE(result, false);
+
+  qDebug() << "set v1 to 5";
+  v1.setValue(5);
+
+  QCOMPARE(result, true);
+  disconnect(&oc, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 
-void TestEngine::writeSettings() {
-  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
+//void TestEngine::tellStdPaths() {
+//  QStringList sl = QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation);
 
-  cfg.setValue("whatEver", "hello world");
-  }
+//  for (const QString& s : sl) {
+//      qDebug() << "app config location: " << s;
+//      }
+//  sl = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+//  for (const QString& s : sl) {
+//      qDebug() << "home location: " << s;
+//      }
+//  }
 
 
-void TestEngine::readSettings() {
-  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
-  QVariant we = cfg.value("whatEver");
+//void TestEngine::writeSettings() {
+//  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
 
-  QCOMPARE(we.toString(), "hello world");
-  }
+//  cfg.setValue("whatEver", "hello world");
+//  }
+
+
+//void TestEngine::readSettings() {
+//  QSettings cfg(QSettings::UserScope, "SRD", "FalconView");
+//  QVariant we = cfg.value("whatEver");
+
+//  QCOMPARE(we.toString(), "hello world");
+//  }
 
 
 QTEST_MAIN(TestEngine)

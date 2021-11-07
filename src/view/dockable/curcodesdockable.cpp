@@ -31,6 +31,7 @@ CurCodesDockable::CurCodesDockable(const QString& fileName, QWidget* parent)
   labels[18] = findChild<QLabel*>("m9");
   labels[19] = findChild<QLabel*>("m10");
 
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
   connectSignals();
   updateStyles();
   }

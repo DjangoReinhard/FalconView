@@ -5,6 +5,14 @@
 DBConnection::DBConnection(const QString& dbName, const QString& dbType)
  : name(dbName)
  , type(dbType) {
+  if (!dbName.contains('/'))
+     name = QString("../") + dbName + "/db/" + dbName;
+  }
+
+
+DBConnection::DBConnection(const DBConnection& other)
+ : name(other.name)
+ , type(other.type) {
   }
 
 

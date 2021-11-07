@@ -1,6 +1,7 @@
 #ifndef KEYCODES_H
 #define KEYCODES_H
 
+#ifdef REDNOSE
 class KeyCodes
 {
 public:
@@ -18,6 +19,8 @@ public:
   static const int CursorRight = 0x1000014;
   static const int CursorDown  = 0x1000015;
 
+  static const int Ctrl        = 0x1000021;
+
   static const int F1_Key      = 0x1000030;
   static const int F2_Key      = 0x1000031;
   static const int F3_Key      = 0x1000032;
@@ -28,6 +31,8 @@ public:
   static const int F8_Key      = 0x1000037;
   static const int F9_Key      = 0x1000038;
   static const int F10_Key     = 0x1000039;
+  static const int F11_Key     = 0x1000040;
+  static const int F12_Key     = 0x1000041;
   };
-
+#endif
 #endif // KEYCODES_H

@@ -54,11 +54,11 @@
    <file>res/SK_Wheel_active.png</file>
    <file>res/SK_Wheel.png</file>
    <file>res/WorkPlane01.png</file>
+   <file>res/Tools_backup.xml</file>
    <file>src/UI/CurCodes.ui</file>
    <file>src/UI/Fixture.ui</file>
    <file>src/UI/GCodeEditor.ui</file>
    <file>src/UI/mainwindow.ui</file>
-   <file>src/UI/Overlay.ui</file>
    <file>src/UI/Position.ui</file>
    <file>src/UI/Settings.ui</file>
    <file>src/UI/SpeedInfo.ui</file>

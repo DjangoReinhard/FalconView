@@ -606,6 +606,7 @@ void SET_XY_ROTATION(double t) {
   }
 
 int GET_EXTERNAL_AXIS_MASK() {
+//  qDebug() << "WHOOHOO ---> get external AXIS mask <--- (00)";
   return Core().axisMask().mask();
   }
 

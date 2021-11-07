@@ -22,15 +22,8 @@
 TestEdit::TestEdit(const QString& fileName, QWidget* parent)
  : DynWidget(fileName, parent)
  , fn(nullptr) {
-  setObjectName("TestEdit");
+  setObjectName(tr("TestEditor"));
   this->setStyleSheet("background: 0xFF0000;");
-//  setLayout(new QHBoxLayout);
-//  QWidget* w = loadFromUI(fileName);
-
-//  qDebug() << "object name of top-widget from UI-file:" << w->objectName();
-
-//  layout()->addWidget(w);
-//  layout()->setContentsMargins(0, 0, 0, 0);
   fn     = w->findChild<QLineEdit*>("fileName");
   pbOpen = w->findChild<QPushButton*>("pbOpen");
   pbSave = w->findChild<QPushButton*>("pbSave");
@@ -88,12 +81,12 @@ void TestEdit::connectSignals() {
 
 
 void TestEdit::openFile() {    
-  QWidget*     w = Core().stackedPage("FileManager");
+  QWidget*     w = Core().stackedPage(tr("FileManager"));
   FileManager* fm = qobject_cast<FileManager*>(w);
 
   if (fm) {
      fm->setClient(this);
-     Core().activatePage("FileManager");
+     Core().activatePage(tr("FileManager"));
      }
   }
 
@@ -111,7 +104,7 @@ QString TestEdit::pageName() {
   }
 
 
-void TestEdit::fileSelected(const QString &filePath) {
+void TestEdit::fileSelected(const QString& filePath) {
   loadFile(filePath);
   }
 
@@ -125,14 +118,14 @@ void TestEdit::loadFile(const QVariant& fileName) {
 
 
 void TestEdit::updateStyles() {
-    ValueManager vm;
-    Config       cfg;
+  ValueManager vm;
+  Config       cfg;
 
-    fn->setStyleSheet(QString("color: #%1; background: #%2;")
-                                   .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
-                                   .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16));
-    fn->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
-    ed->setStyleSheet(QString("background: #%2;")
-                                 .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
-    ed->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
+  fn->setStyleSheet(QString("color: #%1; background: #%2;")
+                           .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                           .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16));
+  fn->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
+  ed->setStyleSheet(QString("background: #%2;")
+                           .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
+  ed->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
   }

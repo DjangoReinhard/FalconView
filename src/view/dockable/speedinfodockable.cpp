@@ -59,6 +59,7 @@ void SpeedInfoDockable::initializeWidget(QWidget* /* w */) {
   slSpeed->setTickInterval(10);
   slSpeed->setTickPosition(QSlider::TicksRight);
 
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
   connectSignals();
   updateStyles();
   }

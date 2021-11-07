@@ -3,55 +3,58 @@
 #include <core.h>
 #include <QAction>
 #include <QDebug>
-//#include <QGridLayout>
 #include <QStackedLayout>
 
 
 MainView::MainView(QWidget* parent)
  : QWidget(parent) {
-//  setLayout(new QGridLayout);
+  setObjectName(tr("MainView"));
   setLayout(new QStackedLayout);
   layout()->setContentsMargins(0, 0, 0, 0);
-  qDebug() << "mainView has margins:" << layout()->contentsMargins();
   }
 
 
 QWidget* MainView::page(const QString& name) {
-  qDebug() << "request page \"" << name << "\"";
+  qDebug() << "MainView: requested page \"" << name << "\"";
 
   if (pages.contains(name)) return pages[name];
+  qDebug() << "MainView: sorry - no page with name >" << name << "<";
+
   return nullptr;
   }
 
 
 QWidget* MainView::activatePage(const QString& name) {
-  qDebug() << "activatePage \""  << name << "\"";
+  qDebug() << "MainView: activatePage \""  << name << "\"";
 
   if (pages.contains(name)) {
      QWidget*     w  = pages[name];
-//     QGridLayout* gl = qobject_cast<QGridLayout*>(layout());
      QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
      if (l) {
-        qDebug() << "ok, found widget. Gonna switch view";
+        qDebug() << "MainView: ok, found page [" << name << "] - gonna switch view";
         l->setCurrentWidget(w);
-//        w->setVisible(true);
-//        for (auto k = pages.keyBegin(); k != pages.keyEnd(); ++k) {
-//            if (!k->compare(name)) continue;
-//            pages[*k]->setVisible(false);
-//            }
-//        w->repaint();
 
         return w;
         }
+     qDebug() << "MainView: sorry - no page for name >" << name << "<";
      }
   return nullptr;
   }
 
 
-void MainView::addPage(const QString& name, DynWidget *page) {
-  pages.insert(name, page);
-//  QGridLayout* l = qobject_cast<QGridLayout*>(layout());
+void MainView::dump() const {
+  for (auto e = pages.constKeyValueBegin(); e != pages.constKeyValueEnd(); e++) {
+      qDebug() << "MainView holds page >>" << e->first;
+      }
+  }
+
+
+void MainView::addPage(DynWidget *page, const QString& name) {
+  QString pageName(name);
+
+  if (pageName.isEmpty()) pageName = page->objectName();
+  pages.insert(pageName, page);
   QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
   if (l) {
@@ -61,5 +64,5 @@ void MainView::addPage(const QString& name, DynWidget *page) {
        Core().activatePage(page->objectName());
        });
      }
-  activatePage(name);
+//  activatePage(pageName);
   }

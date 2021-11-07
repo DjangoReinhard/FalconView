@@ -118,7 +118,6 @@
    <addaction name="menuView"/>
    <addaction name="menuMain"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
     <string>open</string>

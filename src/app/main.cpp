@@ -1,4 +1,5 @@
 #include <mainwindow.h>
+#include <falconviewdb.h>
 #include <core.h>
 #include <QApplication>
 #include <QTranslator>
@@ -19,18 +20,19 @@ int main(int argc, char *argv[]) {
   QStringList args = QCoreApplication::arguments();
   QString iniFileName = getenv("INI_FILE_NAME");
 
+  //  qDebug() << "current locale settings - lang: " << curLocale.language()
+  //           << "\tcountry: " << curLocale.country()
+  //           << "\tname: " << curLocale.name();
+  //  qDebug() << "syslocale.name: " << sysLocale.name();
+  qDebug() << "locale messages found: " << ok;
 #ifdef USE_QT_V6xx
   // set default font for all gui elements. Needed with Qt > 6xx
   a.setFont(QFont("Noto Sans", 15));
 #endif
   if (args.length() > 1) iniFileName = args[1];
-  Core appCore(iniFileName, "FalconView");
+  FalconViewDB dbHelper("FalconView");
+  Core appCore(iniFileName, "FalconView", dbHelper);
 
-//  qDebug() << "current locale settings - lang: " << curLocale.language()
-//           << "\tcountry: " << curLocale.country()
-//           << "\tname: " << curLocale.name();
-//  qDebug() << "syslocale.name: " << sysLocale.name();
-  qDebug() << "locale messages found: " << ok;
   a.installTranslator(&translator);
   MainWindow w;
 

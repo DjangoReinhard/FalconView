@@ -10,8 +10,9 @@ class AbstractCondition : public QObject
   Q_OBJECT
 public:
   explicit AbstractCondition(ValueModel* model, const QVariant& value, QObject *parent = nullptr);
+  virtual ~AbstractCondition();
 
-  bool result() { return met; }
+  bool result() const { return met; }
 
 public slots:
   virtual bool eval() = 0;

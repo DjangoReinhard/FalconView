@@ -7,7 +7,6 @@
 #include <gcodehighlighter.h>
 #include <gcodeinfo.h>
 #include <positioncalculator.h>
-#include <statusreader.h>
 
 class PositionDockable;
 class ToolInfoDockable;
@@ -46,8 +45,8 @@ protected:
   void createMainWidgets(DBConnection& conn);
   void createConnections();
   void createValueModels();
-  void timerEvent(QTimerEvent* event) override;
   void closeEvent(QCloseEvent *event) override;
+  void keyPressEvent(QKeyEvent* event) override;
   void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
 
 protected slots:
@@ -57,9 +56,6 @@ private:
   Ui::MainWindow*     ui;
   PositionDockable*   pos;
   GCodeHighlighter*   gh;
-  QLabel*             bg01;
-  QLabel*             bg02;
-  QLabel*             bg03;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;
@@ -89,10 +85,6 @@ private:
   QToolBar*           powerTB;
   QToolBar*           switchTB;
   int                 line;
-  QBasicTimer         timer;
-  GCodeInfo           gcodeInfo;
-  PositionCalculator  positionCalculator;
-  StatusReader        statusReader;
   QList<Dockable*>    dockables;
   };
 #endif // MAINWINDOW_H

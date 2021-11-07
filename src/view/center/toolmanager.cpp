@@ -41,7 +41,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  , tsMsgBox(timeStamp())
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
-  setObjectName("ToolManager");
+  setObjectName(tr("ToolManager"));
   pxCat->setSourceModel(categoryTreeModel);
   categories->setModel(pxCat);
   categories->setTabKeyNavigation(false);
@@ -325,7 +325,8 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
 //  qDebug() << "\tmodifiers: "  << event->modifiers();
 
   switch (event->key()) {    
-    case KeyCodes::Enter: {
+    case Qt::Key_Return:
+    case Qt::Key_Enter: {
          qDebug() << "TM: enter (" << event->key() << ") has ts: " << event->timestamp();
          long now = timeStamp();
 
@@ -334,7 +335,7 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
             editTool();
             }
          } break;
-    case KeyCodes::Escape:
+    case Qt::Key_Escape:
          if (tEdit->isEnabled()) {  // abort editing
             //TODO: sync changes with start editing
             tEdit->setEnabled(false);
@@ -343,7 +344,7 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
             tools->setFocus();
             }
          break;
-    case KeyCodes::Space:
+    case Qt::Key_Space:
          if (categories->hasFocus()) {
             QItemSelection  is  = categories->selectionModel()->selection();
             QModelIndexList ml  = is.indexes();
@@ -353,18 +354,18 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
             else                             categories->setExpanded(cur, true);
             }
          break;
-    case KeyCodes::Insert: {
+    case Qt::Key_Insert: {
          if (categories->hasFocus()) createCategory();
          else if (tools->hasFocus()) createTool();
          } break;
-    case KeyCodes::Delete: {
+    case Qt::Key_Delete: {
          if (categories->hasFocus()) deleteCategory();
          else if (tools->hasFocus()) deleteTool();
          } break;
-    case KeyCodes::F6_Key: {
+    case Qt::Key_F6: {
          if (categories->hasFocus()) renameCategory();
          } break;
-    case KeyCodes::F10_Key:
+    case Qt::Key_F10:
          if (tEdit->isEnabled()) saveToolChanges();
          break;
     }

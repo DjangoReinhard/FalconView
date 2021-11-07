@@ -5,6 +5,8 @@
 #include <QVector3D>
 #include <core.h>
 #include <lcproperties.h>
+#include <dbconnection.h>
+#include <dbhelper.h>
 #include <mainwindow.h>
 #include <tooltable.h>
 #include <LCInter.h>
@@ -14,9 +16,9 @@
 #include <cassert>
 
 
-Core::Core(const QString& iniFileName, const QString& appName, const QString& group) {
+Core::Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group) {
   if (!kernel)
-     kernel = new Kernel(iniFileName, appName, group);
+     kernel = new Kernel(iniFileName, appName, group, dbAssist);
   }
 
 
@@ -29,6 +31,11 @@ void Core::parseGCFile(const QString &fileName) {
   }
 
 
+bool Core::isBackendActive() const {
+  return core()->statusReader.isActive();
+  }
+
+
 LcProperties& Core::lcProperties() {
   return core()->lcProps;
   }
@@ -36,6 +43,11 @@ LcProperties& Core::lcProperties() {
 
 OcctQtViewer* Core::view3D() {
   return core()->view3D;
+  }
+
+
+DBConnection* Core::databaseConnection() {
+  return core()->conn;
   }
 
 
@@ -53,14 +65,22 @@ void Core::showAllButCenter(bool visible) {
   core()->mainWindow->showAllButCenter(visible);
   }
 
+
 QWidget* Core::stackedPage(const QString& pageName) {
+  qDebug() << "Core: query for page: >" << pageName << "<";
+
   return core()->mainView->page(pageName);
   }
 
 
 void Core::activatePage(const QString& pageName) {
+  qDebug() << "Core: activate page with name >" << pageName << "<";
+
   auto page = core()->mainView->activatePage(pageName);
-  core()->mainWindow->setWindowTitle(core()->mainWindow->objectName() + " - " + page->objectName());
+  if (page)
+     core()->mainWindow->setWindowTitle(core()->mainWindow->objectName()
+                                     + " - "
+                                     +  page->objectName());
   }
 
 
@@ -81,30 +101,57 @@ const Kernel* Core::core() const {
   }
 
 
-Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString& group)
+Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString& group, DBHelper& dbAssist)
  : cfg(appName, group)
  , lcProps(iniFileName)
- , tt(lcProps.toolTableFileName())
+ , tt(lcProps.toolTableFileName()) // tooltable: file used by linuxcnc NOT the database table
  , lcIF(lcProps, tt)
  , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
- , view3D(new OcctQtViewer()) {
+ , view3D(new OcctQtViewer())
+ , conn(nullptr)
+ , statusReader(positionCalculator, gcodeInfo) {
   CanonIF ci(lcProps, tt);
   ValueManager().setValue("conePos", QVector3D());
 
-  lcProps.dump();
+//  lcProps.dump();
   if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
 
-  mAxis.dump();
-
+//  mAxis.dump();
   lcIF.setupToolTable();
+
+  // check database before anyone needs it
+  QString dbPath(cfg.value("database", "../FalconView/db/toolTable").toString());
+
+  assert(dbAssist.dbConnection());
+  if (!dbPath.contains('/')) dbPath = dbAssist.dbConnection()->dbName();
+  QFileInfo db(dbPath);
+
+  if (!db.exists() || db.size() < 1) {
+     conn = createDatabase(dbPath, dbAssist);
+     cfg.setValue("database", conn->dbName());
+     cfg.setValue("dbType", conn->dbType());
+     }
+  else conn = new DBConnection(dbPath);
+  if (!conn->connect()) throw std::system_error(-2, std::system_category(), "no database");
   ci.setTraverseColor(QColor(Qt::cyan));
   ci.setFeedColor(QColor(Qt::white));
   ci.setLimitsColor(QColor(150, 255, 150));
-  connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);
+  connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);  
+
+  if (statusReader.isActive()) timer.start(40, this);
   }
 
 
 Kernel::~Kernel() {
+  }
+
+
+DBConnection* Kernel::createDatabase(const QString &path, DBHelper &dbAssist) {
+  DBConnection* rv = dbAssist.createDatabase(path);
+
+  if (rv) dbAssist.createSampleData(*rv);
+
+  return rv;
   }
 
 
@@ -126,5 +173,10 @@ void Kernel::parseGCode(QFile &file) {
   qDebug() << "parsing of " << file.fileName() << " took: " << delta << "ms";
   }
 
+
+void Kernel::timerEvent(QTimerEvent *e) {
+  if (e->timerId() == timer.timerId()) statusReader.update();
+  else QObject::timerEvent(e);
+  }
 
 Kernel* Core::kernel = nullptr;

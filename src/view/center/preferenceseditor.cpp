@@ -1,4 +1,4 @@
-#include <settingseditor.h>
+#include <preferenceseditor.h>
 #include <configacc.h>
 #include <QLabel>
 #include <QColor>
@@ -9,19 +9,19 @@
 #include <QDebug>
 
 
-SettingsEditor::SettingsEditor(const QString& fileName, QWidget* parent)
+PreferencesEditor::PreferencesEditor(const QString& fileName, QWidget* parent)
  : DynWidget(fileName, parent) {
-  setObjectName("SettingsWidget");
+  setObjectName(tr("SettingsEditor"));
   initializeWidget();
   }
 
 
-SettingsEditor::~SettingsEditor() {
+PreferencesEditor::~PreferencesEditor() {
   //delete labels;    
   }
 
 
-void SettingsEditor::initializeWidget() {
+void PreferencesEditor::initializeWidget() {
   labels      = new QLabel*[Config().numGuiElements()];
   bgButtons   = new QPushButton*[Config().numGuiElements()];
   fgButtons   = new QPushButton*[Config().numGuiElements()];
@@ -36,21 +36,21 @@ void SettingsEditor::initializeWidget() {
   }
 
 
-void SettingsEditor::connectSignals() {
+void PreferencesEditor::connectSignals() {
   for (int i=0; i < Config().numGuiElements(); ++i) {
-      connect(bgButtons[i],   &QPushButton::pressed, this, [=](){ changeBackgroundColor(i); });
-      connect(fgButtons[i],   &QPushButton::pressed, this, [=](){ changeForegroundColor(i); });
+      connect(bgButtons[i], &QPushButton::pressed, this, [=](){ changeBackgroundColor(i); });
+      connect(fgButtons[i], &QPushButton::pressed, this, [=](){ changeForegroundColor(i); });
       if (fontButtons[i]) connect(fontButtons[i], &QPushButton::pressed, this, [=](){ changeFont(i); });
       }
   }
 
 
-void SettingsEditor::updateStyles() {
+void PreferencesEditor::updateStyles() {
   setupLabels();
   }
 
 
-void SettingsEditor::setupLabels() {
+void PreferencesEditor::setupLabels() {
   ValueManager vm;
   Config cfg;
   QString keyBg, keyFg, keyF;
@@ -97,7 +97,7 @@ void SettingsEditor::setupLabels() {
   }
 
 
-void SettingsEditor::changeBackgroundColor(int i) {
+void PreferencesEditor::changeBackgroundColor(int i) {
   const QColor oc    = Config().getBackground(static_cast<Config::GuiElem>(i));
   const QColor color = QColorDialog::getColor(oc
                                             , this
@@ -108,7 +108,7 @@ void SettingsEditor::changeBackgroundColor(int i) {
   }
 
 
-void SettingsEditor::changeForegroundColor(int i) {
+void PreferencesEditor::changeForegroundColor(int i) {
   const QColor oc    = Config().getForeground(static_cast<Config::GuiElem>(i));
   const QColor color = QColorDialog::getColor(oc
                                             , this
@@ -118,7 +118,7 @@ void SettingsEditor::changeForegroundColor(int i) {
   }
 
 
-void SettingsEditor::changeFont(int i) {
+void PreferencesEditor::changeFont(int i) {
   bool  ok;
   QFont of   = Config().getFont(static_cast<Config::GuiElem>(i));
   QFont font = QFontDialog::getFont(&ok

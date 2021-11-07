@@ -14,6 +14,8 @@ class StatusReader : public QObject
 public:
   StatusReader(PositionCalculator& pc, GCodeInfo& gi);
 
+  bool isActive() const;
+
 public slots:
   void update();
 

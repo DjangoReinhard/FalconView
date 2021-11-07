@@ -31,6 +31,11 @@ StatusReader::StatusReader(PositionCalculator& posCalc, GCodeInfo& gcodeInfo)
   }
 
 
+bool StatusReader::isActive() const {
+  return cStatus && cStatus->valid();
+  }
+
+
 void StatusReader::createModels() {
   vm.setValue("taskMode",      0);
   vm.setValue("taskState",     0);

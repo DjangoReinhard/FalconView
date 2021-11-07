@@ -16,14 +16,8 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="frameShape">
-   <enum>QFrame::StyledPanel</enum>
-  </property>
-  <property name="frameShadow">
-   <enum>QFrame::Sunken</enum>
-  </property>
-  <property name="lineWidth">
-   <number>2</number>
+  <property name="lineWidth" stdset="0">
+   <number>3</number>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0" columnstretch="0,0">
    <property name="leftMargin">
@@ -48,6 +42,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -75,6 +72,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
    <item row="10" column="1">
@@ -84,6 +84,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -111,6 +114,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
    <item row="2" column="1">
@@ -120,6 +126,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -179,6 +188,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
    <item row="9" column="0">
@@ -221,6 +233,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
    <item row="6" column="0">
@@ -247,6 +262,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
    <item row="3" column="1">
@@ -256,6 +274,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -306,6 +327,25 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DynWidget</class>
+   <extends>QWidget</extends>
+   <header>dynwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>edX</tabstop>
+  <tabstop>edY</tabstop>
+  <tabstop>edZ</tabstop>
+  <tabstop>edA</tabstop>
+  <tabstop>edB</tabstop>
+  <tabstop>edC</tabstop>
+  <tabstop>edU</tabstop>
+  <tabstop>edV</tabstop>
+  <tabstop>edW</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

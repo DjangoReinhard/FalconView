@@ -24,7 +24,7 @@
 PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent)
  : TestEdit(fileName, parent)
  , view(view) {
-  setObjectName("PreViewEditor");
+  setObjectName(tr("PreViewEditor"));
   spV = new QSplitter(Qt::Vertical);
   view->setMinimumSize(400, 400);
   QWidget* w = layout()->itemAt(0)->widget();
@@ -56,11 +56,11 @@ void PreViewEditor::showEvent(QShowEvent* e) {
 
 
 void PreViewEditor::genPreView(const QVariant& fileName) {
-  qDebug() << "PreViewEditor::loadFile" << fileName;
+  qDebug() << "PreViewEditor::genPreView" << fileName;
   CanonIF().toolPath().clear();
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
   Core().parseGCFile(fileName.toString());
   view->showPath(CanonIF().toolPath());
-  Core().activatePage("PreviewEditor");
+  Core().activatePage(tr("PreViewEditor"));
   }

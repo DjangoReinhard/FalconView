@@ -71,6 +71,7 @@ PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, 
  , axisMask(am)
  , ledOn(ledOnStyle)
  , ledOff(ledOffStyle) {
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
   initializeWidget(widget());
   }
 

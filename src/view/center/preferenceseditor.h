@@ -1,16 +1,16 @@
-#ifndef SETTINGSEDITOR_H
-#define SETTINGSEDITOR_H
+#ifndef PREFERENCESEDITOR_H
+#define PREFERENCESEDITOR_H
 #include <dynwidget.h>
 class QLabel;
 class QPushButton;
 
 
-class SettingsEditor : public DynWidget
+class PreferencesEditor : public DynWidget
 {
   Q_OBJECT
 public:
-  SettingsEditor(const QString& uiFile, QWidget* parent = nullptr);
- ~SettingsEditor();
+  PreferencesEditor(const QString& uiFile, QWidget* parent = nullptr);
+ ~PreferencesEditor();
 
   virtual void connectSignals();
   virtual void updateStyles();
@@ -28,4 +28,4 @@ private:
   QPushButton** fgButtons;
   QPushButton** fontButtons;
   };
-#endif // SETTINGSEDITOR_H
+#endif // PREFERENCESEDITOR_H

@@ -1,0 +1,285 @@
+#include <falconviewdb.h>
+#include <dbconnection.h>
+#include <QSqlQuery>
+#include <QSqlDatabase>
+#include <QDomDocument>
+#include <QVariant>
+#include <QtSql>
+#include <QDebug>
+
+
+FalconViewDB::FalconViewDB(const QString& name) {
+  conn = new DBConnection(name, "QSQLITE");
+  assert(conn->connect());
+  }
+
+
+DBConnection* FalconViewDB::createDatabase(const QString&) {
+  QSqlQuery sql;
+
+  sql.exec("CREATE TABLE \"Category\" (id      INT NOT NULL"
+                                    ", parent  INT NOT NULL"
+                                    ", name    VARCHAR(50) NOT NULL"
+                                    ", PRIMARY KEY(id) )");
+  sql.exec("CREATE TABLE \"Tools\" (id         INT PRIMARY KEY"
+                                 ", num        INT NOT NULL"                // 1 Index
+                                 ", lenTool    NUMERIC(7,3) NOT NULL "      // 2
+                                 ", name       VARCHAR(50) NOT NULL "       // 3 Name
+                                 ", type       INT NOT NULL "               // 4 ToolProfile
+                                 ", flutes     INT NOT NULL "               // 5 Flutes
+                                 ", radCut     NUMERIC(7,3) "               // 6 RadialDepthOfCut
+                                 ", lenCut     NUMERIC(7,3) "               // 7 AxialDepthOfCut
+                                 ", angCut     NUMERIC(7,3) "               // 8 VeeAngle
+                                 ", lenFlute   NUMERIC(7,3) "               // 9 FluteLength
+                                 ", diaFlute   NUMERIC(7,3) "               // 10 Diameter
+                                 ", diaColl    NUMERIC(7,3) "               // 11
+                                 ", lenColl    NUMERIC(7,3) "               // 12
+                                 ", diaShank   NUMERIC(7,3) "               // 13 ShankDiameter
+                                 ", lenFree    NUMERIC(7,3) "               // 14 Length
+                                 ", angSlope   NUMERIC(7,3) "               // 15
+                                 ", diaTip     NUMERIC(7,3) "               // 16
+                                 ", partCode   VARCHAR(50) "                // 17 -
+                                 ", material   VARCHAR(20) "                // 18
+                                 ", coating    VARCHAR(20) "                // 19 -
+                                 ", load       NUMERIC(7,3) "               // 20 ToothLoad
+                                 ", angHelix   NUMERIC(7,3) "               // 21 HelixAngle
+                                 ", angMaxRamp NUMERIC(7,3) "               // 22 MaxRampAngle
+                                 ", comment    VARCHAR(254) "               // 23 -
+                                 " )");
+  sql.exec("CREATE TABLE \"SysEvents\" (id   INT NOT NULL"
+                                     ", when INT NOT NULL"
+                                     ", type INT NOT NULL"
+                                     ", what VARCHAR(254) NOT NULL"
+                                     ", PRIMARY KEY(id) )");
+  return conn;
+  }
+
+
+QString FalconViewDB::xml2Sql(const QString& name) const {
+  if (!name.compare("ToolProfile"))           return "type";
+  else if (!name.compare("Index"))            return "num";
+  else if (!name.compare("Name"))             return "name";
+  else if (!name.compare("toolLength"))       return "lenTool";
+  else if (!name.compare("colletDiameter"))   return "diaColl";
+  else if (!name.compare("colletLength"))     return "lenColl";
+  else if (!name.compare("ShankDiameter"))    return "diaShank";
+  else if (!name.compare("Length"))           return "lenFree";
+  else if (!name.compare("slopeAngle"))       return "angSlope";
+  else if (!name.compare("Flutes"))           return "flutes";
+  else if (!name.compare("Diameter"))         return "diaFlute";
+  else if (!name.compare("FluteLength"))      return "lenFlute";
+  else if (!name.compare("RadialDepthOfCut")) return "radCut";
+  else if (!name.compare("AxialDepthOfCut"))  return "lenCut";
+  else if (!name.compare("VeeAngle"))         return "angCut";
+  else if (!name.compare("tipDiameter"))      return "diaTip";
+  else if (!name.compare("ToothLoad"))        return "load";
+  else if (!name.compare("HelixAngle"))       return "angHelix";
+  else if (!name.compare("MaxRampAngle"))     return "angMaxRamp";
+  else if (!name.compare("material"))         return "material";
+  else if (!name.compare("coating"))          return "coating";
+  else if (!name.compare("partCode"))         return "partCode";
+  else if (!name.compare("ToothLoad"))        return "load";
+  else if (!name.compare("HelixAngle"))       return "angHelix";
+  else if (!name.compare("MaxRampAngle"))     return "angMaxRamp";
+  return QString();
+  }
+
+
+QVariant::Type FalconViewDB::colType4(const QString &columnName) const {
+  if (!columnName.compare("type"))            return static_cast<QVariant::Type>(QMetaType::Int);
+  else if (!columnName.compare("id"))         return static_cast<QVariant::Type>(QMetaType::Int);
+  else if (!columnName.compare("num"))        return static_cast<QVariant::Type>(QMetaType::Int);
+  else if (!columnName.compare("lenTool"))    return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("diaColl"))    return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("lenColl"))    return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("diaShank"))   return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("lenTool"))    return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("lenFree"))    return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("angSlope"))   return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("flutes"))     return static_cast<QVariant::Type>(QMetaType::Int);
+  else if (!columnName.compare("diaFlute"))   return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("lenFlute"))   return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("radCut"))     return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("lenCut"))     return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("angCut"))     return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("diaTip"))     return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("load"))       return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("toolthLoad")) return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("angHelix"))   return static_cast<QVariant::Type>(QMetaType::Double);
+  else if (!columnName.compare("angMaxRamp")) return static_cast<QVariant::Type>(QMetaType::Double);
+  qDebug() << "unsupported/unknown field" << columnName << " default to QString";
+
+  return static_cast<QVariant::Type>(QMetaType::QString);
+  }
+
+
+void FalconViewDB::createCategory(QSqlTableModel& model, QSqlField &fId, QSqlField &fProfile, QSqlField &fName, const QString &category) {
+  QSqlRecord rec;
+  bool ok = true;
+
+  if (category.indexOf(" - ") > 0) {
+     QStringList parts = category.split(QRegularExpression("\\s+-\\s+"));
+
+     fId.setValue(toolCategories.size() + 1);
+     if (toolCategories.contains(parts[1])) {
+        fProfile.setValue(toolCategories[parts[1]]);
+        }
+     else {
+        fProfile.setValue(toolCategories.size() + 1);
+        fName.setValue(parts[1]);
+        rec.append(fId);
+        rec.append(fProfile);
+        rec.append(fName);
+        ok = model.insertRecord(-1, rec);
+        if (!ok) {
+           QSqlError err = QSqlDatabase::database().driver()->lastError();
+
+           qDebug() << "failed with error: " << err.text();
+           qDebug() << "         db-error: " << err.databaseText();
+           qDebug() << "     driver-error: " << err.driverText();
+
+           return;
+           }
+        toolCategories[parts[1]] = fId.value().toInt();
+        rec.clear();
+        fProfile.setValue(toolCategories[parts[1]]);
+        fId.setValue(toolCategories.size() + 1);
+        }
+     fName.setValue(parts[0]);
+     }
+  else {
+     fId.setValue(toolCategories.size() + 1);
+     fProfile.setValue(fId.value());
+     fName.setValue(category);
+  }
+  rec.append(fId);
+  rec.append(fProfile);
+  rec.append(fName);
+  ok = model.insertRecord(-1, rec);
+
+  if (!ok) {
+     QSqlError err = QSqlDatabase::database().driver()->lastError();
+
+     qDebug() << "create category failed with error: " << err.text();
+     qDebug() << "                         db-error: " << err.databaseText();
+     qDebug() << "                     driver-error: " << err.driverText();
+
+     return;
+     }
+  }
+
+
+void FalconViewDB::createSampleData(DBConnection&) {
+    QDomDocument doc;
+    QFile file(":/res/Tools_backup.xml");
+    QSqlTableModel tmTool;
+    QSqlTableModel tmCat;
+
+    tmTool.setTable("Tools");
+    tmCat.setTable("Category");
+    if (!file.open(QIODevice::ReadOnly)) return;
+
+    doc.setContent(&file);
+    file.close();
+
+    QDomNodeList tools = doc.elementsByTagName("ToolDefinition");
+    QSqlRecord recCat;
+    QSqlRecord recTool;
+
+    for (int i=0; i < tools.count(); ++i) {
+        QDomNode tool = tools.item(i);
+
+        qDebug() << "\n";
+        qDebug() << "check entry #" << i;
+        if (tool.isElement()) {
+           QDomElement e = tool.toElement();
+
+           for (QDomNode n = e.firstChild(); !n.isNull(); n = n.nextSibling()) {
+               if (n.isElement()) {
+                  QDomElement se = n.toElement();
+                  QString colName = xml2Sql(se.tagName());
+
+
+                  if (!colName.size()) continue;
+                  QSqlField fld(colName, colType4(colName)); // rec.field(colName));
+
+                  qDebug() << "\tcolumn field: " << fld.name()
+                           << "\t" << fld.type() << "\t" << (fld.isReadOnly() ? "RO" : "RW")
+                           << "\twas: " << se.tagName();
+                  fld.setReadOnly(false);
+                  if (!colName.compare("diaColl")) {
+                      fld.setValue(QVariant(57.0));
+                      recTool.append(fld);
+                      continue;
+                      }
+                  if (!colName.compare("lenColl")) {
+                     fld.setValue(QVariant(70.5));
+                     recTool.append(fld);
+                     continue;
+                     }
+                  for (QDomNode n1 = se.firstChild(); !n1.isNull(); n1 = n1.nextSibling()) {
+
+                      if (n1.isElement()) qDebug() << "\tElement";
+                      if (n1.isEntity())  qDebug() << "\tEntity";
+                      if (n1.isAttr())    qDebug() << "\tAttribute";
+                      if (n1.isText()) {
+                         const QString& rawData = n1.toText().data();
+                         QVariant value = rawData;
+
+                         if (fld.type() == QVariant::Int)         value = rawData.toInt();
+                         else if (fld.type() == QVariant::Double) value = rawData.toDouble();
+                         qDebug() << "\tcolumn value: " << value;
+
+                         if (!colName.compare("type")) {
+                            if (toolCategories.contains(rawData)) {
+                               value = toolCategories[rawData];
+                               }
+                            else {
+                               QSqlField fId("id", static_cast<QVariant::Type>(QMetaType::Int));
+                               QSqlField fTP("parent", static_cast<QVariant::Type>(QMetaType::Int));
+                               QSqlField fName("name", static_cast<QVariant::Type>(QMetaType::QString));
+
+                               createCategory(tmCat, fId, fTP, fName, rawData);
+                               toolCategories[fName.value().toString()] = fId.value().toInt();
+                               value = fId.value();
+                               }
+                            }
+                         fld.setValue(value);
+                         }
+                      recTool.append(fld);
+                      }
+                  }
+               if (n.isEntity())  qDebug() << "Entity";
+               if (n.isAttr())    qDebug() << "Attribute";
+               if (n.isText())    qDebug() << "Text";
+               }
+           }
+        if (tool.isEntity())  qDebug() << "Entity";
+        if (tool.isAttr())    qDebug() << "Attribute";
+        if (tool.isText())    qDebug() << "Text";
+        QSqlField fld = recTool.field("lenTool"); //, colType4("lenTool"));
+        double len = recTool.field("lenFree").value().toDouble()
+                   + recTool.field("lenColl").value().toDouble();
+
+        qDebug() << "lenTool: " << fld.value() << "\t" << (fld.isReadOnly() ? "RO" : "RW") << " nv: " << len;
+
+        recTool.setValue("lenTool", len);
+        fld = QSqlField("id", colType4("id"));
+        fld.setValue(tmTool.rowCount() + 1);
+        recTool.append(fld);
+//        dumpFields(recTool);
+        bool ok = tmTool.insertRecord(-1, recTool);
+
+        if (!ok) {
+           QSqlError err = QSqlDatabase::database().driver()->lastError();
+
+           qDebug() << "tool creation failed with error: " << err.text();
+           qDebug() << "                       db-error: " << err.databaseText();
+           qDebug() << "                   driver-error: " << err.driverText();
+
+           return;
+           }
+        recTool.clear();
+        }
+
+  }
