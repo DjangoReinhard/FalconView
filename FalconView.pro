@@ -58,6 +58,7 @@ SOURCES += \
     src/rs274/linecodes.cpp \
     src/rs274/stupidtoolchangerif.cpp \
     src/util/abstractcondition.cpp \
+    src/util/ally3d.cpp \
     src/util/and3condition.cpp \
     src/util/and4condition.cpp \
     src/util/andcondition.cpp \
@@ -65,8 +66,12 @@ SOURCES += \
     src/util/equalcondition.cpp \
     src/util/flowlayout.cpp \
     src/util/gcodehighlighter.cpp \
+    src/util/Geom_HelixData.cpp \
     src/util/graphicfactory.cpp \
     src/util/greatercondition.cpp \
+    src/util/HelixCurveAdaptor_CylinderEvaluator.cpp \
+    src/util/HelixCurveAdaptor.cpp \
+    src/util/HHelixCurveAdaptor.cpp \
     src/util/labeladapter.cpp \
     src/util/notcondition.cpp \
     src/util/orcondition.cpp \
@@ -127,6 +132,7 @@ HEADERS += \
     src/rs274/linecodes.h \
     src/rs274/stupidtoolchangerif.h \
     src/util/abstractcondition.h \
+    src/util/ally3d.h \
     src/util/and3condition.h \
     src/util/and4condition.h \
     src/util/andcondition.h \
@@ -135,8 +141,13 @@ HEADERS += \
     src/util/filemanagerclient.h \
     src/util/flowlayout.h \
     src/util/gcodehighlighter.h \
+    src/util/Geom_HelixData.h \
     src/util/graphicfactory.h \
     src/util/greatercondition.h \
+    src/util/HelixCurveAdaptor_CylinderEvaluator.h \
+    src/util/HelixCurveAdaptor_p.h \
+    src/util/HelixCurveAdaptor.h \
+    src/util/HHelixCurveAdaptor.h \
     src/util/labeladapter.h \
     src/util/LCInter.h \
     src/util/notcondition.h \

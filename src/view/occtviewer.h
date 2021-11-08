@@ -33,6 +33,7 @@
 #include <V3d_View.hxx>
 
 class AIS_ViewCube;
+class Ally3D;
 
 
 //! OCCT 3D View.
@@ -41,41 +42,36 @@ class OcctQtViewer : public QOpenGLWidget, public AIS_ViewController
   Q_OBJECT
 
 public:
-  OcctQtViewer(QWidget* theParent = nullptr);
+  OcctQtViewer(bool verbose = false, QWidget* theParent = nullptr);
   virtual ~OcctQtViewer();
-
-  const Handle(V3d_Viewer)&             viewer() const  { return myViewer; }
-  const Handle(V3d_View)&               view() const    { return myView; }
-  const Handle(AIS_InteractiveContext)& context() const { return myContext; }
-  const Handle(AIS_ViewCube)&           cube() const    { return myViewCube; }
-  Handle(AIS_Shape)                     cone()          { return myCone; }
 
   const QString& getGlInfo() const                { return myGlInfo; }
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
   virtual QSize  sizeHint()        const override { return QSize(720, 480); }
-  void showPath(const QList<Handle(AIS_InteractiveObject)>& path);
   void fitAll();
-  void moveCone(double x, double y, double z);
 
 protected:
-  void showLimits();
-
   // OpenGL events
   virtual void initializeGL() override;
   virtual void paintGL() override;  
 
-protected:     // user input events
-  virtual void closeEvent       (QCloseEvent*  theEvent) override;
-  virtual void keyPressEvent    (QKeyEvent*    theEvent) override;
-  virtual void mousePressEvent  (QMouseEvent*  theEvent) override;
-  virtual void mouseReleaseEvent(QMouseEvent*  theEvent) override;
-  virtual void mouseMoveEvent   (QMouseEvent*  theEvent) override;
-  virtual void wheelEvent       (QWheelEvent*  theEvent) override;
+  // user input events
+  virtual void closeEvent(QCloseEvent* e) override;
+  virtual void keyPressEvent(QKeyEvent* e) override;
+  virtual void mousePressEvent(QMouseEvent* e) override;
+  virtual void mouseReleaseEvent(QMouseEvent* e) override;
+  virtual void mouseMoveEvent(QMouseEvent* e) override;
+  virtual void wheelEvent(QWheelEvent* e) override;
+
+  const Handle(V3d_Viewer)&             viewer() const  { return myViewer; }
+  const Handle(V3d_View)&               view() const    { return myView; }
+  const Handle(AIS_InteractiveContext)& context() const { return myContext; }
+  Handle(AIS_ViewCube)                  cube() const    { return myViewCube; }
+  Handle(AIS_Shape)                     cone()          { return myCone; }
 
 private:
-  void dumpGlInfo (bool theIsBasic);
-  //! Request widget paintGL() event.
-  void updateView();
+  void dumpGlInfo(bool theIsBasic);
+  void updateView();            //! Request widget paintGL() event.
 
   virtual void handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx
                               , const Handle(V3d_View)& theView) override;
@@ -84,11 +80,12 @@ private:
   Handle(V3d_Viewer)             myViewer;
   Handle(V3d_View)               myView;
   Handle(AIS_InteractiveContext) myContext;
-  Handle(AIS_ViewCube)           myViewCube;
   Handle(AIS_Shape)              myCone;
+  Handle(AIS_ViewCube)           myViewCube;
   Bnd_Box                        myBounds;
-
-  QString myGlInfo;
-  bool    myIsCoreProfile;
+  QString                        myGlInfo;
+  bool                           myIsCoreProfile;
+  bool                           verbose;
+  friend class                   Ally3D;
   };
 #endif // _OcctQtViewer_HeaderFile

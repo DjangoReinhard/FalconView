@@ -23,7 +23,7 @@
 
 PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent)
  : TestEdit(fileName, parent)
- , view(view) {
+ , view3D(view) {
   setObjectName(tr("PreViewEditor"));
   spV = new QSplitter(Qt::Vertical);
   view->setMinimumSize(400, 400);
@@ -49,8 +49,8 @@ void PreViewEditor::connectSignals() {
 
 void PreViewEditor::showEvent(QShowEvent* e) {
   if (e->type() == QEvent::Show) {
-     view->setFocus();
-     view->fitAll();
+     view3D->setFocus();
+     view3D->fitAll();
      }
   }
 
@@ -61,6 +61,6 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
   Core().parseGCFile(fileName.toString());
-  view->showPath(CanonIF().toolPath());
+//  view3D->showPath(CanonIF().toolPath());
   Core().activatePage(tr("PreViewEditor"));
   }

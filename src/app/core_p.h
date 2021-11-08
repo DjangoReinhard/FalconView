@@ -6,6 +6,7 @@
 #include <gcodeinfo.h>
 #include <statusreader.h>
 #include <axismask.h>
+#include <ally3d.h>
 #include <tooltable.h>
 #include <LCInter.h>
 #include <mainview.h>
@@ -41,6 +42,7 @@ private:
   MainView*           mainView;
   MainWindow*         mainWindow;
   DBConnection*       conn;
+  Ally3D              ally3D;
   GCodeInfo           gcodeInfo;
   PositionCalculator  positionCalculator;
   StatusReader        statusReader;

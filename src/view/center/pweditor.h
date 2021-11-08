@@ -24,6 +24,6 @@ protected:
 
 private:
   QSplitter*        spV;
-  OcctQtViewer*     view;
+  OcctQtViewer*     view3D;
   };
 #endif // PWEDITOR_H

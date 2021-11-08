@@ -25,7 +25,6 @@ public:
 
   CANON_UNITS       machineUnits() const            { return instance->machineUnits; }
   double            lengthUnits() const             { return instance->lengthUnits(); }
-//  int               axisMask() const                { return instance->axisMask(); }
   double            feedRate() const                { return instance->canon.linearFeedRate; }
   double            traverseRate() const            { return instance->iTraverseRate; }
   bool              isFeedOverrideEnabled() const   { return instance->feedOverride; }
@@ -53,6 +52,7 @@ public:
   Quantity_Color    traverseColor() const           { return instance->colTraverse; }
   Quantity_Color    feedColor() const               { return instance->colFeed; }
   Quantity_Color    limitColor() const              { return instance->colLimits; }
+  Quantity_Color    workPieceColor() const          { return instance->colWorkPiece; }
   CANON_TOOL_TABLE  toolEntry(int ttIndex)          { return instance->toolEntry(ttIndex); }
   CANON_POSITION    g5xOffset(int i=0) const        { return instance->g5xOffset(i); }
   CANON_POSITION    g92Offset() const               { return instance->canon.g92Offset; }
@@ -86,6 +86,7 @@ public:
   void setTraverseColor(const QColor& c)        { instance->setTraverseColor(c); }
   void setFeedColor(const QColor& c)            { instance->setFeedColor(c); }
   void setLimitsColor(const QColor& c)          { instance->setLimitsColor(c); }
+  void setWorkPieceColor(const QColor& c)       { instance->setWorkPieceColor(c); }
   void setToolOffset(EmcPose offset)            { instance->setToolOffset(offset); }
 
 private:
@@ -96,7 +97,6 @@ private:
   private:
     IFSettings(LcProperties& lcProperties, ToolTable& toolTable);
 
-//    int               axisMask() const;
     double            lengthUnits() const;
     bool              isSpeedOverrideEnabled(int) const  {
       //TODO !
@@ -113,6 +113,7 @@ private:
     void setTraverseColor(const QColor& c);
     void setFeedColor(const QColor& c);
     void setLimitsColor(const QColor& c);
+    void setWorkPieceColor(const QColor& c);
     void setEndPoint(const CANON_POSITION& p);
     void setG5xOffset(int i, const CANON_POSITION& p);
     void setMotionMode(CANON_MOTION_MODE mode, double tolerance);
@@ -128,7 +129,6 @@ private:
     CanonConfig_t                        canon;
     CANON_POSITION                       g5xOffsets[9];
     CANON_UNITS                          machineUnits;
-//    AxisMask                             axisPresent;
     StupidToolChangerIF                  changer;
     GraphicFactory                       gf;
     QList<Handle(AIS_InteractiveObject)> toolPath;
@@ -143,6 +143,7 @@ private:
     Quantity_Color                       colFeed;
     Quantity_Color                       colTraverse;
     Quantity_Color                       colLimits;
+    Quantity_Color                       colWorkPiece;
     };
   static IFSettings* instance;
   };

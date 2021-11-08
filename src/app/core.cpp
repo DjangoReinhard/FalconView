@@ -27,6 +27,7 @@ void Core::parseGCFile(const QString &fileName) {
 
   if (gcFile.exists()) {
      core()->parseGCode(gcFile);
+     core()->ally3D.showPath(CanonIF().toolPath());
      }
   }
 
@@ -109,6 +110,7 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
  , view3D(new OcctQtViewer())
  , conn(nullptr)
+ , ally3D(view3D)
  , statusReader(positionCalculator, gcodeInfo) {
   CanonIF ci(lcProps, tt);
   ValueManager().setValue("conePos", QVector3D());
@@ -158,7 +160,7 @@ DBConnection* Kernel::createDatabase(const QString &path, DBHelper &dbAssist) {
 void Kernel::updateView(const QVariant &v) {
   QVector3D p = v.value<QVector3D>();
 
-  view3D->moveCone(p.x(), p.y(), p.z());
+  ally3D.moveCone(p.x(), p.y(), p.z());
   }
 
 
