@@ -46,6 +46,7 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
   files->verticalHeader()->hide();
   files->setEditTriggers(QAbstractItemView::NoEditTriggers);
   files->setSelectionMode(QAbstractItemView::SingleSelection);
+  files->setAlternatingRowColors(true);
   files->setTabKeyNavigation(false);
   files->setSortingEnabled(true);
   files->horizontalHeader()->setStretchLastSection(true);

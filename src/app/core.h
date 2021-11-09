@@ -31,6 +31,7 @@ public:
   void          setMainWindow(MainWindow* mw);
   OcctQtViewer* view3D();
   ToolTable&    toolTable();
+  ToolTable*    toolTableModel();
   LcProperties& lcProperties();
 
 private:

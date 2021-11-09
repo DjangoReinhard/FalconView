@@ -315,21 +315,21 @@ static void to_rotated(PM_CARTESIAN &vec) {
 static void rotate_and_offset(CANON_POSITION & pos) {
   CanonIF ci;
 
-  pos += ci.g92Offset();
+//  pos += ci.g92Offset();
   rotate(pos.x, pos.y, ci.xyRotation());
-  pos += ci.g5xOffset();
-  pos += ci.toolOffset();
+//  pos += ci.g5xOffset();
+//  pos += ci.toolOffset();
   }
 
 static void rotate_and_offset_xyz(PM_CARTESIAN & xyz) {
   CanonIF ci;
 
-  xyz += ci.g92Offset().xyz();
+//  xyz += ci.g92Offset().xyz();
   rotate(xyz.x, xyz.y, ci.xyRotation());
-  xyz += ci.g5xOffset().xyz();
-  xyz += PM_CARTESIAN(ci.toolOffset().x
-                    , ci.toolOffset().y
-                    , ci.toolOffset().z);
+//  xyz += ci.g5xOffset().xyz();
+//  xyz += PM_CARTESIAN(ci.toolOffset().x
+//                    , ci.toolOffset().y
+//                    , ci.toolOffset().z);
   }
 
 static double chord_deviation(double sx, double sy, double ex, double ey, double cx, double cy, int rotation, double& mx, double& my) {
@@ -1100,10 +1100,10 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
                            .arg(center.Z(), 0, 'f', 3)
                            .toStdString().c_str();
         Handle(AIS_Shape) shape;
-        gp_Dir axis(0, 0, -1);
+        gp_Dir axis(0, 0, ep.Z() > sp.Z() ? 1 : -1);
 
         if (rotation > 0) shape = ci.graphicFactory().createHelix(sp, ep, center, axis, true);
-        else              shape = ci.graphicFactory().createHelix(ep, sp, center, axis, false);
+        else              shape = ci.graphicFactory().createHelix(sp, ep, center, axis, false);
         shape->SetColor(ci.feedColor());
         ci.toolPath().append(shape);
         ci.setEndPoint(ep.X(), ep.Y(), ep.Z(), a, b, c, u, v, w);
@@ -1191,18 +1191,18 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
      gp_Pnt sp(lp.x, lp.y, lp.z);
      gp_Pnt ep     = to_ext_len(gp_Pnt(endpt.x, endpt.y, endpt.z));
      // Convert internal center and normal to external units
-     gp_Pnt center = to_ext_len(gp_Pnt(center_cart.x, center_cart.y, center_cart.z));
+     gp_Pnt center = to_ext_len(gp_Pnt(center_cart.x, center_cart.y, fmin(lp.z, endpt.z)));
      gp_Pnt normal = to_ext_len(gp_Pnt(normal_cart.x, normal_cart.y, normal_cart.z));
      gp_Dir axis(normal.X(), normal.Y(), normal.Z());
 
      if (rotation > 0) shape = ci.graphicFactory().createHelix(sp, ep, center, axis, true);
-     else              shape = ci.graphicFactory().createHelix(ep, sp, center, axis, false);
+     else              shape = ci.graphicFactory().createHelix(sp, ep, center, axis, false);
 
-     qDebug() << "TODO: have to create 3D-arc from"
-              << "start: " << lp.x << "/" << lp.y << "/" << lp.z
-              << "\tend: " << endpt.x << "/" << endpt.y << "/" << endpt.z
-              << "\tcenter: " << center_cart.x << "/" << center_cart.y << "/" << center_cart.z
-              << "\tnormal: " << normal_cart.x << "/" << normal_cart.y << "/" << normal_cart.z;
+     qDebug() << "created 3D-helix from"
+              << "start: " << sp.X() << "/" << sp.Y() << "/" << sp.Z()
+              << "\tend: " << ep.X() << "/" << ep.Y() << "/" << ep.Z()
+              << "\tcenter: " << center.X() << "/" << center.Y() << "/" << center.Z()
+              << "\tnormal: " << axis.X() << "/" << axis.Y() << "/" << axis.Z();
      }
   shape->SetColor(ci.feedColor());
   ci.toolPath().append(shape);

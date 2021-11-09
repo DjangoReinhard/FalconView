@@ -53,7 +53,7 @@ double PositionCalculator::convertUnit(double value, CANON_UNITS unit) {
   }
 
 
-void PositionCalculator::update(EmcPose* actPos, EmcPose* relPos, EmcPose* dtg, CANON_UNITS units, EmcPose* g5x, EmcPose* g92, double rotXY, EmcPose* toolOffset) {
+void PositionCalculator::update(EmcPose* actPos, EmcPose*, EmcPose* dtg, CANON_UNITS units, EmcPose* g5x, EmcPose* g92, double rotXY, EmcPose* toolOffset) {
   double x = actPos->tran.x - g5x->tran.x - toolOffset->tran.x;
   double y = actPos->tran.y - g5x->tran.y - toolOffset->tran.y;
   double z = actPos->tran.z - g5x->tran.z - toolOffset->tran.z;

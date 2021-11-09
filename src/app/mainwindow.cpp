@@ -7,6 +7,7 @@
 #include <axismask.h>
 #include <dockable.h>
 #include <core.h>
+#include <lctooltable.h>
 #include <positiondockable.h>
 #include <toolinfodockable.h>
 #include <speedinfodockable.h>
@@ -384,6 +385,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   nb->addPage(new ToolManager(conn, nb));
   nb->addPage(new FixtureManager(Core().axisMask(), nb));
   nb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", nb));
+  nb->addPage(new LCToolTable());
   mainView->addPage(nb);
   ui->menuMain->addAction(nb->viewAction());
 

@@ -58,6 +58,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
   tools->verticalHeader()->hide();
   tools->setEditTriggers(QAbstractItemView::NoEditTriggers);
   tools->setSelectionMode(QAbstractItemView::SingleSelection);
+  tools->setAlternatingRowColors(true);
   tools->setTabKeyNavigation(false);
   tools->setSortingEnabled(true);
   tools->setColumnHidden(0, true);
@@ -200,28 +201,6 @@ void ToolManager::deleteCategory() {
         categoryTreeModel->removeRows(srcIdx.row(), 1, srcIdx.parent());
      }
   }
-
-
-//bool ToolManager::eventFilter(QObject* o, QEvent* e) {
-//  if (e->type() == QEvent::KeyRelease) {
-//     QKeyEvent *ke = static_cast<QKeyEvent*>(e);
-
-//     qDebug("Filter sees key release %d - ts: %d", ke->key(), ke->timestamp());
-
-//     return true;
-//     }
-//  else if (e->type() == QEvent::KeyPress) {
-//     QKeyEvent *ke = static_cast<QKeyEvent*>(e);
-
-//     qDebug("Filter sees key press %d - ts: %d", ke->key(), ke->timestamp());
-
-//     return true;
-//     }
-//  else {
-//     // standard event processing
-//     return QObject::eventFilter(o, e);
-//     }
-//  }
 
 
 long ToolManager::timeStamp() {

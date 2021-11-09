@@ -90,6 +90,16 @@ const AxisMask& Core::axisMask() const {
   }
 
 
+ToolTable& Core::toolTable() {
+  return core()->tt;
+  }
+
+
+ToolTable* Core::toolTableModel() {
+  return &core()->tt;
+  }
+
+
 Kernel* Core::core() {
   assert(kernel != nullptr);
   return kernel;

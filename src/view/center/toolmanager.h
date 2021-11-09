@@ -20,7 +20,7 @@ class ToolManager : public DynWidget
 {
   Q_OBJECT
 public:
-  explicit ToolManager(DBConnection& conn, QWidget *parent = nullptr);
+  explicit ToolManager(DBConnection& conn, QWidget* parent = nullptr);
 
   virtual void connectSignals() override;
   virtual void updateStyles() override;

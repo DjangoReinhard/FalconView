@@ -79,6 +79,7 @@ SOURCES += \
     src/util/smallercondition.cpp \
     src/view/center/filemanager.cpp \
     src/view/center/fixturemanager.cpp \
+    src/view/center/lctooltable.cpp \
     src/view/center/mainview.cpp \
     src/view/center/patheditor.cpp \
     src/view/center/preferenceseditor.cpp \
@@ -155,6 +156,7 @@ HEADERS += \
     src/util/smallercondition.h \
     src/view/center/filemanager.h \
     src/view/center/fixturemanager.h \
+    src/view/center/lctooltable.h \
     src/view/center/mainview.h \
     src/view/center/patheditor.h \
     src/view/center/preferenceseditor.h \

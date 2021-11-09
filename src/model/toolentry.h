@@ -32,9 +32,17 @@ public:
   CANON_TOOL_TABLE toCanon() const     { return canon; }
   void             dump() const;
 
+  void setLength(double l);
+  void setDiameter(double d);
+  void setQuadrant(int q);
+  void setFrontAngle(double a);
+  void setBackAngle(double a);
+  void setDescription(const QString& s);
+
 private:
   QString          desc;
   int              serial;
+  bool             dirty;
   CANON_TOOL_TABLE canon;
   };
 #endif // TOOLENTRY_H
