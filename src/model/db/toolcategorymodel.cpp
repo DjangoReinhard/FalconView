@@ -5,16 +5,29 @@
 #include <QDebug>
 
 
-ToolCategoryModel::ToolCategoryModel(QObject *parent)
+ToolCategoryModel::ToolCategoryModel(DBConnection& conn, QObject *parent)
  : QSqlTableModel(parent) {
-  if (!DBConnection("toolTable").connect()) {
+  if (!conn.connect()) {
      throw new QSqlError("failed to open database!");
      }
   setTable("Category");
+  this->setEditStrategy(QSqlTableModel::OnManualSubmit);
   select();
 
   qDebug() << "cat-columns" << columnCount();
   qDebug() << "cat-rows" << rowCount();
+  }
+
+
+bool ToolCategoryModel::createTable() {
+  QSqlQuery sql;
+  bool      rv;
+
+  rv = sql.exec("CREATE TABLE \"Category\" (id      INT NOT NULL"
+                                         ", parent  INT NOT NULL"
+                                         ", name    VARCHAR(50) NOT NULL"
+                                         ", PRIMARY KEY(id) )");
+  return rv;
   }
 
 

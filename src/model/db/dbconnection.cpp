@@ -1,12 +1,16 @@
 #include <dbconnection.h>
 #include <QSqlDatabase>
+#include <QFileInfo>
 
 
 DBConnection::DBConnection(const QString& dbName, const QString& dbType)
  : name(dbName)
  , type(dbType) {
-  if (!dbName.contains('/'))
-     name = QString("../") + dbName + "/db/" + dbName;
+  if (!dbName.contains('/')) {
+     QFileInfo dbPath(QString("../FalconView/db/") + dbName);
+
+     name = dbPath.absoluteFilePath();
+     }
   }
 
 
@@ -21,7 +25,7 @@ bool DBConnection::connect() {
      if (QSqlDatabase::database().isOpen()) return true;
      else                                   return QSqlDatabase::database().open();
      }
-  QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+  QSqlDatabase db = QSqlDatabase::addDatabase(type);
 
   db.setDatabaseName(name);
   db.setHostName("localhost");

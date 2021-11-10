@@ -1,7 +1,7 @@
 #ifndef DBHELPER_H
 #define DBHELPER_H
+#include <QString>
 class DBConnection;
-class QString;
 
 
 class DBHelper

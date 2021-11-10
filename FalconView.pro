@@ -39,6 +39,7 @@ SOURCES += \
     src/model/db/CategoryTreeModel.cpp \
     src/model/db/dbconnection.cpp \
     src/model/db/falconviewdb.cpp \
+    src/model/db/syseventmodel.cpp \
     src/model/db/toolcategorymodel.cpp \
     src/model/db/toolmodel.cpp \
     src/model/direntry.cpp \
@@ -113,6 +114,7 @@ HEADERS += \
     src/model/db/dbconnection.h \
     src/model/db/dbhelper.h \
     src/model/db/falconviewdb.h \
+    src/model/db/syseventmodel.h \
     src/model/db/toolcategorymodel.h \
     src/model/db/toolmodel.h \
     src/model/direntry.h \

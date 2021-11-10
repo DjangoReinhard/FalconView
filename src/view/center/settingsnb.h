@@ -1,7 +1,7 @@
 #ifndef SETTINGSNB_H
 #define SETTINGSNB_H
 #include <dynwidget.h>
-class QTabWidget;
+#include <QTabWidget>
 
 
 class SettingsNotebook : public DynWidget //QTabWidget
@@ -15,6 +15,10 @@ public:
   virtual void updateStyles() override;
 
   void addPage(DynWidget* page);
+
+protected:
+  QString loadStyles(QTabWidget::TabPosition tp);
+  virtual void keyPressEvent(QKeyEvent* e) override;
 
 private:
   QTabWidget* tw;

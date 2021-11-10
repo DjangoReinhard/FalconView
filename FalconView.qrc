@@ -64,5 +64,7 @@
    <file>src/UI/SpeedInfo.ui</file>
    <file>src/UI/ToolEditor.ui</file>
    <file>src/UI/ToolInfo.ui</file>
+   <file>res/BottomTabButtonStyles.css</file>
+   <file>res/TopTabButtonStyles.css</file>
  </qresource>
 </RCC>

@@ -54,6 +54,7 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <category.h>
+class DBConnection;
 
 
 class CategoryTreeModel : public QAbstractItemModel // QSqlTableModel
@@ -61,7 +62,7 @@ class CategoryTreeModel : public QAbstractItemModel // QSqlTableModel
   Q_OBJECT
 
 public:
-  CategoryTreeModel(QObject *parent = nullptr);
+  CategoryTreeModel(DBConnection& conn, QObject *parent = nullptr);
   ~CategoryTreeModel();
 
   QVariant      data(const QModelIndex &index, int role) const override;

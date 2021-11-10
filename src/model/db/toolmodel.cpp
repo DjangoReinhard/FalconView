@@ -7,9 +7,9 @@
 #include <QDebug>
 
 
-ToolModel::ToolModel(QObject *parent)
+ToolModel::ToolModel(DBConnection& conn, QObject *parent)
  : QSqlTableModel(parent) {
-  if (!DBConnection("toolTable").connect()) {
+  if (!conn.connect()) {
      throw new QSqlError("failed to open database!");
      }
   setTable("Tools");
@@ -18,32 +18,39 @@ ToolModel::ToolModel(QObject *parent)
   }
 
 
-/*
-    "  id         INT PRIMARY KEY"
-    ", num        INT NOT NULL"                // 1 Index
-    ", lenTool    NUMERIC(7,3) NOT NULL "      // 2
-    ", name       VARCHAR(50) NOT NULL "       // 3 Name
-    ", type       INT NOT NULL "               // 4 ToolProfile
-    ", flutes     INT NOT NULL "               // 5 Flutes
-    ", radCut     NUMERIC(7,3) "               // 6 RadialDepthOfCut
-    ", lenCut     NUMERIC(7,3) "               // 7 AxialDepthOfCut
-    ", angCut     NUMERIC(7,3) "               // 8 VeeAngle
-    ", lenFlute   NUMERIC(7,3) "               // 9 FluteLength
-    ", diaFlute   NUMERIC(7,3) "               // 10 Diameter
-    ", diaColl    NUMERIC(7,3) "               // 11
-    ", lenColl    NUMERIC(7,3) "               // 12
-    ", diaShank   NUMERIC(7,3) "               // 13 ShankDiameter
-    ", lenFree    NUMERIC(7,3) "               // 14 Length
-    ", angSlope   NUMERIC(7,3) "               // 15
-    ", diaTip     NUMERIC(7,3) "               // 16
-    ", partCode   VARCHAR(50) "                // 17 -
-    ", material   VARCHAR(20) "                // 18
-    ", coating    VARCHAR(20) "                // 19 -
-    ", load       NUMERIC(7,3) "               // 20 ToothLoad
-    ", angHelix   NUMERIC(7,3) "               // 21 HelixAngle
-    ", angMaxRamp NUMERIC(7,3) "               // 22 MaxRampAngle
-    ", comment    VARCHAR(254) "               // 23 -
- */
+bool ToolModel::createTable() {
+  QSqlQuery sql;
+  bool      rv;
+
+  rv = sql.exec("CREATE TABLE \"Tools\" (id         INT PRIMARY KEY"
+                                      ", num        INT NOT NULL"            // 1 Index
+                                      ", lenTool    NUMERIC(7,3) NOT NULL "  // 2
+                                      ", name       VARCHAR(50) NOT NULL "   // 3 Name
+                                      ", type       INT NOT NULL "           // 4 ToolProfile
+                                      ", flutes     INT NOT NULL "           // 5 Flutes
+                                      ", radCut     NUMERIC(7,3) "           // 6 RadialDepthOfCut
+                                      ", lenCut     NUMERIC(7,3) "           // 7 AxialDepthOfCut
+                                      ", angCut     NUMERIC(7,3) "           // 8 VeeAngle
+                                      ", lenFlute   NUMERIC(7,3) "           // 9 FluteLength
+                                      ", diaFlute   NUMERIC(7,3) "           // 10 Diameter
+                                      ", diaColl    NUMERIC(7,3) "           // 11
+                                      ", lenColl    NUMERIC(7,3) "           // 12
+                                      ", diaShank   NUMERIC(7,3) "           // 13 ShankDiameter
+                                      ", lenFree    NUMERIC(7,3) "           // 14 Length
+                                      ", angSlope   NUMERIC(7,3) "           // 15
+                                      ", diaTip     NUMERIC(7,3) "           // 16
+                                      ", partCode   VARCHAR(50) "            // 17 -
+                                      ", material   VARCHAR(20) "            // 18
+                                      ", coating    VARCHAR(20) "            // 19 -
+                                      ", load       NUMERIC(7,3) "           // 20 ToothLoad
+                                      ", angHelix   NUMERIC(7,3) "           // 21 HelixAngle
+                                      ", angMaxRamp NUMERIC(7,3) "           // 22 MaxRampAngle
+                                      ", comment    VARCHAR(254) "           // 23 -
+                                      " )");
+  return rv;
+  }
+
+
 QVariant ToolModel::headerData(int column, Qt::Orientation orientation, int role) const {
   if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
      switch (column) {

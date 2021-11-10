@@ -228,13 +228,15 @@ const ToolEntry* ToolTable::tool(int number) const {
 
 
 void ToolTable::dump() {
-  qDebug() << "dump tools as list ...";
-  for (const ToolEntry* te : tools) {
+  qDebug() << "--->>> dump tools as list ...";
+  for (const ToolEntry* te : qAsConst(tools)) {
       te->dump();
       }
-  qDebug() << "dump tools by mapped keys ...";
-  for (int n : mappedTools.keys()) {
-      qDebug() << "key #" << n;
-      mappedTools[n]->dump();
+  qDebug() << "--->>> dump tools by mapped keys ...";
+  for (auto e = mappedTools.keyValueBegin()
+     ; e != mappedTools.keyValueEnd()
+     ; e++) {
+      qDebug() << "key #" << e->first;
+      e->second->dump();
       }
   }

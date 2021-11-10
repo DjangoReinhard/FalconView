@@ -242,10 +242,6 @@ void MainWindow::createConnections() {
           , this, [=](){ Core().activatePage(tr("Wheely")); });
   connect(touchMode, &QAction::triggered
           , this, [=](){ Core().activatePage(tr("Touch")); });
-//  connect(tools, &QAction::triggered
-//          , this, [=](){ Core().activatePage(tr("ToolManager")); });
-//  connect(offsets, &QAction::triggered
-//          , this, [=](){ Core().activatePage(tr("FixtureManager")); });
   connect(posAbsolute, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(posAbsolute->isChecked())); });
 //  qDebug() << " start of createConnections(done) ...";
   }
@@ -375,11 +371,6 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   page = new TestEdit(":/src/UI/GCodeEditor.ui", mainView);
   mainView->addPage(page);
   ui->menuMain->addAction(page->viewAction());
-
-//  page = new PreferencesEditor(":/src/UI/Settings.ui", mainView);
-//  mainView->addPage(page);
-//  ui->menuMain->addAction(page->viewAction());
-
   SettingsNotebook* nb = new SettingsNotebook(this);
 
   nb->addPage(new ToolManager(conn, nb));

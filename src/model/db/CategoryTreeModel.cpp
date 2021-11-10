@@ -48,14 +48,14 @@
 **
 ****************************************************************************/
 #include <CategoryTreeModel.h>
+#include <dbconnection.h>
 #include <category.h>
 #include <QtWidgets>
 #include <QSqlQuery>
 #include <QSqlError>
 
 
-CategoryTreeModel::CategoryTreeModel(QObject *parent)
-// : QSqlTableModel(parent)
+CategoryTreeModel::CategoryTreeModel(DBConnection& conn, QObject *parent)
  : QAbstractItemModel(parent)
  , rootItem(new Category(0, "Cat-Root")) {
   rootItem->insertChildren(0, 1, rootItem->columnCount());
@@ -65,6 +65,7 @@ CategoryTreeModel::CategoryTreeModel(QObject *parent)
   root->setData(1, 0);
   root->setData(2, 0);
 
+  assert(conn.connect());
   setupModelData(root);
   }
 

@@ -3,6 +3,7 @@
 #include <QTime>
 #include <QString>
 #include <QVector3D>
+#include <QSqlError>
 #include <core.h>
 #include <lcproperties.h>
 #include <dbconnection.h>
@@ -132,18 +133,13 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
   lcIF.setupToolTable();
 
   // check database before anyone needs it
-  QString dbPath(cfg.value("database", "../FalconView/db/toolTable").toString());
-
-  assert(dbAssist.dbConnection());
-  if (!dbPath.contains('/')) dbPath = dbAssist.dbConnection()->dbName();
-  QFileInfo db(dbPath);
+  QFileInfo db(dbAssist.dbConnection()->dbName());
 
   if (!db.exists() || db.size() < 1) {
-     conn = createDatabase(dbPath, dbAssist);
+     conn = createDatabase(dbAssist);
      cfg.setValue("database", conn->dbName());
      cfg.setValue("dbType", conn->dbType());
      }
-  else conn = new DBConnection(dbPath);
   if (!conn->connect()) throw std::system_error(-2, std::system_category(), "no database");
   ci.setTraverseColor(QColor(Qt::cyan));
   ci.setFeedColor(QColor(Qt::white));
@@ -158,12 +154,12 @@ Kernel::~Kernel() {
   }
 
 
-DBConnection* Kernel::createDatabase(const QString &path, DBHelper &dbAssist) {
-  DBConnection* rv = dbAssist.createDatabase(path);
+DBConnection* Kernel::createDatabase(DBHelper &dbAssist) {
+  DBConnection* conn = dbAssist.createDatabase(dbAssist.dbConnection()->dbName());
 
-  if (rv) dbAssist.createSampleData(*rv);
+  dbAssist.createSampleData(*conn);
 
-  return rv;
+  return conn;
   }
 
 

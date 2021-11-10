@@ -31,7 +31,7 @@ private:
 
   void parseGCode(QFile& file);
   void updateView(const QVariant& v);
-  DBConnection* createDatabase(const QString& path, DBHelper& dbAssist);
+  DBConnection* createDatabase(DBHelper& dbAssist);
 
   ConfigManager       cfg;
   LcProperties        lcProps;
