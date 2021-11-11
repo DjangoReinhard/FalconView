@@ -1,6 +1,7 @@
 #include <falconviewdb.h>
 #include <dbconnection.h>
 #include <toolcategorymodel.h>
+#include <timestamp.h>
 #include <syseventmodel.h>
 #include <toolmodel.h>
 #include <QSqlQuery>
@@ -24,17 +25,54 @@ FalconViewDB::FalconViewDB(const QString& name) {
 
 
 DBConnection* FalconViewDB::createDatabase(const QString&) {
-  if (!conn->connect()) {
-     throw new QSqlError("no database connection!");
-     }
-  if (!ToolCategoryModel::createTable())
-     throw new QSqlError("failed to create Category-table");
-  if (ToolModel::createTable())
-     throw new QSqlError("failed to create Tools-table");
-  if (SysEventModel::createTable())
-     throw new QSqlError("failed to create SysEvent-table");
+  for (;;) {
+      if (!conn->connect()) break;
+      if (!ToolCategoryModel::createTable()) break;
+      if (!ToolModel::createTable()) break;
+      if (!SysEventModel::createTable()) break;
 
-  return conn;
+      return conn;
+      }
+  QSqlError err = QSqlDatabase::database().driver()->lastError();
+
+  qDebug() << "sysEvent-table failed with error: " << err.text();
+  qDebug() << "                        db-error: " << err.databaseText();
+  qDebug() << "                    driver-error: " << err.driverText();
+
+  throw err;
+  }
+
+
+void FalconViewDB::createSampleData(DBConnection& conn) {
+  createToolSampleData(conn);
+  createSysEventSamples(conn);
+  }
+
+
+void FalconViewDB::createSysEventSamples(DBConnection&) {
+  QSqlTableModel  tmSysEvents;
+  QSqlRecord      recSysEvent;
+  int             n = 0;
+
+  tmSysEvents.setTable("SysEvents");
+  recSysEvent = tmSysEvents.record();
+
+  do {
+     recSysEvent.setValue("id", ++n);
+     recSysEvent.setValue("sewhen", QVariant((qlonglong)TimeStamp::rtSequence()));
+     recSysEvent.setValue("setype", QVariant(0));
+     recSysEvent.setValue("what", QString("Testdata for system event list (%1)").arg(n));
+     if (!tmSysEvents.insertRecord(-1, recSysEvent)) {
+        QSqlError err = QSqlDatabase::database().driver()->lastError();
+
+        qDebug() << "sysevent creation failed with error: " << err.text();
+        qDebug() << "                           db-error: " << err.databaseText();
+        qDebug() << "                       driver-error: " << err.driverText();
+
+        return;
+        }
+     recSysEvent = tmSysEvents.record();
+     } while (n < 10);
   }
 
 
@@ -152,7 +190,7 @@ void FalconViewDB::createCategory(QSqlTableModel& model, QSqlField &fId, QSqlFie
   }
 
 
-void FalconViewDB::createSampleData(DBConnection&) {
+void FalconViewDB::createToolSampleData(DBConnection&) {
   QDomDocument doc;
   QFile file(":/res/Tools_backup.xml");
   QSqlTableModel tmTool;

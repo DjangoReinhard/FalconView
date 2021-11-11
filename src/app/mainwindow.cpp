@@ -7,6 +7,7 @@
 #include <axismask.h>
 #include <dockable.h>
 #include <core.h>
+#include <syseventview.h>
 #include <lctooltable.h>
 #include <positiondockable.h>
 #include <toolinfodockable.h>
@@ -362,7 +363,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
 
   page = new FileManager(QDir(QDir::homePath() + "/linuxcnc"), mainView);
   mainView->addPage(page);
-  ui->menuMain->addAction(page->viewAction());
+//  ui->menuMain->addAction(page->viewAction());
 
   page = new PathEditor(":/src/UI/GCodeEditor.ui", mainView);
   mainView->addPage(page);
@@ -371,6 +372,10 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   page = new TestEdit(":/src/UI/GCodeEditor.ui", mainView);
   mainView->addPage(page);
   ui->menuMain->addAction(page->viewAction());
+
+  page = new SysEventView(conn, mainView);
+  mainView->addPage(page);
+//  ui->menuMain->addAction(page->viewAction());
   SettingsNotebook* nb = new SettingsNotebook(this);
 
   nb->addPage(new ToolManager(conn, nb));

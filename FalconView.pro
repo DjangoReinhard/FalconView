@@ -39,6 +39,7 @@ SOURCES += \
     src/model/db/CategoryTreeModel.cpp \
     src/model/db/dbconnection.cpp \
     src/model/db/falconviewdb.cpp \
+    src/model/db/sysevent.cpp \
     src/model/db/syseventmodel.cpp \
     src/model/db/toolcategorymodel.cpp \
     src/model/db/toolmodel.cpp \
@@ -54,6 +55,8 @@ SOURCES += \
     src/model/tooltable.cpp \
     src/model/valuemanager.cpp \
     src/model/valuemodel.cpp \
+    src/nml/commandwriter.cpp \
+    src/nml/errorreader.cpp \
     src/nml/statusreader.cpp \
     src/rs274/canonif.cpp \
     src/rs274/linecodes.cpp \
@@ -78,6 +81,7 @@ SOURCES += \
     src/util/orcondition.cpp \
     src/util/LCInter.cpp \
     src/util/smallercondition.cpp \
+    src/util/timestamp.cpp \
     src/view/center/filemanager.cpp \
     src/view/center/fixturemanager.cpp \
     src/view/center/lctooltable.cpp \
@@ -86,6 +90,7 @@ SOURCES += \
     src/view/center/preferenceseditor.cpp \
     src/view/center/pweditor.cpp \
     src/view/center/settingsnb.cpp \
+    src/view/center/syseventview.cpp \
     src/view/center/testEdit.cpp \
     src/view/center/toolmanager.cpp \
     src/view/dockable/curcodesdockable.cpp \
@@ -114,6 +119,7 @@ HEADERS += \
     src/model/db/dbconnection.h \
     src/model/db/dbhelper.h \
     src/model/db/falconviewdb.h \
+    src/model/db/sysevent.h \
     src/model/db/syseventmodel.h \
     src/model/db/toolcategorymodel.h \
     src/model/db/toolmodel.h \
@@ -129,6 +135,8 @@ HEADERS += \
     src/model/tooltable.h \
     src/model/valuemanager.h \
     src/model/valuemodel.h \
+    src/nml/commandwriter.h \
+    src/nml/errorreader.h \
     src/nml/insulatePose.h \
     src/nml/statusreader.h \
     src/rs274/canonif.h \
@@ -156,6 +164,7 @@ HEADERS += \
     src/util/notcondition.h \
     src/util/orcondition.h \
     src/util/smallercondition.h \
+    src/util/timestamp.h \
     src/view/center/filemanager.h \
     src/view/center/fixturemanager.h \
     src/view/center/lctooltable.h \
@@ -164,6 +173,7 @@ HEADERS += \
     src/view/center/preferenceseditor.h \
     src/view/center/pweditor.h \
     src/view/center/settingsnb.h \
+    src/view/center/syseventview.h \
     src/view/center/testEdit.h \
     src/view/center/toolmanager.h \
     src/view/dockable/curcodesdockable.h \

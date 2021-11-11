@@ -18,6 +18,8 @@ protected:
   QString        xml2Sql(const QString& name) const;
   QVariant::Type colType4(const QString& columnName) const;
   void           createCategory(QSqlTableModel& model, QSqlField &fId, QSqlField &fProfile, QSqlField &fName, const QString &category);
+  void           createToolSampleData(DBConnection& conn);
+  void           createSysEventSamples(DBConnection& conn);
 
 private:
   QMap<QString, int> toolCategories;

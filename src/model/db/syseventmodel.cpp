@@ -10,7 +10,7 @@ SysEventModel::SysEventModel(DBConnection& conn, QObject *parent)
   if (!conn.connect()) {
      throw new QSqlError("failed to open database!");
      }
-  setTable("SysEvent");
+  setTable("SysEvents");
   this->setEditStrategy(QSqlTableModel::OnManualSubmit);
   select();
 
@@ -24,8 +24,8 @@ bool SysEventModel::createTable() {
   bool      rv;
 
   rv = sql.exec("CREATE TABLE \"SysEvents\" (id   INT NOT NULL"
-                                          ", when INT NOT NULL"
-                                          ", type INT NOT NULL"
+                                          ", sewhen INT NOT NULL"
+                                          ", setype INT NOT NULL"
                                           ", what VARCHAR(254) NOT NULL"
                                           ", PRIMARY KEY(id) )");
   return rv;

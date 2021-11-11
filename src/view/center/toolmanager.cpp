@@ -3,6 +3,7 @@
 #include <toolcategorymodel.h>
 #include <tooleditor.h>
 #include <toolmodel.h>
+#include <timestamp.h>
 #include <KeyCodes.h>
 #include <QAbstractButton>
 #include <QTreeView>
@@ -38,7 +39,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  , categoryTableModel(new ToolCategoryModel(conn))
  , toolModel(new ToolModel(conn))
  , tEdit(new ToolEditor(this))
- , tsMsgBox(timeStamp())
+ , tsMsgBox(TimeStamp::rtSequence())
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
   setObjectName(tr("ToolManager"));
@@ -203,23 +204,6 @@ void ToolManager::deleteCategory() {
   }
 
 
-long ToolManager::timeStamp() {
-  QFile sysTime("/proc/uptime");
-
-  if (sysTime.open(QIODevice::ReadOnly | QIODevice::Text)) {
-     QTextStream in(&sysTime);
-     QStringList parts = in.readLine().split(" ");
-     bool   ok = false;
-     double ts = 0;
-
-     sysTime.close();
-     if (parts.size()) ts = parts[0].toDouble(&ok);
-     if (ok) return ts * 1000;
-     }
-  return 0;
-  }
-
-
 void ToolManager::deleteTool() {
   qDebug() << "delete tool: " << toolModel->record(tool2Edit).value("num");
   QMessageBox::StandardButton reply;
@@ -228,7 +212,7 @@ void ToolManager::deleteTool() {
                               , tr("QMessageBox::question()")
                               , tr("Should this tool be deleted?")
                               , QMessageBox::Yes | QMessageBox::No);
-  tsMsgBox = timeStamp();
+  tsMsgBox = TimeStamp::rtSequence();
 
   if (reply == QMessageBox::No) return;
   if (!toolModel->removeRows(tool2Edit, 1)) qDebug() << toolModel->lastError().text();
@@ -307,7 +291,7 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
     case Qt::Key_Return:
     case Qt::Key_Enter: {
          qDebug() << "TM: enter (" << event->key() << ") has ts: " << event->timestamp();
-         long now = timeStamp();
+         long now = TimeStamp::rtSequence();
 
          qDebug() << "TM: time-delta" << (now - tsMsgBox);
          if (tools->hasFocus() && (now - tsMsgBox) > 400) {

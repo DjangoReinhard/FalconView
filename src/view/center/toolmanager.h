@@ -39,7 +39,6 @@ protected:
   void editTool();
   void renameCategory();
   void saveToolChanges();
-  long timeStamp();
 
 private:
   DBConnection&          conn;
