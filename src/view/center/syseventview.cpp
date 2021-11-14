@@ -1,9 +1,12 @@
 #include <syseventview.h>
 #include <syseventmodel.h>
+#include <valuemanager.h>
 #include <QSortFilterProxyModel>
+#include <QShowEvent>
 #include <QHeaderView>
 #include <QVBoxLayout>
 #include <QTableView>
+#include <QDebug>
 
 
 SysEventView::SysEventView(DBConnection& conn, QWidget* parent)
@@ -11,7 +14,7 @@ SysEventView::SysEventView(DBConnection& conn, QWidget* parent)
  , table(new QTableView)
  , model(new SysEventModel(conn))
  , px(new QSortFilterProxyModel(this)) {
-  setObjectName(tr("SysEventView"));
+  setObjectName(SysEventView::className);
   setLayout(new QVBoxLayout(this));
   px->setSourceModel(model);
   table->setModel(px);
@@ -35,3 +38,22 @@ void SysEventView::connectSignals() {
 
 void SysEventView::updateStyles() {
   }
+
+
+void SysEventView::showEvent(QShowEvent* e) {
+  if (e->type() == QEvent::Show) {
+     qDebug() << ">>>   SysEventView::showEvent - SHOW";
+     ValueManager().setValue("errorActive", true);
+     }
+  }
+
+
+void SysEventView::hideEvent(QHideEvent* e) {
+  if (e->type() == QEvent::Hide) {
+     qDebug() << "<<<   SysEventView::showEvent - HIDE";
+     ValueManager().setValue("errorActive", false);
+     }
+  }
+
+
+const QString SysEventView::className = "SysEventView";

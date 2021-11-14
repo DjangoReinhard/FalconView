@@ -63,11 +63,11 @@ SOURCES += \
     src/rs274/stupidtoolchangerif.cpp \
     src/util/abstractcondition.cpp \
     src/util/ally3d.cpp \
-    src/util/and3condition.cpp \
-    src/util/and4condition.cpp \
     src/util/andcondition.cpp \
     src/util/axismask.cpp \
+    src/util/dynaaction.cpp \
     src/util/equalcondition.cpp \
+    src/util/falsecondition.cpp \
     src/util/flowlayout.cpp \
     src/util/gcodehighlighter.cpp \
     src/util/Geom_HelixData.cpp \
@@ -82,6 +82,7 @@ SOURCES += \
     src/util/LCInter.cpp \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
+    src/util/truecondition.cpp \
     src/view/center/filemanager.cpp \
     src/view/center/fixturemanager.cpp \
     src/view/center/lctooltable.cpp \
@@ -144,11 +145,11 @@ HEADERS += \
     src/rs274/stupidtoolchangerif.h \
     src/util/abstractcondition.h \
     src/util/ally3d.h \
-    src/util/and3condition.h \
-    src/util/and4condition.h \
     src/util/andcondition.h \
     src/util/axismask.h \
+    src/util/dynaaction.h \
     src/util/equalcondition.h \
+    src/util/falsecondition.h \
     src/util/filemanagerclient.h \
     src/util/flowlayout.h \
     src/util/gcodehighlighter.h \
@@ -165,6 +166,7 @@ HEADERS += \
     src/util/orcondition.h \
     src/util/smallercondition.h \
     src/util/timestamp.h \
+    src/util/truecondition.h \
     src/view/center/filemanager.h \
     src/view/center/fixturemanager.h \
     src/view/center/lctooltable.h \

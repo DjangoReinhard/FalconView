@@ -1,4 +1,5 @@
 #include <axismask.h>
+#include <valuemanager.h>
 #include <iostream>
 #include <QString>
 #include <QRegularExpression>
@@ -6,7 +7,8 @@
 
 
 AxisMask::AxisMask(const QString& iniValue)
- : cntActive(0)
+ : QObject(nullptr)
+ , cntActive(0)
  , axisMask(0) {
   memset(&joint2Axis, -1, sizeof(joint2Axis));
   memset(&axisSeen, 0, sizeof(axisSeen));
@@ -15,7 +17,8 @@ AxisMask::AxisMask(const QString& iniValue)
 
 
 AxisMask::AxisMask(const AxisMask& other)
- : cntActive(other.cntActive)
+ : QObject(nullptr)
+ , cntActive(other.cntActive)
  , axisMask(other.axisMask) {
   for (int i=0; i < 9; ++i) {
       joint2Axis[i] = other.joint2Axis[i];
@@ -24,13 +27,36 @@ AxisMask::AxisMask(const AxisMask& other)
   }
 
 
+AxisMask::~AxisMask() {
+  }
+
+
 void AxisMask::calcActive() {
+  ValueManager vm;
+
   for (int i=0; i < 9; ++i)
       if (axisSeen[i]) {
          ++cntActive;
          axisMask |= 1 << i;
+         connect(vm.getModel(QString("homedJoint%1").arg(joint2Axis[i])), &ValueModel::valueChanged
+                 , this, [=](){ ValueManager vmgr;
+                                checkHomed(i, vmgr.getValue(QString("homedJoint%1").arg(joint2Axis[i]))); });
          }
   qDebug() << "\tfound " << cntActive << " active axis. Mask set to:" << axisMask;
+  }
+
+
+void AxisMask::checkHomed(int axis, QVariant value) {
+  if (axis > -1 && axis < 9) axisHomed[axis] = value.toBool();
+  bool allHomed = true;
+
+  for (int i=0; i < 9; ++i) {
+      if (axisSeen[i] && !axisHomed[i]) {
+         allHomed = false;
+         break;
+         }
+      }
+  if (allHomed) ValueManager().setValue("allHomed", true);
   }
 
 

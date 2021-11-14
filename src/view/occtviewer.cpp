@@ -29,6 +29,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QDebug>
 #include <Standard_WarningsRestore.hxx>
 
 #include <AIS_Shape.hxx>
@@ -147,7 +148,7 @@ Aspect_VKey qtKey2VKey(int theKey) {
     case Qt::Key_PageUp:    return Aspect_VKey_PageUp;
     case Qt::Key_Home:      return Aspect_VKey_Home;
     case Qt::Key_End:       return Aspect_VKey_End;
-    case Qt::Key_Escape:    return Aspect_VKey_Escape;
+//    case Qt::Key_Escape:    return Aspect_VKey_Escape;
     case Qt::Key_Back:      return Aspect_VKey_Back;
     case Qt::Key_Enter:     return Aspect_VKey_Enter;
     case Qt::Key_Backspace: return Aspect_VKey_Backspace;
@@ -333,30 +334,31 @@ void OcctQtViewer::initializeGL() {
 // Purpose  :
 // ================================================================
 void OcctQtViewer::closeEvent(QCloseEvent* e) {
+  qDebug() << "OcctQtViewer::closeEvent?!?";
   e->accept();
   }
 
 
-// ================================================================
-// Function : keyPressEvent
-// Purpose  :
-// ================================================================
-void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
-  Aspect_VKey aKey = qtKey2VKey (e->key());
+void OcctQtViewer::setBounds(const Bnd_Box &bounds) {
+  myBounds = bounds;
+  }
 
-  switch (aKey) {
-    case Aspect_VKey_Escape: {
-         QApplication::exit();
-         return;
-         }
-    case Aspect_VKey_F: {
-         myView->FitAll(myBounds, false);
-         update();
+
+void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
+  switch (e->key()) {
+    case Qt::Key_Escape:
+         qDebug() << "OcctQtViewer: escape hit - but don't do anything!";
          e->accept();
-         return;
-         }
+         break;
+    case Qt::Key_F:
+         qDebug() << "OcctQtViewer: F key pressed";
+         fitAll();
+         e->accept();
+         break;
+    default:
+         QOpenGLWidget::keyPressEvent(e);
+         break;
     }
-  QOpenGLWidget::keyPressEvent(e);
   }
 
 

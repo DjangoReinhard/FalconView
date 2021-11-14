@@ -1,6 +1,8 @@
 #ifndef DYNWIDGET_H
 #define DYNWIDGET_H
 #include <QFrame>
+class MainView;
+class SettingsNotebook;
 class QString;
 class QWidget;
 class QAction;
@@ -23,6 +25,8 @@ protected:
 
   /*! connect signals/slots offline - called by addPage */
   virtual void connectSignals() = 0;
+  /*! called by MainView at application shutdown */
+  virtual void closeEvent(QCloseEvent *event) override;
 
   /*! style the child widgets offline - called by addPage */
   virtual void updateStyles()   = 0;
@@ -31,5 +35,7 @@ protected:
 
 private:
   QAction*     vAction;
+  friend class MainView;
+  friend class SettingsNotebook;
   };
 #endif // DYNWIDGET_H

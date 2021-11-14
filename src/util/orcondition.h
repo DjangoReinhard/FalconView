@@ -7,16 +7,15 @@ class OrCondition : public AbstractCondition
 {
   Q_OBJECT
 public:
-  explicit OrCondition(const AbstractCondition& c0, const AbstractCondition& c1, QObject *parent = nullptr);
+  explicit OrCondition(AbstractCondition* c0, AbstractCondition* c1, QObject *parent = nullptr);
   virtual ~OrCondition();
 
-  void addCondition(const AbstractCondition& c);
+  OrCondition& addCondition(AbstractCondition* c);
 
 public slots:
   virtual bool eval() override;
 
 private:
-  const AbstractCondition& c0;
-  const AbstractCondition& c1;
+  QList<AbstractCondition*> cl;
   };
 #endif // ORCONDITION_H

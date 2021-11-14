@@ -217,5 +217,6 @@ void Ally3D::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
   workPiece = Bnd_Box(cMin, cMax);
   showWorkLimits();
   showMachineLimits();
+  v3D->setBounds(workPiece);
   v3D->fitAll();
   }

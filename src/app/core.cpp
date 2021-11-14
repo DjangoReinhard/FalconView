@@ -1,6 +1,7 @@
 #include <core.h>
 #include <core_p.h>
 #include <QTime>
+#include <QTimerEvent>
 #include <QString>
 #include <QVector3D>
 #include <QSqlError>
@@ -15,6 +16,7 @@
 #include <configmgr.h>
 #include <occtviewer.h>
 #include <cassert>
+#include <emc.hh>
 
 
 Core::Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group) {
@@ -63,8 +65,13 @@ void Core::setMainWindow(MainWindow* mw) {
   }
 
 
+void Core::setAppMode(ApplicationMode m) {
+  ValueManager().setValue("appMode", m);
+  }
+
+
 void Core::showAllButCenter(bool visible) {
-  core()->mainWindow->showAllButCenter(visible);
+  ValueManager().setValue("showAllButCenter", visible);
   }
 
 
@@ -72,6 +79,23 @@ QWidget* Core::stackedPage(const QString& pageName) {
   qDebug() << "Core: query for page: >" << pageName << "<";
 
   return core()->mainView->page(pageName);
+  }
+
+
+bool Core::checkBE() {
+  bool rv = core()->statusReader.isActive();
+
+  if (!rv) {
+     ValueManager vm;
+
+     qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
+     vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
+     vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+     vm.setValue("allHomed", true);
+     vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
+     vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
+     }
+  return rv;
   }
 
 
@@ -96,8 +120,18 @@ ToolTable& Core::toolTable() {
   }
 
 
+const QString& Core::curPage() const {
+  return core()->mainView->activePage();
+  }
+
+
 ToolTable* Core::toolTableModel() {
   return &core()->tt;
+  }
+
+
+void Core::windowClosing(QCloseEvent *e) {
+  core()->windowClosing(e);
   }
 
 
@@ -120,6 +154,8 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , lcIF(lcProps, tt)
  , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
  , view3D(new OcctQtViewer())
+ , mainView(nullptr)
+ , mainWindow(nullptr)
  , conn(nullptr)
  , ally3D(view3D)
  , statusReader(positionCalculator, gcodeInfo) {
@@ -179,6 +215,16 @@ void Kernel::parseGCode(QFile &file) {
   long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
 
   qDebug() << "parsing of " << file.fileName() << " took: " << delta << "ms";
+  }
+
+
+void Kernel::windowClosing(QCloseEvent *e) {
+  // application is going to shut down ...
+  cfg.settings.beginGroup("MainWindow");
+  cfg.setValue("geometry", mainWindow->saveGeometry());
+  cfg.setValue("windowState", mainWindow->saveState());
+  cfg.settings.endGroup();
+  mainView->windowClosing(e);
   }
 
 

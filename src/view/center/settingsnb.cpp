@@ -3,6 +3,7 @@
 #include <QTabWidget>
 #include <QKeyEvent>
 #include <QTabBar>
+#include <QDebug>
 #include <QFile>
 #include <QFont>
 
@@ -12,7 +13,7 @@ SettingsNotebook::SettingsNotebook(QWidget *parent)
  , tw(nullptr) {
   QTabWidget::TabPosition tp = QTabWidget::TabPosition::South;
 
-  setObjectName(tr("SettingsNotebook"));
+  setObjectName(SettingsNotebook::className);
   setLayout(new QVBoxLayout);
   setContentsMargins(0, 0, 0, 0);
   tw = new QTabWidget();
@@ -43,6 +44,21 @@ void SettingsNotebook::updateStyles() {
   }
 
 
+void SettingsNotebook::closeEvent(QCloseEvent* e) {
+  qDebug() << "DynWidget::closeEvent() on widget " << objectName();
+//  Config cfg;
+
+//  cfg.setValue("widgetState", this->saveState());
+  int mx = tw->count();
+
+  for (int i=0; i < mx; ++i) {
+      DynWidget* w = static_cast<DynWidget*>(tw->widget(i));
+
+      if (w) w->closeEvent(e);
+      }
+  }
+
+
 void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
   //TODO: add shortcut for each page
   switch (e->key()) {
@@ -65,3 +81,6 @@ QString SettingsNotebook::loadStyles(QTabWidget::TabPosition tp) {
      }
   return rv;
   }
+
+
+const QString SettingsNotebook::className = "SettingsNotebook";

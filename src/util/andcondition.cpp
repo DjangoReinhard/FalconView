@@ -2,12 +2,10 @@
 #include <QDebug>
 
 
-AndCondition::AndCondition(const AbstractCondition& c0, const AbstractCondition& c1, QObject* parent)
- : AbstractCondition(nullptr, QVariant(), parent)
- , c0(c0)
- , c1(c1) {
-  connect(&c0, &AbstractCondition::conditionChanged, this, &AbstractCondition::update);
-  connect(&c1, &AbstractCondition::conditionChanged, this, &AbstractCondition::update);
+AndCondition::AndCondition(AbstractCondition* c0, AbstractCondition* c1, QObject* parent)
+  : AbstractCondition(nullptr, QVariant(), parent) {
+  addCondition(c0);
+  addCondition(c1);
   }
 
 
@@ -15,8 +13,18 @@ AndCondition::~AndCondition() {
   }
 
 
-bool AndCondition::eval() {
-  qDebug() << "AndCondition::eval() ..." << c0.result() << "<>" << c1.result();
+AndCondition* AndCondition::addCondition(AbstractCondition* c) {
+  connect(c, &AbstractCondition::conditionChanged, this, &AbstractCondition::update);
+  cl.append(c);
 
-  return c0.result() && c1.result();
+  return this;
+  }
+
+
+bool AndCondition::eval() {
+  for (auto c : qAsConst(cl)) {
+//      qDebug() << "AndCondition::eval() ..." << c->result();
+      if (!c->result()) return false;
+      }
+  return true;
   }

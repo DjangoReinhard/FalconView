@@ -19,12 +19,8 @@ public slots:
   void showMachineLimits();
   void showWorkLimits();
 
-protected:
-//  Handle(AIS_ViewCube) getCube();
-
 private:
   Handle(AIS_Shape)    cone;
-//  Handle(AIS_ViewCube) cube;
   OcctQtViewer*        v3D;
   Bnd_Box              workPiece;
   };

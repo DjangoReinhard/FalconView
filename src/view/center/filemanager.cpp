@@ -3,6 +3,7 @@
 #include <testEdit.h>
 #include <mainview.h>
 #include <core.h>
+#include <configacc.h>
 #include <KeyCodes.h>
 #include <dirmodel.h>
 #include <direntry.h>
@@ -33,7 +34,7 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
  , pxDirs(new QSortFilterProxyModel(this))
  , pxFiles(new QSortFilterProxyModel(this))
  , client(nullptr) {
-  setObjectName(tr("FileManager"));
+  setObjectName(FileManager::className);
   pxDirs->setSourceModel(dirModel);
   dirs->setModel(pxDirs);
   dirs->setTabKeyNavigation(false);
@@ -63,6 +64,12 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
   spV->addWidget(preView);
   layout()->addWidget(spH);
   layout()->setContentsMargins(0, 0, 0, 0);
+  Config cfg;
+
+  cfg.beginGroup(FileManager::className);
+  spH->restoreState(cfg.value("hState").toByteArray());
+  spV->restoreState(cfg.value("vState").toByteArray());
+  cfg.endGroup();
   }
 
 
@@ -124,6 +131,16 @@ void FileManager::keyReleaseEvent(QKeyEvent* e) {
   }
 
 
+void FileManager::closeEvent(QCloseEvent*) {
+  Config cfg;
+
+  cfg.beginGroup(FileManager::className);
+  cfg.setValue("hState", spH->saveState());
+  cfg.setValue("vState", spV->saveState());
+  cfg.endGroup();
+  }
+
+
 void FileManager::selectionChanged(const QItemSelection& selected, const QItemSelection&) {
 //  qDebug() << "selected: "     << selected;
   QModelIndexList    mi       = selected.indexes();
@@ -144,3 +161,6 @@ void FileManager::selectionChanged(const QItemSelection& selected, const QItemSe
      preView->setPlainText(tr("<p>no textfile</p>"));
      }
   }
+
+
+const QString FileManager::className = "FileManager";

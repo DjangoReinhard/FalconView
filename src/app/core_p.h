@@ -30,7 +30,9 @@ private:
   virtual ~Kernel();
 
   void parseGCode(QFile& file);
+  void simulateStartOfBE();
   void updateView(const QVariant& v);
+  void windowClosing(QCloseEvent* e);
   DBConnection* createDatabase(DBHelper& dbAssist);
 
   ConfigManager       cfg;

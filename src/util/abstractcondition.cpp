@@ -17,14 +17,20 @@ AbstractCondition::~AbstractCondition() {
   }
 
 
+bool AbstractCondition::result() const {
+//  qDebug() << "Condition [" << (m ? m->getName() : "unnamed") << "] has result:" << met;
+  return met;
+  }
+
+
 void AbstractCondition::update() {
-  qDebug() << "AbstractCondition::update() ...";
+//  qDebug() << "AbstractCondition::update() ...";
   bool rv = eval();
 
-  qDebug() << "\teval returned: " << (rv ? "true" : "false");
+//  qDebug() << "\teval returned: " << (rv ? "true" : "false");
   if (!initialized || rv != met) {
      met = rv;
-     qDebug() << "\tgonna fire condition changed event ...";
+//     qDebug() << "\tgonna fire condition changed event ...";
      emit  conditionChanged(met);
      initialized = true;
      }

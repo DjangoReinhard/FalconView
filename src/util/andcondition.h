@@ -7,14 +7,15 @@ class AndCondition : public AbstractCondition
 {
   Q_OBJECT
 public:
-  explicit AndCondition(const AbstractCondition& c0, const AbstractCondition& c1, QObject *parent = nullptr);
+  explicit AndCondition(AbstractCondition* c0, AbstractCondition* c1, QObject *parent = nullptr);
   virtual ~AndCondition();
+
+  AndCondition* addCondition(AbstractCondition* c);
 
 public slots:
   virtual bool eval() override;
 
 private:
-  const AbstractCondition& c0;
-  const AbstractCondition& c1;
+  QList<AbstractCondition*> cl;
   };
 #endif // ANDCONDITION_H

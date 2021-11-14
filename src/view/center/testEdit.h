@@ -15,13 +15,14 @@ class TestEdit : public DynWidget, FileManagerClient
 {
   Q_OBJECT
 public:
+  static const QString className;
   TestEdit(const QString& fileName, QWidget* parent = nullptr);
 
   QString pageName() override;
 
 public slots:
-  void         openFile();
-  virtual void fileSelected(const QString& filePath) override;
+  void openFile();
+  void fileSelected(const QString& filePath) override;
 
 protected:
   void         initializeWidget();

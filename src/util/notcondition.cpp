@@ -14,9 +14,9 @@ NotCondition::~NotCondition() {
 
 
 bool NotCondition::eval() {
-  qDebug() << "NotCondition::eval() ...";
+//  qDebug() << "NotCondition::eval() ...";
   if (model()->getValue().type() == value().type()) {
-     qDebug() << "model type matches value type" << model()->getValue() << "<>" << value();
+//     qDebug() << "model type matches value type" << model()->getValue() << "<>" << value();
      return model()->getValue() != value();
      }
   else return false;

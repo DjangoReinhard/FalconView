@@ -3,6 +3,7 @@
 #include <core.h>
 #include <QApplication>
 #include <QTranslator>
+#include <QKeySequence>
 #include <QDebug>
 
 
@@ -20,12 +21,8 @@ int main(int argc, char *argv[]) {
   QStringList args = QCoreApplication::arguments();
   QString iniFileName = getenv("INI_FILE_NAME");
 
-  //  qDebug() << "current locale settings - lang: " << curLocale.language()
-  //           << "\tcountry: " << curLocale.country()
-  //           << "\tname: " << curLocale.name();
-  //  qDebug() << "syslocale.name: " << sysLocale.name();
   qDebug() << "locale messages found: " << ok;
-#ifdef USE_QT_V6xx
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
   // set default font for all gui elements. Needed with Qt > 6xx
   a.setFont(QFont("Noto Sans", 15));
 #endif
@@ -37,7 +34,12 @@ int main(int argc, char *argv[]) {
   MainWindow w;
 
   appCore.setMainWindow(&w);
+  appCore.checkBE();
   w.show();
 
-  return a.exec();
+  int rv = a.exec();
+
+  qDebug() << "left event loop with rv ==" << rv;
+
+  return rv;
   }

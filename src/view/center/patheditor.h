@@ -14,9 +14,14 @@ class PathEditor : public TestEdit
 {
   Q_OBJECT
 public:
+  static const QString className;
   PathEditor(const QString& fileName, QWidget* parent = nullptr);
 
 protected:
   virtual void loadFile(const QVariant& fileName) override;
+  virtual void connectSignals() override;
+
+private:
+  void reallyLoadFile(const QVariant& fileName);
   };
 #endif // PWEDITOR_H

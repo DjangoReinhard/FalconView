@@ -48,6 +48,7 @@ public:
   const QString& getGlInfo() const                { return myGlInfo; }
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
   virtual QSize  sizeHint()        const override { return QSize(720, 480); }
+  void setBounds(const Bnd_Box& bounds);
   void fitAll();
 
 protected:

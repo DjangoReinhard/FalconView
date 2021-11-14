@@ -20,7 +20,9 @@ class ToolManager : public DynWidget
 {
   Q_OBJECT
 public:
+  static const QString className;
   explicit ToolManager(DBConnection& conn, QWidget* parent = nullptr);
+  virtual ~ToolManager();
 
   virtual void connectSignals() override;
   virtual void updateStyles() override;
@@ -32,6 +34,7 @@ public slots:
 protected:
   virtual void keyReleaseEvent(QKeyEvent *event) override;
   virtual void showEvent(QShowEvent *event) override;
+  virtual void closeEvent(QCloseEvent*) override;
   void createCategory();
   void createTool();
   void deleteCategory();

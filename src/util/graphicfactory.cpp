@@ -1,5 +1,6 @@
 #include "graphicfactory.h"
 #include <cassert>
+#include <QVector3D>
 #include <QDebug>
 #include <AIS_ColoredShape.hxx>
 #include <gp_Circ.hxx>
@@ -68,43 +69,63 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
                                             , const gp_Dir& axis
                                             , bool          ccw
                                             , int           fullTurns) {
+  QVector3D start(from.X(), from.Y(), from.Z());
+  QVector3D end(to.X(), to.Y(), from.Z());
+  QVector3D c(center.X(), center.Y(), from.Z());
+  gp_Dir    hAxis(axis);
+  QVector3D s = start - c;
+  QVector3D e = end - c;
+
+  double r0 = s.length();
+  double r1 = e.length();
+
+  double a0 = atan2(s.y(), s.x());
+  double a1 = atan2(e.y(), e.x());
+
+  qDebug() << "> PRE(0) - a0:" << a0 << "a1:" << a1;
+
+  if (a0 < 0) a0 += 2 * M_PI;
+  if (a1 < 0) a1 += 2 * M_PI;
+
+  qDebug() << "> PRE(1) - a0:" << a0 << "a1:" << a1;
+
+  double arc = a1 - a0;
+
+  qDebug() << "> PRE(2) - arc:" << arc;
+
+  if (ccw && a0 > a1 && arc < 0)       arc += 2 * M_PI;
+  else if (!ccw) {
+     if (a0 < a1 && arc > 0) arc -= 2 * M_PI;
+     arc = fabs(arc);
+     hAxis.SetZ(-hAxis.Z());
+     }
+  arc += fullTurns * 2 * M_PI;
+
+  qDebug() << "> PRE(3) - r0:" << r0 << "r1:" << r1 << "a0 >" << a0 << "< - a1:" << a1 << "arc:" << arc << "\n\n";
+
   Handle(Geom_BSplineCurve) aHelix;
   Geom_HelixData helDat;
-  gp_Ax3 pos(center, axis);
-  gp_Lin centerAxis(center, axis);
-  gp_Ax2 cylAxis(center, axis);
-  gp_Lin normStart  = centerAxis.Normal(from);
-  gp_Lin normEnd    = centerAxis.Normal(to);
-  double r0         = centerAxis.Distance(from);
-  double r1         = centerAxis.Distance(to);
-  double angStart   = pos.XDirection().Angle(normStart.Direction());
-  double angEnd     = pos.XDirection().Angle(normEnd.Direction());
-  double angle      = 2 * M_PI - normStart.Angle(normEnd);
-  double height     = normStart.Distance(normEnd);
-  double turnFactor = (angle + (fullTurns * 2.0 * M_PI)) / (2.0 * M_PI);
+  gp_Ax3 pos(gp_Pnt(center.X(), center.Y(), from.Z()), hAxis);
+  double height     = to.Z() - from.Z();
+  double turnFactor = arc / (2.0 * M_PI);
   double pitch      = height / turnFactor;
 
-  qDebug() << "angle of start point:" << angStart
-           << "angle of end point:" << angEnd;
-  qDebug() << "makeHelix: r0=" << r0 << "r1=" << r1
-           << "height=" << height << "angle=" << angle
-           << "pitch=" << pitch << "turnFactor=" << turnFactor;
-  qDebug() << "pitch * turnFactor = " << (pitch * turnFactor);
-
-  if (ccw) pos.XReverse();
   helDat.setPosition(pos);
   helDat.setRadius(r0);
   helDat.setPitch(pitch);
-  helDat.setRangeMax(angle);
+  helDat.setRangeMax(arc);
   Handle(AIS_Shape) rv;
 
   if (helDat.MakeHelix(helDat, aHelix)) {
      TopoDS_Shape ts = BRepBuilderAPI_MakeEdge(aHelix);
      gp_Trsf rot;
+     gp_Trsf trans;
 
-     rot.SetRotation(pos.Axis(), -angStart);
+     rot.SetRotation(pos.Axis(), ccw ? a0 : -(a0 + M_PI));
+     trans.SetTranslation(gp_Vec(0, 0, 0));
      TopoDS_Shape rts = BRepBuilderAPI_Transform(ts, rot);
 
+     rts = BRepBuilderAPI_Transform(rts, trans);
      rv = new AIS_Shape(rts);
      rv->SetWidth(2);
      }

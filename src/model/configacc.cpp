@@ -18,6 +18,16 @@ QFont Config::getFont(GuiElem key) const {
   }
 
 
+void Config::beginGroup(const QString &name) {
+  Core().core()->cfg.settings.beginGroup(name);
+  }
+
+
+void Config::endGroup() {
+  Core().core()->cfg.settings.endGroup();
+  }
+
+
 QVariant Config::value(const QString& key, const QVariant& defaultValue) const {
   return Core().core()->cfg.value(key, defaultValue);
   }

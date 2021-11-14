@@ -1,13 +1,16 @@
 #ifndef AXISMASK_H
 #define AXISMASK_H
+#include <QObject>
 class QString;
 
 
-class AxisMask
+class AxisMask : public QObject
 {
+  Q_OBJECT
 public:
-  AxisMask(const AxisMask& other);
-  AxisMask(const QString& iniValue);
+  explicit AxisMask(const AxisMask& other);
+  explicit AxisMask(const QString& iniValue);
+  virtual ~AxisMask();
 
   int  activeAxis() const { return cntActive; }
   bool hasXAxis()   const { return axisSeen[0]; }
@@ -28,12 +31,14 @@ public:
 protected:
   void calcActive();
   void parseIni(const QString& iniValue);
+  void checkHomed(int axis, QVariant value);
 
 private:
   int  cntActive;
   int  axisMask;
   int  joint2Axis[9];
   bool axisSeen[9];
+  bool axisHomed[9];
   static const char axisLetters[];
   };
 #endif // AXISMASK_H

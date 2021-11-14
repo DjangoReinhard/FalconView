@@ -20,9 +20,9 @@
 
 
 TestEdit::TestEdit(const QString& fileName, QWidget* parent)
- : DynWidget(fileName, parent)
+ : DynWidget(fileName, false, parent)
  , fn(nullptr) {
-  setObjectName(tr("TestEditor"));
+  setObjectName(TestEdit::className);
   this->setStyleSheet("background: 0xFF0000;");
   fn     = w->findChild<QLineEdit*>("fileName");
   pbOpen = w->findChild<QPushButton*>("pbOpen");
@@ -80,13 +80,14 @@ void TestEdit::connectSignals() {
   }
 
 
+// opens fileManager
 void TestEdit::openFile() {    
-  QWidget*     w = Core().stackedPage(tr("FileManager"));
+  QWidget*     w = Core().stackedPage(FileManager::className);
   FileManager* fm = qobject_cast<FileManager*>(w);
 
   if (fm) {
      fm->setClient(this);
-     Core().activatePage(tr("FileManager"));
+     Core().activatePage(FileManager::className);
      }
   }
 
@@ -104,6 +105,7 @@ QString TestEdit::pageName() {
   }
 
 
+// callback for fileManager
 void TestEdit::fileSelected(const QString& filePath) {
   loadFile(filePath);
   }
@@ -113,7 +115,8 @@ void TestEdit::loadFile(const QVariant& fileName) {
   qDebug() << "TestEdit::loadFile" << fileName;
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
-  Core().activatePage(objectName());
+  // show editor again
+  Core().setAppMode(ApplicationMode::XEdit);
   }
 
 
@@ -129,3 +132,6 @@ void TestEdit::updateStyles() {
                            .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
   ed->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
   }
+
+
+const QString TestEdit::className = "TestEdit";

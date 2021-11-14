@@ -18,6 +18,7 @@ class FileManager : public DynWidget
 {
   Q_OBJECT
 public:
+  static const QString className;
   explicit FileManager(const QDir& baseDir, QWidget *parent = nullptr);
 
   virtual void connectSignals() override;
@@ -34,6 +35,7 @@ public slots:
 protected:
   virtual void keyReleaseEvent(QKeyEvent *event) override;
   virtual void showEvent(QShowEvent *event) override;
+  virtual void closeEvent(QCloseEvent*) override;
 
 private:
   QSplitter*             spH;

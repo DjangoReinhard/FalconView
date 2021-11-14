@@ -1086,8 +1086,8 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
         gp_Pnt ep     = gp_Pnt(fe, se, ae);
         gp_Pnt center = gp_Pnt(fa, sa, fmin(sp.Z(), ae));
 
-        qDebug() << "rotation" << rotation << "at line #" << lineno;
-        qDebug() << QString("NCanon: arc move #%1  -  (%2/%3/%4) -> (%5/%6/%7) CENTER (%8/%9/%10)")
+        qDebug() << "NCanon (AFs): rotation" << rotation << "at line #" << lineno;
+        qDebug() << QString("NCanon (AFs): simple arc move #%1  -  (%2/%3/%4) -> (%5/%6/%7) CENTER (%8/%9/%10)")
                            .arg(lineno)
                            .arg(sp.X(), 0, 'f', 3)
                            .arg(sp.Y(), 0, 'f', 3)
@@ -1119,9 +1119,9 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
   PM_CARTESIAN plane_x(1.0,0.0,0.0);
   PM_CARTESIAN plane_y(0.0,1.0,0.0);
 
-  qDebug("start = %f %f %f", lp.x, lp.y, lp.z);
-  qDebug("end = %f %f %f", end_cart.x, end_cart.y, end_cart.z);
-  qDebug("center = %f %f %f", center_cart.x, center_cart.y, center_cart.z);
+  qDebug("NCanon (AFx): start = %f %f %f", lp.x, lp.y, lp.z);
+  qDebug("NCanon (AFx): end = %f %f %f", end_cart.x, end_cart.y, end_cart.z);
+  qDebug("NCanon (AFx): center = %f %f %f", center_cart.x, center_cart.y, center_cart.z);
 
   // Rearrange the X Y Z coordinates in the correct order based on the active plane (XY, YZ, or XZ)
   // KLUDGE CANON_PLANE is 1-indexed, hence the subtraction here to make a 0-index value
@@ -1143,7 +1143,7 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
          CANON_ERROR("Can't set plane in UVW axes, assuming XY");
          break;
     }
-  qDebug("active plane is %d, shift_ind is %d", ci.activePlane(), shift_ind);
+  qDebug("NCanon (AFx): active plane is %d, shift_ind is %d", ci.activePlane(), shift_ind);
 
   end_cart    = circshift(end_cart,    shift_ind);
   center_cart = circshift(center_cart, shift_ind);
@@ -1151,9 +1151,9 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
   plane_x     = circshift(plane_x, shift_ind);
   plane_y     = circshift(plane_y, shift_ind);
 
-  qDebug("normal = %f %f %f",  normal_cart.x, normal_cart.y, normal_cart.z);
-  qDebug("plane_x = %f %f %f", plane_x.x, plane_x.y, plane_x.z);
-  qDebug("plane_y = %f %f %f", plane_y.x, plane_y.y, plane_y.z);
+  qDebug("NCanon (AFx): normal = %f %f %f",  normal_cart.x, normal_cart.y, normal_cart.z);
+  qDebug("NCanon (AFx): plane_x = %f %f %f", plane_x.x, plane_x.y, plane_x.z);
+  qDebug("NCanon (AFx): plane_y = %f %f %f", plane_y.x, plane_y.y, plane_y.z);
 
   // Define end point in PROGRAM units and convert to CANON
   CANON_POSITION endpt(0,0,0,a,b,c,u,v,w);
@@ -1177,35 +1177,40 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
   to_rotated(normal_cart);
 
   // Note that the "start" point is already rotated and offset
-  qDebug("end = %f %f %f",    end_cart.x, end_cart.y, end_cart.z);
-  qDebug("endpt = %f %f %f",  endpt.x, endpt.y, endpt.z);
-  qDebug("center = %f %f %f", center_cart.x, center_cart.y, center_cart.z);
-  qDebug("normal = %f %f %f", normal_cart.x, normal_cart.y, normal_cart.z);
+  qDebug("NCanon (AFx): end = %f %f %f",    end_cart.x, end_cart.y, end_cart.z);
+  qDebug("NCanon (AFx): endpt = %f %f %f",  endpt.x, endpt.y, endpt.z);
+  qDebug("NCanon (AFx): center = %f %f %f", center_cart.x, center_cart.y, center_cart.z);
+  qDebug("NCanon (AFx): normal = %f %f %f", normal_cart.x, normal_cart.y, normal_cart.z);
   Handle(AIS_Shape) shape;
 
   if (rotation == 0) {
+     qDebug() << "NCanon (AFx): simple Line ?!?";
      shape = ci.graphicFactory().createLine(gp_Pnt(lp.x, lp.y, lp.z)
                                           , gp_Pnt(endpt.x, endpt.y, endpt.z));
      }
   else {
+     int fullTurn = 0;
      gp_Pnt sp(lp.x, lp.y, lp.z);
      gp_Pnt ep     = to_ext_len(gp_Pnt(endpt.x, endpt.y, endpt.z));
      // Convert internal center and normal to external units
      gp_Pnt center = to_ext_len(gp_Pnt(center_cart.x, center_cart.y, fmin(lp.z, endpt.z)));
      gp_Pnt normal = to_ext_len(gp_Pnt(normal_cart.x, normal_cart.y, normal_cart.z));
      gp_Dir axis(normal.X(), normal.Y(), normal.Z());
+     if (sp.X() == ep.X() && sp.Y() == ep.Y() && sp.Z() == ep.Z()) fullTurn = 1;
 
-     if (rotation > 0) shape = ci.graphicFactory().createHelix(sp, ep, center, axis, true);
-     else              shape = ci.graphicFactory().createHelix(sp, ep, center, axis, false);
-
-     qDebug() << "created 3D-helix from"
-              << "start: " << sp.X() << "/" << sp.Y() << "/" << sp.Z()
+     qDebug() << "NCanon (AFx): create 3D-helix from #" << lineno
+              << "\tstart: " << sp.X() << "/" << sp.Y() << "/" << sp.Z()
               << "\tend: " << ep.X() << "/" << ep.Y() << "/" << ep.Z()
               << "\tcenter: " << center.X() << "/" << center.Y() << "/" << center.Z()
-              << "\tnormal: " << axis.X() << "/" << axis.Y() << "/" << axis.Z();
+              << "\tnormal: " << axis.X() << "/" << axis.Y() << "/" << axis.Z()
+              << "\trot: " << rotation << "\tfullTurn:" << fullTurn;
+
+     shape = ci.graphicFactory().createHelix(sp, ep, center, axis, rotation > 0,  fullTurn);
      }
-  shape->SetColor(ci.feedColor());
-  ci.toolPath().append(shape);
+  if (shape) {
+     shape->SetColor(ci.feedColor());
+     ci.toolPath().append(shape);
+     }
   ci.setEndPoint(endpt);
   }
 

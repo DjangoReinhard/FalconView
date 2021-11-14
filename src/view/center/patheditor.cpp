@@ -20,12 +20,31 @@
 
 PathEditor::PathEditor(const QString& fileName, QWidget* parent)
  : TestEdit(fileName, parent) {
-  setObjectName(tr("PathEditor"));
+  setObjectName(PathEditor::className);
+
   }
 
 
+void PathEditor::connectSignals() {
+  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::reallyLoadFile);
+  TestEdit::connectSignals();
+  }
+
+
+// called from TestEdit::fileSelected
 void PathEditor::loadFile(const QVariant& fileName) {
-  qDebug() << "PathEditor::loadFile" << fileName;
-  TestEdit::loadFile(fileName);
-  if (!Core().isBackendActive()) ValueManager().setValue("fileName", fileName);
+  if (Core().isBackendActive()) {
+     qDebug() << "PathEditor::loadFile (backend active)" << fileName;
+     //TODO: send command to backend, which in turn changes filename vm
+     }
+  else ValueManager().setValue("fileName", fileName);
   }
+
+
+void PathEditor::reallyLoadFile(const QVariant& fileName) {
+  TestEdit::loadFile(fileName);
+  Core().setAppMode(ApplicationMode::Edit);
+  }
+
+
+const QString PathEditor::className = "PathEditor";

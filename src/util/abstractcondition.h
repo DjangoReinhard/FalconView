@@ -12,7 +12,7 @@ public:
   explicit AbstractCondition(ValueModel* model, const QVariant& value, QObject *parent = nullptr);
   virtual ~AbstractCondition();
 
-  bool result() const { return met; }
+  virtual bool result() const;
 
 public slots:
   virtual bool eval() = 0;

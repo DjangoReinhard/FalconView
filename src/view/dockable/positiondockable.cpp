@@ -199,7 +199,6 @@ void PositionDockable::connectSignals() {
   Config cfg;
 
   connect(vm.getModel("showAbsolute", false), &ValueModel::valueChanged, this, &PositionDockable::setAbsolute);
-//  connect(vm.getModel("axisMask", 0x0),       &ValueModel::valueChanged, this, &PositionDockable::setAxisMask);
   for (int i=0; i < 9; ++i) {
       QString modelKey = QString("homedJoint%1").arg(axisMask.joint4Axis(i));
 

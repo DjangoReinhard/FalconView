@@ -11,12 +11,14 @@ class LCToolTable : public DynWidget
 {
   Q_OBJECT
 public:
+  static const QString className;
   explicit LCToolTable(QWidget* parent = nullptr);
   virtual ~LCToolTable();
 
   virtual void connectSignals() override;
   virtual void updateStyles() override;
   virtual void keyReleaseEvent(QKeyEvent *event) override;
+  virtual void closeEvent(QCloseEvent*) override;
 
 private:
   QTableView*            table;

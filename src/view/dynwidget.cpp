@@ -1,8 +1,10 @@
 #include <dynwidget.h>
+#include <configacc.h>
 #include <QString>
 #include <QFrame>
 #include <QAction>
 #include <QFile>
+#include <QDebug>
 #include <QUiLoader>
 #include <QScrollArea>
 #include <QStackedLayout>
@@ -37,6 +39,14 @@ DynWidget::DynWidget(const QString& fileName, bool addScrollArea, QWidget* paren
 void DynWidget::init() {
   connectSignals();
   updateStyles();
+  }
+
+
+void DynWidget::closeEvent(QCloseEvent*) {
+  qDebug() << "DynWidget::closeEvent() on widget " << objectName();
+//  Config cfg;
+
+//  cfg.setValue("widgetState", this->saveState());
   }
 
 

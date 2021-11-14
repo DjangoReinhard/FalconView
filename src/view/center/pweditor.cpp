@@ -24,7 +24,7 @@
 PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent)
  : TestEdit(fileName, parent)
  , view3D(view) {
-  setObjectName(tr("PreViewEditor"));
+  setObjectName(PreViewEditor::className);
   spV = new QSplitter(Qt::Vertical);
   view->setMinimumSize(400, 400);
   QWidget* w = layout()->itemAt(0)->widget();
@@ -38,6 +38,11 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidge
   pbOpen->hide();
   pbSave->hide();
   ValueManager().setValue("fileName", "janeDoe");
+  Config cfg;
+
+  cfg.beginGroup(PreViewEditor::className);
+  spV->restoreState(cfg.value("vState").toByteArray());
+  cfg.endGroup();
   }
 
 
@@ -55,12 +60,39 @@ void PreViewEditor::showEvent(QShowEvent* e) {
   }
 
 
+void PreViewEditor::keyPressEvent(QKeyEvent* e) {
+  qDebug() << "PW-Edit: key pressed: " << e->key();
+  switch (e->key()) {
+    case Qt::Key_F:
+         qDebug() << "PW-Edit: 'F' recognized ...";
+         view3D->fitAll();
+         e->accept();
+         break;
+    default:
+         TestEdit::keyPressEvent(e);
+         break;
+    }
+  }
+
+
+void PreViewEditor::closeEvent(QCloseEvent*) {
+  Config cfg;
+
+  cfg.beginGroup(PreViewEditor::className);
+  cfg.setValue("vState", spV->saveState());
+  cfg.endGroup();
+  }
+
+
 void PreViewEditor::genPreView(const QVariant& fileName) {
   qDebug() << "PreViewEditor::genPreView" << fileName;
   CanonIF().toolPath().clear();
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
   Core().parseGCFile(fileName.toString());
-//  view3D->showPath(CanonIF().toolPath());
-  Core().activatePage(tr("PreViewEditor"));
+  Core().activatePage(PreViewEditor::className);
+  Core().setAppMode(ApplicationMode::Auto);
   }
+
+
+const QString PreViewEditor::className = "PreViewEditor";

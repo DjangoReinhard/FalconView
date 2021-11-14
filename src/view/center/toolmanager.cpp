@@ -4,7 +4,8 @@
 #include <tooleditor.h>
 #include <toolmodel.h>
 #include <timestamp.h>
-#include <KeyCodes.h>
+#include <core.h>
+#include <configacc.h>
 #include <QAbstractButton>
 #include <QTreeView>
 #include <QTableView>
@@ -42,7 +43,7 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  , tsMsgBox(TimeStamp::rtSequence())
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
-  setObjectName(tr("ToolManager"));
+  setObjectName(ToolManager::className);
   pxCat->setSourceModel(categoryTreeModel);
   categories->setModel(pxCat);
   categories->setTabKeyNavigation(false);
@@ -81,6 +82,12 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
   spV->addWidget(sa);
   layout()->addWidget(spH);
   layout()->setContentsMargins(0, 0, 0, 0);
+  Config cfg;
+
+  cfg.beginGroup(ToolManager::className);
+  spH->restoreState(cfg.value("hState").toByteArray());
+  spV->restoreState(cfg.value("vState").toByteArray());
+  cfg.endGroup();
   }
 
 
@@ -89,6 +96,10 @@ void ToolManager::connectSignals() {
         , this, &ToolManager::currentChanged);
   connect(tools->selectionModel(), &QItemSelectionModel::selectionChanged
         , this, &ToolManager::selectionChanged);
+  }
+
+
+ToolManager::~ToolManager() {
   }
 
 
@@ -223,7 +234,7 @@ void ToolManager::deleteTool() {
 void ToolManager::editTool() {
   categories->hide();
   tools->hide();
-  //TODO: hide all others!
+  Core().showAllButCenter(false);
   tEdit->setEnabled(true);
 
   qDebug() << "default size: " << edSize;
@@ -277,8 +288,9 @@ void ToolManager::saveToolChanges() {
   if (!toolModel->submitAll()) qDebug() << "saving of tool-data failed!" << toolModel->lastError().text();
   tEdit->setEnabled(false);
   tEdit->resize(edSize);
+  Core().showAllButCenter(true);
   categories->show();
-  tools->show();
+  tools->show();  
   tools->setFocus();
   }
 
@@ -302,8 +314,9 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
          if (tEdit->isEnabled()) {  // abort editing
             //TODO: sync changes with start editing
             tEdit->setEnabled(false);
+            Core().showAllButCenter(true);
             categories->show();
-            tools->show();
+            tools->show();            
             tools->setFocus();
             }
          break;
@@ -336,6 +349,16 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
   }
 
 
+void ToolManager::closeEvent(QCloseEvent*) {
+  Config cfg;
+
+  cfg.beginGroup(ToolManager::className);
+  cfg.setValue("hState", spH->saveState());
+  cfg.setValue("vState", spV->saveState());
+  cfg.endGroup();
+  }
+
+
 void ToolManager::showEvent(QShowEvent* e) {
   if (e->type() == QEvent::Show) categories->setFocus();
   }
@@ -349,3 +372,6 @@ void ToolManager::selectionChanged(const QItemSelection& selected, const QItemSe
   tool2Edit = srcIndex.row();
   tEdit->setModel(toolModel->record(tool2Edit));
   }
+
+
+const QString ToolManager::className = "ToolManager";

@@ -15,12 +15,15 @@ class PreViewEditor : public TestEdit
 {
   Q_OBJECT
 public:
+  static const QString className;
   PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent);
 
 protected:
   void genPreView(const QVariant& fileName);
   virtual void connectSignals() override;
   virtual void showEvent(QShowEvent *event) override;
+  virtual void keyPressEvent(QKeyEvent* e) override;
+  virtual void closeEvent(QCloseEvent*) override;
 
 private:
   QSplitter*        spV;
