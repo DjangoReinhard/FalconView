@@ -7,7 +7,6 @@
 #include <valuemanager.h>
 class ToolEntry;
 
-
 class ConfigManager
 {
 public:

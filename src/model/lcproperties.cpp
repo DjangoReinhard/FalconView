@@ -137,7 +137,7 @@ void LcProperties::processLine(const QString &input) {
          bool ok;
          qlonglong lv = value.toLongLong(&ok, 0);
 
-         if (ok) {
+         if (ok) {             
 //            qDebug() << "\tadd value as integer [" << name << "] => " << lv << "\twas: " << value;
 
             if (lv > INT_MIN && lv < INT_MAX) {
@@ -154,7 +154,7 @@ void LcProperties::processLine(const QString &input) {
          else {
             double dv = value.toDouble(&ok);
 
-            if (ok) {
+            if (ok) {                
 //               qDebug() << "\tadd value as double  [" << name << "] => " << dv << "\twas: " << value;
                QVariant v(dv);
 
@@ -195,6 +195,17 @@ void LcProperties::processLine(const QString &input) {
 
 
 void LcProperties::dump() {
+#ifdef REDNOSE
+  for (const QString& groupID : properties.keys()) {
+      const QMap<QString, QVariant>& m = properties.value(groupID);
+
+      qDebug() << " ";
+      qDebug() << "dump group <" << groupID << ">";
+      for (const QString& name : m.keys()) {
+          qDebug() << "\t[" << name << "] => " << m.value(name);
+          }
+      }
+#else
   for (auto g = properties.keyValueBegin(); g != properties.keyValueEnd(); g++) {
       qDebug() << " ";
       qDebug() << "dump group <" << g->first << ">";
@@ -202,4 +213,5 @@ void LcProperties::dump() {
         qDebug() << "\t[" << e->first << "] => " << e->second;
         }
       }
+#endif
   }

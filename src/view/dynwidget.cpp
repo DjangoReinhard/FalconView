@@ -9,32 +9,6 @@
 #include <QScrollArea>
 #include <QStackedLayout>
 
-DynWidget::DynWidget(const QString& fileName, QWidget* parent, int margin)
- : QWidget(parent)
- , vAction(nullptr) {
-  setLayout(new QVBoxLayout);
-  layout()->setContentsMargins(0, 0, 0, 0);
-  w = loadFromUI(fileName);
-  if (w) layout()->addWidget(w);
-  }
-
-
-void DynWidget::init() {
-  connectSignals();
-  updateStyles();
-  }
-
-
-QAction* DynWidget::viewAction() {
-  if (!vAction) {
-     vAction = new QAction(this);
-
-     vAction->setMenuRole(QAction::NoRole);
-     vAction->setText(objectName());
-     }
-  return vAction;
-  }
-
 
 /*! loads widgets from uiFile and allows late initialization at page usage
  */
@@ -70,6 +44,9 @@ void DynWidget::init() {
 
 void DynWidget::closeEvent(QCloseEvent*) {
   qDebug() << "DynWidget::closeEvent() on widget " << objectName();
+//  Config cfg;
+
+//  cfg.setValue("widgetState", this->saveState());
   }
 
 

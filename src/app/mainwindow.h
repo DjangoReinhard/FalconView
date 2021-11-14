@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
+
 class PositionDockable;
 class Dockable;
 class DBConnection;
@@ -39,9 +40,6 @@ protected slots:
   void appModeChanged(const QVariant& appMode);
   void setSingleStep(bool singleStep);
   void toggleErrMessages();
-
-protected slots:
-  void selectPage(const QString& name);
 
 private:
   Ui::MainWindow*     ui;

@@ -481,6 +481,14 @@ void PositionDockable::connectSignals() {
   }
 
 
+//void PositionDockable::setAxisMask(QVariant am) {
+//  if (axisMask.mask() != am.toInt())  {
+//     axisMask = am.toInt();
+//     updatePos();
+//     }
+//  }
+
+
 void PositionDockable::setRelative() {
   setAbsolute(QVariant(false));
   }

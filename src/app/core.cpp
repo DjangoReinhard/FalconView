@@ -10,7 +10,6 @@
 #include <dbconnection.h>
 #include <dbhelper.h>
 #include <mainwindow.h>
-#include <mainview.h>
 #include <tooltable.h>
 #include <LCInter.h>
 #include <canonif.h>
@@ -181,7 +180,7 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
   ci.setTraverseColor(QColor(Qt::cyan));
   ci.setFeedColor(QColor(Qt::white));
   ci.setLimitsColor(QColor(150, 255, 150));
-  connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);
+  connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);  
 
   if (statusReader.isActive()) timer.start(40, this);
   }

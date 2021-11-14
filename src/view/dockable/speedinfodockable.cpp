@@ -28,6 +28,14 @@ SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
 
 
 SpeedInfoDockable::~SpeedInfoDockable() {
+    /*
+  delete curFeed;
+  delete curFastFeed;
+  delete curSpeed;
+  delete cmdFeed;
+  delete cmdFastFeed;
+  delete cmdSpeed;
+  */
   }
 
 

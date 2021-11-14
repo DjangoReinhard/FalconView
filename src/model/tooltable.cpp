@@ -26,6 +26,7 @@ ToolTable::ToolTable(const ToolTable&& other)
  , fn(other.fn) {
   }
 
+
 ToolTable::~ToolTable() {
   //TODO:
   }
@@ -91,7 +92,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
              if (!ok) number = -1;
              break;
         case 'P':
-             slot = part.mid(1).toInt(&ok);
+             slot = part.midRef(1).toInt(&ok);
              if (!ok) number = -1;
              break;
         case 'Z':
@@ -220,7 +221,6 @@ void ToolTable::setCurrent(int slot) {
   }
 
 
->>>>>>> Work
 const ToolEntry* ToolTable::tool(int number) const {
   if (number < 0 || number >= tools.size()) return nullptr;
   return tools[number];

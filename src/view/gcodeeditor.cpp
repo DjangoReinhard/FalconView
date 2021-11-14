@@ -14,7 +14,7 @@ GCodeEditor::GCodeEditor(QWidget* parent)
 
   connect(this, &GCodeEditor::blockCountChanged,     this, &GCodeEditor::updateLineNumberAreaWidth);
   connect(this, &GCodeEditor::updateRequest,         this, &GCodeEditor::updateLineNumberArea);
-  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine);
+  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine); 
 
   updateLineNumberAreaWidth(0);
   highlightCurrentLine();
@@ -82,11 +82,12 @@ void GCodeEditor::highlightCurrentLine() {
   }
 
 
-void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
+void GCodeEditor::paintLineNumbers(QPaintEvent *e) {    
   QPainter painter(lineNumberArea);
   QColor   bgLineNum = ValueManager().getValue("cfgBg" + Config().nameOf(Config::GuiElem::EdLinNum)).value<QColor>();
   QColor   fgLineNum = ValueManager().getValue("cfgFg" + Config().nameOf(Config::GuiElem::EdLinNum)).value<QColor>();
 
+//  painter.fillRect(e->rect(), QColor(239, 240, 241));
   painter.fillRect(e->rect(), bgLineNum);
   painter.setFont(font());
   QTextBlock block    = firstVisibleBlock();        // lines == block

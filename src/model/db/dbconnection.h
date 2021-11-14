@@ -6,8 +6,8 @@
 class DBConnection
 {
 public:
-  DBConnection(const QString& dbName, const QString& dbType = "QSQLITE");
-  DBConnection(const DBConnection& conn);
+  explicit DBConnection(const QString& dbName, const QString& dbType = "QSQLITE");
+  explicit DBConnection(const DBConnection& conn);
 
   bool connect();
   const QString& dbName() const { return name; }
@@ -17,5 +17,4 @@ private:
   QString name;
   QString type;
   };
-
 #endif // DBCONNECTION_H

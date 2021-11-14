@@ -148,6 +148,7 @@ Aspect_VKey qtKey2VKey(int theKey) {
     case Qt::Key_PageUp:    return Aspect_VKey_PageUp;
     case Qt::Key_Home:      return Aspect_VKey_Home;
     case Qt::Key_End:       return Aspect_VKey_End;
+//    case Qt::Key_Escape:    return Aspect_VKey_Escape;
     case Qt::Key_Back:      return Aspect_VKey_Back;
     case Qt::Key_Enter:     return Aspect_VKey_Enter;
     case Qt::Key_Backspace: return Aspect_VKey_Backspace;
@@ -458,6 +459,7 @@ void OcctQtViewer::updateView() {
 // ================================================================
 void OcctQtViewer::paintGL() {
   if (myView->Window().IsNull()) return;
+
   // wrap FBO created by QOpenGLWidget
   Handle(OpenGl_GraphicDriver)  aDriver     = Handle(OpenGl_GraphicDriver)::DownCast(myContext->CurrentViewer()->Driver());
   const Handle(OpenGl_Context)& aGlCtx      = aDriver->GetSharedContext();

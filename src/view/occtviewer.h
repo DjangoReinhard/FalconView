@@ -31,6 +31,7 @@
 #include <AIS_InteractiveObject.hxx>
 #include <AIS_Shape.hxx>
 #include <V3d_View.hxx>
+
 class AIS_ViewCube;
 class Ally3D;
 
@@ -53,7 +54,7 @@ public:
 protected:
   // OpenGL events
   virtual void initializeGL() override;
-  virtual void paintGL() override;
+  virtual void paintGL() override;  
 
   // user input events
   virtual void closeEvent(QCloseEvent* e) override;

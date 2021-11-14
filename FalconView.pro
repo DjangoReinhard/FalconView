@@ -144,6 +144,8 @@ HEADERS += \
     src/rs274/linecodes.h \
     src/rs274/stupidtoolchangerif.h \
     src/util/abstractcondition.h \
+    src/util/ally3d.h \
+    src/util/andcondition.h \
     src/util/axismask.h \
     src/util/dynaaction.h \
     src/util/equalcondition.h \
