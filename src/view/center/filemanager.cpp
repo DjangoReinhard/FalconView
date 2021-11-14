@@ -4,7 +4,6 @@
 #include <mainview.h>
 #include <core.h>
 #include <configacc.h>
-#include <KeyCodes.h>
 #include <dirmodel.h>
 #include <direntry.h>
 #include <filemodel.h>

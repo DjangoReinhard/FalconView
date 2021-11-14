@@ -1,7 +1,6 @@
 #include <fixtureedit.h>
 #include <valuemanager.h>
 #include <canonif.h>
-#include <KeyCodes.h>
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QLabel>
