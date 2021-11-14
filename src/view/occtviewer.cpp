@@ -66,113 +66,9 @@ Aspect_VKeyFlags qtMouseModifiers2VKeys(Qt::KeyboardModifiers theModifiers) {
 
   return aFlags;
   }
-
-
-//! Map Qt key to virtual key.
-Aspect_VKey qtKey2VKey(int theKey) {
-  switch (theKey) {
-    case 1060: // ru
-    case Qt::Key_A: return Aspect_VKey_A;
-    case 1048: // ru
-    case Qt::Key_B: return Aspect_VKey_B;
-    case 1057: // ru
-    case Qt::Key_C: return Aspect_VKey_C;
-    case 1042: // ru
-    case Qt::Key_D: return Aspect_VKey_D;
-    case 1059: // ru
-    case Qt::Key_E: return Aspect_VKey_E;
-    case 1040: // ru
-    case Qt::Key_F: return Aspect_VKey_F;
-    case Qt::Key_G: return Aspect_VKey_G;
-    case Qt::Key_H: return Aspect_VKey_H;
-    case Qt::Key_I: return Aspect_VKey_I;
-    case Qt::Key_J: return Aspect_VKey_J;
-    case Qt::Key_K: return Aspect_VKey_K;
-    case 1044: // ru
-    case Qt::Key_L: return Aspect_VKey_L;
-    case Qt::Key_M: return Aspect_VKey_M;
-    case Qt::Key_N: return Aspect_VKey_N;
-    case Qt::Key_O: return Aspect_VKey_O;
-    case Qt::Key_P: return Aspect_VKey_P;
-    case 1049: // ru
-    case Qt::Key_Q: return Aspect_VKey_Q;
-    case 1050: // ru
-    case Qt::Key_R: return Aspect_VKey_R;
-    case 1067: // ru
-    case Qt::Key_S: return Aspect_VKey_S;
-    case 1045: // ru
-    case Qt::Key_T: return Aspect_VKey_T;
-    case Qt::Key_U: return Aspect_VKey_U;
-    case 1052: // ru
-    case Qt::Key_V: return Aspect_VKey_V;
-    case 1062: // ru
-    case Qt::Key_W: return Aspect_VKey_W;
-    case 1063: // ru
-    case Qt::Key_X: return Aspect_VKey_X;
-    case Qt::Key_Y: return Aspect_VKey_Y;
-    case 1071: // ru
-    case Qt::Key_Z: return Aspect_VKey_Z;
-      //
-    case Qt::Key_0: return Aspect_VKey_0;
-    case Qt::Key_1: return Aspect_VKey_1;
-    case Qt::Key_2: return Aspect_VKey_2;
-    case Qt::Key_3: return Aspect_VKey_3;
-    case Qt::Key_4: return Aspect_VKey_4;
-    case Qt::Key_5: return Aspect_VKey_5;
-    case Qt::Key_6: return Aspect_VKey_6;
-    case Qt::Key_7: return Aspect_VKey_7;
-    case Qt::Key_8: return Aspect_VKey_8;
-    case Qt::Key_9: return Aspect_VKey_9;
-      //
-    case Qt::Key_F1:        return Aspect_VKey_F1;
-    case Qt::Key_F2:        return Aspect_VKey_F2;
-    case Qt::Key_F3:        return Aspect_VKey_F3;
-    case Qt::Key_F4:        return Aspect_VKey_F4;
-    case Qt::Key_F5:        return Aspect_VKey_F5;
-    case Qt::Key_F6:        return Aspect_VKey_F6;
-    case Qt::Key_F7:        return Aspect_VKey_F7;
-    case Qt::Key_F8:        return Aspect_VKey_F8;
-    case Qt::Key_F9:        return Aspect_VKey_F9;
-    case Qt::Key_F10:       return Aspect_VKey_F10;
-    case Qt::Key_F11:       return Aspect_VKey_F11;
-    case Qt::Key_F12:       return Aspect_VKey_F12;
-      //
-    case Qt::Key_Up:        return Aspect_VKey_Up;
-    case Qt::Key_Left:      return Aspect_VKey_Left;
-    case Qt::Key_Right:     return Aspect_VKey_Right;
-    case Qt::Key_Down:      return Aspect_VKey_Down;
-    case Qt::Key_Plus:      return Aspect_VKey_Plus;
-    case Qt::Key_Minus:     return Aspect_VKey_Minus;
-    case Qt::Key_Equal:     return Aspect_VKey_Equal;
-    case Qt::Key_PageDown:  return Aspect_VKey_PageDown;
-    case Qt::Key_PageUp:    return Aspect_VKey_PageUp;
-    case Qt::Key_Home:      return Aspect_VKey_Home;
-    case Qt::Key_End:       return Aspect_VKey_End;
-//    case Qt::Key_Escape:    return Aspect_VKey_Escape;
-    case Qt::Key_Back:      return Aspect_VKey_Back;
-    case Qt::Key_Enter:     return Aspect_VKey_Enter;
-    case Qt::Key_Backspace: return Aspect_VKey_Backspace;
-    case Qt::Key_Space:     return Aspect_VKey_Space;
-    case Qt::Key_Delete:    return Aspect_VKey_Delete;
-    case Qt::Key_Tab:       return Aspect_VKey_Tab;
-    case 1025:
-    case Qt::Key_QuoteLeft: return Aspect_VKey_Tilde;
-      //
-    case Qt::Key_Shift:     return Aspect_VKey_Shift;
-    case Qt::Key_Control:   return Aspect_VKey_Control;
-    case Qt::Key_Alt:       return Aspect_VKey_Alt;
-    case Qt::Key_Menu:      return Aspect_VKey_Menu;
-    case Qt::Key_Meta:      return Aspect_VKey_Meta;
-    default:                return Aspect_VKey_UNKNOWN;
-    }
-  }
 }   // end unnamed namespace
 
 
-// ================================================================
-// Function : OcctQtViewer
-// Purpose  :
-// ================================================================
 OcctQtViewer::OcctQtViewer(bool verbose, QWidget* theParent)
  : QOpenGLWidget(theParent)
  , myIsCoreProfile(false)
@@ -207,7 +103,6 @@ OcctQtViewer::OcctQtViewer(bool verbose, QWidget* theParent)
   myView->ChangeRenderingParams().CollectedStats = (Graphic3d_RenderingParams::PerfCounters)
                                                    (Graphic3d_RenderingParams::PerfCounters_FrameRate
                                                   | Graphic3d_RenderingParams::PerfCounters_Triangles);
-
   // Qt widget setup
   setMouseTracking(true);
   setBackgroundRole(QPalette::NoRole);  // or NoBackground
@@ -244,25 +139,17 @@ OcctQtViewer::OcctQtViewer(bool verbose, QWidget* theParent)
   Handle(Prs3d_Drawer) hlStyle = myContext->HighlightStyle();
 
   hlStyle->SetMethod(Aspect_TOHM_COLOR);
-  hlStyle->SetColor(Quantity_NOC_BLUE); // highlight color?!?
+  hlStyle->SetColor(Quantity_NOC_BLUE);
   hlStyle->SetDisplayMode(1);
   hlStyle->SetTransparency(0.2f);
   myContext->SetHighlightStyle(hlStyle);
   }
 
 
-// ================================================================
-// Function : ~OcctQtViewer
-// Purpose  :
-// ================================================================
 OcctQtViewer::~OcctQtViewer() {
   }
 
 
-// ================================================================
-// Function : dumpGlInfo
-// Purpose  :
-// ================================================================
 void OcctQtViewer::dumpGlInfo(bool theIsBasic) {
   TColStd_IndexedDataMapOfStringString aGlCapsDict;
 
@@ -286,10 +173,6 @@ void OcctQtViewer::dumpGlInfo(bool theIsBasic) {
   }
 
 
-// ================================================================
-// Function : initializeGL
-// Purpose  :
-// ================================================================
 void OcctQtViewer::initializeGL() {
   const QRect            aRect = rect();
   const Graphic3d_Vec2i  aViewSize(aRect.right()  - aRect.left()
@@ -329,10 +212,6 @@ void OcctQtViewer::initializeGL() {
   }
 
 
-// ================================================================
-// Function : closeEvent
-// Purpose  :
-// ================================================================
 void OcctQtViewer::closeEvent(QCloseEvent* e) {
   qDebug() << "OcctQtViewer::closeEvent?!?";
   e->accept();
@@ -346,14 +225,41 @@ void OcctQtViewer::setBounds(const Bnd_Box &bounds) {
 
 void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
   switch (e->key()) {
-    case Qt::Key_Escape:
-         qDebug() << "OcctQtViewer: escape hit - but don't do anything!";
+    case Qt::Key_F:
+         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier)
+            frontView();
+         else fitAll();
          e->accept();
          break;
-    case Qt::Key_F:
-         qDebug() << "OcctQtViewer: F key pressed";
-         fitAll();
-         e->accept();
+    case Qt::Key_T:
+         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            topView();
+            e->accept();
+            }
+         break;
+    case Qt::Key_R:
+         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            rightView();
+            e->accept();
+            }
+         break;
+    case Qt::Key_L:
+         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            leftView();
+            e->accept();
+            }
+         break;
+    case Qt::Key_B:
+         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            backView();
+            e->accept();
+            }
+         break;
+    case Qt::Key_3:
+         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            isoView();
+            e->accept();
+            }
          break;
     default:
          QOpenGLWidget::keyPressEvent(e);
@@ -362,10 +268,6 @@ void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
   }
 
 
-// ================================================================
-// Function : fitAll
-// Purpose  : zoom to workpath
-// ================================================================
 void OcctQtViewer::fitAll() {
   myView->FitAll(myBounds, false);
   myView->Invalidate();
@@ -373,10 +275,6 @@ void OcctQtViewer::fitAll() {
   }
 
 
-// ================================================================
-// Function : mousePressEvent
-// Purpose  :
-// ================================================================
 void OcctQtViewer::mousePressEvent(QMouseEvent* e) {
   QOpenGLWidget::mousePressEvent(e);
   const Graphic3d_Vec2i  aPnt(e->pos().x(), e->pos().y());
@@ -392,10 +290,6 @@ void OcctQtViewer::mousePressEvent(QMouseEvent* e) {
   }
 
 
-// ================================================================
-// Function : mouseReleaseEvent
-// Purpose  :
-// ================================================================
 void OcctQtViewer::mouseReleaseEvent(QMouseEvent* e) {
   QOpenGLWidget::mouseReleaseEvent(e);
   const Graphic3d_Vec2i  aPnt(e->pos().x(), e->pos().y());
@@ -411,10 +305,6 @@ void OcctQtViewer::mouseReleaseEvent(QMouseEvent* e) {
   }
 
 
-// ================================================================
-// Function : mouseMoveEvent
-// Purpose  :
-// ================================================================
 void OcctQtViewer::mouseMoveEvent(QMouseEvent* e) {
   QOpenGLWidget::mouseMoveEvent(e);
   const Graphic3d_Vec2i aNewPos (e->pos().x(), e->pos().y());
@@ -429,10 +319,6 @@ void OcctQtViewer::mouseMoveEvent(QMouseEvent* e) {
   }
 
 
-// ==============================================================================
-// function : wheelEvent
-// purpose  :
-// ==============================================================================
 void OcctQtViewer::wheelEvent(QWheelEvent* e) {
   QOpenGLWidget::wheelEvent(e);
   const Graphic3d_Vec2i aPos(e->position().x(), e->position().y());
@@ -444,19 +330,11 @@ void OcctQtViewer::wheelEvent(QWheelEvent* e) {
   }
 
 
-// =======================================================================
-// function : updateView
-// purpose  :
-// =======================================================================
 void OcctQtViewer::updateView() {
   update();
   }
 
 
-// ================================================================
-// Function : paintGL
-// Purpose  :
-// ================================================================
 void OcctQtViewer::paintGL() {
   if (myView->Window().IsNull()) return;
 
@@ -492,10 +370,6 @@ void OcctQtViewer::paintGL() {
   }
 
 
-// ================================================================
-// Function : handleViewRedraw
-// Purpose  :
-// ================================================================
 void OcctQtViewer::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx
                                   , const Handle(V3d_View)& theView) {
   AIS_ViewController::handleViewRedraw(theCtx, theView);
@@ -503,4 +377,40 @@ void OcctQtViewer::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx
   if (myToAskNextFrame) {
      updateView();      // ask more frames for animation
      }
+  }
+
+
+void OcctQtViewer::frontView() {
+  myView->SetProj(V3d_Yneg);
+  fitAll();
+  }
+
+
+void OcctQtViewer::backView() {
+  myView->SetProj(V3d_Ypos);
+  fitAll();
+  }
+
+
+void OcctQtViewer::topView() {
+  myView->SetProj(V3d_Zpos);
+  fitAll();
+  }
+
+
+void OcctQtViewer::leftView() {
+  myView->SetProj(V3d_Xneg);
+  fitAll();
+  }
+
+
+void OcctQtViewer::rightView() {
+  myView->SetProj(V3d_Xpos);
+  fitAll();
+  }
+
+
+void OcctQtViewer::isoView() {
+  myView->SetProj(V3d_XposYnegZpos);
+  fitAll();
   }

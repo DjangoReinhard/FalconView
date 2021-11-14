@@ -50,6 +50,12 @@ public:
   virtual QSize  sizeHint()        const override { return QSize(720, 480); }
   void setBounds(const Bnd_Box& bounds);
   void fitAll();
+  void frontView();
+  void backView();
+  void topView();
+  void leftView();
+  void rightView();
+  void isoView();
 
 protected:
   // OpenGL events

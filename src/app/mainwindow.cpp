@@ -1,6 +1,6 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
-//#include <applicationmode.h>
+#include <occtviewer.h>
 #include <settingsnb.h>
 #include <dbconnection.h>
 #include <dynaaction.h>
@@ -105,6 +105,13 @@ void MainWindow::addDockable(Qt::DockWidgetArea area, Dockable* d) {
 void MainWindow::createActions() {
   MIcon::setDisabledFileName(":/res/SK_DisabledIcon.png");
   ValueManager vm;
+
+  ui->action3D_View->setShortcut(Qt::CTRL   + Qt::Key_3);
+  ui->actionFrontView->setShortcut(Qt::CTRL + Qt::Key_F);
+  ui->actionBackView->setShortcut(Qt::CTRL  + Qt::Key_B);
+  ui->actionleftView->setShortcut(Qt::CTRL  + Qt::Key_L);
+  ui->actionrightView->setShortcut(Qt::CTRL + Qt::Key_R);
+  ui->actionTopView->setShortcut(Qt::CTRL   + Qt::Key_T);
 
   qDebug() << "\tMW::createActions() ... START";
   startAction = new DynaAction(MIcon(":/res/SK_AutoStart.png", ":/res/SK_AutoStart_active.png")
@@ -335,6 +342,13 @@ void MainWindow::createConnections() {
   connect(ui->actionAbsPos,    &QAction::triggered, pos,  [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
   connect(ui->actionDockables, &QAction::triggered, this, [=](){ Core().showAllButCenter(ui->actionDockables->isChecked()); });
   connect(ui->actionExit,      &QAction::triggered, this, &QWidget::close);
+
+  connect(ui->action3D_View, &QAction::triggered, Core().view3D(), &OcctQtViewer::isoView);
+  connect(ui->actionFrontView, &QAction::triggered, Core().view3D(), &OcctQtViewer::frontView);
+  connect(ui->actionBackView, &QAction::triggered, Core().view3D(), &OcctQtViewer::backView);
+  connect(ui->actionleftView, &QAction::triggered, Core().view3D(), &OcctQtViewer::leftView);
+  connect(ui->actionrightView, &QAction::triggered, Core().view3D(), &OcctQtViewer::rightView);
+  connect(ui->actionTopView, &QAction::triggered, Core().view3D(), &OcctQtViewer::topView);
 
   // main menu actions ...
   connect(autoMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::Auto); });

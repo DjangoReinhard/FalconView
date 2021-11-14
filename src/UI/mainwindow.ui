@@ -98,6 +98,13 @@
     </property>
     <addaction name="actionAbsPos"/>
     <addaction name="separator"/>
+    <addaction name="actionFrontView"/>
+    <addaction name="actionrightView"/>
+    <addaction name="actionleftView"/>
+    <addaction name="actionBackView"/>
+    <addaction name="actionTopView"/>
+    <addaction name="action3D_View"/>
+    <addaction name="separator"/>
     <addaction name="actionDockables"/>
    </widget>
    <widget class="QMenu" name="menuMain">
@@ -166,6 +173,57 @@
    </property>
    <property name="text">
     <string>Dockables</string>
+   </property>
+  </action>
+  <action name="actionFrontView">
+   <property name="text">
+    <string>FrontView</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionrightView">
+   <property name="text">
+    <string>rightView</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionleftView">
+   <property name="text">
+    <string>leftView</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionBackView">
+   <property name="text">
+    <string>BackView</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionTopView">
+   <property name="text">
+    <string>TopView</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="action3D_View">
+   <property name="text">
+    <string>3D-View</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
  </widget>
