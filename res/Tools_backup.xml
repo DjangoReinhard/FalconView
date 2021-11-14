@@ -1,0 +1,1005 @@
+<?xml version="1.0" ?>
+<ToolLibrary Version="0.1" toolNameFormat="CamBam-V1.0" numberFormat="0.000">
+<ToolDefinition Name="2.00mm 4 Schneiden Fräser">
+<ToolProfile>EndMill</ToolProfile>
+<Index>2</Index>
+<Name>2.00mm 4 Schneiden Fräser</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>4.0</ShankDiameter>
+<Length>20.0</Length>
+<slopeAngle>30.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>2.0</Diameter>
+<FluteLength>5.0</FluteLength>
+<RadialDepthOfCut>1.0</RadialDepthOfCut>
+<AxialDepthOfCut>5.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>VHM</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="3.00mm 2 flute EndMill">
+<ToolProfile>EndMill</ToolProfile>
+<Index>3</Index>
+<Name>3.00mm 2 flute EndMill</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>0.0</ShankDiameter>
+<Length>0.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>3.0</Diameter>
+<FluteLength>0.0</FluteLength>
+<RadialDepthOfCut>1.5</RadialDepthOfCut>
+<AxialDepthOfCut>20.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode>0815</partCode>
+<material>HSS-E</material>
+<coating>Titan</coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<note>nimmer ganz so scharf</note>
+</ToolDefinition>
+<ToolDefinition Name="6.00mm 4 Schneiden Fräser">
+<ToolProfile>EndMill</ToolProfile>
+<Index>6</Index>
+<Name>6.00mm 4 Schneiden Fräser</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>6.0</ShankDiameter>
+<Length>30.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>6.0</Diameter>
+<FluteLength>19.0</FluteLength>
+<RadialDepthOfCut>3.0</RadialDepthOfCut>
+<AxialDepthOfCut>15.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>6.0</tipDiameter>
+<partCode></partCode>
+<material>VHM</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="4,00mm 4 Schneiden Fräser">
+<ToolProfile>EndMill</ToolProfile>
+<Index>19</Index>
+<Name>4,00mm 4 Schneiden Fräser</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>4.0</ShankDiameter>
+<Length>30.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>4.0</Diameter>
+<FluteLength>11.0</FluteLength>
+<RadialDepthOfCut>2.0</RadialDepthOfCut>
+<AxialDepthOfCut>11.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>VHM</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="8,00mm 4 Schneiden Fräser">
+<ToolProfile>EndMill</ToolProfile>
+<Index>21</Index>
+<Name>8,00mm 4 Schneiden Fräser</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>8.0</ShankDiameter>
+<Length>40.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>8.0</Diameter>
+<FluteLength>30.0</FluteLength>
+<RadialDepthOfCut>4.0</RadialDepthOfCut>
+<AxialDepthOfCut>20.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>4.0</tipDiameter>
+<material>VHM</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="5,00mm 4 Schneiden Fräser">
+<ToolProfile>EndMill</ToolProfile>
+<Index>22</Index>
+<Name>5,00mm 4 Schneiden Fräser</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>6.0</ShankDiameter>
+<Length>30.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>6.0</Diameter>
+<FluteLength>17.0</FluteLength>
+<RadialDepthOfCut>3.0</RadialDepthOfCut>
+<AxialDepthOfCut>12.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>5.0</tipDiameter>
+<partCode></partCode>
+<material>VHM</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="10,00mm 4 Schneiden Fräser">
+<ToolProfile>EndMill</ToolProfile>
+<Index>23</Index>
+<Name>10,00mm 4 Schneiden Fräser</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>10.0</ShankDiameter>
+<Length>50.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>10.0</Diameter>
+<FluteLength>32.0</FluteLength>
+<RadialDepthOfCut>5.0</RadialDepthOfCut>
+<AxialDepthOfCut>25.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>10.0</tipDiameter>
+<partCode></partCode>
+<material>VHM</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="12,00mm 4 Schneiden Fräser">
+<ToolProfile>EndMill</ToolProfile>
+<Index>24</Index>
+<Name>12,00mm 4 Schneiden Fräser</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>12.0</ShankDiameter>
+<Length>50.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>12.0</Diameter>
+<FluteLength>37.0</FluteLength>
+<RadialDepthOfCut>6.0</RadialDepthOfCut>
+<AxialDepthOfCut>30.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>12.0</tipDiameter>
+<partCode></partCode>
+<material>VHM</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="45 deg V Cutter">
+<ToolProfile>VCutter</ToolProfile>
+<Index>7</Index>
+<Name>45 deg V Cutter</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>0.0</ShankDiameter>
+<Length>0.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>0.0</Diameter>
+<FluteLength>0.0</FluteLength>
+<RadialDepthOfCut>0.0</RadialDepthOfCut>
+<AxialDepthOfCut>0.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="90° Kegelsenker">
+<ToolProfile>VCutter</ToolProfile>
+<Index>39</Index>
+<Name>90° Kegelsenker</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>9.76</ShankDiameter>
+<Length>35.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>20.5</Diameter>
+<FluteLength>8.0</FluteLength>
+<RadialDepthOfCut>10.25</RadialDepthOfCut>
+<AxialDepthOfCut>8.0</AxialDepthOfCut>
+<VeeAngle>90.0</VeeAngle>
+<tipDiameter>3.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note>als Senker weniger geeignet</note>
+</ToolDefinition>
+<ToolDefinition Name="2,0mm Reibahle 2H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>4</Index>
+<Name>2,0mm Reibahle 2H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>1.93</ShankDiameter>
+<Length>30.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>4</Flutes>
+<Diameter>2.0</Diameter>
+<FluteLength>13.0</FluteLength>
+<RadialDepthOfCut>1.0</RadialDepthOfCut>
+<AxialDepthOfCut>13.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode>15310200</partCode>
+<material>HSS-E</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment>Passung: 2H7</comment>
+</ToolDefinition>
+<ToolDefinition Name="3,0mm Reibahle 3H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>5</Index>
+<Name>3,0mm Reibahle 3H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>3.07</ShankDiameter>
+<Length>42.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>3.0</Diameter>
+<FluteLength>16.5</FluteLength>
+<RadialDepthOfCut>1.5</RadialDepthOfCut>
+<AxialDepthOfCut>16.5</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="4,0mm Reibahle 4H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>8</Index>
+<Name>4,0mm Reibahle 4H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>3.24</ShankDiameter>
+<Length>47.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>4.0</Diameter>
+<FluteLength>19.0</FluteLength>
+<RadialDepthOfCut>2.0</RadialDepthOfCut>
+<AxialDepthOfCut>19.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="5,0mm Reibahle 5H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>10</Index>
+<Name>5,0mm Reibahle 5H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>4.09</ShankDiameter>
+<Length>54.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>5.0</Diameter>
+<FluteLength>24.0</FluteLength>
+<RadialDepthOfCut>5.0</RadialDepthOfCut>
+<AxialDepthOfCut>24.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="6,0mm Reibahle 6H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>12</Index>
+<Name>6,0mm Reibahle 6H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>4.96</ShankDiameter>
+<Length>61.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>6.0</Diameter>
+<FluteLength>27.0</FluteLength>
+<RadialDepthOfCut>3.0</RadialDepthOfCut>
+<AxialDepthOfCut>27.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="7,0mm Reibahle 7H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>25</Index>
+<Name>7,0mm Reibahle 7H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>6.01</ShankDiameter>
+<Length>64.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>7.0</Diameter>
+<FluteLength>32.0</FluteLength>
+<RadialDepthOfCut>3.5</RadialDepthOfCut>
+<AxialDepthOfCut>32.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-E</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="8,0mm Reibahle 8H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>26</Index>
+<Name>8,0mm Reibahle 8H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>6.94</ShankDiameter>
+<Length>69.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>8.0</Diameter>
+<FluteLength>34.0</FluteLength>
+<RadialDepthOfCut>4.0</RadialDepthOfCut>
+<AxialDepthOfCut>34.0</AxialDepthOfCut>
+<VeeAngle>45.0</VeeAngle>
+<tipDiameter>7.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-E</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="9,0mm Reibahle 9H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>27</Index>
+<Name>9,0mm Reibahle 9H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>7.58</ShankDiameter>
+<Length>77.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>9.0</Diameter>
+<FluteLength>36.0</FluteLength>
+<RadialDepthOfCut>4.5</RadialDepthOfCut>
+<AxialDepthOfCut>36.0</AxialDepthOfCut>
+<VeeAngle>45.0</VeeAngle>
+<tipDiameter>7.0</tipDiameter>
+<partCode></partCode>
+<material>VHM</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="10,0mm Reibahle 10H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>28</Index>
+<Name>10,0mm Reibahle 10H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>7.5</ShankDiameter>
+<Length>79.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>10.0</Diameter>
+<FluteLength>38.0</FluteLength>
+<RadialDepthOfCut>5.0</RadialDepthOfCut>
+<AxialDepthOfCut>38.0</AxialDepthOfCut>
+<VeeAngle>45.0</VeeAngle>
+<tipDiameter>8.5</tipDiameter>
+<partCode></partCode>
+<material>HSS-E</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="11,0mm Reibahle 11H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>29</Index>
+<Name>11,0mm Reibahle 11H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>9.43</ShankDiameter>
+<Length>88.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>11.0</Diameter>
+<FluteLength>41.0</FluteLength>
+<RadialDepthOfCut>5.5</RadialDepthOfCut>
+<AxialDepthOfCut>41.0</AxialDepthOfCut>
+<VeeAngle>45.0</VeeAngle>
+<tipDiameter>8.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-E</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="12,0mm Reibahle 12H7">
+<ToolProfile>Reibahle - Drill</ToolProfile>
+<Index>30</Index>
+<Name>12,0mm Reibahle 12H7</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>10.27</ShankDiameter>
+<Length>10.16</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>6</Flutes>
+<Diameter>12.0</Diameter>
+<FluteLength>44.0</FluteLength>
+<RadialDepthOfCut>6.0</RadialDepthOfCut>
+<AxialDepthOfCut>44.0</AxialDepthOfCut>
+<VeeAngle>45.0</VeeAngle>
+<tipDiameter>10.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-E</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="1,5mm Spiralbohrer extra lang">
+<ToolProfile>Spiralbohrer - Drill</ToolProfile>
+<Index>11</Index>
+<Name>1,5mm Spiralbohrer extra lang</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>1.5</ShankDiameter>
+<Length>55.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>1.5</Diameter>
+<FluteLength>42.0</FluteLength>
+<RadialDepthOfCut>0.75</RadialDepthOfCut>
+<AxialDepthOfCut>42.0</AxialDepthOfCut>
+<VeeAngle>118.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="5,2mm Spiralbohrer extra lang">
+<ToolProfile>Spiralbohrer - Drill</ToolProfile>
+<Index>20</Index>
+<Name>5,2mm Spiralbohrer extra lang</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>5.07</ShankDiameter>
+<Length>155.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>5.2</Diameter>
+<FluteLength>141.0</FluteLength>
+<RadialDepthOfCut>2.6</RadialDepthOfCut>
+<AxialDepthOfCut>141.0</AxialDepthOfCut>
+<VeeAngle>118.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="6,0mm Spiralbohrer extra lang">
+<ToolProfile>Spiralbohrer - Drill</ToolProfile>
+<Index>13</Index>
+<Name>6,0mm Spiralbohrer extra lang</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>5.8</ShankDiameter>
+<Length>160.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>6.0</Diameter>
+<FluteLength>135.0</FluteLength>
+<RadialDepthOfCut>3.0</RadialDepthOfCut>
+<AxialDepthOfCut>135.0</AxialDepthOfCut>
+<VeeAngle>118.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="10,2mm Spiralbohrer">
+<ToolProfile>Spiralbohrer - Drill</ToolProfile>
+<Index>31</Index>
+<Name>10,2mm Spiralbohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>10.0</ShankDiameter>
+<Length>105.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>10.2</Diameter>
+<FluteLength>87.0</FluteLength>
+<RadialDepthOfCut>5.1</RadialDepthOfCut>
+<AxialDepthOfCut>87.0</AxialDepthOfCut>
+<VeeAngle>135.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-Co</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="11,5mm Spiralbohrer">
+<ToolProfile>Spiralbohrer - Drill</ToolProfile>
+<Index>32</Index>
+<Name>11,5mm Spiralbohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>11.0</ShankDiameter>
+<Length>115.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>11.5</Diameter>
+<FluteLength>94.0</FluteLength>
+<RadialDepthOfCut>5.75</RadialDepthOfCut>
+<AxialDepthOfCut>94.0</AxialDepthOfCut>
+<VeeAngle>135.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-G</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="18,0mm Spiralbohrer">
+<ToolProfile>Spiralbohrer - Drill</ToolProfile>
+<Index>33</Index>
+<Name>18,0mm Spiralbohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>13.0</ShankDiameter>
+<Length>150.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>18.0</Diameter>
+<FluteLength>130.0</FluteLength>
+<RadialDepthOfCut>9.0</RadialDepthOfCut>
+<AxialDepthOfCut>130.0</AxialDepthOfCut>
+<VeeAngle>118.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="22,0mm Spiralbohrer">
+<ToolProfile>Spiralbohrer - Drill</ToolProfile>
+<Index>34</Index>
+<Name>22,0mm Spiralbohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>13.0</ShankDiameter>
+<Length>180.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>22.0</Diameter>
+<FluteLength>150.0</FluteLength>
+<RadialDepthOfCut>11.0</RadialDepthOfCut>
+<AxialDepthOfCut>150.0</AxialDepthOfCut>
+<VeeAngle>118.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="6,0mm NC-Anbohrer 90°">
+<ToolProfile>NC-Anbohrer - Drill</ToolProfile>
+<Index>14</Index>
+<Name>6,0mm NC-Anbohrer 90°</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>6.0</ShankDiameter>
+<Length>30.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>6.0</Diameter>
+<FluteLength>13.0</FluteLength>
+<RadialDepthOfCut>3.0</RadialDepthOfCut>
+<AxialDepthOfCut>3.0</AxialDepthOfCut>
+<VeeAngle>90.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>VHM</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment>HRC 45</comment>
+</ToolDefinition>
+<ToolDefinition Name="12,0mm NC-Anbohrer 90°">
+<ToolProfile>NC-Anbohrer - Drill</ToolProfile>
+<Index>15</Index>
+<Name>12,0mm NC-Anbohrer 90°</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>12.0</ShankDiameter>
+<Length>40.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>2</Flutes>
+<Diameter>12.0</Diameter>
+<FluteLength>25.0</FluteLength>
+<RadialDepthOfCut>6.0</RadialDepthOfCut>
+<AxialDepthOfCut>6.0</AxialDepthOfCut>
+<VeeAngle>90.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>VHM</material>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="M3 Gewindebohrer">
+<ToolProfile>Gewindebohrer - Drill</ToolProfile>
+<Index>16</Index>
+<Name>M3 Gewindebohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>3.85</ShankDiameter>
+<Length>30.0</Length>
+<slopeAngle>30.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>3.0</Diameter>
+<FluteLength>10.0</FluteLength>
+<RadialDepthOfCut>1.5</RadialDepthOfCut>
+<AxialDepthOfCut>10.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<coating>Titan</coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="M4 Gewindebohrer">
+<ToolProfile>Gewindebohrer - Drill</ToolProfile>
+<Index>17</Index>
+<Name>M4 Gewindebohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>4.9</ShankDiameter>
+<Length>37.0</Length>
+<slopeAngle>30.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>4.0</Diameter>
+<FluteLength>12.5</FluteLength>
+<RadialDepthOfCut>2.0</RadialDepthOfCut>
+<AxialDepthOfCut>12.5</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<coating>Titan</coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="M5 Gewindebohrer">
+<ToolProfile>Gewindebohrer - Drill</ToolProfile>
+<Index>18</Index>
+<Name>M5 Gewindebohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>4.9</ShankDiameter>
+<Length>42.0</Length>
+<slopeAngle>30.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>5.0</Diameter>
+<FluteLength>17.0</FluteLength>
+<RadialDepthOfCut>2.5</RadialDepthOfCut>
+<AxialDepthOfCut>17.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<material>HSS</material>
+<coating>Titan</coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+</ToolDefinition>
+<ToolDefinition Name="M6 Gewindebohrer">
+<ToolProfile>Gewindebohrer - Drill</ToolProfile>
+<Index>35</Index>
+<Name>M6 Gewindebohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>5.82</ShankDiameter>
+<Length>35.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>6.0</Diameter>
+<FluteLength>21.0</FluteLength>
+<RadialDepthOfCut>0.0</RadialDepthOfCut>
+<AxialDepthOfCut>21.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating>Titan</coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="M8 Gewindebohrer">
+<ToolProfile>Gewindebohrer - Drill</ToolProfile>
+<Index>36</Index>
+<Name>M8 Gewindebohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>6.09</ShankDiameter>
+<Length>50.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>8.0</Diameter>
+<FluteLength>24.0</FluteLength>
+<RadialDepthOfCut>4.0</RadialDepthOfCut>
+<AxialDepthOfCut>24.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating>Titan</coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="M12 Gewindebohrer">
+<ToolProfile>Gewindebohrer - Drill</ToolProfile>
+<Index>37</Index>
+<Name>M12 Gewindebohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>8.78</ShankDiameter>
+<Length>75.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>12.0</Diameter>
+<FluteLength>27.0</FluteLength>
+<RadialDepthOfCut>6.0</RadialDepthOfCut>
+<AxialDepthOfCut>27.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-E</material>
+<coating>Titan</coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="G1/4&quot; Gewindebohrer">
+<ToolProfile>Gewindebohrer - Drill</ToolProfile>
+<Index>38</Index>
+<Name>G1/4" Gewindebohrer</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>10.8</ShankDiameter>
+<Length>65.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>3</Flutes>
+<Diameter>13.3</Diameter>
+<FluteLength>22.0</FluteLength>
+<RadialDepthOfCut>6.65</RadialDepthOfCut>
+<AxialDepthOfCut>22.0</AxialDepthOfCut>
+<VeeAngle>0.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS-E</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="10,0mm Querlochsenker">
+<ToolProfile>Senker - Drill</ToolProfile>
+<Index>40</Index>
+<Name>10,0mm Querlochsenker</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>5.8</ShankDiameter>
+<Length>22.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>1</Flutes>
+<Diameter>10.0</Diameter>
+<FluteLength>5.0</FluteLength>
+<RadialDepthOfCut>5.0</RadialDepthOfCut>
+<AxialDepthOfCut>5.0</AxialDepthOfCut>
+<VeeAngle>90.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="13,7mm Querlochsenker">
+<ToolProfile>Senker - Drill</ToolProfile>
+<Index>41</Index>
+<Name>13,7mm Querlochsenker</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>7.8</ShankDiameter>
+<Length>26.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>1</Flutes>
+<Diameter>13.0</Diameter>
+<FluteLength>7.0</FluteLength>
+<RadialDepthOfCut>6.5</RadialDepthOfCut>
+<AxialDepthOfCut>7.0</AxialDepthOfCut>
+<VeeAngle>90.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="20,9mm Querlochsenker">
+<ToolProfile>Senker - Drill</ToolProfile>
+<Index>42</Index>
+<Name>20,9mm Querlochsenker</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>9.76</ShankDiameter>
+<Length>35.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>1</Flutes>
+<Diameter>20.0</Diameter>
+<FluteLength>11.0</FluteLength>
+<RadialDepthOfCut>10.0</RadialDepthOfCut>
+<AxialDepthOfCut>11.0</AxialDepthOfCut>
+<VeeAngle>90.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+<ToolDefinition Name="27,9mm Querlochsenker">
+<ToolProfile>Senker - Drill</ToolProfile>
+<Index>43</Index>
+<Name>27,9mm Querlochsenker</Name>
+<toolLength>0.0</toolLength>
+<colletDiameter>0.0</colletDiameter>
+<colletLength>0.0</colletLength>
+<ShankDiameter>11.78</ShankDiameter>
+<Length>41.0</Length>
+<slopeAngle>0.0</slopeAngle>
+<Flutes>1</Flutes>
+<Diameter>27.0</Diameter>
+<FluteLength>13.0</FluteLength>
+<RadialDepthOfCut>13.5</RadialDepthOfCut>
+<AxialDepthOfCut>13.0</AxialDepthOfCut>
+<VeeAngle>90.0</VeeAngle>
+<tipDiameter>0.0</tipDiameter>
+<partCode></partCode>
+<material>HSS</material>
+<coating></coating>
+<ToothLoad>0.0</ToothLoad>
+<HelixAngle>0.0</HelixAngle>
+<MaxRampAngle>0.0</MaxRampAngle>
+<comment></comment>
+<note></note>
+</ToolDefinition>
+</ToolLibrary>

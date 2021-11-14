@@ -22,7 +22,6 @@
 #include <micon.h>
 #include <canonif.h>
 #include <configacc.h>
-#include <DocumentCommon.h>
 #include <occtviewer.h>
 #include <QDockWidget>
 #include <QtUiTools/QUiLoader>
@@ -38,17 +37,12 @@
 #include <QColorSpace>
 #include <QToolBar>
 #include <QVariant>
-#include <overlay.h>
 #include <valuemanager.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
  : QMainWindow(parent)
  , ui(new Ui::MainWindow)
- , gh(nullptr)
- , bg01(nullptr)
- , bg02(nullptr)
- , bg03(nullptr)
  , startAction(nullptr)
  , pauseAction(nullptr)
  , stopAction(nullptr)
@@ -77,8 +71,6 @@ MainWindow::MainWindow(QWidget *parent)
   createDockables(conn);
   createValueModels();
   createConnections();
-
-  timer.start(40, this);
 
   // application window
   resize(QSize(1920, 1200));

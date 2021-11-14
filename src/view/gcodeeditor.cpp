@@ -1,4 +1,6 @@
-#include "gcodeeditor.h"
+#include <gcodeeditor.h>
+#include <configacc.h>
+#include <valuemanager.h>
 #include <QPainter>
 #include <QTextBlock>
 #include <QScrollBar>
@@ -12,7 +14,7 @@ GCodeEditor::GCodeEditor(QWidget* parent)
 
   connect(this, &GCodeEditor::blockCountChanged,     this, &GCodeEditor::updateLineNumberAreaWidth);
   connect(this, &GCodeEditor::updateRequest,         this, &GCodeEditor::updateLineNumberArea);
-  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine); 
+  connect(this, &GCodeEditor::cursorPositionChanged, this, &GCodeEditor::highlightCurrentLine);
 
   updateLineNumberAreaWidth(0);
   highlightCurrentLine();
@@ -66,9 +68,12 @@ void GCodeEditor::loadFile(QVariant name) {
 void GCodeEditor::highlightCurrentLine() {
   QList<QTextEdit::ExtraSelection> extraSelections;
   QTextEdit::ExtraSelection selection;
-  QColor lineColor = QColor(Qt::yellow).lighter(140);
+  QColor bgHLLine = ValueManager().getValue("cfgBg" + Config().nameOf(Config::GuiElem::LineHL)).value<QColor>();
+  QColor fgHLLine = ValueManager().getValue("cfgFg" + Config().nameOf(Config::GuiElem::LineHL)).value<QColor>();
+//  QColor lineColor = QColor(Qt::yellow).lighter(140);
 
-  selection.format.setBackground(lineColor);
+  selection.format.setBackground(bgHLLine);
+  selection.format.setForeground(fgHLLine);
   selection.format.setProperty(QTextFormat::FullWidthSelection, true);
   selection.cursor = textCursor();
   selection.cursor.clearSelection();
@@ -77,10 +82,12 @@ void GCodeEditor::highlightCurrentLine() {
   }
 
 
-void GCodeEditor::paintLineNumbers(QPaintEvent *e) {    
+void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
   QPainter painter(lineNumberArea);
+  QColor   bgLineNum = ValueManager().getValue("cfgBg" + Config().nameOf(Config::GuiElem::EdLinNum)).value<QColor>();
+  QColor   fgLineNum = ValueManager().getValue("cfgFg" + Config().nameOf(Config::GuiElem::EdLinNum)).value<QColor>();
 
-  painter.fillRect(e->rect(), QColor(239, 240, 241));
+  painter.fillRect(e->rect(), bgLineNum);
   painter.setFont(font());
   QTextBlock block    = firstVisibleBlock();        // lines == block
   int        blockNum = block.blockNumber();
@@ -91,7 +98,7 @@ void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
         if (block.isVisible() && bottom >= e->rect().top()) {
            QString lineNum = QString::number(blockNum + 1);
 
-           painter.setPen(Qt::darkBlue);
+           painter.setPen(fgLineNum);
            painter.drawText(0
                           , top
                           , lineNumberArea->width()

@@ -23,7 +23,6 @@
   #include <windows.h>
 #endif
 #include <OpenGl_Context.hxx>
-
 #include <occtviewer.h>
 
 #include <Standard_WarningsDisable.hxx>
@@ -31,17 +30,13 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QDebug>
-#include <core.h>
-#include <canonif.h>
 #include <Standard_WarningsRestore.hxx>
 
 #include <AIS_Shape.hxx>
 #include <AIS_ViewCube.hxx>
-#include <AIS_ColoredShape.hxx>
 #include <Aspect_DisplayConnection.hxx>
 #include <Aspect_NeutralWindow.hxx>
 #include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
 #include <Message.hxx>
 #include <OpenGl_GraphicDriver.hxx>
 #include <OpenGl_FrameBuffer.hxx>
@@ -74,7 +69,7 @@ Aspect_VKeyFlags qtMouseModifiers2VKeys(Qt::KeyboardModifiers theModifiers) {
 
 
 //! Map Qt key to virtual key.
-Aspect_VKey qtKey2VKey (int theKey) {
+Aspect_VKey qtKey2VKey(int theKey) {
   switch (theKey) {
     case 1060: // ru
     case Qt::Key_A: return Aspect_VKey_A;
@@ -153,7 +148,6 @@ Aspect_VKey qtKey2VKey (int theKey) {
     case Qt::Key_PageUp:    return Aspect_VKey_PageUp;
     case Qt::Key_Home:      return Aspect_VKey_Home;
     case Qt::Key_End:       return Aspect_VKey_End;
-    case Qt::Key_Escape:    return Aspect_VKey_Escape;
     case Qt::Key_Back:      return Aspect_VKey_Back;
     case Qt::Key_Enter:     return Aspect_VKey_Enter;
     case Qt::Key_Backspace: return Aspect_VKey_Backspace;
@@ -178,9 +172,10 @@ Aspect_VKey qtKey2VKey (int theKey) {
 // Function : OcctQtViewer
 // Purpose  :
 // ================================================================
-OcctQtViewer::OcctQtViewer(QWidget* theParent)
+OcctQtViewer::OcctQtViewer(bool verbose, QWidget* theParent)
  : QOpenGLWidget(theParent)
- , myIsCoreProfile(false) {
+ , myIsCoreProfile(false)
+ , verbose(verbose) {
   Handle(Aspect_DisplayConnection) aDisp   = new Aspect_DisplayConnection();
   Handle(OpenGl_GraphicDriver)     aDriver = new OpenGl_GraphicDriver(aDisp, false);
 
@@ -201,7 +196,7 @@ OcctQtViewer::OcctQtViewer(QWidget* theParent)
   myViewCube->SetViewAnimation(myViewAnimation);
   myViewCube->SetFixedAnimationLoop(false);
   myViewCube->SetAutoStartAnimation(true);
-  myViewCube->TransformPersistence()->SetOffset2d(Graphic3d_Vec2i(100, 100));
+  myViewCube->TransformPersistence()->SetOffset2d(Graphic3d_Vec2i(100, 150));
 
   // note - window will be created later within initializeGL() callback!
   myView = myViewer->CreateView();
@@ -248,7 +243,7 @@ OcctQtViewer::OcctQtViewer(QWidget* theParent)
   Handle(Prs3d_Drawer) hlStyle = myContext->HighlightStyle();
 
   hlStyle->SetMethod(Aspect_TOHM_COLOR);
-  hlStyle->SetColor(Quantity_NOC_BLUE);
+  hlStyle->SetColor(Quantity_NOC_BLUE); // highlight color?!?
   hlStyle->SetDisplayMode(1);
   hlStyle->SetTransparency(0.2f);
   myContext->SetHighlightStyle(hlStyle);
@@ -267,7 +262,7 @@ OcctQtViewer::~OcctQtViewer() {
 // Function : dumpGlInfo
 // Purpose  :
 // ================================================================
-void OcctQtViewer::dumpGlInfo (bool theIsBasic) {
+void OcctQtViewer::dumpGlInfo(bool theIsBasic) {
   TColStd_IndexedDataMapOfStringString aGlCapsDict;
 
   myView->DiagnosticInformation(aGlCapsDict
@@ -312,8 +307,7 @@ void OcctQtViewer::initializeGL() {
   if (!aWindow.IsNull()) {
      aWindow->SetSize(aViewSize.x(), aViewSize.y());
      myView->SetWindow(aWindow, aGlCtx->RenderingContext());
-     qDebug() << "aWindow is not null";
-     dumpGlInfo(true);
+     if (verbose) dumpGlInfo(true);
      }
   else {
      aWindow = new Aspect_NeutralWindow();
@@ -329,121 +323,8 @@ void OcctQtViewer::initializeGL() {
      aWindow->SetNativeHandle(aNativeWin);
      aWindow->SetSize(aViewSize.x(), aViewSize.y());
      myView->SetWindow(aWindow, aGlCtx->RenderingContext());
-     qDebug() << "aWindow was null";
-     dumpGlInfo(true);
-
-     myContext->Display(myViewCube, 0, 0, false);
+     if (verbose) dumpGlInfo(true);
      }
-  }
-
-
-// ================================================================
-// Function : showPath
-// Purpose  :
-// ================================================================
-void OcctQtViewer::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
-  myContext->RemoveAll(false);
-  gp_Pnt  cMin, cMax, p;
-  Bnd_Box bb;
-  gp_Dir  axis = gp::DZ();
-  gp_Ax2  aplace(gp_Pnt(0, 0, 0), axis);
-  Quantity_Color    col;
-  Quantity_Color    tc = CanonIF().feedColor();
-  TopoDS_Shape      topo_cone = BRepPrimAPI_MakeCone(aplace, 0.001, 10, 20).Shape();
-
-  myCone = new AIS_Shape(topo_cone);
-  for (const Handle(AIS_InteractiveObject)& anObject : path) {
-      myContext->Display(anObject, AIS_Shaded, 0, false);
-      const Handle(AIS_ColoredShape) shape = Handle(AIS_ColoredShape)::DownCast(anObject);
-
-      if (!shape.IsNull()) {
-         shape->Color(col);
-         if (col != tc) continue;
-         bb = shape->BoundingBox();
-         p = bb.CornerMin();
-         cMin.SetX(fmin(cMin.X(), p.X()));
-         cMin.SetY(fmin(cMin.Y(), p.Y()));
-         cMin.SetZ(fmin(cMin.Z(), p.Z()));
-         p = bb.CornerMax();
-         cMax.SetX(fmax(cMax.X(), p.X()));
-         cMax.SetY(fmax(cMax.Y(), p.Y()));
-         cMax.SetZ(fmax(cMax.Z(), p.Z()));
-         }
-      }
-  myContext->Display(myViewCube, 0, 0, false);
-  myContext->Display(myCone, AIS_Shaded, 0, false);
-  myBounds = Bnd_Box(cMin, cMax);
-  showLimits();
-  myView->FitAll(myBounds, false);
-  }
-
-
-void OcctQtViewer::showLimits() {
-  CanonIF ci;
-
-  gp_Pnt cMin(Core().lcProperties().value("AXIS_X", "MIN_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Y", "MIN_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Z", "MIN_LIMIT").toDouble());
-  gp_Pnt cMax(Core().lcProperties().value("AXIS_X", "MAX_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Y", "MAX_LIMIT").toDouble()
-            , Core().lcProperties().value("AXIS_Z", "MAX_LIMIT").toDouble());
-
-  Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                                         , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
-  shape = ci.graphicFactory().createLine(gp_Pnt(cMin.X(), cMax.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(ci.limitColor());
-  myContext->Display(shape, AIS_Shaded, 0, false);
   }
 
 
@@ -452,30 +333,42 @@ void OcctQtViewer::showLimits() {
 // Purpose  :
 // ================================================================
 void OcctQtViewer::closeEvent(QCloseEvent* e) {
+  qDebug() << "OcctQtViewer::closeEvent?!?";
   e->accept();
   }
 
 
-// ================================================================
-// Function : keyPressEvent
-// Purpose  :
-// ================================================================
-void OcctQtViewer::keyPressEvent (QKeyEvent* e) {
-  Aspect_VKey aKey = qtKey2VKey (e->key());
+void OcctQtViewer::setBounds(const Bnd_Box &bounds) {
+  myBounds = bounds;
+  }
 
-  switch (aKey) {
-    case Aspect_VKey_Escape: {
-         QApplication::exit();
-         return;
-         }
-    case Aspect_VKey_F: {
-         myView->FitAll(myBounds, false);
-         update();
+
+void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
+  switch (e->key()) {
+    case Qt::Key_Escape:
+         qDebug() << "OcctQtViewer: escape hit - but don't do anything!";
          e->accept();
-         return;
-         }
+         break;
+    case Qt::Key_F:
+         qDebug() << "OcctQtViewer: F key pressed";
+         fitAll();
+         e->accept();
+         break;
+    default:
+         QOpenGLWidget::keyPressEvent(e);
+         break;
     }
-  QOpenGLWidget::keyPressEvent(e);
+  }
+
+
+// ================================================================
+// Function : fitAll
+// Purpose  : zoom to workpath
+// ================================================================
+void OcctQtViewer::fitAll() {
+  myView->FitAll(myBounds, false);
+  myView->Invalidate();
+  update();
   }
 
 
@@ -485,7 +378,6 @@ void OcctQtViewer::keyPressEvent (QKeyEvent* e) {
 // ================================================================
 void OcctQtViewer::mousePressEvent(QMouseEvent* e) {
   QOpenGLWidget::mousePressEvent(e);
-
   const Graphic3d_Vec2i  aPnt(e->pos().x(), e->pos().y());
   const Aspect_VKeyFlags aFlags = qtMouseModifiers2VKeys(e->modifiers());
 
@@ -505,7 +397,6 @@ void OcctQtViewer::mousePressEvent(QMouseEvent* e) {
 // ================================================================
 void OcctQtViewer::mouseReleaseEvent(QMouseEvent* e) {
   QOpenGLWidget::mouseReleaseEvent(e);
-
   const Graphic3d_Vec2i  aPnt(e->pos().x(), e->pos().y());
   const Aspect_VKeyFlags aFlags = qtMouseModifiers2VKeys(e->modifiers());
 
@@ -525,7 +416,6 @@ void OcctQtViewer::mouseReleaseEvent(QMouseEvent* e) {
 // ================================================================
 void OcctQtViewer::mouseMoveEvent(QMouseEvent* e) {
   QOpenGLWidget::mouseMoveEvent(e);
-
   const Graphic3d_Vec2i aNewPos (e->pos().x(), e->pos().y());
 
   if (!myView.IsNull()
@@ -542,9 +432,8 @@ void OcctQtViewer::mouseMoveEvent(QMouseEvent* e) {
 // function : wheelEvent
 // purpose  :
 // ==============================================================================
-void OcctQtViewer::wheelEvent (QWheelEvent* e) {
+void OcctQtViewer::wheelEvent(QWheelEvent* e) {
   QOpenGLWidget::wheelEvent(e);
-
   const Graphic3d_Vec2i aPos(e->position().x(), e->position().y());
 
   if (!myView.IsNull()
@@ -560,7 +449,6 @@ void OcctQtViewer::wheelEvent (QWheelEvent* e) {
 // =======================================================================
 void OcctQtViewer::updateView() {
   update();
-  //if (window() != NULL) { window()->update(); }
   }
 
 
@@ -570,7 +458,6 @@ void OcctQtViewer::updateView() {
 // ================================================================
 void OcctQtViewer::paintGL() {
   if (myView->Window().IsNull()) return;
-
   // wrap FBO created by QOpenGLWidget
   Handle(OpenGl_GraphicDriver)  aDriver     = Handle(OpenGl_GraphicDriver)::DownCast(myContext->CurrentViewer()->Driver());
   const Handle(OpenGl_Context)& aGlCtx      = aDriver->GetSharedContext();
@@ -588,7 +475,6 @@ void OcctQtViewer::paintGL() {
      return;
      }
   Graphic3d_Vec2i              aViewSizeOld;
-  //const QRect aRect = rect(); Graphic3d_Vec2i aViewSizeNew(aRect.right() - aRect.left(), aRect.bottom() - aRect.top());
   Graphic3d_Vec2i              aViewSizeNew = aDefaultFbo->GetVPSize();
   Handle(Aspect_NeutralWindow) aWindow      = Handle(Aspect_NeutralWindow)::DownCast(myView->Window());
 
@@ -613,7 +499,6 @@ void OcctQtViewer::handleViewRedraw(const Handle(AIS_InteractiveContext)& theCtx
   AIS_ViewController::handleViewRedraw(theCtx, theView);
 
   if (myToAskNextFrame) {
-     // ask more frames for animation
-     updateView();
+     updateView();      // ask more frames for animation
      }
   }

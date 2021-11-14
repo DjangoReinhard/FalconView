@@ -1,31 +1,44 @@
 #ifndef AXISMASK_H
 #define AXISMASK_H
+#include <QObject>
+class QString;
 
 
-class AxisMask
+class AxisMask : public QObject
 {
+  Q_OBJECT
 public:
-  AxisMask(int mask = 0);
-  AxisMask(const AxisMask& other);
-  AxisMask(bool hasX, bool hasY, bool hasZ, bool hasA, bool hasB, bool hasC, bool hasU, bool hasV, bool hasW);
+  explicit AxisMask(const AxisMask& other);
+  explicit AxisMask(const QString& iniValue);
+  virtual ~AxisMask();
 
-  int activeAxis() const { return cntActive; }
-  int  mask()      const { return axisMask;  }
-  bool hasXAxis()  const { return axisMask & 0x001; }
-  bool hasYAxis()  const { return axisMask & 0x002; }
-  bool hasZAxis()  const { return axisMask & 0x004; }
-  bool hasAAxis()  const { return axisMask & 0x008; }
-  bool hasBAxis()  const { return axisMask & 0x010; }
-  bool hasCAxis()  const { return axisMask & 0x020; }
-  bool hasUAxis()  const { return axisMask & 0x040; }
-  bool hasVAxis()  const { return axisMask & 0x080; }
-  bool hasWAxis()  const { return axisMask & 0x100; }
+  int  activeAxis() const { return cntActive; }
+  bool hasXAxis()   const { return axisSeen[0]; }
+  bool hasYAxis()   const { return axisSeen[1]; }
+  bool hasZAxis()   const { return axisSeen[2]; }
+  bool hasAAxis()   const { return axisSeen[3]; }
+  bool hasBAxis()   const { return axisSeen[4]; }
+  bool hasCAxis()   const { return axisSeen[5]; }
+  bool hasUAxis()   const { return axisSeen[6]; }
+  bool hasVAxis()   const { return axisSeen[7]; }
+  bool hasWAxis()   const { return axisSeen[8]; }
+  bool hasAxis(int axis) const;
+  void setup(const QString& axisLetters);
+  int  joint4Axis(int axis) const;
+  int  mask() const { return axisMask; }
+  void dump() const;
 
 protected:
   void calcActive();
+  void parseIni(const QString& iniValue);
+  void checkHomed(int axis, QVariant value);
 
 private:
-  int axisMask;
-  int cntActive;
+  int  cntActive;
+  int  axisMask;
+  int  joint2Axis[9];
+  bool axisSeen[9];
+  bool axisHomed[9];
+  static const char axisLetters[];
   };
 #endif // AXISMASK_H

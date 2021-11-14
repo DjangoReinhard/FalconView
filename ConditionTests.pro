@@ -14,18 +14,28 @@ INCLUDEPATH += src/util \
 
 SOURCES = \
     src/test/testengine.cpp \
+    src/util/and3condition.cpp \
+    src/util/and4condition.cpp \
+    src/util/andcondition.cpp \
     src/util/axismask.cpp \
     src/model/valuemodel.cpp \
     src/util/abstractcondition.cpp \
     src/util/equalcondition.cpp \
     src/util/greatercondition.cpp \
+    src/util/notcondition.cpp \
+    src/util/orcondition.cpp \
     src/util/smallercondition.cpp
 
 HEADERS = \
     src/model/valuemodel.h \
     src/util/abstractcondition.h \
+    src/util/and3condition.h \
+    src/util/and4condition.h \
+    src/util/andcondition.h \
     src/util/equalcondition.h \
     src/util/greatercondition.h \
+    src/util/notcondition.h \
+    src/util/orcondition.h \
     src/util/smallercondition.h
 
 

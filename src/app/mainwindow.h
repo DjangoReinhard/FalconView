@@ -1,26 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
-#include <QBasicTimer>
-#include <valuemodel.h>
-#include <labeladapter.h>
-#include <gcodehighlighter.h>
-#include <gcodeinfo.h>
-#include <positioncalculator.h>
-#include <statusreader.h>
-
 class PositionDockable;
-class ToolInfoDockable;
-class SpeedInfoDockable;
-class CurCodesDockable;
-class DocumentCommon;
+class Dockable;
 class DBConnection;
 class GCodeViewer;
-class MainView;
-class OcctQtViewer;
-class QSplitter;
-class Overlay;
-class QLabel;
 class QAction;
 
 QT_BEGIN_NAMESPACE
@@ -36,15 +20,25 @@ public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
+  void toggleAllButCenter();
+
 protected:
+  void closeEvent(QCloseEvent *event)  override;
+  void keyPressEvent(QKeyEvent* event) override;
+  void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
   void createActions();
   void createToolBars();
   void createDockables(DBConnection& conn);
   void createMainWidgets(DBConnection& conn);
   void createConnections();
   void createValueModels();
-  void timerEvent(QTimerEvent* event) override;
-  void closeEvent(QCloseEvent *event) override;
+  void setupMenu();
+  void tellStates() const;
+
+protected slots:
+  void appModeChanged(const QVariant& appMode);
+  void setSingleStep(bool singleStep);
+  void toggleErrMessages();
 
 protected slots:
   void selectPage(const QString& name);
@@ -52,40 +46,37 @@ protected slots:
 private:
   Ui::MainWindow*     ui;
   PositionDockable*   pos;
-  GCodeHighlighter*   gh;
-  QLabel*             bg01;
-  QLabel*             bg02;
-  QLabel*             bg03;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;
   QAction*            singleStep;
+  QAction*            homeAll;
+  QAction*            posAbsolute;
   QAction*            autoMode;
   QAction*            mdiMode;
   QAction*            editMode;
+  QAction*            testEditMode;
   QAction*            wheelMode;
   QAction*            jogMode;
   QAction*            cfgMode;
+  QAction*            msgMode;
+  QAction*            touchMode;
   QAction*            power;
   QAction*            mist;
   QAction*            flood;
   QAction*            spindleLeft;
   QAction*            spindleRight;
   QAction*            spindleOff;
-  QAction*            nop0;
-  QAction*            nop1;
-  QAction*            nop2;
-  QAction*            nop3;
-  QAction*            nop4;
+  QAction*            tools;
+  QAction*            offsets;
+
   QToolBar*           autoTB;
   QToolBar*           modeTB;
   QToolBar*           nopTB;
   QToolBar*           powerTB;
   QToolBar*           switchTB;
   int                 line;
-  QBasicTimer         timer;
-  GCodeInfo           gcodeInfo;
-  PositionCalculator  positionCalculator;
-  StatusReader        statusReader;
+
+  QList<Dockable*>    dockables;
   };
 #endif // MAINWINDOW_H

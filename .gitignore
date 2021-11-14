@@ -6,4 +6,5 @@
 *.pro.user
 build/*
 test/*
+oldStuff/*
 /.project

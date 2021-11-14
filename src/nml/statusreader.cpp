@@ -31,17 +31,25 @@ StatusReader::StatusReader(PositionCalculator& posCalc, GCodeInfo& gcodeInfo)
   }
 
 
+bool StatusReader::isActive() const {
+  return cStatus && cStatus->valid();
+  }
+
+
 void StatusReader::createModels() {
-  vm.setValue("taskMode",    0);
-  vm.setValue("taskState",   0);
-  vm.setValue("execState",   0);
-  vm.setValue("interpState", 0);
-  vm.setValue("axisMask",    0x1F);
-  vm.setValue("units",       0);
-  vm.setValue("feedrate",    1);
-  vm.setValue("rapidrate",   1);
-  vm.setValue("maxVelocity", 2);
-  vm.setValue("curVelocity", 2);
+  qDebug() << "\tSR::createModels() ... START";
+  vm.setValue("errorActive", false);
+  vm.setValue("showAllButCenter", true);
+  vm.setValue("taskMode",     -1);
+  vm.setValue("taskState",    -1);
+  vm.setValue("execState",    -1);
+  vm.setValue("interpState",  -1);
+  vm.setValue("axisMask",      0);
+  vm.setValue("units",        -1);
+  vm.setValue("feedrate",      1);
+  vm.setValue("rapidrate",     1);
+  vm.setValue("maxVelocity",   2);
+  vm.setValue("curVelocity",   2);
   vm.setValue("spindle0Speed", 0);
   vm.setValue("spindle0Scale", 1);
   vm.setValue("spindle0Dir",   0);
@@ -54,28 +62,30 @@ void StatusReader::createModels() {
   // signals:
   vm.setValue("enabledFeedOverride", true);
   vm.setValue("enabledAdaptiveFeed", true);
-  vm.setValue("spindle0Homed",  false);
-  vm.setValue("enabledJoint0", true);
-  vm.setValue("enabledJoint1", true);
-  vm.setValue("enabledJoint2", true);
+  vm.setValue("spindle0Homed", false);
+  vm.setValue("enabledJoint0", false);
+  vm.setValue("enabledJoint1", false);
+  vm.setValue("enabledJoint2", false);
   vm.setValue("enabledJoint3", false);
   vm.setValue("enabledJoint4", false);
   vm.setValue("enabledJoint5", false);
   vm.setValue("enabledJoint6", false);
   vm.setValue("enabledJoint7", false);
   vm.setValue("enabledJoint8", false);
-  vm.setValue("homedJoint0", true);
-  vm.setValue("homedJoint1", true);
-  vm.setValue("homedJoint2", true);
+  vm.setValue("homedJoint0", false);
+  vm.setValue("homedJoint1", false);
+  vm.setValue("homedJoint2", false);
   vm.setValue("homedJoint3", false);
   vm.setValue("homedJoint4", false);
   vm.setValue("homedJoint5", false);
   vm.setValue("homedJoint6", false);
   vm.setValue("homedJoint7", false);
   vm.setValue("homedJoint8", false);
+  vm.setValue("allHomed",  false);
   vm.setValue("coolMist",  false);
   vm.setValue("coolFlood", false);
-  vm.setValue("estop",     false);
+  vm.setValue("estop",     true);
+  qDebug() << "\tSR::createModels() ... END";
   }
 
 void StatusReader::update() {
@@ -83,7 +93,7 @@ void StatusReader::update() {
 #ifdef WANT_BENCH
   std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 #endif
-  cStatus->peek();
+  cStatus->peek();  // get a copy :(
   vm.setValue("taskMode",    status->task.mode);
   vm.setValue("taskState",   status->task.state);
   vm.setValue("execState",   status->task.execState);

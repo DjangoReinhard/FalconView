@@ -132,12 +132,12 @@ void LcProperties::processLine(const QString &input) {
 
      list = line.split(QRegularExpression("\\s*=\\s*"));
      if (list.size() >= 2) {
-         QString name  = list.at(0);
-         QString value = list.at(1);
+         QString name  = list.takeFirst();
+         QString value = list.join(" = ");
          bool ok;
          qlonglong lv = value.toLongLong(&ok, 0);
 
-         if (ok) {             
+         if (ok) {
 //            qDebug() << "\tadd value as integer [" << name << "] => " << lv << "\twas: " << value;
 
             if (lv > INT_MIN && lv < INT_MAX) {
@@ -154,7 +154,7 @@ void LcProperties::processLine(const QString &input) {
          else {
             double dv = value.toDouble(&ok);
 
-            if (ok) {                
+            if (ok) {
 //               qDebug() << "\tadd value as double  [" << name << "] => " << dv << "\twas: " << value;
                QVariant v(dv);
 
@@ -195,13 +195,11 @@ void LcProperties::processLine(const QString &input) {
 
 
 void LcProperties::dump() {
-  for (QString groupID : properties.keys()) {
-      const QMap<QString, QVariant>& m = properties.value(groupID);
-
+  for (auto g = properties.keyValueBegin(); g != properties.keyValueEnd(); g++) {
       qDebug() << " ";
-      qDebug() << "dump group <" << groupID << ">";
-      for (QString name : m.keys()) {
-          qDebug() << "\t[" << name << "] => " << m.value(name);
-          }
+      qDebug() << "dump group <" << g->first << ">";
+      for (auto e = g->second.keyValueBegin(); e != g->second.keyValueEnd(); e++) {
+        qDebug() << "\t[" << e->first << "] => " << e->second;
+        }
       }
   }

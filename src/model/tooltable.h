@@ -1,18 +1,20 @@
 #ifndef TOOLTABLE_H
 #define TOOLTABLE_H
 #include <toolentry.h>
+#include <QAbstractTableModel>
 #include <QListIterator>
 #include <QString>
 #include <QList>
 #include <QMap>
 class QFile;
+class QModelIndex;
 
 
 /**
  * @brief The ToolTable class
  * parse and hold tooltable of linuxcnc
  */
-class ToolTable
+class ToolTable : public QAbstractTableModel
 {
 public:
   ToolTable(const QString& fileName = QString());
@@ -25,11 +27,20 @@ public:
   const ToolEntry* tool(int num) const;
   QString          fileName() const { return fn; }
   void             dump();
+  void             save();
   void             setCurrent(int lineNum);
   QList<ToolEntry*>::Iterator begin()            { return tools.begin(); }
   QList<ToolEntry*>::Iterator end()              { return tools.end();   }
   QList<ToolEntry*>::ConstIterator begin() const { return tools.begin(); }
   QList<ToolEntry*>::ConstIterator end() const   { return tools.end();   }
+
+  // for AbstractTableModel
+  int rowCount(const QModelIndex &parent) const override;
+  int columnCount(const QModelIndex &parent) const override;
+  QVariant data(const QModelIndex &index, int role) const override;
+  QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+  Qt::ItemFlags flags(const QModelIndex &index) const override;
+  bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 
 protected:
   void processFile(QFile& file);

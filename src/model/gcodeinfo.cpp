@@ -44,7 +44,7 @@ raw gcode value:  80
 raw gcode value:  922
      */
   for (int i=0; i < ACTIVE_G_CODES; ++i) {
-      qDebug() << "raw gcode value: " << activeGCodes[i];
+//      qDebug() << "raw gcode value: " << activeGCodes[i];
       QString k = QString("GC%1").arg(i);
       QString v = " ";
 
@@ -57,7 +57,7 @@ raw gcode value:  922
       vm.setValue(k, v);
       }
   for (int i=0; i < ACTIVE_M_CODES; ++i) {
-      qDebug() << "raw mcode value: " << activeMCodes[i];
+//      qDebug() << "raw mcode value: " << activeMCodes[i];
       QString k = QString("MC%1").arg(i);
       QString v = " ";
 

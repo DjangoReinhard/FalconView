@@ -48,39 +48,39 @@ void EditorDockable::connectSignals() {
   Config       cfg;
 
   connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, fileName, [=](QVariant name){ fileName->setText(name.toString()); });
-  connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[6]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , fileName
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
                  fileName->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.guiSettings[6]), QColor(Qt::black))
+  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , fileName
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
                  fileName->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.guiSettings[6]), fileName->font())
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Filename)), fileName->font())
         , &ValueModel::valueChanged
         , fileName
-        , [=](){ fileName->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[6]).value<QFont>());
+        , [=](){ fileName->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
                  });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.guiSettings[7]), QColor(Qt::white))
+  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , editor
         , [=](){ QString arg = QString("background: #%2;")
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[7]).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16);
                  editor->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.guiSettings[7]), fileName->font())
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::GCode)), fileName->font())
         , &ValueModel::valueChanged
         , editor
-        , [=](){ editor->setFont(ValueManager().getValue("cfgF" + cfg.guiSettings[7]).value<QFont>());
+        , [=](){ editor->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
                  });
   }
 
@@ -90,28 +90,20 @@ void EditorDockable::updateStyles() {
   Config       cfg;
 
   fileName->setStyleSheet(QString("color: #%1; background: #%2;")
-                                 .arg(ValueManager().getValue("cfgFg" + cfg.guiSettings[6]).value<QColor>().rgb(), 0, 16)
-                                 .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[6]).value<QColor>().rgba(), 0, 16));
-  fileName->setFont(vm.getValue("cfgF"  + cfg.guiSettings[6]).value<QFont>());
+                                 .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                 .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16));
+  fileName->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
   editor->setStyleSheet(QString("background: #%2;")
-                               .arg(ValueManager().getValue("cfgBg" + cfg.guiSettings[7]).value<QColor>().rgba(), 0, 16));
-  editor->setFont(vm.getValue("cfgF"  + cfg.guiSettings[7]).value<QFont>());
-
+                               .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
+  editor->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
   }
-
-/*
-void EditorDockable::setLine(QVariant line) {
-  qDebug() << "should set editor to line #" << line.toInt();
-  editor->verticalScrollBar()->setValue(line.toInt());
-  }
-*/
 
 /*
  * this file dialog blocks the timer for the time of dialog creation only.
  * Then timer keeps running without issue
  */
 void EditorDockable::openFile() {
-  QDir dirStart(QDir::homePath() + "/linuxcnc/nc_files");
+  QDir    dirStart(QDir::homePath() + "/linuxcnc/nc_files");
   QString name = QFileDialog::getOpenFileName(this
                                             , tr("open GCode file")
                                             , dirStart.absolutePath()

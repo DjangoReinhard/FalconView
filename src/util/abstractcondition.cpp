@@ -9,7 +9,17 @@ AbstractCondition::AbstractCondition(ValueModel* model, const QVariant& value, Q
  , v(value)
  , met(false)
  , initialized(false) {
-  connect(m, &ValueModel::valueChanged, this, &AbstractCondition::update);
+  if (m) connect(m, &ValueModel::valueChanged, this, &AbstractCondition::update);
+  }
+
+
+AbstractCondition::~AbstractCondition() {
+  }
+
+
+bool AbstractCondition::result() const {
+//  qDebug() << "Condition [" << (m ? m->getName() : "unnamed") << "] has result:" << met;
+  return met;
   }
 
 

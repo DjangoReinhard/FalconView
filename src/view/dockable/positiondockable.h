@@ -30,7 +30,7 @@ public:
 
 public slots:
   void setAbsolute(QVariant arg = QVariant(true));
-  void setAxisMask(QVariant axisMask);
+//  void setAxisMask(QVariant axisMask);
   void setRelative();
 
 protected:
@@ -62,11 +62,11 @@ private:
   LabelAdapter** droRel;
   LabelAdapter** droAbs;
   LabelAdapter** droDtg;
-  int height;
+  int  height;
   bool absolute;
   AxisMask axisMask;
-  QString ledOn;
-  QString ledOff;
+  QString  ledOn;
+  QString  ledOff;
 
   static const char* a[];
   };

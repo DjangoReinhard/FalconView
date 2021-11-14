@@ -4,7 +4,7 @@
 #include <QDebug>
 
 
-EqualCondition::EqualCondition(ValueModel* model, const QVariant& value, QObject *parent)
+EqualCondition::EqualCondition(ValueModel* model, const QVariant& value, QObject* parent)
  : AbstractCondition(model, value, parent) {
   update();
   }

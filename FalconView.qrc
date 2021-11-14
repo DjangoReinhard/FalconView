@@ -27,6 +27,8 @@
    <file>res/SK_Manual.png</file>
    <file>res/SK_MDI_active.png</file>
    <file>res/SK_MDI.png</file>
+   <file>res/SK_Messages.png</file>
+   <file>res/SK_Messages_active.png</file>
    <file>res/SK_NOP.png</file>
    <file>res/SK_Offsets_active.png</file>
    <file>res/SK_Offsets.png</file>
@@ -45,6 +47,8 @@
    <file>res/SK_Spindle_CW.png</file>
    <file>res/SK_Spindle_Stop_active.png</file>
    <file>res/SK_Spindle_Stop.png</file>
+   <file>res/SK_TestEdit_active.png</file>
+   <file>res/SK_TestEdit.png</file>
    <file>res/SK_Tools_active.png</file>
    <file>res/SK_Tools.png</file>
    <file>res/SK_Touch_active.png</file>
@@ -52,15 +56,17 @@
    <file>res/SK_Wheel_active.png</file>
    <file>res/SK_Wheel.png</file>
    <file>res/WorkPlane01.png</file>
+   <file>res/Tools_backup.xml</file>
    <file>src/UI/CurCodes.ui</file>
    <file>src/UI/Fixture.ui</file>
    <file>src/UI/GCodeEditor.ui</file>
    <file>src/UI/mainwindow.ui</file>
-   <file>src/UI/Overlay.ui</file>
    <file>src/UI/Position.ui</file>
    <file>src/UI/Settings.ui</file>
    <file>src/UI/SpeedInfo.ui</file>
    <file>src/UI/ToolEditor.ui</file>
    <file>src/UI/ToolInfo.ui</file>
+   <file>res/BottomTabButtonStyles.css</file>
+   <file>res/TopTabButtonStyles.css</file>
  </qresource>
 </RCC>

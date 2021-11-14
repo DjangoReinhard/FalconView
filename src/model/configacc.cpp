@@ -3,18 +3,28 @@
 #include <core_p.h>
 
 
-QColor Config::getBackground(int index) {
-  return Core().core()->cfg.getBackground(index);
+QColor Config::getBackground(GuiElem key) const {
+  return Core().core()->cfg.getBackground(key);
   }
 
 
-QColor Config::getForeground(int index) {
-  return Core().core()->cfg.getForeground(index);
+QColor Config::getForeground(GuiElem key) const {
+  return Core().core()->cfg.getForeground(key);
   }
 
 
-QFont Config::getFont(int index) {
-  return Core().core()->cfg.getFont(index);
+QFont Config::getFont(GuiElem key) const {
+  return Core().core()->cfg.getFont(key);
+  }
+
+
+void Config::beginGroup(const QString &name) {
+  Core().core()->cfg.settings.beginGroup(name);
+  }
+
+
+void Config::endGroup() {
+  Core().core()->cfg.settings.endGroup();
   }
 
 
@@ -23,18 +33,18 @@ QVariant Config::value(const QString& key, const QVariant& defaultValue) const {
   }
 
 
-void Config::setBackground(int index, const QColor& color) {
-  Core().core()->cfg.setBackground(index, color);
+void Config::setBackground(GuiElem key, const QColor& color) {
+  Core().core()->cfg.setBackground(key, color);
   }
 
 
-void Config::setForeground(int index, const QColor& color) {
-  Core().core()->cfg.setForeground(index, color);
+void Config::setForeground(GuiElem key, const QColor& color) {
+  Core().core()->cfg.setForeground(key, color);
   }
 
 
-void Config::setFont(int index, const QFont& font) {
-  Core().core()->cfg.setFont(index, font);
+void Config::setFont(GuiElem key, const QFont& font) {
+  Core().core()->cfg.setFont(key, font);
   }
 
 
@@ -43,22 +53,6 @@ void Config::setValue(const QString& key, const QVariant& value) {
   }
 
 
-const int      Config::guiSettingEntries = 12;
-const QString  Config::guiSettings[]     = {
-  "ActCodes"        /*  0 */
-, "DroAbs"          /*  1 */
-, "DroDtg"          /*  2 */
-, "DroRel"          /*  3 */
-, "DroTitle"        /*  4 */
-, "Feed"            /*  5 */
-, "Filename"        /*  6 */
-, "GCode"           /*  7 */
-, "Speed"           /*  8 */
-, "ToolDesc"        /*  9 */
-, "ToolNum"         /* 10 */
-, "ToolNext"        /* 11 */
-, "EdLinNum"        /* 12 */
-, "Fixture"         /* 13 */
-, "FixTitle"        /* 14 */
-, "FixFrame"        /* 15 */
-  };
+QString Config::nameOf(GuiElem key) const {
+  return Core().core()->cfg.geToString(key);
+  }
