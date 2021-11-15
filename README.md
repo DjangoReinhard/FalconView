@@ -27,6 +27,7 @@ around the central preview pane.
 
 - [Qt](https://www.qt.io/download) works fine from distribution packages as well as
   from Qt-binary download-center.
+
   **NOTE:** You have to use Release 5.xx, as opencascade is not ready for Qt6.xx
 
 - *QtCreator* - optional. I have very good experience with using QtCreator. It's not
