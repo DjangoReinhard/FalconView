@@ -30,6 +30,5 @@ protected:
   Ui::Form*       ui;
   QSqlQueryModel* model;
   int             toolId;
-  static QPair<QString, QString> names[];
   };
 #endif // TOOLEDITOR_H

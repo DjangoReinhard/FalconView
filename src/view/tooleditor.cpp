@@ -140,27 +140,27 @@ void ToolEditor::setModel(const QSqlRecord& r) {
   }
 
 
-QPair<QString, QString> ToolEditor::names[] = {
-  { "toolNum",     "num" }
-, { "cbType",      "type" }
-, { "eComment",    "comment" }
-, { "eLenCut",     "lenCut" }
-, { "eLenFree",    "lenFree" }
-, { "eDiaTip",     "diaTip" }
-, { "eAngMaxRamp", "angMaxRamp" }
-, { "eAngCut",     "angCut" }
-, { "eLenFlute",   "lenFlute" }
-, { "eFlutes",     "flutes" }
-, { "eLoad",       "load" }
-, { "eAngSlope",   "angSlope" }
-, { "eDiaColl",    "diaColl" }
-, { "eAngHelix",   "angHelix" }
-, { "eLenColl",    "lenColl" }
-, { "eDiaFlute",   "diaFlute" }
-, { "eLenTool",    "lenTool" }
-, { "eName",       "name" }
-, { "ePartCode",   "partCode" }
-, { "eDiaShank",   "diaShank" }
-, { "eMaterial",   "material" }
-, { "eCoating",    "coating"  }
-  };
+//QPair<QString, QString> ToolEditor::names[] = {
+//  { "toolNum",     "num" }
+//, { "cbType",      "type" }
+//, { "eComment",    "comment" }
+//, { "eLenCut",     "lenCut" }
+//, { "eLenFree",    "lenFree" }
+//, { "eDiaTip",     "diaTip" }
+//, { "eAngMaxRamp", "angMaxRamp" }
+//, { "eAngCut",     "angCut" }
+//, { "eLenFlute",   "lenFlute" }
+//, { "eFlutes",     "flutes" }
+//, { "eLoad",       "load" }
+//, { "eAngSlope",   "angSlope" }
+//, { "eDiaColl",    "diaColl" }
+//, { "eAngHelix",   "angHelix" }
+//, { "eLenColl",    "lenColl" }
+//, { "eDiaFlute",   "diaFlute" }
+//, { "eLenTool",    "lenTool" }
+//, { "eName",       "name" }
+//, { "ePartCode",   "partCode" }
+//, { "eDiaShank",   "diaShank" }
+//, { "eMaterial",   "material" }
+//, { "eCoating",    "coating"  }
+//  };
