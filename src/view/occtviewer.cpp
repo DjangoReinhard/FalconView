@@ -82,7 +82,7 @@ OcctQtViewer::OcctQtViewer(bool verbose, QWidget* theParent)
 
   // create viewer
   myViewer = new V3d_Viewer(aDriver);
-  myViewer->SetDefaultBackgroundColor(Quantity_NOC_GRAY);
+  myViewer->SetDefaultBackgroundColor(Quantity_NOC_GRAY80);
   myViewer->SetDefaultLights();
   myViewer->SetLightOn();
   myViewer->ActivateGrid(Aspect_GT_Rectangular, Aspect_GDM_Lines);

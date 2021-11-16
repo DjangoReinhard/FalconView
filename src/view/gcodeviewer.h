@@ -7,7 +7,8 @@ class GCodeViewer : public GCodeEditor
 {
   Q_OBJECT
 public:
-  GCodeViewer(QWidget* parent = nullptr);
+  explicit GCodeViewer(QWidget* parent = nullptr);
+  virtual ~GCodeViewer();
 
 private slots:
   void setCurrentLine(QVariant line);

@@ -30,15 +30,28 @@ int DirEntry::childCount() const {
   }
 
 
+int DirEntry::childNumber() const {
+  if (parentItem)
+     return parentItem->children.indexOf(const_cast<DirEntry*>(this));
+  return 0;
+  }
+
+
 int DirEntry::columnCount() const {
   return 1;
   }
 
 
 QVariant DirEntry::data(int column) const {
-  if (column == 0) return itemData;
-  if (column == 9) return filePath;
+  if (column == 0)      return itemData;
+  else if (column == 9) return filePath;
   return QVariant();
+  }
+
+
+void DirEntry::setData(int column, const QVariant& value) {
+  if (!column)          itemData = value;
+  else if (column == 9) filePath = value.toString();
   }
 
 

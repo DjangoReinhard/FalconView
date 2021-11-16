@@ -61,14 +61,18 @@ void PreViewEditor::showEvent(QShowEvent* e) {
 
 
 void PreViewEditor::keyPressEvent(QKeyEvent* e) {
-  qDebug() << "PW-Edit: key pressed: " << e->key();
   switch (e->key()) {
-    case Qt::Key_F:
-         qDebug() << "PW-Edit: 'F' recognized ...";
-         view3D->fitAll();
-         e->accept();
-         break;
+    case Qt::Key_Up: {
+         qDebug() << "PWE: inc current line";
+         ValueManager().setValue("curLine", ValueManager().getValue("curLine").toInt() + 1);
+         } break;
+    case Qt::Key_Down:
+         {
+         qDebug() << "PWE: dec current line";
+         ValueManager().setValue("curLine", ValueManager().getValue("curLine").toInt() - 1);
+         } break;
     default:
+         qDebug() << "PW-Edit: key pressed: " << e->key();
          TestEdit::keyPressEvent(e);
          break;
     }

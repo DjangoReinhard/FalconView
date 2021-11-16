@@ -13,11 +13,13 @@ public:
 
   DirEntry* child(int row);
   int       childCount() const;
+  int       childNumber() const;
   int       columnCount() const;
   QVariant  data(int column) const;
   QString   path() const;
   int       row() const;
   DirEntry* parent();
+  void      setData(int column, const QVariant& value);
 
 private:
   QVector<DirEntry*> children;

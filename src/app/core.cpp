@@ -180,6 +180,8 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
   ci.setTraverseColor(QColor(Qt::cyan));
   ci.setFeedColor(QColor(Qt::white));
   ci.setLimitsColor(QColor(150, 255, 150));
+  ci.setCurSegColor(QColor(Qt::blue));
+  ci.setOldSegColor(QColor(170, 0, 0));
   connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);  
 
   if (statusReader.isActive()) timer.start(40, this);

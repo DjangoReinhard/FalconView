@@ -38,8 +38,8 @@ void PreferencesEditor::initializeWidget() {
 
 void PreferencesEditor::connectSignals() {
   for (int i=0; i < Config().numGuiElements(); ++i) {
-      connect(bgButtons[i], &QPushButton::pressed, this, [=](){ changeBackgroundColor(i); });
-      connect(fgButtons[i], &QPushButton::pressed, this, [=](){ changeForegroundColor(i); });
+      if (bgButtons[i])   connect(bgButtons[i],   &QPushButton::pressed, this, [=](){ changeBackgroundColor(i); });
+      if (fgButtons[i])   connect(fgButtons[i],   &QPushButton::pressed, this, [=](){ changeForegroundColor(i); });
       if (fontButtons[i]) connect(fontButtons[i], &QPushButton::pressed, this, [=](){ changeFont(i); });
       }
   }
@@ -60,11 +60,14 @@ void PreferencesEditor::setupLabels() {
 
   for (int i=0; i < cfg.numGuiElements(); ++i) {
       keyBg = QString("cfgBg") + cfg.nameOf(static_cast<Config::GuiElem>(i));
-      colBg = cfg.value(keyBg, QColor(Qt::white)).value<QColor>();
+      colBg = cfg.value(keyBg, QColor(204, 205, 206)).value<QColor>();
       keyFg = QString("cfgFg") + cfg.nameOf(static_cast<Config::GuiElem>(i));
       colFg = cfg.value(keyFg, QColor(Qt::black)).value<QColor>();
       keyF  = QString("cfgF") + cfg.nameOf(static_cast<Config::GuiElem>(i));
       font  = cfg.value(keyF, QFont("Hack", 12)).value<QFont>();
+      vm.setValue(keyBg, colBg);
+      vm.setValue(keyFg, colFg);
+      vm.setValue(keyF,  font);
 
       connect(vm.getModel(keyBg, colBg)
             , &ValueModel::valueChanged
@@ -89,9 +92,11 @@ void PreferencesEditor::setupLabels() {
             , labels[i]
             , [=](){ labels[i]->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QFont>()); });
 
-      labels[i]->setStyleSheet(QString("color: #%1; background: #%2;")
-                               .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
-                               .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16));
+      QString ss = QString("color: #%1; background: #%2;")
+                          .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
+                          .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
+      qDebug() << cfg.nameOf(static_cast<Config::GuiElem>(i)) << " => " << ss << " <= ";
+      labels[i]->setStyleSheet(ss);
       labels[i]->setFont(font);
       }
   }

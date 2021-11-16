@@ -18,6 +18,11 @@ GCodeEditor::GCodeEditor(QWidget* parent)
 
   updateLineNumberAreaWidth(0);
   highlightCurrentLine();
+  setCenterOnScroll(true);
+  }
+
+
+GCodeEditor::~GCodeEditor() {
   }
 
 
@@ -70,7 +75,6 @@ void GCodeEditor::highlightCurrentLine() {
   QTextEdit::ExtraSelection selection;
   QColor bgHLLine = ValueManager().getValue("cfgBg" + Config().nameOf(Config::GuiElem::LineHL)).value<QColor>();
   QColor fgHLLine = ValueManager().getValue("cfgFg" + Config().nameOf(Config::GuiElem::LineHL)).value<QColor>();
-//  QColor lineColor = QColor(Qt::yellow).lighter(140);
 
   selection.format.setBackground(bgHLLine);
   selection.format.setForeground(fgHLLine);
@@ -87,7 +91,6 @@ void GCodeEditor::paintLineNumbers(QPaintEvent *e) {
   QColor   bgLineNum = ValueManager().getValue("cfgBg" + Config().nameOf(Config::GuiElem::EdLinNum)).value<QColor>();
   QColor   fgLineNum = ValueManager().getValue("cfgFg" + Config().nameOf(Config::GuiElem::EdLinNum)).value<QColor>();
 
-//  painter.fillRect(e->rect(), QColor(239, 240, 241));
   painter.fillRect(e->rect(), bgLineNum);
   painter.setFont(font());
   QTextBlock block    = firstVisibleBlock();        // lines == block

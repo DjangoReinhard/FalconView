@@ -52,6 +52,8 @@ public:
   Quantity_Color    traverseColor() const           { return instance->colTraverse; }
   Quantity_Color    feedColor() const               { return instance->colFeed; }
   Quantity_Color    limitColor() const              { return instance->colLimits; }
+  Quantity_Color    curSegColor() const             { return instance->colCurSeg; }
+  Quantity_Color    oldSegColor() const             { return instance->colOldSeg; }
   Quantity_Color    workPieceColor() const          { return instance->colWorkPiece; }
   CANON_TOOL_TABLE  toolEntry(int ttIndex)          { return instance->toolEntry(ttIndex); }
   CANON_POSITION    g5xOffset(int i=0) const        { return instance->g5xOffset(i); }
@@ -65,7 +67,8 @@ public:
   CANON_POSITION    endPoint() const                { return instance->canon.endPoint; }
   QString           parameterFilename() const       { return instance->properties.parameterFileName(); }
   double            convert(double v);
-  QList<Handle(AIS_InteractiveObject)>& toolPath() { return instance->toolPath; }
+  void              appendShape(int lineNum, Handle(AIS_InteractiveObject) shape);
+  QMap<long, Handle(AIS_InteractiveObject)>& toolPath() { return instance->toolPath; }
   void changeTool(int ttIndex)       { instance->changeTool(ttIndex); }
   void selectTool(int tool)          { instance->changer.selectNextTool(tool); }
   void setLengthUnits(CANON_UNITS u) { instance->setJobUnits(u); }
@@ -86,6 +89,8 @@ public:
   void setTraverseColor(const QColor& c)        { instance->setTraverseColor(c); }
   void setFeedColor(const QColor& c)            { instance->setFeedColor(c); }
   void setLimitsColor(const QColor& c)          { instance->setLimitsColor(c); }
+  void setCurSegColor(const QColor& c)          { instance->setCurSegColor(c); }
+  void setOldSegColor(const QColor& c)          { instance->setOldSegColor(c); }
   void setWorkPieceColor(const QColor& c)       { instance->setWorkPieceColor(c); }
   void setToolOffset(EmcPose offset)            { instance->setToolOffset(offset); }
 
@@ -113,6 +118,8 @@ private:
     void setTraverseColor(const QColor& c);
     void setFeedColor(const QColor& c);
     void setLimitsColor(const QColor& c);
+    void setCurSegColor(const QColor& c);
+    void setOldSegColor(const QColor& c);
     void setWorkPieceColor(const QColor& c);
     void setEndPoint(const CANON_POSITION& p);
     void setG5xOffset(int i, const CANON_POSITION& p);
@@ -124,26 +131,28 @@ private:
     void setToolOffset(EmcPose offset)         { canon.toolOffset  = offset; }
 
   private:
-    LcProperties&                        properties;
-    ToolTable&                           toolTable;
-    CanonConfig_t                        canon;
-    CANON_POSITION                       g5xOffsets[9];
-    CANON_UNITS                          machineUnits;
-    StupidToolChangerIF                  changer;
-    GraphicFactory                       gf;
-    QList<Handle(AIS_InteractiveObject)> toolPath;
-    double                               iTraverseRate;
-    bool                                 floodActive;
-    bool                                 mistActive;
-    bool                                 feedOverride;
-    bool                                 speedOverride;
-    bool                                 adaptiveFeed;
-    bool                                 feedHold;
-    int                                  selectedOffset;
-    Quantity_Color                       colFeed;
-    Quantity_Color                       colTraverse;
-    Quantity_Color                       colLimits;
-    Quantity_Color                       colWorkPiece;
+    LcProperties&       properties;
+    ToolTable&          toolTable;
+    CanonConfig_t       canon;
+    CANON_POSITION      g5xOffsets[9];
+    CANON_UNITS         machineUnits;
+    StupidToolChangerIF changer;
+    GraphicFactory      gf;
+    double              iTraverseRate;
+    bool                floodActive;
+    bool                mistActive;
+    bool                feedOverride;
+    bool                speedOverride;
+    bool                adaptiveFeed;
+    bool                feedHold;
+    int                 selectedOffset;
+    Quantity_Color      colFeed;
+    Quantity_Color      colTraverse;
+    Quantity_Color      colLimits;
+    Quantity_Color      colCurSeg;
+    Quantity_Color      colOldSeg;
+    Quantity_Color      colWorkPiece;
+    QMultiMap<long, Handle(AIS_InteractiveObject)> toolPath;
     };
   static IFSettings* instance;
   };

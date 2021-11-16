@@ -98,23 +98,27 @@ void ConfigManager::setValue(const QString& key, const QVariant& value) {
 // sync with Config::GuiElem
 QString ConfigManager::geToString(int i) {
   switch (static_cast<Config::GuiElem>(i)) {
-    case Config::GuiElem::ActCodes: return asString(ActCodes);
-    case Config::GuiElem::DroAbs:   return asString(DroAbs);
-    case Config::GuiElem::DroDtg:   return asString(DroDtg);
-    case Config::GuiElem::DroRel:   return asString(DroRel);
-    case Config::GuiElem::DroTitle: return asString(DroTitle);
-    case Config::GuiElem::EdLinNum: return asString(EdLinNum);
-    case Config::GuiElem::LineHL:   return asString(LineHL);
-    case Config::GuiElem::Feed:     return asString(Feed);
-    case Config::GuiElem::Filename: return asString(Filename);
-    case Config::GuiElem::FixFrame: return asString(FixFrame);
-    case Config::GuiElem::FixTitle: return asString(FixTitle);
-    case Config::GuiElem::Fixture:  return asString(Fixture);
-    case Config::GuiElem::GCode:    return asString(GCode);
-    case Config::GuiElem::Speed:    return asString(Speed);
-    case Config::GuiElem::ToolDesc: return asString(ToolDesc);
-    case Config::GuiElem::ToolNext: return asString(ToolNext);
-    case Config::GuiElem::ToolNum:  return asString(ToolNum);
+    case Config::GuiElem::ActCodes:  return asString(ActCodes);
+    case Config::GuiElem::CurSeg:    return asString(CurSeg);
+    case Config::GuiElem::DroAbs:    return asString(DroAbs);
+    case Config::GuiElem::DroDtg:    return asString(DroDtg);
+    case Config::GuiElem::DroRel:    return asString(DroRel);
+    case Config::GuiElem::DroTitle:  return asString(DroTitle);
+    case Config::GuiElem::EdLinNum:  return asString(EdLinNum);
+    case Config::GuiElem::Feed:      return asString(Feed);
+    case Config::GuiElem::Filename:  return asString(Filename);
+    case Config::GuiElem::FixFrame:  return asString(FixFrame);
+    case Config::GuiElem::FixTitle:  return asString(FixTitle);
+    case Config::GuiElem::Fixture:   return asString(Fixture);
+    case Config::GuiElem::GCode:     return asString(GCode);
+    case Config::GuiElem::LineHL:    return asString(LineHL);
+    case Config::GuiElem::OldSeg:    return asString(OldSeg);
+    case Config::GuiElem::RapidMove: return asString(RapidMove);
+    case Config::GuiElem::Speed:     return asString(Speed);
+    case Config::GuiElem::ToolDesc:  return asString(ToolDesc);
+    case Config::GuiElem::ToolNext:  return asString(ToolNext);
+    case Config::GuiElem::ToolNum:   return asString(ToolNum);
+    case Config::GuiElem::WorkMove:  return asString(WorkMove);
     default: break;
     }
   return QString();

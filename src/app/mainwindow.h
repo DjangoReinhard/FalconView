@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
+#include <QBasicTimer>
 
 class PositionDockable;
 class Dockable;
@@ -26,6 +27,7 @@ public:
 protected:
   void closeEvent(QCloseEvent *event)  override;
   void keyPressEvent(QKeyEvent* event) override;
+  void timerEvent(QTimerEvent* event) override;
   void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
   void createActions();
   void createToolBars();
@@ -40,6 +42,7 @@ protected slots:
   void appModeChanged(const QVariant& appMode);
   void setSingleStep(bool singleStep);
   void toggleErrMessages();
+  void enableLoop();
 
 private:
   Ui::MainWindow*     ui;
@@ -74,6 +77,7 @@ private:
   QToolBar*           powerTB;
   QToolBar*           switchTB;
   int                 line;
+  QBasicTimer         timer;
 
   QList<Dockable*>    dockables;
   };

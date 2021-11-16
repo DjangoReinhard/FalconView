@@ -10,7 +10,8 @@ class GCodeEditor : public QPlainTextEdit
 {
   Q_OBJECT
 public:
-  GCodeEditor(QWidget* parent = nullptr);
+  explicit GCodeEditor(QWidget* parent = nullptr);
+  virtual ~GCodeEditor();
 
   void paintLineNumbers(QPaintEvent* event);
   int  lineNumberAreaWidth();

@@ -14,24 +14,29 @@ class QFile;
 class Config
 {
 public:
+  // sync with ConfigManager::geToString(int i) !
   enum GuiElem {
     ActCodes        /*  0 */
-  , DroAbs          /*  1 */
-  , DroDtg          /*  2 */
-  , DroRel          /*  3 */
-  , DroTitle        /*  4 */
-  , Feed            /*  5 */
-  , Filename        /*  6 */
-  , GCode           /*  7 */
-  , Speed           /*  8 */
-  , ToolDesc        /*  9 */
-  , ToolNum         /* 10 */
-  , ToolNext        /* 11 */
-  , EdLinNum        /* 12 */
+  , CurSeg          /*  1 */
+  , DroAbs          /*  2 */
+  , DroDtg          /*  3 */
+  , DroRel          /*  4 */
+  , DroTitle        /*  5 */
+  , EdLinNum        /*  6 */
+  , Feed            /*  7 */
+  , Filename        /*  8 */
+  , FixFrame        /*  9 */
+  , FixTitle        /* 10 */
+  , Fixture         /* 11 */
+  , GCode           /* 12 */
   , LineHL          /* 13 */
-  , Fixture         /* 14 */
-  , FixTitle        /* 15 */
-  , FixFrame        /* 16 */
+  , OldSeg          /* 14 */
+  , RapidMove       /* 15 */
+  , Speed           /* 16 */
+  , ToolDesc        /* 17 */
+  , ToolNext        /* 18 */
+  , ToolNum         /* 19 */
+  , WorkMove        /* 20 */
   , LastKey
     };
 

@@ -2,6 +2,7 @@
 #include <occtviewer.h>
 #include <AIS_ColoredShape.hxx>
 #include <BRepPrimAPI_MakeCone.hxx>
+#include <valuemanager.h>
 #include <canonif.h>
 #include <core.h>
 
@@ -9,26 +10,14 @@
 Ally3D::Ally3D(OcctQtViewer* view3D, QObject *parent)
  : QObject(parent)
  , v3D(view3D) {
+  connect(ValueManager().getModel("curLine", 0), &ValueModel::valueChanged, this, &Ally3D::update);
   }
-
-
-//Handle(AIS_ViewCube) Ally3D::getCube() {
-//  if (cube.IsNull()) {
-//     cube = new AIS_ViewCube();
-//     cube->SetViewAnimation(v3D->ViewAnimation());
-//     cube->SetFixedAnimationLoop(false);
-//     cube->SetAutoStartAnimation(true);
-//     cube->TransformPersistence()->SetOffset2d(Graphic3d_Vec2i(100, 100));
-//     }
-//  return cube;
-//  }
 
 
 void Ally3D::moveCone(double x, double y, double z) {
   gp_Trsf   move;
 
-  qDebug() << "moveCone: " << x << "/" << y << "/" << z;
-
+//  qDebug() << "moveCone: " << x << "/" << y << "/" << z;
   move.SetValues (1, 0, 0, x
                 , 0, 1, 0, y
                 , 0, 0, 1, z);
@@ -180,9 +169,12 @@ void Ally3D::showWorkLimits() {
   ctx->Display(shape, AIS_Shaded, 0, false);
   }
 
-void Ally3D::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
-  Handle(AIS_InteractiveContext) ctx = v3D->context();
 
+void Ally3D::showPath(const QMap<long, Handle(AIS_InteractiveObject)>& path) {
+  Handle(AIS_InteractiveContext) ctx = v3D->context();  
+
+  workPath.clear();
+  workPath = path;
   ctx->RemoveAll(false);
   gp_Pnt  cMin, cMax, p;
   Bnd_Box bb;
@@ -194,7 +186,7 @@ void Ally3D::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
 
 
   cone = new AIS_Shape(topo_cone);
-  for (const Handle(AIS_InteractiveObject)& anObject : path) {
+  for (const Handle(AIS_InteractiveObject)& anObject : qAsConst(workPath)) {
       ctx->Display(anObject, AIS_Shaded, 0, false);
       const Handle(AIS_ColoredShape) shape = Handle(AIS_ColoredShape)::DownCast(anObject);
 
@@ -219,4 +211,23 @@ void Ally3D::showPath(const QList<Handle(AIS_InteractiveObject)>& path) {
   showMachineLimits();
   v3D->setBounds(workPiece);
   v3D->fitAll();
+  lastSeg = workPath.lowerBound(0);
+  }
+
+void Ally3D::update(const QVariant& line) {
+  int segNum = fmax(0, line.toInt() - 2);
+  QMap<long, Handle(AIS_InteractiveObject)>::iterator curSeg = workPath.upperBound(segNum);
+  Quantity_Color cCur = CanonIF().curSegColor();
+  Quantity_Color cOld = CanonIF().oldSegColor();
+
+  if (lastSeg.key() > segNum) lastSeg = curSeg;
+  qDebug() << "Ally3D::update(" << segNum << ")";
+  while (lastSeg != curSeg) {
+        lastSeg.value()->SetColor(cOld);
+        lastSeg++;
+        }
+  lastSeg = curSeg;
+  lastSeg.value()->SetColor(cCur);
+  v3D->view()->Invalidate();
+  v3D->update();
   }

@@ -362,6 +362,25 @@ void MainWindow::createConnections() {
   connect(posAbsolute, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(posAbsolute->isChecked())); });
   connect(msgMode, &QAction::triggered, this, &MainWindow::toggleErrMessages);
   connect(singleStep, &QAction::triggered, this, &MainWindow::setSingleStep);
+
+  connect(singleStep, &QAction::triggered, this, &MainWindow::enableLoop);
+  }
+
+
+void MainWindow::enableLoop() {
+//  bool ss = ValueManager().getValue("singleStep").toBool();
+
+//  if (ss) {
+//     qDebug() << "start timer ...";
+//     timer.start(20000, this);
+//     }
+//  else {
+//     qDebug() << "stop timer ...";
+//     timer.stop();
+//     }
+  ValueModel* vm = ValueManager().getModel("curLine");
+
+  vm->setValue(vm->getValue().toInt() + 1);
   }
 
 
@@ -517,6 +536,13 @@ void MainWindow::createToolBars() {
   }
 
 
+void MainWindow::timerEvent(QTimerEvent* e) {
+  if (e->timerId() == this->timer.timerId())
+     ValueManager().setValue("curLine", ValueManager().getValue("curLine").toInt() + 1);
+  else QMainWindow::timerEvent(e);
+  }
+
+
 void MainWindow::tellStates() const {
   ValueManager vm;
 
@@ -549,7 +575,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   mainView->addPage(page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new FileManager(QDir(QDir::homePath() + "/linuxcnc"), mainView);
+  page = new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"), mainView);
   mainView->addPage(page);
 //  ui->menuMain->addAction(page->viewAction());
 

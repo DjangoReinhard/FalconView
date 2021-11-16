@@ -1,13 +1,17 @@
 #include <filesystem>
 #include <dirmodel.h>
 #include <direntry.h>
+#include <QDir>
 #include <QDebug>
 
 
 DirModel::DirModel(const QString& baseDir, QObject *parent)
- : QAbstractItemModel(parent) {
-  rootItem = new DirEntry(tr("Name"), baseDir);
-  setupModelData(baseDir, rootItem);
+ : QAbstractItemModel(parent)
+ , rootItem(new DirEntry(tr("Root"), baseDir)) {
+  DirEntry* pD = new DirEntry(tr("BaseDir"), baseDir);
+
+  rootItem->appendChild(pD);
+  setupModelData(baseDir, pD);
   }
 
 
@@ -32,6 +36,29 @@ QVariant DirModel::data(const QModelIndex& index, int role) const {
   }
 
 
+bool DirModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+  if (!index.isValid()) return false;
+  if (!(role == Qt::EditRole || role == Qt::DisplayRole)) return false;
+  DirEntry* item = getItem(index);
+
+  if (!item) return false;
+  QFileInfo fi(item->path());
+  QDir      oldDir(item->path());
+  QVariant  oldName = item->data(0);
+  QString   newPath(fi.dir().absolutePath() + "/" + value.toString());
+
+  if (oldDir.rename(item->path(), newPath)) {
+     item->setData(0, value);
+     item->setData(9, newPath);
+     emit dataChanged(index
+                    , index
+                    , { Qt::DisplayRole, Qt::EditRole });
+     return true;
+     }
+  return false;
+  }
+
+
 Qt::ItemFlags DirModel::flags(const QModelIndex& index) const {
   if (!index.isValid()) return Qt::NoItemFlags;
   return QAbstractItemModel::flags(index);
@@ -45,6 +72,33 @@ QVariant DirModel::headerData(int section, Qt::Orientation orientation, int role
   }
 
 
+DirEntry* DirModel::getItem(const QModelIndex &index) const {
+  if (index.isValid()) {
+     DirEntry* item = static_cast<DirEntry*>(index.internalPointer());
+
+     if (item) return item;
+     }
+  return rootItem->child(0);
+  }
+
+
+bool DirModel::insertDirectory(const QModelIndex &parentIdx, DirEntry *entry) {
+  if (!parentIdx.isValid()) return false;
+  if (!entry) return false;
+  DirEntry* parent = getItem(parentIdx);
+  QDir      newDir(entry->path());
+
+  if (parent == entry->parent() && newDir.mkpath(newDir.path())) {
+     beginInsertRows(parentIdx, parent->childCount(), parent->childCount());
+     parent->appendChild(entry);
+     endInsertRows();
+
+     return true;
+     }
+  return false;
+  }
+
+
 QModelIndex DirModel::index(int row, int column, const QModelIndex &parent) const {
   if (!hasIndex(row, column, parent)) return QModelIndex();
   DirEntry* parentItem;
@@ -54,18 +108,23 @@ QModelIndex DirModel::index(int row, int column, const QModelIndex &parent) cons
   DirEntry* childItem  = parentItem->child(row);
 
   if (childItem) return createIndex(row, column, childItem);
-
   return QModelIndex();
   }
 
 
 QModelIndex DirModel::parent(const QModelIndex &index) const {
   if (!index.isValid()) return QModelIndex();
-  DirEntry* child  = static_cast<DirEntry*>(index.internalPointer());
-  DirEntry* parent = child->parent();
-  if (parent == rootItem) return QModelIndex();
+  DirEntry* childItem  = getItem(index);
+  DirEntry* parentItem = childItem ? childItem->parent() : nullptr;
 
-  return createIndex(parent->row(), 0, parent);
+  if (parentItem == rootItem || !parentItem)
+     return QModelIndex();
+  return createIndex(parentItem->childNumber(), 0, parentItem);
+  }
+
+
+DirEntry* DirModel::root() const {
+  return rootItem->child(0);
   }
 
 
@@ -90,10 +149,10 @@ void DirModel::setupModelData(const QString &baseDir, DirEntry *parent) {
       QString     curPath = baseDir;
       DirEntry*   last    = parent;
 
-//      qDebug() << "entry: " << path;
+      qDebug() << "entry: " << path;
       for (const QString& s : parts) {
           if (!parents.contains(s)) {
-//             qDebug() << "add new parent: " << s;
+             qDebug() << "add new parent: " << s;
              parents[s] = new DirEntry(s, baseDir + "/" + path, last);
              last->appendChild(parents[s]);
              last = parents[s];

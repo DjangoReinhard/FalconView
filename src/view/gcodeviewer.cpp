@@ -4,16 +4,22 @@
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTextDocument>
-#include <tgmath.h>
+#include <QDebug>
+#include <cmath>
 
 
 GCodeViewer::GCodeViewer(QWidget* parent)
  : GCodeEditor(parent) {
-  setReadOnly(true);
+//  setReadOnly(true);
+  this->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   ValueManager vm;
 
   connect(vm.getModel("curLine", 0), &ValueModel::valueChanged, this, &GCodeViewer::setCurrentLine);
-  connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, this, &GCodeEditor::loadFile);
+//  connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, this, &GCodeEditor::loadFile);
+  }
+
+
+GCodeViewer::~GCodeViewer() {
   }
 
 
@@ -24,6 +30,7 @@ void GCodeViewer::setCurrentLine(QVariant line) {
   QTextCursor    c0(b0);
   QTextCursor    c1(b1);
 
+  qDebug() << "GCV::setCurrentLine(" << line << ")";
   moveCursor(QTextCursor::End);
   setTextCursor(c0);
   setTextCursor(c1);
