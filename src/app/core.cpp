@@ -13,6 +13,7 @@
 #include <tooltable.h>
 #include <LCInter.h>
 #include <canonif.h>
+#include <configacc.h>
 #include <configmgr.h>
 #include <occtviewer.h>
 #include <cassert>
@@ -177,18 +178,36 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
      cfg.setValue("dbType", conn->dbType());
      }
   if (!conn->connect()) throw std::system_error(-2, std::system_category(), "no database");
-  ci.setTraverseColor(QColor(Qt::cyan));
-  ci.setFeedColor(QColor(Qt::white));
-  ci.setLimitsColor(QColor(150, 255, 150));
-  ci.setCurSegColor(QColor(Qt::blue));
-  ci.setOldSegColor(QColor(170, 0, 0));
   connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);  
 
+  ci.setTraverseColor(cfg.getForeground(Config::GuiElem::RapidMove));
+  ci.setFeedColor(cfg.getForeground(Config::GuiElem::WorkMove));
+  ci.setLimitsColor(cfg.getForeground(Config::GuiElem::WorkLimit));
+  ci.setWorkPieceColor(cfg.getForeground(Config::GuiElem::WorkPiece));
+  ci.setCurSegColor(cfg.getForeground(Config::GuiElem::CurSeg));
+  ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
   if (statusReader.isActive()) timer.start(40, this);
+//  checkTools();
   }
 
 
 Kernel::~Kernel() {
+  }
+
+
+void Kernel::checkTools() {
+  int              mx = tt.entries();
+  const ToolEntry* te;
+
+  for (int i=0; i < mx; ++i) {
+      qDebug() << "\t<<< check tool num #" << i << " <<<";
+      te = tt.tool(i);
+
+      if (te) te->dump();
+      else {
+         qDebug() << "NO TOOL with num #" << i;
+         }
+      }
   }
 
 

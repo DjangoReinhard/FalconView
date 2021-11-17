@@ -48,6 +48,7 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidge
 
 void PreViewEditor::connectSignals() {
   connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::genPreView);
+  connect(ValueManager().getModel("curLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setCurrentLine);
   TestEdit::connectSignals();
   }
 
@@ -76,6 +77,20 @@ void PreViewEditor::keyPressEvent(QKeyEvent* e) {
          TestEdit::keyPressEvent(e);
          break;
     }
+  }
+
+
+void PreViewEditor::setCurrentLine(const QVariant& line) {
+  QTextDocument* d  = ed->document();
+  QTextBlock     b0 = d->findBlockByLineNumber(fmax(0, line.toInt() - 3));
+  QTextBlock     b1 = d->findBlockByLineNumber(line.toInt() - 2);
+  QTextCursor    c0(b0);
+  QTextCursor    c1(b1);
+
+  qDebug() << "PWE::setCurrentLine(" << line << ")";
+  ed->moveCursor(QTextCursor::End);
+  ed->setTextCursor(c0);
+  ed->setTextCursor(c1);
   }
 
 

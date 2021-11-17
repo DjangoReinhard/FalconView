@@ -221,7 +221,7 @@ void Ally3D::update(const QVariant& line) {
   Quantity_Color cOld = CanonIF().oldSegColor();
 
   if (lastSeg.key() > segNum) lastSeg = curSeg;
-  qDebug() << "Ally3D::update(" << segNum << ")";
+//  qDebug() << "Ally3D::update(" << segNum << ")";
   while (lastSeg != curSeg) {
         lastSeg.value()->SetColor(cOld);
         lastSeg++;

@@ -28,6 +28,7 @@ public:
   void             dump();
   void             save();
   void             setCurrent(int lineNum);
+  int              entries() const;
   QList<ToolEntry*>::Iterator begin()            { return tools.begin(); }
   QList<ToolEntry*>::Iterator end()              { return tools.end();   }
   QList<ToolEntry*>::ConstIterator begin() const { return tools.begin(); }

@@ -25,9 +25,9 @@ public:
   , EdLinNum        /*  6 */
   , Feed            /*  7 */
   , Filename        /*  8 */
-  , FixFrame        /*  9 */
-  , FixTitle        /* 10 */
-  , Fixture         /* 11 */
+  , FixEdit         /*  9 */
+  , FixPrompt       /* 10 */
+  , FixTitle        /* 11 */
   , GCode           /* 12 */
   , LineHL          /* 13 */
   , OldSeg          /* 14 */
@@ -36,7 +36,9 @@ public:
   , ToolDesc        /* 17 */
   , ToolNext        /* 18 */
   , ToolNum         /* 19 */
-  , WorkMove        /* 20 */
+  , WorkLimit       /* 20 */
+  , WorkMove        /* 21 */
+  , WorkPiece       /* 22 */
   , LastKey
     };
 

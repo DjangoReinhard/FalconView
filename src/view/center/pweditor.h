@@ -19,11 +19,14 @@ public:
   PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent);
 
 protected:
-  void genPreView(const QVariant& fileName);
   virtual void connectSignals() override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void closeEvent(QCloseEvent*) override;
+
+protected slots:
+  void setCurrentLine(const QVariant& line);
+  void genPreView(const QVariant& fileName);
 
 private:
   QSplitter*        spV;

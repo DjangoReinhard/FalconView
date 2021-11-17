@@ -2,6 +2,7 @@
 #define TOOLINFODOCKABLE_H
 #include <dockable.h>
 class LabelAdapter;
+class QVariant;
 class QLabel;
 
 
@@ -17,10 +18,13 @@ protected:
   void updateStyles();
   void connectSignals();
 
+protected slots:
+  void toolChanged(const QVariant& toolNum);
+
 private:
-  QLabel*       curTool;
-  QLabel*       nxtTool;
-  LabelAdapter* tlDesc;
+  LabelAdapter* curTool;
+  LabelAdapter* nxtTool;
+  QLabel*       tlDesc;
   LabelAdapter* tlLen;
   LabelAdapter* tlRad;
   };

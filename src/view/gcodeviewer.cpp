@@ -11,11 +11,10 @@
 GCodeViewer::GCodeViewer(QWidget* parent)
  : GCodeEditor(parent) {
 //  setReadOnly(true);
-  this->setFocusPolicy(Qt::FocusPolicy::NoFocus);
+//  this->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   ValueManager vm;
 
   connect(vm.getModel("curLine", 0), &ValueModel::valueChanged, this, &GCodeViewer::setCurrentLine);
-//  connect(vm.getModel("fileName", " "), &ValueModel::valueChanged, this, &GCodeEditor::loadFile);
   }
 
 

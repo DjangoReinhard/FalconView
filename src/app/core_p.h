@@ -29,6 +29,7 @@ private:
   Kernel(const QString& iniFilename, const QString& appName, const QString& group, DBHelper& dbAssist);
   virtual ~Kernel();
 
+  void checkTools();
   void parseGCode(QFile& file);
   void simulateStartOfBE();
   void updateView(const QVariant& v);

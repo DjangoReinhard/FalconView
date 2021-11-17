@@ -15,10 +15,9 @@ public:
   virtual void updateStyles()   override;
 
 protected:
-  virtual void focusInEvent(QFocusEvent *event) override;
-  virtual void focusOutEvent(QFocusEvent *event) override;
   virtual void keyReleaseEvent(QKeyEvent* event) override;
   virtual void changeEvent(QEvent* event) override;
+  virtual bool focusNextPrevChild(bool next) override;
   void saveFixture();
   void setupUi(DynWidget* parent);
 

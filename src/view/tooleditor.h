@@ -25,10 +25,14 @@ public:
 protected:
   void selectCBEntry(QComboBox* cb, const QString& name);
   virtual void changeEvent(QEvent *event) override;
+  virtual bool focusNextPrevChild(bool next) override;
   void dumpModel();
+  void setupTabOrder();
 
   Ui::Form*       ui;
   QSqlQueryModel* model;
   int             toolId;
+  int             edCount;
+  QWidget**       tabOrder;
   };
 #endif // TOOLEDITOR_H

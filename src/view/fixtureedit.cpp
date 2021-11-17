@@ -25,22 +25,38 @@ void FixtureEdit::changeEvent(QEvent* e) {
   if (e->type() == QEvent::EnabledChange) {
      for (int i=0; i < 9; ++i)
          if (edits.at(i)->isVisible()) {
-            ui->edX->setFocus();
+            edits.at(i)->setFocus();
             break;
             }
      }
   }
 
 
-void FixtureEdit::focusInEvent(QFocusEvent* e) {
-  DynWidget::focusOutEvent(e);
-  qDebug() << "FE: focus in Event";
-  }
+bool FixtureEdit::focusNextPrevChild(bool next) {
+  QWidget* w = focusWidget();
 
+  if (w != QApplication::focusWidget()) return false;
+  int i;
+  int mx = edits.size();
 
-void FixtureEdit::focusOutEvent(QFocusEvent* e) {
-  DynWidget::focusOutEvent(e);
-  qDebug() << "FE:: focus out Event";
+  // find focus widget in edits
+  for (i=0; i < mx; ++i) if (edits.at(i) == w) break;
+
+  if (next) {
+     do {
+        if (++i >= mx) i=0;
+        } while (edits.at(i)->focusPolicy() == Qt::FocusPolicy::NoFocus
+             || !edits.at(i)->isVisible());
+     edits.at(i)->setFocus(Qt::TabFocusReason);
+     }
+  else {
+     do {
+        if (--i < 0) i = mx - 1;
+        } while (edits.at(i)->focusPolicy() == Qt::FocusPolicy::NoFocus
+             || !edits.at(i)->isVisible());
+     edits.at(i)->setFocus(Qt::BacktabFocusReason);
+     }
+  return true;
   }
 
 
@@ -81,25 +97,6 @@ void FixtureEdit::setupUi(DynWidget* parent) {
   edits.append(ui->edU);
   edits.append(ui->edV);
   edits.append(ui->edW);
-  int start = -1, first = 0, second = 1, mx = edits.size() - 1;
-
-  do {
-     while (first < mx) {
-           if (m.hasAxis(first)) break;
-           ++first;
-           }
-     second = first + 1;
-     while (second < mx) {
-           if (m.hasAxis(second)) break;
-           ++second;
-           }
-//     qDebug() << "set taborder" << first << "->" << second;
-     QWidget::setTabOrder(edits.at(first), edits.at(second));
-     if (start < 0) start = first;
-     first = second;
-     } while (first < mx);
-//  qDebug() << "set taborder" << second << "->" << start;
-//  QWidget::setTabOrder(edits.at(second), edits.at(start));
   }
 
 const char axisLetters[] = "XYZABCUVW";

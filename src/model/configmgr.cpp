@@ -21,20 +21,12 @@ void ConfigManager::initialize() {
       QString  k = QString("cfgBg") + geToString(i);
       QVariant v = settings.value(k, QColor(Qt::white));
 
-//      qDebug() << "config key: " << k;
-//      qDebug() << "background color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
       vm.setValue(k, v);
-
       k = QString("cfgFg") + geToString(i);
       v = settings.value(k, QColor(Qt::black));
-//      qDebug() << "config key: " << k;
-//      qDebug() << "foreground color: #" << QString("#%1").arg(v.value<QColor>().rgba(), 0, 16);
       vm.setValue(k, v);
-
       k = QString("cfgF") + geToString(i);
       v = settings.value(k, QFont("Hack", 12));
-//      qDebug() << "config key: " << k;
-//      qDebug() << "font: " << v.value<QFont>().key();
       vm.setValue(k, v);
       }
   }
@@ -107,9 +99,9 @@ QString ConfigManager::geToString(int i) {
     case Config::GuiElem::EdLinNum:  return asString(EdLinNum);
     case Config::GuiElem::Feed:      return asString(Feed);
     case Config::GuiElem::Filename:  return asString(Filename);
-    case Config::GuiElem::FixFrame:  return asString(FixFrame);
+    case Config::GuiElem::FixEdit:   return asString(FixEdit);
+    case Config::GuiElem::FixPrompt: return asString(FixPrompt);
     case Config::GuiElem::FixTitle:  return asString(FixTitle);
-    case Config::GuiElem::Fixture:   return asString(Fixture);
     case Config::GuiElem::GCode:     return asString(GCode);
     case Config::GuiElem::LineHL:    return asString(LineHL);
     case Config::GuiElem::OldSeg:    return asString(OldSeg);
@@ -118,7 +110,9 @@ QString ConfigManager::geToString(int i) {
     case Config::GuiElem::ToolDesc:  return asString(ToolDesc);
     case Config::GuiElem::ToolNext:  return asString(ToolNext);
     case Config::GuiElem::ToolNum:   return asString(ToolNum);
+    case Config::GuiElem::WorkLimit: return asString(WorkLimit);
     case Config::GuiElem::WorkMove:  return asString(WorkMove);
+    case Config::GuiElem::WorkPiece: return asString(WorkPiece);
     default: break;
     }
   return QString();

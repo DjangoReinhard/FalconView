@@ -221,9 +221,14 @@ void ToolTable::setCurrent(int slot) {
   }
 
 
+int ToolTable::entries() const {
+  return tools.count();
+  }
+
+
 const ToolEntry* ToolTable::tool(int number) const {
   if (number < 0 || number >= tools.size()) return nullptr;
-  return tools[number];
+  return mappedTools[number];
   }
 
 

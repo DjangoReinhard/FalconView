@@ -11,13 +11,16 @@
 ToolEditor::ToolEditor(QWidget *parent)
  : QWidget(parent)
  , ui(new Ui::Form)
- , model(new QSqlQueryModel) {
+ , model(new QSqlQueryModel)
+ , edCount(21)
+ , tabOrder(new QWidget*[edCount]) {
   if (!DBConnection("toolTable").connect()) {
      throw new QSqlError("failed to open database!");
      }
   model->setQuery("select id, name from Category");
   dumpModel();
   ui->setupUi(this);
+  setupTabOrder();
   }
 
 
@@ -101,6 +104,33 @@ void ToolEditor::changeEvent(QEvent* e) {
   }
 
 
+bool ToolEditor::focusNextPrevChild(bool next) {
+  QWidget* w = focusWidget();
+
+  if (w != QApplication::focusWidget()) return false;
+  int i;
+
+  // find focus widget in edits
+  for (i=0; i < edCount; ++i) if (tabOrder[i] == w) break;
+
+  if (next) {
+     do {
+        if (++i >= edCount) i=0;
+        } while (tabOrder[i]->focusPolicy() == Qt::FocusPolicy::NoFocus
+             || !tabOrder[i]->isVisible());
+     tabOrder[i]->setFocus(Qt::TabFocusReason);
+     }
+  else {
+     do {
+        if (--i < 0) i = edCount - 1;
+        } while (tabOrder[i]->focusPolicy() == Qt::FocusPolicy::NoFocus
+             || !tabOrder[i]->isVisible());
+     tabOrder[i]->setFocus(Qt::BacktabFocusReason);
+     }
+  return true;
+  }
+
+
 void ToolEditor::selectCBEntry(QComboBox* cb, const QString& name) {
   for (int i=0; i < cb->count(); ++i) {
       qDebug() << "cb-entry: " << cb->itemText(i) << " <> name:" << name;
@@ -137,4 +167,29 @@ void ToolEditor::setModel(const QSqlRecord& r) {
   ui->eDiaShank->setText(r.value("diaShank").toString());
   ui->eMaterial->setText(r.value("material").toString());
   ui->eCoating->setText(r.value("coating").toString());
+  }
+
+
+void ToolEditor::setupTabOrder() {
+  tabOrder[0]  = ui->eName;
+  tabOrder[1]  = ui->cbType;
+  tabOrder[2]  = ui->eLenTool;
+  tabOrder[3]  = ui->eFlutes;
+  tabOrder[4]  = ui->eDiaFlute;
+  tabOrder[5]  = ui->eDiaTip;
+  tabOrder[6]  = ui->eLenFlute;
+  tabOrder[7]  = ui->eAngCut;
+  tabOrder[8]  = ui->eLenCut;
+  tabOrder[9]  = ui->eLenFree;
+  tabOrder[10] = ui->eAngSlope;
+  tabOrder[11] = ui->eMaterial;
+  tabOrder[12] = ui->eDiaShank;
+  tabOrder[13] = ui->eCoating;
+  tabOrder[14] = ui->eAngHelix;
+  tabOrder[15] = ui->eAngMaxRamp;
+  tabOrder[16] = ui->eDiaColl;
+  tabOrder[17] = ui->eLoad;
+  tabOrder[18] = ui->eLenColl;
+  tabOrder[19] = ui->ePartCode;
+  tabOrder[20] = ui->eComment;
   }
