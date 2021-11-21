@@ -79,10 +79,9 @@ void SpeedInfoDockable::connectSignals() {
   connect(vm.getModel("curVelocity", 0),     &ValueModel::valueChanged, curFeed,     &LabelAdapter::setValue);
   connect(vm.getModel("curRapid", 0),        &ValueModel::valueChanged, curFastFeed, &LabelAdapter::setValue);
   connect(vm.getModel("curSpeed", 0),        &ValueModel::valueChanged, curSpeed,    &LabelAdapter::setValue);
-  connect(slFeed,     &QSlider::valueChanged, feedFactor,     [=](QVariant v){ feedFactor->setValue(v.toDouble()); });
-  connect(slFastFeed, &QSlider::valueChanged, fastfeedFactor, [=](QVariant v){ fastfeedFactor->setValue(v.toDouble()); });
-  connect(slSpeed,    &QSlider::valueChanged, speedFactor,    [=](QVariant v){ speedFactor->setValue(v.toDouble()); });
-
+  connect(slFeed,     &QSlider::valueChanged, this, &SpeedInfoDockable::feedChanged);
+  connect(slFastFeed, &QSlider::valueChanged, this, &SpeedInfoDockable::fastFeedChanged);
+  connect(slSpeed,    &QSlider::valueChanged, this, &SpeedInfoDockable::speedChanged);
 
   connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::white))
         , &ValueModel::valueChanged
@@ -215,6 +214,24 @@ void SpeedInfoDockable::connectSignals() {
         , cmdSpeed->label()
         , [=](){ cmdSpeed->label()->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Speed)).value<QFont>());
                  });
+  }
+
+
+void SpeedInfoDockable::feedChanged(const QVariant& v) {
+//  qDebug() << "SpeedInfoDockable::feedChanged(" << v << ")";
+  feedFactor->setValue(v.toDouble());
+  }
+
+
+void SpeedInfoDockable::fastFeedChanged(const QVariant& v) {
+//  qDebug() << "SpeedInfoDockable::fastFeedChanged(" << v << ")";
+  fastfeedFactor->setValue(v.toDouble());
+  }
+
+
+void SpeedInfoDockable::speedChanged(const QVariant& v) {
+//  qDebug() << "SpeedInfoDockable::speedChanged(" << v << ")";
+  speedFactor->setValue(v.toDouble());
   }
 
 

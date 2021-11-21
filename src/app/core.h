@@ -1,6 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 #include <QString>
+#include <applicationmode.h>
 class Kernel;
 class OcctQtViewer;
 class DBConnection;
@@ -12,21 +13,6 @@ class MainView;
 class QCloseEvent;
 class QWidget;
 class AxisMask;
-
-
-enum ApplicationMode {
-  Invalid,
-  Auto,          // 1
-  MDI,           // 2
-  Manual,        // 3
-  Edit,          // 4
-  Wheel,         // 5
-  XEdit,         // 6
-  Settings,      // 7
-  Touch,         // 8
-  ErrMessages,   // 9
-  Unknown
-  };
 
 
 class Core
@@ -42,22 +28,43 @@ public:
   void            showAllButCenter(bool visible = true);
   QWidget*        stackedPage(const QString& pageName);
   const AxisMask& axisMask() const;
-  bool            isBackendActive() const;
 
-  void          setViewStack(MainView* v);
-  void          setAppMode(ApplicationMode m);
-  void          setMainWindow(MainWindow* mw);
-  void          windowClosing(QCloseEvent* e);
-  bool          checkBE();
-  OcctQtViewer* view3D();
-  ToolTable&    toolTable();
-  ToolTable*    toolTableModel();
-  LcProperties& lcProperties();
+  void           setViewStack(MainView* v);
+  void           setAppMode(ApplicationMode m);
+  void           setMainWindow(MainWindow* mw);
+  void           windowClosing(QCloseEvent* e);
+  bool           checkBE();
+  OcctQtViewer*  view3D();
+  ToolTable&     toolTable();
+  ToolTable*     toolTableModel();
+  LcProperties&  lcProperties();
+
+  void beAbortTask();
+  void beEnableBlockDelete(bool enable);
+  void beEnableFlood(bool enable);
+  void beEnableMist(bool enable);
+  void beEnableOptionalStop(bool enable);
+  void beEnableSpindleOverride(double rate);
+  void beJogStep(int axis, double stepSize, double speed);
+  void beJogStart(int axis, double speed);
+  void beJogStop(int axis);
+  void beHomeAxis(int jointNum);
+  void beLoadTaskPlan(const QString& gcodeFile);
+  void beLoadToolTable(const QString& toolTableFile);
+  void beSendMDICommand(const QString& command);
+  void beSetAuto(int autoMode, int line);
+  void beSetFeedOverride(double rate);
+  void beSetRapidOverride(double rate);
+  void beSetSpindle(bool enable, int speed, int direction);
+  void beSetTaskMode(int mode);
+  void beSetTaskState(int state);
+  void beTaskPlanSynch();
 
 private:
   friend class   Config;
   Kernel*        core();
   const Kernel*  core() const;
   static Kernel* kernel;
+  static int     checked;
   };
 #endif

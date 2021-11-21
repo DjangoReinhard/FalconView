@@ -215,6 +215,7 @@ void Ally3D::showPath(const QMap<long, Handle(AIS_InteractiveObject)>& path) {
   }
 
 void Ally3D::update(const QVariant& line) {
+  if (workPath.size() < 1) return;
   int segNum = fmax(0, line.toInt() - 2);
   QMap<long, Handle(AIS_InteractiveObject)>::iterator curSeg = workPath.upperBound(segNum);
   Quantity_Color cCur = CanonIF().curSegColor();

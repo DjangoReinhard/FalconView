@@ -18,7 +18,7 @@ ToolEditor::ToolEditor(QWidget *parent)
      throw new QSqlError("failed to open database!");
      }
   model->setQuery("select id, name from Category");
-  dumpModel();
+//  dumpModel();
   ui->setupUi(this);
   setupTabOrder();
   }
@@ -42,7 +42,7 @@ void ToolEditor::getChanges(QSqlRecord& r) {
   QVariant   v0 = m->data(m->index(idx, 0));
   QVariant   v1 = m->data(m->index(idx, 1));
 
-  qDebug() << "category at #" << idx << "v0" << v0 << "v1" << v1;
+//  qDebug() << "category at #" << idx << "v0" << v0 << "v1" << v1;
 
   if (toolId < 0) {                         // neg. toolId signals new record
      iv = ui->toolNum->text().toInt(&ok);   // so we need to read tool-number
@@ -133,14 +133,14 @@ bool ToolEditor::focusNextPrevChild(bool next) {
 
 void ToolEditor::selectCBEntry(QComboBox* cb, const QString& name) {
   for (int i=0; i < cb->count(); ++i) {
-      qDebug() << "cb-entry: " << cb->itemText(i) << " <> name:" << name;
+//      qDebug() << "cb-entry: " << cb->itemText(i) << " <> name:" << name;
       if (!cb->itemText(i).compare(name)) cb->setCurrentIndex(i);
       }
   }
 
 
 void ToolEditor::setModel(const QSqlRecord& r) {
-  qDebug() << "ToolEditor::setModel() - tool #" << r.value("num") << " " << r.value("name");
+//  qDebug() << "ToolEditor::setModel() - tool #" << r.value("num") << " " << r.value("name");
 
   toolId = r.value("id").isNull() ? -1 : r.value("id").toInt();
   ui->toolNum->setText(r.value("num").toString());

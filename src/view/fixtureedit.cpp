@@ -20,7 +20,7 @@ FixtureEdit::FixtureEdit(const QString& title, const AxisMask& mask, QWidget* pa
 
 void FixtureEdit::changeEvent(QEvent* e) {
   DynWidget::changeEvent(e);
-  qDebug() << "changeEvent(" << e->type() << ")";
+//  qDebug() << "changeEvent(" << e->type() << ")";
 
   if (e->type() == QEvent::EnabledChange) {
      for (int i=0; i < 9; ++i)

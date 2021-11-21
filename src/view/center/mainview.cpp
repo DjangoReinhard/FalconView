@@ -34,7 +34,7 @@ QWidget* MainView::page(const QString& name) {
 
 
 QWidget* MainView::activatePage(const QString& name) {
-  qDebug() << "MainView: activatePage \""  << name << "\"";
+//  qDebug() << "MainView: activatePage \""  << name << "\"";
 
   if (pages.contains(name)) {
      QWidget*     w  = pages[name];
@@ -72,9 +72,9 @@ const QString& MainView::activePage() const {
 
 
 void MainView::dump() const {
-  for (auto e = pages.constKeyValueBegin(); e != pages.constKeyValueEnd(); e++) {
-      qDebug() << "MainView holds page >>" << e->first;
-      }
+//  for (auto e = pages.constKeyValueBegin(); e != pages.constKeyValueEnd(); e++) {
+//      qDebug() << "MainView holds page >>" << e->first;
+//      }
   }
 
 

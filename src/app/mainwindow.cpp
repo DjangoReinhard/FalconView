@@ -22,6 +22,7 @@
 #include <editordockable.h>
 #include <curcodesdockable.h>
 #include <maindockable.h>
+#include <multistateaction.h>
 #include <gcodeviewer.h>
 #include <pweditor.h>
 #include <patheditor.h>
@@ -85,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent)
   restoreGeometry(cfg.value("geometry").toByteArray());
   restoreState(cfg.value("windowState").toByteArray());
   cfg.endGroup();
+//  timer.start(1000, this);
   }
 
 
@@ -113,7 +115,10 @@ void MainWindow::createActions() {
   ui->actionrightView->setShortcut(Qt::CTRL + Qt::Key_R);
   ui->actionTopView->setShortcut(Qt::CTRL   + Qt::Key_T);
 
-  qDebug() << "\tMW::createActions() ... START";
+  ui->actionAbsPos->setIcon(MIcon(":/res/SK_PosAbsolute.png"
+                                , ":/res/SK_PosRelative.png"));
+
+//  qDebug() << "\tMW::createActions() ... START";
   startAction = new DynaAction(MIcon(":/res/SK_AutoStart.png", ":/res/SK_AutoStart_active.png")
                              , tr("Start")
                              , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
@@ -127,7 +132,7 @@ void MainWindow::createActions() {
                                    , ":/res/SK_AutoPause_active.png")
                              , tr("Pause")
                              , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                               , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE)))
+                                               , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_WAITING)))
                                   ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                              , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED)
                              , this);
@@ -136,9 +141,9 @@ void MainWindow::createActions() {
                                   , ":/res/SK_AutoStop_active.png")
                             , tr("Stop")
                             , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                              , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE)))
+                                              , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_WAITING)))
                                  ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                            , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)
+                            , new EqualCondition(vm.getModel("execState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE)
                             , this);
   stopAction->setCheckable(true);
   singleStep = new DynaAction(MIcon(":/res/SK_SingleStep.png"
@@ -291,27 +296,18 @@ void MainWindow::createActions() {
                                , ":/res/SK_HomeAll_active.png")
                          , tr("Home-all")
                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                           , new EqualCondition(vm.getModel("homeAll"), false)))
+                                           , new EqualCondition(vm.getModel("allHomed"), false)))
                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                         , new EqualCondition(vm.getModel("homeAll"), true)
+                         , new EqualCondition(vm.getModel("allHomed"), true)
                          , this);
   homeAll->setCheckable(true);
-  posAbsolute = new DynaAction(MIcon(":/res/SK_PosAbsolute.png"
-                                   , ":/res/SK_PosRelative.png")
-                             , tr("Pos-Type")
-                             , new TrueCondition()
-                             , new EqualCondition(vm.getModel("showAbsolute"), true)
-                             , this);
-  posAbsolute->setCheckable(true);
 
-  power       = new DynaAction(MIcon(":/res/SK_PowerOff.png"
-                                   , ":/res/SK_PowerOn.png")
-                             , tr("Poweroff")
-                             , new TrueCondition()
-                             , new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                             , this);
+  power = new MultiStateAction(vm.getModel("taskState")
+                             , QIcon(":/res/SK_PowerOff.png")
+                             , QIcon(":/res/SK_PowerOff_1.png")
+                             , QIcon(":/res/SK_PowerOn.png"));
   power->setCheckable(true);
-  qDebug() << "\tMW::createActions() ... END";
+//  qDebug() << "\tMW::createActions() ... END";
   }
 
 
@@ -340,52 +336,39 @@ void MainWindow::createConnections() {
   connect(vm.getModel("appMode"), &ValueModel::valueChanged, this,  &MainWindow::appModeChanged);
   connect(vm.getModel("showAllButCenter"), &ValueModel::valueChanged, this, &MainWindow::toggleAllButCenter);
   connect(ui->actionAbsPos,    &QAction::triggered, pos,  [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
-  connect(ui->actionDockables, &QAction::triggered, this, [=](){ Core().showAllButCenter(ui->actionDockables->isChecked()); });
+  connect(ui->actionDockables, &QAction::triggered, this, [=](){ ValueManager().setValue("showAllButCenter", ui->actionDockables->isChecked()); });
   connect(ui->actionExit,      &QAction::triggered, this, &QWidget::close);
 
-  connect(ui->action3D_View, &QAction::triggered, Core().view3D(), &OcctQtViewer::isoView);
+  connect(ui->action3D_View,   &QAction::triggered, Core().view3D(), &OcctQtViewer::isoView);
   connect(ui->actionFrontView, &QAction::triggered, Core().view3D(), &OcctQtViewer::frontView);
-  connect(ui->actionBackView, &QAction::triggered, Core().view3D(), &OcctQtViewer::backView);
-  connect(ui->actionleftView, &QAction::triggered, Core().view3D(), &OcctQtViewer::leftView);
+  connect(ui->actionBackView,  &QAction::triggered, Core().view3D(), &OcctQtViewer::backView);
+  connect(ui->actionleftView,  &QAction::triggered, Core().view3D(), &OcctQtViewer::leftView);
   connect(ui->actionrightView, &QAction::triggered, Core().view3D(), &OcctQtViewer::rightView);
-  connect(ui->actionTopView, &QAction::triggered, Core().view3D(), &OcctQtViewer::topView);
+  connect(ui->actionTopView,   &QAction::triggered, Core().view3D(), &OcctQtViewer::topView);
 
-  // main menu actions ...
-  connect(autoMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::Auto); });
-  connect(mdiMode, &QAction::triggered, this,  [=](){ Core().setAppMode(ApplicationMode::MDI); });
-  connect(editMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::Edit); });
-  connect(testEditMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::XEdit); });
-  connect(cfgMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::Settings); });
-  connect(jogMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::Manual); });
-  connect(wheelMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::Wheel); });
-  connect(touchMode, &QAction::triggered, this, [=](){ Core().setAppMode(ApplicationMode::Touch); });
-  connect(posAbsolute, &QAction::triggered, pos, [=](){ pos->setAbsolute(QVariant(posAbsolute->isChecked())); });
-  connect(msgMode, &QAction::triggered, this, &MainWindow::toggleErrMessages);
-  connect(singleStep, &QAction::triggered, this, &MainWindow::setSingleStep);
+  // be actions ...
+  connect(startAction,  &QAction::triggered, this, &MainWindow::autoStart);
+  connect(pauseAction,  &QAction::triggered, this, &MainWindow::autoPause);
+  connect(stopAction,   &QAction::triggered, this, &MainWindow::autoStop);
+  connect(singleStep,   &QAction::triggered, this, &MainWindow::setSingleStep);
+  connect(homeAll,      &QAction::triggered, this, &MainWindow::homeAxis);
 
-  connect(singleStep, &QAction::triggered, this, &MainWindow::enableLoop);
-  }
+  connect(autoMode,     &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Auto); });
+  connect(mdiMode,      &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::MDI); });
+  connect(editMode,     &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Edit); });
+  connect(testEditMode, &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::XEdit); });
+  connect(wheelMode,    &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Wheel); });
+  connect(jogMode,      &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Manual); });
+  connect(cfgMode,      &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Settings); });
+  connect(msgMode,      &QAction::triggered, this, &MainWindow::toggleErrMessages);
+  connect(touchMode,    &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Touch); });
 
-
-void MainWindow::enableLoop() {
-//  bool ss = ValueManager().getValue("singleStep").toBool();
-
-//  if (ss) {
-//     qDebug() << "start timer ...";
-//     timer.start(20000, this);
-//     }
-//  else {
-//     qDebug() << "stop timer ...";
-//     timer.stop();
-//     }
-  ValueModel* vm = ValueManager().getModel("curLine");
-
-  vm->setValue(vm->getValue().toInt() + 1);
-  }
-
-
-void MainWindow::setSingleStep(bool singleStep) {
-  ValueManager().setValue("singleStep", singleStep);
+  connect(power,        &QAction::triggered, this, &MainWindow::hitPowerBtn);
+  connect(mist,         &QAction::triggered, this, &MainWindow::mistToggle);
+  connect(flood,        &QAction::triggered, this, &MainWindow::floodToggle);
+  connect(spindleLeft,  &QAction::triggered, this, &MainWindow::startSpindleCCW);
+  connect(spindleRight, &QAction::triggered, this, &MainWindow::startSpindleCW);
+  connect(spindleOff,   &QAction::triggered, this, &MainWindow::stopSpindle);
   }
 
 
@@ -432,10 +415,10 @@ void MainWindow::toggleAllButCenter() {
   bool visible = m->getValue().toBool();
 
   for (int i=0; i < dockables.size(); ++i)
-      dockables.at(i)->setVisible(visible);      
+      dockables.at(i)->setVisible(visible);
   autoTB->setVisible(visible);
   modeTB->setVisible(visible);
-  nopTB->setVisible(visible);
+  topTB->setVisible(visible);
   powerTB->setVisible(visible);
   switchTB->setVisible(visible);
   }
@@ -483,18 +466,13 @@ void MainWindow::createToolBars() {
   modeTB->addAction(cfgMode);
   addToolBar(Qt::BottomToolBarArea, modeTB);
 
-  QWidget* ab = modeTB->widgetForAction(editMode);
-
-  if (ab && ab->autoFillBackground()) {
-     qDebug() << ">>>>>> ToolbarButton.autoFill set <<<<<<<<<<<<<<<";
-     }
-  nopTB = new QToolBar(tr("NOP"), this);
-  nopTB->setObjectName("NopTB");
-  nopTB->setIconSize(s);
-  nopTB->addAction(homeAll);  
-  nopTB->addAction(posAbsolute);
-  nopTB->addAction(msgMode);
-  addToolBar(Qt::RightToolBarArea, nopTB);
+  topTB = new QToolBar(tr("TOP"), this);
+  topTB->setObjectName("TopTB");
+  topTB->setIconSize(s);
+  topTB->addAction(homeAll);
+  topTB->addAction(ui->actionAbsPos);
+  topTB->addAction(msgMode);
+  addToolBar(Qt::RightToolBarArea, topTB);
 
   switchTB = new QToolBar(tr("Switch"), this);
   switchTB->setObjectName("SwitchTB");
@@ -510,36 +488,8 @@ void MainWindow::createToolBars() {
   powerTB->setObjectName("PowerTB");
   powerTB->setIconSize(s);
 
-  auto pushButton = new QPushButton("Tristate button");
-  pushButton->setProperty("state", 0);
-  pushButton->setProperty("state-step", 1); // change to next state, 1 or -1
-  pushButton->setStyleSheet("QPushButton[state=\"0\"] { background: red; }"
-                            "QPushButton[state=\"1\"] { background: grey; }"
-                            "QPushButton[state=\"2\"] { background: blue; }");
-  connect(pushButton, &QPushButton::clicked, [=](bool) {
-    const int state = pushButton->property("state").toInt();
-    const int step = state == 0 ? 1 :
-                     state == 2 ? -1 : pushButton->property("state-step").toInt();
-    pushButton->setProperty("state", state + step);
-    pushButton->setProperty("state-step", step); // update in case it changed
-
-    // Changing the property is not enough to choose a new style from the stylesheet,
-    //  it is necessary to force a re-evaluation
-    pushButton->style()->unpolish(pushButton);
-    pushButton->style()->polish(pushButton);
-    tellStates();
-    });
-
-//  powerTB->addAction(power);
-  powerTB->addWidget(pushButton);
+  powerTB->addAction(power);
   addToolBar(Qt::BottomToolBarArea, powerTB);
-  }
-
-
-void MainWindow::timerEvent(QTimerEvent* e) {
-  if (e->timerId() == this->timer.timerId())
-     ValueManager().setValue("curLine", ValueManager().getValue("curLine").toInt() + 1);
-  else QMainWindow::timerEvent(e);
   }
 
 
@@ -555,7 +505,8 @@ void MainWindow::tellStates() const {
   vm.getModel("execState")->dump();
   vm.getModel("errorActive")->dump();
   vm.getModel("showAbsolute")->dump();
-  vm.setValue("errorActive", false);
+  vm.getModel("singleStep")->dump();
+//  vm.setValue("errorActive", false);
   }
 
 
@@ -604,10 +555,133 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   }
 
 
+void MainWindow::hitPowerBtn() {
+  int ns;
+
+  switch (ValueManager().getValue("taskState").toInt()) {
+    case EMC_TASK_STATE_ENUM::EMC_TASK_STATE_OFF:
+         qDebug() << "switch taskstate from OFF to ON";
+         ns = EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON;
+         break;
+    case EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON:
+         qDebug() << "switch taskstate from ON to ESTOP";
+         ns = EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ESTOP;
+         break;
+    case EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ESTOP_RESET:
+         qDebug() << "switch taskstate from ESTOP_RESET to ON";
+         ns = EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON;
+         break;
+    default:
+         qDebug() << "new taskstate is ESTOP_RESET";
+         ns = EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ESTOP_RESET;
+         break;
+    }
+//  tellStates();
+  Core().beSetTaskState(ns);
+  }
+
+
+void MainWindow::setSingleStep(bool singleStep) {
+  ValueManager().setValue("singleStep", singleStep);
+  }
+
+
+void MainWindow::autoStart() {
+  Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+  if (ValueManager().getValue("singleStep").toBool()) {
+     Core().beSetAuto(3, 0);
+     }
+  else {
+     Core().beSetAuto(0, 0);
+     }
+  }
+
+
+void MainWindow::autoPause() {
+  int iState = ValueManager().getValue("interpState").toInt();
+
+  if (iState == EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED) {
+     Core().beSetAuto(2, 0);
+     }
+  else {
+     Core().beSetAuto(1, 0);
+     }
+  }
+
+
+void MainWindow::autoStop() {
+  Core().beAbortTask();
+  Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+  Core().beTaskPlanSynch();
+  }
+
+
+void MainWindow::homeAxis() {
+  Core().beHomeAxis(-1);
+  }
+
+
+void MainWindow::mistToggle() {
+  ValueModel* vm = ValueManager().getModel("coolMist");
+
+  Core().beEnableMist(!vm->getValue().toBool());
+  }
+
+
+void MainWindow::floodToggle() {
+  ValueModel* vm = ValueManager().getModel("coolFlood");
+
+  Core().beEnableMist(!vm->getValue().toBool());
+  }
+
+
+void MainWindow::startSpindleCCW() {
+  double speed = ValueManager().getValue("spindle0Speed").toDouble();
+  int    dir   = ValueManager().getValue("spindle0Dir").toInt();
+
+  Core().beSetSpindle(0, speed, dir);
+  }
+
+
+void MainWindow::startSpindleCW() {
+    double speed = ValueManager().getValue("spindle0Speed").toDouble();
+    int    dir   = ValueManager().getValue("spindle0Dir").toInt();
+  Core().beSetSpindle(0, speed, dir);
+  }
+
+
+void MainWindow::stopSpindle() {
+  double speed = ValueManager().getValue("spindle0Speed").toDouble();
+  int    dir   = ValueManager().getValue("spindle0Dir").toInt();
+  Core().beSetSpindle(0, speed, dir);
+  }
+
+
+void MainWindow::setAppMode(ApplicationMode am) {
+  if (am == ApplicationMode::Auto)
+     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+  else if (am == ApplicationMode::MDI)
+     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+  else
+     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+  ValueManager().setValue("appMode", am);
+  }
+
+
+void MainWindow::timerEvent(QTimerEvent* ) {
+//  if (e->timerId() == timer.timerId()) tellStates();
+  }
+
+
 void MainWindow::keyPressEvent(QKeyEvent* e) {
   switch (e->key()) {
     case Qt::Key_Escape:
-         qDebug() << "MW: escape pressed! But don't do anything!";
+         if (Core().curPage() == SysEventView::className) {
+            msgMode->toggle();
+            toggleErrMessages();
+            }
+         else
+            qDebug() << "MW: escape pressed! But don't do anything!";
          e->accept();
          break;
     case Qt::Key_F1:

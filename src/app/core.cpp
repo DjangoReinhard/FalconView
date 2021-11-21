@@ -15,6 +15,7 @@
 #include <canonif.h>
 #include <configacc.h>
 #include <configmgr.h>
+#include <commandwriter.h>
 #include <occtviewer.h>
 #include <cassert>
 #include <emc.hh>
@@ -33,11 +34,6 @@ void Core::parseGCFile(const QString &fileName) {
      core()->parseGCode(gcFile);
      core()->ally3D.showPath(CanonIF().toolPath());
      }
-  }
-
-
-bool Core::isBackendActive() const {
-  return core()->statusReader.isActive();
   }
 
 
@@ -67,7 +63,7 @@ void Core::setMainWindow(MainWindow* mw) {
 
 
 void Core::setAppMode(ApplicationMode m) {
-  ValueManager().setValue("appMode", m);
+  core()->mainWindow->setAppMode(m);
   }
 
 
@@ -84,19 +80,24 @@ QWidget* Core::stackedPage(const QString& pageName) {
 
 
 bool Core::checkBE() {
-  bool rv = core()->statusReader.isActive();
+  if (checked < 0) {
+     bool rv = core()->statusReader.isActive()
+            && core()->commandWriter->isActive();
 
-  if (!rv) {
-     ValueManager vm;
+     checked = 1;
+     if (!rv) {
+        ValueManager vm;
 
-     qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
-     vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
-     vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
-     vm.setValue("allHomed", true);
-     vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
-     vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
-     }
-  return rv;
+        checked = 0;
+        qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
+
+        vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+        vm.setValue("allHomed", true);
+        vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
+        vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
+        }
+    }
+  return checked == 1;
   }
 
 
@@ -148,6 +149,107 @@ const Kernel* Core::core() const {
   }
 
 
+void Core::beAbortTask() {
+  emit core()->abortTask();
+  }
+
+
+void Core::beEnableBlockDelete(bool enable) {
+    emit core()->enableBlockDelete(enable);
+    }
+
+
+void Core::beEnableFlood(bool enable) {
+    emit core()->enableFlood(enable);
+    }
+
+
+void Core::beEnableMist(bool enable) {
+    emit core()->enableMist(enable);
+    }
+
+
+void Core::beEnableOptionalStop(bool enable) {
+    if (!checked) return;
+    emit core()->enableOptionalStop(enable);
+    }
+
+
+void Core::beEnableSpindleOverride(double rate) {
+    emit core()->enableSpindleOverride(rate);
+    }
+
+
+void Core::beJogStep(int axis, double stepSize, double speed) {
+    emit core()->jogStep(axis, stepSize, speed);
+    }
+
+
+void Core::beJogStart(int axis, double speed) {
+    emit core()->jogStart(axis, speed);
+    }
+
+
+void Core::beJogStop(int axis) {
+    emit core()->jogStop(axis);
+    }
+
+
+void Core::beHomeAxis(int jointNum) {
+    emit core()->homeAxis(jointNum);
+    }
+
+
+void Core::beLoadTaskPlan(const QString& gcodeFile) {
+    emit core()->loadTaskPlan(gcodeFile);
+    }
+
+
+void Core::beLoadToolTable(const QString& toolTableFile) {
+    emit core()->loadToolTable(toolTableFile);
+    }
+
+
+void Core::beSendMDICommand(const QString& command) {
+    emit core()->sendMDICommand(command);
+    }
+
+
+void Core::beSetAuto(int autoMode, int line) {
+    emit core()->setAuto(autoMode, line);
+    }
+
+
+void Core::beSetFeedOverride(double rate) {
+    emit core()->setFeedOverride(rate);
+    }
+
+
+void Core::beSetRapidOverride(double rate) {
+    emit core()->setRapidOverride(rate);
+    }
+
+
+void Core::beSetSpindle(bool enable, int speed, int direction) {
+    emit core()->setSpindle(enable, speed, direction);
+    }
+
+
+void Core::beSetTaskMode(int mode) {
+    emit core()->setTaskMode(mode);
+    }
+
+
+void Core::beSetTaskState(int state) {
+    emit core()->setTaskState(state);
+    }
+
+
+void Core::beTaskPlanSynch() {
+    emit core()->taskPlanSynch();
+    }
+
+
 Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString& group, DBHelper& dbAssist)
  : cfg(appName, group)
  , lcProps(iniFileName)
@@ -159,35 +261,40 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , mainWindow(nullptr)
  , conn(nullptr)
  , ally3D(view3D)
- , statusReader(positionCalculator, gcodeInfo) {
+ , statusReader(positionCalculator, gcodeInfo)
+ , commandWriter(new CommandWriter()) {
   CanonIF ci(lcProps, tt);
-  ValueManager().setValue("conePos", QVector3D());
 
-//  lcProps.dump();
   if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
-
-//  mAxis.dump();
   lcIF.setupToolTable();
 
   // check database before anyone needs it
-  QFileInfo db(dbAssist.dbConnection()->dbName());
+  QString   dbName = cfg.value("database").toString();
+  QFileInfo db(dbName);
 
   if (!db.exists() || db.size() < 1) {
-     conn = createDatabase(dbAssist);
-     cfg.setValue("database", conn->dbName());
-     cfg.setValue("dbType", conn->dbType());
+     if (dbAssist.connect(db.absoluteFilePath())) {
+        conn = createDatabase(dbAssist);
+        cfg.setValue("database", conn->dbName());
+        cfg.setValue("dbType", conn->dbType());
+        }
+     else throw std::system_error(-2, std::system_category(), "could not create database");
      }
-  if (!conn->connect()) throw std::system_error(-2, std::system_category(), "no database");
-  connect(ValueManager().getModel("conePos"), &ValueModel::valueChanged, this, &Kernel::updateView);  
-
+  else {
+     dbAssist.connect(db.absoluteFilePath());
+     conn = dbAssist.dbConnection();
+     if (!conn) throw std::system_error(-2, std::system_category(), "could not access database");
+     }
   ci.setTraverseColor(cfg.getForeground(Config::GuiElem::RapidMove));
   ci.setFeedColor(cfg.getForeground(Config::GuiElem::WorkMove));
   ci.setLimitsColor(cfg.getForeground(Config::GuiElem::WorkLimit));
   ci.setWorkPieceColor(cfg.getForeground(Config::GuiElem::WorkPiece));
   ci.setCurSegColor(cfg.getForeground(Config::GuiElem::CurSeg));
   ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
-  if (statusReader.isActive()) timer.start(40, this);
-//  checkTools();
+
+  connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged, this, &Kernel::updateView);
+
+  setupBackend();
   }
 
 
@@ -208,6 +315,69 @@ void Kernel::checkTools() {
          qDebug() << "NO TOOL with num #" << i;
          }
       }
+  }
+
+
+void Kernel::setupBackend() {
+  if (statusReader.isActive()) {
+     qDebug() << "Well, we have an active status reader ... ;)";
+     timer.start(40, this);
+     }
+  if (commandWriter->isActive()) {
+     qDebug() << "OK, ok, ok - backend seems to be available!";
+     commandWriter->moveToThread(&backendCommThread);
+     connect(&backendCommThread, &QThread::finished, &backendCommThread, &QObject::deleteLater);
+
+     connect(this, &Kernel::abortTask, commandWriter, &CommandWriter::abortTask);
+     connect(this, &Kernel::enableBlockDelete, commandWriter, &CommandWriter::enableBlockDelete);
+     connect(this, &Kernel::enableFlood, commandWriter, &CommandWriter::enableFlood);
+     connect(this, &Kernel::enableMist, commandWriter, &CommandWriter::enableMist);
+     connect(this, &Kernel::enableOptionalStop, commandWriter, &CommandWriter::enableOptionalStop);
+     connect(this, &Kernel::enableSpindleOverride, commandWriter, &CommandWriter::enableSpindleOverride);
+     connect(this, &Kernel::jogStep, commandWriter, &CommandWriter::jogStep);
+     connect(this, &Kernel::jogStart, commandWriter, &CommandWriter::jogStart);
+     connect(this, &Kernel::jogStop, commandWriter, &CommandWriter::jogStop);
+     connect(this, &Kernel::homeAxis, commandWriter, &CommandWriter::homeAxis);
+     connect(this, &Kernel::loadTaskPlan, commandWriter, &CommandWriter::loadTaskPlan);
+     connect(this, &Kernel::loadToolTable, commandWriter, &CommandWriter::loadToolTable);
+     connect(this, &Kernel::sendMDICommand, commandWriter, &CommandWriter::sendMDICommand);
+     connect(this, &Kernel::setAuto, commandWriter, &CommandWriter::setAuto);
+     connect(this, &Kernel::setFeedOverride, commandWriter, &CommandWriter::setFeedOverride);
+     connect(this, &Kernel::setRapidOverride, commandWriter, &CommandWriter::setRapidOverride);
+     connect(this, &Kernel::setSpindle, commandWriter, &CommandWriter::setSpindle);
+     connect(this, &Kernel::setTaskMode, commandWriter, &CommandWriter::setTaskMode);
+     connect(this, &Kernel::setTaskState, commandWriter, &CommandWriter::setTaskState);
+     connect(this, &Kernel::taskPlanSynch, commandWriter, &CommandWriter::taskPlanSynch);
+     backendCommThread.start();
+     }
+  else {
+     qDebug() << "Bad luck this time. Sorry but no backend!";
+     connect(this, &Kernel::abortTask, this, &Kernel::nop);
+     connect(this, &Kernel::enableBlockDelete, this, &Kernel::nop);
+     connect(this, &Kernel::enableFlood, this, &Kernel::nop);
+     connect(this, &Kernel::enableMist, this, &Kernel::nop);
+     connect(this, &Kernel::enableOptionalStop, this, &Kernel::nop);
+     connect(this, &Kernel::enableSpindleOverride, this, &Kernel::nop);
+     connect(this, &Kernel::jogStep, this, &Kernel::nop);
+     connect(this, &Kernel::jogStart, this, &Kernel::nop);
+     connect(this, &Kernel::jogStop, this, &Kernel::nop);
+     connect(this, &Kernel::homeAxis, this, &Kernel::nop);
+     connect(this, &Kernel::loadTaskPlan, this, &Kernel::nop);
+     connect(this, &Kernel::loadToolTable, this, &Kernel::nop);
+     connect(this, &Kernel::sendMDICommand, this, &Kernel::nop);
+     connect(this, &Kernel::setAuto, this, &Kernel::nop);
+     connect(this, &Kernel::setFeedOverride, this, &Kernel::nop);
+     connect(this, &Kernel::setRapidOverride, this, &Kernel::nop);
+     connect(this, &Kernel::setSpindle, this, &Kernel::nop);
+     connect(this, &Kernel::setTaskMode, this, &Kernel::nop);
+     connect(this, &Kernel::setTaskState, this, &Kernel::nop);
+     connect(this, &Kernel::taskPlanSynch, this, &Kernel::nop);
+     }
+  }
+
+
+void Kernel::nop() {
+  qDebug() << "backend not available!";
   }
 
 
@@ -254,4 +424,5 @@ void Kernel::timerEvent(QTimerEvent *e) {
   else QObject::timerEvent(e);
   }
 
-Kernel* Core::kernel = nullptr;
+Kernel* Core::kernel  = nullptr;
+int     Core::checked = -1;

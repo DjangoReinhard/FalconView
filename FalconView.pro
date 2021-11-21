@@ -76,10 +76,12 @@ SOURCES += \
     src/util/HelixCurveAdaptor_CylinderEvaluator.cpp \
     src/util/HelixCurveAdaptor.cpp \
     src/util/HHelixCurveAdaptor.cpp \
+    src/util/LCInter.cpp \
     src/util/labeladapter.cpp \
+    src/util/multistateaction.cpp \
+    src/util/multistatetoolbutton.cpp \
     src/util/notcondition.cpp \
     src/util/orcondition.cpp \
-    src/util/LCInter.cpp \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
     src/util/truecondition.cpp \
@@ -110,6 +112,7 @@ SOURCES += \
     src/view/tooleditor.cpp \
 
 HEADERS += \
+    src/app/applicationmode.h \
     src/app/core_p.h \
     src/app/mainwindow.h \
     src/app/core.h \
@@ -162,6 +165,8 @@ HEADERS += \
     src/util/HHelixCurveAdaptor.h \
     src/util/labeladapter.h \
     src/util/LCInter.h \
+    src/util/multistateaction.h \
+    src/util/multistatetoolbutton.h \
     src/util/notcondition.h \
     src/util/orcondition.h \
     src/util/smallercondition.h \
@@ -229,7 +234,8 @@ LIBS += \
   -ldl \
   -lutil
 
-LIBS += -L/usr/local/src/build-occt-Desktop_5_15_opt-Debug/lin64/gcc/libd
+LIBS += -Wl,-rpath=/usr/local/src/build-occt-Desktop_5_15_opt-Debug/lin64/gcc/libd \
+        -L/usr/local/src/build-occt-Desktop_5_15_opt-Debug/lin64/gcc/libd
 LIBS += -lTKernel -lTKMath -lTKService -lTKV3d -lTKOpenGl \
         -lTKBRep -lTKIGES -lTKSTL -lTKVRML -lTKSTEP -lTKSTEPAttr -lTKSTEP209 \
         -lTKSTEPBase -lTKGeomBase -lTKGeomAlgo -lTKG3d -lTKG2d \

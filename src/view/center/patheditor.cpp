@@ -33,9 +33,10 @@ void PathEditor::connectSignals() {
 
 // called from TestEdit::fileSelected
 void PathEditor::loadFile(const QVariant& fileName) {
-  if (Core().isBackendActive()) {
+  if (Core().checkBE()) {
      qDebug() << "PathEditor::loadFile (backend active)" << fileName;
      //TODO: send command to backend, which in turn changes filename vm
+     Core().beLoadTaskPlan(fileName.toString());
      }
   else ValueManager().setValue("fileName", fileName);
   }

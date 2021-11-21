@@ -18,9 +18,10 @@
 #include <configacc.h>
 
 
-FalconViewDB::FalconViewDB(const QString& name) {
+bool FalconViewDB::connect(const QString& name) {
   conn = new DBConnection(name, "QSQLITE");
-  assert(conn->connect());
+
+  return conn->connect();
   }
 
 

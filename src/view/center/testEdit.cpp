@@ -113,8 +113,14 @@ void TestEdit::fileSelected(const QString& filePath) {
 
 void TestEdit::loadFile(const QVariant& fileName) {
   qDebug() << "TestEdit::loadFile" << fileName;
-  ed->loadFile(fileName);
-  fn->setText(fileName.toString());
+  QFileInfo fi(fileName.toString());
+
+  if (!fi.exists() || fi.size() < 1) {
+     qDebug() << "TestEdit::loadFile: >" << fileName << "< is invalid";
+     return;
+     }
+  ed->loadFile(fi.absoluteFilePath());
+  fn->setText(fi.absoluteFilePath());
   // show editor again
   Core().setAppMode(ApplicationMode::XEdit);
   }

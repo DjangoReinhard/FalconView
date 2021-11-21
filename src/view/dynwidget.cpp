@@ -43,10 +43,7 @@ void DynWidget::init() {
 
 
 void DynWidget::closeEvent(QCloseEvent*) {
-  qDebug() << "DynWidget::closeEvent() on widget " << objectName();
-//  Config cfg;
-
-//  cfg.setValue("widgetState", this->saveState());
+//  qDebug() << "DynWidget::closeEvent() on widget " << objectName();
   }
 
 

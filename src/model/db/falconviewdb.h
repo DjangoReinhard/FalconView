@@ -9,7 +9,7 @@ class QSqlField;
 class FalconViewDB : public DBHelper
 {
 public:
-  FalconViewDB(const QString& name);
+  bool connect(const QString& name);
 
   virtual DBConnection* createDatabase(const QString& path);
   virtual void          createSampleData(DBConnection& conn);

@@ -95,7 +95,7 @@ void PreferencesEditor::setupLabels() {
       QString ss = QString("color: #%1; background: #%2;")
                           .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
                           .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
-      qDebug() << cfg.nameOf(static_cast<Config::GuiElem>(i)) << " => " << ss << " <= ";
+//      qDebug() << cfg.nameOf(static_cast<Config::GuiElem>(i)) << " => " << ss << " <= ";
       labels[i]->setStyleSheet(ss);
       labels[i]->setFont(font);
       }

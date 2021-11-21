@@ -13,6 +13,7 @@ public:
   virtual ~AbstractCondition();
 
   virtual bool result() const;
+  QString name() const;
 
 public slots:
   virtual bool eval() = 0;

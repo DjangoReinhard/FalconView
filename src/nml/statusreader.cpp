@@ -1,6 +1,7 @@
 #include <stat_msg.hh>
 #include <cmd_msg.hh>
 #include <emc_nml.hh>
+#include <config.h>
 #include <insulatePose.h>
 #include <statusreader.h>
 #include <positioncalculator.h>
@@ -12,6 +13,7 @@
 #include <chrono>
 #include <cmath>
 
+//#define WANT_BENCH
 
 StatusReader::StatusReader(PositionCalculator& posCalc, GCodeInfo& gcodeInfo)
  : QObject(0)
@@ -37,9 +39,10 @@ bool StatusReader::isActive() const {
 
 
 void StatusReader::createModels() {
-  qDebug() << "\tSR::createModels() ... START";
+//  qDebug() << "\tSR::createModels() ... START";
   vm.setValue("errorActive", false);
   vm.setValue("showAllButCenter", true);
+  vm.setValue("singleStep", false);
   vm.setValue("taskMode",     -1);
   vm.setValue("taskState",    -1);
   vm.setValue("execState",    -1);
@@ -85,7 +88,7 @@ void StatusReader::createModels() {
   vm.setValue("coolMist",  false);
   vm.setValue("coolFlood", false);
   vm.setValue("estop",     true);
-  qDebug() << "\tSR::createModels() ... END";
+//  qDebug() << "\tSR::createModels() ... END";
   }
 
 void StatusReader::update() {

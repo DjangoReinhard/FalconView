@@ -56,4 +56,15 @@ void SysEventView::hideEvent(QHideEvent* e) {
   }
 
 
+//void SysEventView::keyReleaseEvent(QKeyEvent* e) {
+//  switch (e->key()) {
+//    case Qt::Key_Escape:
+//         ValueManager().setValue("errorActive", false);
+//         ValueManager().setValue("showAllButCenter", false);
+//         break;
+//    default: DynWidget::keyReleaseEvent(e); break;
+//    }
+//  }
+
+
 const QString SysEventView::className = "SysEventView";

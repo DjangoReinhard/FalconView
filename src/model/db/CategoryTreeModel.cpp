@@ -288,7 +288,7 @@ void CategoryTreeModel::setupModelData(Category* parent) {
       if (parentIdx && parentIdx != id) parent = categories.at(parentIdx - 1);
       else                              parent = rootItem->child(0);
 
-      qDebug() << "id: " << id << "name:" << rec.value("name").toString() << "parent: " << parentIdx;
+//      qDebug() << "id: " << id << "name:" << rec.value("name").toString() << "parent: " << parentIdx;
 
       parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
       Category* cat = parent->child(parent->childCount() - 1);

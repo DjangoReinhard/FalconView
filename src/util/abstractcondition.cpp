@@ -17,6 +17,11 @@ AbstractCondition::~AbstractCondition() {
   }
 
 
+QString AbstractCondition::name() const {
+  return m ? m->getName() : QString();
+  }
+
+
 bool AbstractCondition::result() const {
 //  qDebug() << "Condition [" << (m ? m->getName() : "unnamed") << "] has result:" << met;
   return met;

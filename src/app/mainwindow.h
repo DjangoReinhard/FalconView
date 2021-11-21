@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 #include <QMainWindow>
 #include <QBasicTimer>
+#include <commandwriter.h>
+#include <applicationmode.h>
 
 class PositionDockable;
 class Dockable;
@@ -22,7 +24,7 @@ public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
-  void toggleAllButCenter();
+  void setAppMode(ApplicationMode am);
 
 protected:
   void closeEvent(QCloseEvent *event)  override;
@@ -41,8 +43,18 @@ protected:
 protected slots:
   void appModeChanged(const QVariant& appMode);
   void setSingleStep(bool singleStep);
+  void hitPowerBtn();
   void toggleErrMessages();
-  void enableLoop();
+  void toggleAllButCenter();
+  void autoStart();
+  void autoPause();
+  void autoStop();
+  void homeAxis();
+  void mistToggle();
+  void floodToggle();
+  void startSpindleCCW();
+  void startSpindleCW();
+  void stopSpindle();
 
 private:
   Ui::MainWindow*     ui;
@@ -52,7 +64,6 @@ private:
   QAction*            stopAction;
   QAction*            singleStep;
   QAction*            homeAll;
-  QAction*            posAbsolute;
   QAction*            autoMode;
   QAction*            mdiMode;
   QAction*            editMode;
@@ -62,6 +73,7 @@ private:
   QAction*            cfgMode;
   QAction*            msgMode;
   QAction*            touchMode;
+
   QAction*            power;
   QAction*            mist;
   QAction*            flood;
@@ -73,7 +85,7 @@ private:
 
   QToolBar*           autoTB;
   QToolBar*           modeTB;
-  QToolBar*           nopTB;
+  QToolBar*           topTB;
   QToolBar*           powerTB;
   QToolBar*           switchTB;
   int                 line;

@@ -23,7 +23,7 @@ AndCondition* AndCondition::addCondition(AbstractCondition* c) {
 
 bool AndCondition::eval() {
   for (auto c : qAsConst(cl)) {
-//      qDebug() << "AndCondition::eval() ..." << c->result();
+//      qDebug() << "AndCondition[" << c->name() << "]::eval() ..." << c->result();
       if (!c->result()) return false;
       }
   return true;

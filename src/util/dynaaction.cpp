@@ -7,10 +7,14 @@ DynaAction::DynaAction(const QIcon& ico, const QString& text, AbstractCondition*
  : QAction(ico, text, parent)
  , cEnabled(cEnabled)
  , cChecked(cChecked) {
-  connect(cEnabled, &AbstractCondition::conditionChanged, this, &DynaAction::setEnabled);
-  connect(cChecked, &AbstractCondition::conditionChanged, this, &DynaAction::setChecked);
-  setEnabled(cEnabled->result());
-  setChecked(cChecked->result());
+  if (cEnabled) {
+     connect(cEnabled, &AbstractCondition::conditionChanged, this, &DynaAction::setEnabled);
+     setEnabled(cEnabled->result());
+     }
+  if (cChecked) {
+     connect(cChecked, &AbstractCondition::conditionChanged, this, &DynaAction::setChecked);
+     setChecked(cChecked->result());
+     }
   }
 
 

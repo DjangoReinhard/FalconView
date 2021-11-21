@@ -19,6 +19,11 @@ protected:
   void connectSignals();
   void updateStyles();
 
+protected slots:
+  void feedChanged(const QVariant& v);
+  void fastFeedChanged(const QVariant& v);
+  void speedChanged(const QVariant& v);
+
 private:
   LabelAdapter* curFeed;
   LabelAdapter* curFastFeed;

@@ -87,7 +87,7 @@ void AxisMask::dump() const {
 
 
 void AxisMask::parseIni(const QString& iniValue) {
-  qDebug() << "parseIni(" << iniValue << ") - check for '='";
+//  qDebug() << "parseIni(" << iniValue << ") - check for '='";
 
   if (!iniValue.isEmpty() && iniValue.contains("=")) {
      QStringList parts = iniValue.split(QRegularExpression("\\s*=\\s*"));

@@ -13,6 +13,9 @@ class CommandWriter : public QObject
 public:
   explicit CommandWriter(QObject *parent = nullptr);
 
+  bool isActive();
+
+public slots:
   void abortTask();
   void enableBlockDelete(bool enable);
   void enableFlood(bool enable);
@@ -32,6 +35,7 @@ public:
   void setSpindle(bool enable, int speed, int direction);
   void setTaskMode(int mode);
   void setTaskState(int state);
+  void taskPlanSynch();
 
 protected:
   int sendCommand(RCS_CMD_MSG& msg);

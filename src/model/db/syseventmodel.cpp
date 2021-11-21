@@ -14,8 +14,8 @@ SysEventModel::SysEventModel(DBConnection& conn, QObject *parent)
   this->setEditStrategy(QSqlTableModel::OnManualSubmit);
   select();
 
-  qDebug() << "sys-event-columns" << columnCount();
-  qDebug() << "sys-event-rows" << rowCount();
+//  qDebug() << "sys-event-columns" << columnCount();
+//  qDebug() << "sys-event-rows" << rowCount();
   }
 
 

@@ -1,11 +1,8 @@
-#include <axismask.h>
 #include <equalcondition.h>
 #include <smallercondition.h>
 #include <greatercondition.h>
 #include <notcondition.h>
 #include <andcondition.h>
-#include <and3condition.h>
-#include <and4condition.h>
 #include <orcondition.h>
 #include <valuemodel.h>
 #include <QObject>
@@ -35,6 +32,7 @@ private slots:
   void testAnd3Condition();
   void testAnd4Condition();
   void testOrCondition();
+  void testBoolean();
 
   void init() { result = true; }
 
@@ -42,7 +40,7 @@ private:
   volatile bool result;
   };
 
-
+#ifndef REDNOSE
 void TestEngine::testEqualCondition() {
   ValueModel v("equal", 3);
   EqualCondition c(&v, 7);
@@ -93,7 +91,7 @@ void TestEngine::testAndCondition() {
   ValueModel v1("right", 3);
   GreaterCondition gc(&v0, 20);
   NotCondition     nc(&v1, 3);
-  AndCondition     ac(gc, nc);
+  AndCondition     ac(&gc, &nc);
 
   connect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
 
@@ -119,8 +117,9 @@ void TestEngine::testAnd3Condition() {
   GreaterCondition gc(&v0, 20);
   NotCondition     nc(&v1, 1);
   SmallerCondition sc(&v2, 0);
-  And3Condition    ac(gc, nc, sc);
+  AndCondition    ac(&gc, &nc);
 
+  ac.addCondition(&sc);
   connect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
 
   QCOMPARE(result = ac.result(), false);
@@ -152,8 +151,10 @@ void TestEngine::testAnd4Condition() {
   NotCondition     nc(&v1, 5);
   SmallerCondition sc(&v2, 1);
   GreaterCondition g1c(&v3, 33);
-  And4Condition    ac(g0c, nc, sc, g1c);
+  AndCondition    ac(&g0c, &nc);
 
+  ac.addCondition(&sc);
+  ac.addCondition(&g1c);
   connect(&ac, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
 
   QCOMPARE(result = ac.result(), false);
@@ -186,7 +187,7 @@ void TestEngine::testOrCondition() {
   ValueModel v1("right", 3);
   GreaterCondition gc(&v0, 20);
   NotCondition     nc(&v1, 3);
-  OrCondition      oc(gc, nc);
+  OrCondition      oc(&gc, &nc);
 
   connect(&oc, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
 
@@ -207,6 +208,26 @@ void TestEngine::testOrCondition() {
 
   QCOMPARE(result, true);
   disconnect(&oc, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+  }
+#endif
+
+void TestEngine::testBoolean() {
+  ValueModel     v("equal", true);
+  qualCondition c(&v, false);
+
+  connect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
+
+  QCOMPARE(result = c.result(), false);
+
+  v.setValue(false);
+
+  QCOMPARE(result, true);
+
+  v.setValue(true);
+
+  QCOMPARE(result, false);
+
+  disconnect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
   }
 
 

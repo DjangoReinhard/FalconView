@@ -3,6 +3,7 @@
 #include <emc_nml.hh>
 #include <nml_oi.hh>
 #include <sysevent.h>
+#include <config.h>
 #include <insulatePose.h>
 #include <errorreader.h>
 

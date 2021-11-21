@@ -5,11 +5,13 @@
 #include <positioncalculator.h>
 #include <gcodeinfo.h>
 #include <statusreader.h>
+#include <commandwriter.h>
 #include <axismask.h>
 #include <ally3d.h>
 #include <tooltable.h>
 #include <LCInter.h>
 #include <mainview.h>
+#include <QThread>
 #include <QBasicTimer>
 class OcctQtViewer;
 class DBConnection;
@@ -25,13 +27,36 @@ class Kernel : public QObject
 protected:
   void timerEvent(QTimerEvent* event) override;
 
+signals:
+  void abortTask();
+  void enableBlockDelete(bool enable);
+  void enableFlood(bool enable);
+  void enableMist(bool enable);
+  void enableOptionalStop(bool enable);
+  void enableSpindleOverride(double rate);
+  void jogStep(int axis, double stepSize, double speed);
+  void jogStart(int axis, double speed);
+  void jogStop(int axis);
+  void homeAxis(int jointNum);
+  void loadTaskPlan(const QString& gcodeFile);
+  void loadToolTable(const QString& toolTableFile);
+  void sendMDICommand(const QString& command);
+  void setAuto(int autoMode, int line);
+  void setFeedOverride(double rate);
+  void setRapidOverride(double rate);
+  void setSpindle(bool enable, int speed, int direction);
+  void setTaskMode(int mode);
+  void setTaskState(int state);
+  void taskPlanSynch();
+
 private:
   Kernel(const QString& iniFilename, const QString& appName, const QString& group, DBHelper& dbAssist);
   virtual ~Kernel();
 
+  void nop();
   void checkTools();
   void parseGCode(QFile& file);
-  void simulateStartOfBE();
+  void setupBackend();
   void updateView(const QVariant& v);
   void windowClosing(QCloseEvent* e);
   DBConnection* createDatabase(DBHelper& dbAssist);
@@ -49,7 +74,9 @@ private:
   GCodeInfo           gcodeInfo;
   PositionCalculator  positionCalculator;
   StatusReader        statusReader;
+  CommandWriter*      commandWriter;
   QBasicTimer         timer;
+  QThread             backendCommThread;
 
   friend class Core;
   friend class Config;
