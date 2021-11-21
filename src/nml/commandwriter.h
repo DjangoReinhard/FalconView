@@ -1,6 +1,7 @@
 #ifndef COMMANDWRITER_H
 #define COMMANDWRITER_H
 #include <QObject>
+#include <QTime>
 class RCS_CMD_CHANNEL;
 class RCS_STAT_CHANNEL;
 class RCS_CMD_MSG;
@@ -15,13 +16,16 @@ public:
 
   bool isActive();
 
+signals:
+  void systemEvent(int type, const QString& msg, const QTime& when = QTime::currentTime());
+
 public slots:
   void abortTask();
   void enableBlockDelete(bool enable);
   void enableFlood(bool enable);
   void enableMist(bool enable);
   void enableOptionalStop(bool enable);
-  void enableSpindleOverride(double rate);
+  void setSpindleOverride(double rate);
   void jogStep(int axis, double stepSize, double speed);
   void jogStart(int axis, double speed);
   void jogStop(int axis);

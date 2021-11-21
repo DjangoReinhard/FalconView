@@ -6,6 +6,7 @@
 #include <QVector3D>
 #include <QSqlError>
 #include <core.h>
+#include <sysevent.h>
 #include <lcproperties.h>
 #include <dbconnection.h>
 #include <dbhelper.h>
@@ -175,8 +176,8 @@ void Core::beEnableOptionalStop(bool enable) {
     }
 
 
-void Core::beEnableSpindleOverride(double rate) {
-    emit core()->enableSpindleOverride(rate);
+void Core::beSetSpindleOverride(double rate) {
+    emit core()->setSpindleOverride(rate);
     }
 
 
@@ -333,7 +334,7 @@ void Kernel::setupBackend() {
      connect(this, &Kernel::enableFlood, commandWriter, &CommandWriter::enableFlood);
      connect(this, &Kernel::enableMist, commandWriter, &CommandWriter::enableMist);
      connect(this, &Kernel::enableOptionalStop, commandWriter, &CommandWriter::enableOptionalStop);
-     connect(this, &Kernel::enableSpindleOverride, commandWriter, &CommandWriter::enableSpindleOverride);
+     connect(this, &Kernel::setSpindleOverride, commandWriter, &CommandWriter::setSpindleOverride);
      connect(this, &Kernel::jogStep, commandWriter, &CommandWriter::jogStep);
      connect(this, &Kernel::jogStart, commandWriter, &CommandWriter::jogStart);
      connect(this, &Kernel::jogStop, commandWriter, &CommandWriter::jogStop);
@@ -348,6 +349,8 @@ void Kernel::setupBackend() {
      connect(this, &Kernel::setTaskMode, commandWriter, &CommandWriter::setTaskMode);
      connect(this, &Kernel::setTaskState, commandWriter, &CommandWriter::setTaskState);
      connect(this, &Kernel::taskPlanSynch, commandWriter, &CommandWriter::taskPlanSynch);
+
+     connect(commandWriter, &CommandWriter::systemEvent, this, &Kernel::logSysEvent);
      backendCommThread.start();
      }
   else {
@@ -357,7 +360,7 @@ void Kernel::setupBackend() {
      connect(this, &Kernel::enableFlood, this, &Kernel::nop);
      connect(this, &Kernel::enableMist, this, &Kernel::nop);
      connect(this, &Kernel::enableOptionalStop, this, &Kernel::nop);
-     connect(this, &Kernel::enableSpindleOverride, this, &Kernel::nop);
+     connect(this, &Kernel::setSpindleOverride, this, &Kernel::nop);
      connect(this, &Kernel::jogStep, this, &Kernel::nop);
      connect(this, &Kernel::jogStart, this, &Kernel::nop);
      connect(this, &Kernel::jogStop, this, &Kernel::nop);
@@ -387,6 +390,13 @@ DBConnection* Kernel::createDatabase(DBHelper &dbAssist) {
   dbAssist.createSampleData(*conn);
 
   return conn;
+  }
+
+
+void Kernel::logSysEvent(int type, const QString& msg, const QTime& when) {
+  SysEvent se(static_cast<SysEvent::EventType>(type), msg, when);
+
+  qDebug() << "system event" << se.type() << ":" << se.what() << " at:" << se.when();
   }
 
 

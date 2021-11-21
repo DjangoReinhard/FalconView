@@ -127,6 +127,8 @@ void FixtureEdit::saveFixture() {
   for (int i=0; i < 9; ++i) {
       if (edits.at(i)->hasFocus()) {
          userData = edits.at(i)->text();
+         qDebug() << "userData: >" << userData << "< on field #" << i;
+         axis = i;
          break;
          }
       }

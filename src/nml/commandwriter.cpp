@@ -1,6 +1,7 @@
 #include <commandwriter.h>
 #include <valuemanager.h>
 #include <valuemodel.h>
+#include <sysevent.h>
 #include <stat_msg.hh>
 #include <cmd_msg.hh>
 #include <emc_nml.hh>
@@ -69,8 +70,12 @@ void CommandWriter::jogStep(int axis, double stepSize, double speed) {
   ji.joint_or_axis = axis;
   ji.incr          = stepSize;
   ji.vel           = speed;
-  ji.jjogmode      = 0;
-  sendCommand(ji);
+  ji.jjogmode      = 0;  
+  if (!sendCommand(ji)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("jogStep(%1, %2, %3)")
+                                                .arg(axis)
+                                                .arg(stepSize)
+                                                .arg(speed));
   }
 
 
@@ -81,7 +86,10 @@ void CommandWriter::jogStart(int axis, double speed) {
   jc.joint_or_axis = axis;
   jc.vel           = speed;
   jc.jjogmode      = 0;
-  sendCommand(jc);
+  if (!sendCommand(jc)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("jogStart(%1, %2)")
+                                                .arg(axis)
+                                                .arg(speed));
   }
 
 
@@ -91,7 +99,9 @@ void CommandWriter::jogStop(int axis) {
   qDebug() << "CW::jogStop" << axis;
   js.joint_or_axis = axis;
   js.jjogmode      = 0;
-  sendCommand(js);
+  if (!sendCommand(js)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("jogStop(%1)")
+                                                .arg(axis));
   }
 
 
@@ -100,7 +110,9 @@ void CommandWriter::homeAxis(int jointNum) {
 
   qDebug() << "CW::homeAxis" << jointNum;
   jh.joint = jointNum;
-  sendCommand(jh);
+  if (!sendCommand(jh)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("homeAxis(%1)")
+                                                .arg(jointNum));
   }
 
 
@@ -111,7 +123,9 @@ void CommandWriter::loadTaskPlan(const QString& gcodeFile) {
   qDebug() << "CW::loadTaskPlan" << gcodeFile;
   sendCommand(pc);
   strncpy(po.file, gcodeFile.toStdString().c_str(), LINELEN);
-  sendCommand(po);
+  if (!sendCommand(po)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("loadTaskPlan(%1)")
+                                                .arg(gcodeFile));
   }
 
 
@@ -120,7 +134,9 @@ void CommandWriter::loadToolTable(const QString& toolTableFile) {
 
   qDebug() << "CW::loadToolTable" << toolTableFile;
   strncpy(ltt.file, toolTableFile.toStdString().c_str(), LINELEN);
-  sendCommand(ltt);
+  if (!sendCommand(ltt)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                        , QString("loadToolTable(%1)")
+                                                 .arg(toolTableFile));
   }
 
 
@@ -129,7 +145,9 @@ void CommandWriter::sendMDICommand(const QString& command) {
 
   qDebug() << "CW::sendMDICommand" << command;
   strncpy(pe.command, command.toStdString().c_str(), LINELEN);
-  sendCommand(pe);
+  if (!sendCommand(pe)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("send MDI >%1<")
+                                                .arg(command));
   }
 
 
@@ -141,7 +159,8 @@ void CommandWriter::sendMDICommand(const QString& command) {
 #define LOCAL_AUTO_FORWARD  (5)
 
 void CommandWriter::setAuto(int autoMode, int line) {
-  int rv = 0;
+  QString msg;
+  int     rv = 0;
 
   switch (autoMode) {
     case 0: {
@@ -149,46 +168,46 @@ void CommandWriter::setAuto(int autoMode, int line) {
 
          qDebug() << "CW::taskPlan run (line #" << line << ")";
          pr.line = line;
-         fprintf(stderr, "cmdWriter.setAuto(run) - line: %d\n", line);
+         msg = QString("setAuto(run) - line: %d").arg(line);
          rv = sendCommand(pr);
          } break;
     case 1: {
          EMC_TASK_PLAN_PAUSE pp;
 
          qDebug() << "CW::taskPlan pause";
-         fputs("cmdWriter.setAuto(pause)\n", stderr);
+         msg = "setAuto(pause)";
          rv = sendCommand(pp);
          } break;
     case 2: {
          EMC_TASK_PLAN_RESUME pr;
 
          qDebug() << "CW::taskPlan resume";
-         fputs("cmdWriter.setAuto(resume)\n", stderr);
+         msg = "setAuto(resume)";
          rv = sendCommand(pr);
          } break;
     case 3: {
          EMC_TASK_PLAN_STEP ps;
 
          qDebug() << "CW::taskPlan step";
-         fputs("cmdWriter.setAuto(step)\n", stderr);
+         msg = "setAuto(step)";
          rv = sendCommand(ps);
          } break;
     case 4: {
          EMC_TASK_PLAN_REVERSE pr;
 
          qDebug() << "CW::taskPlan reverse";
-         fputs("cmdWriter.setAuto(reverse)\n", stderr);
+         msg = "setAuto(reverse)";
          rv = sendCommand(pr);
          } break;
     case 5: {
          EMC_TASK_PLAN_FORWARD pf;
 
          qDebug() << "CW::taskPlan forward";
-         fputs("cmdWriter.setAuto(forward)\n", stderr);
+         msg = "setAuto(forward)";
          rv = sendCommand(pf);
          } break;
     }
-  if (rv) fputs("changing interpreters auto mode FAILED!", stderr);
+  if (!rv) emit systemEvent(SysEvent::EventType::NMLEvent, msg);
   }
 
 
@@ -198,7 +217,9 @@ void CommandWriter::enableBlockDelete(bool enable) {
   qDebug() << "CW: enable block delete" << (enable ? "ON" : "OFF");
   if (enable) bd.state = 1;
   else        bd.state = 0;
-  sendCommand(bd);
+  if (!sendCommand(bd)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("enable block delete >%1<")
+                                                .arg(enable ? "ON" : "OFF"));
   }
 
 
@@ -207,37 +228,49 @@ void CommandWriter::setFeedOverride(double rate) {
 
   qDebug() << "CW: setFeedOverride" << rate;
   ss.scale = rate;
-  sendCommand(ss);
+  if (!sendCommand(ss)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("feed override >%1<")
+                                                .arg(rate));
   }
 
 
 void CommandWriter::enableFlood(bool enable) {
   qDebug() << "CW::enableFlood" << (enable ? "ON" : "OFF");
+  int rv;
+
   if (enable) {
      EMC_COOLANT_FLOOD_ON fo;
 
-     sendCommand(fo);
+     rv = sendCommand(fo);
      }
   else {
      EMC_COOLANT_FLOOD_OFF fo;
 
-     sendCommand(fo);
+     rv = sendCommand(fo);
      }
+  if (!rv) emit systemEvent(SysEvent::EventType::NMLEvent
+                          , QString("enable flood >%1<")
+                                   .arg(enable ? "ON" : "OFF"));
   }
 
 
 void CommandWriter::enableMist(bool enable) {
   qDebug() << "CW::enableMist" << (enable ? "ON" : "OFF");
+  int rv;
+
   if (enable) {
      EMC_COOLANT_MIST_ON mo;
 
-     sendCommand(mo);
+     rv = sendCommand(mo);
      }
   else {
      EMC_COOLANT_MIST_OFF mo;
 
-     sendCommand(mo);
+     rv = sendCommand(mo);
      }
+  if (!rv) emit systemEvent(SysEvent::EventType::NMLEvent
+                          , QString("enable mist >%1<")
+                                   .arg(enable ? "ON" : "OFF"));
   }
 
 
@@ -246,7 +279,9 @@ void CommandWriter::enableOptionalStop(bool enable) {
   EMC_TASK_PLAN_SET_OPTIONAL_STOP os;
 
   os.state = enable;
-  sendCommand(os);
+  if (!sendCommand(os)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("enable optional stop >%1<")
+                                                .arg(enable ? "ON" : "OFF"));
   }
 
 
@@ -255,36 +290,47 @@ void CommandWriter::setRapidOverride(double rate) {
 
   qDebug() << "CW: set rapid override" << rate;
   rs.scale = rate;
-  sendCommand(rs);
+  if (!sendCommand(rs)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("rapid override >%1<")
+                                                .arg(rate));
   }
 
 
 void CommandWriter::setSpindle(bool enable, int speed, int direction) {
+  int rv;
+
   if (enable) {
      EMC_SPINDLE_ON so;
 
      qDebug() << "CW::setSpindle(" << (enable ? "ON": "OFF") << ", " << speed << ", " << direction;
      so.speed = direction * speed;
      so.spindle = 0;
-     sendCommand(so);
+     rv = sendCommand(so);
      }
   else {
      EMC_SPINDLE_OFF so;
 
      qDebug() << "CW::setSpindle() off";
      so.spindle = 0;
-     sendCommand(so);
+     rv = sendCommand(so);
      }
+  if (!rv) emit systemEvent(SysEvent::EventType::NMLEvent
+                          , QString("spindle >%1<, %2, %3")
+                                   .arg(enable ? "ON" : "OFF")
+                                   .arg(speed)
+                                   .arg(direction));
   }
 
 
-void CommandWriter::enableSpindleOverride(double rate) {
+void CommandWriter::setSpindleOverride(double rate) {
   EMC_TRAJ_SET_SPINDLE_SCALE ss;
 
-  qDebug() << "CW::enableSpindleOverride" << rate;
+  qDebug() << "CW::setSpindleOverride" << rate;
   ss.spindle = 0;
   ss.scale = rate;
-  sendCommand(ss);
+  if (!sendCommand(ss)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("spindle override >%1<")
+                                                .arg(rate));
   }
 
 
@@ -293,7 +339,9 @@ void CommandWriter::setTaskMode(int mode) {
 
   qDebug() << "CW::set task mode" << mode;
   sm.mode = static_cast<EMC_TASK_MODE_ENUM>(mode);
-  sendCommand(sm);
+  if (!sendCommand(sm)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("set task mode >%1<")
+                                                .arg(mode));
   }
 
 
@@ -302,10 +350,9 @@ void CommandWriter::setTaskState(int state) {
 
   qDebug() << "CW:: set task state" << state;
   ss.state = static_cast<EMC_TASK_STATE_ENUM>(state);
-  if (sendCommand(ss) < 0) {    // backend not active?
-     // simulate response from be
-     ValueManager().setValue("taskState", ss.state);
-     }
+  if (!sendCommand(ss)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("set task state >%1<")
+                                                .arg(state));
   }
 
 
@@ -313,7 +360,8 @@ void CommandWriter::abortTask() {
   EMC_TASK_ABORT ta;
 
   qDebug() << "CW: abort task";
-  sendCommand(ta);
+  if (!sendCommand(ta)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                       , QString("abort task"));
   }
 
 
@@ -321,7 +369,8 @@ void CommandWriter::taskPlanSynch() {
   EMC_TASK_PLAN_SYNCH synch;
 
   qDebug() << "abort task";
-  sendCommand(synch);
+  if (!sendCommand(synch)) emit systemEvent(SysEvent::EventType::NMLEvent
+                                            , QString("task plan synch"));
   }
 
 const int    CommandWriter::EMC_COMMAND_TIMEOUT = 5.0;  // how long to wait until timeout

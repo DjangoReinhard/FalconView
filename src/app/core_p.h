@@ -17,6 +17,7 @@ class OcctQtViewer;
 class DBConnection;
 class DBHelper;
 class MainWindow;
+class SysEvent;
 class QString;
 class QFile;
 
@@ -27,13 +28,16 @@ class Kernel : public QObject
 protected:
   void timerEvent(QTimerEvent* event) override;
 
+protected slots:
+  void logSysEvent(int type, const QString& msg, const QTime& when);
+
 signals:
   void abortTask();
   void enableBlockDelete(bool enable);
   void enableFlood(bool enable);
   void enableMist(bool enable);
   void enableOptionalStop(bool enable);
-  void enableSpindleOverride(double rate);
+  void setSpindleOverride(double rate);
   void jogStep(int axis, double stepSize, double speed);
   void jogStart(int axis, double speed);
   void jogStop(int axis);

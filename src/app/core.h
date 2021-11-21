@@ -44,7 +44,7 @@ public:
   void beEnableFlood(bool enable);
   void beEnableMist(bool enable);
   void beEnableOptionalStop(bool enable);
-  void beEnableSpindleOverride(double rate);
+  void beSetSpindleOverride(double rate);
   void beJogStep(int axis, double stepSize, double speed);
   void beJogStart(int axis, double speed);
   void beJogStop(int axis);

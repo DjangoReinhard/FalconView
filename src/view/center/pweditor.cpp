@@ -61,25 +61,6 @@ void PreViewEditor::showEvent(QShowEvent* e) {
   }
 
 
-void PreViewEditor::keyPressEvent(QKeyEvent* e) {
-  switch (e->key()) {
-    case Qt::Key_Up: {
-         qDebug() << "PWE: inc current line";
-         ValueManager().setValue("curLine", ValueManager().getValue("curLine").toInt() + 1);
-         } break;
-    case Qt::Key_Down:
-         {
-         qDebug() << "PWE: dec current line";
-         ValueManager().setValue("curLine", ValueManager().getValue("curLine").toInt() - 1);
-         } break;
-    default:
-         qDebug() << "PW-Edit: key pressed: " << e->key();
-         TestEdit::keyPressEvent(e);
-         break;
-    }
-  }
-
-
 void PreViewEditor::setCurrentLine(const QVariant& line) {
   QTextDocument* d  = ed->document();
   QTextBlock     b0 = d->findBlockByLineNumber(fmax(0, line.toInt() - 3));
@@ -87,7 +68,7 @@ void PreViewEditor::setCurrentLine(const QVariant& line) {
   QTextCursor    c0(b0);
   QTextCursor    c1(b1);
 
-  qDebug() << "PWE::setCurrentLine(" << line << ")";
+//  qDebug() << "PWE::setCurrentLine(" << line << ")";
   ed->moveCursor(QTextCursor::End);
   ed->setTextCursor(c0);
   ed->setTextCursor(c1);

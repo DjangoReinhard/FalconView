@@ -2,6 +2,7 @@
 #include <labeladapter.h>
 #include <valuemanager.h>
 #include <configacc.h>
+#include <core.h>
 #include <QFile>
 #include <QSlider>
 #include <QUiLoader>
@@ -28,14 +29,6 @@ SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
 
 
 SpeedInfoDockable::~SpeedInfoDockable() {
-    /*
-  delete curFeed;
-  delete curFastFeed;
-  delete curSpeed;
-  delete cmdFeed;
-  delete cmdFastFeed;
-  delete cmdSpeed;
-  */
   }
 
 
@@ -69,9 +62,9 @@ void SpeedInfoDockable::connectSignals() {
   ValueManager vm;
   Config       cfg;
 
-  connect(vm.getModel("feedrate", 100),      &ValueModel::valueChanged, slFeed,     [=](QVariant v){ slFeed->setValue(int(v.toDouble() * 100.0)); });
-  connect(vm.getModel("rapidrate", 100),     &ValueModel::valueChanged, slFastFeed, [=](QVariant v){ slFastFeed->setValue(int(v.toDouble() * 100.0)); });
-  connect(vm.getModel("spindle0Scale", 100), &ValueModel::valueChanged, slSpeed,    [=](QVariant v){ slSpeed->setValue(int(v.toDouble() * 100.0)); });
+  connect(vm.getModel("feedrate", 100),      &ValueModel::valueChanged, this, &SpeedInfoDockable::feedRateChanged);
+  connect(vm.getModel("rapidrate", 100),     &ValueModel::valueChanged, this, &SpeedInfoDockable::fastFeedRateChanged);
+  connect(vm.getModel("spindle0Scale", 100), &ValueModel::valueChanged, this, &SpeedInfoDockable::speedRateChanged);
 
   connect(vm.getModel("cmdVelocity", 0),     &ValueModel::valueChanged, cmdFeed,     &LabelAdapter::setValue);
   connect(vm.getModel("maxVelocity", 0),     &ValueModel::valueChanged, cmdFastFeed, &LabelAdapter::setValue);
@@ -217,21 +210,51 @@ void SpeedInfoDockable::connectSignals() {
   }
 
 
+// backend callback (backend uses factor, frontend percent
+void SpeedInfoDockable::feedRateChanged(const QVariant& v) {
+  int rate = int(v.toDouble() * 100.0);
+
+  slFeed->setValue(rate);
+  feedFactor->setValue(rate);
+  }
+
+
+// backend callback (backend uses factor, frontend percent
+void SpeedInfoDockable::fastFeedRateChanged(const QVariant& v) {
+  int rate = int(v.toDouble() * 100.0);
+
+  slFastFeed->setValue(rate);
+  fastfeedFactor->setValue(rate);
+  }
+
+
+// backend callback (backend uses factor, frontend percent
+void SpeedInfoDockable::speedRateChanged(const QVariant& v) {
+  int rate = int(v.toDouble() * 100.0);
+
+  slSpeed->setValue(rate);
+  speedFactor->setValue(rate);
+  }
+
+
+// slider callback
 void SpeedInfoDockable::feedChanged(const QVariant& v) {
-//  qDebug() << "SpeedInfoDockable::feedChanged(" << v << ")";
-  feedFactor->setValue(v.toDouble());
+  qDebug() << "SpeedInfoDockable::feedChanged(" << v << ")";
+  Core().beSetFeedOverride(v.toDouble() / 100.0);
   }
 
 
+// slider callback
 void SpeedInfoDockable::fastFeedChanged(const QVariant& v) {
-//  qDebug() << "SpeedInfoDockable::fastFeedChanged(" << v << ")";
-  fastfeedFactor->setValue(v.toDouble());
+  qDebug() << "SpeedInfoDockable::fastFeedChanged(" << v << ")";
+  Core().beSetRapidOverride(v.toDouble() / 100.0);
   }
 
 
+// slider callback
 void SpeedInfoDockable::speedChanged(const QVariant& v) {
-//  qDebug() << "SpeedInfoDockable::speedChanged(" << v << ")";
-  speedFactor->setValue(v.toDouble());
+  qDebug() << "SpeedInfoDockable::speedChanged(" << v << ")";
+  Core().beSetSpindleOverride(v.toDouble() / 100.0);
   }
 
 
@@ -247,9 +270,6 @@ void SpeedInfoDockable::updateStyles() {
   slFastFeed->setValue(int(vm.getValue("rapidrate").toDouble() * 100));
   slSpeed->setValue(int(vm.getValue("spindle0Scale").toDouble() * 100));
 
-//  qDebug() << "feed style: " << style;
-//  qDebug() << "feed font:  " << font;
-
   curFeed->label()->setStyleSheet(style);
   curFeed->label()->setFont(font);
   cmdFeed->label()->setStyleSheet(style);
@@ -263,9 +283,6 @@ void SpeedInfoDockable::updateStyles() {
   colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>();
   font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::Speed)).value<QFont>();
   style = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
-
-//  qDebug() << "speed style: " << style;
-//  qDebug() << "speed font:  " << font;
 
   curSpeed->label()->setStyleSheet(style);
   curSpeed->label()->setFont(font);

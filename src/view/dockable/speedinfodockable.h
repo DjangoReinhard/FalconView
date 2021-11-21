@@ -20,9 +20,14 @@ protected:
   void updateStyles();
 
 protected slots:
+  // slider callbacks
   void feedChanged(const QVariant& v);
   void fastFeedChanged(const QVariant& v);
   void speedChanged(const QVariant& v);
+  // backend callbacks
+  void feedRateChanged(const QVariant& v);
+  void fastFeedRateChanged(const QVariant& v);
+  void speedRateChanged(const QVariant& v);
 
 private:
   LabelAdapter* curFeed;
