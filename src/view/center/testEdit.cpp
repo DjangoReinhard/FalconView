@@ -20,21 +20,28 @@
 
 
 TestEdit::TestEdit(const QString& fileName, QWidget* parent)
- : DynWidget(fileName, false, parent)
+ : DynCenterWidget(fileName, TestEdit::className, false, parent)
  , fn(nullptr) {
-  setObjectName(TestEdit::className);
   this->setStyleSheet("background: 0xFF0000;");
-  fn     = w->findChild<QLineEdit*>("fileName");
-  pbOpen = w->findChild<QPushButton*>("pbOpen");
-  pbSave = w->findChild<QPushButton*>("pbSave");
-  QGridLayout* gl = w->findChild<QGridLayout*>("gridLayout");
-  QWidget* placeHolder = w->findChild<QWidget*>("widget");
+  }
 
-  ed     = new GCodeEditor(this);
-  gh     = new GCodeHighlighter(ed->document());
+QWidget* TestEdit::createContent() {
+  QWidget* rv = DynCenterWidget::createContent();
+
+  fn     = findChild<QLineEdit*>("fileName");
+  pbOpen = findChild<QPushButton*>("pbOpen");
+  pbSave = findChild<QPushButton*>("pbSave");
+  QGridLayout* gl = findChild<QGridLayout*>("gridLayout");
+  QWidget* placeHolder = findChild<QWidget*>("widget");
+
+  ed = new GCodeEditor(this);
+  gh = new GCodeHighlighter(ed->document());
   ed->setFocusPolicy(Qt::NoFocus);
-  gl->addWidget(ed, 1, 0, 1, 3);
-  placeHolder->hide();
+//  gl->addWidget(ed, 1, 0, 1, 3);
+//  placeHolder->hide();
+  gl->replaceWidget(placeHolder, ed);
+
+  return rv;
   }
 
 

@@ -7,8 +7,15 @@
 
 
 CurCodesDockable::CurCodesDockable(const QString& fileName, QWidget* parent)
- : Dockable(fileName, tr("actual Codes"), parent)
+ : DynCenterWidget(fileName, tr("actual Codes"), false, parent)
  , labels(nullptr) {
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
+  }
+
+
+QWidget* CurCodesDockable::createContent() {
+  QWidget* w = DynCenterWidget::createContent();
+
   labels = new QLabel*[28];
   labels[0] = findChild<QLabel*>("g1");
   labels[1] = findChild<QLabel*>("g2");
@@ -31,9 +38,7 @@ CurCodesDockable::CurCodesDockable(const QString& fileName, QWidget* parent)
   labels[18] = findChild<QLabel*>("m9");
   labels[19] = findChild<QLabel*>("m10");
 
-  setFocusPolicy(Qt::FocusPolicy::NoFocus);
-  connectSignals();
-  updateStyles();
+  return w;
   }
 
 

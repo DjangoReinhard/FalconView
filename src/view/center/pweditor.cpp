@@ -21,28 +21,35 @@
 #include <QPushButton>
 
 
-PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent)
+PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent)
  : TestEdit(fileName, parent)
- , view3D(view) {
+ , view3D(view)
+ , statusInPreview(statusInPreview) {
   setObjectName(PreViewEditor::className);
-  spV = new QSplitter(Qt::Vertical);
-  view->setMinimumSize(400, 400);
-  QWidget* w = layout()->itemAt(0)->widget();
+  }
 
-  layout()->removeWidget(w);
-  spV->addWidget(view);
-  spV->addWidget(w);
+QWidget* PreViewEditor::createContent() {
+  QWidget* rv = TestEdit::createContent();
+
+  spV = new QSplitter(Qt::Vertical);
+  view3D->setMinimumSize(400, 400);
+  QFrame* frame = findChild<QFrame*>("Frame");
+
+  spV->addWidget(view3D);
+  spV->addWidget(frame);
   ed->setWordWrapMode(QTextOption::NoWrap);
   ed->setReadOnly(true);
-  layout()->addWidget(spV);
   pbOpen->hide();
   pbSave->hide();
   ValueManager().setValue("fileName", "janeDoe");
+  createDecorations(view3D, statusInPreview);
   Config cfg;
 
   cfg.beginGroup(PreViewEditor::className);
   spV->restoreState(cfg.value("vState").toByteArray());
   cfg.endGroup();
+
+  return rv;
   }
 
 
@@ -81,6 +88,14 @@ void PreViewEditor::closeEvent(QCloseEvent*) {
   cfg.beginGroup(PreViewEditor::className);
   cfg.setValue("vState", spV->saveState());
   cfg.endGroup();
+  }
+
+
+void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
+  if (!sip) return;
+  v->setLayout(new QGridLayout(v));
+
+  //TODO:
   }
 
 

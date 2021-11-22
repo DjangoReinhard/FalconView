@@ -1,12 +1,12 @@
 #ifndef FIXTUREMANAGER_H
 #define FIXTUREMANAGER_H
 
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 class FixtureEdit;
 class AxisMask;
 
 
-class FixtureManager : public DynWidget
+class FixtureManager : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -20,6 +20,7 @@ protected:
   virtual void keyReleaseEvent(QKeyEvent* event) override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void resizeEvent(QResizeEvent *event) override;
+  virtual QWidget* createContent() override;
 
 private:
   QWidget*            client;

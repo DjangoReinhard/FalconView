@@ -1,6 +1,6 @@
 #ifndef TESTEDIT_H
 #define TESTEDIT_H
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 #include <filemanagerclient.h>
 class QSplitter;
 class QLineEdit;
@@ -11,7 +11,7 @@ class GCodeEditor;
 class GCodeHighlighter;
 
 
-class TestEdit : public DynWidget, FileManagerClient
+class TestEdit : public DynCenterWidget, FileManagerClient
 {
   Q_OBJECT
 public:
@@ -25,7 +25,7 @@ public slots:
   void fileSelected(const QString& filePath) override;
 
 protected:
-  void         initializeWidget();
+  virtual QWidget* createContent() override;
   virtual void connectSignals() override;
   virtual void updateStyles() override;
   virtual void showEvent(QShowEvent *event) override;

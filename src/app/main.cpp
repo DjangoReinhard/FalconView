@@ -48,11 +48,8 @@ int main(int argc, char *argv[]) {
       Core appCore(iniFileName, "FalconView", dbHelper);
 
       a.installTranslator(&translator);
-      MainWindow w;
-
-      appCore.setMainWindow(&w);
       appCore.checkBE();
-      w.show();
+      appCore.mainWindow()->show();
 
       int rv = a.exec();
 

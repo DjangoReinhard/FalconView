@@ -85,6 +85,7 @@ SOURCES += \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
     src/util/truecondition.cpp \
+    src/view/center/dynframe.cpp \
     src/view/center/filemanager.cpp \
     src/view/center/fixturemanager.cpp \
     src/view/center/lctooltable.cpp \
@@ -97,13 +98,13 @@ SOURCES += \
     src/view/center/testEdit.cpp \
     src/view/center/toolmanager.cpp \
     src/view/dockable/curcodesdockable.cpp \
-    src/view/dockable/dockable.cpp \
+    src/view/dockable/dyndockable.cpp \
     src/view/dockable/editordockable.cpp \
     src/view/dockable/maindockable.cpp \
     src/view/dockable/positiondockable.cpp \
     src/view/dockable/speedinfodockable.cpp \
     src/view/dockable/toolinfodockable.cpp \
-    src/view/dynwidget.cpp \
+    src/view/dyncenterwidget.cpp \
     src/view/fixtureedit.cpp \
     src/view/gcodeeditor.cpp \
     src/view/gcodeviewer.cpp \
@@ -172,6 +173,7 @@ HEADERS += \
     src/util/smallercondition.h \
     src/util/timestamp.h \
     src/util/truecondition.h \
+    src/view/center/dynframe.h \
     src/view/center/filemanager.h \
     src/view/center/fixturemanager.h \
     src/view/center/lctooltable.h \
@@ -184,13 +186,13 @@ HEADERS += \
     src/view/center/testEdit.h \
     src/view/center/toolmanager.h \
     src/view/dockable/curcodesdockable.h \
-    src/view/dockable/dockable.h \
+    src/view/dockable/dyndockable.h \
     src/view/dockable/editordockable.h \
     src/view/dockable/maindockable.h \
     src/view/dockable/positiondockable.h \
     src/view/dockable/speedinfodockable.h \
     src/view/dockable/toolinfodockable.h \
-    src/view/dynwidget.h \
+    src/view/dyncenterwidget.h \
     src/view/gcodeeditor.h \
     src/view/gcodeviewer.h \
     src/view/micon.h \
@@ -208,6 +210,7 @@ FORMS += \
     src/UI/SpeedInfo.ui \
     src/UI/ToolEditor.ui \
     src/UI/ToolInfo.ui \
+    src/UI/testForm.ui
 
 unix:!mac {
   LIBS += -Wl,-rpath=$${_PRO_FILE_PWD_}/lc/lib

@@ -1,11 +1,11 @@
 #ifndef SETTINGSNB_H
 #define SETTINGSNB_H
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 #include <QTabWidget>
 class QCloseEvent;
 
 
-class SettingsNotebook : public DynWidget //QTabWidget
+class SettingsNotebook : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -16,12 +16,13 @@ public:
   virtual void connectSignals() override;
   virtual void updateStyles() override;
 
-  void addPage(DynWidget* page);
+  void addPage(DynCenterWidget* page);
 
 protected:
   QString loadStyles(QTabWidget::TabPosition tp);
   virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void closeEvent(QCloseEvent*) override;
+  virtual QWidget* createContent() override;
 
 private:
   QTabWidget* tw;

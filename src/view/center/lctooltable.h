@@ -1,13 +1,13 @@
 #ifndef LCTOOLTABLE_H
 #define LCTOOLTABLE_H
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 #include <QObject>
 class QTableView;
 class ToolTable;
 class QSortFilterProxyModel;
 
 
-class LCToolTable : public DynWidget
+class LCToolTable : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -19,6 +19,7 @@ public:
   virtual void updateStyles() override;
   virtual void keyReleaseEvent(QKeyEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
+  virtual QWidget* createContent() override;
 
 private:
   QTableView*            table;

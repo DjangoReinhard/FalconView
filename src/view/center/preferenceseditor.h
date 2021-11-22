@@ -1,22 +1,22 @@
 #ifndef PREFERENCESEDITOR_H
 #define PREFERENCESEDITOR_H
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 class QLabel;
 class QPushButton;
 
 
-class PreferencesEditor : public DynWidget
+class PreferencesEditor : public DynCenterWidget
 {
   Q_OBJECT
 public:
   PreferencesEditor(const QString& uiFile, QWidget* parent = nullptr);
  ~PreferencesEditor();
 
-  virtual void connectSignals();
-  virtual void updateStyles();
+  virtual void connectSignals() override;
+  virtual void updateStyles() override;
 
 protected:
-  void initializeWidget();
+  virtual QWidget* createContent() override;
   void setupLabels();
   void changeForegroundColor(int i);
   void changeBackgroundColor(int i);

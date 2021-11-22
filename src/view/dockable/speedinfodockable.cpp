@@ -11,7 +11,7 @@
 
 
 SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
- : Dockable(fileName, tr("SpeedInfo"), parent)
+ : DynCenterWidget(fileName, tr("SpeedInfo"), false, parent)
  , curFeed(nullptr)
  , curFastFeed(nullptr)
  , curSpeed(nullptr)
@@ -24,7 +24,7 @@ SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
  , slFeed(nullptr)
  , slFastFeed(nullptr)
  , slSpeed(nullptr) {
-  initializeWidget(widget());
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
   }
 
 
@@ -32,7 +32,9 @@ SpeedInfoDockable::~SpeedInfoDockable() {
   }
 
 
-void SpeedInfoDockable::initializeWidget(QWidget* /* w */) {
+QWidget* SpeedInfoDockable::createContent() {
+  QWidget* rv = DynCenterWidget::createContent();
+
   curFeed        = new LabelAdapter(findChild<QLabel*>("curFeed"), 0);
   curFastFeed    = new LabelAdapter(findChild<QLabel*>("curFastFeed"), 0);
   curSpeed       = new LabelAdapter(findChild<QLabel*>("curSpeed"), 0);
@@ -52,9 +54,7 @@ void SpeedInfoDockable::initializeWidget(QWidget* /* w */) {
   slSpeed->setTickInterval(10);
   slSpeed->setTickPosition(QSlider::TicksRight);
 
-  setFocusPolicy(Qt::FocusPolicy::NoFocus);
-  connectSignals();
-  updateStyles();
+  return rv;
   }
 
 

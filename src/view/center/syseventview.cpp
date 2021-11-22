@@ -10,12 +10,15 @@
 
 
 SysEventView::SysEventView(DBConnection& conn, QWidget* parent)
- : DynWidget(QString(), false, parent)
+ : DynCenterWidget(QString(), "SysEventView", false, parent)
  , table(new QTableView)
  , model(new SysEventModel(conn))
  , px(new QSortFilterProxyModel(this)) {
   setObjectName(SysEventView::className);
-  setLayout(new QVBoxLayout(this));
+  }
+
+
+QWidget* SysEventView::createContent() {
   px->setSourceModel(model);
   table->setModel(px);
   table->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -24,7 +27,8 @@ SysEventView::SysEventView(DBConnection& conn, QWidget* parent)
   table->horizontalHeader()->setStretchLastSection(true);
   table->horizontalHeader()->setSortIndicator(1, Qt::AscendingOrder);
   table->setAlternatingRowColors(true);
-  layout()->addWidget(table);
+
+  return table;
   }
 
 
@@ -54,17 +58,6 @@ void SysEventView::hideEvent(QHideEvent* e) {
      ValueManager().setValue("errorActive", false);
      }
   }
-
-
-//void SysEventView::keyReleaseEvent(QKeyEvent* e) {
-//  switch (e->key()) {
-//    case Qt::Key_Escape:
-//         ValueManager().setValue("errorActive", false);
-//         ValueManager().setValue("showAllButCenter", false);
-//         break;
-//    default: DynWidget::keyReleaseEvent(e); break;
-//    }
-//  }
 
 
 const QString SysEventView::className = "SysEventView";

@@ -1,6 +1,7 @@
 #include <mainview.h>
 #define WANT_STACKED_LAYOUT
-#include <dynwidget.h>
+#include <dynframe.h>
+#include <dyncenterwidget.h>
 #include <core.h>
 #include <QAction>
 #include <QDebug>
@@ -78,7 +79,7 @@ void MainView::dump() const {
   }
 
 
-void MainView::addPage(DynWidget *page, const QString& name) {
+void MainView::addPage(DynFrame* page, const QString& name) {
   QString pageName(name);
 
   if (pageName.isEmpty()) pageName = page->objectName();

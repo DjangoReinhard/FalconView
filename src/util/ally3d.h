@@ -12,7 +12,9 @@ class Ally3D : public QObject
 {
   Q_OBJECT
 public:
-  explicit Ally3D(OcctQtViewer* view3D, QObject *parent = nullptr);
+  explicit Ally3D(QObject *parent = nullptr);
+
+  void setOcctViewer(OcctQtViewer* view3D);
 
 public slots:
   void showPath(const QMap<long, Handle(AIS_InteractiveObject)>& path);

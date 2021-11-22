@@ -1,6 +1,6 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 class QDir;
 class QSplitter;
 class QTreeView;
@@ -14,7 +14,7 @@ class QKeyEvent;
 class FileManagerClient;
 
 
-class FileManager : public DynWidget
+class FileManager : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -23,6 +23,7 @@ public:
 
   virtual void connectSignals() override;
   virtual void updateStyles() override;
+  virtual QWidget* createContent() override;
   void setClient(FileManagerClient* c);
 
 signals:

@@ -1,6 +1,6 @@
 #ifndef POSITIONDOCKABLE_H
 #define POSITIONDOCKABLE_H
-#include <dockable.h>
+#include <dyncenterwidget.h>
 #include <labeladapter.h>
 #include <axismask.h>
 #include <QDockWidget>
@@ -9,7 +9,7 @@
 class QString;
 
 
-class PositionDockable : public Dockable
+class PositionDockable : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -30,13 +30,12 @@ public:
 
 public slots:
   void setAbsolute(QVariant arg = QVariant(true));
-//  void setAxisMask(QVariant axisMask);
   void setRelative();
 
 protected:
-  void initializeWidget(QWidget* widget);
-  void updateStyles();
-  void connectSignals();
+  virtual void updateStyles() override;
+  virtual void connectSignals() override;
+  virtual QWidget* createContent() override;
   void updatePos();
   void setActive();
 

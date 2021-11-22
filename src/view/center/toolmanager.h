@@ -1,6 +1,6 @@
 #ifndef TOOLMANAGER_H
 #define TOOLMANAGER_H
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 class QDir;
 class QSplitter;
 class QTreeView;
@@ -16,7 +16,7 @@ class QItemSelection;
 class QKeyEvent;
 
 
-class ToolManager : public DynWidget
+class ToolManager : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -35,6 +35,7 @@ protected:
   virtual void keyReleaseEvent(QKeyEvent *event) override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
+  virtual QWidget* createContent() override;
   void createCategory();
   void createTool();
   void deleteCategory();

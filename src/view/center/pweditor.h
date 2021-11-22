@@ -16,12 +16,14 @@ class PreViewEditor : public TestEdit
   Q_OBJECT
 public:
   static const QString className;
-  PreViewEditor(const QString& fileName, OcctQtViewer* view, QWidget* parent);
+  PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent = nullptr);
 
 protected:
   virtual void connectSignals() override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
+  virtual QWidget* createContent() override;
+  void createDecorations(OcctQtViewer* v, bool sip);
 
 protected slots:
   void setCurrentLine(const QVariant& line);
@@ -30,5 +32,6 @@ protected slots:
 private:
   QSplitter*        spV;
   OcctQtViewer*     view3D;
+  bool              statusInPreview;
   };
 #endif // PWEDITOR_H

@@ -25,13 +25,13 @@ public:
   void            activatePage(const QString& pageName);
   const QString&  curPage() const;
   DBConnection*   databaseConnection();
+  MainWindow*     mainWindow();
   void            showAllButCenter(bool visible = true);
   QWidget*        stackedPage(const QString& pageName);
   const AxisMask& axisMask() const;
 
   void           setViewStack(MainView* v);
   void           setAppMode(ApplicationMode m);
-  void           setMainWindow(MainWindow* mw);
   void           windowClosing(QCloseEvent* e);
   bool           checkBE();
   OcctQtViewer*  view3D();

@@ -21,7 +21,6 @@
 PathEditor::PathEditor(const QString& fileName, QWidget* parent)
  : TestEdit(fileName, parent) {
   setObjectName(PathEditor::className);
-
   }
 
 

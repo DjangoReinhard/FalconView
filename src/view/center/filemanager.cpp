@@ -22,7 +22,7 @@
 
 
 FileManager::FileManager(const QDir& baseDir, QWidget *parent)
- : DynWidget(parent)
+ : DynCenterWidget(QString(), "FileManager", false, parent)
  , spH(new QSplitter(Qt::Horizontal, this))
  , spV(new QSplitter(Qt::Vertical, this))
  , dirs(new QTreeView(spV))
@@ -55,13 +55,14 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
   preView->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   preView->setReadOnly(true);
   preView->setWordWrapMode(QTextOption::NoWrap);
+  }
 
-  this->setLayout(new QVBoxLayout(this));
+
+QWidget* FileManager::createContent() {
   spH->addWidget(dirs);
   spH->addWidget(spV);
   spV->addWidget(files);
   spV->addWidget(preView);
-  layout()->addWidget(spH);
   layout()->setContentsMargins(0, 0, 0, 0);
   Config cfg;
 
@@ -69,6 +70,8 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
   spH->restoreState(cfg.value("hState").toByteArray());
   spV->restoreState(cfg.value("vState").toByteArray());
   cfg.endGroup();
+
+  return spH;
   }
 
 

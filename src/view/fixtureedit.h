@@ -1,12 +1,12 @@
 #ifndef FIXTUREEDIT_H
 #define FIXTUREEDIT_H
-#include <dynwidget.h>
+#include <dyncenterwidget.h>
 #include <ui_Fixture.h>
 class QLineEdit;
 class AxisMask;
 
 
-class FixtureEdit : public DynWidget // , protected Ui_frame
+class FixtureEdit : public DynCenterWidget // , protected Ui_frame
 {
 public:
   FixtureEdit(const QString& title, const AxisMask& mask, QWidget* parent = nullptr);
@@ -18,8 +18,9 @@ protected:
   virtual void keyReleaseEvent(QKeyEvent* event) override;
   virtual void changeEvent(QEvent* event) override;
   virtual bool focusNextPrevChild(bool next) override;
+  virtual QWidget* createContent() override;
   void saveFixture();
-  void setupUi(DynWidget* parent);
+  void setupUi(DynCenterWidget* parent);
 
 private:
   Ui::frame*        ui;

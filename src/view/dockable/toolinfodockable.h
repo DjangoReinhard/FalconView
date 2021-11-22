@@ -1,22 +1,22 @@
 #ifndef TOOLINFODOCKABLE_H
 #define TOOLINFODOCKABLE_H
-#include <dockable.h>
+#include <dyncenterwidget.h>
 class LabelAdapter;
 class QVariant;
 class QLabel;
 
 
-class ToolInfoDockable : public Dockable
+class ToolInfoDockable : public DynCenterWidget
 {
   Q_OBJECT
 public:
-  ToolInfoDockable(const QString& fileName, QWidget* parent = nullptr);
+  explicit ToolInfoDockable(const QString& fileName, QWidget* parent = nullptr);
   virtual ~ToolInfoDockable();
 
 protected:
-  void initializeWidget(QWidget* widget);
-  void updateStyles();
-  void connectSignals();
+  virtual QWidget* createContent() override;
+  virtual void updateStyles() override;
+  virtual void connectSignals() override;
 
 protected slots:
   void toolChanged(const QVariant& toolNum);

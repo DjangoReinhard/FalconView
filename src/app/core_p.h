@@ -4,6 +4,7 @@
 #include <lcproperties.h>
 #include <positioncalculator.h>
 #include <gcodeinfo.h>
+#include <syseventmodel.h>
 #include <statusreader.h>
 #include <commandwriter.h>
 #include <axismask.h>
@@ -54,11 +55,12 @@ signals:
   void taskPlanSynch();
 
 private:
-  Kernel(const QString& iniFilename, const QString& appName, const QString& group, DBHelper& dbAssist);
+  Kernel(const QString& iniFilename, const QString& appName, const QString& group);
   virtual ~Kernel();
 
   void nop();
   void checkTools();
+  void initialize(DBHelper& dbAssist);
   void parseGCode(QFile& file);
   void setupBackend();
   void updateView(const QVariant& v);
@@ -81,6 +83,7 @@ private:
   CommandWriter*      commandWriter;
   QBasicTimer         timer;
   QThread             backendCommThread;
+  SysEventModel*      tmSysEvents;
 
   friend class Core;
   friend class Config;

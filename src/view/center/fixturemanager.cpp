@@ -7,16 +7,18 @@
 
 
 FixtureManager::FixtureManager(const AxisMask& mask, QWidget* parent)
- : DynWidget(parent)
+ : DynCenterWidget(QString(), "FixtureManager", false, parent)
  , client(new QWidget(this))
  , axisMask(mask) {
   setObjectName(tr("FixtureManager"));
-  setLayout(new QVBoxLayout);
+  }
+
+
+QWidget* FixtureManager::createContent() {
   FlowLayout*  fl = new FlowLayout;
   QScrollArea* sa = new QScrollArea;
   FixtureEdit* fe = new FixtureEdit(tr("Offsets"), axisMask);
 
-//  client = sa;
   client->setLayout(fl);
   fe->setEnabled(false);
   fl->setContentsMargins(0, 0, 0, 0);
@@ -29,8 +31,8 @@ FixtureManager::FixtureManager(const AxisMask& mask, QWidget* parent)
       }
   sa->setWidgetResizable(true);
   sa->setWidget(client);
-  layout()->addWidget(sa);
-  layout()->setContentsMargins(0, 0, 0, 0);
+
+  return sa;
   }
 
 
@@ -74,12 +76,12 @@ void FixtureManager::keyReleaseEvent(QKeyEvent* e) {
             activateEditor(e->key() - '0');
             e->accept();
             }
-         else DynWidget::keyReleaseEvent(e);
+         else DynCenterWidget::keyReleaseEvent(e);
          break;
     default:
          qDebug() << "FM: released key: " << e->key();
          qDebug() << "FM: modifiers: "    << e->modifiers();
-         DynWidget::keyReleaseEvent(e);
+         DynCenterWidget::keyReleaseEvent(e);
          break;
     }
   }
@@ -87,12 +89,12 @@ void FixtureManager::keyReleaseEvent(QKeyEvent* e) {
 
 void FixtureManager::resizeEvent(QResizeEvent *e) {
   qDebug() << "resize from:" << e->oldSize() << "\tto" << e->size();
-  DynWidget::resizeEvent(e);
+  DynCenterWidget::resizeEvent(e);
   }
 
 
 void FixtureManager::showEvent(QShowEvent* e) {
-  DynWidget::showEvent(e);
+  DynCenterWidget::showEvent(e);
   qDebug() << "FM: show Event ...";
   if (e->type() == QEvent::Show) activateEditor(0);
   }

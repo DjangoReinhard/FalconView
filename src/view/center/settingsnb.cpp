@@ -9,18 +9,21 @@
 
 
 SettingsNotebook::SettingsNotebook(QWidget *parent)
- : DynWidget(parent)
+ : DynCenterWidget(QString(), "SettingsNotebook", false, parent)
  , tw(nullptr) {
+  setObjectName(SettingsNotebook::className);
+  }
+
+
+QWidget* SettingsNotebook::createContent() {
   QTabWidget::TabPosition tp = QTabWidget::TabPosition::South;
 
-  setObjectName(SettingsNotebook::className);
-  setLayout(new QVBoxLayout);
-  setContentsMargins(0, 0, 0, 0);
   tw = new QTabWidget();
   tw->setTabPosition(tp);
   tw->setTabShape(QTabWidget::TabShape::Rounded); 
   tw->setStyleSheet(loadStyles(tp));
-  layout()->addWidget(tw);
+
+  return tw;
   }
 
 
@@ -28,9 +31,10 @@ SettingsNotebook::~SettingsNotebook() {
   }
 
 
-void SettingsNotebook::addPage(DynWidget* page) {
+void SettingsNotebook::addPage(DynCenterWidget* page) {
   assert(page);
-  page->init();
+  page->initialize();
+
   //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
   tw->addTab(page, QString("  ") + page->objectName() + "  ");
   }
@@ -46,13 +50,10 @@ void SettingsNotebook::updateStyles() {
 
 void SettingsNotebook::closeEvent(QCloseEvent* e) {
   qDebug() << "DynWidget::closeEvent() on widget " << objectName();
-//  Config cfg;
-
-//  cfg.setValue("widgetState", this->saveState());
   int mx = tw->count();
 
   for (int i=0; i < mx; ++i) {
-      DynWidget* w = static_cast<DynWidget*>(tw->widget(i));
+      DynCenterWidget* w = static_cast<DynCenterWidget*>(tw->widget(i));
 
       if (w) w->closeEvent(e);
       }
@@ -62,7 +63,7 @@ void SettingsNotebook::closeEvent(QCloseEvent* e) {
 void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
   //TODO: add shortcut for each page
   switch (e->key()) {
-    default: DynWidget::keyPressEvent(e); break;
+    default: DynCenterWidget::keyPressEvent(e); break;
     }
   }
 

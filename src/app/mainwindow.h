@@ -6,7 +6,7 @@
 #include <applicationmode.h>
 
 class PositionDockable;
-class Dockable;
+class DynDockable;
 class DBConnection;
 class GCodeViewer;
 class QAction;
@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = nullptr);
+  MainWindow(bool statusInPreview, QWidget *parent = nullptr);
  ~MainWindow();
 
   void setAppMode(ApplicationMode am);
@@ -30,7 +30,7 @@ protected:
   void closeEvent(QCloseEvent *event)  override;
   void keyPressEvent(QKeyEvent* event) override;
   void timerEvent(QTimerEvent* event) override;
-  void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
+  void addDockable(Qt::DockWidgetArea area, DynDockable* dockable);
   void createActions();
   void createToolBars();
   void createDockables(DBConnection& conn);
@@ -57,6 +57,7 @@ protected slots:
   void stopSpindle();
 
 private:
+  bool                statusInPreview;
   Ui::MainWindow*     ui;
   PositionDockable*   pos;
   QAction*            startAction;
@@ -91,6 +92,6 @@ private:
   int                 line;
   QBasicTimer         timer;
 
-  QList<Dockable*>    dockables;
+  QList<DynDockable*> dockables;
   };
 #endif // MAINWINDOW_H

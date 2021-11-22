@@ -10,18 +10,17 @@
 
 
 PreferencesEditor::PreferencesEditor(const QString& fileName, QWidget* parent)
- : DynWidget(fileName, true, parent) {
-  setObjectName(tr("SettingsEditor"));
-  initializeWidget();
+ : DynCenterWidget(fileName, tr("SettingsEditor"), true, parent) {
   }
 
 
 PreferencesEditor::~PreferencesEditor() {
-  //delete labels;    
   }
 
 
-void PreferencesEditor::initializeWidget() {
+QWidget* PreferencesEditor::createContent() {
+  QWidget* rv = DynCenterWidget::createContent();
+
   labels      = new QLabel*[Config().numGuiElements()];
   bgButtons   = new QPushButton*[Config().numGuiElements()];
   fgButtons   = new QPushButton*[Config().numGuiElements()];
@@ -33,6 +32,7 @@ void PreferencesEditor::initializeWidget() {
       fgButtons[i]   = findChild<QPushButton*>(QString("fg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
       fontButtons[i] = findChild<QPushButton*>(QString("font") + Config().nameOf(static_cast<Config::GuiElem>(i)));
       }
+  return rv;
   }
 
 

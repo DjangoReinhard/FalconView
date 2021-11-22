@@ -9,7 +9,7 @@
 
 
 FixtureEdit::FixtureEdit(const QString& title, const AxisMask& mask, QWidget* parent)
- : DynWidget(QString(), parent)
+ : DynCenterWidget(QString(), "FixtureEdit", false, parent)
  , ui(new Ui::frame())
  , m(mask) {
   setupUi(this);
@@ -19,7 +19,7 @@ FixtureEdit::FixtureEdit(const QString& title, const AxisMask& mask, QWidget* pa
 
 
 void FixtureEdit::changeEvent(QEvent* e) {
-  DynWidget::changeEvent(e);
+  DynCenterWidget::changeEvent(e);
 //  qDebug() << "changeEvent(" << e->type() << ")";
 
   if (e->type() == QEvent::EnabledChange) {
@@ -60,6 +60,11 @@ bool FixtureEdit::focusNextPrevChild(bool next) {
   }
 
 
+QWidget* FixtureEdit::createContent() {
+  return nullptr;
+  }
+
+
 void FixtureEdit::connectSignals() {
   }
 
@@ -68,7 +73,7 @@ void FixtureEdit::updateStyles() {
   }
 
 
-void FixtureEdit::setupUi(DynWidget* parent) {
+void FixtureEdit::setupUi(DynCenterWidget* parent) {
   ui->setupUi(parent);
   ui->lX->setVisible(m.hasXAxis());
   ui->lY->setVisible(m.hasYAxis());
@@ -112,7 +117,7 @@ void FixtureEdit::keyReleaseEvent(QKeyEvent* e) {
     default:
          qDebug() << "FE: released key: " << e->key();
          qDebug() << "FE: modifiers: "    << e->modifiers();
-         DynWidget::keyReleaseEvent(e);
+         DynCenterWidget::keyReleaseEvent(e);
          break;
     }
 }

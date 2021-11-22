@@ -1,5 +1,7 @@
 #include <syseventmodel.h>
 #include <dbconnection.h>
+#include <sysevent.h>
+#include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
@@ -29,6 +31,19 @@ bool SysEventModel::createTable() {
                                           ", what VARCHAR(254) NOT NULL"
                                           ", PRIMARY KEY(id) )");
   return rv;
+  }
+
+
+void SysEventModel::append(const SysEvent *e) {
+  QSqlRecord r = record();
+
+  if (!e) return;
+  r.setValue("id", this->rowCount());
+  r.setValue("sewhen", (qlonglong)e->when());
+  r.setValue("setype", e->type());
+  r.setValue("what", e->what());
+
+  insertRecord(-1, r);
   }
 
 

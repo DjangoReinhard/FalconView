@@ -1,6 +1,6 @@
 #ifndef EDITORDOCKABLE_H
 #define EDITORDOCKABLE_H
-#include <dockable.h>
+#include <dyncenterwidget.h>
 #include <QVariant>
 class QFile;
 class GCodeEditor;
@@ -10,7 +10,7 @@ class QPushButton;
 class QLineEdit;
 
 
-class EditorDockable : public Dockable
+class EditorDockable : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -22,7 +22,8 @@ public slots:
 //  void setLine(QVariant line);
 
 protected:
-  void initializeWidget();
+  virtual QWidget* createContent();
+//  void initializeWidget();
   void connectSignals();
   void updateStyles();
 

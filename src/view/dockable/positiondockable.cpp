@@ -12,7 +12,7 @@
 
 
 PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, QWidget* parent)
- : Dockable(fileName, tr("Position"), parent)
+ : DynCenterWidget(fileName, tr("Position"), false, parent)
  , lblX(nullptr)
  , lblY(nullptr)
  , lblZ(nullptr)
@@ -39,12 +39,11 @@ PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, 
  , axisMask(am)
  , ledOn("background: #0F0")
  , ledOff("background: red") {
-  initializeWidget(widget());
   }
 
 
 PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
- : Dockable(fileName, tr("Position"), parent)
+ : DynCenterWidget(fileName, tr("Position"), false, parent)
  , lblX(nullptr)
  , lblY(nullptr)
  , lblZ(nullptr)
@@ -72,59 +71,48 @@ PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, 
  , ledOn(ledOnStyle)
  , ledOff(ledOffStyle) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
-  initializeWidget(widget());
   }
 
 
 PositionDockable::~PositionDockable() {
-    /*
-  for (int i=0; i < 9; ++i) {
-      delete droRel[i];
-      delete droDtg[i];
-      delete droAbs[i]->label();
-      delete droAbs[i];
-      }
-  delete droRel;
-  delete droAbs;
-  delete droDtg;
-  */
   }
 
 
-void PositionDockable::initializeWidget(QWidget* /* w */) {
+QWidget* PositionDockable::createContent() {
+  QWidget*     rv = DynCenterWidget::createContent();
+  QGridLayout* gl = rv->findChild<QGridLayout*>("gridLayout");
+
   droRel = new LabelAdapter*[9];
   droAbs = new LabelAdapter*[9];
   droDtg = new LabelAdapter*[9];
-  QGridLayout* gl = findChild<QGridLayout*>("gridLayout");
-
   for (int i=0; i < 9; ++i) {
-      droRel[i] = new LabelAdapter(findChild<QLabel*>(QString("pos") + a[i]));
-      droDtg[i] = new LabelAdapter(findChild<QLabel*>(QString("dtg") + a[i]));
+      droRel[i] = new LabelAdapter(rv->findChild<QLabel*>(QString("pos") + a[i]));
+      droDtg[i] = new LabelAdapter(rv->findChild<QLabel*>(QString("dtg") + a[i]));
       droAbs[i] = new LabelAdapter(new QLabel("0.000", this));
 
       droAbs[i]->label()->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
       droAbs[i]->label()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
       gl->addWidget(droAbs[i]->label(), i, 2);
       }
-  lblX = findChild<QLabel*>("lblX");
-  lblY = findChild<QLabel*>("lblY");
-  lblZ = findChild<QLabel*>("lblZ");
-  lblA = findChild<QLabel*>("lblA");
-  lblB = findChild<QLabel*>("lblB");
-  lblC = findChild<QLabel*>("lblC");
-  lblU = findChild<QLabel*>("lblU");
-  lblV = findChild<QLabel*>("lblV");
-  lblW = findChild<QLabel*>("lblW");
+  lblX = rv->findChild<QLabel*>("lblX");
+  lblY = rv->findChild<QLabel*>("lblY");
+  lblZ = rv->findChild<QLabel*>("lblZ");
+  lblA = rv->findChild<QLabel*>("lblA");
+  lblB = rv->findChild<QLabel*>("lblB");
+  lblC = rv->findChild<QLabel*>("lblC");
+  lblU = rv->findChild<QLabel*>("lblU");
+  lblV = rv->findChild<QLabel*>("lblV");
+  lblW = rv->findChild<QLabel*>("lblW");
 
-  ledX = findChild<QLabel*>("ledX");
-  ledY = findChild<QLabel*>("ledY");
-  ledZ = findChild<QLabel*>("ledZ");
-  ledA = findChild<QLabel*>("ledA");
-  ledB = findChild<QLabel*>("ledB");
-  ledC = findChild<QLabel*>("ledC");
-  ledU = findChild<QLabel*>("ledU");
-  ledV = findChild<QLabel*>("ledV");
-  ledW = findChild<QLabel*>("ledW");
+  ledX = rv->findChild<QLabel*>("ledX");
+  ledY = rv->findChild<QLabel*>("ledY");
+  ledZ = rv->findChild<QLabel*>("ledZ");
+  ledA = rv->findChild<QLabel*>("ledA");
+  ledB = rv->findChild<QLabel*>("ledB");
+  ledC = rv->findChild<QLabel*>("ledC");
+  ledU = rv->findChild<QLabel*>("ledU");
+  ledV = rv->findChild<QLabel*>("ledV");
+  ledW = rv->findChild<QLabel*>("ledW");
 
   setXHomed(false);
   setYHomed(false);
@@ -137,8 +125,8 @@ void PositionDockable::initializeWidget(QWidget* /* w */) {
   setWHomed(false);
 
   setRelative();
-  connectSignals();
-  updateStyles();
+
+  return rv;
   }
 
 
@@ -479,14 +467,6 @@ void PositionDockable::connectSignals() {
         , [=](){ lblW->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>());
                  });
   }
-
-
-//void PositionDockable::setAxisMask(QVariant am) {
-//  if (axisMask.mask() != am.toInt())  {
-//     axisMask = am.toInt();
-//     updatePos();
-//     }
-//  }
 
 
 void PositionDockable::setRelative() {

@@ -15,31 +15,26 @@
 
 
 EditorDockable::EditorDockable(const QString& name, QWidget* parent)
- : Dockable(name, tr("Editor"), parent) {
-  initializeWidget();
+ : DynCenterWidget(name, tr("Editor"), false, parent) {
   }
 
 
 EditorDockable::~EditorDockable() {
-  //delete gh;
   }
 
 
-void EditorDockable::initializeWidget() {
+QWidget* EditorDockable::createContent() {
+  QWidget*     rv          = DynCenterWidget::createContent();
   QGridLayout* layout      = findChild<QGridLayout*>("gridLayout");
   QWidget*     placeHolder = findChild<QWidget*>("widget");
 
   editor = new GCodeEditor(this);
-//  editor = new GCodeViewer(this);
-  layout->addWidget(editor, 1, 0, 1, 2);
-  placeHolder->hide();
+  layout->replaceWidget(placeHolder, editor);
   fileName = findChild<QLineEdit*>("fileName");
   pbOpen   = findChild<QPushButton*>("pbOpen");
   gh       = new GCodeHighlighter(editor->document());
-//  pbOpen->hide();
 
-  connectSignals();
-  updateStyles();
+  return rv;
   }
 
 

@@ -7,14 +7,20 @@
 #include <core.h>
 
 
-Ally3D::Ally3D(OcctQtViewer* view3D, QObject *parent)
+Ally3D::Ally3D(QObject *parent)
  : QObject(parent)
- , v3D(view3D) {
+ , v3D(nullptr) {
+  }
+
+
+void Ally3D::setOcctViewer(OcctQtViewer *view3D) {
+  v3D = view3D;
   connect(ValueManager().getModel("curLine", 0), &ValueModel::valueChanged, this, &Ally3D::update);
   }
 
 
 void Ally3D::moveCone(double x, double y, double z) {
+  if (!v3D) return;
   gp_Trsf   move;
 
 //  qDebug() << "moveCone: " << x << "/" << y << "/" << z;
@@ -28,6 +34,7 @@ void Ally3D::moveCone(double x, double y, double z) {
 
 
 void Ally3D::showMachineLimits() {
+  if (!v3D) return;
   CanonIF ci;
   CANON_POSITION g5xO = ci.g5xOffset(ci.selectedOffset());
   CANON_POSITION g92O = ci.g92Offset();
@@ -106,6 +113,7 @@ void Ally3D::showMachineLimits() {
 
 
 void Ally3D::showWorkLimits() {
+  if (!v3D) return;
   Handle(AIS_InteractiveContext) ctx = v3D->context();
   gp_Pnt  cMin = workPiece.CornerMin();
   gp_Pnt  cMax = workPiece.CornerMax();
@@ -171,7 +179,8 @@ void Ally3D::showWorkLimits() {
 
 
 void Ally3D::showPath(const QMap<long, Handle(AIS_InteractiveObject)>& path) {
-  Handle(AIS_InteractiveContext) ctx = v3D->context();  
+  if (!v3D) return;
+  Handle(AIS_InteractiveContext) ctx = v3D->context();
 
   workPath.clear();
   workPath = path;
@@ -215,6 +224,7 @@ void Ally3D::showPath(const QMap<long, Handle(AIS_InteractiveObject)>& path) {
   }
 
 void Ally3D::update(const QVariant& line) {
+  if (!v3D) return;
   if (workPath.size() < 1) return;
   int segNum = fmax(0, line.toInt() - 2);
   QMap<long, Handle(AIS_InteractiveObject)>::iterator curSeg = workPath.upperBound(segNum);

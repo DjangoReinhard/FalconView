@@ -13,12 +13,15 @@
 
 
 LCToolTable::LCToolTable(QWidget* parent)
- : DynWidget(QString(), false, parent)
+ : DynCenterWidget(QString(), "LCToolTable", false, parent)
  , table(new QTableView)
  , model(Core().toolTableModel())
  , px(new QSortFilterProxyModel(this)) {
   setObjectName(LCToolTable::className);
-  setLayout(new QVBoxLayout(this));
+  }
+
+
+QWidget* LCToolTable::createContent() {
   px->setSourceModel(model);
   table->setModel(px);
   table->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -27,12 +30,13 @@ LCToolTable::LCToolTable(QWidget* parent)
   table->horizontalHeader()->setStretchLastSection(true);
   table->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
   table->setAlternatingRowColors(true);
-  layout()->addWidget(table);
   Config cfg;
 
   cfg.beginGroup(LCToolTable::className);
   table->horizontalHeader()->restoreState(cfg.value("state").toByteArray());
   cfg.endGroup();
+
+  return table;
   }
 
 
@@ -57,7 +61,7 @@ void LCToolTable::keyReleaseEvent(QKeyEvent *e) {
          break;
     default: break;
     }
-  DynWidget::keyReleaseEvent(e);
+  DynCenterWidget::keyReleaseEvent(e);
   }
 
 

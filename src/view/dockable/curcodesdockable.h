@@ -1,18 +1,19 @@
 #ifndef CURCODESDOCKABLE_H
 #define CURCODESDOCKABLE_H
-#include <dockable.h>
+#include <dyncenterwidget.h>
 class QWidget;
 class QLabel;
 
-class CurCodesDockable : public Dockable
+class CurCodesDockable : public DynCenterWidget
 {
   Q_OBJECT
 public:
   CurCodesDockable(const QString& fileName, QWidget* parent = nullptr);
 
 protected:
-  void connectSignals();
-  void updateStyles();
+  virtual void connectSignals() override;
+  virtual void updateStyles() override;
+  virtual QWidget* createContent() override;
 
 private:
   QLabel** labels;

@@ -1,13 +1,13 @@
 #ifndef SPEEDINFODOCKABLE_H
 #define SPEEDINFODOCKABLE_H
-#include <dockable.h>
+#include <dyncenterwidget.h>
 class LabelAdapter;
 class QString;
 class QWidget;
 class QSlider;
 
 
-class SpeedInfoDockable : public Dockable
+class SpeedInfoDockable : public DynCenterWidget
 {
   Q_OBJECT
 public:
@@ -15,9 +15,9 @@ public:
   virtual ~SpeedInfoDockable();
 
 protected:
-  void initializeWidget(QWidget* widget);
-  void connectSignals();
-  void updateStyles();
+  virtual void connectSignals() override;
+  virtual void updateStyles() override;
+  virtual QWidget* createContent() override;
 
 protected slots:
   // slider callbacks

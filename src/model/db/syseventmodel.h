@@ -3,6 +3,7 @@
 #include <QSqlTableModel>
 class DBConnection;
 class FalconViewDB;
+class SysEvent;
 
 
 class SysEventModel : public QSqlTableModel
@@ -12,6 +13,7 @@ public:
   explicit SysEventModel(DBConnection& conn, QObject *parent = nullptr);
 
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+  void append(const SysEvent* e);
 
 private:
   static bool  createTable();

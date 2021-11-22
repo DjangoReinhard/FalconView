@@ -23,8 +23,10 @@
 
 
 Core::Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group) {
-  if (!kernel)
-     kernel = new Kernel(iniFileName, appName, group, dbAssist);
+  if (!kernel) {
+     kernel = new Kernel(iniFileName, appName, group);
+     kernel->initialize(dbAssist);
+     }
   }
 
 
@@ -58,8 +60,8 @@ void Core::setViewStack(MainView* v) {
   }
 
 
-void Core::setMainWindow(MainWindow* mw) {
-  core()->mainWindow = mw;
+MainWindow* Core::mainWindow() {
+  return core()->mainWindow;
   }
 
 
@@ -251,24 +253,27 @@ void Core::beTaskPlanSynch() {
     }
 
 
-Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString& group, DBHelper& dbAssist)
+Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString& group)
  : cfg(appName, group)
  , lcProps(iniFileName)
  , tt(lcProps.toolTableFileName()) // tooltable: file used by linuxcnc NOT the database table
  , lcIF(lcProps, tt)
  , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
- , view3D(new OcctQtViewer())
+ , view3D(nullptr)
  , mainView(nullptr)
  , mainWindow(nullptr)
  , conn(nullptr)
- , ally3D(view3D)
+ , ally3D(nullptr)
  , statusReader(positionCalculator, gcodeInfo)
- , commandWriter(new CommandWriter()) {
-  CanonIF ci(lcProps, tt);
-
+ , commandWriter(new CommandWriter())
+ , tmSysEvents(nullptr) {
   if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
   lcIF.setupToolTable();
+  }
 
+
+void Kernel::initialize(DBHelper& dbAssist) {
+  CanonIF ci(lcProps, tt);
   // check database before anyone needs it
   QString   dbName = cfg.value("database").toString();
   QFileInfo db(dbName);
@@ -286,12 +291,18 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
      conn = dbAssist.dbConnection();
      if (!conn) throw std::system_error(-2, std::system_category(), "could not access database");
      }
+  tmSysEvents = new SysEventModel(*conn, this);
+  tmSysEvents->setTable("SysEvents");
   ci.setTraverseColor(cfg.getForeground(Config::GuiElem::RapidMove));
   ci.setFeedColor(cfg.getForeground(Config::GuiElem::WorkMove));
   ci.setLimitsColor(cfg.getForeground(Config::GuiElem::WorkLimit));
   ci.setWorkPieceColor(cfg.getForeground(Config::GuiElem::WorkPiece));
   ci.setCurSegColor(cfg.getForeground(Config::GuiElem::CurSeg));
   ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
+  cfg.setValue("statusInPreview", false);
+  view3D = new OcctQtViewer(cfg.value("statusInPreview", false).toBool());
+  ally3D.setOcctViewer(view3D);
+  mainWindow = new MainWindow(cfg.value("statusInPreview").toBool());
 
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged, this, &Kernel::updateView);
 
@@ -397,6 +408,7 @@ void Kernel::logSysEvent(int type, const QString& msg, const QTime& when) {
   SysEvent se(static_cast<SysEvent::EventType>(type), msg, when);
 
   qDebug() << "system event" << se.type() << ":" << se.what() << " at:" << se.when();
+  tmSysEvents->append(&se);
   }
 
 

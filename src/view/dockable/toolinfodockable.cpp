@@ -12,35 +12,31 @@
 
 
 ToolInfoDockable::ToolInfoDockable(const QString & fileName, QWidget* parent)
- : Dockable(fileName, tr("ToolInfo"), parent)
+ : DynCenterWidget(fileName, tr("ToolInfo"), parent)
  , curTool(nullptr)
  , nxtTool(nullptr)
  , tlDesc(nullptr)
  , tlLen(nullptr)
  , tlRad(nullptr) {
-  initializeWidget(widget());
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
   }
 
 
 ToolInfoDockable::~ToolInfoDockable() {
-  /*
-  delete tlDesc;
-  delete tlLen;
-  delete tlRad;
-   */
   }
 
 
-void ToolInfoDockable::initializeWidget(QWidget* /* w */) {
+QWidget* ToolInfoDockable::createContent() {
+  QWidget* rv = DynCenterWidget::createContent();
+
   tlDesc  = findChild<QLabel*>("toolDesc");
   tlLen   = new LabelAdapter(findChild<QLabel*>("toolLen"));
   tlRad   = new LabelAdapter(findChild<QLabel*>("toolRadius"));
   curTool = new LabelAdapter(findChild<QLabel*>("curToolNum"), 0);
   nxtTool = new LabelAdapter(findChild<QLabel*>("nextToolNum"), 0);
-  setFocusPolicy(Qt::FocusPolicy::NoFocus);
-  connectSignals();
-  updateStyles();
-}
+
+  return rv;
+  }
 
 
 void ToolInfoDockable::toolChanged(const QVariant& toolNum) {

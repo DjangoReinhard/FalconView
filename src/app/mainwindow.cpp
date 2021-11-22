@@ -12,7 +12,8 @@
 #include <greatercondition.h>
 #include <smallercondition.h>
 #include <mainview.h>
-#include <dockable.h>
+#include <dyndockable.h>
+#include <dynframe.h>
 #include <core.h>
 #include <syseventview.h>
 #include <lctooltable.h>
@@ -48,8 +49,9 @@
 #include <valuemanager.h>
 
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(bool statusInPreview, QWidget *parent)
  : QMainWindow(parent)
+ , statusInPreview(statusInPreview)
  , ui(new Ui::MainWindow)
  , startAction(nullptr)
  , pauseAction(nullptr)
@@ -87,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
   restoreState(cfg.value("windowState").toByteArray());
   cfg.endGroup();
 //  timer.start(1000, this);
+  qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
   }
 
 
@@ -94,7 +97,8 @@ MainWindow::~MainWindow() {
   }
 
 
-void MainWindow::addDockable(Qt::DockWidgetArea area, Dockable* d) {
+void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
+  d->initialize();
   dockables.append(d);
   QMainWindow::addDockWidget(area, d);
   QAction* a = d->toggleViewAction();
@@ -411,11 +415,13 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
 
 
 void MainWindow::toggleAllButCenter() {
-  ValueModel* m = ValueManager().getModel("showAllButCenter");
+  ValueModel* m = ValueManager().getModel("showAllButCenter");  
   bool visible = m->getValue().toBool();
 
-  for (int i=0; i < dockables.size(); ++i)
-      dockables.at(i)->setVisible(visible);
+  if (!statusInPreview) {
+     for (int i=0; i < dockables.size(); ++i)
+         dockables.at(i)->setVisible(visible);
+     }
   autoTB->setVisible(visible);
   modeTB->setVisible(visible);
   topTB->setVisible(visible);
@@ -511,43 +517,64 @@ void MainWindow::tellStates() const {
 
 
 void MainWindow::createDockables(DBConnection&) {
-  addDockable(Qt::LeftDockWidgetArea,   new ToolInfoDockable(":/src/UI/ToolInfo.ui", this));
-  addDockable(Qt::LeftDockWidgetArea,   new CurCodesDockable(":/src/UI/CurCodes.ui", this));
-  addDockable(Qt::LeftDockWidgetArea,   pos = new PositionDockable(":/src/UI/Position.ui", Core().axisMask(), this));
-  addDockable(Qt::BottomDockWidgetArea, new SpeedInfoDockable(":/src/UI/SpeedInfo.ui", this));
+  qDebug() << "MainWindow::createDockables() - statusInPreview:"
+           << (statusInPreview ? "TRUE" : "FALSE");
+
+  if (!statusInPreview) {
+     addDockable(Qt::LeftDockWidgetArea
+               , new DynDockable(new ToolInfoDockable(":/src/UI/ToolInfo.ui")
+                               , this));
+     addDockable(Qt::LeftDockWidgetArea
+               , new DynDockable(new CurCodesDockable(":/src/UI/CurCodes.ui")
+                               , this));
+     addDockable(Qt::LeftDockWidgetArea
+               , new DynDockable(pos = new PositionDockable(":/src/UI/Position.ui"
+                                                          , Core().axisMask())
+                               , this));
+     addDockable(Qt::BottomDockWidgetArea
+               , new DynDockable(new SpeedInfoDockable(":/src/UI/SpeedInfo.ui")
+                               , this));
+     }
   }
 
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
-  MainView*  mainView = new MainView(this);
-  DynWidget* page     = new PreViewEditor(":/src/UI/GCodeEditor.ui", Core().view3D(), mainView);
+  MainView* mainView = new MainView(this);
+  DynFrame* page     = new DynFrame(new PreViewEditor(":/src/UI/GCodeEditor.ui"
+                                                    , Core().view3D()
+                                                    , statusInPreview)
+                                  , mainView);
 
   Core().setViewStack(mainView);
   mainView->addPage(page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"), mainView);
+  page = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
+                    , mainView);
   mainView->addPage(page);
 //  ui->menuMain->addAction(page->viewAction());
 
-  page = new PathEditor(":/src/UI/GCodeEditor.ui", mainView);
+  page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui")
+                    , mainView);
   mainView->addPage(page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new TestEdit(":/src/UI/GCodeEditor.ui", mainView);
+  page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui")
+                    , mainView);
   mainView->addPage(page);
   ui->menuMain->addAction(page->viewAction());
 
-  page = new SysEventView(conn, mainView);
+  page = new DynFrame(new SysEventView(conn)
+                    , mainView);
   mainView->addPage(page);
 //  ui->menuMain->addAction(page->viewAction());
   SettingsNotebook* nb = new SettingsNotebook(this);
 
+  mainView->addPage(new DynFrame(nb, mainView));
   nb->addPage(new ToolManager(conn, nb));
   nb->addPage(new FixtureManager(Core().axisMask(), nb));
   nb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", nb));
   nb->addPage(new LCToolTable());
-  mainView->addPage(nb);
   ui->menuMain->addAction(nb->viewAction());
 
   this->setCentralWidget(mainView);

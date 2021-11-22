@@ -30,7 +30,7 @@
 
 
 ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
- : DynWidget(parent)
+ : DynCenterWidget(QString(), "ToolManager", false, parent)
  , conn(conn)
  , spH(new QSplitter(Qt::Horizontal, this))
  , spV(new QSplitter(Qt::Vertical, this))
@@ -44,6 +44,10 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
   setObjectName(ToolManager::className);
+  }
+
+
+QWidget* ToolManager::createContent() {
   pxCat->setSourceModel(categoryTreeModel);
   categories->setModel(pxCat);
   categories->setTabKeyNavigation(false);
@@ -80,14 +84,14 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
   spH->addWidget(spV);
   spV->addWidget(tools);
   spV->addWidget(sa);
-  layout()->addWidget(spH);
-  layout()->setContentsMargins(0, 0, 0, 0);
   Config cfg;
 
   cfg.beginGroup(ToolManager::className);
   spH->restoreState(cfg.value("hState").toByteArray());
   spV->restoreState(cfg.value("vState").toByteArray());
   cfg.endGroup();
+
+  return spH;
   }
 
 
