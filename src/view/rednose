@@ -1,0 +1,57 @@
+	git add       ../../FalconView.pro
+	git add       ../app/core.cpp
+	git add       ../app/core.h
+	git add       ../app/core_p.h
+	git add       ../app/mainwindow.cpp
+	git add       ../app/mainwindow.h
+	git add       center/centerview.cpp
+	git add       center/centerview.h
+	git add       center/dynframe.cpp
+	git add       center/dynframe.h
+	git add       center/filemanager.cpp
+	git add       center/filemanager.h
+	git add       center/fixturemanager.cpp
+	git add       center/fixturemanager.h
+	git add       center/lctooltable.cpp
+	git add       center/lctooltable.h
+	git add       center/patheditor.cpp
+	git add       center/patheditor.h
+	git add       center/preferenceseditor.cpp
+	git add       center/preferenceseditor.h
+	git add       center/pweditor.cpp
+	git add       center/pweditor.h
+	git add       center/settingsnb.cpp
+	git add       center/settingsnb.h
+	git add       center/syseventview.cpp
+	git add       center/syseventview.h
+	git add       center/testEdit.cpp
+	git add       center/testEdit.h
+	git add       center/toolmanager.cpp
+	git add       center/toolmanager.h
+	git add       dockable/curcodesstatus.cpp
+	git add       dockable/curcodesstatus.h
+	git add       dockable/dyndockable.cpp
+	git add       dockable/dyndockable.h
+	git add       dockable/positionstatus.cpp
+	git add       dockable/positionstatus.h
+	git add       dockable/speedstatus.cpp
+	git add       dockable/speedstatus.h
+	git add       dockable/toolstatus.cpp
+	git add       dockable/toolstatus.h
+	git add       dyncenterwidget.h
+	git add       micon.cpp
+	git add       micon.h
+
+git add	../util/micon.cpp
+git add	../util/micon.h
+git add	centerview.cpp
+git add	centerview.h
+git add	dyndockable.cpp
+git add	dyndockable.h
+git add	dynframe.cpp
+git add	dynframe.h
+git add	pages/
+git add	settingsnb.cpp
+git add	settingsnb.h
+git add	status/
+

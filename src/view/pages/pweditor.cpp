@@ -8,6 +8,10 @@
 #include <canonif.h>
 #include <AIS_ViewCube.hxx>
 #include <AIS_InteractiveContext.hxx>
+#include <toolstatus.h>
+#include <curcodesstatus.h>
+#include <positionstatus.h>
+#include <speedstatus.h>
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -19,11 +23,15 @@
 #include <QPlainTextEdit>
 #include <QHBoxLayout>
 #include <QPushButton>
-
+#include <QSpacerItem>
 
 PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent)
  : TestEdit(fileName, parent)
  , view3D(view)
+ , posStat(nullptr)
+ , ccStat(nullptr)
+ , toolStat(nullptr)
+ , speedStat(nullptr)
  , statusInPreview(statusInPreview) {
   setObjectName(PreViewEditor::className);
   setWindowTitle(PreViewEditor::className);
@@ -94,9 +102,33 @@ void PreViewEditor::closeEvent(QCloseEvent*) {
 
 void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   if (!sip) return;
-  v->setLayout(new QGridLayout(v));
+  QGridLayout* gl = new QGridLayout(v);
 
-  //TODO:
+  v->setLayout(gl);
+  toolStat = new ToolStatus(":/src/UI/ToolInfo.ui");
+  ccStat = new CurCodesStatus(":/src/UI/VCurCodes.ui");
+  posStat = new PositionStatus(":/src/UI/Position.ui", Core().axisMask());
+  speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
+  QSpacerItem* hs = new QSpacerItem(200, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
+  QSpacerItem* vs = new QSpacerItem(20, 300, QSizePolicy::Ignored, QSizePolicy::Maximum);
+
+  toolStat->initialize();
+  ccStat->initialize();
+  posStat->initialize();
+  speedStat->initialize();
+  gl->setColumnStretch(0, 0);
+  gl->setColumnStretch(1, 1);
+  gl->setColumnStretch(2, 2);
+  gl->setColumnStretch(3, 0);
+  gl->setRowStretch(0, 0);
+  gl->setRowStretch(1, 1);
+  gl->setRowStretch(2, 2);
+  gl->addWidget(ccStat, 0, 0, 3, 1);
+  gl->addWidget(toolStat, 0, 1, 1, 2);
+  gl->addWidget(speedStat, 0, 4, 3, 1);
+  gl->addWidget(posStat, 1, 1, 1, 1);
+  gl->addItem(hs, 1, 2);
+  gl->addItem(vs, 2, 1);
   }
 
 

@@ -5,10 +5,12 @@
 Controlcenter for machines controlled by **linuxCNC**.
 Subwindows like position or speed override can arranged anywhere
 around the central preview pane.
+Alternatively, the status displays can be shown in the 3D preview.
 
 ## Screenshot
 [![vertical](sample/FalconView_V01s.jpg)](sample/FalconView_V01.jpg)
-[![horizontal](sample/FalconView_H01s.jpg)](sample/FalconView_H01.jpg)
+[![horizontal](sample/FalconView_09s.jpg)](sample/FalconView_09.jpg)
+[![Inline](sample/FalconView_Inline03s.jpg)](sample/FalconView_03.jpg)
 
 ## Build
 

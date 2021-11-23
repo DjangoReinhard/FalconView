@@ -9,6 +9,10 @@ class QPushButton;
 class OcctQtViewer;
 class GCodeEditor;
 class GCodeHighlighter;
+class PositionStatus;
+class CurCodesStatus;
+class ToolStatus;
+class SpeedStatus;
 
 
 class PreViewEditor : public TestEdit
@@ -32,6 +36,10 @@ protected slots:
 private:
   QSplitter*        spV;
   OcctQtViewer*     view3D;
+  PositionStatus*   posStat;
+  CurCodesStatus*   ccStat;
+  ToolStatus*       toolStat;
+  SpeedStatus*      speedStat;
   bool              statusInPreview;
   };
 #endif // PWEDITOR_H

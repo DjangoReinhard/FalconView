@@ -522,14 +522,14 @@ void MainWindow::createDockables(DBConnection&) {
                , new DynDockable(new ToolStatus(":/src/UI/ToolInfo.ui")
                                , this));
      addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(new CurCodesStatus(":/src/UI/CurCodes.ui")
+               , new DynDockable(new CurCodesStatus(":/src/UI/HCurCodes.ui")
                                , this));
      addDockable(Qt::LeftDockWidgetArea
                , new DynDockable(pos = new PositionStatus(":/src/UI/Position.ui"
                                                           , Core().axisMask())
                                , this));
      addDockable(Qt::BottomDockWidgetArea
-               , new DynDockable(new SpeedStatus(":/src/UI/SpeedInfo.ui")
+               , new DynDockable(new SpeedStatus(":/src/UI/HSpeedInfo.ui")
                                , this));
      }
   }

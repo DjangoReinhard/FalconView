@@ -195,13 +195,15 @@ HEADERS += \
     src/view/tooleditor.h \
 
 FORMS += \
-    src/UI/CurCodes.ui \
+    src/UI/HCurCodes.ui \
+    src/UI/VCurCodes.ui \
     src/UI/GCodeEditor.ui \
     src/UI/mainwindow.ui \
     src/UI/Fixture.ui \
     src/UI/Position.ui \
     src/UI/Settings.ui \
-    src/UI/SpeedInfo.ui \
+    src/UI/HSpeedInfo.ui \
+    src/UI/VSpeedInfo.ui \
     src/UI/ToolEditor.ui \
     src/UI/ToolInfo.ui \
     src/UI/testForm.ui
