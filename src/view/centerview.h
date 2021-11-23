@@ -13,9 +13,9 @@ class CenterView : public QWidget
 public:
   CenterView(QWidget* parent = nullptr);
 
-  QWidget*       activatePage(const QString& name);
+  DynFrame*      activatePage(const QString& name);
   const QString& activePage() const;
-  QWidget*       page(const QString& name);
+  DynFrame*      page(const QString& name);
   void           addPage(DynFrame* page, const QString& name = QString());
   void           dump() const;
 

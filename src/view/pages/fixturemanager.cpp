@@ -10,13 +10,14 @@ FixtureManager::FixtureManager(const AxisMask& mask, QWidget* parent)
  : DynCenterWidget(QString(), "FixtureManager", false, parent)
  , client(new QWidget(this))
  , axisMask(mask) {
-  setObjectName(tr("FixtureManager"));
+  setObjectName("FixtureManager");
+  setWindowTitle("FixtureManager");
   }
 
 
 QWidget* FixtureManager::createContent() {
-  FlowLayout*  fl = new FlowLayout;
-  QScrollArea* sa = new QScrollArea;
+  FlowLayout*  fl = new FlowLayout(client);
+  QScrollArea* sa = new QScrollArea(this);
   FixtureEdit* fe = new FixtureEdit(tr("Offsets"), axisMask);
 
   client->setLayout(fl);

@@ -536,46 +536,51 @@ void MainWindow::createDockables(DBConnection&) {
 
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
-  CenterView* mainView = new CenterView(this);
-  DynFrame* page     = new DynFrame(new PreViewEditor(":/src/UI/GCodeEditor.ui"
+  CenterView* center = new CenterView(this);
+  DynFrame*   page   = new DynFrame(new PreViewEditor(":/src/UI/GCodeEditor.ui"
                                                     , Core().view3D()
                                                     , statusInPreview)
-                                  , mainView);
+                                  , true
+                                  , center);
 
-  Core().setViewStack(mainView);
-  mainView->addPage(page);
+  Core().setViewStack(center);
+  center->addPage(page);
   ui->menuMain->addAction(page->viewAction());
 
   page = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
-                    , mainView);
-  mainView->addPage(page);
+                    , true
+                    , center);
+  center->addPage(page);
 //  ui->menuMain->addAction(page->viewAction());
 
   page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui")
-                    , mainView);
-  mainView->addPage(page);
+                    , true
+                    , center);
+  center->addPage(page);
   ui->menuMain->addAction(page->viewAction());
 
   page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui")
-                    , mainView);
-  mainView->addPage(page);
+                    , true
+                    , center);
+  center->addPage(page);
   ui->menuMain->addAction(page->viewAction());
 
   page = new DynFrame(new SysEventView(conn)
-                    , mainView);
-  mainView->addPage(page);
+                    , true
+                    , center);
+  center->addPage(page);
 //  ui->menuMain->addAction(page->viewAction());
   SettingsNotebook* nb = new SettingsNotebook(this);
 
-  mainView->addPage(new DynFrame(nb, mainView));
+  center->addPage(new DynFrame(nb, false, center));
   nb->addPage(new ToolManager(conn, nb));
   nb->addPage(new FixtureManager(Core().axisMask(), nb));
   nb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", nb));
   nb->addPage(new LCToolTable());
   ui->menuMain->addAction(nb->viewAction());
 
-  this->setCentralWidget(mainView);
-  mainView->dump();
+  this->setCentralWidget(center);
+  center->dump();
   }
 
 

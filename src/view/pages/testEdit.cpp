@@ -5,6 +5,7 @@
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
 #include <centerview.h>
+#include <dynframe.h>
 #include <filemanager.h>
 #include <core.h>
 #include <QSplitter>
@@ -22,8 +23,11 @@
 TestEdit::TestEdit(const QString& fileName, QWidget* parent)
  : DynCenterWidget(fileName, TestEdit::className, false, parent)
  , fn(nullptr) {
+  setObjectName(TestEdit::className);
+  setWindowTitle(TestEdit::className);
   this->setStyleSheet("background: 0xFF0000;");
   }
+
 
 QWidget* TestEdit::createContent() {
   QWidget* rv = DynCenterWidget::createContent();
@@ -37,8 +41,6 @@ QWidget* TestEdit::createContent() {
   ed = new GCodeEditor(this);
   gh = new GCodeHighlighter(ed->document());
   ed->setFocusPolicy(Qt::NoFocus);
-//  gl->addWidget(ed, 1, 0, 1, 3);
-//  placeHolder->hide();
   gl->replaceWidget(placeHolder, ed);
 
   return rv;
@@ -89,8 +91,9 @@ void TestEdit::connectSignals() {
 
 // opens fileManager
 void TestEdit::openFile() {    
-  QWidget*     w = Core().stackedPage(FileManager::className);
-  FileManager* fm = qobject_cast<FileManager*>(w);
+  QWidget*     w  = Core().stackedPage(FileManager::className);
+  DynFrame*    df = qobject_cast<DynFrame*>(w);
+  FileManager* fm = qobject_cast<FileManager*>(df->centerWidget());
 
   if (fm) {
      fm->setClient(this);
@@ -147,4 +150,4 @@ void TestEdit::updateStyles() {
   }
 
 
-const QString TestEdit::className = "TestEdit";
+const QString& TestEdit::className = "TestEdit";

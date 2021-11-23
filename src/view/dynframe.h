@@ -9,11 +9,14 @@ class DynFrame : public QWidget
 {
   Q_OBJECT
 public:
-  explicit DynFrame(DynCenterWidget* cw, QWidget *parent = nullptr);
+  explicit DynFrame(DynCenterWidget* cw, bool visualFrame = false, QWidget *parent = nullptr);
 
   virtual void init();
   QAction* viewAction();
+  QString  name() const;
   virtual void closeEvent(QCloseEvent* e) override;
+  DynCenterWidget* centerWidget() { return dcw; }
+  DynCenterWidget* centerWidget() const { return dcw; }
 
 protected:
 //  virtual void closeEvent(QCloseEvent* e) override;

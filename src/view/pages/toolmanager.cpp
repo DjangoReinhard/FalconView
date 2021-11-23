@@ -33,17 +33,18 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  : DynCenterWidget(QString(), "ToolManager", false, parent)
  , conn(conn)
  , spH(new QSplitter(Qt::Horizontal, this))
- , spV(new QSplitter(Qt::Vertical, this))
- , categories(new QTreeView(spV))
- , tools(new QTableView(spH))
+ , categories(new QTreeView(spH))
+ , spV(new QSplitter(Qt::Vertical, spH))
+ , tools(new QTableView(spV))
  , categoryTreeModel(new CategoryTreeModel(conn))
  , categoryTableModel(new ToolCategoryModel(conn))
  , toolModel(new ToolModel(conn))
- , tEdit(new ToolEditor(this))
+ , tEdit(new ToolEditor())
  , tsMsgBox(TimeStamp::rtSequence())
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
   setObjectName(ToolManager::className);
+  setWindowTitle(ToolManager::className);
   }
 
 
@@ -71,7 +72,7 @@ QWidget* ToolManager::createContent() {
   tools->setColumnHidden(4, true);
   tools->horizontalHeader()->setSortIndicator(3, Qt::AscendingOrder);
   tools->setMinimumHeight(400);
-  QScrollArea* sa = new QScrollArea;
+  QScrollArea* sa = new QScrollArea();
 
   tEdit->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   tEdit->setEnabled(false);  
@@ -79,9 +80,9 @@ QWidget* ToolManager::createContent() {
   sa->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   sa->setWidget(tEdit);
 
-  this->setLayout(new QVBoxLayout(this));
-  spH->addWidget(categories);
-  spH->addWidget(spV);
+//  this->setLayout(new QVBoxLayout(this));
+//  spH->addWidget(categories);
+//  spH->addWidget(spV);
   spV->addWidget(tools);
   spV->addWidget(sa);
   Config cfg;
@@ -378,4 +379,4 @@ void ToolManager::selectionChanged(const QItemSelection& selected, const QItemSe
   }
 
 
-const QString ToolManager::className = "ToolManager";
+const QString& ToolManager::className = "ToolManager";

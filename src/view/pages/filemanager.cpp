@@ -34,6 +34,7 @@ FileManager::FileManager(const QDir& baseDir, QWidget *parent)
  , pxFiles(new QSortFilterProxyModel(this))
  , client(nullptr) {
   setObjectName(FileManager::className);
+  setWindowTitle(FileManager::className);
   pxDirs->setSourceModel(dirModel);
   dirs->setModel(pxDirs);
   dirs->setTabKeyNavigation(false);
@@ -63,7 +64,6 @@ QWidget* FileManager::createContent() {
   spH->addWidget(spV);
   spV->addWidget(files);
   spV->addWidget(preView);
-  layout()->setContentsMargins(0, 0, 0, 0);
   Config cfg;
 
   cfg.beginGroup(FileManager::className);

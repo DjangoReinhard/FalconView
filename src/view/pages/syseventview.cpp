@@ -15,6 +15,7 @@ SysEventView::SysEventView(DBConnection& conn, QWidget* parent)
  , model(new SysEventModel(conn))
  , px(new QSortFilterProxyModel(this)) {
   setObjectName(SysEventView::className);
+  setWindowTitle(SysEventView::className);
   }
 
 

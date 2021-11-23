@@ -21,6 +21,7 @@
 PathEditor::PathEditor(const QString& fileName, QWidget* parent)
  : TestEdit(fileName, parent) {
   setObjectName(PathEditor::className);
+  setWindowTitle(PathEditor::className);
   }
 
 

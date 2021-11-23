@@ -11,6 +11,8 @@
 
 PreferencesEditor::PreferencesEditor(const QString& fileName, QWidget* parent)
  : DynCenterWidget(fileName, tr("SettingsEditor"), true, parent) {
+  setWindowTitle(PreferencesEditor::className);
+  setObjectName(PreferencesEditor::className);
   }
 
 
@@ -134,3 +136,5 @@ void PreferencesEditor::changeFont(int i) {
 
   if (ok) Config().setFont(static_cast<Config::GuiElem>(i), font);
   }
+
+const QString& PreferencesEditor::className = "PreferencesEditor";

@@ -19,8 +19,6 @@ DynCenterWidget::DynCenterWidget(const QString& fileName, const QString& name, b
  , fileName(fileName)
  , addScrollArea(addScrollArea) {
   setWindowTitle(name);
-  setLayout(new QVBoxLayout);
-  layout()->setContentsMargins(0, 0, 0, 0);
   }
 
 
@@ -52,9 +50,14 @@ QWidget* DynCenterWidget::createContent() {
 void DynCenterWidget::initialize() {
   QWidget* w = createContent();
 
-  if (w) layout()->addWidget(w);
+  if (w) {
+     setLayout(new QVBoxLayout);
+     layout()->setContentsMargins(0, 0, 0, 0);
+     layout()->addWidget(w);
+     }
   connectSignals();
   updateStyles();
+  layout()->invalidate();
   }
 
 
@@ -63,7 +66,7 @@ QAction* DynCenterWidget::viewAction() {
      vAction = new QAction(this);
 
      vAction->setMenuRole(QAction::NoRole);
-     vAction->setText(objectName());
+     vAction->setText(windowTitle());
      }
   return vAction;
   }

@@ -20,7 +20,7 @@ class ToolManager : public DynCenterWidget
 {
   Q_OBJECT
 public:
-  static const QString className;
+  static const QString& className;
   explicit ToolManager(DBConnection& conn, QWidget* parent = nullptr);
   virtual ~ToolManager();
 
@@ -47,8 +47,8 @@ protected:
 private:
   DBConnection&          conn;
   QSplitter*             spH;
-  QSplitter*             spV;
   QTreeView*             categories;
+  QSplitter*             spV;
   QTableView*            tools;
   CategoryTreeModel*     categoryTreeModel;
   ToolCategoryModel*     categoryTableModel;

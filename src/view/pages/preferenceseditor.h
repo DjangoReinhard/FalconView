@@ -27,5 +27,6 @@ private:
   QPushButton** bgButtons;
   QPushButton** fgButtons;
   QPushButton** fontButtons;
+  static const QString& className;
   };
 #endif // PREFERENCESEDITOR_H

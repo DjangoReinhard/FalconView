@@ -10,6 +10,7 @@
 #include <lcproperties.h>
 #include <dbconnection.h>
 #include <dbhelper.h>
+#include <dynframe.h>
 #include <mainwindow.h>
 #include <tooltable.h>
 #include <LCInter.h>
@@ -95,9 +96,11 @@ bool Core::checkBE() {
         qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
 
         vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+        vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
         vm.setValue("allHomed", true);
         vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
         vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
+        vm.setValue("errorActive", false);
         }
     }
   return checked == 1;
@@ -111,7 +114,7 @@ void Core::activatePage(const QString& pageName) {
   if (page)
      core()->mainWindow->setWindowTitle(core()->mainWindow->objectName()
                                      + " - "
-                                     +  page->objectName());
+                                     + core()->tr(page->name().toStdString().c_str()));
   }
 
 

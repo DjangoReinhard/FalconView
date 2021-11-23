@@ -15,7 +15,7 @@ class TestEdit : public DynCenterWidget, FileManagerClient
 {
   Q_OBJECT
 public:
-  static const QString className;
+  static const QString& className;
   TestEdit(const QString& fileName, QWidget* parent = nullptr);
 
   QString pageName() override;

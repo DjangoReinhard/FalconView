@@ -18,6 +18,7 @@ LCToolTable::LCToolTable(QWidget* parent)
  , model(Core().toolTableModel())
  , px(new QSortFilterProxyModel(this)) {
   setObjectName(LCToolTable::className);
+  setWindowTitle(LCToolTable::className);
   }
 
 

@@ -24,7 +24,7 @@ CenterView::CenterView(QWidget* parent)
   }
 
 
-QWidget* CenterView::page(const QString& name) {
+DynFrame* CenterView::page(const QString& name) {
 //  qDebug() << "MainView: requested page \"" << name << "\"";
 
   if (pages.contains(name)) return pages[name];
@@ -34,11 +34,11 @@ QWidget* CenterView::page(const QString& name) {
   }
 
 
-QWidget* CenterView::activatePage(const QString& name) {
+DynFrame* CenterView::activatePage(const QString& name) {
 //  qDebug() << "MainView: activatePage \""  << name << "\"";
 
   if (pages.contains(name)) {
-     QWidget*     w  = pages[name];
+     DynFrame*       w  = pages[name];
 #ifdef WANT_STACKED_LAYOUT
      QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 #else
@@ -73,16 +73,17 @@ const QString& CenterView::activePage() const {
 
 
 void CenterView::dump() const {
-//  for (auto e = pages.constKeyValueBegin(); e != pages.constKeyValueEnd(); e++) {
-//      qDebug() << "MainView holds page >>" << e->first;
-//      }
+  qDebug() << "CenterView contains" << pages.size() << " pages";
+  for (auto e = pages.constKeyValueBegin(); e != pages.constKeyValueEnd(); e++) {
+      qDebug() << "MainView holds page >>" << e->first;
+      }
   }
 
 
 void CenterView::addPage(DynFrame* page, const QString& name) {
   QString pageName(name);
 
-  if (pageName.isEmpty()) pageName = page->objectName();
+  if (pageName.isEmpty()) pageName = page->windowTitle();
   pages.insert(pageName, page);
 #ifdef WANT_STACKED_LAYOUT
   QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
@@ -98,7 +99,7 @@ void CenterView::addPage(DynFrame* page, const QString& name) {
 #endif
                  );
      connect(page->viewAction(), &QAction::triggered, this, [=]() {
-       Core().activatePage(page->objectName());
+       Core().activatePage(page->windowTitle());
        });
      }
   activatePage(pageName);

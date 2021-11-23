@@ -36,7 +36,7 @@ void SettingsNotebook::addPage(DynCenterWidget* page) {
   page->initialize();
 
   //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
-  tw->addTab(page, QString("  ") + page->objectName() + "  ");
+  tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
   }
 
 

@@ -26,6 +26,7 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool s
  , view3D(view)
  , statusInPreview(statusInPreview) {
   setObjectName(PreViewEditor::className);
+  setWindowTitle(PreViewEditor::className);
   }
 
 QWidget* PreViewEditor::createContent() {
@@ -49,7 +50,7 @@ QWidget* PreViewEditor::createContent() {
   spV->restoreState(cfg.value("vState").toByteArray());
   cfg.endGroup();
 
-  return rv;
+  return spV;
   }
 
 
