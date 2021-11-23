@@ -1,7 +1,7 @@
 #ifndef DYNCENTERWIDGET_H
 #define DYNCENTERWIDGET_H
 #include <QWidget>
-class MainView;
+class CenterView;
 class SettingsNotebook;
 class QString;
 class QWidget;

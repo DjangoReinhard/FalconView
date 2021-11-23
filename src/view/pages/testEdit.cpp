@@ -4,7 +4,7 @@
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
-#include <mainview.h>
+#include <centerview.h>
 #include <filemanager.h>
 #include <core.h>
 #include <QSplitter>

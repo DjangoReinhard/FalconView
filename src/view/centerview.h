@@ -1,5 +1,5 @@
-#ifndef MAINVIEW_H
-#define MAINVIEW_H
+#ifndef CENTERVIEW_H
+#define CENTERVIEW_H
 #include <QWidget>
 #include <QMap>
 class DynFrame;
@@ -7,11 +7,11 @@ class QCloseEvent;
 class Kernel;
 
 
-class MainView : public QWidget
+class CenterView : public QWidget
 {
   Q_OBJECT
 public:
-  MainView(QWidget* parent = nullptr);
+  CenterView(QWidget* parent = nullptr);
 
   QWidget*       activatePage(const QString& name);
   const QString& activePage() const;
@@ -26,4 +26,4 @@ private:
   QString                  curPage;
   friend class Kernel;
   };
-#endif // MAINVIEW_H
+#endif // CENTERVIEW_H

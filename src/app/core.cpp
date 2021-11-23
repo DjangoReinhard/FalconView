@@ -55,7 +55,7 @@ DBConnection* Core::databaseConnection() {
   }
 
 
-void Core::setViewStack(MainView* v) {
+void Core::setViewStack(CenterView* v) {
   core()->mainView = v;
   }
 

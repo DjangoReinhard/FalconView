@@ -5,7 +5,7 @@
 #include <commandwriter.h>
 #include <applicationmode.h>
 
-class PositionDockable;
+class PositionStatus;
 class DynDockable;
 class DBConnection;
 class GCodeViewer;
@@ -59,7 +59,7 @@ protected slots:
 private:
   bool                statusInPreview;
   Ui::MainWindow*     ui;
-  PositionDockable*   pos;
+  PositionStatus*   pos;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;

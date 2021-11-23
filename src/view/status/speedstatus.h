@@ -1,5 +1,5 @@
-#ifndef SPEEDINFODOCKABLE_H
-#define SPEEDINFODOCKABLE_H
+#ifndef SPEEDSTATUS_H
+#define SPEEDSTATUS_H
 #include <dyncenterwidget.h>
 class LabelAdapter;
 class QString;
@@ -7,12 +7,12 @@ class QWidget;
 class QSlider;
 
 
-class SpeedInfoDockable : public DynCenterWidget
+class SpeedStatus : public DynCenterWidget
 {
   Q_OBJECT
 public:
-  SpeedInfoDockable(const QString& fileName, QWidget* parent = nullptr);
-  virtual ~SpeedInfoDockable();
+  SpeedStatus(const QString& fileName, QWidget* parent = nullptr);
+  virtual ~SpeedStatus();
 
 protected:
   virtual void connectSignals() override;
@@ -43,4 +43,4 @@ private:
   QSlider*      slFastFeed;
   QSlider*      slSpeed;
   };
-#endif // SPEEDINFODOCKABLE_H
+#endif // SPEEDSTATUS_H

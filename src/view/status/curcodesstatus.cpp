@@ -1,4 +1,4 @@
-#include <curcodesdockable.h>
+#include <curcodesstatus.h>
 #include <valuemanager.h>
 #include <configacc.h>
 #include <QLabel>
@@ -6,14 +6,14 @@
 #include <QFont>
 
 
-CurCodesDockable::CurCodesDockable(const QString& fileName, QWidget* parent)
+CurCodesStatus::CurCodesStatus(const QString& fileName, QWidget* parent)
  : DynCenterWidget(fileName, tr("actual Codes"), false, parent)
  , labels(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
   }
 
 
-QWidget* CurCodesDockable::createContent() {
+QWidget* CurCodesStatus::createContent() {
   QWidget* w = DynCenterWidget::createContent();
 
   labels = new QLabel*[28];
@@ -42,7 +42,7 @@ QWidget* CurCodesDockable::createContent() {
   }
 
 
-void CurCodesDockable::connectSignals() {
+void CurCodesStatus::connectSignals() {
   ValueManager vm;
 
   connect(vm.getModel("GC1", " "), &ValueModel::valueChanged,  labels[0],  [=](QVariant arg){ labels[0]->setText(arg.toString()); });
@@ -92,7 +92,7 @@ void CurCodesDockable::connectSignals() {
   }
 
 
-void CurCodesDockable::updateStyles() {
+void CurCodesStatus::updateStyles() {
   Config  cfg;
   QString styles = QString("color: #%1; background: #%2;")
                           .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::ActCodes)).value<QColor>().rgb(),  0, 16)

@@ -1,6 +1,6 @@
 #include <patheditor.h>
 #include <valuemanager.h>
-#include <mainview.h>
+#include <centerview.h>
 #include <core.h>
 #include <configacc.h>
 #include <gcodeeditor.h>

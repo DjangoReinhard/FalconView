@@ -1,7 +1,7 @@
 #include <filemanager.h>
 #include <filemanagerclient.h>
 #include <testEdit.h>
-#include <mainview.h>
+#include <centerview.h>
 #include <core.h>
 #include <configacc.h>
 #include <dirmodel.h>

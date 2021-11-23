@@ -1,14 +1,14 @@
-#ifndef CURCODESDOCKABLE_H
-#define CURCODESDOCKABLE_H
+#ifndef CURCODESSTATUS_H
+#define CURCODESSTATUS_H
 #include <dyncenterwidget.h>
 class QWidget;
 class QLabel;
 
-class CurCodesDockable : public DynCenterWidget
+class CurCodesStatus : public DynCenterWidget
 {
   Q_OBJECT
 public:
-  CurCodesDockable(const QString& fileName, QWidget* parent = nullptr);
+  CurCodesStatus(const QString& fileName, QWidget* parent = nullptr);
 
 protected:
   virtual void connectSignals() override;
@@ -18,4 +18,4 @@ protected:
 private:
   QLabel** labels;
   };
-#endif // CURCODESDOCKABLE_H
+#endif // CURCODESSTATUS_H

@@ -1,4 +1,4 @@
-#include <speedinfodockable.h>
+#include <speedstatus.h>
 #include <labeladapter.h>
 #include <valuemanager.h>
 #include <configacc.h>
@@ -10,7 +10,7 @@
 #include <QDebug>
 
 
-SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
+SpeedStatus::SpeedStatus(const QString& fileName, QWidget* parent)
  : DynCenterWidget(fileName, tr("SpeedInfo"), false, parent)
  , curFeed(nullptr)
  , curFastFeed(nullptr)
@@ -28,11 +28,11 @@ SpeedInfoDockable::SpeedInfoDockable(const QString& fileName, QWidget* parent)
   }
 
 
-SpeedInfoDockable::~SpeedInfoDockable() {
+SpeedStatus::~SpeedStatus() {
   }
 
 
-QWidget* SpeedInfoDockable::createContent() {
+QWidget* SpeedStatus::createContent() {
   QWidget* rv = DynCenterWidget::createContent();
 
   curFeed        = new LabelAdapter(findChild<QLabel*>("curFeed"), 0);
@@ -58,13 +58,13 @@ QWidget* SpeedInfoDockable::createContent() {
   }
 
 
-void SpeedInfoDockable::connectSignals() {
+void SpeedStatus::connectSignals() {
   ValueManager vm;
   Config       cfg;
 
-  connect(vm.getModel("feedrate", 100),      &ValueModel::valueChanged, this, &SpeedInfoDockable::feedRateChanged);
-  connect(vm.getModel("rapidrate", 100),     &ValueModel::valueChanged, this, &SpeedInfoDockable::fastFeedRateChanged);
-  connect(vm.getModel("spindle0Scale", 100), &ValueModel::valueChanged, this, &SpeedInfoDockable::speedRateChanged);
+  connect(vm.getModel("feedrate", 100),      &ValueModel::valueChanged, this, &SpeedStatus::feedRateChanged);
+  connect(vm.getModel("rapidrate", 100),     &ValueModel::valueChanged, this, &SpeedStatus::fastFeedRateChanged);
+  connect(vm.getModel("spindle0Scale", 100), &ValueModel::valueChanged, this, &SpeedStatus::speedRateChanged);
 
   connect(vm.getModel("cmdVelocity", 0),     &ValueModel::valueChanged, cmdFeed,     &LabelAdapter::setValue);
   connect(vm.getModel("maxVelocity", 0),     &ValueModel::valueChanged, cmdFastFeed, &LabelAdapter::setValue);
@@ -72,9 +72,9 @@ void SpeedInfoDockable::connectSignals() {
   connect(vm.getModel("curVelocity", 0),     &ValueModel::valueChanged, curFeed,     &LabelAdapter::setValue);
   connect(vm.getModel("curRapid", 0),        &ValueModel::valueChanged, curFastFeed, &LabelAdapter::setValue);
   connect(vm.getModel("curSpeed", 0),        &ValueModel::valueChanged, curSpeed,    &LabelAdapter::setValue);
-  connect(slFeed,     &QSlider::valueChanged, this, &SpeedInfoDockable::feedChanged);
-  connect(slFastFeed, &QSlider::valueChanged, this, &SpeedInfoDockable::fastFeedChanged);
-  connect(slSpeed,    &QSlider::valueChanged, this, &SpeedInfoDockable::speedChanged);
+  connect(slFeed,     &QSlider::valueChanged, this, &SpeedStatus::feedChanged);
+  connect(slFastFeed, &QSlider::valueChanged, this, &SpeedStatus::fastFeedChanged);
+  connect(slSpeed,    &QSlider::valueChanged, this, &SpeedStatus::speedChanged);
 
   connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::white))
         , &ValueModel::valueChanged
@@ -211,7 +211,7 @@ void SpeedInfoDockable::connectSignals() {
 
 
 // backend callback (backend uses factor, frontend percent
-void SpeedInfoDockable::feedRateChanged(const QVariant& v) {
+void SpeedStatus::feedRateChanged(const QVariant& v) {
   int rate = int(v.toDouble() * 100.0);
 
   slFeed->setValue(rate);
@@ -220,7 +220,7 @@ void SpeedInfoDockable::feedRateChanged(const QVariant& v) {
 
 
 // backend callback (backend uses factor, frontend percent
-void SpeedInfoDockable::fastFeedRateChanged(const QVariant& v) {
+void SpeedStatus::fastFeedRateChanged(const QVariant& v) {
   int rate = int(v.toDouble() * 100.0);
 
   slFastFeed->setValue(rate);
@@ -229,7 +229,7 @@ void SpeedInfoDockable::fastFeedRateChanged(const QVariant& v) {
 
 
 // backend callback (backend uses factor, frontend percent
-void SpeedInfoDockable::speedRateChanged(const QVariant& v) {
+void SpeedStatus::speedRateChanged(const QVariant& v) {
   int rate = int(v.toDouble() * 100.0);
 
   slSpeed->setValue(rate);
@@ -238,27 +238,27 @@ void SpeedInfoDockable::speedRateChanged(const QVariant& v) {
 
 
 // slider callback
-void SpeedInfoDockable::feedChanged(const QVariant& v) {
+void SpeedStatus::feedChanged(const QVariant& v) {
   qDebug() << "SpeedInfoDockable::feedChanged(" << v << ")";
   Core().beSetFeedOverride(v.toDouble() / 100.0);
   }
 
 
 // slider callback
-void SpeedInfoDockable::fastFeedChanged(const QVariant& v) {
+void SpeedStatus::fastFeedChanged(const QVariant& v) {
   qDebug() << "SpeedInfoDockable::fastFeedChanged(" << v << ")";
   Core().beSetRapidOverride(v.toDouble() / 100.0);
   }
 
 
 // slider callback
-void SpeedInfoDockable::speedChanged(const QVariant& v) {
+void SpeedStatus::speedChanged(const QVariant& v) {
   qDebug() << "SpeedInfoDockable::speedChanged(" << v << ")";
   Core().beSetSpindleOverride(v.toDouble() / 100.0);
   }
 
 
-void SpeedInfoDockable::updateStyles() {
+void SpeedStatus::updateStyles() {
   ValueManager vm;
   Config       cfg;
   QColor       colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>();

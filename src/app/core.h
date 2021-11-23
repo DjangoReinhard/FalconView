@@ -9,7 +9,7 @@ class DBHelper;
 class MainWindow;
 class ToolTable;
 class LcProperties;
-class MainView;
+class CenterView;
 class QCloseEvent;
 class QWidget;
 class AxisMask;
@@ -30,7 +30,7 @@ public:
   QWidget*        stackedPage(const QString& pageName);
   const AxisMask& axisMask() const;
 
-  void           setViewStack(MainView* v);
+  void           setViewStack(CenterView* v);
   void           setAppMode(ApplicationMode m);
   void           windowClosing(QCloseEvent* e);
   bool           checkBE();

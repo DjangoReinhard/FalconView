@@ -11,7 +11,7 @@
 #include <ally3d.h>
 #include <tooltable.h>
 #include <LCInter.h>
-#include <mainview.h>
+#include <centerview.h>
 #include <QThread>
 #include <QBasicTimer>
 class OcctQtViewer;
@@ -73,7 +73,7 @@ private:
   LCInterface         lcIF;
   AxisMask            mAxis;
   OcctQtViewer*       view3D;
-  MainView*           mainView;
+  CenterView*           mainView;
   MainWindow*         mainWindow;
   DBConnection*       conn;
   Ally3D              ally3D;

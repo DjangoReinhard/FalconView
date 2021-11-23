@@ -1,4 +1,4 @@
-#include <mainview.h>
+#include <centerview.h>
 #define WANT_STACKED_LAYOUT
 #include <dynframe.h>
 #include <dyncenterwidget.h>
@@ -12,7 +12,7 @@
 #endif
 
 
-MainView::MainView(QWidget* parent)
+CenterView::CenterView(QWidget* parent)
  : QWidget(parent) {
   setObjectName(tr("MainView"));
 #ifdef WANT_STACKED_LAYOUT
@@ -24,7 +24,7 @@ MainView::MainView(QWidget* parent)
   }
 
 
-QWidget* MainView::page(const QString& name) {
+QWidget* CenterView::page(const QString& name) {
 //  qDebug() << "MainView: requested page \"" << name << "\"";
 
   if (pages.contains(name)) return pages[name];
@@ -34,7 +34,7 @@ QWidget* MainView::page(const QString& name) {
   }
 
 
-QWidget* MainView::activatePage(const QString& name) {
+QWidget* CenterView::activatePage(const QString& name) {
 //  qDebug() << "MainView: activatePage \""  << name << "\"";
 
   if (pages.contains(name)) {
@@ -67,19 +67,19 @@ QWidget* MainView::activatePage(const QString& name) {
   }
 
 
-const QString& MainView::activePage() const {
+const QString& CenterView::activePage() const {
   return curPage;
   }
 
 
-void MainView::dump() const {
+void CenterView::dump() const {
 //  for (auto e = pages.constKeyValueBegin(); e != pages.constKeyValueEnd(); e++) {
 //      qDebug() << "MainView holds page >>" << e->first;
 //      }
   }
 
 
-void MainView::addPage(DynFrame* page, const QString& name) {
+void CenterView::addPage(DynFrame* page, const QString& name) {
   QString pageName(name);
 
   if (pageName.isEmpty()) pageName = page->objectName();
@@ -105,7 +105,7 @@ void MainView::addPage(DynFrame* page, const QString& name) {
   }
 
 
-void MainView::windowClosing(QCloseEvent* e) {
+void CenterView::windowClosing(QCloseEvent* e) {
   for (auto t = pages.constKeyValueBegin(); t != pages.constKeyValueEnd(); t++) {
       t->second->closeEvent(e);
       }

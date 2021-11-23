@@ -1,4 +1,4 @@
-#include <toolinfodockable.h>
+#include <toolstatus.h>
 #include <labeladapter.h>
 #include <valuemanager.h>
 #include <configacc.h>
@@ -11,7 +11,7 @@
 #include <QDebug>
 
 
-ToolInfoDockable::ToolInfoDockable(const QString & fileName, QWidget* parent)
+ToolStatus::ToolStatus(const QString & fileName, QWidget* parent)
  : DynCenterWidget(fileName, tr("ToolInfo"), parent)
  , curTool(nullptr)
  , nxtTool(nullptr)
@@ -22,11 +22,11 @@ ToolInfoDockable::ToolInfoDockable(const QString & fileName, QWidget* parent)
   }
 
 
-ToolInfoDockable::~ToolInfoDockable() {
+ToolStatus::~ToolStatus() {
   }
 
 
-QWidget* ToolInfoDockable::createContent() {
+QWidget* ToolStatus::createContent() {
   QWidget* rv = DynCenterWidget::createContent();
 
   tlDesc  = findChild<QLabel*>("toolDesc");
@@ -39,7 +39,7 @@ QWidget* ToolInfoDockable::createContent() {
   }
 
 
-void ToolInfoDockable::toolChanged(const QVariant& toolNum) {
+void ToolStatus::toolChanged(const QVariant& toolNum) {
   const ToolEntry* te = Core().toolTable().tool(toolNum.toInt());
 
   if (!te) return;
@@ -53,13 +53,13 @@ void ToolInfoDockable::toolChanged(const QVariant& toolNum) {
   }
 
 
-void ToolInfoDockable::connectSignals() {
+void ToolStatus::connectSignals() {
   ValueManager vm;
   Config       cfg;
 
   curTool->label()->setStyleSheet("background: white; ");
   connect(vm.getModel("toolInSpindle", 0),  &ValueModel::valueChanged
-        , this, &ToolInfoDockable::toolChanged);
+        , this, &ToolStatus::toolChanged);
   connect(vm.getModel("pocketPrepared", 0),  &ValueModel::valueChanged
         , nxtTool, [=](){ nxtTool->label()->setNum(ValueManager().getValue("pocketPrepared").toInt()); });
 
@@ -181,7 +181,7 @@ void ToolInfoDockable::connectSignals() {
   }
 
 
-void ToolInfoDockable::updateStyles() {
+void ToolStatus::updateStyles() {
   ValueManager vm;
   Config       cfg;
 

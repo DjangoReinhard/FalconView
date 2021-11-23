@@ -1,5 +1,5 @@
-#ifndef POSITIONDOCKABLE_H
-#define POSITIONDOCKABLE_H
+#ifndef POSITIONSTATUS_H
+#define POSITIONSTATUS_H
 #include <dyncenterwidget.h>
 #include <labeladapter.h>
 #include <axismask.h>
@@ -9,13 +9,13 @@
 class QString;
 
 
-class PositionDockable : public DynCenterWidget
+class PositionStatus : public DynCenterWidget
 {
   Q_OBJECT
 public:
-  PositionDockable(const QString& fileName, const AxisMask& axisMask, QWidget* parent = nullptr);
-  PositionDockable(const QString& fileName, const AxisMask& axisMask, QWidget* parent, QString ledOn, QString ledOff);
-  virtual ~PositionDockable();
+  PositionStatus(const QString& fileName, const AxisMask& axisMask, QWidget* parent = nullptr);
+  PositionStatus(const QString& fileName, const AxisMask& axisMask, QWidget* parent, QString ledOn, QString ledOff);
+  virtual ~PositionStatus();
 
   void setLedStyles(QString onStyle, QString offStyle);
   void setXHomed(QVariant arg = QVariant(true));
@@ -70,4 +70,4 @@ private:
   static const char* a[];
   };
 
-#endif // POSITIONDOCKABLE_H
+#endif // POSITIONSTATUS_H

@@ -1,17 +1,17 @@
-#ifndef TOOLINFODOCKABLE_H
-#define TOOLINFODOCKABLE_H
+#ifndef TOOLSTATUS_H
+#define TOOLSTATUS_H
 #include <dyncenterwidget.h>
 class LabelAdapter;
 class QVariant;
 class QLabel;
 
 
-class ToolInfoDockable : public DynCenterWidget
+class ToolStatus : public DynCenterWidget
 {
   Q_OBJECT
 public:
-  explicit ToolInfoDockable(const QString& fileName, QWidget* parent = nullptr);
-  virtual ~ToolInfoDockable();
+  explicit ToolStatus(const QString& fileName, QWidget* parent = nullptr);
+  virtual ~ToolStatus();
 
 protected:
   virtual QWidget* createContent() override;
@@ -28,4 +28,4 @@ private:
   LabelAdapter* tlLen;
   LabelAdapter* tlRad;
   };
-#endif // TOOLINFODOCKABLE_H
+#endif // TOOLSTATUS_H

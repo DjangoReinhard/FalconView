@@ -19,8 +19,8 @@ INCLUDEPATH += \
     src/rs274 \
     src/util \
     src/view \
-    src/view/center \
-    src/view/dockable \
+    src/view/pages \
+    src/view/status \
     /usr/include/python3.9 \
     lc/include \
     lc/src/emc/rs274ngc \
@@ -78,6 +78,7 @@ SOURCES += \
     src/util/HHelixCurveAdaptor.cpp \
     src/util/LCInter.cpp \
     src/util/labeladapter.cpp \
+    src/util/micon.cpp \
     src/util/multistateaction.cpp \
     src/util/multistatetoolbutton.cpp \
     src/util/notcondition.cpp \
@@ -85,31 +86,27 @@ SOURCES += \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
     src/util/truecondition.cpp \
-    src/view/center/dynframe.cpp \
-    src/view/center/filemanager.cpp \
-    src/view/center/fixturemanager.cpp \
-    src/view/center/lctooltable.cpp \
-    src/view/center/mainview.cpp \
-    src/view/center/patheditor.cpp \
-    src/view/center/preferenceseditor.cpp \
-    src/view/center/pweditor.cpp \
-    src/view/center/settingsnb.cpp \
-    src/view/center/syseventview.cpp \
-    src/view/center/testEdit.cpp \
-    src/view/center/toolmanager.cpp \
-    src/view/dockable/curcodesdockable.cpp \
-    src/view/dockable/dyndockable.cpp \
-    src/view/dockable/editordockable.cpp \
-    src/view/dockable/maindockable.cpp \
-    src/view/dockable/positiondockable.cpp \
-    src/view/dockable/speedinfodockable.cpp \
-    src/view/dockable/toolinfodockable.cpp \
+    src/view/pages/filemanager.cpp \
+    src/view/pages/fixturemanager.cpp \
+    src/view/pages/lctooltable.cpp \
+    src/view/pages/patheditor.cpp \
+    src/view/pages/preferenceseditor.cpp \
+    src/view/pages/pweditor.cpp \
+    src/view/pages/syseventview.cpp \
+    src/view/pages/testEdit.cpp \
+    src/view/pages/toolmanager.cpp \
+    src/view/status/curcodesstatus.cpp \
+    src/view/status/positionstatus.cpp \
+    src/view/status/speedstatus.cpp \
+    src/view/status/toolstatus.cpp \
+    src/view/centerview.cpp \
     src/view/dyncenterwidget.cpp \
+    src/view/dyndockable.cpp \
+    src/view/dynframe.cpp \
     src/view/fixtureedit.cpp \
     src/view/gcodeeditor.cpp \
-    src/view/gcodeviewer.cpp \
-    src/view/micon.cpp \
     src/view/occtviewer.cpp \
+    src/view/settingsnb.cpp \
     src/view/tooleditor.cpp \
 
 HEADERS += \
@@ -166,6 +163,7 @@ HEADERS += \
     src/util/HHelixCurveAdaptor.h \
     src/util/labeladapter.h \
     src/util/LCInter.h \
+    src/util/micon.h \
     src/util/multistateaction.h \
     src/util/multistatetoolbutton.h \
     src/util/notcondition.h \
@@ -173,31 +171,27 @@ HEADERS += \
     src/util/smallercondition.h \
     src/util/timestamp.h \
     src/util/truecondition.h \
-    src/view/center/dynframe.h \
-    src/view/center/filemanager.h \
-    src/view/center/fixturemanager.h \
-    src/view/center/lctooltable.h \
-    src/view/center/mainview.h \
-    src/view/center/patheditor.h \
-    src/view/center/preferenceseditor.h \
-    src/view/center/pweditor.h \
-    src/view/center/settingsnb.h \
-    src/view/center/syseventview.h \
-    src/view/center/testEdit.h \
-    src/view/center/toolmanager.h \
-    src/view/dockable/curcodesdockable.h \
-    src/view/dockable/dyndockable.h \
-    src/view/dockable/editordockable.h \
-    src/view/dockable/maindockable.h \
-    src/view/dockable/positiondockable.h \
-    src/view/dockable/speedinfodockable.h \
-    src/view/dockable/toolinfodockable.h \
+    src/view/pages/filemanager.h \
+    src/view/pages/fixturemanager.h \
+    src/view/pages/lctooltable.h \
+    src/view/pages/patheditor.h \
+    src/view/pages/preferenceseditor.h \
+    src/view/pages/pweditor.h \
+    src/view/pages/syseventview.h \
+    src/view/pages/testEdit.h \
+    src/view/pages/toolmanager.h \
+    src/view/status/curcodesstatus.h \
+    src/view/status/positionstatus.h \
+    src/view/status/speedstatus.h \
+    src/view/status/toolstatus.h \
+    src/view/centerview.h \
     src/view/dyncenterwidget.h \
+    src/view/dyndockable.h \
+    src/view/dynframe.h \
     src/view/gcodeeditor.h \
-    src/view/gcodeviewer.h \
-    src/view/micon.h \
-    src/view/occtviewer.h \
     src/view/fixtureedit.h \
+    src/view/occtviewer.h \
+    src/view/settingsnb.h \
     src/view/tooleditor.h \
 
 FORMS += \

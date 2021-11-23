@@ -11,20 +11,17 @@
 #include <equalcondition.h>
 #include <greatercondition.h>
 #include <smallercondition.h>
-#include <mainview.h>
+#include <centerview.h>
 #include <dyndockable.h>
 #include <dynframe.h>
 #include <core.h>
 #include <syseventview.h>
 #include <lctooltable.h>
-#include <positiondockable.h>
-#include <toolinfodockable.h>
-#include <speedinfodockable.h>
-#include <editordockable.h>
-#include <curcodesdockable.h>
-#include <maindockable.h>
+#include <positionstatus.h>
+#include <toolstatus.h>
+#include <speedstatus.h>
+#include <curcodesstatus.h>
 #include <multistateaction.h>
-#include <gcodeviewer.h>
 #include <pweditor.h>
 #include <patheditor.h>
 #include <preferenceseditor.h>
@@ -522,24 +519,24 @@ void MainWindow::createDockables(DBConnection&) {
 
   if (!statusInPreview) {
      addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(new ToolInfoDockable(":/src/UI/ToolInfo.ui")
+               , new DynDockable(new ToolStatus(":/src/UI/ToolInfo.ui")
                                , this));
      addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(new CurCodesDockable(":/src/UI/CurCodes.ui")
+               , new DynDockable(new CurCodesStatus(":/src/UI/CurCodes.ui")
                                , this));
      addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(pos = new PositionDockable(":/src/UI/Position.ui"
+               , new DynDockable(pos = new PositionStatus(":/src/UI/Position.ui"
                                                           , Core().axisMask())
                                , this));
      addDockable(Qt::BottomDockWidgetArea
-               , new DynDockable(new SpeedInfoDockable(":/src/UI/SpeedInfo.ui")
+               , new DynDockable(new SpeedStatus(":/src/UI/SpeedInfo.ui")
                                , this));
      }
   }
 
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
-  MainView* mainView = new MainView(this);
+  CenterView* mainView = new CenterView(this);
   DynFrame* page     = new DynFrame(new PreViewEditor(":/src/UI/GCodeEditor.ui"
                                                     , Core().view3D()
                                                     , statusInPreview)

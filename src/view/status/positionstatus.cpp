@@ -1,4 +1,4 @@
-#include <positiondockable.h>
+#include <positionstatus.h>
 #include <valuemanager.h>
 #include <configacc.h>
 #include <QtUiTools/QUiLoader>
@@ -11,7 +11,7 @@
 #include <iostream>
 
 
-PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, QWidget* parent)
+PositionStatus::PositionStatus(const QString& fileName, const AxisMask& am, QWidget* parent)
  : DynCenterWidget(fileName, tr("Position"), false, parent)
  , lblX(nullptr)
  , lblY(nullptr)
@@ -42,7 +42,7 @@ PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, 
   }
 
 
-PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
+PositionStatus::PositionStatus(const QString& fileName, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
  : DynCenterWidget(fileName, tr("Position"), false, parent)
  , lblX(nullptr)
  , lblY(nullptr)
@@ -74,11 +74,11 @@ PositionDockable::PositionDockable(const QString& fileName, const AxisMask& am, 
   }
 
 
-PositionDockable::~PositionDockable() {
+PositionStatus::~PositionStatus() {
   }
 
 
-QWidget* PositionDockable::createContent() {
+QWidget* PositionStatus::createContent() {
   QWidget*     rv = DynCenterWidget::createContent();
   QGridLayout* gl = rv->findChild<QGridLayout*>("gridLayout");
 
@@ -130,7 +130,7 @@ QWidget* PositionDockable::createContent() {
   }
 
 
-void PositionDockable::updateStyles() {
+void PositionStatus::updateStyles() {
   ValueManager vm;
   Config       cfg;
   QColor       colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroAbs)).value<QColor>();
@@ -182,33 +182,33 @@ void PositionDockable::updateStyles() {
   lblW->setFont(font);
   }
 
-void PositionDockable::connectSignals() {
+void PositionStatus::connectSignals() {
   ValueManager vm;
   Config cfg;
 
-  connect(vm.getModel("showAbsolute", false), &ValueModel::valueChanged, this, &PositionDockable::setAbsolute);
+  connect(vm.getModel("showAbsolute", false), &ValueModel::valueChanged, this, &PositionStatus::setAbsolute);
   for (int i=0; i < 9; ++i) {
       QString modelKey = QString("homedJoint%1").arg(axisMask.joint4Axis(i));
 
       switch (i) {
         case 0: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setXHomed); break;
+                      , this, &PositionStatus::setXHomed); break;
         case 1: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setYHomed); break;
+                      , this, &PositionStatus::setYHomed); break;
         case 2: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setZHomed); break;
+                      , this, &PositionStatus::setZHomed); break;
         case 3: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setAHomed); break;
+                      , this, &PositionStatus::setAHomed); break;
         case 4: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setBHomed); break;
+                      , this, &PositionStatus::setBHomed); break;
         case 5: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setCHomed); break;
+                      , this, &PositionStatus::setCHomed); break;
         case 6: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setUHomed); break;
+                      , this, &PositionStatus::setUHomed); break;
         case 7: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setVHomed); break;
+                      , this, &PositionStatus::setVHomed); break;
         case 8: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
-                      , this, &PositionDockable::setWHomed); break;
+                      , this, &PositionStatus::setWHomed); break;
         }
       connect(vm.getModel(QString("abs") + a[i], 0), &ValueModel::valueChanged, droAbs[i], &LabelAdapter::setValue);
       connect(vm.getModel(QString("rel") + a[i], 0), &ValueModel::valueChanged, droRel[i], &LabelAdapter::setValue);
@@ -469,12 +469,12 @@ void PositionDockable::connectSignals() {
   }
 
 
-void PositionDockable::setRelative() {
+void PositionStatus::setRelative() {
   setAbsolute(QVariant(false));
   }
 
 
-void PositionDockable::setAbsolute(QVariant arg) {
+void PositionStatus::setAbsolute(QVariant arg) {
   bool abs = arg.toBool();
 
   qDebug() << "PosDock::setAbsolute(" << (abs ? "yes" : "no") << ")";
@@ -485,7 +485,7 @@ void PositionDockable::setAbsolute(QVariant arg) {
   }
 
 
-void PositionDockable::updatePos() {
+void PositionStatus::updatePos() {
   if (absolute) {
      for (int i=0; i < 9; ++i) {
          droAbs[i]->label()->show();
@@ -502,7 +502,7 @@ void PositionDockable::updatePos() {
   }
 
 
-void PositionDockable::setActive() {
+void PositionStatus::setActive() {
   if (!axisMask.hasXAxis()) {
      ledX->hide();
      lblX->hide();
@@ -569,49 +569,49 @@ void PositionDockable::setActive() {
   }
 
 
-void PositionDockable::setXHomed(QVariant homed) {
+void PositionStatus::setXHomed(QVariant homed) {
   ledX->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setYHomed(QVariant homed) {
+void PositionStatus::setYHomed(QVariant homed) {
   ledY->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setZHomed(QVariant homed) {
+void PositionStatus::setZHomed(QVariant homed) {
   ledZ->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setAHomed(QVariant homed) {
+void PositionStatus::setAHomed(QVariant homed) {
   ledA->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setBHomed(QVariant homed) {
+void PositionStatus::setBHomed(QVariant homed) {
   ledB->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setCHomed(QVariant homed) {
+void PositionStatus::setCHomed(QVariant homed) {
   ledC->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setUHomed(QVariant homed) {
+void PositionStatus::setUHomed(QVariant homed) {
   ledU->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setVHomed(QVariant homed) {
+void PositionStatus::setVHomed(QVariant homed) {
   ledV->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-void PositionDockable::setWHomed(QVariant homed) {
+void PositionStatus::setWHomed(QVariant homed) {
   ledW->setStyleSheet(homed.toBool() ? ledOn : ledOff);
   }
 
 
-const char* PositionDockable::a[] = {"X", "Y", "Z", "A", "B", "C", "U", "V", "W"};
+const char* PositionStatus::a[] = {"X", "Y", "Z", "A", "B", "C", "U", "V", "W"};
