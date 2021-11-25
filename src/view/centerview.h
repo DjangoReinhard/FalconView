@@ -19,6 +19,9 @@ public:
   void           addPage(DynFrame* page, const QString& name = QString());
   void           dump() const;
 
+  virtual void keyPressEvent(QKeyEvent* e) override;
+  virtual void keyReleaseEvent(QKeyEvent* e) override;
+
 private:
   void           windowClosing(QCloseEvent* e);
 

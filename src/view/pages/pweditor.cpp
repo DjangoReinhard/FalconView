@@ -38,8 +38,7 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool s
   }
 
 QWidget* PreViewEditor::createContent() {
-  QWidget* rv = TestEdit::createContent();
-
+  TestEdit::createContent();
   spV = new QSplitter(Qt::Vertical);
   view3D->setMinimumSize(400, 400);
   QFrame* frame = findChild<QFrame*>("Frame");
@@ -109,8 +108,8 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   ccStat = new CurCodesStatus(":/src/UI/VCurCodes.ui");
   posStat = new PositionStatus(":/src/UI/Position.ui", Core().axisMask());
   speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
-  QSpacerItem* hs = new QSpacerItem(200, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
-  QSpacerItem* vs = new QSpacerItem(20, 300, QSizePolicy::Ignored, QSizePolicy::Maximum);
+  QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
+  QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
 
   toolStat->initialize();
   ccStat->initialize();
@@ -118,11 +117,11 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   speedStat->initialize();
   gl->setColumnStretch(0, 0);
   gl->setColumnStretch(1, 1);
-  gl->setColumnStretch(2, 2);
+  gl->setColumnStretch(2, 20);
   gl->setColumnStretch(3, 0);
   gl->setRowStretch(0, 0);
   gl->setRowStretch(1, 1);
-  gl->setRowStretch(2, 2);
+  gl->setRowStretch(2, 20);
   gl->addWidget(ccStat, 0, 0, 3, 1);
   gl->addWidget(toolStat, 0, 1, 1, 2);
   gl->addWidget(speedStat, 0, 4, 3, 1);
@@ -143,4 +142,4 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   }
 
 
-const QString PreViewEditor::className = "PreViewEditor";
+const QString PreViewEditor::className = "3D Preview";

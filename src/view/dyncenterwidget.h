@@ -19,7 +19,9 @@ public:
   QAction* viewAction();
 
   /*! called by central widget stack */
-  virtual void closeEvent(QCloseEvent* e);
+  virtual void closeEvent(QCloseEvent* e) override;
+  virtual void keyPressEvent(QKeyEvent* e) override;
+  virtual void keyReleaseEvent(QKeyEvent* e) override;
 
 protected:
   DynCenterWidget(const QString& fileName, const QString& name, bool addScrollArea = false, QWidget* parent = nullptr);

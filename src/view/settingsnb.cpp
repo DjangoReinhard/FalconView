@@ -1,4 +1,5 @@
 #include <settingsnb.h>
+#include <core.h>
 #include <QVBoxLayout>
 #include <QTabWidget>
 #include <QKeyEvent>
@@ -41,10 +42,16 @@ void SettingsNotebook::addPage(DynCenterWidget* page) {
 
 
 void SettingsNotebook::connectSignals() {
+  connect(tw, &QTabWidget::currentChanged, this, &SettingsNotebook::currentChanged);
   }
 
 
 void SettingsNotebook::updateStyles() {
+  }
+
+
+void SettingsNotebook::currentChanged(int) {
+  Core().setWindowTitle(tr(tw->currentWidget()->windowTitle().toStdString().c_str()));
   }
 
 
@@ -60,11 +67,45 @@ void SettingsNotebook::closeEvent(QCloseEvent* e) {
   }
 
 
-void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
-  //TODO: add shortcut for each page
+void SettingsNotebook::keyReleaseEvent(QKeyEvent* e) {
   switch (e->key()) {
-    default: DynCenterWidget::keyPressEvent(e); break;
+    case Qt::Key_0:
+    case Qt::Key_1:
+    case Qt::Key_2:
+    case Qt::Key_3:
+    case Qt::Key_4:
+    case Qt::Key_5:
+    case Qt::Key_6:
+    case Qt::Key_7:
+    case Qt::Key_8:
+    case Qt::Key_9:
+         qDebug() << "SN: numberkey pressed, modifier: " << e->modifiers()
+                  << "event-ts: " << e->timestamp();
+
+         if (e->modifiers() == Qt::AltModifier) {
+            if (switchTabPage(e->key() - Qt::Key_0)) {
+               e->accept();
+               break;
+               }
+            }
+    default:
+         qDebug() << "SN: whatever key (" << e->key()
+                  << ") pressed, modifier: " << e->modifiers()
+                  << "event-ts: " << e->timestamp();
+         DynCenterWidget::keyReleaseEvent(e); break;
     }
+  }
+
+
+bool SettingsNotebook::switchTabPage(int pageIndex) {
+  qDebug() << "switch TAB-page to index #" << pageIndex << " - pageCount:" << tw->count();
+
+  if (pageIndex < tw->count()) {
+     tw->tabBar()->setCurrentIndex(pageIndex);
+
+     return true;
+     }
+  return false;
   }
 
 

@@ -9,7 +9,7 @@ class AxisMask;
 class FixtureEdit : public DynCenterWidget // , protected Ui_frame
 {
 public:
-  FixtureEdit(const QString& title, const AxisMask& mask, QWidget* parent = nullptr);
+  FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent = nullptr);
 
   virtual void connectSignals() override;
   virtual void updateStyles()   override;
@@ -24,6 +24,7 @@ protected:
 
 private:
   Ui::frame*        ui;
+  int               ordinal;
   QList<QLineEdit*> edits;
   const AxisMask&   m;
   };

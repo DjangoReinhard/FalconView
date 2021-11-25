@@ -67,6 +67,7 @@ private:
   QString  ledOn;
   QString  ledOff;
 
+  static const char* widthPat;
   static const char* a[];
   };
 

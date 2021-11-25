@@ -9,6 +9,7 @@
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
 #include <QKeyEvent>
+#include <QDebug>
 #include <core.h>
 
 
@@ -16,7 +17,8 @@ LCToolTable::LCToolTable(QWidget* parent)
  : DynCenterWidget(QString(), "LCToolTable", false, parent)
  , table(new QTableView)
  , model(Core().toolTableModel())
- , px(new QSortFilterProxyModel(this)) {
+ , px(new QSortFilterProxyModel(this))
+ , latheMode(Core().lcProperties().value("DISPLAY", "LATHE").isValid()) {
   setObjectName(LCToolTable::className);
   setWindowTitle(LCToolTable::className);
   }

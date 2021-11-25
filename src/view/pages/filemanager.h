@@ -11,6 +11,7 @@ class DirModel;
 class FileModel;
 class QItemSelection;
 class QKeyEvent;
+class QFileInfo;
 class FileManagerClient;
 
 
@@ -37,6 +38,8 @@ protected:
   virtual void keyReleaseEvent(QKeyEvent *event) override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
+  void createDirectory();
+  void renameDirectory();
 
 private:
   QSplitter*             spH;
@@ -49,5 +52,7 @@ private:
   QSortFilterProxyModel* pxDirs;
   QSortFilterProxyModel* pxFiles;
   FileManagerClient*     client;
+  QFileInfo*             file2Copy;
+  QFileInfo*             file2Move;
   };
 #endif // FILEMANAGER_H

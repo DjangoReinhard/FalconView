@@ -72,5 +72,18 @@ QAction* DynCenterWidget::viewAction() {
   }
 
 
-void DynCenterWidget::closeEvent(QCloseEvent *) {
+void DynCenterWidget::closeEvent(QCloseEvent* e) {
+  QWidget::closeEvent(e);
+  }
+
+
+void DynCenterWidget::keyPressEvent(QKeyEvent* e) {
+  qDebug() << "DynCenterWidget::keyPressEvent of " << objectName();
+  QWidget::keyPressEvent(e);
+  }
+
+
+void DynCenterWidget::keyReleaseEvent(QKeyEvent* e) {
+  qDebug() << "DynCenterWidget::keyReleaseEvent of " << objectName();
+  QWidget::keyPressEvent(e);
   }

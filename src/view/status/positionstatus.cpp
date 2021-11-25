@@ -133,29 +133,39 @@ QWidget* PositionStatus::createContent() {
 void PositionStatus::updateStyles() {
   ValueManager vm;
   Config       cfg;
+
   QColor       colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroAbs)).value<QColor>();
   QColor       colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroAbs)).value<QColor>();
   QFont        font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::DroAbs)).value<QFont>();
+  QFontMetrics fm(font);
+  QRect        r = fm.boundingRect(widthPat);
 
   for (int i=0; i < 9; ++i) {
       droAbs[i]->label()->setStyleSheet(QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16));
       droAbs[i]->label()->setFont(font);
+      droAbs[i]->label()->setMinimumWidth(r.width());
       }
   colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroDtg)).value<QColor>();
   colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroDtg)).value<QColor>();
   font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::DroDtg)).value<QFont>();
+  fm    = QFontMetrics(font);
+  r     = fm.boundingRect(widthPat);
 
   for (int i=0; i < 9; ++i) {
       droDtg[i]->label()->setStyleSheet(QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16));
       droDtg[i]->label()->setFont(font);
+      droDtg[i]->label()->setMinimumWidth(r.width());
       }
   colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroRel)).value<QColor>();
   colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroRel)).value<QColor>();
   font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::DroRel)).value<QFont>();
+  fm    = QFontMetrics(font);
+  r     = fm.boundingRect(widthPat);
 
   for (int i=0; i < 9; ++i) {
       droRel[i]->label()->setStyleSheet(QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16));
       droRel[i]->label()->setFont(font);
+      droRel[i]->label()->setMinimumWidth(r.width());
       }
   colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>();
   colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>();
@@ -615,3 +625,4 @@ void PositionStatus::setWHomed(QVariant homed) {
 
 
 const char* PositionStatus::a[] = {"X", "Y", "Z", "A", "B", "C", "U", "V", "W"};
+const char* PositionStatus::widthPat = "-10.333,333";

@@ -3,7 +3,9 @@
 #include <QLabel>
 #include <QColor>
 #include <QFont>
+#include <QCheckBox>
 #include <QPushButton>
+#include <QMessageBox>
 #include <QColorDialog>
 #include <QFontDialog>
 #include <QDebug>
@@ -28,6 +30,7 @@ QWidget* PreferencesEditor::createContent() {
   fgButtons   = new QPushButton*[Config().numGuiElements()];
   fontButtons = new QPushButton*[Config().numGuiElements()];
 
+  cbStatesInside = findChild<QCheckBox*>("cbStatesInside");
   for (int i=0; i < Config().numGuiElements(); ++i) {
       labels[i]      = findChild<QLabel*>(QString("l")         + Config().nameOf(static_cast<Config::GuiElem>(i)));
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
@@ -44,6 +47,10 @@ void PreferencesEditor::connectSignals() {
       if (fgButtons[i])   connect(fgButtons[i],   &QPushButton::pressed, this, [=](){ changeForegroundColor(i); });
       if (fontButtons[i]) connect(fontButtons[i], &QPushButton::pressed, this, [=](){ changeFont(i); });
       }
+  if (cbStatesInside) {
+     cbStatesInside->setChecked(Config().value("statusInPreview").toBool());
+     connect(cbStatesInside, &QCheckBox::stateChanged, this, &PreferencesEditor::statusInsideChanged);
+     }
   }
 
 
@@ -135,6 +142,16 @@ void PreferencesEditor::changeFont(int i) {
                                   , QFontDialog::ScalableFonts);
 
   if (ok) Config().setFont(static_cast<Config::GuiElem>(i), font);
+  }
+
+
+void PreferencesEditor::statusInsideChanged(QVariant state) {
+  qDebug() << "PE::statusInsideChanged(" << (state.toBool() ? "TRUE" : "FALSE") << ")";
+  QMessageBox::information(this
+                         , tr("QMessageBox::information()")
+                         , tr("for this change to take effect, "
+                              "the application must be restarted."));
+  Config().setValue("statusInPreview", state.toBool());
   }
 
 const QString& PreferencesEditor::className = "PreferencesEditor";

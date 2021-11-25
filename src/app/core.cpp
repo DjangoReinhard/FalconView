@@ -57,7 +57,7 @@ DBConnection* Core::databaseConnection() {
 
 
 void Core::setViewStack(CenterView* v) {
-  core()->mainView = v;
+  core()->centerView = v;
   }
 
 
@@ -79,7 +79,12 @@ void Core::showAllButCenter(bool visible) {
 QWidget* Core::stackedPage(const QString& pageName) {
   qDebug() << "Core: query for page: >" << pageName << "<";
 
-  return core()->mainView->page(pageName);
+  return core()->centerView->page(pageName);
+  }
+
+
+CenterView* Core::viewStack() {
+  return core()->centerView;
   }
 
 
@@ -110,11 +115,16 @@ bool Core::checkBE() {
 void Core::activatePage(const QString& pageName) {
   qDebug() << "Core: activate page with name >" << pageName << "<";
 
-  auto page = core()->mainView->activatePage(pageName);
-  if (page)
+  core()->centerView->activatePage(pageName);
+  }
+
+
+void Core::setWindowTitle(const QString &title) {
+  if (core()->mainWindow) {
      core()->mainWindow->setWindowTitle(core()->mainWindow->objectName()
-                                     + " - "
-                                     + core()->tr(page->name().toStdString().c_str()));
+                                      + " - "
+                                      + title);
+     }
   }
 
 
@@ -129,7 +139,7 @@ ToolTable& Core::toolTable() {
 
 
 const QString& Core::curPage() const {
-  return core()->mainView->activePage();
+  return core()->centerView->activePage();
   }
 
 
@@ -263,7 +273,7 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , lcIF(lcProps, tt)
  , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
  , view3D(nullptr)
- , mainView(nullptr)
+ , centerView(nullptr)
  , mainWindow(nullptr)
  , conn(nullptr)
  , ally3D(nullptr)
@@ -302,10 +312,9 @@ void Kernel::initialize(DBHelper& dbAssist) {
   ci.setWorkPieceColor(cfg.getForeground(Config::GuiElem::WorkPiece));
   ci.setCurSegColor(cfg.getForeground(Config::GuiElem::CurSeg));
   ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
-  cfg.setValue("statusInPreview", false);
-  view3D = new OcctQtViewer(cfg.value("statusInPreview", false).toBool());
+  view3D = new OcctQtViewer();
   ally3D.setOcctViewer(view3D);
-  mainWindow = new MainWindow(cfg.value("statusInPreview").toBool());
+  mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool());
 
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged, this, &Kernel::updateView);
 
@@ -440,7 +449,7 @@ void Kernel::windowClosing(QCloseEvent *e) {
   cfg.setValue("geometry", mainWindow->saveGeometry());
   cfg.setValue("windowState", mainWindow->saveState());
   cfg.settings.endGroup();
-  mainView->windowClosing(e);
+  centerView->windowClosing(e);
   }
 
 

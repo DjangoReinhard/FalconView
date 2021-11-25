@@ -8,9 +8,10 @@
 #include <QDebug>
 
 
-FixtureEdit::FixtureEdit(const QString& title, const AxisMask& mask, QWidget* parent)
+FixtureEdit::FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent)
  : DynCenterWidget(QString(), "FixtureEdit", false, parent)
  , ui(new Ui::frame())
+ , ordinal(ordinal)
  , m(mask) {
   setupUi(this);
   ui->title->setText(title);
@@ -26,6 +27,7 @@ void FixtureEdit::changeEvent(QEvent* e) {
      for (int i=0; i < 9; ++i)
          if (edits.at(i)->isVisible()) {
             edits.at(i)->setFocus();
+            edits.at(i)->selectAll();
             break;
             }
      }
@@ -114,9 +116,28 @@ void FixtureEdit::keyReleaseEvent(QKeyEvent* e) {
          saveFixture();
          e->accept();
          break;
+    case Qt::Key_0:
+    case Qt::Key_1:
+    case Qt::Key_2:
+    case Qt::Key_3:
+    case Qt::Key_4:
+    case Qt::Key_5:
+    case Qt::Key_6:
+    case Qt::Key_7:
+    case Qt::Key_8:
+    case Qt::Key_9:
+         if (e->modifiers() == Qt::AltModifier) {
+            QWidget* w = static_cast<QWidget*>(parent());
+
+            qDebug() << "FE: parent is" << w << " numberkey pressed" << e->key();
+//            if (w) w->keyReleaseEvent(e);
+//            parent()->keyReleaseEvent(e);
+//            e->accept();
+//            break;
+            }
     default:
-         qDebug() << "FE: released key: " << e->key();
-         qDebug() << "FE: modifiers: "    << e->modifiers();
+         qDebug() << "FE: pressed key: " << e->key();
+         qDebug() << "FE: modifiers: "   << e->modifiers();
          DynCenterWidget::keyReleaseEvent(e);
          break;
     }
@@ -201,9 +222,12 @@ void FixtureEdit::saveFixture() {
             } break;
        }
      curPos -= dv;
-     qDebug() << "FixEd: change fixture on" << ui->title->text()
-              << "axis " << axisLetters[axis] << "to user entry:" << dv
+     qDebug() << "FixEd: change fixture on" << ui->title->text() << "<" << ordinal
+              << "> - axis " << axisLetters[axis] << "to user entry:" << dv
               << "calculated machine pos: " << curPos;
-     //TODO: send command
+     //TODO: send command (ordinal > 0)
+     // MDI-command:     G10 L2 P{ordinal} axisLetters[axis] curPos
+
+     //TODO: check command to use for offset settings (ordinal == 0)
      }
   }

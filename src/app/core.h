@@ -32,8 +32,10 @@ public:
 
   void           setViewStack(CenterView* v);
   void           setAppMode(ApplicationMode m);
+  void           setWindowTitle(const QString& title);
   void           windowClosing(QCloseEvent* e);
   bool           checkBE();
+  CenterView*    viewStack();
   OcctQtViewer*  view3D();
   ToolTable&     toolTable();
   ToolTable*     toolTableModel();

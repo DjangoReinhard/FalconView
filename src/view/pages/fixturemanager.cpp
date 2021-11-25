@@ -1,6 +1,7 @@
 #include <fixturemanager.h>
 #include <flowlayout.h>
 #include <fixtureedit.h>
+#include <QMessageBox>
 #include <QScrollArea>
 #include <QShowEvent>
 #include <QDebug>
@@ -18,19 +19,21 @@ FixtureManager::FixtureManager(const AxisMask& mask, QWidget* parent)
 QWidget* FixtureManager::createContent() {
   FlowLayout*  fl = new FlowLayout(client);
   QScrollArea* sa = new QScrollArea(this);
-  FixtureEdit* fe = new FixtureEdit(tr("Offsets"), axisMask);
+  FixtureEdit* fe = new FixtureEdit(tr("Offsets"), 0, axisMask);
 
   client->setLayout(fl);
   fe->setEnabled(false);
   fl->setContentsMargins(0, 0, 0, 0);
   fl->addWidget(fe);
   for (int i=0; i < 9; ++i) {
-      if (i < 6) fe = new FixtureEdit(QString("G%1").arg(54 + i), axisMask);
-      else       fe = new FixtureEdit(QString("G59.%1").arg(i - 5), axisMask);
+      if (i < 6) fe = new FixtureEdit(QString("G%1").arg(54 + i), i+1, axisMask);
+      else       fe = new FixtureEdit(QString("G59.%1").arg(i - 5), i+1, axisMask);
       fe->setEnabled(false);
       fl->addWidget(fe);
       }
   sa->setWidgetResizable(true);
+  client->setObjectName("client");
+  sa->setAutoFillBackground(true);
   sa->setWidget(client);
 
   return sa;
@@ -57,10 +60,11 @@ void FixtureManager::connectSignals() {
 
 
 void FixtureManager::updateStyles() {
+//  this->setStyleSheet("QWidget#client { background: #9CF788; }");
   }
 
 
-void FixtureManager::keyReleaseEvent(QKeyEvent* e) {
+void FixtureManager::keyPressEvent(QKeyEvent* e) {
   switch (e->key()) {
     case '0':   // offsets
     case '1':   // G54
@@ -76,16 +80,18 @@ void FixtureManager::keyReleaseEvent(QKeyEvent* e) {
             qDebug() << "FM: detected Ctrl+Number - activateEditor" << (e->key() - '0');
             activateEditor(e->key() - '0');
             e->accept();
+            break;
             }
-         else DynCenterWidget::keyReleaseEvent(e);
-         break;
-    default:
-         qDebug() << "FM: released key: " << e->key();
-         qDebug() << "FM: modifiers: "    << e->modifiers();
-         DynCenterWidget::keyReleaseEvent(e);
-         break;
+    default: {
+         QWidget* w = static_cast<QWidget*>(parent());
+
+         qDebug() << "FM: pressed key: " << e->key()
+                  << "modifiers: " << e->modifiers()
+                  << "event->ts: " << e->timestamp();
+         DynCenterWidget::keyPressEvent(e);
+         } break;
     }
-  }
+}
 
 
 void FixtureManager::resizeEvent(QResizeEvent *e) {
@@ -97,5 +103,18 @@ void FixtureManager::resizeEvent(QResizeEvent *e) {
 void FixtureManager::showEvent(QShowEvent* e) {
   DynCenterWidget::showEvent(e);
   qDebug() << "FM: show Event ...";
-  if (e->type() == QEvent::Show) activateEditor(0);
+  if (e->type() == QEvent::Show) {
+     activateEditor(0);
+     QMessageBox::information(this
+                            , tr("QMessageBox::information()")
+                            , tr("<p>Fixture-Manager helps you manage your individual "
+                                 "coordinate system offsets.</p><p>Use CTRL+number to activate "
+                                 "an editor. G54 is CTRL+1, G55 is CTRL+2 and CTRL+0 "
+                                 "activates the relative offsets.</p><p>TAB / BackTAB can be"
+                                 "used to select the axis. In an axis field, just enter the "
+                                 "value you'd like to see at the current postion.</p><p>"
+                                 "Usually you'd like to enter 0 - followed by ENTER.</p><p>"
+                                 "That calculates the coordinate offset for that axis and "
+                                 "sends the value to linuxcnc backend</p>"));
+     }
   }

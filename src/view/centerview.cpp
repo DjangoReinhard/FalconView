@@ -58,8 +58,11 @@ DynFrame* CenterView::activatePage(const QString& name) {
         w->repaint();
 #endif
         curPage = name;
+        if (w) {
+           Core().setWindowTitle(tr(w->name().toStdString().c_str()));
 
-        return w;
+           return w;
+           }
         }
      qDebug() << "MainView: sorry - no page for name >" << name << "<";
      }
@@ -103,6 +106,18 @@ void CenterView::addPage(DynFrame* page, const QString& name) {
        });
      }
   activatePage(pageName);
+  }
+
+
+void CenterView::keyPressEvent(QKeyEvent *e) {
+  qDebug() << "CenterView::keyPressEvent ...";
+  pages[curPage]->keyPressEvent(e);
+  }
+
+
+void CenterView::keyReleaseEvent(QKeyEvent *e) {
+  qDebug() << "CenterView::keyReleaseEvent ...";
+  pages[curPage]->keyReleaseEvent(e);
   }
 
 

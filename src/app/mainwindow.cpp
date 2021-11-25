@@ -116,8 +116,8 @@ void MainWindow::createActions() {
   ui->actionrightView->setShortcut(Qt::CTRL + Qt::Key_R);
   ui->actionTopView->setShortcut(Qt::CTRL   + Qt::Key_T);
 
-  ui->actionAbsPos->setIcon(MIcon(":/res/SK_PosAbsolute.png"
-                                , ":/res/SK_PosRelative.png"));
+  ui->actionAbsPos->setIcon(MIcon(":/res/SK_PosRelative.png"
+                                , ":/res/SK_PosAbsolute.png"));
 
 //  qDebug() << "\tMW::createActions() ... START";
   startAction = new DynaAction(MIcon(":/res/SK_AutoStart.png", ":/res/SK_AutoStart_active.png")
@@ -327,7 +327,14 @@ void MainWindow::setupMenu() {
 void MainWindow::createValueModels() {
   ValueManager vm;
 
+  ui->actionAbsPos->setChecked(false);
   vm.setValue("showAbsolute", false);
+  }
+
+
+void MainWindow::toggleAbsolute(const QVariant& absolute) {
+  qDebug() << "Mainwindow::toggleAbsolute(" << (absolute.toBool() ? "TRUE" : "FALSE") << ")";
+  ValueManager().setValue("showAbsolute", absolute.toBool());
   }
 
 
@@ -336,7 +343,7 @@ void MainWindow::createConnections() {
 
   connect(vm.getModel("appMode"), &ValueModel::valueChanged, this,  &MainWindow::appModeChanged);
   connect(vm.getModel("showAllButCenter"), &ValueModel::valueChanged, this, &MainWindow::toggleAllButCenter);
-  connect(ui->actionAbsPos,    &QAction::triggered, pos,  [=](){ pos->setAbsolute(QVariant(ui->actionAbsPos->isChecked())); });
+  connect(ui->actionAbsPos,    &QAction::triggered, this, &MainWindow::toggleAbsolute);
   connect(ui->actionDockables, &QAction::triggered, this, [=](){ ValueManager().setValue("showAllButCenter", ui->actionDockables->isChecked()); });
   connect(ui->actionExit,      &QAction::triggered, this, &QWidget::close);
 
@@ -525,8 +532,8 @@ void MainWindow::createDockables(DBConnection&) {
                , new DynDockable(new CurCodesStatus(":/src/UI/HCurCodes.ui")
                                , this));
      addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(pos = new PositionStatus(":/src/UI/Position.ui"
-                                                          , Core().axisMask())
+               , new DynDockable(new PositionStatus(":/src/UI/Position.ui"
+                                                  , Core().axisMask())
                                , this));
      addDockable(Qt::BottomDockWidgetArea
                , new DynDockable(new SpeedStatus(":/src/UI/HSpeedInfo.ui")
@@ -545,7 +552,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
 
   Core().setViewStack(center);
   center->addPage(page);
-  ui->menuMain->addAction(page->viewAction());
+//  ui->menuMain->addAction(page->viewAction());
 
   page = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
                     , true
@@ -557,13 +564,13 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
                     , true
                     , center);
   center->addPage(page);
-  ui->menuMain->addAction(page->viewAction());
+//  ui->menuMain->addAction(page->viewAction());
 
   page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui")
                     , true
                     , center);
   center->addPage(page);
-  ui->menuMain->addAction(page->viewAction());
+//  ui->menuMain->addAction(page->viewAction());
 
   page = new DynFrame(new SysEventView(conn)
                     , true
@@ -577,7 +584,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   nb->addPage(new FixtureManager(Core().axisMask(), nb));
   nb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", nb));
   nb->addPage(new LCToolTable());
-  ui->menuMain->addAction(nb->viewAction());
+//  ui->menuMain->addAction(nb->viewAction());
 
   this->setCentralWidget(center);
   center->dump();
@@ -704,6 +711,16 @@ void MainWindow::timerEvent(QTimerEvent* ) {
 
 void MainWindow::keyPressEvent(QKeyEvent* e) {
   switch (e->key()) {
+    default:
+         qDebug() << "MW: pressed key: " << e->key()
+                  << "modifiers: "   << e->modifiers()
+                  << "event-ts: " << e->timestamp();
+         Core().viewStack()->keyReleaseEvent(e);
+    }
+  }
+
+void MainWindow::keyReleaseEvent(QKeyEvent* e) {
+    switch (e->key()) {
     case Qt::Key_Escape:
          if (Core().curPage() == SysEventView::className) {
             msgMode->toggle();
@@ -728,9 +745,10 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
 //         e->accept();
 //         break;
     default:
-         qDebug() << "MW: pressed key: " << e->key();
-         qDebug() << "MW: modifiers: "   << e->modifiers();
-         QMainWindow::keyPressEvent(e);
+         qDebug() << "MW: released key: " << e->key()
+                  << "modifiers: "   << e->modifiers()
+                  << "event-ts: " << e->timestamp();
+         Core().viewStack()->keyReleaseEvent(e);
          break;
     }
   }

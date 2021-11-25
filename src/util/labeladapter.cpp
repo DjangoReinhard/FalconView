@@ -1,5 +1,8 @@
 #include "labeladapter.h"
 #include <QTextStream>
+#include <QResizeEvent>
+#include <QDebug>
+
 
 LabelAdapter::LabelAdapter(QLabel* label, int realDigits)
  : QObject(label)

@@ -29,6 +29,7 @@ public:
 protected:
   void closeEvent(QCloseEvent *event)  override;
   void keyPressEvent(QKeyEvent* event) override;
+  void keyReleaseEvent(QKeyEvent* event) override;
   void timerEvent(QTimerEvent* event) override;
   void addDockable(Qt::DockWidgetArea area, DynDockable* dockable);
   void createActions();
@@ -46,6 +47,7 @@ protected slots:
   void hitPowerBtn();
   void toggleErrMessages();
   void toggleAllButCenter();
+  void toggleAbsolute(const QVariant& absolute);
   void autoStart();
   void autoPause();
   void autoStop();
@@ -59,7 +61,7 @@ protected slots:
 private:
   bool                statusInPreview;
   Ui::MainWindow*     ui;
-  PositionStatus*   pos;
+//  PositionStatus*     pos;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;

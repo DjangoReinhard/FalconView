@@ -10,6 +10,7 @@
 #include <core.h>
 #include <QSplitter>
 #include <QFileDialog>
+#include <QAction>
 #include <QLabel>
 #include <QDir>
 #include <QDebug>
@@ -42,6 +43,7 @@ QWidget* TestEdit::createContent() {
   gh = new GCodeHighlighter(ed->document());
   ed->setFocusPolicy(Qt::NoFocus);
   gl->replaceWidget(placeHolder, ed);
+  pbSave->setEnabled(ed->document()->isModified());
 
   return rv;
   }
@@ -52,6 +54,7 @@ void TestEdit::connectSignals() {
     Config       cfg;
 
     connect(pbOpen, &QPushButton::clicked, this, &TestEdit::openFile);
+    connect(ed->document(), &QTextDocument::modificationChanged, pbSave, &QPushButton::setEnabled);
     connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::white))
           , &ValueModel::valueChanged
           , fn
@@ -117,6 +120,7 @@ QString TestEdit::pageName() {
 
 // callback for fileManager
 void TestEdit::fileSelected(const QString& filePath) {
+  qDebug() << "TestEdit::fileSelected(" << filePath << ")";
   loadFile(filePath);
   }
 
@@ -132,6 +136,7 @@ void TestEdit::loadFile(const QVariant& fileName) {
   ed->loadFile(fi.absoluteFilePath());
   fn->setText(fi.absoluteFilePath());
   // show editor again
+  Core().activatePage(TestEdit::className);
   Core().setAppMode(ApplicationMode::XEdit);
   }
 

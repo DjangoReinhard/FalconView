@@ -2,6 +2,7 @@
 #include <dyncenterwidget.h>
 #include <QVBoxLayout>
 #include <QFrame>
+#include <QDebug>
 
 
 DynFrame::DynFrame(DynCenterWidget* cw, bool visualFrame, QWidget *parent)
@@ -45,4 +46,16 @@ QAction* DynFrame::viewAction() {
 
 void DynFrame::closeEvent(QCloseEvent *e) {
   dcw->closeEvent(e);
+  }
+
+
+void DynFrame::keyPressEvent(QKeyEvent *e) {
+  qDebug() << "DynFrame::keyPressEvent()";
+  dcw->keyPressEvent(e);
+  }
+
+
+void DynFrame::keyReleaseEvent(QKeyEvent *e) {
+  qDebug() << "DynFrame::keyReleaseEvent()";
+  dcw->keyReleaseEvent(e);
   }

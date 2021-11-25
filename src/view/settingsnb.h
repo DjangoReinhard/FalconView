@@ -15,14 +15,16 @@ public:
 
   virtual void connectSignals() override;
   virtual void updateStyles() override;
+  virtual void keyReleaseEvent(QKeyEvent* e) override;
+  virtual void closeEvent(QCloseEvent*) override;
 
   void addPage(DynCenterWidget* page);
 
 protected:
   QString loadStyles(QTabWidget::TabPosition tp);
-  virtual void keyPressEvent(QKeyEvent* e) override;
-  virtual void closeEvent(QCloseEvent*) override;
   virtual QWidget* createContent() override;
+  bool switchTabPage(int pageIndex);
+  void currentChanged(int index);
 
 private:
   QTabWidget* tw;

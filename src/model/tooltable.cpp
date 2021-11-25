@@ -169,7 +169,7 @@ QVariant ToolTable::headerData(int column, Qt::Orientation orientation, int role
        case 0:  return tr("Num");
        case 1:  return tr("Len");
        case 2:  return tr("Dia");
-       case 3:  return tr("Quad");
+       case 3:  return tr("TO");
        case 4:  return tr("FA");
        case 5:  return tr("BA");
        case 6:  return tr("Description");
