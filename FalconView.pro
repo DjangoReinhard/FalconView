@@ -1,4 +1,5 @@
-QT += core gui uitools sql xml
+TEMPLATE = app
+QT += core gui uitools sql xml help
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -86,8 +87,10 @@ SOURCES += \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
     src/util/truecondition.cpp \
+    src/view/helpdialog.cpp \
     src/view/pages/filemanager.cpp \
     src/view/pages/fixturemanager.cpp \
+    src/view/pages/helpbrowser.cpp \
     src/view/pages/lctooltable.cpp \
     src/view/pages/patheditor.cpp \
     src/view/pages/preferenceseditor.cpp \
@@ -171,8 +174,10 @@ HEADERS += \
     src/util/smallercondition.h \
     src/util/timestamp.h \
     src/util/truecondition.h \
+    src/view/helpdialog.h \
     src/view/pages/filemanager.h \
     src/view/pages/fixturemanager.h \
+    src/view/pages/helpbrowser.h \
     src/view/pages/lctooltable.h \
     src/view/pages/patheditor.h \
     src/view/pages/preferenceseditor.h \
@@ -251,6 +256,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    docs/FalconView.qdocconf \
+    docs/FalconView.qhp \
+    docs/genHelp \
+    docs/src/fileManager.qdoc \
+    docs/src/reference.qdoc \
+    docs/src/startup.qdoc \
+    docs/src/usage.qdoc \
+    docs/html/FalconView.qhcp \
     i18n/FalconView_de_DE.ts
 
 RESOURCES += FalconView.qrc
+
+INSTALLS += target docs

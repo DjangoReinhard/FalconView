@@ -17,7 +17,7 @@ public:
 
   virtual void connectSignals() override;
   virtual void updateStyles() override;
-  virtual void keyReleaseEvent(QKeyEvent *event) override;
+  virtual void keyPressEvent(QKeyEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
   virtual QWidget* createContent() override;
 
@@ -25,6 +25,5 @@ private:
   QTableView*            table;
   ToolTable*             model;
   QSortFilterProxyModel* px;
-  bool                   latheMode;
   };
 #endif // LCTOOLTABLE_H

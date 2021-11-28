@@ -1,0 +1,164 @@
+/*
+ * FalconView documentation
+ */
+
+/*!
+\page     reference.html
+\title    Userguide
+\subtitle Reference
+\ingroup  userguide
+\section1 description of application parts and their usage.
+\list
+     \li  The \b {red part} (1) is the main or center application area. That may be an editor,
+          the 3D Preview or whatever controls that require user interaction.
+     \li  The \b {blue areas} are toolbars. Each toolbar can be moved around and placed wherever
+          you want around the center area.
+     \li  The \b {green aras} are information addons, so called dockables. As with toolbars,
+          dockables can be moved around the center area and placed wherever you want.
+          Dockable can be put over each other, then a notebook is created on the fly.
+\endlist
+
+\image    FV006.jpg
+
+\section2 Toolbars
+\section3 Special (2)
+\table
+\header
+    \li   Icon
+    \li   \b {Short}
+    \li   Description
+\row
+    \li   \inlineimage SK_HomeAll.png
+    \li   \b {Home all}
+    \li   moves all axis to their reference point
+\row
+    \li   \inlineimage SK_PosRelative.png
+    \li   \b {Relative}
+    \li   toggles position display between relative and absolute coordinates
+\row
+    \li   \inlineimage SK_Messages.png
+    \li   \b {Messages}
+    \li   shows list of system events (error and user logs)
+\endtable
+
+
+\section3 Machine (3)
+\table
+\header
+    \li   Icon
+    \li   \b {Short}
+    \li   Description
+\row
+    \li   \inlineimage SK_Cool_Mist.png
+    \li   \b {Mist}
+    \li   toggles mist cooling
+\row
+    \li   \inlineimage SK_Cool_Flood.png
+    \li   \b {Flood}
+    \li   toggles flood cooling
+\row
+    \li   \inlineimage SK_Spindle_CCW.png
+    \li   \b {CCW}
+    \li   turns spindle on in counter clock wise direction
+\row
+    \li   \inlineimage SK_Spindle_Stop.png
+    \li   \b {Stop}
+    \li   turns spindle off
+\row
+    \li   \inlineimage SK_Spindle_CW.png
+    \li   \b {CW}
+    \li   turns spindle on in clock wise direction
+\endtable
+
+\section3 Application Mode (4)
+\table
+\header
+    \li   Icon
+    \li   \b {Short}
+    \li   Description
+\row
+    \li   \inlineimage SK_Edit.png
+    \li   \b {Edit} \e {[F2]}
+    \li   starts the gcode editor for the active gcode file, which is the
+          gcode file for preview and execution of motion commands.
+\row
+    \li   \inlineimage SK_Auto.png
+    \li   \b {Auto} \e {[F3]}
+    \li   switches machine into auto mode and shows 3D preview of the toolpaths.
+\row
+    \li   \inlineimage SK_MDI.png
+    \li   \b {MDI} \e {[F4]}
+    \li   switches machine into mdi mode, where single gcode commands can be
+          entered and executed.
+\row
+    \li   \inlineimage SK_TestEdit.png
+    \li   \b {AltEdit} \e {[F5]}
+    \li   loads an alternate file into gcode editor. This file is independant
+          of active gcode file and does not interfere automatic processing.
+\row
+    \li   \inlineimage SK_Wheel.png
+    \li   \b {Wheel} \e {[F6]}
+    \li   \b { Not implemented yet! }
+          switches machine into wheel jogging mode
+\row
+    \li   \inlineimage SK_Manual.png
+    \li   \b {Manual} \e {[F7]}
+    \li   \b { Not implemented yet! }
+          switches machine into manual jogging mode
+\row
+    \li   \inlineimage SK_Touch.png
+    \li   \b {Touch} \e {[F8]}
+    \li   \b { Not implemented yet! }
+          switches machine into touch mode. You need an electronic touch device
+          for this mode.
+\row
+    \li   \inlineimage SK_Settings.png
+    \li   \b {Settings} \e {[F9]}
+    \li   turns application into configuration mode.
+\endtable
+
+
+\section3 Auto (5)
+\table
+\header
+    \li   Icon
+    \li   \b {Short}
+    \li   Description
+\row
+    \li   \inlineimage SK_AutoStart.png
+    \li   \b {Mist}
+    \li   starts execution of gcode-file or mdi command
+\row
+    \li   \inlineimage SK_AutoPause.png
+    \li   \b {Flood}
+    \li   stops temporarily execution of gcode-file (ready for resume)
+\row
+    \li   \inlineimage SK_AutoStop.png
+    \li   \b {CCW}
+    \li   aborts execution of gcode-file
+\row
+    \li   \inlineimage SK_SingleStep.png
+    \li   \b {Stop}
+    \li   toggles between execution of a single command step and automatic execution
+\endtable
+
+\section2 Dockables
+\section3 SpeedInfo (6)
+
+          shows commanded feed and spindle speed with oportunity to change speed by moving
+          slider control
+
+\section3 Codes (7)
+
+          displays the actual active G- and M-codes
+
+\section3 ToolInfo (8)
+
+          displays properties of active tool and selected next tool number
+
+\section3 Position (9)
+
+          shows absolute/relative coordinate position of tooltip. Distance to go is
+          shown too. Display of axis depends on \e {linuxCNC} ini file settings.
+
+*/

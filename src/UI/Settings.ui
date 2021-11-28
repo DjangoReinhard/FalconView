@@ -34,6 +34,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -50,21 +53,15 @@
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QLabel" name="lDroDtg">
+    <widget class="QLineEdit" name="lDroDtg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>DRO dtg 123,999</string>
@@ -72,8 +69,8 @@
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -84,6 +81,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -108,6 +108,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -124,27 +127,24 @@
     </widget>
    </item>
    <item row="13" column="0">
-    <widget class="QLabel" name="lEdLinNum">
+    <widget class="QLineEdit" name="lEdLinNum">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Editor Line Number 109</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -155,6 +155,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -178,6 +181,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -208,27 +214,24 @@
     </spacer>
    </item>
    <item row="8" column="0">
-    <widget class="QLabel" name="lActCodes">
+    <widget class="QLineEdit" name="lActCodes">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>actual Codes</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -239,6 +242,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -256,52 +262,46 @@
     </widget>
    </item>
    <item row="21" column="0">
-    <widget class="QLabel" name="lOldSeg">
+    <widget class="QLineEdit" name="lOldSeg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Preview 3D: passed Segments</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="20" column="0">
-    <widget class="QLabel" name="lCurSeg">
+    <widget class="QLineEdit" name="lCurSeg">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Preview 3D: active Segment</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -312,6 +312,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -336,6 +339,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -358,6 +364,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -382,6 +391,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -405,6 +417,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -422,6 +437,9 @@
    </item>
    <item row="17" column="2">
     <widget class="QPushButton" name="fontFixEdit">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -448,6 +466,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -464,27 +485,24 @@
     </widget>
    </item>
    <item row="22" column="0">
-    <widget class="QLabel" name="lWorkPiece">
+    <widget class="QLineEdit" name="lWorkPiece">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Preview 3D: WorkPiece</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -495,6 +513,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -513,6 +534,9 @@
    </item>
    <item row="13" column="3">
     <widget class="QPushButton" name="bgEdLinNum">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -536,6 +560,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -552,27 +579,24 @@
     </widget>
    </item>
    <item row="14" column="0">
-    <widget class="QLabel" name="lLineHL">
+    <widget class="QLineEdit" name="lLineHL">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Line Highlight</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -583,6 +607,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -607,6 +634,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -629,6 +659,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -653,6 +686,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -675,6 +711,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -699,6 +738,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -721,6 +763,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -745,6 +790,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -767,6 +815,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -791,6 +842,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -807,52 +861,46 @@
     </widget>
    </item>
    <item row="15" column="0">
-    <widget class="QLabel" name="lFixTitle">
+    <widget class="QLineEdit" name="lFixTitle">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Fixture Title</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="QLabel" name="lToolNum">
+    <widget class="QLineEdit" name="lToolNum">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Tool number</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -863,6 +911,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -881,6 +932,9 @@
    </item>
    <item row="17" column="3">
     <widget class="QPushButton" name="bgFixEdit">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -898,6 +952,9 @@
    </item>
    <item row="15" column="3">
     <widget class="QPushButton" name="bgFixTitle">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -921,6 +978,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -937,27 +997,24 @@
     </widget>
    </item>
    <item row="16" column="0">
-    <widget class="QLabel" name="lFixPrompt">
+    <widget class="QLineEdit" name="lFixPrompt">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Fixture Prompt</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -968,6 +1025,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -992,6 +1052,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1009,6 +1072,9 @@
    </item>
    <item row="15" column="2">
     <widget class="QPushButton" name="fontFixTitle">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1032,6 +1098,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1048,27 +1117,24 @@
     </widget>
    </item>
    <item row="5" column="0">
-    <widget class="QLabel" name="lToolDesc">
+    <widget class="QLineEdit" name="lToolDesc">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Tool Description</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -1079,6 +1145,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1096,82 +1165,76 @@
     </widget>
    </item>
    <item row="4" column="0">
-    <widget class="QLabel" name="lDroTitle">
+    <widget class="QLineEdit" name="lDroTitle">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>DRO Axis: X Y Z</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="12" column="0">
-    <widget class="QLabel" name="lGCode">
+    <widget class="QLineEdit" name="lGCode">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>GCode Editor</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="10" column="0">
-    <widget class="QLabel" name="lSpeed">
+    <widget class="QLineEdit" name="lSpeed">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Speed Info</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="14" column="3">
     <widget class="QPushButton" name="bgLineHL">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1194,6 +1257,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1218,6 +1284,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1241,6 +1310,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1257,52 +1329,46 @@
     </widget>
    </item>
    <item row="9" column="0">
-    <widget class="QLabel" name="lFeed">
+    <widget class="QLineEdit" name="lFeed">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Feed Info</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="19" column="0">
-    <widget class="QLabel" name="lWorkMove">
+    <widget class="QLineEdit" name="lWorkMove">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Preview 3D: work move</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -1313,6 +1379,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1337,6 +1406,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1353,27 +1425,24 @@
     </widget>
    </item>
    <item row="7" column="0">
-    <widget class="QLabel" name="lToolNext">
+    <widget class="QLineEdit" name="lToolNext">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>next Toolnum</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -1384,6 +1453,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1401,32 +1473,32 @@
     </widget>
    </item>
    <item row="23" column="0">
-    <widget class="QLabel" name="lWorkLimit">
+    <widget class="QLineEdit" name="lWorkLimit">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Preview 3D: Work-Limits</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="16" column="3">
     <widget class="QPushButton" name="bgFixPrompt">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1449,6 +1521,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1473,6 +1548,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1496,6 +1574,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1512,21 +1593,15 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="lDroAbs">
+    <widget class="QLineEdit" name="lDroAbs">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>DRO abs 123,999</string>
@@ -1534,8 +1609,8 @@
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -1546,6 +1621,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1570,6 +1648,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1586,27 +1667,24 @@
     </widget>
    </item>
    <item row="18" column="0">
-    <widget class="QLabel" name="lRapidMove">
+    <widget class="QLineEdit" name="lRapidMove">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Preview 3D: rapid move</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -1617,6 +1695,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1641,6 +1722,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1664,6 +1748,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1680,21 +1767,15 @@
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="lDroRel">
+    <widget class="QLineEdit" name="lDroRel">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>DRO rel 123,999</string>
@@ -1702,8 +1783,8 @@
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -1714,6 +1795,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1731,27 +1815,24 @@
     </widget>
    </item>
    <item row="11" column="0">
-    <widget class="QLabel" name="lFilename">
+    <widget class="QLineEdit" name="lFilename">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Filename</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -1762,6 +1843,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1779,32 +1863,32 @@
     </widget>
    </item>
    <item row="17" column="0">
-    <widget class="QLabel" name="lFixEdit">
+    <widget class="QLineEdit" name="lFixEdit">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string>Fixture Edit</string>
      </property>
-     <property name="indent">
-      <number>10</number>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="16" column="2">
     <widget class="QPushButton" name="fontFixPrompt">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1827,6 +1911,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -1858,6 +1945,32 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lDroAbs</tabstop>
+  <tabstop>lDroRel</tabstop>
+  <tabstop>lDroDtg</tabstop>
+  <tabstop>lDroTitle</tabstop>
+  <tabstop>lToolDesc</tabstop>
+  <tabstop>lToolNum</tabstop>
+  <tabstop>lToolNext</tabstop>
+  <tabstop>lActCodes</tabstop>
+  <tabstop>lFeed</tabstop>
+  <tabstop>lSpeed</tabstop>
+  <tabstop>lFilename</tabstop>
+  <tabstop>lGCode</tabstop>
+  <tabstop>lEdLinNum</tabstop>
+  <tabstop>lLineHL</tabstop>
+  <tabstop>lFixTitle</tabstop>
+  <tabstop>lFixPrompt</tabstop>
+  <tabstop>lFixEdit</tabstop>
+  <tabstop>lRapidMove</tabstop>
+  <tabstop>lWorkMove</tabstop>
+  <tabstop>lCurSeg</tabstop>
+  <tabstop>lOldSeg</tabstop>
+  <tabstop>lWorkPiece</tabstop>
+  <tabstop>lWorkLimit</tabstop>
+  <tabstop>cbStatesInside</tabstop>
+ </tabstops>
  <resources>
   <include location="../../FalconView.qrc"/>
  </resources>

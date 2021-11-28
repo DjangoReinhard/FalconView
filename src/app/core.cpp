@@ -2,9 +2,13 @@
 #include <core_p.h>
 #include <QTime>
 #include <QTimerEvent>
+#include <QApplication>
 #include <QString>
 #include <QVector3D>
 #include <QSqlError>
+#include <QHelpEngineCore>
+#include <QHelpFilterEngine>
+#include <QHelpLink>
 #include <core.h>
 #include <sysevent.h>
 #include <lcproperties.h>
@@ -53,6 +57,12 @@ OcctQtViewer* Core::view3D() {
 
 DBConnection* Core::databaseConnection() {
   return core()->conn;
+  }
+
+
+bool Core::isLatheMode() const {
+  return core()->lcProps.value("DISPLAY", "LATHE").isValid()
+      && core()->lcProps.value("DISPLAY", "LATHE").toBool();
   }
 
 
@@ -125,6 +135,11 @@ void Core::setWindowTitle(const QString &title) {
                                       + " - "
                                       + title);
      }
+  }
+
+
+QString Core::helpFilename() const {
+  return QApplication::applicationDirPath() + "/../share/doc/falconview/FalconView.qch";
   }
 
 
@@ -279,9 +294,11 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , ally3D(nullptr)
  , statusReader(positionCalculator, gcodeInfo)
  , commandWriter(new CommandWriter())
- , tmSysEvents(nullptr) {
+ , tmSysEvents(nullptr)
+ , helpEngine(nullptr) {
   if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
   lcIF.setupToolTable();
+  tt.setLatheMode(isLatheMode());
   }
 
 
@@ -315,10 +332,51 @@ void Kernel::initialize(DBHelper& dbAssist) {
   view3D = new OcctQtViewer();
   ally3D.setOcctViewer(view3D);
   mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool());
+  helpEngine = new QHelpEngineCore(Core().helpFilename());
 
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged, this, &Kernel::updateView);
 
   setupBackend();
+
+  connect(helpEngine, &QHelpEngineCore::setupFinished, this, &Kernel::checkHelp);
+  if (!helpEngine->setupData()) {
+     qDebug() << "failed to setup help engine! helpFile: " << Core().helpFilename();
+     delete helpEngine;
+     helpEngine = 0;
+     }
+  else qDebug() << "help engine should work now ...";
+  }
+
+
+/* =================== */
+/* test helpfile ?!?   */
+/* =================== */
+void Kernel::checkHelp() {
+  static bool inCheck = false;
+
+  if (inCheck) return;
+  inCheck = true;
+  helpEngine->setUsesFilterEngine(true);
+  QHelpFilterEngine* hfe = helpEngine->filterEngine();
+
+  qDebug() << "start of help test ...";
+  const QStringList& sl = hfe->indices();
+
+  for (const QString& s : sl) {
+      qDebug() << "help-Index: " << s;
+      }
+  QStringList cl = hfe->availableComponents();
+
+  for (const QString& c : cl) {
+      qDebug() << "help component: " << c;
+      }
+  QList<QHelpLink> links = helpEngine->documentsForIdentifier("reference");
+
+  qDebug() << "found " << links.size() << "documents for about";
+  for (const QHelpLink& hl : links) {
+      qDebug() << "help docs: " << hl.title << " - url:" << hl.url;
+      }
+  qDebug() << "end of help test ...";
   }
 
 
@@ -430,6 +488,11 @@ void Kernel::updateView(const QVariant &v) {
   ally3D.moveCone(p.x(), p.y(), p.z());
   }
 
+
+bool Kernel::isLatheMode() const {
+  return lcProps.value("DISPLAY", "LATHE").isValid()
+      && lcProps.value("DISPLAY", "LATHE").toBool();
+  }
 
 void Kernel::parseGCode(QFile &file) {
   QTime start = QTime::currentTime();

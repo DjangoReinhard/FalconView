@@ -60,7 +60,8 @@ void FixtureManager::connectSignals() {
 
 
 void FixtureManager::updateStyles() {
-//  this->setStyleSheet("QWidget#client { background: #9CF788; }");
+//  this->setStyleSheet("background: #9CF788;");
+//    this->setStyleSheet("QWidget#client { background: #9CF788; }");
   }
 
 

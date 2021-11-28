@@ -1,8 +1,9 @@
 #include <preferenceseditor.h>
 #include <configacc.h>
-#include <QLabel>
+#include <QLineEdit>
 #include <QColor>
 #include <QFont>
+#include <QShowEvent>
 #include <QCheckBox>
 #include <QPushButton>
 #include <QMessageBox>
@@ -12,7 +13,8 @@
 
 
 PreferencesEditor::PreferencesEditor(const QString& fileName, QWidget* parent)
- : DynCenterWidget(fileName, tr("SettingsEditor"), true, parent) {
+ : DynCenterWidget(fileName, tr("SettingsEditor"), true, parent)
+ , count(Config().numGuiElements()) {
   setWindowTitle(PreferencesEditor::className);
   setObjectName(PreferencesEditor::className);
   }
@@ -25,24 +27,26 @@ PreferencesEditor::~PreferencesEditor() {
 QWidget* PreferencesEditor::createContent() {
   QWidget* rv = DynCenterWidget::createContent();
 
-  labels      = new QLabel*[Config().numGuiElements()];
-  bgButtons   = new QPushButton*[Config().numGuiElements()];
-  fgButtons   = new QPushButton*[Config().numGuiElements()];
-  fontButtons = new QPushButton*[Config().numGuiElements()];
+  labels      = new QLineEdit*[count];
+  bgButtons   = new QPushButton*[count];
+  fgButtons   = new QPushButton*[count];
+  fontButtons = new QPushButton*[count];
 
   cbStatesInside = findChild<QCheckBox*>("cbStatesInside");
-  for (int i=0; i < Config().numGuiElements(); ++i) {
-      labels[i]      = findChild<QLabel*>(QString("l")         + Config().nameOf(static_cast<Config::GuiElem>(i)));
+  for (int i=0; i < count; ++i) {
+      labels[i]      = findChild<QLineEdit*>(QString("l")      + Config().nameOf(static_cast<Config::GuiElem>(i)));
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
       fgButtons[i]   = findChild<QPushButton*>(QString("fg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
       fontButtons[i] = findChild<QPushButton*>(QString("font") + Config().nameOf(static_cast<Config::GuiElem>(i)));
+      if (labels[i])
+         labels[i]->installEventFilter(this);
       }
   return rv;
   }
 
 
 void PreferencesEditor::connectSignals() {
-  for (int i=0; i < Config().numGuiElements(); ++i) {
+  for (int i=0; i < count; ++i) {
       if (bgButtons[i])   connect(bgButtons[i],   &QPushButton::pressed, this, [=](){ changeBackgroundColor(i); });
       if (fgButtons[i])   connect(fgButtons[i],   &QPushButton::pressed, this, [=](){ changeForegroundColor(i); });
       if (fontButtons[i]) connect(fontButtons[i], &QPushButton::pressed, this, [=](){ changeFont(i); });
@@ -59,6 +63,13 @@ void PreferencesEditor::updateStyles() {
   }
 
 
+void PreferencesEditor::showEvent(QShowEvent* e) {
+  if (e->type() == QEvent::Show && labels[0]) {
+     labels[0]->setFocus();
+     }
+  }
+
+
 void PreferencesEditor::setupLabels() {
   ValueManager vm;
   Config cfg;
@@ -67,7 +78,7 @@ void PreferencesEditor::setupLabels() {
   QColor colFg;
   QFont font;
 
-  for (int i=0; i < cfg.numGuiElements(); ++i) {
+  for (int i=0; i < count; ++i) {
       keyBg = QString("cfgBg") + cfg.nameOf(static_cast<Config::GuiElem>(i));
       colBg = cfg.value(keyBg, QColor(204, 205, 206)).value<QColor>();
       keyFg = QString("cfgFg") + cfg.nameOf(static_cast<Config::GuiElem>(i));
@@ -153,5 +164,40 @@ void PreferencesEditor::statusInsideChanged(QVariant state) {
                               "the application must be restarted."));
   Config().setValue("statusInPreview", state.toBool());
   }
+
+
+bool PreferencesEditor::eventFilter(QObject* l, QEvent* event) {
+  if (event->type() == QEvent::KeyPress) {
+    QKeyEvent* e = static_cast<QKeyEvent*>(event);
+
+    if (!e) return false;
+    switch (e->key()) {
+      case Qt::Key_B:
+      case Qt::Key_F:
+      case Qt::Key_C:
+           if (e->modifiers() == Qt::AltModifier) {
+              int idGuiElem = -1;
+
+              for (int i=0; i < count; ++i) {
+                  if (l == labels[i]) {
+                     idGuiElem = i;
+                     break;
+                     }
+                  }
+              if (idGuiElem < 0) return false;
+              switch (e->key()) {
+                case Qt::Key_B: bgButtons[idGuiElem]->click(); break;
+                case Qt::Key_F: fontButtons[idGuiElem]->click(); break;
+                case Qt::Key_C: fgButtons[idGuiElem]->click(); break;
+                default: return false;
+                }
+              return true;
+              }
+      default: break;
+      }
+    }
+  return false;
+  }
+
 
 const QString& PreferencesEditor::className = "PreferencesEditor";

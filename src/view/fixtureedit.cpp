@@ -72,6 +72,7 @@ void FixtureEdit::connectSignals() {
 
 
 void FixtureEdit::updateStyles() {
+//  this->setStyleSheet("background: #AA0000; ");
   }
 
 
@@ -104,9 +105,41 @@ void FixtureEdit::setupUi(DynCenterWidget* parent) {
   edits.append(ui->edU);
   edits.append(ui->edV);
   edits.append(ui->edW);
+  for (int i=0; i < 9; ++i)
+      edits[i]->installEventFilter(this);
   }
 
 const char axisLetters[] = "XYZABCUVW";
+
+
+bool FixtureEdit::eventFilter(QObject *, QEvent *event) {
+  if (event->type() == QEvent::KeyPress) {
+     QKeyEvent* e = static_cast<QKeyEvent*>(event);
+
+     if (!e) return false;
+     switch (e->key()) {
+       case Qt::Key_0:
+       case Qt::Key_1:
+       case Qt::Key_2:
+       case Qt::Key_3:
+       case Qt::Key_4:
+       case Qt::Key_5:
+       case Qt::Key_6:
+       case Qt::Key_7:
+       case Qt::Key_8:
+       case Qt::Key_9:
+            if (e->modifiers() == Qt::AltModifier) {
+               qDebug() << "FE::filter - numberkey pressed: " << e->key()
+                        << "modifiers: " << e->modifiers()
+                        << "ts: " << e->timestamp();
+               DynCenterWidget::keyPressEvent(e);
+               return true;
+               }
+       default: break;
+       }
+     }
+  return false;
+  }
 
 
 void FixtureEdit::keyReleaseEvent(QKeyEvent* e) {
@@ -116,25 +149,6 @@ void FixtureEdit::keyReleaseEvent(QKeyEvent* e) {
          saveFixture();
          e->accept();
          break;
-    case Qt::Key_0:
-    case Qt::Key_1:
-    case Qt::Key_2:
-    case Qt::Key_3:
-    case Qt::Key_4:
-    case Qt::Key_5:
-    case Qt::Key_6:
-    case Qt::Key_7:
-    case Qt::Key_8:
-    case Qt::Key_9:
-         if (e->modifiers() == Qt::AltModifier) {
-            QWidget* w = static_cast<QWidget*>(parent());
-
-            qDebug() << "FE: parent is" << w << " numberkey pressed" << e->key();
-//            if (w) w->keyReleaseEvent(e);
-//            parent()->keyReleaseEvent(e);
-//            e->accept();
-//            break;
-            }
     default:
          qDebug() << "FE: pressed key: " << e->key();
          qDebug() << "FE: modifiers: "   << e->modifiers();

@@ -2,12 +2,14 @@
 #include <QTextStream>
 #include <QRegularExpression>
 #include <QDebug>
+#include <core.h>
 #include <tooltable.h>
 #include <toolentry.h>
 
 
 ToolTable::ToolTable(const QString& fileName)
- : fn(fileName) {
+ : fn(fileName)
+ , latheMode(false) {
   QFile file(fileName);
 
   if (file.exists()) processFile(file);
@@ -44,6 +46,7 @@ ToolTable& ToolTable::operator=(const ToolTable&& other) {
 
 void ToolTable::processFile(QFile& file) {
   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+     qDebug() << "ToolTable::processFile(" << file.fileName() << ")";
      QTextStream in(&file);
      QString line    = in.readLine();
      int     lineNum = 0;
@@ -57,8 +60,9 @@ void ToolTable::processFile(QFile& file) {
 
 
 void ToolTable::save() {
+  qDebug() << "ToolTable::save() - >" << fn << "<";
   for (auto t : qAsConst(tools)) {
-      qDebug() << t;
+      qDebug() << t->number() << "at #" << t->lineNum();
       }
   }
 
@@ -79,6 +83,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
   int    number     = 0;
   int    slot       = 0;
   int    quadrant   = 0;
+  double x          = 0;
   double length     = 0;
   double diameter   = 0;
   double frontAngle = 0;
@@ -97,6 +102,10 @@ void ToolTable::processLine(int lineNum, const QString& input) {
              break;
         case 'Z':
              length = part.midRef(1).toDouble(&ok);
+             if (!ok) length = 0;
+             break;
+        case 'X':
+             x = part.midRef(1).toDouble(&ok);
              if (!ok) length = 0;
              break;
         case 'D':
@@ -119,6 +128,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
       }
   ToolEntry* te = new ToolEntry(number
                               , length
+                              , x
                               , diameter
                               , quadrant
                               , frontAngle
@@ -128,6 +138,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
                               , lineNum);
   tools.append(te);
   mappedTools.insert(number, te);
+  te->dump();
   }
 
 
@@ -137,7 +148,7 @@ int ToolTable::rowCount(const QModelIndex& p) const {
 
 
 int ToolTable::columnCount(const QModelIndex &p) const {
-  return p.isValid() ? 0 : 7;
+  return p.isValid() ? 0 : latheMode ? 8 : 4;
   }
 
 
@@ -147,17 +158,41 @@ QVariant ToolTable::data(const QModelIndex& n, int role) const {
   if (role == Qt::DisplayRole) {
      const ToolEntry* t = tools.at(n.row());
 
-     switch (n.column()) {
-       case 0:  return t->number();
-       case 1:  return t->length();
-       case 2:  return t->diameter();
-       case 3:  return t->quadrant();
-       case 4:  return t->frontAngle();
-       case 5:  return t->backAngle();
-       case 6:  return t->description();
-       default: break;
-       }
+     if (latheMode) {
+        switch (n.column()) {
+          case 0:  return t->number();
+          case 1:  return t->length();
+          case 2:  return t->xOffset();
+          case 3:  return t->diameter();
+          case 4:  return t->quadrant();
+          case 5:  return t->frontAngle();
+          case 6:  return t->backAngle();
+          case 7:  return t->description();
+          default: break;
+          }
+        }
+     else {
+        switch (n.column()) {
+          case 0:  return t->number();
+          case 1:  return t->length();
+          case 2:  return t->diameter();
+          case 3:  return t->description();
+          default: break;
+          }
+        }
      }
+  else if (role == Qt::TextAlignmentRole) {
+    if (latheMode) {
+       switch (n.column()) {
+         case 0:
+         case 5:
+         case 6:
+              return int(Qt::AlignRight | Qt::AlignVCenter);
+         default:
+              return int(Qt::AlignLeft | Qt::AlignVCenter);
+         }
+       }
+    }
   return QVariant();
   }
 
@@ -165,16 +200,28 @@ QVariant ToolTable::data(const QModelIndex& n, int role) const {
 QVariant ToolTable::headerData(int column, Qt::Orientation orientation, int role) const {
   if (role != Qt::DisplayRole) return QVariant();
   if (orientation == Qt::Horizontal) {
-     switch (column) {
-       case 0:  return tr("Num");
-       case 1:  return tr("Len");
-       case 2:  return tr("Dia");
-       case 3:  return tr("TO");
-       case 4:  return tr("FA");
-       case 5:  return tr("BA");
-       case 6:  return tr("Description");
-       default: break;
-       }
+     if (latheMode) {
+        switch (column) {
+          case 0:  return tr("Num");
+          case 1:  return tr("Z");
+          case 2:  return tr("X");
+          case 3:  return tr("Dia");
+          case 4:  return tr("TO");
+          case 5:  return tr("FA");
+          case 6:  return tr("BA");
+          case 7:  return tr("Description");
+          default: break;
+          }
+        }
+     else {
+        switch (column) {
+          case 0:  return tr("Num");
+          case 1:  return tr("Len");
+          case 2:  return tr("Dia");
+          case 3:  return tr("Description");
+          default: break;
+          }
+        }
      }
   return QVariant();
   }
@@ -191,16 +238,30 @@ bool ToolTable::setData(const QModelIndex &index, const QVariant &value, int rol
      const int row = index.row();
      ToolEntry* t = tools.value(row);
 
-     switch (index.column()) {
-       case 0:  break; // no support for changing tool number!
-       case 1:  t->setLength(value.toDouble()); break;
-       case 2:  t->setDiameter(value.toDouble()); break;
-       case 3:  t->setQuadrant(value.toInt()); break;
-       case 4:  t->setFrontAngle(value.toDouble()); break;
-       case 5:  t->setBackAngle(value.toDouble()); break;
-       case 6:  t->setDescription(value.toString()); break;
-       default: return false;
-       }
+     qDebug() << "\t\tToolTable::setData() ...";
+     Core().showAllButCenter(false);
+     if (latheMode) {
+        switch (index.column()) {
+          case 0:  break; // no support for changing tool number!
+          case 1:  t->setLength(value.toDouble()); break;
+          case 2:  t->setXOffset(value.toDouble()); break;
+          case 3:  t->setDiameter(value.toDouble()); break;
+          case 4:  t->setQuadrant(value.toInt()); break;
+          case 5:  t->setFrontAngle(value.toDouble()); break;
+          case 6:  t->setBackAngle(value.toDouble()); break;
+          case 7:  t->setDescription(value.toString()); break;
+          default: return false;
+          }
+        }
+     else {
+        switch (index.column()) {
+          case 0:  break; // no support for changing tool number!
+          case 1:  t->setLength(value.toDouble()); break;
+          case 2:  t->setDiameter(value.toDouble()); break;
+          case 3:  t->setDescription(value.toString()); break;
+          default: return false;
+          }
+        }
      emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
 
      return true;

@@ -15,7 +15,7 @@ class ToolEntry
 {
 public:
   ToolEntry();
-  ToolEntry(int num, double length, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum);
+  ToolEntry(int num, double length, double x, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum);
   ToolEntry(const ToolEntry& other);
 
   ToolEntry& operator = (const ToolEntry& other);
@@ -23,6 +23,7 @@ public:
   int              number() const      { return canon.toolno;  }
   QString          description() const { return desc; }
   double           length() const      { return canon.offset.tran.z; }
+  double           xOffset() const     { return canon.offset.tran.x; }
   double           diameter() const    { return canon.diameter; }
   double           frontAngle() const  { return canon.frontangle;  }
   double           backAngle() const   { return canon.backangle;   }
@@ -33,6 +34,7 @@ public:
   void             dump() const;
 
   void setLength(double l);
+  void setXOffset(double o);
   void setDiameter(double d);
   void setQuadrant(int q);
   void setFrontAngle(double a);

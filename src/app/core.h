@@ -21,25 +21,26 @@ public:
   Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group = "SRD");
   Core() {}
 
-  void            parseGCFile(const QString& fileName);
-  void            activatePage(const QString& pageName);
   const QString&  curPage() const;
+  QString         helpFilename() const;
+  const AxisMask& axisMask() const;
+  bool            isLatheMode() const;
   DBConnection*   databaseConnection();
   MainWindow*     mainWindow();
+  void            activatePage(const QString& pageName);
   void            showAllButCenter(bool visible = true);
   QWidget*        stackedPage(const QString& pageName);
-  const AxisMask& axisMask() const;
-
-  void           setViewStack(CenterView* v);
-  void           setAppMode(ApplicationMode m);
-  void           setWindowTitle(const QString& title);
-  void           windowClosing(QCloseEvent* e);
-  bool           checkBE();
-  CenterView*    viewStack();
-  OcctQtViewer*  view3D();
-  ToolTable&     toolTable();
-  ToolTable*     toolTableModel();
-  LcProperties&  lcProperties();
+  void            setViewStack(CenterView* v);
+  void            setAppMode(ApplicationMode m);
+  void            setWindowTitle(const QString& title);
+  void            windowClosing(QCloseEvent* e);
+  void            parseGCFile(const QString& fileName);
+  bool            checkBE();
+  CenterView*     viewStack();
+  OcctQtViewer*   view3D();
+  ToolTable&      toolTable();
+  ToolTable*      toolTableModel();
+  LcProperties&   lcProperties();
 
   void beAbortTask();
   void beEnableBlockDelete(bool enable);

@@ -1,6 +1,7 @@
 #include <dynframe.h>
 #include <dyncenterwidget.h>
 #include <QVBoxLayout>
+#include <QKeyEvent>
 #include <QFrame>
 #include <QDebug>
 
@@ -50,12 +51,12 @@ void DynFrame::closeEvent(QCloseEvent *e) {
 
 
 void DynFrame::keyPressEvent(QKeyEvent *e) {
-  qDebug() << "DynFrame::keyPressEvent()";
+  qDebug() << "DynFrame::keyPressEvent() of" << objectName() << "ts: " << e->timestamp();
   dcw->keyPressEvent(e);
   }
 
 
 void DynFrame::keyReleaseEvent(QKeyEvent *e) {
-  qDebug() << "DynFrame::keyReleaseEvent()";
+  qDebug() << "DynFrame::keyReleaseEvent() of" << objectName() << "ts: " << e->timestamp();
   dcw->keyReleaseEvent(e);
   }

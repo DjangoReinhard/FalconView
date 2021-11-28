@@ -1,0 +1,10 @@
+#!/bin/bash
+project=FalconView
+
+qdoc ${project}.qdocconf
+cp ${project}.qhp html
+cd html
+cp -a images/* .
+qhelpgenerator ${project}.qhp
+mv ${project}.qch ..
+

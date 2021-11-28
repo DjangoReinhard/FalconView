@@ -1,0 +1,81 @@
+/*
+ * FalconView documentation
+ */
+
+/*!
+\page     usage.html
+\title    Userguide
+\subtitle Reference
+\ingroup  userguide
+\brief    description of workflows
+
+\section1 load gcode-file for execution
+\list
+     \li  turn application into edit-mode \inlineimage SK_Edit.png [F2].
+     \li  \e {Spacebar} activates \e {Open}-button, which loads the \l {fileManager.html}{FileManager}.
+          Root-directory of filemanager is configured in ini-file from \e {linuxCNC}.
+
+\inlineimage FileManager.jpg
+
+     \li  Select the desired gcode-file and press \e {Enter}. That loads the file into
+          editor and processes it for 3D-Preview.
+\endlist
+
+\section1 set workpiece origin
+\list
+     \li  move tooltip to the place, where your workpiece is located
+     \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
+     \li  select \e {Fixture} - press key \e {ALT+2}
+
+          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+
+\inlineimage Fixtures.jpg
+
+     \li \e {Fixture-Manager} contains 10 editors for coordinate system origins. \b {G54}
+         is the first, so enable it by \e {CTRL+1}.
+     \li Within the right fixture editor, use \e {TAB} to select the axis, you'd like to
+         change. Enter the number you'd like to see in position display and press \e {ENTER}.
+\endlist
+
+\section1 manage actual tools for the job
+\list
+     \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
+     \li  select \e {LCTools} - press key \e {ALT+4}
+
+          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+
+\inlineimage LCTools.jpg
+\endlist
+
+\section1 manage all your tools (with toolchanger)
+\list
+     \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
+     \li  select \e {ToolManager} - press key \e {ALT+1}
+
+          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+
+\inlineimage ToolMgr.jpg
+\endlist
+
+\section1 change application look
+\list
+     \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
+     \li  select \e {Preferences} - press key \e {ALT+3}
+
+          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+
+\inlineimage Settings.jpg
+
+     \li  change foreground color with \inlineimage editor.png
+     \li  change font with \inlineimage font.png
+     \li  change background color with \inlineimage colors.png
+     \li  This dialog can be controlled by keyboard only too. Switch through the different
+          gui-elements by \e {TAB}/\e {BackTAB}. On the desired field hit
+\list
+    \li   \e {ALT+B} for background color
+    \li   \e {ALT+F} for font changes
+    \li   \e {ALT+C} for foreground color
+\endlist
+\endlist
+
+*/

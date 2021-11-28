@@ -6,20 +6,23 @@ ToolEntry::ToolEntry()
  : desc("")
  , serial(-1)
  , dirty(false) {
-  canon.toolno      = 0;
-  canon.pocketno    = 0;
-  canon.diameter    = 0;
-  canon.frontangle  = 0;
-  canon.backangle   = 0;
-  canon.orientation = 1;
+  canon.toolno        = 0;
+  canon.pocketno      = 0;
+  canon.diameter      = 0;
+  canon.frontangle    = 0;
+  canon.backangle     = 0;
+  canon.orientation   = 1;
+  canon.offset.tran.z = 0;
+  canon.offset.tran.x = 0;
   }
 
 
-ToolEntry::ToolEntry(int number, double length, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum)
+ToolEntry::ToolEntry(int number, double length, double x, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum)
  : desc(description)
  , serial(lineNum)
  , dirty(false) {
   canon.offset.tran.z = length;
+  canon.offset.tran.x = x;
   canon.toolno        = number;
   canon.pocketno      = slot;
   canon.diameter      = diameter;
@@ -36,6 +39,7 @@ ToolEntry::ToolEntry(const ToolEntry& other)
   canon.toolno        = other.canon.toolno;
   canon.pocketno      = other.canon.pocketno;
   canon.offset.tran.z = other.canon.offset.tran.z;
+  canon.offset.tran.x = other.canon.offset.tran.x;
   canon.diameter      = other.canon.diameter;
   canon.frontangle    = other.canon.frontangle;
   canon.backangle     = other.canon.backangle;
@@ -48,6 +52,7 @@ ToolEntry& ToolEntry::operator=(const ToolEntry &other) {
   canon.toolno        = other.canon.toolno;
   canon.pocketno      = other.canon.pocketno;
   canon.offset.tran.z = other.canon.offset.tran.z;
+  canon.offset.tran.x = other.canon.offset.tran.x;
   canon.diameter      = other.canon.diameter;
   canon.frontangle    = other.canon.frontangle;
   canon.backangle     = other.canon.backangle;
@@ -62,7 +67,8 @@ ToolEntry& ToolEntry::operator=(const ToolEntry &other) {
 void ToolEntry::dump() const {
   qDebug() << "\nTool Entry  #" << number();
   qDebug() <<   "description: " << description();
-  qDebug() <<   "     length: " << length();
+  qDebug() <<   "  length(Z): " << length();
+  qDebug() <<   "     X-offs: " << xOffset();
   qDebug() <<   "   diameter: " << diameter();
   qDebug() <<   "   quadrant: " << quadrant();
   qDebug() <<   "front angle: " << frontAngle();
@@ -74,6 +80,12 @@ void ToolEntry::dump() const {
 
 void ToolEntry::setLength(double l) {
   canon.offset.tran.z = l;
+  dirty = true;
+  }
+
+
+void ToolEntry::setXOffset(double o) {
+  canon.offset.tran.x = o;
   dirty = true;
   }
 

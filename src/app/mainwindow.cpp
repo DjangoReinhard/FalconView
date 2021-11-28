@@ -108,7 +108,11 @@ void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
 void MainWindow::createActions() {
   MIcon::setDisabledFileName(":/res/SK_DisabledIcon.png");
   ValueManager vm;
+//  QAction *aboutAct = helpMenu->addAction(tr("&About"), this, &MainWindow::about);
+//  aboutAct->setStatusTip(tr("Show the application's About box"));
+  QAction *aboutQtAct = ui->menuHelp->addAction(tr("About &Qt"), this, &QApplication::aboutQt);
 
+  aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
   ui->action3D_View->setShortcut(Qt::CTRL   + Qt::Key_3);
   ui->actionFrontView->setShortcut(Qt::CTRL + Qt::Key_F);
   ui->actionBackView->setShortcut(Qt::CTRL  + Qt::Key_B);
@@ -166,7 +170,6 @@ void MainWindow::createActions() {
                                             , new EqualCondition(vm.getModel("taskMode"), EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO))
                            , this);
   autoMode->setCheckable(true);
-  autoMode->setShortcut(Qt::Key_F3);
   mdiMode = new DynaAction(MIcon(":/res/SK_MDI.png"
                                , ":/res/SK_MDI_active.png")
                          , tr("MDI-mode")
@@ -177,7 +180,6 @@ void MainWindow::createActions() {
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::MDI)
                          , this);
   mdiMode->setCheckable(true);
-  mdiMode->setShortcut(Qt::Key_F4);
   editMode = new DynaAction(MIcon(":/res/SK_Edit.png"
                                 , ":/res/SK_Edit_active.png")
                           , tr("Edit-mode")
@@ -187,7 +189,6 @@ void MainWindow::createActions() {
                           , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Edit)
                           , this);
   editMode->setCheckable(true);
-  editMode->setShortcut(Qt::Key_F2);
   testEditMode = new DynaAction(MIcon(":/res/SK_TestEdit.png"
                                     , ":/res/SK_TestEdit_active.png")
                               , tr("TestEdit-mode")
@@ -195,7 +196,6 @@ void MainWindow::createActions() {
                               , new EqualCondition(vm.getModel("appMode"), ApplicationMode::XEdit)
                               , this);
   testEditMode->setCheckable(true);
-  testEditMode->setShortcut(Qt::Key_F5);
   cfgMode = new DynaAction(MIcon(":/res/SK_Settings.png"
                                , ":/res/SK_Settings_active.png")
                          , tr("Settings-mode")
@@ -205,7 +205,6 @@ void MainWindow::createActions() {
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Settings)
                          , this);
   cfgMode->setCheckable(true);
-  cfgMode->setShortcut(Qt::Key_F9);
   jogMode = new DynaAction(MIcon(":/res/SK_Manual.png"
                                , ":/res/SK_Manual_active.png")
                          , tr("Manual-mode")
@@ -215,7 +214,6 @@ void MainWindow::createActions() {
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Manual)
                          , this);
   jogMode->setCheckable(true);
-  jogMode->setShortcut(Qt::Key_F7);
   wheelMode = new DynaAction(MIcon(":/res/SK_Wheel.png"
                                  , ":/res/SK_Wheel_active.png")
                            , tr("Wheel-mode")
@@ -226,7 +224,6 @@ void MainWindow::createActions() {
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Wheel)
                            , this);
   wheelMode->setCheckable(true);
-  wheelMode->setShortcut(Qt::Key_F6);
   wheelMode->setEnabled(false);
   touchMode = new DynaAction(MIcon(":/res/SK_Touch.png"
                                  , ":/res/SK_Touch_active.png")
@@ -238,7 +235,6 @@ void MainWindow::createActions() {
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Touch)
                            , this);
   touchMode->setCheckable(true);
-  touchMode->setShortcut(Qt::Key_F8);
   msgMode = new DynaAction(MIcon(":/res/SK_Messages.png"
                                , ":/res/SK_Messages_active.png")
                          , tr("SysEvents")
@@ -246,7 +242,6 @@ void MainWindow::createActions() {
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::ErrMessages)
                          , this);
   msgMode->setCheckable(true);
-  msgMode->setShortcut(Qt::Key_F10);
 
   mist = new DynaAction(MIcon(":/res/SK_Cool_Mist.png"
                             , ":/res/SK_Cool_Mist_active.png")
@@ -307,6 +302,7 @@ void MainWindow::createActions() {
                              , QIcon(":/res/SK_PowerOff.png")
                              , QIcon(":/res/SK_PowerOff_1.png")
                              , QIcon(":/res/SK_PowerOn.png"));
+  power->setShortcut(QKeySequence("CTRL+ALT+P"));
   power->setCheckable(true);
 //  qDebug() << "\tMW::createActions() ... END";
   }
@@ -322,6 +318,7 @@ void MainWindow::setupMenu() {
   ui->menuMode->addAction(touchMode);
   ui->menuMode->addAction(cfgMode);
   ui->menuMode->addAction(msgMode);
+  ui->actionHelp->setShortcut(QKeySequence::HelpContents);
   }
 
 void MainWindow::createValueModels() {
@@ -710,16 +707,6 @@ void MainWindow::timerEvent(QTimerEvent* ) {
 
 
 void MainWindow::keyPressEvent(QKeyEvent* e) {
-  switch (e->key()) {
-    default:
-         qDebug() << "MW: pressed key: " << e->key()
-                  << "modifiers: "   << e->modifiers()
-                  << "event-ts: " << e->timestamp();
-         Core().viewStack()->keyReleaseEvent(e);
-    }
-  }
-
-void MainWindow::keyReleaseEvent(QKeyEvent* e) {
     switch (e->key()) {
     case Qt::Key_Escape:
          if (Core().curPage() == SysEventView::className) {
@@ -730,6 +717,12 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e) {
             qDebug() << "MW: escape pressed! But don't do anything!";
          e->accept();
          break;
+    case Qt::Key_H:
+         if (e->modifiers() == int(Qt::CTRL | Qt::ALT) && !ValueManager().getValue("allHomed").toBool()) {
+            e->accept();
+            homeAll->trigger();
+            break;
+            }
     case Qt::Key_F1:
     case Qt::Key_F2:
     case Qt::Key_F3:
@@ -742,13 +735,78 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e) {
     case Qt::Key_F10:
     case Qt::Key_F11:
     case Qt::Key_F12:
+         if (modeTB->isVisible()) {
+            qDebug() << "mode toolbar is visible";
+            e->accept();
+            }
+         else {
+            qDebug() << "mode toolbar is NOT visible";
+            }
+//        autoMode->setShortcut(Qt::Key_F3);
+//        editMode->setShortcut(Qt::Key_F2);
+//        mdiMode->setShortcut(Qt::Key_F4);
+//        testEditMode->setShortcut(Qt::Key_F5);
+//        wheelMode->setShortcut(Qt::Key_F6);
+//        jogMode->setShortcut(Qt::Key_F7);
+//        touchMode->setShortcut(Qt::Key_F8);
+//        cfgMode->setShortcut(Qt::Key_F9);
+//        msgMode->setShortcut(Qt::Key_F10);
 //         e->accept();
 //         break;
     default:
+         qDebug() << "MW: pressed key: " << e->key()
+                  << "modifiers: "   << e->modifiers()
+                  << "event-ts: " << e->timestamp();
+         Core().viewStack()->keyPressEvent(e);
+         break;
+    }
+  }
+
+void MainWindow::keyReleaseEvent(QKeyEvent* e) {
+//    switch (e->key()) {
+//    case Qt::Key_Escape:
+//         if (Core().curPage() == SysEventView::className) {
+//            msgMode->toggle();
+//            toggleErrMessages();
+//            }
+//         else
+//            qDebug() << "MW: escape pressed! But don't do anything!";
+//         e->accept();
+//         break;
+//    case Qt::Key_F1:
+//    case Qt::Key_F2:
+//    case Qt::Key_F3:
+//    case Qt::Key_F4:
+//    case Qt::Key_F5:
+//    case Qt::Key_F6:
+//    case Qt::Key_F7:
+//    case Qt::Key_F8:
+//    case Qt::Key_F9:
+//    case Qt::Key_F10:
+//    case Qt::Key_F11:
+//    case Qt::Key_F12:
+//         if (modeTB->isVisible()) {
+//            qDebug() << "mode toolbar is visible";
+//            }
+//         else {
+//            qDebug() << "mode toolbar is NOT visible";
+//            }
+////        autoMode->setShortcut(Qt::Key_F3);
+////        editMode->setShortcut(Qt::Key_F2);
+////        mdiMode->setShortcut(Qt::Key_F4);
+////        testEditMode->setShortcut(Qt::Key_F5);
+////        wheelMode->setShortcut(Qt::Key_F6);
+////        jogMode->setShortcut(Qt::Key_F7);
+////        touchMode->setShortcut(Qt::Key_F8);
+////        cfgMode->setShortcut(Qt::Key_F9);
+////        msgMode->setShortcut(Qt::Key_F10);
+////         e->accept();
+////         break;
+//    default:
          qDebug() << "MW: released key: " << e->key()
                   << "modifiers: "   << e->modifiers()
                   << "event-ts: " << e->timestamp();
          Core().viewStack()->keyReleaseEvent(e);
-         break;
-    }
+//         break;
+//    }
   }

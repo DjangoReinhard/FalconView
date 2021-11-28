@@ -18,6 +18,7 @@ protected:
   virtual void keyReleaseEvent(QKeyEvent* event) override;
   virtual void changeEvent(QEvent* event) override;
   virtual bool focusNextPrevChild(bool next) override;
+  virtual bool eventFilter(QObject *obj, QEvent *event) override;
   virtual QWidget* createContent() override;
   void saveFixture();
   void setupUi(DynCenterWidget* parent);

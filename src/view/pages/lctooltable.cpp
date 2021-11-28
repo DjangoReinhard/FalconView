@@ -17,8 +17,7 @@ LCToolTable::LCToolTable(QWidget* parent)
  : DynCenterWidget(QString(), "LCToolTable", false, parent)
  , table(new QTableView)
  , model(Core().toolTableModel())
- , px(new QSortFilterProxyModel(this))
- , latheMode(Core().lcProperties().value("DISPLAY", "LATHE").isValid()) {
+ , px(new QSortFilterProxyModel(this)) {
   setObjectName(LCToolTable::className);
   setWindowTitle(LCToolTable::className);
   }
@@ -55,16 +54,18 @@ void LCToolTable::updateStyles() {
   }
 
 
-void LCToolTable::keyReleaseEvent(QKeyEvent *e) {
+void LCToolTable::keyPressEvent(QKeyEvent *e) {
   switch (e->key()) {
     case Qt::Key_F10:
+         qDebug() << "LCToolTable::keyPressEvent (F10)";
          //TODO: save tooltable changes ...
          model->save();
          e->accept();
          break;
-    default: break;
+    default:
+         DynCenterWidget::keyPressEvent(e);
+         break;
     }
-  DynCenterWidget::keyReleaseEvent(e);
   }
 
 

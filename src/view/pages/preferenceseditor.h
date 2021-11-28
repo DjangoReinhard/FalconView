@@ -2,9 +2,10 @@
 #define PREFERENCESEDITOR_H
 #include <dyncenterwidget.h>
 #include <QVariant>
-class QLabel;
+class QLineEdit;
 class QCheckBox;
 class QPushButton;
+class QShowEvent;
 
 
 class PreferencesEditor : public DynCenterWidget
@@ -19,6 +20,7 @@ public:
 
 protected:
   virtual QWidget* createContent() override;
+  virtual bool eventFilter(QObject *, QEvent *event) override;
   void setupLabels();
 
 protected slots:
@@ -26,13 +28,15 @@ protected slots:
   void changeBackgroundColor(int i);
   void changeFont(int i);
   void statusInsideChanged(QVariant state);
+  virtual void showEvent(QShowEvent* e) override;
 
 private:
-  QLabel**      labels;
+  QLineEdit**   labels;
   QPushButton** bgButtons;
   QPushButton** fgButtons;
   QPushButton** fontButtons;
   QCheckBox*    cbStatesInside;
+  int           count;
   static const QString& className;
   };
 #endif // PREFERENCESEDITOR_H

@@ -35,9 +35,38 @@ SettingsNotebook::~SettingsNotebook() {
 void SettingsNotebook::addPage(DynCenterWidget* page) {
   assert(page);
   page->initialize();
+  page->installEventFilter(this);
 
   //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
   tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
+  }
+
+bool SettingsNotebook::eventFilter(QObject *obj, QEvent *event) {
+  if (event->type() == QEvent::KeyPress) {
+     QKeyEvent* e = static_cast<QKeyEvent*>(event);
+
+     switch (e->key()) {
+       case Qt::Key_0:
+       case Qt::Key_1:
+       case Qt::Key_2:
+       case Qt::Key_3:
+       case Qt::Key_4:
+       case Qt::Key_5:
+       case Qt::Key_6:
+       case Qt::Key_7:
+       case Qt::Key_8:
+       case Qt::Key_9:
+            qDebug() << "SN::filter - numberkey pressed, modifier: " << e->modifiers()
+                     << "event-ts: " << e->timestamp();
+
+            if (e->modifiers() == Qt::AltModifier) {
+               keyPressEvent(e);
+               return true;
+               }
+       default: break;
+       }
+     }
+  return false;
   }
 
 
@@ -66,8 +95,7 @@ void SettingsNotebook::closeEvent(QCloseEvent* e) {
       }
   }
 
-
-void SettingsNotebook::keyReleaseEvent(QKeyEvent* e) {
+void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
   switch (e->key()) {
     case Qt::Key_0:
     case Qt::Key_1:
@@ -83,7 +111,8 @@ void SettingsNotebook::keyReleaseEvent(QKeyEvent* e) {
                   << "event-ts: " << e->timestamp();
 
          if (e->modifiers() == Qt::AltModifier) {
-            if (switchTabPage(e->key() - Qt::Key_0)) {
+            // real humans don't start counting at 0
+            if (switchTabPage(e->key() - Qt::Key_0 - 1)) {
                e->accept();
                break;
                }
@@ -92,7 +121,7 @@ void SettingsNotebook::keyReleaseEvent(QKeyEvent* e) {
          qDebug() << "SN: whatever key (" << e->key()
                   << ") pressed, modifier: " << e->modifiers()
                   << "event-ts: " << e->timestamp();
-         DynCenterWidget::keyReleaseEvent(e); break;
+         DynCenterWidget::keyPressEvent(e); break;
     }
   }
 
@@ -100,6 +129,7 @@ void SettingsNotebook::keyReleaseEvent(QKeyEvent* e) {
 bool SettingsNotebook::switchTabPage(int pageIndex) {
   qDebug() << "switch TAB-page to index #" << pageIndex << " - pageCount:" << tw->count();
 
+  if (pageIndex < 0) pageIndex = 9;
   if (pageIndex < tw->count()) {
      tw->tabBar()->setCurrentIndex(pageIndex);
 

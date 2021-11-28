@@ -19,6 +19,7 @@ class DBConnection;
 class DBHelper;
 class MainWindow;
 class SysEvent;
+class QHelpEngineCore;
 class QString;
 class QFile;
 
@@ -60,6 +61,8 @@ private:
 
   void nop();
   void checkTools();
+  void checkHelp();
+  bool isLatheMode() const;
   void initialize(DBHelper& dbAssist);
   void parseGCode(QFile& file);
   void setupBackend();
@@ -84,6 +87,7 @@ private:
   QBasicTimer         timer;
   QThread             backendCommThread;
   SysEventModel*      tmSysEvents;
+  QHelpEngineCore*    helpEngine;
 
   friend class Core;
   friend class Config;

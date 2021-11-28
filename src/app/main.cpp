@@ -33,8 +33,9 @@ int main(int argc, char *argv[]) {
                                           , "_"
                                           , "../FalconView/src/i18n");
       QStringList args = QCoreApplication::arguments();
-      QString iniFileName = findIni(args); //getenv("INI_FILE_NAME");
+      QString iniFileName = findIni(args);
 
+      qDebug() << "application arguments: " << args;
       qDebug() << "locale messages found: " << ok;
       qDebug() << "gonna use ini-file: " << iniFileName;
       QFileInfo ifi(iniFileName);

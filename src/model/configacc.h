@@ -16,29 +16,29 @@ class Config
 public:
   // sync with ConfigManager::geToString(int i) !
   enum GuiElem {
-    ActCodes        /*  0 */
-  , CurSeg          /*  1 */
-  , DroAbs          /*  2 */
-  , DroDtg          /*  3 */
+    DroAbs          /*  2 */
   , DroRel          /*  4 */
+  , DroDtg          /*  3 */
   , DroTitle        /*  5 */
-  , EdLinNum        /*  6 */
+  , ToolDesc        /* 17 */
+  , ToolNum         /* 19 */
+  , ToolNext        /* 18 */
+  , ActCodes        /*  0 */
   , Feed            /*  7 */
+  , Speed           /* 16 */
   , Filename        /*  8 */
-  , FixEdit         /*  9 */
+  , GCode           /* 12 */
+  , EdLinNum        /*  6 */
+  , LineHL          /* 13 */
   , FixPrompt       /* 10 */
   , FixTitle        /* 11 */
-  , GCode           /* 12 */
-  , LineHL          /* 13 */
-  , OldSeg          /* 14 */
+  , FixEdit         /*  9 */
   , RapidMove       /* 15 */
-  , Speed           /* 16 */
-  , ToolDesc        /* 17 */
-  , ToolNext        /* 18 */
-  , ToolNum         /* 19 */
-  , WorkLimit       /* 20 */
   , WorkMove        /* 21 */
+  , CurSeg          /*  1 */
+  , OldSeg          /* 14 */
   , WorkPiece       /* 22 */
+  , WorkLimit       /* 20 */
   , LastKey
     };
 

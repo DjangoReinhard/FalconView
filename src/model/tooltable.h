@@ -25,10 +25,11 @@ public:
   const ToolEntry& current() const  { return curTool; }
   const ToolEntry* tool(int num) const;
   QString          fileName() const { return fn; }
+  int              entries() const;
   void             dump();
   void             save();
   void             setCurrent(int lineNum);
-  int              entries() const;
+  void             setLatheMode(bool latheMode)  { this->latheMode = latheMode; }
   QList<ToolEntry*>::Iterator begin()            { return tools.begin(); }
   QList<ToolEntry*>::Iterator end()              { return tools.end();   }
   QList<ToolEntry*>::ConstIterator begin() const { return tools.begin(); }
@@ -55,5 +56,6 @@ private:
   QList<ToolEntry*>     tools;
   ToolEntry             curTool;
   QString               fn;
+  bool                  latheMode;
   };
 #endif // TOOLTABLE_H

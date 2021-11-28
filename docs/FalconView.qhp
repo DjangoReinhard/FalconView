@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QtHelpProject version="1.0">
+    <namespace>de.schwarzrot.falconview.0.1</namespace>
+    <virtualFolder>FalconView</virtualFolder>
+    <filterSection>
+        <filterAttribute>FalconView</filterAttribute>
+        <filterAttribute>0.1</filterAttribute>
+        <toc>
+            <section title="User Guide" ref="index.html">
+                <section title="start the engine" ref="startup.html"/>
+                <section title="reference" ref="reference.html"/>
+                <section title="use case" ref="usage.html"/>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="fileManager" id="fileManager" ref="fileManager.html"/>
+        </keywords>
+        <files>
+            <file>*.html</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

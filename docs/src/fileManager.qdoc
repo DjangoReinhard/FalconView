@@ -1,0 +1,36 @@
+/*
+ * FalconView documentation
+ */
+
+/*!
+\page     fileManager.html
+\title    Userguide
+\subtitle Reference
+\ingroup  userguide
+\brief    description of filemanager.
+
+\image    FileManager.jpg
+
+          \b {FileManager} consists of a treeview on the left, which shows the directory tree.
+          On the right side at the top a list of files of the selected directory is shown.
+          \e {TAB} changes between directories and files.
+          On the right side at the bottom a preview of the selected file is shown.
+
+          There are several keystrokes defined for \b {FileManager}
+
+\list
+    \li   \e {Insert} - at directory tree creates a directory, if the file list is
+          active, a new file will be created.
+    \li   \e {Delete} - at directory tree deletes a directory (if it is empty!)
+    \li   \e {Enter} - selects a file and loads it into the editor
+    \li   \e {F5} - if the file list is active, the selected file will be marked
+          for copy operation. To execute the copy operation select the target
+          directory and press \e {Enter}.
+    \li   \e {F6} - if the file list is active, the selected file will be marked
+          for move operation. To finish the move transfer, select the target
+          diretory and press \e {Enter}.
+    \li   \e {Enter} if the file list is active, the selected file will be loaded
+          into gcode-editor and (optionally) loaded into 3D preview.
+\endlist
+
+*/
