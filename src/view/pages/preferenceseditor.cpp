@@ -38,8 +38,7 @@ QWidget* PreferencesEditor::createContent() {
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
       fgButtons[i]   = findChild<QPushButton*>(QString("fg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
       fontButtons[i] = findChild<QPushButton*>(QString("font") + Config().nameOf(static_cast<Config::GuiElem>(i)));
-      if (labels[i])
-         labels[i]->installEventFilter(this);
+      if (labels[i]) labels[i]->installEventFilter(this);
       }
   return rv;
   }

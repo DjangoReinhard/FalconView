@@ -1,5 +1,6 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
+#include <helpdialog.h>
 #include <occtviewer.h>
 #include <settingsnb.h>
 #include <dbconnection.h>
@@ -50,6 +51,7 @@ MainWindow::MainWindow(bool statusInPreview, QWidget *parent)
  : QMainWindow(parent)
  , statusInPreview(statusInPreview)
  , ui(new Ui::MainWindow)
+ , dlgHelp(nullptr)
  , startAction(nullptr)
  , pauseAction(nullptr)
  , stopAction(nullptr)
@@ -350,6 +352,7 @@ void MainWindow::createConnections() {
   connect(ui->actionleftView,  &QAction::triggered, Core().view3D(), &OcctQtViewer::leftView);
   connect(ui->actionrightView, &QAction::triggered, Core().view3D(), &OcctQtViewer::rightView);
   connect(ui->actionTopView,   &QAction::triggered, Core().view3D(), &OcctQtViewer::topView);
+  connect(ui->actionHelp,      &QAction::triggered, dlgHelp,         &QWidget::show);
 
   // be actions ...
   connect(startAction,  &QAction::triggered, this, &MainWindow::autoStart);
@@ -536,6 +539,9 @@ void MainWindow::createDockables(DBConnection&) {
                , new DynDockable(new SpeedStatus(":/src/UI/HSpeedInfo.ui")
                                , this));
      }
+  dlgHelp = new HelpDialog(this);
+  dlgHelp->init();
+  addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
   }
 
 

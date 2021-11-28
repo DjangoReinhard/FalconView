@@ -9,6 +9,7 @@ class PositionStatus;
 class DynDockable;
 class DBConnection;
 class GCodeViewer;
+class HelpDialog;
 class QAction;
 
 QT_BEGIN_NAMESPACE
@@ -62,6 +63,7 @@ private:
   bool                statusInPreview;
   Ui::MainWindow*     ui;
 //  PositionStatus*     pos;
+  HelpDialog*         dlgHelp;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;

@@ -13,10 +13,10 @@ public:
 
   virtual void connectSignals() override;
   virtual void updateStyles()   override;
+  virtual void setEnabled(bool enable, QFont* f, QString* s);
 
 protected:
   virtual void keyReleaseEvent(QKeyEvent* event) override;
-  virtual void changeEvent(QEvent* event) override;
   virtual bool focusNextPrevChild(bool next) override;
   virtual bool eventFilter(QObject *obj, QEvent *event) override;
   virtual QWidget* createContent() override;

@@ -4,6 +4,10 @@
 *~
 *.qm
 *.pro.user
+lc
+docs/html
+*.qch
+db
 build/*
 test/*
 oldStuff/*

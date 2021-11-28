@@ -69,7 +69,7 @@
      \li  change foreground color with \inlineimage editor.png
      \li  change font with \inlineimage font.png
      \li  change background color with \inlineimage colors.png
-     \li  This dialog can be controlled by keyboard only too. Switch through the different
+     \li  This dialog can be controlled by keyboard too. Switch through the different
           gui-elements by \e {TAB}/\e {BackTAB}. On the desired field hit
 \list
     \li   \e {ALT+B} for background color

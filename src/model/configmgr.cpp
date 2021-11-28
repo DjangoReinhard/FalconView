@@ -113,6 +113,7 @@ QString ConfigManager::geToString(int i) {
     case Config::GuiElem::WorkLimit: return asString(WorkLimit);
     case Config::GuiElem::WorkMove:  return asString(WorkMove);
     case Config::GuiElem::WorkPiece: return asString(WorkPiece);
+    case Config::GuiElem::FixDisabledTitle: return asString(FixDisabledTitle);
     default: break;
     }
   return QString();

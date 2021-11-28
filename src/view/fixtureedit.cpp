@@ -1,6 +1,7 @@
 #include <fixtureedit.h>
 #include <valuemanager.h>
 #include <canonif.h>
+#include <configacc.h>
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QLabel>
@@ -16,21 +17,6 @@ FixtureEdit::FixtureEdit(const QString& title, int ordinal, const AxisMask& mask
   setupUi(this);
   ui->title->setText(title);
   layout()->setContentsMargins(0, 0, 0, 0);
-  }
-
-
-void FixtureEdit::changeEvent(QEvent* e) {
-  DynCenterWidget::changeEvent(e);
-//  qDebug() << "changeEvent(" << e->type() << ")";
-
-  if (e->type() == QEvent::EnabledChange) {
-     for (int i=0; i < 9; ++i)
-         if (edits.at(i)->isVisible()) {
-            edits.at(i)->setFocus();
-            edits.at(i)->selectAll();
-            break;
-            }
-     }
   }
 
 
@@ -72,7 +58,53 @@ void FixtureEdit::connectSignals() {
 
 
 void FixtureEdit::updateStyles() {
-//  this->setStyleSheet("background: #AA0000; ");
+  // we get styled by parent ;)
+  }
+
+
+void FixtureEdit::setEnabled(bool enable, QFont* f, QString* ss) {
+  ui->title->setEnabled(enable);
+  if (enable) {
+     ui->title->setFont(f[0]);
+     ui->title->setStyleSheet(ss[0]);
+     }
+  else {
+     ui->title->setFont(f[1]);
+     ui->title->setStyleSheet(ss[1]);
+     }
+  ui->lX->setFont(f[2]);
+  ui->lX->setStyleSheet(ss[2]);
+  ui->lY->setFont(f[2]);
+  ui->lY->setStyleSheet(ss[2]);
+  ui->lZ->setFont(f[2]);
+  ui->lZ->setStyleSheet(ss[2]);
+  ui->lA->setFont(f[2]);
+  ui->lA->setStyleSheet(ss[2]);
+  ui->lB->setFont(f[2]);
+  ui->lB->setStyleSheet(ss[2]);
+  ui->lC->setFont(f[2]);
+  ui->lC->setStyleSheet(ss[2]);
+  ui->lU->setFont(f[2]);
+  ui->lU->setStyleSheet(ss[2]);
+  ui->lV->setFont(f[2]);
+  ui->lV->setStyleSheet(ss[2]);
+  ui->lW->setFont(f[2]);
+  ui->lW->setStyleSheet(ss[2]);
+
+  for (int i=0; i < 9; ++i) {
+      edits[i]->setFont(f[3]);
+      edits[i]->setStyleSheet(ss[3]);
+      edits[i]->setEnabled(enable);
+      }
+  if (enable) {
+     for (int i=0; i < 9; ++i) {
+         if (edits[i]->isVisible()) {
+            edits[i]->setFocus();
+            edits[i]->selectAll();
+            break;
+            }
+         }
+     }
   }
 
 

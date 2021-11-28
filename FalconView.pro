@@ -210,8 +210,7 @@ FORMS += \
     src/UI/HSpeedInfo.ui \
     src/UI/VSpeedInfo.ui \
     src/UI/ToolEditor.ui \
-    src/UI/ToolInfo.ui \
-    src/UI/testForm.ui
+    src/UI/ToolInfo.ui
 
 unix:!mac {
   LIBS += -Wl,-rpath=$${_PRO_FILE_PWD_}/lc/lib

@@ -25,6 +25,8 @@ protected:
 
 private:
   QWidget*            client;
+  QFont               cFonts[4];
+  QString             cStyle[4];
   const AxisMask&     axisMask;
   };
 #endif // FIXTUREMANAGER_H
