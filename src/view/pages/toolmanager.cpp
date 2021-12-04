@@ -76,13 +76,8 @@ QWidget* ToolManager::createContent() {
 
   tEdit->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   tEdit->setEnabled(false);  
-
   sa->setFocusPolicy(Qt::FocusPolicy::NoFocus);
   sa->setWidget(tEdit);
-
-//  this->setLayout(new QVBoxLayout(this));
-//  spH->addWidget(categories);
-//  spH->addWidget(spV);
   spV->addWidget(tools);
   spV->addWidget(sa);
   Config cfg;

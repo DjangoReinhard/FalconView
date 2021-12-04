@@ -47,7 +47,7 @@ QWidget* DynCenterWidget::createContent() {
   }
 
 
-// called by MainView::addPage
+// offline initialization (i.e. called by MainView::addPage)
 void DynCenterWidget::initialize() {
   QWidget* w = createContent();
 

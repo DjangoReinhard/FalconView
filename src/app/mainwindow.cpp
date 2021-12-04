@@ -15,6 +15,7 @@
 #include <centerview.h>
 #include <dyndockable.h>
 #include <dynframe.h>
+#include <jogview.h>
 #include <core.h>
 #include <syseventview.h>
 #include <lctooltable.h>
@@ -108,10 +109,8 @@ void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
 
 
 void MainWindow::createActions() {
-  MIcon::setDisabledFileName(":/res/SK_DisabledIcon.png");
+//  MIcon::setDisabledFileName(":/res/SK_DisabledIcon.png");
   ValueManager vm;
-//  QAction *aboutAct = helpMenu->addAction(tr("&About"), this, &MainWindow::about);
-//  aboutAct->setStatusTip(tr("Show the application's About box"));
   QAction *aboutQtAct = ui->menuHelp->addAction(tr("About &Qt"), this, &QApplication::aboutQt);
 
   aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
@@ -345,6 +344,7 @@ void MainWindow::createConnections() {
   connect(ui->actionAbsPos,    &QAction::triggered, this, &MainWindow::toggleAbsolute);
   connect(ui->actionDockables, &QAction::triggered, this, [=](){ ValueManager().setValue("showAllButCenter", ui->actionDockables->isChecked()); });
   connect(ui->actionExit,      &QAction::triggered, this, &QWidget::close);
+  connect(ui->actionAbout,     &QAction::triggered, this, &MainWindow::about);
 
   connect(ui->action3D_View,   &QAction::triggered, Core().view3D(), &OcctQtViewer::isoView);
   connect(ui->actionFrontView, &QAction::triggered, Core().view3D(), &OcctQtViewer::frontView);
@@ -352,7 +352,9 @@ void MainWindow::createConnections() {
   connect(ui->actionleftView,  &QAction::triggered, Core().view3D(), &OcctQtViewer::leftView);
   connect(ui->actionrightView, &QAction::triggered, Core().view3D(), &OcctQtViewer::rightView);
   connect(ui->actionTopView,   &QAction::triggered, Core().view3D(), &OcctQtViewer::topView);
-  connect(ui->actionHelp,      &QAction::triggered, dlgHelp,         &QWidget::show);
+  connect(ui->actionHelp,      &QAction::triggered, dlgHelp,         &HelpDialog::showHelp);
+
+  connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
 
   // be actions ...
   connect(startAction,  &QAction::triggered, this, &MainWindow::autoStart);
@@ -415,6 +417,14 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
     case ErrMessages: Core().activatePage(SysEventView::className); break;
     default: break;
     }
+  }
+
+
+void MainWindow::about() {
+  QMessageBox::about(this
+                   , tr("About FalconView")
+                   , tr("<h3>FalconView</h3><p>is an application to manage machines "
+                        "controlled by linuxCNC.</p>"));
   }
 
 
@@ -540,46 +550,36 @@ void MainWindow::createDockables(DBConnection&) {
                                , this));
      }
   dlgHelp = new HelpDialog(this);
-  dlgHelp->init();
   addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
   }
 
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
   CenterView* center = new CenterView(this);
-  DynFrame*   page   = new DynFrame(new PreViewEditor(":/src/UI/GCodeEditor.ui"
-                                                    , Core().view3D()
-                                                    , statusInPreview)
+  DynFrame*   page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
+                                                        , Core().view3D()
+                                                        , statusInPreview)
                                   , true
                                   , center);
 
   Core().setViewStack(center);
   center->addPage(page);
-//  ui->menuMain->addAction(page->viewAction());
-
   page = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
                     , true
                     , center);
   center->addPage(page);
-//  ui->menuMain->addAction(page->viewAction());
-
   page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui")
                     , true
                     , center);
   center->addPage(page);
-//  ui->menuMain->addAction(page->viewAction());
-
   page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui")
                     , true
                     , center);
   center->addPage(page);
-//  ui->menuMain->addAction(page->viewAction());
-
   page = new DynFrame(new SysEventView(conn)
                     , true
                     , center);
   center->addPage(page);
-//  ui->menuMain->addAction(page->viewAction());
   SettingsNotebook* nb = new SettingsNotebook(this);
 
   center->addPage(new DynFrame(nb, false, center));
@@ -587,10 +587,12 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   nb->addPage(new FixtureManager(Core().axisMask(), nb));
   nb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", nb));
   nb->addPage(new LCToolTable());
-//  ui->menuMain->addAction(nb->viewAction());
-
+  page = new DynFrame(new JogView()
+                    , true
+                    , center);
+  center->addPage(page);
   this->setCentralWidget(center);
-  center->dump();
+  center->dump(); //TODO!
   }
 
 
@@ -768,51 +770,10 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
     }
   }
 
+
 void MainWindow::keyReleaseEvent(QKeyEvent* e) {
-//    switch (e->key()) {
-//    case Qt::Key_Escape:
-//         if (Core().curPage() == SysEventView::className) {
-//            msgMode->toggle();
-//            toggleErrMessages();
-//            }
-//         else
-//            qDebug() << "MW: escape pressed! But don't do anything!";
-//         e->accept();
-//         break;
-//    case Qt::Key_F1:
-//    case Qt::Key_F2:
-//    case Qt::Key_F3:
-//    case Qt::Key_F4:
-//    case Qt::Key_F5:
-//    case Qt::Key_F6:
-//    case Qt::Key_F7:
-//    case Qt::Key_F8:
-//    case Qt::Key_F9:
-//    case Qt::Key_F10:
-//    case Qt::Key_F11:
-//    case Qt::Key_F12:
-//         if (modeTB->isVisible()) {
-//            qDebug() << "mode toolbar is visible";
-//            }
-//         else {
-//            qDebug() << "mode toolbar is NOT visible";
-//            }
-////        autoMode->setShortcut(Qt::Key_F3);
-////        editMode->setShortcut(Qt::Key_F2);
-////        mdiMode->setShortcut(Qt::Key_F4);
-////        testEditMode->setShortcut(Qt::Key_F5);
-////        wheelMode->setShortcut(Qt::Key_F6);
-////        jogMode->setShortcut(Qt::Key_F7);
-////        touchMode->setShortcut(Qt::Key_F8);
-////        cfgMode->setShortcut(Qt::Key_F9);
-////        msgMode->setShortcut(Qt::Key_F10);
-////         e->accept();
-////         break;
-//    default:
-         qDebug() << "MW: released key: " << e->key()
-                  << "modifiers: "   << e->modifiers()
-                  << "event-ts: " << e->timestamp();
-         Core().viewStack()->keyReleaseEvent(e);
-//         break;
-//    }
+  qDebug() << "MW: released key: " << e->key()
+           << "modifiers: "   << e->modifiers()
+           << "event-ts: " << e->timestamp();
+  Core().viewStack()->keyReleaseEvent(e);
   }

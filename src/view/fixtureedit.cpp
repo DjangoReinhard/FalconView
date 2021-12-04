@@ -11,7 +11,7 @@
 
 FixtureEdit::FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent)
  : DynCenterWidget(QString(), "FixtureEdit", false, parent)
- , ui(new Ui::frame())
+ , ui(new Ui::FixtureEditorForm())
  , ordinal(ordinal)
  , m(mask) {
   setupUi(this);

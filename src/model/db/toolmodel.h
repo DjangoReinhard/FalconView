@@ -1,6 +1,7 @@
 #ifndef TOOLMODEL_H
 #define TOOLMODEL_H
 #include <QSqlTableModel>
+#include <QIcon>
 class FalconViewDB;
 class DBConnection;
 
@@ -11,6 +12,7 @@ class ToolModel : public QSqlTableModel
 public:
   explicit ToolModel(DBConnection& conn, QObject *parent = nullptr);
 
+  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   QVariant promptData(int section, int role = Qt::DisplayRole) const;
   int      tools4Category(int categoryId);
@@ -20,6 +22,8 @@ public:
 
 private:
   static bool  createTable();
+  QIcon  ui;
+  QIcon  ci;
   friend class FalconViewDB;
   };
 #endif // TOOLMODEL_H

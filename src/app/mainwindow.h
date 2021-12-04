@@ -6,6 +6,7 @@
 #include <applicationmode.h>
 
 class PositionStatus;
+class PreViewEditor;
 class DynDockable;
 class DBConnection;
 class GCodeViewer;
@@ -32,6 +33,7 @@ protected:
   void keyPressEvent(QKeyEvent* event) override;
   void keyReleaseEvent(QKeyEvent* event) override;
   void timerEvent(QTimerEvent* event) override;
+  void about();
   void addDockable(Qt::DockWidgetArea area, DynDockable* dockable);
   void createActions();
   void createToolBars();
@@ -63,6 +65,7 @@ private:
   bool                statusInPreview;
   Ui::MainWindow*     ui;
 //  PositionStatus*     pos;
+  PreViewEditor*      pw;
   HelpDialog*         dlgHelp;
   QAction*            startAction;
   QAction*            pauseAction;

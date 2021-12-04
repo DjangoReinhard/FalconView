@@ -5,7 +5,18 @@
    <file>res/SampleBG03.jpg</file>
    <file>res/colors.png</file>
    <file>res/editor.png</file>
+   <file>res/edit-redo.png</file>
+   <file>res/edit-undo.png</file>
    <file>res/font.png</file>
+   <file>res/help-contents.png</file>
+   <file>res/go-down.png</file>
+   <file>res/go-down-01.png</file>
+   <file>res/go-next.png</file>
+   <file>res/go-next-01.png</file>
+   <file>res/go-previous.png</file>
+   <file>res/go-previous-01.png</file>
+   <file>res/go-up.png</file>
+   <file>res/go-up-01.png</file>
    <file>res/SK_Auto_active.png</file>
    <file>res/SK_AutoPause_active.png</file>
    <file>res/SK_AutoPause.png</file>
@@ -56,11 +67,15 @@
    <file>res/SK_Wheel_active.png</file>
    <file>res/SK_Wheel.png</file>
    <file>res/WorkPlane01.png</file>
+   <file>res/window-close.svg</file>
+   <file>res/CB_checked.png</file>
+   <file>res/CB_unchecked.png</file>
    <file>res/Tools_backup.xml</file>
    <file>src/UI/HCurCodes.ui</file>
    <file>src/UI/VCurCodes.ui</file>
    <file>src/UI/Fixture.ui</file>
    <file>src/UI/GCodeEditor.ui</file>
+   <file>src/UI/Jog.ui</file>
    <file>src/UI/mainwindow.ui</file>
    <file>src/UI/Position.ui</file>
    <file>src/UI/Settings.ui</file>

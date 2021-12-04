@@ -1,5 +1,6 @@
 #include <toolmodel.h>
 #include <dbconnection.h>
+#include <QFileIconProvider>
 #include <QSqlRecord>
 #include <QSqlField>
 #include <QSqlError>
@@ -8,7 +9,9 @@
 
 
 ToolModel::ToolModel(DBConnection& conn, QObject *parent)
- : QSqlTableModel(parent) {
+ : QSqlTableModel(parent)
+ , ui(":/res/CB_unchecked.png")
+ , ci(":/res/CB_checked.png") {
   if (!conn.connect()) {
      throw new QSqlError("failed to open database!");
      }
@@ -48,6 +51,16 @@ bool ToolModel::createTable() {
                                       ", comment    VARCHAR(254) "           // 23 -
                                       " )");
   return rv;
+  }
+
+
+QVariant ToolModel::data(const QModelIndex& idx, int role) const {
+//  qDebug() << "ToolModel::data(" << idx << ", role: " << role << ")";
+
+//  if (role == Qt::DecorationRole && !idx.column()) {
+//     return ci;
+//     }
+  return QSqlTableModel::data(idx, role);
   }
 
 

@@ -8,7 +8,7 @@ class ToolCategoryModel;
 class ToolModel;
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Form; }
+namespace Ui { class ToolEditorForm; }
 QT_END_NAMESPACE
 
 
@@ -29,10 +29,10 @@ protected:
   void dumpModel();
   void setupTabOrder();
 
-  Ui::Form*       ui;
-  QSqlQueryModel* model;
-  int             toolId;
-  int             edCount;
-  QWidget**       tabOrder;
+  Ui::ToolEditorForm* ui;
+  QSqlQueryModel*     model;
+  int                 toolId;
+  int                 edCount;
+  QWidget**           tabOrder;
   };
 #endif // TOOLEDITOR_H

@@ -88,6 +88,7 @@ private:
   QThread             backendCommThread;
   SysEventModel*      tmSysEvents;
   QHelpEngineCore*    helpEngine;
+  bool                simulator;
 
   friend class Core;
   friend class Config;

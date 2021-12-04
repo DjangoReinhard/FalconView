@@ -10,7 +10,7 @@
 
 ToolEditor::ToolEditor(QWidget *parent)
  : QWidget(parent)
- , ui(new Ui::Form)
+ , ui(new Ui::ToolEditorForm)
  , model(new QSqlQueryModel)
  , edCount(21)
  , tabOrder(new QWidget*[edCount]) {

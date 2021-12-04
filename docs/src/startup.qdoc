@@ -7,7 +7,11 @@
 \title    Userguide
 \subtitle Startup Sequence
 \ingroup  userguide
-\section1 common start of \b {FalconView} is as display app of \e {linuxCNC}.
+\section1 Integrate into \e {linuxCNC}
+
+          To control a CNC machine, you need \e {of cause \b {linuxCNC}}.
+          \e {linuxCNC} is configured by an ini-file. That's the place to
+          integrate \b {FalconView} into \e {linuxCNC}.
 
           Configuration-file of \e {linuxCNC} has a section \b {[DISPLAY]} with an entry
 \list
@@ -17,8 +21,11 @@
 \list
    \li    Display = FalconView
 \endlist
-          Starting \b {FalconView} as part of \e {LinuxCNC} will start the application
-          like this
+
+\section1 Start
+          \e {linuxCNC} has a startup-script called "linuxcnc". Select the ini-file
+          for your machine and if you edited that file to start \b {FalconView} it
+          will come up like this
 
 \image    FV001.jpg
 

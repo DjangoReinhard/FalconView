@@ -6,6 +6,7 @@
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
 #include <canonif.h>
+#include <jogview.h>
 #include <AIS_ViewCube.hxx>
 #include <AIS_InteractiveContext.hxx>
 #include <toolstatus.h>
@@ -27,6 +28,8 @@
 
 PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent)
  : TestEdit(fileName, parent)
+ , frame(nullptr)
+ , jp(nullptr)
  , view3D(view)
  , posStat(nullptr)
  , ccStat(nullptr)
@@ -37,18 +40,19 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool s
   setWindowTitle(PreViewEditor::className);
   }
 
+
 QWidget* PreViewEditor::createContent() {
   TestEdit::createContent();
   spV = new QSplitter(Qt::Vertical);
   view3D->setMinimumSize(400, 400);
-  QFrame* frame = findChild<QFrame*>("Frame");
-
+  frame = findChild<QFrame*>("GCodeEditorForm");
   spV->addWidget(view3D);
   spV->addWidget(frame);
   ed->setWordWrapMode(QTextOption::NoWrap);
   ed->setReadOnly(true);
   pbOpen->hide();
   pbSave->hide();
+  jp = new JogView();
   ValueManager().setValue("fileName", "janeDoe");
   createDecorations(view3D, statusInPreview);
   Config cfg;
@@ -141,5 +145,19 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   Core().setAppMode(ApplicationMode::Auto);
   }
 
+
+void PreViewEditor::toggleSub() {
+  QWidget* oldSub = spV->widget(1);
+  QWidget* old;
+
+  if (oldSub == frame) {
+     jp->initialize();
+     old = spV->replaceWidget(1, jp);
+     }
+  else {
+     old = spV->replaceWidget(1, frame);
+     }
+  qDebug() << "old widget: " << old;;
+  }
 
 const QString PreViewEditor::className = "3D Preview";

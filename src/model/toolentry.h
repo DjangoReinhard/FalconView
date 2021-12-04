@@ -5,6 +5,7 @@
 #ifdef toLine
 #undef toLine
 #endif
+class QTextStream;
 
 
 /**
@@ -31,6 +32,7 @@ public:
   int              slot() const        { return canon.pocketno; }
   int              lineNum() const     { return serial; }
   CANON_TOOL_TABLE toCanon() const     { return canon; }
+  QString          toLine() const;
   void             dump() const;
 
   void setLength(double l);

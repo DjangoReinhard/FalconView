@@ -13,7 +13,10 @@
             </section>
         </toc>
         <keywords>
-            <keyword name="fileManager" id="fileManager" ref="fileManager.html"/>
+            <keyword name="FileManager" id="fileManager" ref="filemanager.html"/>
+            <keyword name="Start" id="start" ref="startup.html"/>
+            <keyword name="Reference" id="reference" ref="reference.html"/>
+            <keyword name="Use" id="use" ref="usage.html"/>
         </keywords>
         <files>
             <file>*.html</file>

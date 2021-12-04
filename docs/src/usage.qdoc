@@ -27,14 +27,14 @@
      \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
      \li  select \e {Fixture} - press key \e {ALT+2}
 
-          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+\note     select tabs of the settings-notebook by \e {ALT} + the number of the tab.
 
 \inlineimage Fixtures.jpg
 
      \li \e {Fixture-Manager} contains 10 editors for coordinate system origins. \b {G54}
-         is the first, so enable it by \e {CTRL+1}.
-     \li Within the right fixture editor, use \e {TAB} to select the axis, you'd like to
-         change. Enter the number you'd like to see in position display and press \e {ENTER}.
+          is the first, so enable it by \e {CTRL+1}.
+     \li  Within the right fixture editor, use \e {TAB} to select the axis, you'd like to
+          change. Enter the number you'd like to see in position display and press \e {ENTER}.
 \endlist
 
 \section1 manage actual tools for the job
@@ -42,7 +42,7 @@
      \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
      \li  select \e {LCTools} - press key \e {ALT+4}
 
-          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+\note     select tabs of the settings-notebook by \e {ALT} + the number of the tab.
 
 \inlineimage LCTools.jpg
 \endlist
@@ -52,7 +52,7 @@
      \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
      \li  select \e {ToolManager} - press key \e {ALT+1}
 
-          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+\note     select tabs of the settings-notebook by \e {ALT} + the number of the tab.
 
 \inlineimage ToolMgr.jpg
 \endlist
@@ -62,7 +62,7 @@
      \li  turn application into settings mode \inlineimage SK_Settings.png [F9].
      \li  select \e {Preferences} - press key \e {ALT+3}
 
-          Note: select tabs of the settings-notebook by \e {ALT} + the number of the tab.
+\note     select tabs of the settings-notebook by \e {ALT} + the number of the tab.
 
 \inlineimage Settings.jpg
 

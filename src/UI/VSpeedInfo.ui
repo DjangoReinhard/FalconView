@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Frame</class>
- <widget class="QFrame" name="Frame">
+ <class>VSpeedInfoForm</class>
+ <widget class="QFrame" name="VSpeedInfoForm">
   <property name="geometry">
    <rect>
     <x>0</x>

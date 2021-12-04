@@ -6,7 +6,7 @@ class QLineEdit;
 class AxisMask;
 
 
-class FixtureEdit : public DynCenterWidget // , protected Ui_frame
+class FixtureEdit : public DynCenterWidget
 {
 public:
   FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent = nullptr);
@@ -24,9 +24,9 @@ protected:
   void setupUi(DynCenterWidget* parent);
 
 private:
-  Ui::frame*        ui;
-  int               ordinal;
-  QList<QLineEdit*> edits;
-  const AxisMask&   m;
+  Ui::FixtureEditorForm* ui;
+  int                    ordinal;
+  QList<QLineEdit*>      edits;
+  const AxisMask&        m;
   };
 #endif // FIXTUREEDIT_H

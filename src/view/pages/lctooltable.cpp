@@ -47,6 +47,14 @@ LCToolTable::~LCToolTable() {
 
 
 void LCToolTable::connectSignals() {
+  connect(Core().toolTableModel(), &QAbstractTableModel::dataChanged, this, &LCToolTable::modelChanged);
+  }
+
+
+void LCToolTable::modelChanged() {
+  model->setDirty();
+  Core().showAllButCenter(false);
+  emit dataChanged(this, true);
   }
 
 
@@ -58,8 +66,12 @@ void LCToolTable::keyPressEvent(QKeyEvent *e) {
   switch (e->key()) {
     case Qt::Key_F10:
          qDebug() << "LCToolTable::keyPressEvent (F10)";
-         //TODO: save tooltable changes ...
-         model->save();
+
+         if (model->save()) {
+            model->setDirty(false);
+            Core().showAllButCenter(true);
+            emit dataChanged(this, false);
+            }
          e->accept();
          break;
     default:

@@ -25,6 +25,7 @@ public:
   QString         helpFilename() const;
   const AxisMask& axisMask() const;
   bool            isLatheMode() const;
+  bool            isSimulator() const;
   DBConnection*   databaseConnection();
   MainWindow*     mainWindow();
   void            activatePage(const QString& pageName);

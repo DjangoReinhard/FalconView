@@ -106,6 +106,7 @@
     <addaction name="action3D_View"/>
     <addaction name="separator"/>
     <addaction name="actionDockables"/>
+    <addaction name="actionJog_Simulator"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -246,6 +247,11 @@
    </property>
    <property name="shortcut">
     <string notr="true">Alt+A</string>
+   </property>
+  </action>
+  <action name="actionJog_Simulator">
+   <property name="text">
+    <string>Jog-Simulator</string>
    </property>
   </action>
  </widget>

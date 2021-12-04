@@ -27,8 +27,9 @@ public:
   QString          fileName() const { return fn; }
   int              entries() const;
   void             dump();
-  void             save();
+  bool             save();
   void             setCurrent(int lineNum);
+  void             setDirty(bool dirty = true);
   void             setLatheMode(bool latheMode)  { this->latheMode = latheMode; }
   QList<ToolEntry*>::Iterator begin()            { return tools.begin(); }
   QList<ToolEntry*>::Iterator end()              { return tools.end();   }
@@ -42,14 +43,11 @@ public:
   QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
   Qt::ItemFlags flags(const QModelIndex &index) const override;
   bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
-//  bool insertRows(int position, int rows, const QModelIndex &index = QModelIndex()) override;
-//  bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
-
 
 protected:
+  void addTool(const ToolEntry& tool);
   void processFile(QFile& file);
   void processLine(int lineNum, const QString& line);
-  void addTool(const ToolEntry& tool);
 
 private:
   QMap<int, ToolEntry*> mappedTools;
@@ -57,5 +55,6 @@ private:
   ToolEntry             curTool;
   QString               fn;
   bool                  latheMode;
+  bool                  dirty;
   };
 #endif // TOOLTABLE_H

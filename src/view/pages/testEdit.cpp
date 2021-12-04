@@ -26,7 +26,6 @@ TestEdit::TestEdit(const QString& fileName, QWidget* parent)
  , fn(nullptr) {
   setObjectName(TestEdit::className);
   setWindowTitle(TestEdit::className);
-  this->setStyleSheet("background: 0xFF0000;");
   }
 
 

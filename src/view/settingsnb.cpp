@@ -1,6 +1,8 @@
 #include <settingsnb.h>
 #include <core.h>
+#include <valuemanager.h>
 #include <QVBoxLayout>
+#include <QVariant>
 #include <QTabWidget>
 #include <QKeyEvent>
 #include <QTabBar>
@@ -36,10 +38,12 @@ void SettingsNotebook::addPage(DynCenterWidget* page) {
   assert(page);
   page->initialize();
   page->installEventFilter(this);
+  connect(page, &DynCenterWidget::dataChanged, this, &SettingsNotebook::pageChanged);
 
   //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
   tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
   }
+
 
 bool SettingsNotebook::eventFilter(QObject *obj, QEvent *event) {
   if (event->type() == QEvent::KeyPress) {
@@ -72,6 +76,32 @@ bool SettingsNotebook::eventFilter(QObject *obj, QEvent *event) {
 
 void SettingsNotebook::connectSignals() {
   connect(tw, &QTabWidget::currentChanged, this, &SettingsNotebook::currentChanged);
+  connect(ValueManager().getModel("showAllButCenter"), &ValueModel::valueChanged
+        , this, &SettingsNotebook::enableTabs);
+  }
+
+
+void SettingsNotebook::enableTabs(const QVariant& var) {
+  bool enable = var.toBool();
+
+  for (int i=0; i < tw->tabBar()->count(); ++i)
+      tw->tabBar()->setTabEnabled(i, enable);
+  }
+
+
+void SettingsNotebook::pageChanged(DynCenterWidget* page, const QVariant &dirty) {
+  int n = tw->currentIndex();
+
+  if (tw->currentWidget() != page) {
+     for (int i=0; i < tw->count(); ++i) {
+         if (tw->widget(i) == page) {
+            n = i;
+            break;
+            }
+         }
+     }
+  if (dirty.toBool()) tw->setTabText(n, QString("  *") + page->windowTitle() + "  ");
+  else                tw->setTabText(n, QString("  ") + page->windowTitle() + "  ");
   }
 
 

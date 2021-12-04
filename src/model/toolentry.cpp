@@ -1,19 +1,13 @@
 #include <toolentry.h>
 #include <QDebug>
+#include <cstring>
 
 
 ToolEntry::ToolEntry()
  : desc("")
  , serial(-1)
  , dirty(false) {
-  canon.toolno        = 0;
-  canon.pocketno      = 0;
-  canon.diameter      = 0;
-  canon.frontangle    = 0;
-  canon.backangle     = 0;
-  canon.orientation   = 1;
-  canon.offset.tran.z = 0;
-  canon.offset.tran.x = 0;
+  memset(&canon, 0, sizeof(canon));
   }
 
 
@@ -21,6 +15,7 @@ ToolEntry::ToolEntry(int number, double length, double x, double diameter, int q
  : desc(description)
  , serial(lineNum)
  , dirty(false) {
+  memset(&canon, 0, sizeof(canon));
   canon.offset.tran.z = length;
   canon.offset.tran.x = x;
   canon.toolno        = number;
@@ -36,27 +31,13 @@ ToolEntry::ToolEntry(const ToolEntry& other)
  : desc(other.desc)
  , serial(other.serial)
  , dirty(other.dirty) {
-  canon.toolno        = other.canon.toolno;
-  canon.pocketno      = other.canon.pocketno;
-  canon.offset.tran.z = other.canon.offset.tran.z;
-  canon.offset.tran.x = other.canon.offset.tran.x;
-  canon.diameter      = other.canon.diameter;
-  canon.frontangle    = other.canon.frontangle;
-  canon.backangle     = other.canon.backangle;
-  canon.orientation   = other.canon.orientation;
+  memcpy(&canon, &other.canon, sizeof(canon));
   }
 
 
 ToolEntry& ToolEntry::operator=(const ToolEntry &other) {
   desc                = other.desc;
-  canon.toolno        = other.canon.toolno;
-  canon.pocketno      = other.canon.pocketno;
-  canon.offset.tran.z = other.canon.offset.tran.z;
-  canon.offset.tran.x = other.canon.offset.tran.x;
-  canon.diameter      = other.canon.diameter;
-  canon.frontangle    = other.canon.frontangle;
-  canon.backangle     = other.canon.backangle;
-  canon.orientation   = other.canon.orientation;
+  memcpy(&canon, &other.canon, sizeof(canon));
   serial              = other.serial;
   dirty               = other.dirty;
 
@@ -117,4 +98,30 @@ void ToolEntry::setBackAngle(double a) {
 void ToolEntry::setDescription(const QString &s) {
   desc = s;
   dirty = true;
+  }
+
+
+QString ToolEntry::toLine() const {
+  QString rv;
+
+  rv += QString("T%1").arg(canon.toolno);
+  rv += QString(" P%1").arg(canon.pocketno);
+  if (canon.offset.tran.x) rv += QString(" X%1").arg(canon.offset.tran.x, 0, 'f', 3);
+  if (canon.offset.tran.y) rv += QString(" Y%1").arg(canon.offset.tran.y, 0, 'f', 3);
+  rv += QString(" Z%1").arg(canon.offset.tran.z, 0, 'f', 3);
+  rv += QString(" D%1").arg(canon.diameter, 0, 'f', 3);
+  if (canon.offset.a) rv += QString(" A%1").arg(canon.offset.a, 0, 'f', 3);
+  if (canon.offset.b) rv += QString(" B%1").arg(canon.offset.b, 0, 'f', 3);
+  if (canon.offset.c) rv += QString(" C%1").arg(canon.offset.c, 0, 'f', 3);
+  if (canon.offset.u) rv += QString(" U%1").arg(canon.offset.u, 0, 'f', 3);
+  if (canon.offset.v) rv += QString(" V%1").arg(canon.offset.v, 0, 'f', 3);
+  if (canon.offset.w) rv += QString(" W%1").arg(canon.offset.w, 0, 'f', 3);
+  if (canon.frontangle) rv += QString(" I%1").arg(canon.frontangle, 0, 'f', 3);
+  if (canon.backangle) rv += QString(" J%1").arg(canon.backangle, 0, 'f', 3);
+  if (canon.orientation) rv += QString(" Q%1").arg(canon.orientation);
+  rv += " ;";
+  rv += desc;
+  rv += "\n";
+
+  return rv;
   }

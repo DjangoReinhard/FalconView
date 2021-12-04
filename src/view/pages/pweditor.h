@@ -13,6 +13,7 @@ class PositionStatus;
 class CurCodesStatus;
 class ToolStatus;
 class SpeedStatus;
+class JogView;
 
 
 class PreViewEditor : public TestEdit
@@ -21,6 +22,9 @@ class PreViewEditor : public TestEdit
 public:
   static const QString className;
   PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent = nullptr);
+
+public slots:
+  void toggleSub();
 
 protected:
   virtual void connectSignals() override;
@@ -35,6 +39,8 @@ protected slots:
 
 private:
   QSplitter*        spV;
+  QWidget*          frame;
+  JogView*          jp;
   OcctQtViewer*     view3D;
   PositionStatus*   posStat;
   CurCodesStatus*   ccStat;

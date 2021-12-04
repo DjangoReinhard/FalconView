@@ -21,6 +21,9 @@ public:
   virtual void closeEvent(QCloseEvent*) override;
   virtual QWidget* createContent() override;
 
+protected slots:
+  void modelChanged();
+
 private:
   QTableView*            table;
   ToolTable*             model;

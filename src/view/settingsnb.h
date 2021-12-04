@@ -3,6 +3,7 @@
 #include <dyncenterwidget.h>
 #include <QTabWidget>
 class QCloseEvent;
+class QVariant;
 
 
 class SettingsNotebook : public DynCenterWidget
@@ -24,8 +25,12 @@ protected:
   virtual bool eventFilter(QObject *obj, QEvent *event) override;
   QString loadStyles(QTabWidget::TabPosition tp);
   virtual QWidget* createContent() override;
+  void pageChanged(DynCenterWidget* page, const QVariant& dirty);
   bool switchTabPage(int pageIndex);
   void currentChanged(int index);
+
+protected slots:
+  void enableTabs(const QVariant& enable);
 
 private:
   QTabWidget* tw;

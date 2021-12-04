@@ -15,30 +15,27 @@ class DynCenterWidget : public QWidget
 {
   Q_OBJECT
 public:
-  void     initialize();
+  void     initialize();  // offline initialization!
   QAction* viewAction();
 
-  /*! called by central widget stack */
+  // called by central widget stack
   virtual void closeEvent(QCloseEvent* e) override;
   virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void keyReleaseEvent(QKeyEvent* e) override;
 
+signals:
+  void dataChanged(DynCenterWidget* w, const QVariant& changed);
+
 protected:
   DynCenterWidget(const QString& fileName, const QString& name, bool addScrollArea = false, QWidget* parent = nullptr);
 
-  /*! default is: load content from given filename - will be called from initialize */
-  virtual QWidget* createContent();
-
-  /*! connect signals/slots offline - called by addPage */
-  virtual void connectSignals() = 0;
-
-  /*! style the child widgets offline - called by addPage */
-  virtual void updateStyles()   = 0;
+  virtual QWidget* createContent();  // default: load content from given filename
+  virtual void connectSignals() = 0; // called by initialize
+  virtual void updateStyles()   = 0; // called by initialize
 
 private:
   QAction*     vAction;
   QString      fileName;
   bool         addScrollArea;
-//  friend class SettingsNotebook;
   };
 #endif // DYNCENTERWIDGET_H

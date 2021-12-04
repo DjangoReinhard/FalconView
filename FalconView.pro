@@ -1,5 +1,5 @@
 TEMPLATE = app
-QT += core gui uitools sql xml help
+QT += core gui gui-private uitools sql xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -74,6 +74,7 @@ SOURCES += \
     src/util/Geom_HelixData.cpp \
     src/util/graphicfactory.cpp \
     src/util/greatercondition.cpp \
+    src/util/helpengine.cpp \
     src/util/HelixCurveAdaptor_CylinderEvaluator.cpp \
     src/util/HelixCurveAdaptor.cpp \
     src/util/HHelixCurveAdaptor.cpp \
@@ -87,10 +88,12 @@ SOURCES += \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
     src/util/truecondition.cpp \
+    src/view/helpcontentwidget.cpp \
     src/view/helpdialog.cpp \
+    src/view/helpkeywordwidget.cpp \
     src/view/pages/filemanager.cpp \
     src/view/pages/fixturemanager.cpp \
-    src/view/pages/helpbrowser.cpp \
+    src/view/pages/jogview.cpp \
     src/view/pages/lctooltable.cpp \
     src/view/pages/patheditor.cpp \
     src/view/pages/preferenceseditor.cpp \
@@ -108,6 +111,7 @@ SOURCES += \
     src/view/dynframe.cpp \
     src/view/fixtureedit.cpp \
     src/view/gcodeeditor.cpp \
+    src/view/htmlbrowser.cpp \
     src/view/occtviewer.cpp \
     src/view/settingsnb.cpp \
     src/view/tooleditor.cpp \
@@ -160,6 +164,7 @@ HEADERS += \
     src/util/Geom_HelixData.h \
     src/util/graphicfactory.h \
     src/util/greatercondition.h \
+    src/util/helpengine.h \
     src/util/HelixCurveAdaptor_CylinderEvaluator.h \
     src/util/HelixCurveAdaptor_p.h \
     src/util/HelixCurveAdaptor.h \
@@ -174,10 +179,12 @@ HEADERS += \
     src/util/smallercondition.h \
     src/util/timestamp.h \
     src/util/truecondition.h \
+    src/view/helpcontentwidget.h \
     src/view/helpdialog.h \
+    src/view/helpkeywordwidget.h \
     src/view/pages/filemanager.h \
     src/view/pages/fixturemanager.h \
-    src/view/pages/helpbrowser.h \
+    src/view/pages/jogview.h \
     src/view/pages/lctooltable.h \
     src/view/pages/patheditor.h \
     src/view/pages/preferenceseditor.h \
@@ -193,14 +200,18 @@ HEADERS += \
     src/view/dyncenterwidget.h \
     src/view/dyndockable.h \
     src/view/dynframe.h \
-    src/view/gcodeeditor.h \
     src/view/fixtureedit.h \
+    src/view/gcodeeditor.h \
+    src/view/htmlbrowser.h \
     src/view/occtviewer.h \
     src/view/settingsnb.h \
     src/view/tooleditor.h \
 
 FORMS += \
     src/UI/HCurCodes.ui \
+    src/UI/HelpTitle.ui \
+    src/UI/Jog.ui \
+    src/UI/Jog2.ui \
     src/UI/VCurCodes.ui \
     src/UI/GCodeEditor.ui \
     src/UI/mainwindow.ui \

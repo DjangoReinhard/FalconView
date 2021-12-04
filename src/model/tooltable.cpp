@@ -30,7 +30,6 @@ ToolTable::ToolTable(const ToolTable&& other)
 
 
 ToolTable::~ToolTable() {
-  //TODO:
   }
 
 
@@ -46,6 +45,7 @@ ToolTable& ToolTable::operator=(const ToolTable&& other) {
 
 void ToolTable::processFile(QFile& file) {
   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+     if (fn.isEmpty()) fn = file.fileName();
      qDebug() << "ToolTable::processFile(" << file.fileName() << ")";
      QTextStream in(&file);
      QString line    = in.readLine();
@@ -55,15 +55,33 @@ void ToolTable::processFile(QFile& file) {
            processLine(++lineNum, line);
            line = in.readLine();
            }
+     file.close();
      }
   }
 
 
-void ToolTable::save() {
+bool ToolTable::save() {
   qDebug() << "ToolTable::save() - >" << fn << "<";
-  for (auto t : qAsConst(tools)) {
-      qDebug() << t->number() << "at #" << t->lineNum();
-      }
+  if (!QFile::rename(fn, fn + ".bak")) return false;
+  QFile file(fn);
+
+  if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+
+     for (auto t : qAsConst(tools)) {
+         qDebug() << t->number() << "at #" << t->lineNum();
+         if (!file.write(t->toLine().toStdString().c_str())) return false;
+         }
+     file.flush();
+     file.close();
+
+     return true;
+     }
+  return false;
+  }
+
+
+void ToolTable::setDirty(bool dirty) {
+  this->dirty = dirty;
   }
 
 
