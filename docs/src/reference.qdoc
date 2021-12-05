@@ -13,7 +13,7 @@
           the 3D Preview or whatever controls that require user interaction.
      \li  The \b {blue areas} are toolbars. Each toolbar can be moved around and placed wherever
           you want around the center area.
-     \li  The \b {green aras} are information addons, so called dockables. As with toolbars,
+     \li  The \b {green areas} are information addons, so called dockables. As with toolbars,
           dockables can be moved around the center area and placed wherever you want.
           Dockable can be put over each other, then a notebook is created on the fly.
 \endlist

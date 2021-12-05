@@ -12,13 +12,14 @@
 
 
 ToolStatus::ToolStatus(const QString & fileName, QWidget* parent)
- : DynCenterWidget(fileName, tr("ToolInfo"), parent)
+ : DynCenterWidget(fileName, "ToolStatus", parent)
  , curTool(nullptr)
  , nxtTool(nullptr)
  , tlDesc(nullptr)
  , tlLen(nullptr)
  , tlRad(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
+  setWindowTitle(tr("ToolStatus"));
   }
 
 
@@ -34,6 +35,7 @@ QWidget* ToolStatus::createContent() {
   tlRad   = new LabelAdapter(findChild<QLabel*>("toolRadius"));
   curTool = new LabelAdapter(findChild<QLabel*>("curToolNum"), 0);
   nxtTool = new LabelAdapter(findChild<QLabel*>("nextToolNum"), 0);
+//  tlDesc->setText(tr(tlDesc->text().toStdString().c_str(), "ToolInfoForm"));
 
   return rv;
   }
@@ -47,8 +49,8 @@ void ToolStatus::toolChanged(const QVariant& toolNum) {
   te->dump();
   qDebug() << "< ToolInfoDockable::toolChanged(" << toolNum << ")";
   curTool->setValue(toolNum);
-  tlLen->setValue(te->length());
-  tlRad->setValue(te->diameter() / 2.0);
+  tlLen->setValue(tr("L: %1").arg(te->length()));
+  tlRad->setValue(tr("D: %1").arg(te->diameter() / 2.0));
   tlDesc->setText(te->description());
   }
 

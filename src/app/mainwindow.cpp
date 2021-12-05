@@ -46,6 +46,8 @@
 #include <QToolButton>
 #include <QVariant>
 #include <valuemanager.h>
+#include <Standard_Version.hxx>
+#include <config.h>
 
 
 MainWindow::MainWindow(bool statusInPreview, QWidget *parent)
@@ -408,7 +410,7 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
   switch (m) {
     case Auto:        Core().activatePage(PreViewEditor::className); break;
     case MDI:         Core().activatePage(tr("mdiView")); break;
-    case Manual:      Core().activatePage(tr("manualJogView")); break;
+    case Manual:      Core().activatePage(JogView::className); break;
     case Edit:        Core().activatePage(PathEditor::className); break;
     case Wheel:       Core().activatePage(tr("Wheely")); break;
     case XEdit:       Core().activatePage(TestEdit::className); break;
@@ -421,10 +423,25 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
 
 
 void MainWindow::about() {
+  QString glInfo = Core().view3D()->getGlInfo();
+
+  if (glInfo.isEmpty()) glInfo = tr("You need to switch to 3D-preview "
+                                    "at least once to get this information.");
+  else                  glInfo.replace("\n", "</li><li>");
   QMessageBox::about(this
                    , tr("About FalconView")
-                   , tr("<h3>FalconView</h3><p>is an application to manage machines "
-                        "controlled by linuxCNC.</p>"));
+                   , tr("<h3>FalconView</h3><p>is an application to manage "
+                        "machines controlled by linuxCNC.</p>"
+                        "<p>FalconView uses external components:<ul>"
+                        "<li><a href=\"%1\">linuxCNC v.%2</a></li>"
+                        "<li><a href=\"%3\">Open CASCADE Technology v.%4</a></li>"
+                        "<li><a href=\"%5\">Qt Toolkit v.%6</a></li></ul></p>"
+                        "<hl/><p>GL capabilities: <ul><li>%7</li></ul></p>")
+                       .arg("https://github.com/LinuxCNC/linuxcnc", PACKAGE_VERSION)
+                       .arg("https://dev.opencascade.org/release", OCC_VERSION_STRING_EXT)
+                      .arg("https://www.qt.io/download", QLatin1String(QT_VERSION_STR))
+                       .arg(glInfo)
+                       .toStdString().c_str());
   }
 
 
@@ -536,17 +553,17 @@ void MainWindow::createDockables(DBConnection&) {
 
   if (!statusInPreview) {
      addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(new ToolStatus(":/src/UI/ToolInfo.ui")
-                               , this));
-     addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(new CurCodesStatus(":/src/UI/HCurCodes.ui")
-                               , this));
-     addDockable(Qt::LeftDockWidgetArea
                , new DynDockable(new PositionStatus(":/src/UI/Position.ui"
                                                   , Core().axisMask())
                                , this));
+     addDockable(Qt::LeftDockWidgetArea
+               , new DynDockable(new ToolStatus(":/src/UI/ToolInfo.ui")
+                               , this));
      addDockable(Qt::BottomDockWidgetArea
                , new DynDockable(new SpeedStatus(":/src/UI/HSpeedInfo.ui")
+                               , this));
+     addDockable(Qt::LeftDockWidgetArea
+               , new DynDockable(new CurCodesStatus(":/src/UI/HCurCodes.ui")
                                , this));
      }
   dlgHelp = new HelpDialog(this);
@@ -699,13 +716,13 @@ void MainWindow::stopSpindle() {
 
 
 void MainWindow::setAppMode(ApplicationMode am) {
+  ValueManager().setValue("appMode", am);
   if (am == ApplicationMode::Auto)
      Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
   else if (am == ApplicationMode::MDI)
      Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
   else
      Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
-  ValueManager().setValue("appMode", am);
   }
 
 
@@ -745,22 +762,22 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
     case Qt::Key_F12:
          if (modeTB->isVisible()) {
             qDebug() << "mode toolbar is visible";
+            switch (e->key()) {
+              case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
+              case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
+              case Qt::Key_F4:  ValueManager().setValue("appMode", ApplicationMode::MDI); break;
+              case Qt::Key_F5:  ValueManager().setValue("appMode", ApplicationMode::XEdit); break;
+              case Qt::Key_F6:  ValueManager().setValue("appMode", ApplicationMode::Wheel); break;
+              case Qt::Key_F7:  ValueManager().setValue("appMode", ApplicationMode::Manual); break;
+              case Qt::Key_F8:  ValueManager().setValue("appMode", ApplicationMode::Touch); break;
+              case Qt::Key_F9:  ValueManager().setValue("appMode", ApplicationMode::Settings); break;
+              case Qt::Key_F10: ValueManager().setValue("appMode", ApplicationMode::ErrMessages); break;
+              }
             e->accept();
+            break;
             }
-         else {
-            qDebug() << "mode toolbar is NOT visible";
-            }
-//        autoMode->setShortcut(Qt::Key_F3);
-//        editMode->setShortcut(Qt::Key_F2);
-//        mdiMode->setShortcut(Qt::Key_F4);
-//        testEditMode->setShortcut(Qt::Key_F5);
-//        wheelMode->setShortcut(Qt::Key_F6);
-//        jogMode->setShortcut(Qt::Key_F7);
-//        touchMode->setShortcut(Qt::Key_F8);
-//        cfgMode->setShortcut(Qt::Key_F9);
-//        msgMode->setShortcut(Qt::Key_F10);
-//         e->accept();
-//         break;
+         else qDebug() << "mode toolbar is NOT visible";
+
     default:
          qDebug() << "MW: pressed key: " << e->key()
                   << "modifiers: "   << e->modifiers()

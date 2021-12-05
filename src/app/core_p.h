@@ -20,6 +20,7 @@ class DBHelper;
 class MainWindow;
 class SysEvent;
 class QHelpEngineCore;
+//class QTranslator;
 class QString;
 class QFile;
 
@@ -86,6 +87,7 @@ private:
   CommandWriter*      commandWriter;
   QBasicTimer         timer;
   QThread             backendCommThread;
+//  QTranslator*        translator;
   SysEventModel*      tmSysEvents;
   QHelpEngineCore*    helpEngine;
   bool                simulator;

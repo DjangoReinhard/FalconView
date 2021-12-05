@@ -15,11 +15,12 @@ class QModelIndex;
  */
 class ToolTable : public QAbstractTableModel
 {
+  Q_OBJECT
 public:
-  ToolTable(const QString& fileName = QString());
-  ToolTable(QFile& file);
-  ToolTable(const ToolTable&& other);
- ~ToolTable();
+  explicit ToolTable(const QString& fileName = QString());
+  explicit ToolTable(QFile& file);
+  explicit ToolTable(const ToolTable&& other);
+  virtual ~ToolTable();
 
   ToolTable&       operator = (const ToolTable&& other);
   const ToolEntry& current() const  { return curTool; }

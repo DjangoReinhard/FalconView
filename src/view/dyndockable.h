@@ -14,8 +14,6 @@ public:
   void initialize();
 
 protected:
-//  virtual void closeEvent(QCloseEvent* e) override;
-
   static const int DockingTitleHeight = 39;
 
 private:

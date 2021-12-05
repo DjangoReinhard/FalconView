@@ -11,7 +11,7 @@
 
 
 SpeedStatus::SpeedStatus(const QString& fileName, QWidget* parent)
- : DynCenterWidget(fileName, tr("SpeedInfo"), false, parent)
+ : DynCenterWidget(fileName, "SpeedStatus", false, parent)
  , curFeed(nullptr)
  , curFastFeed(nullptr)
  , curSpeed(nullptr)
@@ -25,6 +25,7 @@ SpeedStatus::SpeedStatus(const QString& fileName, QWidget* parent)
  , slFastFeed(nullptr)
  , slSpeed(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
+  setWindowTitle(tr("SpeedStatus"));
   }
 
 

@@ -25,7 +25,7 @@ TestEdit::TestEdit(const QString& fileName, QWidget* parent)
  : DynCenterWidget(fileName, TestEdit::className, false, parent)
  , fn(nullptr) {
   setObjectName(TestEdit::className);
-  setWindowTitle(TestEdit::className);
+  setWindowTitle(tr("TestEdit"));
   }
 
 

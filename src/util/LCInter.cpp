@@ -127,7 +127,10 @@ void LCInterface::parseInline(const QString& fileName) {
             if (!(!rv || rv == 2)) break;
             }
       if (rv > INTERP_MIN_ERROR) {
-         msg = QString("Error #") + QString::number(rv) + " - interpreter failed to execute line " + QString::number(lineCodes.gCodes[0]);
+         msg = QString("Error #") + QString::number(rv)
+                     + " - interpreter failed to execute line "
+                     + QString::number(lineCodes.gCodes[0])
+                     + " (" + QString::number(lineNumber) + ")";
          }
       pInter->close();
       return;

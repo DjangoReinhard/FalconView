@@ -9,7 +9,7 @@
 DynDockable::DynDockable(DynCenterWidget* cw, QWidget* parent)
  : QDockWidget(cw->windowTitle(), parent)
  , centerWidget(cw) {
-  setObjectName(cw->windowTitle());
+  setObjectName(QString("%1Dockable").arg(cw->objectName()));
   setWidget(cw);
   setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
   }

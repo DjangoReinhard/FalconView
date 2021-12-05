@@ -249,8 +249,11 @@ void FileManager::keyReleaseEvent(QKeyEvent* e) {
             if (file2Copy) {
                QMessageBox::StandardButton reply = QMessageBox::critical(this
                                                                        , tr("QMessageBox::critical()")
-                                                                       , QString(tr("There is already file %1 marked for copy. Do you "
-                                                                            "want to abort that copy operation and start a new copy?")).arg(file2Copy->absoluteFilePath())
+                                                                       , QString(tr("There is already file %1 "
+                                                                                    "marked for copy. Do you "
+                                                                                    "want to abort that copy "
+                                                                                    "operation and start a new copy?"))
+                                                                                .arg(file2Copy->absoluteFilePath())
                                                                        , QMessageBox::Yes | QMessageBox::No);
 
                if (reply == QMessageBox::Yes) {
@@ -259,8 +262,10 @@ void FileManager::keyReleaseEvent(QKeyEvent* e) {
 
                   QMessageBox::information(this
                                          , tr("QMessageBox::information()")
-                                         , QString(tr("file %1 has been marked for copy. To finish copy operation "
-                                                      "goto desired destination directory and press Enter")).arg(file2Copy->absoluteFilePath()));
+                                         , QString(tr("file %1 has been marked for copy. "
+                                                      "To finish copy operation goto "
+                                                      "desired destination directory "
+                                                      "and press [Enter].")).arg(file2Copy->absoluteFilePath()));
                   }
                }
             else {
@@ -268,8 +273,10 @@ void FileManager::keyReleaseEvent(QKeyEvent* e) {
 
                QMessageBox::information(this
                                       , tr("QMessageBox::information()")
-                                      , QString(tr("file %1 has been marked for copy. To finish copy operation "
-                                                   "goto desired destination directory and press Enter")).arg(file2Copy->absoluteFilePath()));
+                                      , QString(tr("file %1 has been marked for copy. To "
+                                                   "finish copy operation goto desired "
+                                                   "destination directory and press [Enter]."))
+                                               .arg(file2Copy->absoluteFilePath()));
                }
             dirs->setFocus();
             } break;
@@ -283,8 +290,12 @@ void FileManager::keyReleaseEvent(QKeyEvent* e) {
             if (file2Move) {
                QMessageBox::StandardButton reply = QMessageBox::critical(this
                                                                        , tr("QMessageBox::critical()")
-                                                                       , QString(tr("There is already file %1 marked for move. Do you "
-                                                                            "want to abort that move operation and start a new move?")).arg(file2Move->absoluteFilePath())
+                                                                       , QString(tr("There is already file %1 "
+                                                                                    "marked for move. Do you "
+                                                                                    "want to abort that move "
+                                                                                    "operation and start a "
+                                                                                    "new move?"))
+                                                                                .arg(file2Move->absoluteFilePath())
                                                                        , QMessageBox::Yes | QMessageBox::No);
 
                if (reply == QMessageBox::Yes) {
@@ -292,8 +303,10 @@ void FileManager::keyReleaseEvent(QKeyEvent* e) {
                   file2Move = new QFileInfo(fi.absoluteFilePath());
                   QMessageBox::information(this
                                          , tr("QMessageBox::information()")
-                                         , QString(tr("file %1 has been marked for move. To finish move operation "
-                                                      "goto desired destination directory and press Enter")).arg(file2Move->absoluteFilePath()));
+                                         , QString(tr("file %1 has been marked for move. To "
+                                                      "finish move operation goto desired "
+                                                      "destination directory and press [Enter]."))
+                                                  .arg(file2Move->absoluteFilePath()));
                   }
                }
             else {
@@ -301,8 +314,10 @@ void FileManager::keyReleaseEvent(QKeyEvent* e) {
 
                QMessageBox::information(this
                                       , tr("QMessageBox::information()")
-                                      , QString(tr("file %1 has been marked for move. To finish move operation "
-                                                   "goto desired destination directory and press Enter")).arg(file2Move->absoluteFilePath()));
+                                      , QString(tr("file %1 has been marked for move. To "
+                                                   "finish move operation goto desired "
+                                                   "destination directory and press Enter"))
+                                               .arg(file2Move->absoluteFilePath()));
                }
             dirs->setFocus();
             }
@@ -343,6 +358,5 @@ void FileManager::selectionChanged(const QItemSelection& selected, const QItemSe
      preView->setPlainText(tr("<p>no textfile</p>"));
      }
   }
-
 
 const QString FileManager::className = "FileManager";

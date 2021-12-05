@@ -10,7 +10,7 @@ DynFrame::DynFrame(DynCenterWidget* cw, bool visualFrame, QWidget *parent)
  : QWidget(parent)
  , frame(nullptr)
  , dcw(cw) {
-  setObjectName(cw->windowTitle());
+  setObjectName(QString("%1Frame").arg(cw->objectName()));
   setWindowTitle(cw->windowTitle());
   setLayout(new QVBoxLayout);
   layout()->setContentsMargins(0, 0, 0, 0);

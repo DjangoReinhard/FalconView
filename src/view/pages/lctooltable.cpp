@@ -74,6 +74,18 @@ void LCToolTable::keyPressEvent(QKeyEvent *e) {
             }
          e->accept();
          break;
+    case Qt::Key_S:
+         if (e->modifiers() == Qt::CTRL) {
+            qDebug() << "LCToolTable::keyPressEvent (CTRL+S)";
+
+            if (model->save()) {
+               model->setDirty(false);
+               Core().showAllButCenter(true);
+               emit dataChanged(this, false);
+               }
+            e->accept();
+            break;
+            }
     default:
          DynCenterWidget::keyPressEvent(e);
          break;

@@ -12,6 +12,9 @@ DEFINES *= QT_USE_QSTRINGBUILDER
 
 TARGET = FalconView
 
+LINUXCNC = /usr/local/src/linuxcnc-deb11
+OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
+
 INCLUDEPATH += \
     src/app \
     src/model \
@@ -22,12 +25,12 @@ INCLUDEPATH += \
     src/view \
     src/view/pages \
     src/view/status \
-    /usr/include/python3.9 \
-    lc/include \
-    lc/src/emc/rs274ngc \
-    lc/src/emc/tooldata \
-    lc/src \
-    /usr/local/src/build-occt-Desktop_5_15_opt-Debug/include/opencascade
+    /usr/include/python3.9 \    # only linuxcnc uses python
+    $${LINUXCNC}/include \
+    $${LINUXCNC}/src/emc/rs274ngc \
+    $${LINUXCNC}/src/emc/tooldata \
+    $${LINUXCNC}/src \
+    $${OCCT}/include/opencascade
 
 
 SOURCES += \
@@ -224,12 +227,12 @@ FORMS += \
     src/UI/ToolInfo.ui
 
 unix:!mac {
-  LIBS += -Wl,-rpath=$${_PRO_FILE_PWD_}/lc/lib
+  LIBS += -Wl,-rpath=$${LINUXCNC}/lib
   QMAKE_CXXFLAGS += -std=gnu++11
 }
 
 LIBS += \
-  -L$${_PRO_FILE_PWD_}/lc/lib \
+  -L$${LINUXCNC}/lib \
   -L/usr/lib \
   -lm \
   -llinuxcnc \
@@ -248,8 +251,8 @@ LIBS += \
   -ldl \
   -lutil
 
-LIBS += -Wl,-rpath=/usr/local/src/build-occt-Desktop_5_15_opt-Debug/lin64/gcc/libd \
-        -L/usr/local/src/build-occt-Desktop_5_15_opt-Debug/lin64/gcc/libd
+LIBS += -Wl,-rpath=$${OCCT}/lin64/gcc/libd \
+        -L$${OCCT}/lin64/gcc/libd
 LIBS += -lTKernel -lTKMath -lTKService -lTKV3d -lTKOpenGl \
         -lTKBRep -lTKIGES -lTKSTL -lTKVRML -lTKSTEP -lTKSTEPAttr -lTKSTEP209 \
         -lTKSTEPBase -lTKGeomBase -lTKGeomAlgo -lTKG3d -lTKG2d \
@@ -270,6 +273,7 @@ DISTFILES += \
     docs/FalconView.qhp \
     docs/genHelp \
     docs/src/fileManager.qdoc \
+    docs/src/index.qdoc \
     docs/src/reference.qdoc \
     docs/src/startup.qdoc \
     docs/src/usage.qdoc \

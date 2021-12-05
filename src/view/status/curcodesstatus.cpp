@@ -1,15 +1,17 @@
 #include <curcodesstatus.h>
 #include <valuemanager.h>
 #include <configacc.h>
+#include <core.h>
 #include <QLabel>
 #include <QColor>
 #include <QFont>
 
 
 CurCodesStatus::CurCodesStatus(const QString& fileName, QWidget* parent)
- : DynCenterWidget(fileName, tr("actual Codes"), false, parent)
+ : DynCenterWidget(fileName, "CurCodesStatus", false, parent)
  , labels(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
+  setWindowTitle(tr("CurCodesStatus"));
   }
 
 

@@ -4,6 +4,6 @@ project=FalconView
 qdoc ${project}.qdocconf
 cp ${project}.qhp html
 cd html
-cp ../src/images/{fold,help-inf}*.* images
+cp ../src/images/{fold,help-}*.* images
 zip -u9 ../FalconView.qzh *.html images/* FalconView.qhp
 cp -a ../FalconView.qzh .

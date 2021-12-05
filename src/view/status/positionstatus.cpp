@@ -1,6 +1,7 @@
 #include <positionstatus.h>
 #include <valuemanager.h>
 #include <configacc.h>
+#include <core.h>
 #include <QtUiTools/QUiLoader>
 #include <QFontMetrics>
 #include <QGridLayout>
@@ -12,7 +13,7 @@
 
 
 PositionStatus::PositionStatus(const QString& fileName, const AxisMask& am, QWidget* parent)
- : DynCenterWidget(fileName, tr("Position"), false, parent)
+ : DynCenterWidget(fileName, "PositionStatus", false, parent)
  , lblX(nullptr)
  , lblY(nullptr)
  , lblZ(nullptr)
@@ -39,11 +40,12 @@ PositionStatus::PositionStatus(const QString& fileName, const AxisMask& am, QWid
  , axisMask(am)
  , ledOn("background: #0F0")
  , ledOff("background: red") {
+  setWindowTitle(tr("PositionStatus"));
   }
 
 
 PositionStatus::PositionStatus(const QString& fileName, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
- : DynCenterWidget(fileName, tr("Position"), false, parent)
+ : DynCenterWidget(fileName, "PositionStatus", false, parent)
  , lblX(nullptr)
  , lblY(nullptr)
  , lblZ(nullptr)
@@ -71,6 +73,7 @@ PositionStatus::PositionStatus(const QString& fileName, const AxisMask& am, QWid
  , ledOn(ledOnStyle)
  , ledOff(ledOffStyle) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
+  setWindowTitle(tr("PositionStatus"));
   }
 
 

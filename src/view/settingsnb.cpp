@@ -15,6 +15,7 @@ SettingsNotebook::SettingsNotebook(QWidget *parent)
  : DynCenterWidget(QString(), "SettingsNotebook", false, parent)
  , tw(nullptr) {
   setObjectName(SettingsNotebook::className);
+  setWindowTitle(tr("SettingsNotebook"));
   }
 
 
@@ -45,7 +46,7 @@ void SettingsNotebook::addPage(DynCenterWidget* page) {
   }
 
 
-bool SettingsNotebook::eventFilter(QObject *obj, QEvent *event) {
+bool SettingsNotebook::eventFilter(QObject*, QEvent* event) {
   if (event->type() == QEvent::KeyPress) {
      QKeyEvent* e = static_cast<QKeyEvent*>(event);
 

@@ -37,7 +37,7 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool s
  , speedStat(nullptr)
  , statusInPreview(statusInPreview) {
   setObjectName(PreViewEditor::className);
-  setWindowTitle(PreViewEditor::className);
+  setWindowTitle(tr("PreViewEditor"));
   }
 
 

@@ -1,0 +1,29 @@
+/*
+ * FalconView documentation
+ */
+
+/*!
+\page     index.html
+\title    Userguide
+\subtitle Reference
+\ingroup  userguide
+\section1 application purpose
+
+          \b {FalconView} is a controlcenter for CNC-machines controlled by \e {linuxCNC}.
+
+
+
+
+\section1 description of application parts and their usage.
+\list
+     \li  The \b {red part} (1) is the main or center application area. That may be an editor,
+          the 3D Preview or whatever controls that require user interaction.
+     \li  The \b {blue areas} are toolbars. Each toolbar can be moved around and placed wherever
+          you want around the center area.
+     \li  The \b {green areas} are information addons, so called dockables. As with toolbars,
+          dockables can be moved around the center area and placed wherever you want.
+          Dockable can be put over each other, then a notebook is created on the fly.
+\endlist
+
+\image    FV006.jpg
+*/

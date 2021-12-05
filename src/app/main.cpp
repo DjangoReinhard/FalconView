@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
       QStringList args = QCoreApplication::arguments();
       QString iniFileName = findIni(args);
 
+      a.installTranslator(&translator);
       qDebug() << "application arguments: " << args;
       qDebug() << "locale messages found: " << ok;
       qDebug() << "gonna use ini-file: " << iniFileName;
@@ -48,7 +49,6 @@ int main(int argc, char *argv[]) {
       FalconViewDB dbHelper;
       Core appCore(iniFileName, "FalconView", dbHelper);
 
-      a.installTranslator(&translator);
       appCore.checkBE();
       appCore.mainWindow()->show();
 

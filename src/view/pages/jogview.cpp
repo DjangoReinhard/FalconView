@@ -3,6 +3,7 @@
 #include <axismask.h>
 #include <core.h>
 #include <QDebug>
+#include <QTranslator>
 
 
 JogView::JogView(QWidget* parent)
@@ -10,7 +11,7 @@ JogView::JogView(QWidget* parent)
  , ui(new Ui::JogForm()) {
   setupUi(this);
   setObjectName(JogView::className);
-  setWindowTitle(JogView::className);
+  setWindowTitle(tr("JogView"));
   }
 
 
@@ -46,7 +47,7 @@ void JogView::jog(int axis, int step) {
   }
 
 
-void JogView::singleStep(bool singleStep) {
+void JogView::singleStep(bool) {
   bool isSingleStep = ui->cbSingleStep->isChecked();
 
   ui->jXn->setCheckable(!isSingleStep);
@@ -69,34 +70,7 @@ void JogView::singleStep(bool singleStep) {
   ui->jWp->setCheckable(!isSingleStep);
   }
 
-/*
-    QCheckBox *cbRapid;
-    QCheckBox *cbSingleStep;
 
-    QPushButton *jAn;
-    QPushButton *jAp;
-    QPushButton *jBn;
-    QPushButton *jBp;
-    QPushButton *jCn;
-    QPushButton *jCp;
-    QPushButton *jUn;
-    QPushButton *jUp;
-    QPushButton *jVn;
-    QPushButton *jVp;
-    QPushButton *jWn;
-    QPushButton *jWp;
-    QPushButton *jXn;
-    QPushButton *jXp;
-    QPushButton *jYn;
-    QPushButton *jYp;
-    QPushButton *jZn;
-    QPushButton *jZp;
-
-    QRadioButton *rO1;
-    QRadioButton *rO5;
-    QRadioButton *rOO1;
-    QRadioButton *rOOO1;
- */
 void JogView::setupUi(DynCenterWidget *parent) {
   ui->setupUi(parent);
   const AxisMask& am = Core().axisMask();
@@ -145,6 +119,19 @@ void JogView::setupUi(DynCenterWidget *parent) {
 
 
 void JogView::updateStyles() {
+//  /*
+//   * retranslate ...
+//   */
+//  ui->jYn->setText(tr("Y-"));
+//  ui->jYp->setText(tr("Y+"));
+//  ui->jVp->setText(QCoreApplication::translate("JogForm", "V+", nullptr));
+//  ui->jVn->setText(QCoreApplication::translate("JogForm", "V-", nullptr));
+//  ui->cbRapid->setText(Core().tr("Rapid", "JogForm"));
+//  ui->cbSingleStep->setText(Core().tr("single Step", "JogForm"));
+//  ui->rOOO1->setText(QCoreApplication::translate("JogForm", "0,001", nullptr));
+//  ui->rOO1->setText(QCoreApplication::translate("JogForm", "0,01", nullptr));
+//  ui->rO1->setText(QCoreApplication::translate("JogForm", "0,1", nullptr));
+//  ui->rO5->setText(QCoreApplication::translate("JogForm", "0,5", nullptr));
   }
 
 const QString& JogView::className = "JogView";

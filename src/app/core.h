@@ -11,6 +11,7 @@ class ToolTable;
 class LcProperties;
 class CenterView;
 class QCloseEvent;
+class QTranslator;
 class QWidget;
 class AxisMask;
 
@@ -37,6 +38,8 @@ public:
   void            windowClosing(QCloseEvent* e);
   void            parseGCFile(const QString& fileName);
   bool            checkBE();
+//  QString         tr(const char* text, const char* context = "");
+//  QTranslator*    translator();
   CenterView*     viewStack();
   OcctQtViewer*   view3D();
   ToolTable&      toolTable();

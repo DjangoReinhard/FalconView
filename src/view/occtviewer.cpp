@@ -150,6 +150,12 @@ OcctQtViewer::~OcctQtViewer() {
   }
 
 
+const QString& OcctQtViewer::getGlInfo() {
+  if (myGlInfo.isEmpty()) dumpGlInfo(true);
+  return myGlInfo;
+  }
+
+
 void OcctQtViewer::dumpGlInfo(bool theIsBasic) {
   TColStd_IndexedDataMapOfStringString aGlCapsDict;
 

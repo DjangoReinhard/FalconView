@@ -7,11 +7,6 @@ Subwindows like position or speed override can arranged anywhere
 around the central preview pane.
 Alternatively, the status displays can be shown in the 3D preview.
 
-## Screenshot
-[![vertical](sample/FalconView_V01s.jpg)](sample/FalconView_V01.jpg)
-[![horizontal](sample/FalconView_09s.jpg)](sample/FalconView_09.jpg)
-[![Inline](sample/FalconView_Inline03s.jpg)](sample/FalconView_03.jpg)
-
 ## Build
 
 **FalconView** uses these dependencies:
@@ -35,4 +30,13 @@ Alternatively, the status displays can be shown in the 3D preview.
 - *QtCreator* - optional. I have very good experience with using QtCreator. It's not
   that powerful as *Eclipse* (yet?), but it really helps on development and debugging.
 
+## Screenshot
+- a vertical configuration
+[![vertical](sample/FalconView_V01s.jpg)](sample/FalconView_V01.jpg)
+
+- a horizontal configuration
+[![horizontal](sample/FalconView_09s.jpg)](sample/FalconView_09.jpg)
+
+- a configuration with inline status controls
+[![Inline](sample/FalconView_Inline03s.jpg)](sample/FalconView_03.jpg)
 

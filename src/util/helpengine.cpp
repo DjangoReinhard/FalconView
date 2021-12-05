@@ -27,7 +27,7 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   bp = reader->fileData("images/folder-open.svg");
   pm.loadFromData(bp);
   icoF.addPixmap(pm, QIcon::Normal, QIcon::On);
-  bp = reader->fileData("images/help-info.png");
+  bp = reader->fileData("images/help-about.svg");
   pm.loadFromData(bp);
   icoL.addPixmap(pm);
   cw->setFolderIcon(icoF);

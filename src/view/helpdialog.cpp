@@ -30,6 +30,7 @@ HelpDialog::HelpDialog(QWidget* parent)
   tw->addTab(cw, tr("Content"));
   tw->addTab(kw, tr("Keywords"));
   setWidget(sp);
+  cw->expandAll();
   setTitleBarWidget(new HelpTitleBar(this));
   connect(cw, &QTreeWidget::currentItemChanged, this, &HelpDialog::contentItemChanged);
   connect(kw, &QListWidget::currentItemChanged, this, &HelpDialog::keywordItemChanged);
@@ -78,14 +79,15 @@ void HelpDialog::closeEvent(QCloseEvent*) {
 
 
 void HelpDialog::showHelp() {
-  setFloating(true);
-  QDockWidget::show();
+  if (!isFloating()) setFloating(true);
+  QDockWidget::show();  
   Config cfg;
 
   cfg.beginGroup(HelpDialog::className);
   sp->restoreState(cfg.value("state").toByteArray());
   restoreGeometry(cfg.value("geometry").toByteArray());
   cfg.endGroup();
+  raise();
   activateWindow();
   cw->setFocus();
   }

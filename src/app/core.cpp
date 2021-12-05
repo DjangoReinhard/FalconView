@@ -3,6 +3,7 @@
 #include <QTime>
 #include <QTimerEvent>
 #include <QApplication>
+#include <QTranslator>
 #include <QString>
 #include <QVector3D>
 #include <QSqlError>
@@ -27,6 +28,7 @@
 Core::Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group) {
   if (!kernel) {
      kernel = new Kernel(iniFileName, appName, group);
+//     kernel->translator = translator;
      kernel->initialize(dbAssist);
      }
   }
@@ -91,8 +93,16 @@ void Core::showAllButCenter(bool visible) {
 QWidget* Core::stackedPage(const QString& pageName) {
   qDebug() << "Core: query for page: >" << pageName << "<";
 
-  return core()->centerView->page(pageName);
+  return core()->centerView->page(QString("%1Frame").arg(pageName));
   }
+
+
+//QTranslator* Core::translator() {
+//  return core()->translator;
+//  }
+//QString Core::tr(const char* text, const char* context) {
+//  return core()->translator->translate(context, text);
+//  }
 
 
 CenterView* Core::viewStack() {
@@ -127,7 +137,7 @@ bool Core::checkBE() {
 void Core::activatePage(const QString& pageName) {
   qDebug() << "Core: activate page with name >" << pageName << "<";
 
-  core()->centerView->activatePage(pageName);
+  core()->centerView->activatePage(QString("%1Frame").arg(pageName));
   }
 
 

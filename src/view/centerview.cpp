@@ -59,7 +59,7 @@ DynFrame* CenterView::activatePage(const QString& name) {
 #endif
         curPage = name;
         if (w) {
-           Core().setWindowTitle(tr(w->name().toStdString().c_str()));
+           Core().setWindowTitle(w->name().toStdString().c_str());
 
            return w;
            }
@@ -86,7 +86,7 @@ void CenterView::dump() const {
 void CenterView::addPage(DynFrame* page, const QString& name) {
   QString pageName(name);
 
-  if (pageName.isEmpty()) pageName = page->windowTitle();
+  if (pageName.isEmpty()) pageName = page->objectName();
   pages.insert(pageName, page);
 #ifdef WANT_STACKED_LAYOUT
   QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
@@ -102,7 +102,7 @@ void CenterView::addPage(DynFrame* page, const QString& name) {
 #endif
                  );
      connect(page->viewAction(), &QAction::triggered, this, [=]() {
-       Core().activatePage(page->windowTitle());
+       Core().activatePage(page->objectName());
        });
      }
   activatePage(pageName);

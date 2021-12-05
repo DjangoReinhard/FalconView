@@ -45,7 +45,7 @@ public:
   OcctQtViewer(bool verbose = false, QWidget* theParent = nullptr);
   virtual ~OcctQtViewer();
 
-  const QString& getGlInfo() const                { return myGlInfo; }
+  const QString& getGlInfo();
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
   virtual QSize  sizeHint()        const override { return QSize(720, 480); }
   void setBounds(const Bnd_Box& bounds);
