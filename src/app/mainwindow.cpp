@@ -16,6 +16,7 @@
 #include <dyndockable.h>
 #include <dynframe.h>
 #include <jogview.h>
+#include <mdieditor.h>
 #include <core.h>
 #include <syseventview.h>
 #include <lctooltable.h>
@@ -113,15 +114,9 @@ void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
 void MainWindow::createActions() {
 //  MIcon::setDisabledFileName(":/res/SK_DisabledIcon.png");
   ValueManager vm;
-  QAction *aboutQtAct = ui->menuHelp->addAction(tr("About &Qt"), this, &QApplication::aboutQt);
+//  QAction *aboutQtAct = ui->menuHelp->addAction(tr("About &Qt"), this, &QApplication::aboutQt);
 
-  aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
-  ui->action3D_View->setShortcut(Qt::CTRL   + Qt::Key_3);
-  ui->actionFrontView->setShortcut(Qt::CTRL + Qt::Key_F);
-  ui->actionBackView->setShortcut(Qt::CTRL  + Qt::Key_B);
-  ui->actionleftView->setShortcut(Qt::CTRL  + Qt::Key_L);
-  ui->actionrightView->setShortcut(Qt::CTRL + Qt::Key_R);
-  ui->actionTopView->setShortcut(Qt::CTRL   + Qt::Key_T);
+//  aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 
   ui->actionAbsPos->setIcon(MIcon(":/res/SK_PosRelative.png"
                                 , ":/res/SK_PosAbsolute.png"));
@@ -409,7 +404,7 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
 
   switch (m) {
     case Auto:        Core().activatePage(PreViewEditor::className); break;
-    case MDI:         Core().activatePage(tr("mdiView")); break;
+    case MDI:         Core().activatePage(MDIEditor::className); break;
     case Manual:      Core().activatePage(JogView::className); break;
     case Edit:        Core().activatePage(PathEditor::className); break;
     case Wheel:       Core().activatePage(tr("Wheely")); break;
@@ -593,6 +588,10 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
                     , true
                     , center);
   center->addPage(page);
+  page = new DynFrame(new MDIEditor(":/src/UI/MDIEditor.ui")
+                    , true
+                    , center);
+  center->addPage(page);
   page = new DynFrame(new SysEventView(conn)
                     , true
                     , center);
@@ -645,12 +644,25 @@ void MainWindow::setSingleStep(bool singleStep) {
 
 
 void MainWindow::autoStart() {
-  Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
-  if (ValueManager().getValue("singleStep").toBool()) {
-     Core().beSetAuto(3, 0);
+//  ApplicationMode am = ValueManager().getValue("appMode").value<ApplicationMode>();
+  int am = 0;
+
+  if (am == ApplicationMode::MDI) {
+     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+//     Core().beSetMDI();
+     qDebug() << "execute MDI: " << "¿what?";
      }
-  else {
-     Core().beSetAuto(0, 0);
+  else if (am == ApplicationMode::Auto) {
+     qDebug() << "start auto NC execution ...";
+     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+     if (ValueManager().getValue("singleStep").toBool()) {
+        qDebug() << "singlestep is ON";
+        Core().beSetAuto(3, 0);
+        }
+     else {
+        qDebug() << "singlestep is OFF";
+        Core().beSetAuto(0, 0);
+        }
      }
   }
 
@@ -772,6 +784,8 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
               case Qt::Key_F8:  ValueManager().setValue("appMode", ApplicationMode::Touch); break;
               case Qt::Key_F9:  ValueManager().setValue("appMode", ApplicationMode::Settings); break;
               case Qt::Key_F10: ValueManager().setValue("appMode", ApplicationMode::ErrMessages); break;
+              case Qt::Key_F11: startAction->trigger(); break;
+              case Qt::Key_F12: stopAction->trigger(); break;
               }
             e->accept();
             break;

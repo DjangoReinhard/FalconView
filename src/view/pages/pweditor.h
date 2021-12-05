@@ -28,6 +28,7 @@ public slots:
 
 protected:
   virtual void connectSignals() override;
+//  virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
   virtual QWidget* createContent() override;

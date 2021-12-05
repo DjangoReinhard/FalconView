@@ -98,6 +98,7 @@ SOURCES += \
     src/view/pages/fixturemanager.cpp \
     src/view/pages/jogview.cpp \
     src/view/pages/lctooltable.cpp \
+    src/view/pages/mdieditor.cpp \
     src/view/pages/patheditor.cpp \
     src/view/pages/preferenceseditor.cpp \
     src/view/pages/pweditor.cpp \
@@ -189,6 +190,7 @@ HEADERS += \
     src/view/pages/fixturemanager.h \
     src/view/pages/jogview.h \
     src/view/pages/lctooltable.h \
+    src/view/pages/mdieditor.h \
     src/view/pages/patheditor.h \
     src/view/pages/preferenceseditor.h \
     src/view/pages/pweditor.h \
@@ -214,7 +216,7 @@ FORMS += \
     src/UI/HCurCodes.ui \
     src/UI/HelpTitle.ui \
     src/UI/Jog.ui \
-    src/UI/Jog2.ui \
+    src/UI/MDIEditor.ui \
     src/UI/VCurCodes.ui \
     src/UI/GCodeEditor.ui \
     src/UI/mainwindow.ui \

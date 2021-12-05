@@ -77,6 +77,7 @@
    <file>src/UI/GCodeEditor.ui</file>
    <file>src/UI/Jog.ui</file>
    <file>src/UI/mainwindow.ui</file>
+   <file>src/UI/MDIEditor.ui</file>
    <file>src/UI/Position.ui</file>
    <file>src/UI/Settings.ui</file>
    <file>src/UI/HSpeedInfo.ui</file>
