@@ -14,7 +14,7 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
  , level(0)
  , cw(nullptr) {
   buildDir(reader->fileInfoList());
-  tellContent();
+//  tellContent();
   cw = new HelpContentWidget();
   kw = new HelpKeywordWidget();
   QByteArray ba = reader->fileData("FalconView.qhp");

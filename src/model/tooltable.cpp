@@ -156,7 +156,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
                               , lineNum);
   tools.append(te);
   mappedTools.insert(number, te);
-  te->dump();
+//  te->dump();
   }
 
 

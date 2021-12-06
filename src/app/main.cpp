@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
       QString iniFileName = findIni(args);
 
       a.installTranslator(&translator);
-      qDebug() << "application arguments: " << args;
+//      qDebug() << "application arguments: " << args;
       qDebug() << "locale messages found: " << ok;
       qDebug() << "gonna use ini-file: " << iniFileName;
       QFileInfo ifi(iniFileName);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
       int rv = a.exec();
 
-      qDebug() << "left event loop with rv ==" << rv;
+//      qDebug() << "left event loop with rv ==" << rv;
 
       return rv;
       }

@@ -53,7 +53,7 @@ QWidget* PreViewEditor::createContent() {
   pbOpen->hide();
   pbSave->hide();
   jp = new JogView();
-  ValueManager().setValue("fileName", "janeDoe");
+//  ValueManager().setValue("fileName", "janeDoe");
   createDecorations(view3D, statusInPreview);
   Config cfg;
 
@@ -94,12 +94,13 @@ void PreViewEditor::setCurrentLine(const QVariant& line) {
   }
 
 
-void PreViewEditor::closeEvent(QCloseEvent*) {
+void PreViewEditor::closeEvent(QCloseEvent* e) {
   Config cfg;
 
   cfg.beginGroup(PreViewEditor::className);
   cfg.setValue("vState", spV->saveState());
   cfg.endGroup();
+  TestEdit::closeEvent(e);
   }
 
 
@@ -141,29 +142,9 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
   Core().parseGCFile(fileName.toString());
-  Core().activatePage(PreViewEditor::className);
+//  Core().activatePage(PreViewEditor::className);
   Core().setAppMode(ApplicationMode::Auto);
   }
-
-//  ui->action3D_View->setShortcut(Qt::CTRL   + Qt::Key_3);
-//  ui->actionFrontView->setShortcut(Qt::CTRL + Qt::Key_F);
-//  ui->actionBackView->setShortcut(Qt::CTRL  + Qt::Key_B);
-//  ui->actionleftView->setShortcut(Qt::CTRL  + Qt::Key_L);
-//  ui->actionrightView->setShortcut(Qt::CTRL + Qt::Key_R);
-//  ui->actionTopView->setShortcut(Qt::CTRL   + Qt::Key_T);
-//void PreViewEditor::keyPressEvent(QKeyEvent* e) {
-//  if (e->modifiers() == Qt::CTRL) {
-//     switch (e->key()) {
-//       case Qt::Key_3: view3D->isoView();   break;
-//       case Qt::Key_F: view3D->frontView(); break;
-//       case Qt::Key_B: view3D->backView();  break;
-//       case Qt::Key_L: view3D->leftView();  break;
-//       case Qt::Key_R: view3D->rightView(); break;
-//       case Qt::Key_T: view3D->topView();   break;
-//       }
-//    }
-//  TestEdit::keyPressEvent(e);
-//  }
 
 
 void PreViewEditor::toggleSub() {

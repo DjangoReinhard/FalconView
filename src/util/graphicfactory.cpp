@@ -82,16 +82,16 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
   double a0 = atan2(s.y(), s.x());
   double a1 = atan2(e.y(), e.x());
 
-  qDebug() << "> PRE(0) - a0:" << a0 << "a1:" << a1;
+//  qDebug() << "> PRE(0) - a0:" << a0 << "a1:" << a1;
 
   if (a0 < 0) a0 += 2 * M_PI;
   if (a1 < 0) a1 += 2 * M_PI;
 
-  qDebug() << "> PRE(1) - a0:" << a0 << "a1:" << a1;
+//  qDebug() << "> PRE(1) - a0:" << a0 << "a1:" << a1;
 
   double arc = a1 - a0;
 
-  qDebug() << "> PRE(2) - arc:" << arc;
+//  qDebug() << "> PRE(2) - arc:" << arc;
 
   if (ccw && a0 > a1 && arc < 0)       arc += 2 * M_PI;
   else if (!ccw) {
@@ -101,7 +101,7 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
      }
   arc += fullTurns * 2 * M_PI;
 
-  qDebug() << "> PRE(3) - r0:" << r0 << "r1:" << r1 << "a0 >" << a0 << "< - a1:" << a1 << "arc:" << arc << "\n\n";
+//  qDebug() << "> PRE(3) - r0:" << r0 << "r1:" << r1 << "a0 >" << a0 << "< - a1:" << a1 << "arc:" << arc << "\n\n";
 
   Handle(Geom_BSplineCurve) aHelix;
   Geom_HelixData helDat;

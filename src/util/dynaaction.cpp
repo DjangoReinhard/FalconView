@@ -3,10 +3,13 @@
 #include <QDebug>
 
 
-DynaAction::DynaAction(const QIcon& ico, const QString& text, AbstractCondition* cEnabled, AbstractCondition* cChecked, QObject *parent)
- : QAction(ico, text, parent)
+DynaAction::DynaAction(const QIcon& disIco, const QIcon& enIco, const QIcon& cIco, const QString& text, AbstractCondition* cEnabled, AbstractCondition* cChecked, QObject *parent)
+ : QAction(disIco, text, parent)
  , cEnabled(cEnabled)
- , cChecked(cChecked) {
+ , cChecked(cChecked)
+ , disabledIcon(disIco)
+ , enabledIcon(enIco)
+ , checkedIcon(cIco) {
   if (cEnabled) {
      connect(cEnabled, &AbstractCondition::conditionChanged, this, &DynaAction::setEnabled);
      setEnabled(cEnabled->result());
@@ -20,11 +23,26 @@ DynaAction::DynaAction(const QIcon& ico, const QString& text, AbstractCondition*
 
 void DynaAction::setEnabled(bool enabled) {
 //  qDebug() << "DA[" << text() << "]: setEnabled(" << (enabled ? "ON" : "OFF") << ")";
-  QAction::setEnabled(enabled);
+  if (enabled) {
+     QAction::setIcon(enabledIcon);
+     QAction::setEnabled(enabled);
+     }
+  else {
+     QAction::setIcon(disabledIcon);
+     QAction::setEnabled(enabled);
+     }
   }
 
 
 void DynaAction::setChecked(bool checked) {
 //  qDebug() << "DA[" << text() << "]: setChecked(" << (checked ? "YES" : "NO") << ")";
-  QAction::setChecked(checked);
+  if (checked) {
+     QAction::setIcon(checkedIcon);
+     QAction::setChecked(checked);
+     }
+  else {
+     QAction::setIcon(enabledIcon);
+     QAction::setChecked(checked);
+     }
+//  qDebug() << "DA[" << text() << "]: is checked(" << (checked ? "YES" : "NO") << ")";
   }

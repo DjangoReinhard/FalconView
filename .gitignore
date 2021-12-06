@@ -8,7 +8,7 @@ lc
 docs/html
 *.qch
 *.qzh
-db
+/db
 build/*
 test/*
 oldStuff/*

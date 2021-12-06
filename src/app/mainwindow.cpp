@@ -112,17 +112,14 @@ void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
 
 
 void MainWindow::createActions() {
-//  MIcon::setDisabledFileName(":/res/SK_DisabledIcon.png");
   ValueManager vm;
-//  QAction *aboutQtAct = ui->menuHelp->addAction(tr("About &Qt"), this, &QApplication::aboutQt);
-
-//  aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 
   ui->actionAbsPos->setIcon(MIcon(":/res/SK_PosRelative.png"
                                 , ":/res/SK_PosAbsolute.png"));
-
 //  qDebug() << "\tMW::createActions() ... START";
-  startAction = new DynaAction(MIcon(":/res/SK_AutoStart.png", ":/res/SK_AutoStart_active.png")
+  startAction = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                             , QIcon(":/res/SK_AutoStart.png")
+                             , QIcon(":/res/SK_AutoStart_active.png")
                              , tr("Start")
                              , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                                 , new EqualCondition(vm.getModel("allHomed"), true)))
@@ -130,27 +127,27 @@ void MainWindow::createActions() {
                              , new OrCondition(new GreaterCondition(vm.getModel("dtg"), 0)
                                              , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_READING))
                              , this);
-  startAction->setCheckable(true);
-  pauseAction = new DynaAction(MIcon(":/res/SK_AutoPause.png"
-                                   , ":/res/SK_AutoPause_active.png")
+  pauseAction = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                             , QIcon(":/res/SK_AutoPause.png")
+                             , QIcon(":/res/SK_AutoPause_active.png")
                              , tr("Pause")
                              , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                                , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_WAITING)))
                                   ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                              , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED)
                              , this);
-  pauseAction->setCheckable(true);
-  stopAction = new DynaAction(MIcon(":/res/SK_AutoStop.png"
-                                  , ":/res/SK_AutoStop_active.png")
+  stopAction = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                            , QIcon(":/res/SK_AutoStop.png")
+                            , QIcon(":/res/SK_AutoStop_active.png")
                             , tr("Stop")
                             , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                               , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_WAITING)))
                                  ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                             , new EqualCondition(vm.getModel("execState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE)
                             , this);
-  stopAction->setCheckable(true);
-  singleStep = new DynaAction(MIcon(":/res/SK_SingleStep.png"
-                                  , ":/res/SK_SingleStep_active.png")
+  singleStep = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                            , QIcon(":/res/SK_SingleStep.png")
+                            , QIcon(":/res/SK_SingleStep_active.png")
                             , tr("Single-Step")
                             , new AndCondition(new EqualCondition(vm.getModel("taskMode"), EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO)
                                              , new EqualCondition(vm.getModel("errorActive"), false))
@@ -158,18 +155,18 @@ void MainWindow::createActions() {
                             , this);
   singleStep->setCheckable(true);
 
-  autoMode = new DynaAction(MIcon(":/res/SK_Auto.png"
-                                , ":/res/SK_Auto_active.png")
+  autoMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                          , QIcon(":/res/SK_Auto.png")
+                          , QIcon(":/res/SK_Auto_active.png")
                           , tr("Auto-mode")
                           , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                             , new EqualCondition(vm.getModel("allHomed"), true)))
                                ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                           , new AndCondition(new EqualCondition(vm.getModel("appMode"), ApplicationMode::Auto)
-                                            , new EqualCondition(vm.getModel("taskMode"), EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO))
+                           , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Auto)
                            , this);
-  autoMode->setCheckable(true);
-  mdiMode = new DynaAction(MIcon(":/res/SK_MDI.png"
-                               , ":/res/SK_MDI_active.png")
+  mdiMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                         , QIcon(":/res/SK_MDI.png")
+                         , QIcon(":/res/SK_MDI_active.png")
                          , tr("MDI-mode")
                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                            , new EqualCondition(vm.getModel("allHomed"), true)))
@@ -177,43 +174,43 @@ void MainWindow::createActions() {
                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::MDI)
                          , this);
-  mdiMode->setCheckable(true);
-  editMode = new DynaAction(MIcon(":/res/SK_Edit.png"
-                                , ":/res/SK_Edit_active.png")
+  editMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                          , QIcon(":/res/SK_Edit.png")
+                          , QIcon(":/res/SK_Edit_active.png")
                           , tr("Edit-mode")
                           , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                             , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
                                ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                           , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Edit)
                           , this);
-  editMode->setCheckable(true);
-  testEditMode = new DynaAction(MIcon(":/res/SK_TestEdit.png"
-                                    , ":/res/SK_TestEdit_active.png")
+  testEditMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                              , QIcon(":/res/SK_TestEdit.png")
+                              , QIcon(":/res/SK_TestEdit_active.png")
                               , tr("TestEdit-mode")
                               , new TrueCondition()
                               , new EqualCondition(vm.getModel("appMode"), ApplicationMode::XEdit)
                               , this);
-  testEditMode->setCheckable(true);
-  cfgMode = new DynaAction(MIcon(":/res/SK_Settings.png"
-                               , ":/res/SK_Settings_active.png")
+  cfgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                         , QIcon(":/res/SK_Settings.png")
+                         , QIcon(":/res/SK_Settings_active.png")
                          , tr("Settings-mode")
                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                            , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Settings)
                          , this);
-  cfgMode->setCheckable(true);
-  jogMode = new DynaAction(MIcon(":/res/SK_Manual.png"
-                               , ":/res/SK_Manual_active.png")
+  jogMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                         , QIcon(":/res/SK_Manual.png")
+                         , QIcon(":/res/SK_Manual_active.png")
                          , tr("Manual-mode")
                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                            , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Manual)
                          , this);
-  jogMode->setCheckable(true);
-  wheelMode = new DynaAction(MIcon(":/res/SK_Wheel.png"
-                                 , ":/res/SK_Wheel_active.png")
+  wheelMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":/res/SK_Wheel.png")
+                           , QIcon(":/res/SK_Wheel_active.png")
                            , tr("Wheel-mode")
                            , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                              , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
@@ -221,10 +218,10 @@ void MainWindow::createActions() {
                                 ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Wheel)
                            , this);
-  wheelMode->setCheckable(true);
   wheelMode->setEnabled(false);
-  touchMode = new DynaAction(MIcon(":/res/SK_Touch.png"
-                                 , ":/res/SK_Touch_active.png")
+  touchMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":/res/SK_Touch.png")
+                           , QIcon(":/res/SK_Touch_active.png")
                            , tr("Touch-mode")
                            , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                              , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
@@ -232,76 +229,73 @@ void MainWindow::createActions() {
                                 ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Touch)
                            , this);
-  touchMode->setCheckable(true);
-  msgMode = new DynaAction(MIcon(":/res/SK_Messages.png"
-                               , ":/res/SK_Messages_active.png")
+  msgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                         , QIcon(":/res/SK_Messages.png")
+                         , QIcon(":/res/SK_Messages_active.png")
                          , tr("SysEvents")
                          , new TrueCondition()
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::ErrMessages)
                          , this);
-  msgMode->setCheckable(true);
-
-  mist = new DynaAction(MIcon(":/res/SK_Cool_Mist.png"
-                            , ":/res/SK_Cool_Mist_active.png")
+  mist = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                      , QIcon(":/res/SK_Cool_Mist.png")
+                      , QIcon(":/res/SK_Cool_Mist_active.png")
                       , tr("cool-Mist")
                       , new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                        , new EqualCondition(vm.getModel("errorActive"), false))
                       , new EqualCondition(vm.getModel("coolMist"), true)
                       , this);
-  mist->setCheckable(true);
-  flood = new DynaAction(MIcon(":/res/SK_Cool_Flood.png"
-                             , ":/res/SK_Cool_Flood_active.png")
+  flood = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                       , QIcon(":/res/SK_Cool_Flood.png")
+                       , QIcon(":/res/SK_Cool_Flood_active.png")
                        , tr("cool-Flood")
                        , new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                         , new EqualCondition(vm.getModel("errorActive"), false))
                        , new EqualCondition(vm.getModel("coolFlood"), true)
                        , this);
-  flood->setCheckable(true);
   QActionGroup* sg = new QActionGroup(this);
 
-  spindleLeft = new DynaAction(MIcon(":/res/SK_Spindle_CCW.png"
-                                   , ":/res/SK_Spindle_CCW_active.png")
+  spindleLeft = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                             , QIcon(":/res/SK_Spindle_CCW.png")
+                             , QIcon(":/res/SK_Spindle_CCW_active.png")
                              , tr("spindle-CCW")
                              , new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                               , new EqualCondition(vm.getModel("errorActive"), false))
                              , new EqualCondition(vm.getModel("spindle0Dir"), -1)
                              , this);
-  spindleLeft->setCheckable(true);
   sg->addAction(spindleLeft);
-  spindleOff = new DynaAction(MIcon(":/res/SK_Spindle_Stop.png"
-                                  , ":/res/SK_Spindle_Stop_active.png")
+  spindleOff = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                            , QIcon(":/res/SK_Spindle_Stop.png")
+                            , QIcon(":/res/SK_Spindle_Stop_active.png")
                             , tr("spindle-Off")
                             , new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                              , new EqualCondition(vm.getModel("errorActive"), false))
                             , new EqualCondition(vm.getModel("spindle0Dir"), 0)
                             , this);
-  spindleOff->setCheckable(true);
   sg->addAction(spindleOff);
-  spindleRight = new DynaAction(MIcon(":/res/SK_Spindle_CW.png"
-                                    , ":/res/SK_Spindle_CW_active.png")
+  spindleRight = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                              , QIcon(":/res/SK_Spindle_CW.png")
+                              , QIcon(":/res/SK_Spindle_CW_active.png")
                               , tr("spindle-CW")
                               , new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                                , new EqualCondition(vm.getModel("errorActive"), false))
                               , new EqualCondition(vm.getModel("spindle0Dir"), 1)
                               , this);
-  spindleRight->setCheckable(true);
   sg->addAction(spindleRight);
-  homeAll = new DynaAction(MIcon(":/res/SK_HomeAll.png"
-                               , ":/res/SK_HomeAll_active.png")
+  homeAll = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                         , QIcon(":/res/SK_HomeAll.png")
+                         , QIcon(":/res/SK_HomeAll_active.png")
                          , tr("Home-all")
                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
                                            , new EqualCondition(vm.getModel("allHomed"), false)))
                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                          , new EqualCondition(vm.getModel("allHomed"), true)
                          , this);
-  homeAll->setCheckable(true);
 
   power = new MultiStateAction(vm.getModel("taskState")
                              , QIcon(":/res/SK_PowerOff.png")
                              , QIcon(":/res/SK_PowerOff_1.png")
                              , QIcon(":/res/SK_PowerOn.png"));
   power->setShortcut(QKeySequence("CTRL+ALT+P"));
-  power->setCheckable(true);
 //  qDebug() << "\tMW::createActions() ... END";
   }
 
@@ -318,6 +312,7 @@ void MainWindow::setupMenu() {
   ui->menuMode->addAction(msgMode);
   ui->actionHelp->setShortcut(QKeySequence::HelpContents);
   }
+
 
 void MainWindow::createValueModels() {
   ValueManager vm;
@@ -538,7 +533,6 @@ void MainWindow::tellStates() const {
   vm.getModel("errorActive")->dump();
   vm.getModel("showAbsolute")->dump();
   vm.getModel("singleStep")->dump();
-//  vm.setValue("errorActive", false);
   }
 
 
@@ -569,18 +563,14 @@ void MainWindow::createDockables(DBConnection&) {
 void MainWindow::createMainWidgets(DBConnection& conn) {
   CenterView* center = new CenterView(this);
   DynFrame*   page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
-                                                        , Core().view3D()
-                                                        , statusInPreview)
+                                                         , Core().view3D()
+                                                         , statusInPreview)
                                   , true
                                   , center);
 
   Core().setViewStack(center);
   center->addPage(page);
   page = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
-                    , true
-                    , center);
-  center->addPage(page);
-  page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui")
                     , true
                     , center);
   center->addPage(page);
@@ -596,6 +586,10 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
                     , true
                     , center);
   center->addPage(page);
+  page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui")
+                    , true
+                    , center);
+  center->addPage(page);
   SettingsNotebook* nb = new SettingsNotebook(this);
 
   center->addPage(new DynFrame(nb, false, center));
@@ -607,8 +601,14 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
                     , true
                     , center);
   center->addPage(page);
+  page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
+                                             , Core().view3D()
+                                             , statusInPreview)
+                      , true
+                      , center);
+  center->addPage(page);
   this->setCentralWidget(center);
-  center->dump(); //TODO!
+//  center->dump(); //TODO!
   }
 
 
@@ -728,7 +728,10 @@ void MainWindow::stopSpindle() {
 
 
 void MainWindow::setAppMode(ApplicationMode am) {
+  ApplicationMode oam = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
   ValueManager().setValue("appMode", am);
+
+  qDebug() << "\tsetAppMode: " << am << "\twas:" << oam;
   if (am == ApplicationMode::Auto)
      Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
   else if (am == ApplicationMode::MDI)

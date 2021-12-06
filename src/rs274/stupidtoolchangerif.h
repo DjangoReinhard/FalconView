@@ -12,21 +12,21 @@ public:
   StupidToolChangerIF();
 
   int  slot4ToolInSpindle() const  {
-       qDebug() << "CHANGER: return slot of tool in spindle #" << actualSlot;
+//       qDebug() << "CHANGER: return slot of tool in spindle #" << actualSlot;
 
        return actualSlot;
        }
   int  nextTool() const      {
-       qDebug() << "CHANGER: return tool number of next tool #" << nextToolNum;
+//       qDebug() << "CHANGER: return tool number of next tool #" << nextToolNum;
 
        return nextToolNum;
        }
   void selectNextTool(int toolNum) {
-       qDebug() << "CHANGER: SET tool number of next tool #" << toolNum;
+//       qDebug() << "CHANGER: SET tool number of next tool #" << toolNum;
        nextToolNum = toolNum;
        }
   void setCurrentTool(int slot)    {
-       qDebug() << "CHANGER: SET slot for tool in spindle #" << slot;
+//       qDebug() << "CHANGER: SET slot for tool in spindle #" << slot;
        actualSlot = slot;
        }
 

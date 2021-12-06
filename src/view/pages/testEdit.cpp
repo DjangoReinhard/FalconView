@@ -112,6 +112,16 @@ void TestEdit::showEvent(QShowEvent* e) {
   }
 
 
+void TestEdit::closeEvent(QCloseEvent* e) {
+  qDebug() << "TestEdit[" << objectName() << "] - " << fn->text();
+  Config cfg;
+
+  cfg.beginGroup(objectName());
+  cfg.setValue("fileName", fn->text());
+  cfg.endGroup();
+  }
+
+
 QString TestEdit::pageName() {
   return objectName();
   }
@@ -134,9 +144,12 @@ void TestEdit::loadFile(const QVariant& fileName) {
      }
   ed->loadFile(fi.absoluteFilePath());
   fn->setText(fi.absoluteFilePath());
+
   // show editor again
-  Core().activatePage(TestEdit::className);
-  Core().setAppMode(ApplicationMode::XEdit);
+  qDebug() << "TestEdit[" << objectName() << "] - set appmode to XEdit(6)";
+  if (objectName() == "TestEdit")      Core().setAppMode(ApplicationMode::XEdit);
+  else if (objectName() == "PathEdit") Core().setAppMode(ApplicationMode::Edit);
+  else                                 Core().setAppMode(ApplicationMode::Auto);
   }
 
 
@@ -151,6 +164,13 @@ void TestEdit::updateStyles() {
   ed->setStyleSheet(QString("background: #%2;")
                            .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
   ed->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
+
+  cfg.beginGroup(objectName());
+  QString lastFile = cfg.value("fileName").toString();
+  cfg.endGroup();
+  QFile ncFile(lastFile);
+
+  if (ncFile.exists()) loadFile(ncFile.fileName());
   }
 
 

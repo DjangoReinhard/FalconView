@@ -23,8 +23,8 @@ void HelpKeywordWidget::parse(const QByteArray &ba) {
   for (int i=0; i < links.count(); ++i) {
       QDomNode link = links.item(i);
 
-      qDebug() << "\n";
-      qDebug() << "check entry #" << i;
+//      qDebug() << "\n";
+//      qDebug() << "check entry #" << i;
       if (link.isElement()) {
          QDomElement e = link.toElement();
 
@@ -35,11 +35,11 @@ void HelpKeywordWidget::parse(const QByteArray &ba) {
 
 
 void HelpKeywordWidget::processChildren(const QDomElement& e) {
-  qDebug() << "processChildren ... ";
+//  qDebug() << "processChildren ... ";
 
   for (QDomNode n = e.firstChild(); !n.isNull(); n = n.nextSibling()) {
       if (n.isElement()) {
-         qDebug() << "child is Element";
+//         qDebug() << "child is Element";
          QDomElement      elem = n.toElement();
          QListWidgetItem* item = new QListWidgetItem();
          int              mx   = elem.attributes().count();
@@ -53,9 +53,9 @@ void HelpKeywordWidget::processChildren(const QDomElement& e) {
              }
          addItem(item);
          }
-      else if (n.isEntity()) qDebug() << "child is Entity";
-      else if (n.isAttr())   qDebug() << "child is Attribute";
-      else if (n.isText())   qDebug() << "child is Text";
+//      else if (n.isEntity()) qDebug() << "child is Entity";
+//      else if (n.isAttr())   qDebug() << "child is Attribute";
+//      else if (n.isText())   qDebug() << "child is Text";
       }
   }
 

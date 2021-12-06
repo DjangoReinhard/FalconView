@@ -149,10 +149,10 @@ void DirModel::setupModelData(const QString &baseDir, DirEntry *parent) {
       QString     curPath = baseDir;
       DirEntry*   last    = parent;
 
-      qDebug() << "entry: " << path;
+//      qDebug() << "entry: " << path;
       for (const QString& s : parts) {
           if (!parents.contains(s)) {
-             qDebug() << "add new parent: " << s;
+//             qDebug() << "add new parent: " << s;
              parents[s] = new DirEntry(s, baseDir + "/" + path, last);
              last->appendChild(parents[s]);
              last = parents[s];

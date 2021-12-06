@@ -14,8 +14,8 @@ ToolCategoryModel::ToolCategoryModel(DBConnection& conn, QObject *parent)
   this->setEditStrategy(QSqlTableModel::OnManualSubmit);
   select();
 
-  qDebug() << "cat-columns" << columnCount();
-  qDebug() << "cat-rows" << rowCount();
+//  qDebug() << "cat-columns" << columnCount();
+//  qDebug() << "cat-rows" << rowCount();
   }
 
 

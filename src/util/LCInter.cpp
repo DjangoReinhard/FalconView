@@ -110,7 +110,7 @@ void LCInterface::parseInline(const QString& fileName) {
       for (int i=0; i < codes.size(); ++i) {
           QString code = codes.at(i);
 
-          qDebug() << "init code: <|" << code << "|>";
+//          qDebug() << "init code: <|" << code << "|>";
           if ((rv = readExec(code))) break;
           }
       if (rv > INTERP_MIN_ERROR) {

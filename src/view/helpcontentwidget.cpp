@@ -26,8 +26,8 @@ void HelpContentWidget::parse(const QByteArray& ba) {
   for (int i=0; i < links.count(); ++i) {
       QDomNode link = links.item(i);
 
-      qDebug() << "\n";
-      qDebug() << "check entry #" << i;
+//      qDebug() << "\n";
+//      qDebug() << "check entry #" << i;
       if (link.isElement()) {
          QDomElement e = link.toElement();
 
@@ -40,27 +40,27 @@ void HelpContentWidget::parse(const QByteArray& ba) {
 void HelpContentWidget::processAttributes(const QDomElement& e, QTreeWidgetItem* item) {
   int mx = e.attributes().count();
 
-  qDebug() << "processAttributes ...";
+//  qDebug() << "processAttributes ...";
   if (mx > 0) {
-     qDebug() << "element has" << mx << "attributes";
+//     qDebug() << "element has" << mx << "attributes";
      for (int i=0; i < mx; ++i) {
          const QDomNode& n = e.attributes().item(i);
 
-         qDebug() << "\tattribute:" << n.nodeName() << " => " << n.nodeValue();
+//         qDebug() << "\tattribute:" << n.nodeName() << " => " << n.nodeValue();
          if (n.nodeName() == "title")    item->setText(0, n.nodeValue());
          else if (n.nodeName() == "ref") item->setText(1, n.nodeValue());
          }
      }
-  else qDebug() << "element has NO attributes";
+//  else qDebug() << "element has NO attributes";
   }
 
 
 void HelpContentWidget::processChildren(const QDomElement& e, QTreeWidgetItem* parent) {
-  qDebug() << "processChildren ... (level:" << level++ << ")";
+//  qDebug() << "processChildren ... (level:" << level++ << ")";
 
   for (QDomNode n = e.firstChild(); !n.isNull(); n = n.nextSibling()) {
       if (n.isElement()) {
-         qDebug() << "child is Element";
+//         qDebug() << "child is Element";
          processElement(n.toElement(), parent);
          }
       }
@@ -81,7 +81,7 @@ QTreeWidgetItem* HelpContentWidget::createItem(const QDomElement &e, QTreeWidget
 
 
 QTreeWidgetItem* HelpContentWidget::processElement(const QDomElement& e, QTreeWidgetItem* parent) {
-  qDebug() << "processElement - tag:" << e.tagName() << "text:" << e.text();
+//  qDebug() << "processElement - tag:" << e.tagName() << "text:" << e.text();
   QTreeWidgetItem* item = nullptr;
 
   if (e.tagName() == "section") {

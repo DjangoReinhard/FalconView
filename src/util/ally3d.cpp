@@ -42,9 +42,9 @@ void Ally3D::showMachineLimits() {
   LcProperties&  lcp  = Core().lcProperties();
   Handle(AIS_InteractiveContext) ctx = v3D->context();
 
-  qDebug() << "showLimits() - g5x:" << g5xO.x << "/" << g5xO.y << "/" << g5xO.z
-           << "\tg92: " << g92O.x << "/" << g92O.y << "/" << g92O.z
-           << "\trot: " << rot;
+//  qDebug() << "showLimits() - g5x:" << g5xO.x << "/" << g5xO.y << "/" << g5xO.z
+//           << "\tg92: " << g92O.x << "/" << g92O.y << "/" << g92O.z
+//           << "\trot: " << rot;
 
   gp_Pnt cMin(lcp.value("AXIS_X", "MIN_LIMIT").toDouble() - g5xO.x - g92O.x
             , lcp.value("AXIS_Y", "MIN_LIMIT").toDouble() - g5xO.y - g92O.y

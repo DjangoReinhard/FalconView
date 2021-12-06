@@ -8,7 +8,7 @@ class DynaAction : public QAction
 {
   Q_OBJECT
 public:
-  explicit DynaAction(const QIcon& ico, const QString& text, AbstractCondition* cEnabled, AbstractCondition* cChecked, QObject *parent = nullptr);
+  explicit DynaAction(const QIcon& disabledIcon, const QIcon& enabledIcon, const QIcon& checkedIcon, const QString& text, AbstractCondition* cEnabled, AbstractCondition* cChecked, QObject *parent = nullptr);
 
 public slots:
   void setEnabled(bool enabled);
@@ -17,5 +17,8 @@ public slots:
 private:
   AbstractCondition* cEnabled;
   AbstractCondition* cChecked;
+  QIcon disabledIcon;
+  QIcon enabledIcon;
+  QIcon checkedIcon;
   };
 #endif // DYNAACTION_H
