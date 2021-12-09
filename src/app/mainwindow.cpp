@@ -377,6 +377,7 @@ void MainWindow::createConnections() {
 void MainWindow::toggleErrMessages() {
   static QString oldPage;
 
+  qDebug() << "MW::toggleErrMessages() ...";
   if (msgMode->isChecked()) {
      ValueManager().setValue("errorActive", true);
      if (oldPage.isEmpty()) oldPage = Core().curPage();

@@ -204,29 +204,25 @@
 <context>
     <name>Form</name>
     <message>
-        <location filename="../UI/Jog2.ui" line="14"/>
+        <location filename="../UI/MDIEditor.ui" line="20"/>
         <source>Form</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../UI/Jog2.ui" line="144"/>
         <source>Y+</source>
-        <translation>Y+</translation>
+        <translation type="vanished">Y+</translation>
     </message>
     <message>
-        <location filename="../UI/Jog2.ui" line="185"/>
         <source>Y-</source>
-        <translation>Y-</translation>
+        <translation type="vanished">Y-</translation>
     </message>
     <message>
-        <location filename="../UI/Jog2.ui" line="277"/>
         <source>V-</source>
-        <translation>V-</translation>
+        <translation type="vanished">V-</translation>
     </message>
     <message>
-        <location filename="../UI/Jog2.ui" line="295"/>
         <source>V+</source>
-        <translation>V+</translation>
+        <translation type="vanished">V+</translation>
     </message>
 </context>
 <context>
@@ -376,6 +372,14 @@
     </message>
 </context>
 <context>
+    <name>MDIEditor</name>
+    <message>
+        <location filename="../view/pages/mdieditor.cpp" line="12"/>
+        <source>MDIEditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../UI/mainwindow.ui" line="60"/>
@@ -495,173 +499,170 @@
         <translation>bewegliche Komponenten</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="116"/>
         <source>About &amp;Qt</source>
-        <translation>über Qt</translation>
+        <translation type="vanished">über Qt</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="118"/>
         <source>Show the Qt library&apos;s About box</source>
-        <translation>information über die verwendete Qt Bibliothek</translation>
+        <translation type="vanished">information über die verwendete Qt Bibliothek</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="131"/>
+        <location filename="../app/mainwindow.cpp" line="123"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="141"/>
+        <location filename="../app/mainwindow.cpp" line="133"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="150"/>
+        <location filename="../app/mainwindow.cpp" line="142"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="159"/>
+        <location filename="../app/mainwindow.cpp" line="151"/>
         <source>Single-Step</source>
         <translation>Einzelschritt</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="168"/>
+        <location filename="../app/mainwindow.cpp" line="161"/>
         <source>Auto-mode</source>
         <translation>Ablauf</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="178"/>
+        <location filename="../app/mainwindow.cpp" line="170"/>
         <source>MDI-mode</source>
         <translation>manuelle Eingabe</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="188"/>
+        <location filename="../app/mainwindow.cpp" line="180"/>
         <source>Edit-mode</source>
         <translation>aktive Datei bearbeiten</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="197"/>
+        <location filename="../app/mainwindow.cpp" line="189"/>
         <source>TestEdit-mode</source>
         <translation>Testdatei bearbeiten</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="204"/>
+        <location filename="../app/mainwindow.cpp" line="196"/>
         <source>Settings-mode</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="213"/>
+        <location filename="../app/mainwindow.cpp" line="205"/>
         <source>Manual-mode</source>
         <translation>händische Bedienung</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="222"/>
+        <location filename="../app/mainwindow.cpp" line="214"/>
         <source>Wheel-mode</source>
         <translation>Handrad</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="243"/>
+        <location filename="../app/mainwindow.cpp" line="235"/>
         <source>SysEvents</source>
         <translation>System-Aktionen</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="296"/>
+        <location filename="../app/mainwindow.cpp" line="287"/>
         <source>Home-all</source>
         <translation>Achsen referenzieren</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="418"/>
+        <location filename="../app/mainwindow.cpp" line="408"/>
         <source>TouchView</source>
         <translation>Taster</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="428"/>
+        <location filename="../app/mainwindow.cpp" line="418"/>
         <source>You need to switch to 3D-preview at least once to get this information.</source>
         <translation>Für diese Information muss zumindest einmal in die 3D-Vorschau gewechselt werden.</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="433"/>
+        <location filename="../app/mainwindow.cpp" line="423"/>
         <source>&lt;h3&gt;FalconView&lt;/h3&gt;&lt;p&gt;is an application to manage machines controlled by linuxCNC.&lt;/p&gt;&lt;p&gt;FalconView uses external components:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;%1&quot;&gt;linuxCNC v.%2&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%3&quot;&gt;Open CASCADE Technology v.%4&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%5&quot;&gt;Qt Toolkit v.%6&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;hl/&gt;&lt;p&gt;GL capabilities: &lt;ul&gt;&lt;li&gt;%7&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</source>
         <translation>&lt;h3&gt;FalconView&lt;/h3&gt;&lt;p&gt;ist eine Anwendung zur Steuerung  von CNC-Maschinen, die via linuxCNC getrieben werden.&lt;/p&gt;&lt;p&gt;FalconView verwendet externe Komponenten:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;%1&quot;&gt;linuxCNC v.%2&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%3&quot;&gt;Open CASCADE Technology v.%4&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%5&quot;&gt;Qt Toolkit v.%6&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;hl/&gt;&lt;p&gt;GL Fähigkeiten: &lt;ul&gt;&lt;li&gt;%7&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="506"/>
+        <location filename="../app/mainwindow.cpp" line="496"/>
         <source>TOP</source>
         <translation>TOP</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="233"/>
+        <location filename="../app/mainwindow.cpp" line="225"/>
         <source>Touch-mode</source>
         <translation>Taster-Modus</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="251"/>
+        <location filename="../app/mainwindow.cpp" line="242"/>
         <source>cool-Mist</source>
         <translation>MinimalmengenKühlung</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="259"/>
+        <location filename="../app/mainwindow.cpp" line="250"/>
         <source>cool-Flood</source>
         <translation>Flutkühlung</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="269"/>
+        <location filename="../app/mainwindow.cpp" line="260"/>
         <source>spindle-CCW</source>
         <translation>Spindel gegen Uhrzeigersinn</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="278"/>
+        <location filename="../app/mainwindow.cpp" line="269"/>
         <source>spindle-Off</source>
         <translation>Spindel anhalten</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="287"/>
+        <location filename="../app/mainwindow.cpp" line="278"/>
         <source>spindle-CW</source>
         <translation>Spindel im Uhrzeigersinn</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="412"/>
         <source>mdiView</source>
-        <translation>MDI</translation>
+        <translation type="vanished">MDI</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="415"/>
+        <location filename="../app/mainwindow.cpp" line="405"/>
         <source>Wheely</source>
         <translation>heißer Reifen</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="432"/>
+        <location filename="../app/mainwindow.cpp" line="422"/>
         <source>About FalconView</source>
         <translation>Über FalconView</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="468"/>
+        <location filename="../app/mainwindow.cpp" line="458"/>
         <source>close application?</source>
         <translation>Anwendung beenden?</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="469"/>
+        <location filename="../app/mainwindow.cpp" line="459"/>
         <source>&lt;p&gt;closing the application means shutting down the backend and stopping all services IF ui has been started by linuxcnc start-helper&lt;/p&gt;</source>
         <translation>&lt;p&gt;Anwendung schließen bedeutet, dass auch die Hintergrunddienste beendet werden, wenn FalconView über linuxCNC gestartet wurde&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="484"/>
+        <location filename="../app/mainwindow.cpp" line="474"/>
         <source>Auto</source>
         <translation>Automatisch</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="122"/>
-        <location filename="../app/mainwindow.cpp" line="493"/>
+        <location filename="../app/mainwindow.cpp" line="483"/>
         <source>Mode</source>
         <translation>Modus</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="514"/>
+        <location filename="../app/mainwindow.cpp" line="504"/>
         <source>Switch</source>
         <translation>Schalter</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="524"/>
+        <location filename="../app/mainwindow.cpp" line="514"/>
         <source>Power</source>
         <translation>Hauptschalter</translation>
     </message>
@@ -1045,7 +1046,7 @@
     <message>
         <location filename="../UI/ToolEditor.ui" line="373"/>
         <source>Part Code</source>
-        <translation>Artikel-No.</translation>
+        <translation>Artikel-No</translation>
     </message>
     <message>
         <location filename="../UI/ToolEditor.ui" line="390"/>
@@ -1088,12 +1089,12 @@
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="114"/>
         <source>Category name:</source>
-        <translation>Kategorie-Bezeichner</translation>
+        <translation>Kategorie-Bezeichner:</translation>
     </message>
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="154"/>
         <source>Tool number:</source>
-        <translation>Werkzeug-Nummer</translation>
+        <translation>Werkzeug-Nummer:</translation>
     </message>
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="207"/>
@@ -1104,7 +1105,7 @@
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="208"/>
         <source>This category has attached tools or sub-categories and cannot be removed.</source>
-        <translation>Diese Kategorie hat zugeordnete Werkzeuge oder Untergruppen und kann deshalb nicht gelöscht werden</translation>
+        <translation>Diese Kategorie hat zugeordnete Werkzeuge oder Untergruppen und kann deshalb nicht gelöscht werden.</translation>
     </message>
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="223"/>
@@ -1124,216 +1125,274 @@
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="266"/>
         <source>new Category name:</source>
-        <translation>neue Kategorie</translation>
+        <translation>neue Kategorie:</translation>
     </message>
 </context>
 <context>
     <name>ToolModel</name>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="70"/>
-        <location filename="../model/db/toolmodel.cpp" line="103"/>
+        <location filename="../model/db/toolmodel.cpp" line="91"/>
+        <location filename="../model/db/toolmodel.cpp" line="125"/>
         <source>id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="71"/>
-        <location filename="../model/db/toolmodel.cpp" line="104"/>
+        <location filename="../model/db/toolmodel.cpp" line="127"/>
         <source>Num</source>
         <translation>Num</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="72"/>
+        <location filename="../model/db/toolmodel.cpp" line="106"/>
         <source>Len</source>
         <translation>Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="73"/>
-        <location filename="../model/db/toolmodel.cpp" line="106"/>
+        <location filename="../model/db/toolmodel.cpp" line="92"/>
+        <source>X</source>
+        <translation>X</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="93"/>
+        <source>TN</source>
+        <translation>WN</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="94"/>
+        <source>TL</source>
+        <translation>WL</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="95"/>
+        <location filename="../model/db/toolmodel.cpp" line="129"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="74"/>
+        <location filename="../model/db/toolmodel.cpp" line="96"/>
+        <source>TC</source>
+        <translation>WT</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="97"/>
+        <source>NF</source>
+        <translation>AS</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="98"/>
+        <source>FR</source>
+        <translation>SR</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="99"/>
+        <source>AC</source>
+        <translation>SW</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="100"/>
+        <source>AV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="101"/>
+        <source>FL</source>
+        <translation>SL</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="102"/>
+        <source>FD</source>
+        <translation>SD</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="103"/>
+        <source>CD</source>
+        <translation>SD</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="104"/>
+        <source>CL</source>
+        <translation>EL</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="105"/>
+        <source>SD</source>
+        <translation>SD</translation>
+    </message>
+    <message>
         <location filename="../model/db/toolmodel.cpp" line="107"/>
+        <source>AS</source>
+        <translation>SW</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="108"/>
+        <source>TD</source>
+        <translation>WD</translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="130"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="75"/>
-        <location filename="../model/db/toolmodel.cpp" line="108"/>
+        <location filename="../model/db/toolmodel.cpp" line="131"/>
         <source>Flutes</source>
         <translation>Schneiden</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="76"/>
         <source>radCut</source>
-        <translation>Schneidenradius</translation>
+        <translation type="vanished">Schneidenradius</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="77"/>
         <source>axCut</source>
-        <translation>axial. Schnitt</translation>
+        <translation type="vanished">axial. Schnitt</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="78"/>
-        <source>angVee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/db/toolmodel.cpp" line="79"/>
         <source>lenFlutes</source>
-        <translation>Schneiden-Länge</translation>
+        <translation type="vanished">Schneiden-Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="80"/>
         <source>diaFlutes</source>
-        <translation>Schneidendurchmesser</translation>
+        <translation type="vanished">Schneidendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="81"/>
         <source>diaCol</source>
-        <translation>Durchmesser Aufnahme</translation>
+        <translation type="vanished">Durchmesser Aufnahme</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="82"/>
         <source>lenCol</source>
-        <translation>Länge Aufnahme</translation>
+        <translation type="vanished">Länge Aufnahme</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="83"/>
         <source>diaShank</source>
-        <translation>Schaftdurchmesser</translation>
+        <translation type="vanished">Schaftdurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="84"/>
         <source>lenFree</source>
-        <translation>freie Länge</translation>
+        <translation type="vanished">freie Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="85"/>
-        <source>angSlope</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/db/toolmodel.cpp" line="86"/>
         <source>diaTip</source>
-        <translation>Spitzendurchmesser</translation>
+        <translation type="vanished">Spitzendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="87"/>
+        <location filename="../model/db/toolmodel.cpp" line="109"/>
         <source>code</source>
         <translation>Artikelnummerl</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="88"/>
-        <location filename="../model/db/toolmodel.cpp" line="121"/>
+        <location filename="../model/db/toolmodel.cpp" line="110"/>
+        <location filename="../model/db/toolmodel.cpp" line="144"/>
         <source>material</source>
         <translation>Material</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="89"/>
-        <location filename="../model/db/toolmodel.cpp" line="122"/>
+        <location filename="../model/db/toolmodel.cpp" line="111"/>
+        <location filename="../model/db/toolmodel.cpp" line="145"/>
         <source>coating</source>
         <translation>Beschichtung</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="90"/>
+        <location filename="../model/db/toolmodel.cpp" line="112"/>
         <source>ldTooth</source>
         <translation>Zahnlast</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="91"/>
+        <location filename="../model/db/toolmodel.cpp" line="113"/>
         <source>angHelix</source>
         <translation>Eintauchwinkel</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="92"/>
+        <location filename="../model/db/toolmodel.cpp" line="114"/>
         <source>angMxRamp</source>
         <translation>max. Rampenwinkel</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="93"/>
-        <location filename="../model/db/toolmodel.cpp" line="126"/>
+        <location filename="../model/db/toolmodel.cpp" line="115"/>
+        <location filename="../model/db/toolmodel.cpp" line="149"/>
         <source>comment</source>
         <translation>Bemerkung</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="105"/>
+        <location filename="../model/db/toolmodel.cpp" line="126"/>
+        <source>Sel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/db/toolmodel.cpp" line="128"/>
         <source>Length</source>
         <translation>Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="109"/>
+        <location filename="../model/db/toolmodel.cpp" line="132"/>
         <source>radial Depth of Cut</source>
         <translation>Schneidendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="110"/>
+        <location filename="../model/db/toolmodel.cpp" line="133"/>
         <source>axial Depth of Cut</source>
         <translation>Eintauchlänge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="111"/>
+        <location filename="../model/db/toolmodel.cpp" line="134"/>
         <source>Vee Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="112"/>
+        <location filename="../model/db/toolmodel.cpp" line="135"/>
         <source>length of Flutes</source>
         <translation>Schneidenlänge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="113"/>
+        <location filename="../model/db/toolmodel.cpp" line="136"/>
         <source>diameter of Flutes</source>
         <translation>Schneidendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="114"/>
+        <location filename="../model/db/toolmodel.cpp" line="137"/>
         <source>diameter of Collet</source>
         <translation>Durchmesser Aufnahme</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="115"/>
+        <location filename="../model/db/toolmodel.cpp" line="138"/>
         <source>length of Collet</source>
         <translation>Länge Aufnahme</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="116"/>
+        <location filename="../model/db/toolmodel.cpp" line="139"/>
         <source>diameter of Shank</source>
         <translation>Schaftdurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="117"/>
+        <location filename="../model/db/toolmodel.cpp" line="140"/>
         <source>free Length</source>
         <translation>freie Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="118"/>
+        <location filename="../model/db/toolmodel.cpp" line="141"/>
         <source>slope angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="119"/>
+        <location filename="../model/db/toolmodel.cpp" line="142"/>
         <source>diameter of Tip</source>
         <translation>Spitzendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="120"/>
+        <location filename="../model/db/toolmodel.cpp" line="143"/>
         <source>partcode</source>
         <translation>Artikelnummer</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="123"/>
+        <location filename="../model/db/toolmodel.cpp" line="146"/>
         <source>tooth load</source>
         <translation>Zahnlast</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="124"/>
+        <location filename="../model/db/toolmodel.cpp" line="147"/>
         <source>angle of Helix</source>
         <translation>Eintauchwinkel</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="125"/>
+        <location filename="../model/db/toolmodel.cpp" line="148"/>
         <source>angle max. Ramp</source>
         <translation>Rampenwinkel</translation>
     </message>
@@ -1388,7 +1447,7 @@
         <location filename="../model/tooltable.cpp" line="226"/>
         <location filename="../model/tooltable.cpp" line="238"/>
         <source>Dia</source>
-        <translation>Durchm.</translation>
+        <translation>Ø</translation>
     </message>
     <message>
         <location filename="../model/tooltable.cpp" line="228"/>

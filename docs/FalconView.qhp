@@ -17,6 +17,16 @@
             <keyword name="Start" id="start" ref="startup.html"/>
             <keyword name="Reference" id="reference" ref="reference.html"/>
             <keyword name="Use" id="use" ref="usage.html"/>
+            <keyword name="3D Preview" id="3D Preview" ref="reference.html"/>
+            <keyword name="MDIEditor" id="MDIEditor" ref="usage.html"/>
+            <keyword name="PathEditor" id="PathEditor" ref="startup.html"/>
+            <keyword name="TestEdit" id="TestEdit" ref="reference.html"/>
+            <keyword name="JogView" id="JogView" ref="usage.html"/>
+            <keyword name="LCToolTable" id="LCToolTable" ref="startup.html"/>
+            <keyword name="SettingsNotebook" id="SettingsNotebook" ref="reference.html"/>
+            <keyword name="PreferencesEditor" id="PreferencesEditor" ref="usage.html"/>
+            <keyword name="FixtureManager" id="FixtureManager" ref="startup.html"/>
+            <keyword name="ToolManager" id="ToolManager" ref="reference.html"/>
         </keywords>
         <files>
             <file>*.html</file>

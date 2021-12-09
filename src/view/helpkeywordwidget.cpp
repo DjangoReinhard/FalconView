@@ -13,7 +13,7 @@ HelpKeywordWidget::~HelpKeywordWidget() {
   }
 
 
-void HelpKeywordWidget::parse(const QByteArray &ba) {
+void HelpKeywordWidget::parse(const QByteArray &ba, QMap<QString, QString>& keyWords) {
   QDomDocument doc;
 
   doc.setContent(ba);
@@ -28,13 +28,13 @@ void HelpKeywordWidget::parse(const QByteArray &ba) {
       if (link.isElement()) {
          QDomElement e = link.toElement();
 
-         processChildren(e);
+         processChildren(e, keyWords);
          }
       }
   }
 
 
-void HelpKeywordWidget::processChildren(const QDomElement& e) {
+void HelpKeywordWidget::processChildren(const QDomElement& e, QMap<QString, QString>& keyWords) {
 //  qDebug() << "processChildren ... ";
 
   for (QDomNode n = e.firstChild(); !n.isNull(); n = n.nextSibling()) {
@@ -52,6 +52,7 @@ void HelpKeywordWidget::processChildren(const QDomElement& e) {
              else if (n.nodeName() == "ref") item->setToolTip(n.nodeValue());
              }
          addItem(item);
+         keyWords[item->text()] = item->toolTip();
          }
 //      else if (n.isEntity()) qDebug() << "child is Entity";
 //      else if (n.isAttr())   qDebug() << "child is Attribute";

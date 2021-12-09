@@ -19,6 +19,7 @@ public:
   HelpDialog(QWidget* parent = nullptr);
 
   void showHelp();
+  void help4Keyword(const QString& keyWord);
 
 protected slots:
   void contentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);

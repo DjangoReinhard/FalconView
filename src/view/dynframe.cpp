@@ -1,5 +1,6 @@
 #include <dynframe.h>
 #include <dyncenterwidget.h>
+#include <core.h>
 #include <QVBoxLayout>
 #include <QKeyEvent>
 #include <QFrame>
@@ -48,6 +49,11 @@ QAction* DynFrame::viewAction() {
 void DynFrame::closeEvent(QCloseEvent *e) {
   dcw->closeEvent(e);
   }
+
+
+//void DynFrame::showEvent(QShowEvent *) {
+//  Core().help4Keyword(objectName());
+//  }
 
 
 void DynFrame::keyPressEvent(QKeyEvent *e) {

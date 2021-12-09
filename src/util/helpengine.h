@@ -18,15 +18,17 @@ public:
   QWidget* contentWidget();
   QWidget* keywordWidget();
 
+  QString  page4Keyword(const QString& keyWord) const;
   void     tellContent();
 
 protected:
   void     buildDir(const QVector<QZipReader::FileInfo> entries);
 
 private:
-  QZipReader*        reader;
-  QMap<QString, int> helpDir;
-  int                level;
+  QZipReader*            reader;
+  QMap<QString, int>     helpDir;
+  QMap<QString, QString> keyWords;
+  int                    level;
   HelpContentWidget*     cw;
   HelpKeywordWidget*     kw;
   };

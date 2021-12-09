@@ -105,6 +105,7 @@ void TestEdit::openFile() {
 
 
 void TestEdit::showEvent(QShowEvent* e) {
+  DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
      if (ed->numLines() > 1) ed->setFocus();
      else                    pbOpen->setFocus();
@@ -112,7 +113,7 @@ void TestEdit::showEvent(QShowEvent* e) {
   }
 
 
-void TestEdit::closeEvent(QCloseEvent* e) {
+void TestEdit::closeEvent(QCloseEvent*) {
   qDebug() << "TestEdit[" << objectName() << "] - " << fn->text();
   Config cfg;
 

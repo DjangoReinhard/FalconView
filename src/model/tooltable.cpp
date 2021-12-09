@@ -166,7 +166,7 @@ int ToolTable::rowCount(const QModelIndex& p) const {
 
 
 int ToolTable::columnCount(const QModelIndex &p) const {
-  return p.isValid() ? 0 : latheMode ? 8 : 4;
+  return p.isValid() ? 0 : latheMode ? 9 : 5;
   }
 
 
@@ -178,23 +178,25 @@ QVariant ToolTable::data(const QModelIndex& n, int role) const {
 
      if (latheMode) {
         switch (n.column()) {
-          case 0:  return t->number();
-          case 1:  return t->length();
-          case 2:  return t->xOffset();
-          case 3:  return t->diameter();
-          case 4:  return t->quadrant();
-          case 5:  return t->frontAngle();
-          case 6:  return t->backAngle();
-          case 7:  return t->description();
+          case 0:  return t->slot();
+          case 1:  return t->number();
+          case 2:  return t->length();
+          case 3:  return t->xOffset();
+          case 4:  return t->diameter();
+          case 5:  return t->quadrant();
+          case 6:  return t->frontAngle();
+          case 7:  return t->backAngle();
+          case 8:  return t->description();
           default: break;
           }
         }
      else {
         switch (n.column()) {
-          case 0:  return t->number();
-          case 1:  return t->length();
-          case 2:  return t->diameter();
-          case 3:  return t->description();
+          case 0:  return t->slot();
+          case 1:  return t->number();
+          case 2:  return t->length();
+          case 3:  return t->diameter();
+          case 4:  return t->description();
           default: break;
           }
         }
@@ -203,8 +205,10 @@ QVariant ToolTable::data(const QModelIndex& n, int role) const {
     if (latheMode) {
        switch (n.column()) {
          case 0:
+         case 1:
          case 5:
          case 6:
+         case 7:
               return int(Qt::AlignRight | Qt::AlignVCenter);
          default:
               return int(Qt::AlignLeft | Qt::AlignVCenter);
@@ -220,23 +224,25 @@ QVariant ToolTable::headerData(int column, Qt::Orientation orientation, int role
   if (orientation == Qt::Horizontal) {
      if (latheMode) {
         switch (column) {
-          case 0:  return tr("Num");
-          case 1:  return tr("Z");
-          case 2:  return tr("X");
-          case 3:  return tr("Dia");
-          case 4:  return tr("TO");
-          case 5:  return tr("FA");
-          case 6:  return tr("BA");
-          case 7:  return tr("Description");
+          case 0:  return tr("Slot");
+          case 1:  return tr("Tool");
+          case 2:  return tr("Z");
+          case 3:  return tr("X");
+          case 4:  return tr("Dia");
+          case 5:  return tr("TO");
+          case 6:  return tr("FA");
+          case 7:  return tr("BA");
+          case 8:  return tr("Description");
           default: break;
           }
         }
      else {
         switch (column) {
-          case 0:  return tr("Num");
-          case 1:  return tr("Len");
-          case 2:  return tr("Dia");
-          case 3:  return tr("Description");
+          case 0:  return tr("Slot");
+          case 1:  return tr("Tool");
+          case 2:  return tr("Len");
+          case 3:  return tr("Dia");
+          case 4:  return tr("Description");
           default: break;
           }
         }

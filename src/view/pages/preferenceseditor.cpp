@@ -33,6 +33,7 @@ QWidget* PreferencesEditor::createContent() {
   fontButtons = new QPushButton*[count];
 
   cbStatesInside = findChild<QCheckBox*>("cbStatesInside");
+  cbHelp         = findChild<QCheckBox*>("cbHelp");
   for (int i=0; i < count; ++i) {
       labels[i]      = findChild<QLineEdit*>(QString("l")      + Config().nameOf(static_cast<Config::GuiElem>(i)));
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
@@ -54,6 +55,10 @@ void PreferencesEditor::connectSignals() {
      cbStatesInside->setChecked(Config().value("statusInPreview").toBool());
      connect(cbStatesInside, &QCheckBox::stateChanged, this, &PreferencesEditor::statusInsideChanged);
      }
+  if (cbHelp) {
+     cbHelp->setChecked(Config().value("showHelpAtPageChange").toBool());
+     connect(cbHelp, &QCheckBox::stateChanged, this, &PreferencesEditor::statusShowHelpChanged);
+     }
   }
 
 
@@ -63,6 +68,7 @@ void PreferencesEditor::updateStyles() {
 
 
 void PreferencesEditor::showEvent(QShowEvent* e) {
+  DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show && labels[0]) {
      labels[0]->setFocus();
      }
@@ -164,6 +170,19 @@ void PreferencesEditor::statusInsideChanged(QVariant state) {
   Config().setValue("statusInPreview", state.toBool());
   }
 
+
+void PreferencesEditor::statusShowHelpChanged(QVariant state) {
+  bool showHelp = state.toBool();
+
+  qDebug() << "PE::statusShowHelpChanged(" << (showHelp ? "TRUE" : "FALSE") << ")";
+  if (showHelp) {
+     QMessageBox::information(this
+                            , tr("QMessageBox::information()")
+                            , tr("You can rise help window at any "
+                                 "time hitting [F1] key."));
+     }
+  Config().setValue("showHelpAtPageChange", state.toBool());
+  }
 
 bool PreferencesEditor::eventFilter(QObject* l, QEvent* event) {
   if (event->type() == QEvent::KeyPress) {

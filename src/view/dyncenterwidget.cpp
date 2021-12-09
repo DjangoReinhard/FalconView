@@ -1,6 +1,7 @@
 #include <dyncenterwidget.h>
 #include <dyndockable.h>
 #include <configacc.h>
+#include <core.h>
 #include <QString>
 #include <QFrame>
 #include <QAction>
@@ -70,6 +71,12 @@ QAction* DynCenterWidget::viewAction() {
      vAction->setText(windowTitle());
      }
   return vAction;
+  }
+
+
+void DynCenterWidget::showEvent(QShowEvent* e) {
+  QWidget::showEvent(e);
+  if (e->type() == QEvent::Show) Core().help4Keyword(objectName());
   }
 
 

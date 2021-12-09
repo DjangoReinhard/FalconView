@@ -27,6 +27,7 @@ public:
   const AxisMask& axisMask() const;
   bool            isLatheMode() const;
   bool            isSimulator() const;
+  bool            showHelpAtPageChange() const;
   DBConnection*   databaseConnection();
   MainWindow*     mainWindow();
   void            activatePage(const QString& pageName);
@@ -38,8 +39,7 @@ public:
   void            windowClosing(QCloseEvent* e);
   void            parseGCFile(const QString& fileName);
   bool            checkBE();
-//  QString         tr(const char* text, const char* context = "");
-//  QTranslator*    translator();
+  void            help4Keyword(const QString& keyWord);
   CenterView*     viewStack();
   OcctQtViewer*   view3D();
   ToolTable&      toolTable();

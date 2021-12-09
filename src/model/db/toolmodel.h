@@ -16,9 +16,11 @@ public:
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   QVariant promptData(int section, int role = Qt::DisplayRole) const;
   int      tools4Category(int categoryId);
+  int      exportTools();
   int      maxToolNum();
   int      nextId();
   bool     existsToolNum(int toolNum);
+  void     toggleSelection(int row);
 
 private:
   static bool  createTable();

@@ -11,11 +11,11 @@ public:
   explicit HelpKeywordWidget(QWidget* parent = nullptr);
   virtual ~HelpKeywordWidget();
 
-  void parse(const QByteArray& ba);
+  void parse(const QByteArray& ba, QMap<QString, QString>& keyWords);
   void setIcon(const QIcon& icon);
 
 protected:
-  void processChildren(const QDomElement& e);
+  void processChildren(const QDomElement& e, QMap<QString, QString>& keyWords);
 
 private:
   QIcon icon;

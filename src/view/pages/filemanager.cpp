@@ -2,6 +2,7 @@
 #include <filemanagerclient.h>
 #include <testEdit.h>
 #include <centerview.h>
+#include <valuemanager.h>
 #include <core.h>
 #include <configacc.h>
 #include <dirmodel.h>
@@ -75,6 +76,7 @@ QWidget* FileManager::createContent() {
   spH->restoreState(cfg.value("hState").toByteArray());
   spV->restoreState(cfg.value("vState").toByteArray());
   cfg.endGroup();
+  dirs->expandAll();
 
   return spH;
   }
@@ -135,21 +137,23 @@ void FileManager::updateStyles() {
 
 
 void FileManager::showEvent(QShowEvent* e) {
+  DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
      dirs->setFocus();
-     QMessageBox::information(this
-                            , tr("QMessageBox::information()")
-                            , tr("<p>File-Manager helps you to select and organize your "
-                                 "gcode files.</p><p>TAB-key toggles between directory tree "
-                                 "and file list. Cursor up/down shows active file in preview. "
-                                 "ENTER loads the selected file into editor.</p><p>"
-                                 "Insert can be used to create files or directories.</p><p>"
-                                 "F5 can be used to select a file for copy transaction. After "
-                                 "hitting F5 you can use Cursor keys to select the target "
-                                 "directory. When the desired directory is selected, press "
-                                 "Enter.</p><p>Same procedure using F6 for move file.</p><p>"
-                                 "ENTER loads a file into editor, whereas ESC closes the "
-                                 "filemanager without any action.</p>"));
+//     QMessageBox::information(this
+//                            , tr("QMessageBox::information()")
+//                            , tr("<p>File-Manager helps you to select and organize your "
+//                                 "gcode files.</p><p>TAB-key toggles between directory tree "
+//                                 "and file list. Cursor up/down shows active file in preview. "
+//                                 "ENTER loads the selected file into editor.</p><p>"
+//                                 "Insert can be used to create files or directories.</p><p>"
+//                                 "F5 can be used to select a file for copy transaction. After "
+//                                 "hitting F5 you can use Cursor keys to select the target "
+//                                 "directory. When the desired directory is selected, press "
+//                                 "Enter.</p><p>Same procedure using F6 for move file.</p><p>"
+//                                 "ENTER loads a file into editor, whereas ESC closes the "
+//                                 "filemanager without any action.</p>"));
+//     if (ValueManager().getValue("showHelpOnNewPage").toBool()) Core().mainWindow()->showHelp();
      }
   }
 

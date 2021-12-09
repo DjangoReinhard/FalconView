@@ -3,6 +3,7 @@
 #include <core.h>
 #include <QApplication>
 #include <QFileInfo>
+#include <QStyleFactory>
 #include <QTranslator>
 #include <QKeySequence>
 #include <QDebug>
@@ -32,13 +33,19 @@ int main(int argc, char *argv[]) {
                                           , "FalconView"
                                           , "_"
                                           , "../FalconView/src/i18n");
-      QStringList args = QCoreApplication::arguments();
-      QString iniFileName = findIni(args);
+      QStringList args        = QCoreApplication::arguments();
+      QString     iniFileName = findIni(args);
+      QStringList sl          = QStyleFactory::keys();
 
       a.installTranslator(&translator);
 //      qDebug() << "application arguments: " << args;
       qDebug() << "locale messages found: " << ok;
       qDebug() << "gonna use ini-file: " << iniFileName;
+      qDebug() << "check for styles ...";
+      for (const QString& s : sl) {
+          qDebug() << "available style: " << s;
+          }
+      qDebug() << "style check done ...";
       QFileInfo ifi(iniFileName);
 
       if (!ifi.exists() || ifi.size() < 1) throw std::invalid_argument("invalid or not existant inifile");

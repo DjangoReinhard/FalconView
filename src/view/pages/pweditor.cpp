@@ -73,6 +73,7 @@ void PreViewEditor::connectSignals() {
 
 
 void PreViewEditor::showEvent(QShowEvent* e) {
+  DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
      view3D->setFocus();
      view3D->fitAll();

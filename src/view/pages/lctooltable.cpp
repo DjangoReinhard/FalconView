@@ -35,7 +35,7 @@ QWidget* LCToolTable::createContent() {
   Config cfg;
 
   cfg.beginGroup(LCToolTable::className);
-  table->horizontalHeader()->restoreState(cfg.value("state").toByteArray());
+  table->horizontalHeader()->restoreState(cfg.value(Core().isLatheMode() ? "latheState": "millState").toByteArray());
   cfg.endGroup();
 
   return table;
@@ -97,7 +97,7 @@ void LCToolTable::closeEvent(QCloseEvent*) {
   Config cfg;
 
   cfg.beginGroup(LCToolTable::className);
-  cfg.setValue("state", table->horizontalHeader()->saveState());
+  cfg.setValue(Core().isLatheMode() ? "latheState" : "millState", table->horizontalHeader()->saveState());
   cfg.endGroup();
   }
 

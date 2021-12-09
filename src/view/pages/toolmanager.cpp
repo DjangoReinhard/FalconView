@@ -85,7 +85,15 @@ QWidget* ToolManager::createContent() {
   cfg.beginGroup(ToolManager::className);
   spH->restoreState(cfg.value("hState").toByteArray());
   spV->restoreState(cfg.value("vState").toByteArray());
+  int cc = tools->horizontalHeader()->count();
+  QList<QVariant> cwl = cfg.value("cw").toList();
+
+  if (cc > cwl.size()) cc = cwl.size();
+  for (int i=0; i < cc; ++i) {
+      tools->setColumnWidth(i, cwl.at(i).toInt());
+      }
   cfg.endGroup();
+  categories->expandAll();
 
   return spH;
   }
@@ -188,7 +196,7 @@ void ToolManager::currentChanged(const QModelIndex& index) {
 
   if (cid > 0) toolModel->setFilter("type = " + QString::number(cid));
   else         toolModel->setFilter("type > 0");
-  tools->resizeColumnsToContents();
+//  tools->resizeColumnsToContents();
   }
 
 
@@ -329,6 +337,10 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
             if (categories->isExpanded(cur)) categories->setExpanded(cur, false);
             else                             categories->setExpanded(cur, true);
             }
+         else {
+            qDebug() << "space at tableView hit ...";
+            toolModel->toggleSelection(tool2Edit);
+            }
          break;
     case Qt::Key_Insert: {
          if (categories->hasFocus()) createCategory();
@@ -341,6 +353,9 @@ void ToolManager::keyReleaseEvent(QKeyEvent *event) {
     case Qt::Key_F6: {
          if (categories->hasFocus()) renameCategory();
          } break;
+    case Qt::Key_F9:
+         toolModel->exportTools();
+         break;
     case Qt::Key_F10:
          if (tEdit->isEnabled()) saveToolChanges();
          break;
@@ -355,11 +370,19 @@ void ToolManager::closeEvent(QCloseEvent*) {
   cfg.beginGroup(ToolManager::className);
   cfg.setValue("hState", spH->saveState());
   cfg.setValue("vState", spV->saveState());
+  int cc = tools->horizontalHeader()->count();
+  QList<QVariant> cwl;
+
+  for (int i=0; i < cc; ++i) {
+      cwl.append(tools->columnWidth(i));
+      }
+  cfg.setValue("cw", cwl);
   cfg.endGroup();
   }
 
 
 void ToolManager::showEvent(QShowEvent* e) {
+  DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) categories->setFocus();
   }
 

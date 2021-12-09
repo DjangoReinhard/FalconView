@@ -33,7 +33,7 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   cw->setFolderIcon(icoF);
   cw->parse(ba);
   kw->setIcon(icoL);
-  kw->parse(ba);
+  kw->parse(ba, keyWords);
   }
 
 
@@ -54,6 +54,12 @@ QWidget* HelpEngine::contentWidget() {
 
 QWidget* HelpEngine::keywordWidget() {
   return kw;
+  }
+
+
+QString  HelpEngine::page4Keyword(const QString& keyWord) const {
+  if (keyWords.contains(keyWord)) return keyWords[keyWord];
+  return QString();
   }
 
 

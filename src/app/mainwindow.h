@@ -27,6 +27,7 @@ public:
  ~MainWindow();
 
   void setAppMode(ApplicationMode am);
+  HelpDialog* helpDialog() { return dlgHelp; }
 
 protected:
   void closeEvent(QCloseEvent *event)  override;
@@ -64,7 +65,6 @@ protected slots:
 private:
   bool                statusInPreview;
   Ui::MainWindow*     ui;
-//  PositionStatus*     pos;
   PreViewEditor*      pw;
   HelpDialog*         dlgHelp;
   QAction*            startAction;

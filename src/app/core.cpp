@@ -13,6 +13,7 @@
 #include <dbconnection.h>
 #include <dbhelper.h>
 #include <dynframe.h>
+#include <helpdialog.h>
 #include <mainwindow.h>
 #include <tooltable.h>
 #include <LCInter.h>
@@ -89,6 +90,11 @@ void Core::showAllButCenter(bool visible) {
   }
 
 
+void Core::help4Keyword(const QString &keyWord) {
+  core()->mainWindow->helpDialog()->help4Keyword(keyWord);
+  }
+
+
 QWidget* Core::stackedPage(const QString& pageName) {
   qDebug() << "Core: query for page: >" << pageName << "<";
 
@@ -138,6 +144,11 @@ void Core::setWindowTitle(const QString &title) {
                                       + " - "
                                       + title);
      }
+  }
+
+
+bool Core::showHelpAtPageChange() const {
+  return core()->cfg.value("showHelpAtPageChange").toBool();
   }
 
 
@@ -297,8 +308,7 @@ Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString
  , ally3D(nullptr)
  , statusReader(positionCalculator, gcodeInfo)
  , commandWriter(new CommandWriter())
- , tmSysEvents(nullptr)
- , helpEngine(nullptr) {
+ , tmSysEvents(nullptr) {
   if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
   lcIF.setupToolTable();
   tt.setLatheMode(isLatheMode());
@@ -342,13 +352,6 @@ void Kernel::initialize(DBHelper& dbAssist) {
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged, this, &Kernel::updateView);
 
   setupBackend();
-  }
-
-
-/* =================== */
-/* test helpfile ?!?   */
-/* =================== */
-void Kernel::checkHelp() {
   }
 
 
@@ -468,12 +471,12 @@ bool Kernel::isLatheMode() const {
 
 
 void Kernel::parseGCode(QFile &file) {
-  QTime start = QTime::currentTime();
+//  QTime start = QTime::currentTime();
 
   lcIF.parseInline(file.fileName());
 
-  QTime end  = QTime::currentTime();
-  long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
+//  QTime end  = QTime::currentTime();
+//  long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
 
 //  qDebug() << "parsing of " << file.fileName() << " took: " << delta << "ms";
   }

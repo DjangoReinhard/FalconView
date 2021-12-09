@@ -51,6 +51,28 @@ void HelpDialog::keywordItemChanged(QListWidgetItem *current, QListWidgetItem *)
   }
 
 
+/*
+ * "3D Preview"
+ * "MDIEditor"
+ * "PathEditor"
+ * "TestEdit"
+ * "FileManager"
+ * "JogView"
+ * "LCToolTable"
+ * "SettingsNotebook"
+ * "PreferencesEditor"
+ * "FixtureManager"
+ * "ToolManager"
+ */
+void HelpDialog::help4Keyword(const QString &keyWord) {
+  QString page = he->page4Keyword(keyWord);
+
+  qDebug() << "help requested for keyword >" << keyWord << "<";
+  if (!page.isEmpty()) tb->setSource(page);
+  showHelp();
+  }
+
+
 void HelpDialog::keyPressEvent(QKeyEvent* e) {
   qDebug() << "HelpDLG: pressed key: " << e->key()
            << "modifiers: "   << e->modifiers()

@@ -130,16 +130,16 @@ void FixtureManager::showEvent(QShowEvent* e) {
   qDebug() << "FM: show Event ...";
   if (e->type() == QEvent::Show) {
      activateEditor(0);
-     QMessageBox::information(this
-                            , tr("QMessageBox::information()")
-                            , tr("<p>Fixture-Manager helps you manage your individual "
-                                 "coordinate system offsets.</p><p>Use CTRL+number to activate "
-                                 "an editor. G54 is CTRL+1, G55 is CTRL+2 and CTRL+0 "
-                                 "activates the relative offsets.</p><p>TAB / BackTAB can be"
-                                 "used to select the axis. In an axis field, just enter the "
-                                 "value you'd like to see at the current postion.</p><p>"
-                                 "Usually you'd like to enter 0 - followed by ENTER.</p><p>"
-                                 "That calculates the coordinate offset for that axis and "
-                                 "sends the value to linuxcnc backend</p>"));
+//     QMessageBox::information(this
+//                            , tr("QMessageBox::information()")
+//                            , tr("<p>Fixture-Manager helps you manage your individual "
+//                                 "coordinate system offsets.</p><p>Use CTRL+number to activate "
+//                                 "an editor. G54 is CTRL+1, G55 is CTRL+2 and CTRL+0 "
+//                                 "activates the relative offsets.</p><p>TAB / BackTAB can be"
+//                                 "used to select the axis. In an axis field, just enter the "
+//                                 "value you'd like to see at the current postion.</p><p>"
+//                                 "Usually you'd like to enter 0 - followed by ENTER.</p><p>"
+//                                 "That calculates the coordinate offset for that axis and "
+//                                 "sends the value to linuxcnc backend</p>"));
      }
   }

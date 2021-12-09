@@ -46,6 +46,7 @@ void SysEventView::updateStyles() {
 
 
 void SysEventView::showEvent(QShowEvent* e) {
+  DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
      qDebug() << ">>>   SysEventView::showEvent - SHOW";
      ValueManager().setValue("errorActive", true);
