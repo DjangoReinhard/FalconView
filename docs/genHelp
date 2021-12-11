@@ -1,9 +1,24 @@
 #!/bin/bash
 project=FalconView
+extIN=md
+extOut=html
 
-qdoc ${project}.qdocconf
+for i in $(ls src/*.$extIN)
+do
+  t=html${i#src}
+  d=${t%.$extIN}.$extOut
+  cat $i | gfm | fixhtml > $d
+done
+cd src
+images=`grep -Ro -P "\(images/(.*)\)" | sed 's%.*(images/%%' | sed 's%)%%'`
+cd ..
 cp ${project}.qhp html
+mkdir html/images 2>/dev/null
+for i in $images
+do
+  echo $i
+  cp src/images/$i html/images
+done
 cd html
-cp ../src/images/{fold,help-}*.* images
 zip -u9 ../FalconView.qzh *.html images/* FalconView.qhp
 cp -a ../FalconView.qzh .

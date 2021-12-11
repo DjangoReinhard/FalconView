@@ -13,13 +13,13 @@ public:
 
   void setFolderIcon(const QIcon& ico);
   void setHelpIcon(const QIcon& ico);
-  void parse(const QByteArray& ba);
+  void parse(const QByteArray& ba, QMap<QString, QString>& pages);
 
 protected:
-  QTreeWidgetItem* createItem(const QDomElement& e, QTreeWidgetItem* parent);
-  QTreeWidgetItem* processElement(const QDomElement& e, QTreeWidgetItem* parent);
-  void processChildren(const QDomElement& e, QTreeWidgetItem* parentItem = nullptr);
-  void processAttributes(const QDomElement& e, QTreeWidgetItem* item);
+  QTreeWidgetItem* createItem(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parent);
+  QTreeWidgetItem* processElement(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parent);
+  void processChildren(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parentItem = nullptr);
+  void processAttributes(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* item);
 
 private:
   int   level;

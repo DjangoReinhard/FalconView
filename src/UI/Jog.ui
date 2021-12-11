@@ -30,7 +30,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-next.png</normaloff>:/res/go-next.png</iconset>
+       <normaloff>:/res/X+.png</normaloff>:/res/X+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -76,7 +76,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-previous-01.png</normaloff>:/res/go-previous-01.png</iconset>
+       <normaloff>:/res/U-.png</normaloff>:/res/U-.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -96,7 +96,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-up-01.png</normaloff>:/res/go-up-01.png</iconset>
+       <normaloff>:/res/W+.png</normaloff>:/res/W+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -116,7 +116,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-up.png</normaloff>:/res/go-up.png</iconset>
+       <normaloff>:/res/Z+.png</normaloff>:/res/Z+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -136,7 +136,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-down-01.png</normaloff>:/res/go-down-01.png</iconset>
+       <normaloff>:/res/W-.png</normaloff>:/res/W-.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -156,7 +156,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-next-01.png</normaloff>:/res/go-next-01.png</iconset>
+       <normaloff>:/res/U+.png</normaloff>:/res/U+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -231,7 +231,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-down.png</normaloff>:/res/go-down.png</iconset>
+       <normaloff>:/res/Z-.png</normaloff>:/res/Z-.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -326,7 +326,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/edit-undo.png</normaloff>:/res/edit-undo.png</iconset>
+          <normaloff>:/res/A-.png</normaloff>:/res/A-.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -346,7 +346,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/edit-redo.png</normaloff>:/res/edit-redo.png</iconset>
+          <normaloff>:/res/A+.png</normaloff>:/res/A+.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -379,7 +379,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/edit-undo.png</normaloff>:/res/edit-undo.png</iconset>
+          <normaloff>:/res/B-.png</normaloff>:/res/B-.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -399,7 +399,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/edit-redo.png</normaloff>:/res/edit-redo.png</iconset>
+          <normaloff>:/res/B+.png</normaloff>:/res/B+.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -432,7 +432,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/edit-undo.png</normaloff>:/res/edit-undo.png</iconset>
+          <normaloff>:/res/C-.png</normaloff>:/res/C-.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -452,7 +452,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/edit-redo.png</normaloff>:/res/edit-redo.png</iconset>
+          <normaloff>:/res/C+.png</normaloff>:/res/C+.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -494,7 +494,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/go-previous.png</normaloff>:/res/go-previous.png</iconset>
+       <normaloff>:/res/X-.png</normaloff>:/res/X-.png</iconset>
      </property>
      <property name="iconSize">
       <size>

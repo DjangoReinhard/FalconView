@@ -1,6 +1,7 @@
 #include <helpengine.h>
 #include <helpcontentwidget.h>
 #include <helpkeywordwidget.h>
+#include <core.h>
 #include <QDomDocument>
 #include <QDomNode>
 #include <QVariant>
@@ -12,9 +13,10 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
  : QObject(parent)
  , reader(new QZipReader(helpFile))
  , level(0)
- , cw(nullptr) {
+ , cw(nullptr)
+ , locXT("_" + Core().languagePrefix() + ".html")
+ , defXT(".html") {
   buildDir(reader->fileInfoList());
-//  tellContent();
   cw = new HelpContentWidget();
   kw = new HelpKeywordWidget();
   QByteArray ba = reader->fileData("FalconView.qhp");
@@ -31,9 +33,10 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   pm.loadFromData(bp);
   icoL.addPixmap(pm);
   cw->setFolderIcon(icoF);
-  cw->parse(ba);
+  cw->parse(ba, pages);
   kw->setIcon(icoL);
   kw->parse(ba, keyWords);
+  tellContent();
   }
 
 
@@ -64,10 +67,51 @@ QString  HelpEngine::page4Keyword(const QString& keyWord) const {
 
 
 QVariant HelpEngine::readFile(const QString& file) {
-  if (!helpDir.contains(file)) return QVariant();
-  QByteArray ba = reader->fileData(file);
+  qDebug() << "HelpEngine::readFile(" << file << ")";
+  QString page = file + locXT;
 
+  if (!helpDir.contains(page)) {
+     page = file + defXT;
+
+     if (!helpDir.contains(page)) {
+        if (!helpDir.contains(file)) return QVariant();
+        page = file;
+        }
+     }
+  QByteArray ba = reader->fileData(page);
+  QString    title;
+
+  if (page.endsWith(".html")) {
+     title = pages[file];
+
+     qDebug() << "page [" << file << "] has title: " << title;
+
+     ba = wrapPage(title, ba);
+     }
   return QVariant(ba);
+  }
+
+
+QByteArray HelpEngine::wrapPage(const QString& title, const QByteArray& ba) {
+  QByteArray frame("<!DOCTYPE html><html lang=\"");
+
+  frame += Core().languagePrefix().toUtf8();
+  frame += QByteArray("\"><head><meta charset=\"utf-8\"><title>");
+  frame += tr("Help").toUtf8();
+  frame += QByteArray(" FalconView 0.1 | ");
+  frame += title.toUtf8();
+  frame += QByteArray("</title><style>");
+  // styles ?!?
+//  frame += QByteArray("table, th, td {"
+//                      "border: medium solid black;"
+//                      "border-collapse: collapse;"
+//                      "}");
+
+  frame += QByteArray("</style></head><body>");
+  frame += ba;
+  frame += QByteArray("</body></html>");
+
+  return frame;
   }
 
 
@@ -77,5 +121,11 @@ void HelpEngine::tellContent() {
                << (e.isDir ? "Dir" : "")
                << (e.isFile ? "File" : "")
                << (e.isSymLink ? "SymLink" : "");
+      }
+  for (auto k = pages.keyBegin(); k != pages.keyEnd(); k++) {
+      qDebug() << "page[" << *k << "] => " << pages[*k];
+      }
+  for (auto k = keyWords.keyBegin(); k != keyWords.keyEnd(); k++) {
+      qDebug() << "keywords[" << *k << "] => " << keyWords[*k];
       }
   }

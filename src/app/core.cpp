@@ -172,6 +172,10 @@ const QString& Core::curPage() const {
   }
 
 
+QString Core::languagePrefix() const {
+  return core()->curLocale.name().mid(0, 2);
+  }
+
 ToolTable* Core::toolTableModel() {
   return &core()->tt;
   }

@@ -6,27 +6,46 @@
         <filterAttribute>FalconView</filterAttribute>
         <filterAttribute>0.1</filterAttribute>
         <toc>
-            <section title="User Guide" ref="index.html">
-                <section title="start the engine" ref="startup.html"/>
-                <section title="reference" ref="reference.html"/>
-                <section title="use case" ref="usage.html"/>
+            <section title="User Guide" ref="index">
+                <section title="linuxCNC" ref="integration"/>
+                <section title="Center-Area" ref="reference">
+                    <section title="NC-Editor" ref="nceditor"/>
+                    <section title="3D-Preview" ref="preview"/>
+                    <section title="JogView" ref="jogview"/>
+                    <section title="Settings" ref="settingsnotebook">
+                        <section title="Fixtures" ref="fixturemanager"/>
+                        <section title="Preferences" ref="preferences"/>
+                        <section title="LC-Tools" ref="lctooltable"/>
+                    </section>
+                </section>
+                <section title="Toolbars" ref="toolbars">
+                    <section title="ApplicationMode" ref="tbappmode"/>
+                    <section title="RunMode" ref="tbrunmode"/>
+                    <section title="Machine" ref="tbmachine"/>
+                    <section title="Extended" ref="tbextend"/>
+                </section>
+                <section title="Status-Info" ref="info">
+                    <section title="Position" ref="sipos"/>
+                    <section title="ToolInfo" ref="sitool"/>
+                    <section title="act.Codes" ref="sicodes"/>
+                    <section title="SpeedInfo" ref="sispeed"/>
+                </section>
+                <section title="use case" ref="usage"/>
             </section>
         </toc>
         <keywords>
-            <keyword name="FileManager" id="fileManager" ref="filemanager.html"/>
-            <keyword name="Start" id="start" ref="startup.html"/>
-            <keyword name="Reference" id="reference" ref="reference.html"/>
-            <keyword name="Use" id="use" ref="usage.html"/>
-            <keyword name="3D Preview" id="3D Preview" ref="reference.html"/>
-            <keyword name="MDIEditor" id="MDIEditor" ref="usage.html"/>
-            <keyword name="PathEditor" id="PathEditor" ref="startup.html"/>
-            <keyword name="TestEdit" id="TestEdit" ref="reference.html"/>
-            <keyword name="JogView" id="JogView" ref="usage.html"/>
-            <keyword name="LCToolTable" id="LCToolTable" ref="startup.html"/>
-            <keyword name="SettingsNotebook" id="SettingsNotebook" ref="reference.html"/>
-            <keyword name="PreferencesEditor" id="PreferencesEditor" ref="usage.html"/>
-            <keyword name="FixtureManager" id="FixtureManager" ref="startup.html"/>
-            <keyword name="ToolManager" id="ToolManager" ref="reference.html"/>
+            <keyword name="3D Preview" id="3D Preview" ref="preview"/>
+            <keyword name="FileManager" id="fileManager" ref="filemanager"/>
+            <keyword name="FixtureManager" id="FixtureManager" ref="fixturemanager"/>
+            <keyword name="JogView" id="JogView" ref="jogview"/>
+            <keyword name="LCToolTable" id="LCToolTable" ref="lctooltable"/>
+            <keyword name="MDIEditor" id="MDIEditor" ref="mdiedit"/>
+            <keyword name="PathEditor" id="PathEditor" ref="nceditor"/>
+            <keyword name="PreferencesEditor" id="PreferencesEditor" ref="preferences"/>
+            <keyword name="SettingsNotebook" id="SettingsNotebook" ref="settingsnotebook"/>
+            <keyword name="TestEdit" id="TestEdit" ref="nceditor"/>
+            <keyword name="ToolEditor" id="ToolEditor" ref="tooleditor"/>
+            <keyword name="ToolManager" id="ToolManager" ref="toolmanager"/>
         </keywords>
         <files>
             <file>*.html</file>

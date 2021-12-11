@@ -230,47 +230,38 @@ void OcctQtViewer::setBounds(const Bnd_Box &bounds) {
 
 
 void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
-  switch (e->key()) {
-    case Qt::Key_F:
-         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier)
-            frontView();
-         else fitAll();
-         e->accept();
-         break;
-    case Qt::Key_T:
-         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+  if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+     switch (e->key()) {
+       case Qt::Key_T:
             topView();
             e->accept();
-            }
-         break;
-    case Qt::Key_R:
-         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            break;
+       case Qt::Key_R:
             rightView();
             e->accept();
-            }
-         break;
-    case Qt::Key_L:
-         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            break;
+       case Qt::Key_L:
             leftView();
             e->accept();
-            }
-         break;
-    case Qt::Key_B:
-         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            break;
+       case Qt::Key_B:
             backView();
             e->accept();
-            }
-         break;
-    case Qt::Key_3:
-         if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
+            break;
+       case Qt::Key_3:
             isoView();
             e->accept();
-            }
-         break;
-    default:
-         QOpenGLWidget::keyPressEvent(e);
-         break;
-    }
+            break;
+       default:
+            QOpenGLWidget::keyPressEvent(e);
+            break;
+       }
+     }
+  else if (e->key() == Qt::Key_F) {
+     fitAll();
+     e->accept();
+     }
+  else QOpenGLWidget::keyPressEvent(e);
   }
 
 

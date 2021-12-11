@@ -15,7 +15,7 @@ HelpContentWidget::~HelpContentWidget() {
   }
 
 
-void HelpContentWidget::parse(const QByteArray& ba) {
+void HelpContentWidget::parse(const QByteArray& ba, QMap<QString, QString>& pages) {
   QDomDocument doc;
 
   doc.setContent(ba);
@@ -26,68 +26,58 @@ void HelpContentWidget::parse(const QByteArray& ba) {
   for (int i=0; i < links.count(); ++i) {
       QDomNode link = links.item(i);
 
-//      qDebug() << "\n";
-//      qDebug() << "check entry #" << i;
       if (link.isElement()) {
          QDomElement e = link.toElement();
 
-         processChildren(e);
+         processChildren(e, pages);
          }
       }
   }
 
 
-void HelpContentWidget::processAttributes(const QDomElement& e, QTreeWidgetItem* item) {
+void HelpContentWidget::processAttributes(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* item) {
   int mx = e.attributes().count();
 
-//  qDebug() << "processAttributes ...";
   if (mx > 0) {
-//     qDebug() << "element has" << mx << "attributes";
      for (int i=0; i < mx; ++i) {
          const QDomNode& n = e.attributes().item(i);
 
-//         qDebug() << "\tattribute:" << n.nodeName() << " => " << n.nodeValue();
-         if (n.nodeName() == "title")    item->setText(0, n.nodeValue());
+         if (n.nodeName() == "title")    item->setText(0, tr(n.nodeValue().toStdString().c_str()));
          else if (n.nodeName() == "ref") item->setText(1, n.nodeValue());
          }
+     pages[item->text(1)] = item->text(0);
      }
-//  else qDebug() << "element has NO attributes";
   }
 
 
-void HelpContentWidget::processChildren(const QDomElement& e, QTreeWidgetItem* parent) {
-//  qDebug() << "processChildren ... (level:" << level++ << ")";
-
+void HelpContentWidget::processChildren(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parent) {
+  ++level;
   for (QDomNode n = e.firstChild(); !n.isNull(); n = n.nextSibling()) {
-      if (n.isElement()) {
-//         qDebug() << "child is Element";
-         processElement(n.toElement(), parent);
-         }
+      if (n.isElement()) processElement(n.toElement(), pages, parent);
       }
   --level;
   }
 
 
-QTreeWidgetItem* HelpContentWidget::createItem(const QDomElement &e, QTreeWidgetItem *parent) {
+QTreeWidgetItem* HelpContentWidget::createItem(const QDomElement &e, QMap<QString, QString>& pages, QTreeWidgetItem *parent) {
   QTreeWidgetItem* item;
 
   if (parent) item = new QTreeWidgetItem(parent);
   else        item = new QTreeWidgetItem(this);
   item->setIcon(0, folderIcon);
-  processAttributes(e, item);
+  processAttributes(e, pages, item);
 
   return item;
   }
 
 
-QTreeWidgetItem* HelpContentWidget::processElement(const QDomElement& e, QTreeWidgetItem* parent) {
-//  qDebug() << "processElement - tag:" << e.tagName() << "text:" << e.text();
+QTreeWidgetItem* HelpContentWidget::processElement(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parent) {
   QTreeWidgetItem* item = nullptr;
 
   if (e.tagName() == "section") {
-     item = createItem(e, parent);
+     item = createItem(e, pages, parent);
 
-     processChildren(e, item);
+     processChildren(e, pages, item);
      }
   return item;
   }

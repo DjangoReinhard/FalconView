@@ -1,6 +1,6 @@
 #include <configacc.h>
 #include <helpdialog.h>
-#include <htmlbrowser.h>
+#include <helpbrowser.h>
 #include <helpengine.h>
 #include <helpcontentwidget.h>
 #include <helpkeywordwidget.h>
@@ -15,13 +15,16 @@
 
 HelpDialog::HelpDialog(QWidget* parent)
  : QDockWidget(tr("Help"), parent)
+ , tb(new HelpBrowser)
  , sp(new QSplitter(Qt::Horizontal, this))
  , he(new HelpEngine(Core().helpFilename(), this))
- , tb(new HTMLBrowser(*he))
  , cw(static_cast<HelpContentWidget*>(he->contentWidget()))
  , kw(static_cast<HelpKeywordWidget*>(he->keywordWidget())) {
   setObjectName("HelpDialog");
-  tb->setMinimumWidth(830);
+  HelpBrowser* hb = static_cast<HelpBrowser*>(tb);
+
+  hb->setHelpEngine(he);
+  hb->setMinimumWidth(830);
   setMinimumWidth(1100);
   QTabWidget* tw = new QTabWidget(sp);
 
@@ -34,6 +37,7 @@ HelpDialog::HelpDialog(QWidget* parent)
   setTitleBarWidget(new HelpTitleBar(this));
   connect(cw, &QTreeWidget::currentItemChanged, this, &HelpDialog::contentItemChanged);
   connect(kw, &QListWidget::currentItemChanged, this, &HelpDialog::keywordItemChanged);
+  connect(tb, &QTextBrowser::sourceChanged, this, &HelpDialog::sourceChanged);
   }
 
 
@@ -41,6 +45,14 @@ void HelpDialog::contentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *)
   const QString& page = current->data(1, Qt::DisplayRole).toString();
 
   tb->setSource(page);
+  }
+
+
+void HelpDialog::sourceChanged(const QUrl&) {
+  qDebug() << "HelpDialog::sourceChanged - " << tb->documentTitle();
+  HelpTitleBar* htb = static_cast<HelpTitleBar*>(this->titleBarWidget());
+
+  if (htb) htb->setTitle(tb->documentTitle());
   }
 
 
@@ -67,7 +79,7 @@ void HelpDialog::keywordItemChanged(QListWidgetItem *current, QListWidgetItem *)
 void HelpDialog::help4Keyword(const QString &keyWord) {
   QString page = he->page4Keyword(keyWord);
 
-  qDebug() << "help requested for keyword >" << keyWord << "<";
+  qDebug() << "HD: keyword >" << keyWord << "< \tpage:" << page;
   if (!page.isEmpty()) tb->setSource(page);
   showHelp();
   }
@@ -78,6 +90,9 @@ void HelpDialog::keyPressEvent(QKeyEvent* e) {
            << "modifiers: "   << e->modifiers()
            << "event-ts: " << e->timestamp();
   switch (e->key()) {
+    case Qt::Key_Escape:
+         close();
+         break;
     case Qt::Key_Right:
     case Qt::Key_Left:
     case Qt::Key_Up:
@@ -117,8 +132,8 @@ void HelpDialog::showHelp() {
 
 HelpTitleBar::HelpTitleBar(QWidget *parent)
  : QWidget(parent)
- , title(new Ui::HelpTitle) {
-  title->setupUi(this);
+ , titleBar(new Ui::HelpTitle) {
+  titleBar->setupUi(this);
   layout()->setContentsMargins(0, 0, 0, 0);
   setStyleSheet("background: #4D565E;");
   }
@@ -126,6 +141,12 @@ HelpTitleBar::HelpTitleBar(QWidget *parent)
 
 QSize HelpTitleBar::minimumSizeHint() const {
   return QSize(1100, 40);
+  }
+
+
+void HelpTitleBar::setTitle(const QString &title) {
+  qDebug() << "Help - Titlebar::setTitle(" << title << ")";
+  this->titleBar->title->setText(title);
   }
 
 

@@ -91,6 +91,7 @@ SOURCES += \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
     src/util/truecondition.cpp \
+    src/view/helpbrowser.cpp \
     src/view/helpcontentwidget.cpp \
     src/view/helpdialog.cpp \
     src/view/helpkeywordwidget.cpp \
@@ -115,7 +116,6 @@ SOURCES += \
     src/view/dynframe.cpp \
     src/view/fixtureedit.cpp \
     src/view/gcodeeditor.cpp \
-    src/view/htmlbrowser.cpp \
     src/view/occtviewer.cpp \
     src/view/settingsnb.cpp \
     src/view/tooleditor.cpp \
@@ -183,6 +183,7 @@ HEADERS += \
     src/util/smallercondition.h \
     src/util/timestamp.h \
     src/util/truecondition.h \
+    src/view/helpbrowser.h \
     src/view/helpcontentwidget.h \
     src/view/helpdialog.h \
     src/view/helpkeywordwidget.h \
@@ -207,7 +208,6 @@ HEADERS += \
     src/view/dynframe.h \
     src/view/fixtureedit.h \
     src/view/gcodeeditor.h \
-    src/view/htmlbrowser.h \
     src/view/occtviewer.h \
     src/view/settingsnb.h \
     src/view/tooleditor.h \
@@ -274,11 +274,23 @@ DISTFILES += \
     docs/FalconView.qdocconf \
     docs/FalconView.qhp \
     docs/genHelp \
+    docs/src/FixtureManager.qdoc \
+    docs/src/JogView.qdoc \
+    docs/src/LCToolTable.qdoc \
+    docs/src/MDIedit.qdoc \
+    docs/src/PreferencesEditor.qdoc \
+    docs/src/Preview.qdoc \
+    docs/src/SettingsNotebook.qdoc \
+    docs/src/TestEdit.qdoc \
+    docs/src/ToolEditor.qdoc \
+    docs/src/ToolManager.qdoc \
     docs/src/fileManager.qdoc \
     docs/src/index.qdoc \
+    docs/src/pathEdit.qdoc \
     docs/src/reference.qdoc \
     docs/src/startup.qdoc \
     docs/src/usage.qdoc \
+    docs/src.de/index.qdoc \
     docs/html/FalconView.qhcp \
     i18n/FalconView_de_DE.ts
 

@@ -35,11 +35,8 @@ void HelpKeywordWidget::parse(const QByteArray &ba, QMap<QString, QString>& keyW
 
 
 void HelpKeywordWidget::processChildren(const QDomElement& e, QMap<QString, QString>& keyWords) {
-//  qDebug() << "processChildren ... ";
-
   for (QDomNode n = e.firstChild(); !n.isNull(); n = n.nextSibling()) {
       if (n.isElement()) {
-//         qDebug() << "child is Element";
          QDomElement      elem = n.toElement();
          QListWidgetItem* item = new QListWidgetItem();
          int              mx   = elem.attributes().count();
@@ -54,9 +51,6 @@ void HelpKeywordWidget::processChildren(const QDomElement& e, QMap<QString, QStr
          addItem(item);
          keyWords[item->text()] = item->toolTip();
          }
-//      else if (n.isEntity()) qDebug() << "child is Entity";
-//      else if (n.isAttr())   qDebug() << "child is Attribute";
-//      else if (n.isText())   qDebug() << "child is Text";
       }
   }
 

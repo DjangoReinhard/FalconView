@@ -40,6 +40,9 @@ int main(int argc, char *argv[]) {
       a.installTranslator(&translator);
 //      qDebug() << "application arguments: " << args;
       qDebug() << "locale messages found: " << ok;
+      qDebug() << "language:" << lang;
+      qDebug() << "country:" << country;
+      qDebug() << "syslocale:" << sysLocale.name() << "\tcurrent locale:" << curLocale.name();
       qDebug() << "gonna use ini-file: " << iniFileName;
       qDebug() << "check for styles ...";
       for (const QString& s : sl) {

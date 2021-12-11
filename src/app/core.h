@@ -28,6 +28,7 @@ public:
   bool            isLatheMode() const;
   bool            isSimulator() const;
   bool            showHelpAtPageChange() const;
+  QString         languagePrefix() const;
   DBConnection*   databaseConnection();
   MainWindow*     mainWindow();
   void            activatePage(const QString& pageName);

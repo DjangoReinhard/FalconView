@@ -12,6 +12,7 @@
 #include <tooltable.h>
 #include <LCInter.h>
 #include <centerview.h>
+#include <QLocale>
 #include <QThread>
 #include <QBasicTimer>
 class OcctQtViewer;
@@ -83,6 +84,7 @@ private:
   StatusReader        statusReader;
   CommandWriter*      commandWriter;
   QBasicTimer         timer;
+  QLocale             curLocale;
   QThread             backendCommThread;
   SysEventModel*      tmSysEvents;
   bool                simulator;

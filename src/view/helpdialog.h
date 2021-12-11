@@ -26,11 +26,12 @@ protected slots:
   void keywordItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
   void keyPressEvent(QKeyEvent* event) override;
   void closeEvent(QCloseEvent* event) override;
+  void 	sourceChanged(const QUrl &src);
 
 private:
+  QTextBrowser*  tb;
   QSplitter*     sp;
   HelpEngine*    he;
-  QTextBrowser*  tb;
   HelpContentWidget* cw;
   HelpKeywordWidget* kw;
   static const QString& className;
@@ -45,11 +46,12 @@ public:
 
   QSize sizeHint() const override { return minimumSizeHint(); }
   QSize minimumSizeHint() const override;
+  void  setTitle(const QString& title);
 
 protected:
   void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
-  Ui::HelpTitle* title;
+  Ui::HelpTitle* titleBar;
   };
 #endif // HELPDIALOG_H

@@ -49,65 +49,59 @@
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="94"/>
-        <location filename="../view/pages/filemanager.cpp" line="116"/>
+        <location filename="../view/pages/filemanager.cpp" line="96"/>
+        <location filename="../view/pages/filemanager.cpp" line="118"/>
         <source>QInputDialog::getText()</source>
         <translation>Eingabe</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="95"/>
-        <location filename="../view/pages/filemanager.cpp" line="117"/>
+        <location filename="../view/pages/filemanager.cpp" line="97"/>
+        <location filename="../view/pages/filemanager.cpp" line="119"/>
         <source>name of Directory: </source>
         <translation>Verzeichnis: </translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="141"/>
-        <location filename="../view/pages/filemanager.cpp" line="264"/>
-        <location filename="../view/pages/filemanager.cpp" line="275"/>
-        <location filename="../view/pages/filemanager.cpp" line="305"/>
-        <location filename="../view/pages/filemanager.cpp" line="316"/>
+        <location filename="../view/pages/filemanager.cpp" line="268"/>
+        <location filename="../view/pages/filemanager.cpp" line="279"/>
+        <location filename="../view/pages/filemanager.cpp" line="309"/>
+        <location filename="../view/pages/filemanager.cpp" line="320"/>
         <source>QMessageBox::information()</source>
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="142"/>
-        <source>&lt;p&gt;File-Manager helps you to select and organize your gcode files.&lt;/p&gt;&lt;p&gt;TAB-key toggles between directory tree and file list. Cursor up/down shows active file in preview. ENTER loads the selected file into editor.&lt;/p&gt;&lt;p&gt;Insert can be used to create files or directories.&lt;/p&gt;&lt;p&gt;F5 can be used to select a file for copy transaction. After hitting F5 you can use Cursor keys to select the target directory. When the desired directory is selected, press Enter.&lt;/p&gt;&lt;p&gt;Same procedure using F6 for move file.&lt;/p&gt;&lt;p&gt;ENTER loads a file into editor, whereas ESC closes the filemanager without any action.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../view/pages/filemanager.cpp" line="251"/>
-        <location filename="../view/pages/filemanager.cpp" line="292"/>
+        <location filename="../view/pages/filemanager.cpp" line="255"/>
+        <location filename="../view/pages/filemanager.cpp" line="296"/>
         <source>QMessageBox::critical()</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="252"/>
+        <location filename="../view/pages/filemanager.cpp" line="256"/>
         <source>There is already file %1 marked for copy. Do you want to abort that copy operation and start a new copy?</source>
         <translation>Datei %1 ist bereits zum Kopieren vorgemerkt. Soll die Aktion abgebrochen und eine neue gestartet werden?</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="265"/>
-        <location filename="../view/pages/filemanager.cpp" line="276"/>
+        <location filename="../view/pages/filemanager.cpp" line="269"/>
+        <location filename="../view/pages/filemanager.cpp" line="280"/>
         <source>file %1 has been marked for copy. To finish copy operation goto desired destination directory and press [Enter].</source>
         <translation>Datei %1 wurde zum Kopieren ausgewählt. Um die Kopieraktion abzuschließen muss das Zielverzeichnis ausgewählt und mit [ENTER] bestätigt werden.</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="293"/>
+        <location filename="../view/pages/filemanager.cpp" line="297"/>
         <source>There is already file %1 marked for move. Do you want to abort that move operation and start a new move?</source>
         <translation>Datei %1 ist bereits zum Verschieben vorgemerkt. Soll die Aktion abgebrochen und eine neue gestartet werden?</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="306"/>
+        <location filename="../view/pages/filemanager.cpp" line="310"/>
         <source>file %1 has been marked for move. To finish move operation goto desired destination directory and press [Enter].</source>
         <translation>Datei %1 wurde zum Verschieben ausgewählt. Um die Verschiebeaktion abzuschließen muss das Zielverzeichnis ausgewählt und mit [ENTER] bestätigt werden.</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="317"/>
+        <location filename="../view/pages/filemanager.cpp" line="321"/>
         <source>file %1 has been marked for move. To finish move operation goto desired destination directory and press Enter</source>
         <translation>Datei %1 wurde zum Verschieben ausgewählt. Um die Verschiebeaktion abzuschließen muss das Zielverzeichnis ausgewählt und mit [ENTER] bestätigt werden</translation>
     </message>
     <message>
-        <location filename="../view/pages/filemanager.cpp" line="358"/>
+        <location filename="../view/pages/filemanager.cpp" line="362"/>
         <source>&lt;p&gt;no textfile&lt;/p&gt;</source>
         <translation>keine Textdatei</translation>
     </message>
@@ -191,14 +185,8 @@
         <translation>Korrektur</translation>
     </message>
     <message>
-        <location filename="../view/pages/fixturemanager.cpp" line="134"/>
         <source>QMessageBox::information()</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <location filename="../view/pages/fixturemanager.cpp" line="135"/>
-        <source>&lt;p&gt;Fixture-Manager helps you manage your individual coordinate system offsets.&lt;/p&gt;&lt;p&gt;Use CTRL+number to activate an editor. G54 is CTRL+1, G55 is CTRL+2 and CTRL+0 activates the relative offsets.&lt;/p&gt;&lt;p&gt;TAB / BackTAB can beused to select the axis. In an axis field, just enter the value you&apos;d like to see at the current postion.&lt;/p&gt;&lt;p&gt;Usually you&apos;d like to enter 0 - followed by ENTER.&lt;/p&gt;&lt;p&gt;That calculates the coordinate offset for that axis and sends the value to linuxcnc backend&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Information</translation>
     </message>
 </context>
 <context>
@@ -207,22 +195,6 @@
         <location filename="../UI/MDIEditor.ui" line="20"/>
         <source>Form</source>
         <translation>Form</translation>
-    </message>
-    <message>
-        <source>Y+</source>
-        <translation type="vanished">Y+</translation>
-    </message>
-    <message>
-        <source>Y-</source>
-        <translation type="vanished">Y-</translation>
-    </message>
-    <message>
-        <source>V-</source>
-        <translation type="vanished">V-</translation>
-    </message>
-    <message>
-        <source>V+</source>
-        <translation type="vanished">V+</translation>
     </message>
 </context>
 <context>
@@ -273,6 +245,86 @@
         <source>Title</source>
         <translation>Titel</translation>
     </message>
+    <message>
+        <source>User Guide</source>
+        <translation>Benutzer-Handbuch</translation>
+    </message>
+    <message>
+        <source>linuxCNC</source>
+        <translation>LinuxCNC</translation>
+    </message>
+    <message>
+        <source>Center-Area</source>
+        <translation>Hauptbereich</translation>
+    </message>
+    <message>
+        <source>NC-Editor</source>
+        <translation>NC-Editor</translation>
+    </message>
+    <message>
+        <source>3D-Preview</source>
+        <translation>3D-Vorschau</translation>
+    </message>
+    <message>
+        <source>JogView</source>
+        <translation>Handbetrieb</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>Fixtures</source>
+        <translation>Koordinatensysteme</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Optionen</translation>
+    </message>
+    <message>
+        <source>LC-Tools</source>
+        <translation>LC-Werkzeuge</translation>
+    </message>
+    <message>
+        <source>Toolbars</source>
+        <translation>Werkzeugleisten</translation>
+    </message>
+    <message>
+        <source>ApplicationMode</source>
+        <translation>Anwendungs-Modus</translation>
+    </message>
+    <message>
+        <source>RunMode</source>
+        <translation>Betriebsart</translation>
+    </message>
+    <message>
+        <source>Machine</source>
+        <translation>Maschine</translation>
+    </message>
+    <message>
+        <source>Extended</source>
+        <translation>Zusatz</translation>
+    </message>
+    <message>
+        <source>Status-Info</source>
+        <translation>Informationen</translation>
+    </message>
+    <message>
+        <source>Position</source>
+        <translation>Werkzeug-Position</translation>
+    </message>
+    <message>
+        <source>ToolInfo</source>
+        <translation>Werkzeug</translation>
+    </message>
+    <message>
+        <source>act.Codes</source>
+        <translation>aktive Befehle</translation>
+    </message>
+    <message>
+        <source>SpeedInfo</source>
+        <translation>Geschwindigkeit</translation>
+    </message>
 </context>
 <context>
     <name>HelpDialog</name>
@@ -290,6 +342,14 @@
         <location filename="../view/helpdialog.cpp" line="31"/>
         <source>Keywords</source>
         <translation>Fachbegriffe</translation>
+    </message>
+</context>
+<context>
+    <name>HelpEngine</name>
+    <message>
+        <location filename="../util/helpengine.cpp" line="100"/>
+        <source>Help</source>
+        <translation>Hilfe</translation>
     </message>
 </context>
 <context>
@@ -376,7 +436,7 @@
     <message>
         <location filename="../view/pages/mdieditor.cpp" line="12"/>
         <source>MDIEditor</source>
-        <translation type="unfinished"></translation>
+        <translation>manuelle Dateneingabe</translation>
     </message>
 </context>
 <context>
@@ -499,14 +559,6 @@
         <translation>bewegliche Komponenten</translation>
     </message>
     <message>
-        <source>About &amp;Qt</source>
-        <translation type="vanished">über Qt</translation>
-    </message>
-    <message>
-        <source>Show the Qt library&apos;s About box</source>
-        <translation type="vanished">information über die verwendete Qt Bibliothek</translation>
-    </message>
-    <message>
         <location filename="../app/mainwindow.cpp" line="123"/>
         <source>Start</source>
         <translation>Start</translation>
@@ -572,22 +624,22 @@
         <translation>Achsen referenzieren</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="408"/>
+        <location filename="../app/mainwindow.cpp" line="409"/>
         <source>TouchView</source>
         <translation>Taster</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="418"/>
+        <location filename="../app/mainwindow.cpp" line="419"/>
         <source>You need to switch to 3D-preview at least once to get this information.</source>
         <translation>Für diese Information muss zumindest einmal in die 3D-Vorschau gewechselt werden.</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="423"/>
+        <location filename="../app/mainwindow.cpp" line="424"/>
         <source>&lt;h3&gt;FalconView&lt;/h3&gt;&lt;p&gt;is an application to manage machines controlled by linuxCNC.&lt;/p&gt;&lt;p&gt;FalconView uses external components:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;%1&quot;&gt;linuxCNC v.%2&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%3&quot;&gt;Open CASCADE Technology v.%4&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%5&quot;&gt;Qt Toolkit v.%6&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;hl/&gt;&lt;p&gt;GL capabilities: &lt;ul&gt;&lt;li&gt;%7&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</source>
         <translation>&lt;h3&gt;FalconView&lt;/h3&gt;&lt;p&gt;ist eine Anwendung zur Steuerung  von CNC-Maschinen, die via linuxCNC getrieben werden.&lt;/p&gt;&lt;p&gt;FalconView verwendet externe Komponenten:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;%1&quot;&gt;linuxCNC v.%2&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%3&quot;&gt;Open CASCADE Technology v.%4&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%5&quot;&gt;Qt Toolkit v.%6&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;hl/&gt;&lt;p&gt;GL Fähigkeiten: &lt;ul&gt;&lt;li&gt;%7&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="496"/>
+        <location filename="../app/mainwindow.cpp" line="497"/>
         <source>TOP</source>
         <translation>TOP</translation>
     </message>
@@ -622,47 +674,43 @@
         <translation>Spindel im Uhrzeigersinn</translation>
     </message>
     <message>
-        <source>mdiView</source>
-        <translation type="vanished">MDI</translation>
-    </message>
-    <message>
-        <location filename="../app/mainwindow.cpp" line="405"/>
+        <location filename="../app/mainwindow.cpp" line="406"/>
         <source>Wheely</source>
         <translation>heißer Reifen</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="422"/>
+        <location filename="../app/mainwindow.cpp" line="423"/>
         <source>About FalconView</source>
         <translation>Über FalconView</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="458"/>
+        <location filename="../app/mainwindow.cpp" line="459"/>
         <source>close application?</source>
         <translation>Anwendung beenden?</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="459"/>
+        <location filename="../app/mainwindow.cpp" line="460"/>
         <source>&lt;p&gt;closing the application means shutting down the backend and stopping all services IF ui has been started by linuxcnc start-helper&lt;/p&gt;</source>
         <translation>&lt;p&gt;Anwendung schließen bedeutet, dass auch die Hintergrunddienste beendet werden, wenn FalconView über linuxCNC gestartet wurde&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="474"/>
+        <location filename="../app/mainwindow.cpp" line="475"/>
         <source>Auto</source>
         <translation>Automatisch</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="122"/>
-        <location filename="../app/mainwindow.cpp" line="483"/>
+        <location filename="../app/mainwindow.cpp" line="484"/>
         <source>Mode</source>
         <translation>Modus</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="504"/>
+        <location filename="../app/mainwindow.cpp" line="505"/>
         <source>Switch</source>
         <translation>Schalter</translation>
     </message>
     <message>
-        <location filename="../app/mainwindow.cpp" line="514"/>
+        <location filename="../app/mainwindow.cpp" line="515"/>
         <source>Power</source>
         <translation>Hauptschalter</translation>
     </message>
@@ -753,14 +801,20 @@
         <translation>Optionen</translation>
     </message>
     <message>
-        <location filename="../view/pages/preferenceseditor.cpp" line="161"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="167"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="180"/>
         <source>QMessageBox::information()</source>
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location filename="../view/pages/preferenceseditor.cpp" line="162"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="168"/>
         <source>for this change to take effect, the application must be restarted.</source>
         <translation>Zum Aktivieren dieser Änderung muss die Anwendung neu gestartet werden.</translation>
+    </message>
+    <message>
+        <location filename="../view/pages/preferenceseditor.cpp" line="181"/>
+        <source>You can rise help window at any time hitting [F1] key.</source>
+        <translation>Hilfe kann jederzeit wieder per [F1] angezeigt werden.</translation>
     </message>
 </context>
 <context>
@@ -771,127 +825,132 @@
         <translation>Rahmen</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="41"/>
+        <location filename="../UI/Settings.ui" line="354"/>
         <source>DRO rel 123,999</source>
         <translation>DRO rel 123,999</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="89"/>
+        <location filename="../UI/Settings.ui" line="1578"/>
         <source>Editor Line Number 109</source>
         <translation>Editor Zeile 109</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="111"/>
+        <location filename="../UI/Settings.ui" line="1792"/>
         <source>Speed Info</source>
         <translation>Drehzahl</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="156"/>
+        <location filename="../UI/Settings.ui" line="2049"/>
+        <source>show Help on content change</source>
+        <translation>Hilfe bei Fensterwechsel anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../UI/Settings.ui" line="1330"/>
         <source>state information inside 3D preview?</source>
         <translation>Status Ausgaben innerhalb 3D Vorschau anzeigen?</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="250"/>
+        <location filename="../UI/Settings.ui" line="157"/>
         <source>DRO abs 123,999</source>
         <translation>DRO abs 123,999</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="370"/>
+        <location filename="../UI/Settings.ui" line="420"/>
         <source>Fixture Title</source>
         <translation>Nullpunkt Titel</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="470"/>
+        <location filename="../UI/Settings.ui" line="1814"/>
         <source>Line Highlight</source>
         <translation>akt. Zeile</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="544"/>
+        <location filename="../UI/Settings.ui" line="664"/>
         <source>Tool Description</source>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="592"/>
+        <location filename="../UI/Settings.ui" line="642"/>
         <source>Preview 3D: work move</source>
         <translation>3D Vorschau: Arbeitsweg</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="761"/>
+        <location filename="../UI/Settings.ui" line="135"/>
         <source>Preview 3D: rapid move</source>
         <translation>3D Vorschau: schnelle Positionierung</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="939"/>
+        <location filename="../UI/Settings.ui" line="1263"/>
         <source>Preview 3D: Work-Limits</source>
         <translation>3D Vorschau: Grenzen des Arbeitsbereiches</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1039"/>
+        <location filename="../UI/Settings.ui" line="1482"/>
         <source>DRO dtg 123,999</source>
         <translation>DRO dtg 123,999</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1061"/>
+        <location filename="../UI/Settings.ui" line="376"/>
         <source>DRO Axis: X Y Z</source>
         <translation>DRO Axis: X Y Z</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1083"/>
+        <location filename="../UI/Settings.ui" line="985"/>
         <source>Fixture Prompt</source>
         <translation>Koordinaten-Bezeichner</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1105"/>
+        <location filename="../UI/Settings.ui" line="1744"/>
         <source>Tool number</source>
         <translation>Werkzeug-Nummer</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1251"/>
+        <location filename="../UI/Settings.ui" line="113"/>
         <source>Preview 3D: WorkPiece</source>
         <translation>3D Vorschau: Werkstück Grenzen</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1273"/>
+        <location filename="../UI/Settings.ui" line="398"/>
         <source>Fixture Edit</source>
         <translation>Koordinaten Editor</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1315"/>
+        <location filename="../UI/Settings.ui" line="620"/>
         <source>Preview 3D: passed Segments</source>
         <translation>3D Vorschau: gefahrene Wege</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1402"/>
+        <location filename="../UI/Settings.ui" line="1285"/>
         <source>actual Codes</source>
         <translation>akt. Befehle</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1522"/>
+        <location filename="../UI/Settings.ui" line="257"/>
         <source>Preview 3D: active Segment</source>
         <translation>3D Vorschau: aktueller Weg</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1596"/>
+        <location filename="../UI/Settings.ui" line="1460"/>
         <source>Filename</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1670"/>
+        <location filename="../UI/Settings.ui" line="572"/>
         <source>Feed Info</source>
         <translation>Vorschub</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1692"/>
+        <location filename="../UI/Settings.ui" line="1504"/>
         <source>GCode Editor</source>
         <translation>NC-Editor</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1740"/>
+        <location filename="../UI/Settings.ui" line="1418"/>
         <source>next Toolnum</source>
         <translation>nächstes Werkzeug</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1961"/>
+        <location filename="../UI/Settings.ui" line="1114"/>
         <source>Fixture Title (disabled)</source>
         <translation>Koordinaten-Titel</translation>
     </message>
@@ -1072,7 +1131,7 @@
         <translation>Rahmen</translation>
     </message>
     <message>
-        <location filename="../UI/ToolInfo.ui" line="144"/>
+        <location filename="../UI/ToolInfo.ui" line="179"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This could be a very long description of whatever kind loaded from tooltable comments&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hier könnte eine sehr lange Beschreibung des aktuellen Werkzeuges stehen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1080,50 +1139,50 @@
 <context>
     <name>ToolManager</name>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="113"/>
-        <location filename="../view/pages/toolmanager.cpp" line="153"/>
-        <location filename="../view/pages/toolmanager.cpp" line="265"/>
+        <location filename="../view/pages/toolmanager.cpp" line="121"/>
+        <location filename="../view/pages/toolmanager.cpp" line="161"/>
+        <location filename="../view/pages/toolmanager.cpp" line="273"/>
         <source>QInputDialog::getText()</source>
         <translation>Eingabe</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="114"/>
+        <location filename="../view/pages/toolmanager.cpp" line="122"/>
         <source>Category name:</source>
         <translation>Kategorie-Bezeichner:</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="154"/>
+        <location filename="../view/pages/toolmanager.cpp" line="162"/>
         <source>Tool number:</source>
         <translation>Werkzeug-Nummer:</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="207"/>
-        <location filename="../view/pages/toolmanager.cpp" line="250"/>
+        <location filename="../view/pages/toolmanager.cpp" line="215"/>
+        <location filename="../view/pages/toolmanager.cpp" line="258"/>
         <source>QMessageBox::information()</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="208"/>
+        <location filename="../view/pages/toolmanager.cpp" line="216"/>
         <source>This category has attached tools or sub-categories and cannot be removed.</source>
         <translation>Diese Kategorie hat zugeordnete Werkzeuge oder Untergruppen und kann deshalb nicht gelöscht werden.</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="223"/>
+        <location filename="../view/pages/toolmanager.cpp" line="231"/>
         <source>QMessageBox::question()</source>
         <translation>Sicherheits-Abfrage</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="224"/>
+        <location filename="../view/pages/toolmanager.cpp" line="232"/>
         <source>Should this tool be deleted?</source>
         <translation>Soll dies Werkzeug gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="251"/>
+        <location filename="../view/pages/toolmanager.cpp" line="259"/>
         <source>To finish tool editing press F10 to save changes or ESC to abort.</source>
         <translation>Die Bearbeitung der Werkzeugdaten kann mit ESC abgebrochen und mit F10 gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="266"/>
+        <location filename="../view/pages/toolmanager.cpp" line="274"/>
         <source>new Category name:</source>
         <translation>neue Kategorie:</translation>
     </message>
@@ -1131,268 +1190,232 @@
 <context>
     <name>ToolModel</name>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="91"/>
-        <location filename="../model/db/toolmodel.cpp" line="125"/>
+        <location filename="../model/db/toolmodel.cpp" line="89"/>
+        <location filename="../model/db/toolmodel.cpp" line="123"/>
         <source>id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="127"/>
+        <location filename="../model/db/toolmodel.cpp" line="125"/>
         <source>Num</source>
         <translation>Num</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="106"/>
+        <location filename="../model/db/toolmodel.cpp" line="104"/>
         <source>Len</source>
         <translation>Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="92"/>
+        <location filename="../model/db/toolmodel.cpp" line="90"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="93"/>
+        <location filename="../model/db/toolmodel.cpp" line="91"/>
         <source>TN</source>
         <translation>WN</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="94"/>
+        <location filename="../model/db/toolmodel.cpp" line="92"/>
         <source>TL</source>
         <translation>WL</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="95"/>
-        <location filename="../model/db/toolmodel.cpp" line="129"/>
+        <location filename="../model/db/toolmodel.cpp" line="93"/>
+        <location filename="../model/db/toolmodel.cpp" line="127"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="96"/>
+        <location filename="../model/db/toolmodel.cpp" line="94"/>
         <source>TC</source>
         <translation>WT</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="97"/>
+        <location filename="../model/db/toolmodel.cpp" line="95"/>
         <source>NF</source>
         <translation>AS</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="98"/>
+        <location filename="../model/db/toolmodel.cpp" line="96"/>
         <source>FR</source>
         <translation>SR</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="99"/>
+        <location filename="../model/db/toolmodel.cpp" line="97"/>
         <source>AC</source>
         <translation>SW</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="100"/>
+        <location filename="../model/db/toolmodel.cpp" line="98"/>
         <source>AV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="101"/>
+        <location filename="../model/db/toolmodel.cpp" line="99"/>
         <source>FL</source>
         <translation>SL</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="102"/>
+        <location filename="../model/db/toolmodel.cpp" line="100"/>
         <source>FD</source>
         <translation>SD</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="103"/>
+        <location filename="../model/db/toolmodel.cpp" line="101"/>
         <source>CD</source>
         <translation>SD</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="104"/>
+        <location filename="../model/db/toolmodel.cpp" line="102"/>
         <source>CL</source>
         <translation>EL</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="105"/>
+        <location filename="../model/db/toolmodel.cpp" line="103"/>
         <source>SD</source>
         <translation>SD</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="107"/>
+        <location filename="../model/db/toolmodel.cpp" line="105"/>
         <source>AS</source>
         <translation>SW</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="108"/>
+        <location filename="../model/db/toolmodel.cpp" line="106"/>
         <source>TD</source>
         <translation>WD</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="130"/>
+        <location filename="../model/db/toolmodel.cpp" line="128"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="131"/>
+        <location filename="../model/db/toolmodel.cpp" line="129"/>
         <source>Flutes</source>
         <translation>Schneiden</translation>
     </message>
     <message>
-        <source>radCut</source>
-        <translation type="vanished">Schneidenradius</translation>
-    </message>
-    <message>
-        <source>axCut</source>
-        <translation type="vanished">axial. Schnitt</translation>
-    </message>
-    <message>
-        <source>lenFlutes</source>
-        <translation type="vanished">Schneiden-Länge</translation>
-    </message>
-    <message>
-        <source>diaFlutes</source>
-        <translation type="vanished">Schneidendurchmesser</translation>
-    </message>
-    <message>
-        <source>diaCol</source>
-        <translation type="vanished">Durchmesser Aufnahme</translation>
-    </message>
-    <message>
-        <source>lenCol</source>
-        <translation type="vanished">Länge Aufnahme</translation>
-    </message>
-    <message>
-        <source>diaShank</source>
-        <translation type="vanished">Schaftdurchmesser</translation>
-    </message>
-    <message>
-        <source>lenFree</source>
-        <translation type="vanished">freie Länge</translation>
-    </message>
-    <message>
-        <source>diaTip</source>
-        <translation type="vanished">Spitzendurchmesser</translation>
-    </message>
-    <message>
-        <location filename="../model/db/toolmodel.cpp" line="109"/>
+        <location filename="../model/db/toolmodel.cpp" line="107"/>
         <source>code</source>
         <translation>Artikelnummerl</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="110"/>
-        <location filename="../model/db/toolmodel.cpp" line="144"/>
+        <location filename="../model/db/toolmodel.cpp" line="108"/>
+        <location filename="../model/db/toolmodel.cpp" line="142"/>
         <source>material</source>
         <translation>Material</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="111"/>
-        <location filename="../model/db/toolmodel.cpp" line="145"/>
+        <location filename="../model/db/toolmodel.cpp" line="109"/>
+        <location filename="../model/db/toolmodel.cpp" line="143"/>
         <source>coating</source>
         <translation>Beschichtung</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="112"/>
+        <location filename="../model/db/toolmodel.cpp" line="110"/>
         <source>ldTooth</source>
         <translation>Zahnlast</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="113"/>
+        <location filename="../model/db/toolmodel.cpp" line="111"/>
         <source>angHelix</source>
         <translation>Eintauchwinkel</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="114"/>
+        <location filename="../model/db/toolmodel.cpp" line="112"/>
         <source>angMxRamp</source>
         <translation>max. Rampenwinkel</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="115"/>
-        <location filename="../model/db/toolmodel.cpp" line="149"/>
+        <location filename="../model/db/toolmodel.cpp" line="113"/>
+        <location filename="../model/db/toolmodel.cpp" line="147"/>
         <source>comment</source>
         <translation>Bemerkung</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="126"/>
+        <location filename="../model/db/toolmodel.cpp" line="124"/>
         <source>Sel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="128"/>
+        <location filename="../model/db/toolmodel.cpp" line="126"/>
         <source>Length</source>
         <translation>Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="132"/>
+        <location filename="../model/db/toolmodel.cpp" line="130"/>
         <source>radial Depth of Cut</source>
         <translation>Schneidendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="133"/>
+        <location filename="../model/db/toolmodel.cpp" line="131"/>
         <source>axial Depth of Cut</source>
         <translation>Eintauchlänge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="134"/>
+        <location filename="../model/db/toolmodel.cpp" line="132"/>
         <source>Vee Angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="135"/>
+        <location filename="../model/db/toolmodel.cpp" line="133"/>
         <source>length of Flutes</source>
         <translation>Schneidenlänge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="136"/>
+        <location filename="../model/db/toolmodel.cpp" line="134"/>
         <source>diameter of Flutes</source>
         <translation>Schneidendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="137"/>
+        <location filename="../model/db/toolmodel.cpp" line="135"/>
         <source>diameter of Collet</source>
         <translation>Durchmesser Aufnahme</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="138"/>
+        <location filename="../model/db/toolmodel.cpp" line="136"/>
         <source>length of Collet</source>
         <translation>Länge Aufnahme</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="139"/>
+        <location filename="../model/db/toolmodel.cpp" line="137"/>
         <source>diameter of Shank</source>
         <translation>Schaftdurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="140"/>
+        <location filename="../model/db/toolmodel.cpp" line="138"/>
         <source>free Length</source>
         <translation>freie Länge</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="141"/>
+        <location filename="../model/db/toolmodel.cpp" line="139"/>
         <source>slope angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="142"/>
+        <location filename="../model/db/toolmodel.cpp" line="140"/>
         <source>diameter of Tip</source>
         <translation>Spitzendurchmesser</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="143"/>
+        <location filename="../model/db/toolmodel.cpp" line="141"/>
         <source>partcode</source>
         <translation>Artikelnummer</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="146"/>
+        <location filename="../model/db/toolmodel.cpp" line="144"/>
         <source>tooth load</source>
         <translation>Zahnlast</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="147"/>
+        <location filename="../model/db/toolmodel.cpp" line="145"/>
         <source>angle of Helix</source>
         <translation>Eintauchwinkel</translation>
     </message>
     <message>
-        <location filename="../model/db/toolmodel.cpp" line="148"/>
+        <location filename="../model/db/toolmodel.cpp" line="146"/>
         <source>angle max. Ramp</source>
         <translation>Rampenwinkel</translation>
     </message>
@@ -1418,50 +1441,56 @@
 <context>
     <name>ToolTable</name>
     <message>
-        <location filename="../model/tooltable.cpp" line="223"/>
-        <location filename="../model/tooltable.cpp" line="236"/>
-        <source>Num</source>
-        <translation>Num</translation>
-    </message>
-    <message>
-        <location filename="../model/tooltable.cpp" line="224"/>
+        <location filename="../model/tooltable.cpp" line="229"/>
         <source>Z</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="../model/tooltable.cpp" line="225"/>
+        <location filename="../model/tooltable.cpp" line="230"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../model/tooltable.cpp" line="227"/>
+        <location filename="../model/tooltable.cpp" line="232"/>
         <source>TO</source>
         <translation>TO</translation>
     </message>
     <message>
-        <location filename="../model/tooltable.cpp" line="237"/>
+        <location filename="../model/tooltable.cpp" line="243"/>
         <source>Len</source>
         <translation>Länge</translation>
     </message>
     <message>
-        <location filename="../model/tooltable.cpp" line="226"/>
-        <location filename="../model/tooltable.cpp" line="238"/>
+        <location filename="../model/tooltable.cpp" line="231"/>
+        <location filename="../model/tooltable.cpp" line="244"/>
         <source>Dia</source>
         <translation>Ø</translation>
     </message>
     <message>
+        <location filename="../model/tooltable.cpp" line="227"/>
+        <location filename="../model/tooltable.cpp" line="241"/>
+        <source>Slot</source>
+        <translation>Platz</translation>
+    </message>
+    <message>
         <location filename="../model/tooltable.cpp" line="228"/>
+        <location filename="../model/tooltable.cpp" line="242"/>
+        <source>Tool</source>
+        <translation>Werkzeug</translation>
+    </message>
+    <message>
+        <location filename="../model/tooltable.cpp" line="233"/>
         <source>FA</source>
         <translation>VW</translation>
     </message>
     <message>
-        <location filename="../model/tooltable.cpp" line="229"/>
+        <location filename="../model/tooltable.cpp" line="234"/>
         <source>BA</source>
         <translation>RW</translation>
     </message>
     <message>
-        <location filename="../model/tooltable.cpp" line="230"/>
-        <location filename="../model/tooltable.cpp" line="239"/>
+        <location filename="../model/tooltable.cpp" line="235"/>
+        <location filename="../model/tooltable.cpp" line="245"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>

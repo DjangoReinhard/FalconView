@@ -779,8 +779,8 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
          if (modeTB->isVisible()) {
             qDebug() << "mode toolbar is visible";
             switch (e->key()) {
-              case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
-              case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
+              case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
+              case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
               case Qt::Key_F4:  ValueManager().setValue("appMode", ApplicationMode::MDI); break;
               case Qt::Key_F5:  ValueManager().setValue("appMode", ApplicationMode::XEdit); break;
               case Qt::Key_F6:  ValueManager().setValue("appMode", ApplicationMode::Wheel); break;
