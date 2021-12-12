@@ -1,7 +1,7 @@
 # Werkzeugleiste - Betriebsart
 
 | Symbol | Name | Beschreibung |
-|---|---|---|
+|:---:|---|---|
 | ![edit](images/SK_Edit.png) | Edit | bearbeitet die aktive NC-Datei |
 | ![auto](images/SK_Auto.png) | Auto | 3D-preview |
 | ![mdi](images/SK_MDI.png) | MDI | manuelle Befehlseingabe |

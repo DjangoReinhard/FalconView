@@ -36,7 +36,7 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   cw->parse(ba, pages);
   kw->setIcon(icoL);
   kw->parse(ba, keyWords);
-  tellContent();
+//  tellContent();
   }
 
 
@@ -60,21 +60,21 @@ QWidget* HelpEngine::keywordWidget() {
   }
 
 
-QString  HelpEngine::page4Keyword(const QString& keyWord) const {
+QString  HelpEngine::document4Keyword(const QString& keyWord) const {
   if (keyWords.contains(keyWord)) return keyWords[keyWord];
   return QString();
   }
 
 
-QVariant HelpEngine::readFile(const QString& file) {
-  qDebug() << "HelpEngine::readFile(" << file << ")";
+QByteArray HelpEngine::fileData(const QString& file) const {
+  qDebug() << "HelpEngine::fileData(" << file << ")";
   QString page = file + locXT;
 
   if (!helpDir.contains(page)) {
      page = file + defXT;
 
      if (!helpDir.contains(page)) {
-        if (!helpDir.contains(file)) return QVariant();
+        if (!helpDir.contains(file)) return QByteArray();
         page = file;
         }
      }
@@ -86,13 +86,15 @@ QVariant HelpEngine::readFile(const QString& file) {
 
      qDebug() << "page [" << file << "] has title: " << title;
 
+     // markdown generates body part only, so we need to
+     // add a bit to get valid html pages
      ba = wrapPage(title, ba);
      }
-  return QVariant(ba);
+  return ba;
   }
 
 
-QByteArray HelpEngine::wrapPage(const QString& title, const QByteArray& ba) {
+QByteArray HelpEngine::wrapPage(const QString& title, const QByteArray& ba) const {
   QByteArray frame("<!DOCTYPE html><html lang=\"");
 
   frame += Core().languagePrefix().toUtf8();
@@ -100,14 +102,8 @@ QByteArray HelpEngine::wrapPage(const QString& title, const QByteArray& ba) {
   frame += tr("Help").toUtf8();
   frame += QByteArray(" FalconView 0.1 | ");
   frame += title.toUtf8();
-  frame += QByteArray("</title><style>");
-  // styles ?!?
-//  frame += QByteArray("table, th, td {"
-//                      "border: medium solid black;"
-//                      "border-collapse: collapse;"
-//                      "}");
-
-  frame += QByteArray("</style></head><body>");
+  // adding styles into meta section does not work!
+  frame += QByteArray("</title></head><body>");
   frame += ba;
   frame += QByteArray("</body></html>");
 

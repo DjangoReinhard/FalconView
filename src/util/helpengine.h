@@ -14,16 +14,16 @@ class HelpEngine : public QObject
 public:
   explicit HelpEngine(const QString& helpFile, QObject *parent = nullptr);
 
-  QVariant readFile(const QString& file);
-  QWidget* contentWidget();
-  QWidget* keywordWidget();
+  QByteArray fileData(const QString& file) const;
+  QWidget*   contentWidget();
+  QWidget*   keywordWidget();
 
-  QString  page4Keyword(const QString& keyWord) const;
+  QString  document4Keyword(const QString& keyWord) const;
   void     tellContent();
 
 protected:
   void       buildDir(const QVector<QZipReader::FileInfo> entries);
-  QByteArray wrapPage(const QString& title, const QByteArray& ba);
+  QByteArray wrapPage(const QString& title, const QByteArray& ba) const;
 
 private:
   QZipReader*            reader;

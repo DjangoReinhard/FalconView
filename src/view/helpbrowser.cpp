@@ -7,7 +7,6 @@ HelpBrowser::HelpBrowser(QWidget* parent)
  : QTextBrowser(parent)
  , engine(nullptr) {
   this->document()->setDefaultStyleSheet(defaultStyles);
-  qDebug() << "HB: def-styles:" << this->document()->defaultStyleSheet();
   }
 
 
@@ -15,10 +14,10 @@ HelpBrowser::~HelpBrowser() {
   }
 
 
-QVariant HelpBrowser::loadResource(int type, const QUrl& link) {
-  qDebug() << "loadResource(" << type << "url:" << link;
-
-  return engine->readFile(link.path());
+QVariant HelpBrowser::loadResource(int, const QUrl& link) {
+  // all files for help system are inside the helpfile, so
+  // don't need to use type of url ...
+  return engine->fileData(link.path());
   }
 
 
@@ -27,6 +26,11 @@ void HelpBrowser::setHelpEngine(HelpEngine *he) {
   }
 
 const QString HelpBrowser::defaultStyles("table, th, td {"
-                                         "border: thin solid red;"
+                                         "border-width: 1px;"
+                                         "border-color: #CCCCCC;"
                                          "border-collapse: collapse;"
+                                         "}"
+                                         "img {vertical-align: middle; }"
+                                         "th, td {"
+                                         "padding: 15px;"
                                          "}");

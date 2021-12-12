@@ -1,7 +1,7 @@
 # Werkzeugleiste - Maschine
 
 | Symbol | Name | Beschreibung |
-|---|---|---|
+|:---:|---|---|
 ![mist](images/SK_Cool_Mist.png) | Minimal-Kühlung | schaltet die Minimalmengen-Kühlung ein oder aus
 ![flood](images/SK_Cool_Flood.png) | Schwall-Kühlung | schaltet die Schwallkühlung ein oder aus
 ![ccw](images/SK_Spindle_CCW.png) | Spindel links | startet die Spindel gegen den Uhrzeigersinn

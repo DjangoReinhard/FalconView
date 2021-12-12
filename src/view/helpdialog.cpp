@@ -63,32 +63,19 @@ void HelpDialog::keywordItemChanged(QListWidgetItem *current, QListWidgetItem *)
   }
 
 
-/*
- * "3D Preview"
- * "MDIEditor"
- * "PathEditor"
- * "TestEdit"
- * "FileManager"
- * "JogView"
- * "LCToolTable"
- * "SettingsNotebook"
- * "PreferencesEditor"
- * "FixtureManager"
- * "ToolManager"
- */
 void HelpDialog::help4Keyword(const QString &keyWord) {
-  QString page = he->page4Keyword(keyWord);
+  QString document = he->document4Keyword(keyWord);
 
-  qDebug() << "HD: keyword >" << keyWord << "< \tpage:" << page;
-  if (!page.isEmpty()) tb->setSource(page);
+  qDebug() << "HD: keyword >" << keyWord << "< \tpage:" << document;
+  if (!document.isEmpty()) tb->setSource(document);
   showHelp();
   }
 
 
 void HelpDialog::keyPressEvent(QKeyEvent* e) {
-  qDebug() << "HelpDLG: pressed key: " << e->key()
-           << "modifiers: "   << e->modifiers()
-           << "event-ts: " << e->timestamp();
+//  qDebug() << "HelpDLG: pressed key: " << e->key()
+//           << "modifiers: "   << e->modifiers()
+//           << "event-ts: " << e->timestamp();
   switch (e->key()) {
     case Qt::Key_Escape:
          close();

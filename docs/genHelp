@@ -7,7 +7,7 @@ for i in $(ls src/*.$extIN)
 do
   t=html${i#src}
   d=${t%.$extIN}.$extOut
-  cat $i | gfm | fixhtml > $d
+  cat $i | gfm | fixhtml -e htmlEntities.def > $d
 done
 cd src
 images=`grep -Ro -P "\(images/(.*)\)" | sed 's%.*(images/%%' | sed 's%)%%'`

@@ -10,13 +10,13 @@ verarbeitet. Genauso kann eine zweite Client-Anwendung Befehle an den *linuxCNC*
 Server schicken, welches Statusänderungen zur Folge hat, die in **FalconView**
 angezeigt werden.
 
-**Hinweis:** siehe [Die Einbindung von **FalconView** in linuxCNC](integration)
+**Hinweis:** siehe [Einbindung von **FalconView** in linuxCNC](integration)
 
 Zum leichteren Erlernen der Bedienung von **FalconView** wird bei jedem Seitenwechsel
 die dazugehörige Hilfe eingeblendet. Dort wird die Bedienung per Tastaturkürzel
 beschrieben.
 Soll die Hilfe nicht weiter angezeigt werden, kann dies in den Einstellungen
-abgestellt werden.
+![Einstellungen](images/SK_Settings.png) abgestellt werden.
 
 Trotzdem kann zu jedem Zeitpunkt die Hilfe mit **[F1]** wieder angezeigt werden.
 

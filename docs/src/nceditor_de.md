@@ -1,8 +1,8 @@
 # NC-Editor
 
 Es gibt 2 NC-Editoren in **FalconView**:
-- einen für die aktive NC-Datei, also der Job, der ausgeführt werden soll
-- einen unabhängigen, um auch während der Job-Verarbeitung Änderungen an anderen
+- einen für die aktive NC-Datei ![Edit](images/SK_Edit.png), also der Job, der ausgeführt werden soll
+- einen unabhängigen ![TestEdit](images/SK_TestEdit.png), um auch während der Job-Verarbeitung Änderungen an anderen
 Dateien durchführen zu können.
 
 Dateiänderungen können mit **[F10]** gespeichert oder mit **[Esc]** verworfen werden.
