@@ -715,8 +715,9 @@ void MainWindow::startSpindleCCW() {
 
 
 void MainWindow::startSpindleCW() {
-    double speed = ValueManager().getValue("spindle0Speed").toDouble();
-    int    dir   = ValueManager().getValue("spindle0Dir").toInt();
+  double speed = ValueManager().getValue("spindle0Speed").toDouble();
+  int    dir   = ValueManager().getValue("spindle0Dir").toInt();
+
   Core().beSetSpindle(0, speed, dir);
   }
 
@@ -724,6 +725,7 @@ void MainWindow::startSpindleCW() {
 void MainWindow::stopSpindle() {
   double speed = ValueManager().getValue("spindle0Speed").toDouble();
   int    dir   = ValueManager().getValue("spindle0Dir").toInt();
+
   Core().beSetSpindle(0, speed, dir);
   }
 

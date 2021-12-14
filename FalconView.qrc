@@ -28,6 +28,20 @@
    <file>res/U-.png</file>
    <file>res/W+.png</file>
    <file>res/W-.png</file>
+   <file>res/Xs+.png</file>
+   <file>res/Xs-.png</file>
+   <file>res/Zs+.png</file>
+   <file>res/Zs-.png</file>
+   <file>res/As+.png</file>
+   <file>res/As-.png</file>
+   <file>res/Bs+.png</file>
+   <file>res/Bs-.png</file>
+   <file>res/Cs+.png</file>
+   <file>res/Cs-.png</file>
+   <file>res/Us+.png</file>
+   <file>res/Us-.png</file>
+   <file>res/Ws+.png</file>
+   <file>res/Ws-.png</file>
    <file>res/Senklochfräser01s.JPG</file>
    <file>res/Schaftfräser01s.JPG</file>
    <file>res/Gewindebohrer01s.JPG</file>

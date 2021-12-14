@@ -83,6 +83,11 @@ void ToolEntry::setQuadrant(int q) {
   }
 
 
+void ToolEntry::setPixmap(const QPixmap& pm) {
+  this->pm = pm;
+  }
+
+
 void ToolEntry::setFrontAngle(double a) {
   canon.frontangle = a;
   dirty = true;

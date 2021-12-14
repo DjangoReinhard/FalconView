@@ -23,6 +23,7 @@ public:
   QString       fileName() const { return fn.absoluteFilePath(); }
   QString       parameterFileName() const;
   QString       toolTableFileName() const;
+  QString       toolImageDir() const;
   QString       baseDir() const  { return fn.absoluteDir().path(); }
   void          dump();
 

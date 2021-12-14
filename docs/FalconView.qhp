@@ -30,7 +30,9 @@
                     <section title="act.Codes" ref="sicodes"/>
                     <section title="SpeedInfo" ref="sispeed"/>
                 </section>
-                <section title="use case" ref="usage"/>
+            </section>
+            <section title="G-Codes" ref="gcode"/>
+            <section title="use case" ref="usage">
             </section>
         </toc>
         <keywords>

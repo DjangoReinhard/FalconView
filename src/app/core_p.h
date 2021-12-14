@@ -1,5 +1,6 @@
 #ifndef CORE_P_H
 #define CORE_P_H
+#include <tooltable.h>
 #include <configmgr.h>
 #include <lcproperties.h>
 #include <positioncalculator.h>
@@ -9,7 +10,6 @@
 #include <commandwriter.h>
 #include <axismask.h>
 #include <ally3d.h>
-#include <tooltable.h>
 #include <LCInter.h>
 #include <centerview.h>
 #include <QLocale>

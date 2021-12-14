@@ -3,19 +3,26 @@
 #include <axismask.h>
 #include <core.h>
 #include <QDebug>
+#include <QKeyEvent>
 #include <QTranslator>
 
 
 JogView::JogView(QWidget* parent)
  : DynCenterWidget(QString(), JogView::className, false, parent)
  , ui(new Ui::JogForm()) {
-  setupUi(this);
-  setObjectName(JogView::className);
-  setWindowTitle(tr("JogView"));
   }
 
 
 JogView::~JogView() {
+  }
+
+
+QWidget* JogView::createContent() {
+  setupUi(this);
+  setObjectName(JogView::className);
+  setWindowTitle(tr("JogView"));
+
+  return nullptr;
   }
 
 
@@ -72,6 +79,7 @@ void JogView::singleStep(bool) {
 
 
 void JogView::setupUi(DynCenterWidget *parent) {
+  qDebug() << "JogView::setupUi() ...";
   ui->setupUi(parent);
   const AxisMask& am = Core().axisMask();
 
@@ -119,19 +127,24 @@ void JogView::setupUi(DynCenterWidget *parent) {
 
 
 void JogView::updateStyles() {
-//  /*
-//   * retranslate ...
-//   */
-//  ui->jYn->setText(tr("Y-"));
-//  ui->jYp->setText(tr("Y+"));
-//  ui->jVp->setText(QCoreApplication::translate("JogForm", "V+", nullptr));
-//  ui->jVn->setText(QCoreApplication::translate("JogForm", "V-", nullptr));
-//  ui->cbRapid->setText(Core().tr("Rapid", "JogForm"));
-//  ui->cbSingleStep->setText(Core().tr("single Step", "JogForm"));
-//  ui->rOOO1->setText(QCoreApplication::translate("JogForm", "0,001", nullptr));
-//  ui->rOO1->setText(QCoreApplication::translate("JogForm", "0,01", nullptr));
-//  ui->rO1->setText(QCoreApplication::translate("JogForm", "0,1", nullptr));
-//  ui->rO5->setText(QCoreApplication::translate("JogForm", "0,5", nullptr));
+  }
+
+
+void JogView::keyPressEvent(QKeyEvent* e) {
+  bool shift = e->modifiers() == Qt::ShiftModifier;
+
+  switch (e->key()) {
+    case Qt::Key_X: jog(0, shift ? -1 : 1); break;
+    case Qt::Key_Y: jog(1, shift ? -1 : 1); break;
+    case Qt::Key_Z: jog(2, shift ? -1 : 1); break;
+    case Qt::Key_A: jog(3, shift ? -1 : 1); break;
+    case Qt::Key_B: jog(4, shift ? -1 : 1); break;
+    case Qt::Key_C: jog(5, shift ? -1 : 1); break;
+    case Qt::Key_U: jog(6, shift ? -1 : 1); break;
+    case Qt::Key_V: jog(7, shift ? -1 : 1); break;
+    case Qt::Key_W: jog(8, shift ? -1 : 1); break;
+    default: DynCenterWidget::keyPressEvent(e); break;
+    }
   }
 
 const QString& JogView::className = "JogView";

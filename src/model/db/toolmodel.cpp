@@ -186,7 +186,7 @@ int ToolModel::maxToolNum() {
 
 
 int ToolModel::exportTools() {
-  QString   qs = QString("SELECT * FROM Tools WHERE selected = 1");
+  QString   qs = QString("SELECT tools.*, category.name FROM Tools, Category WHERE tools.selected = 1 AND Category.id = tools.type");
   QSqlQuery q(qs);
 
   if (!q.exec()) {
@@ -198,7 +198,12 @@ int ToolModel::exportTools() {
 
   while (q.next()) {
         r = q.record();
-        qDebug() << "Tool #" << r.value("num") << " with id:" << r.value("id");
+        qDebug() << "Tool #" << r.value("Tools.num").toInt()
+                 << "Slot #" << (count + 1)
+                 << "with Len: " << r.value("Tools.lenTool").toDouble()
+                 << "and diameter: " << r.value("diaFlute").toDouble()
+                 << ", desc:" << r.value("comment").toString()
+                 << "and category:" << r.value("Category.name").toString();
         ++count;
         }
   qDebug() << "exported " << count << "tools";

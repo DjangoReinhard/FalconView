@@ -294,6 +294,35 @@ DISTFILES += \
     docs/html/FalconView.qhcp \
     i18n/FalconView_de_DE.ts
 
+#QMAKE_SPEC - the shortname of the host mkspec that is resolved and stored in the QMAKESPEC variable during a host build
+#QMAKE_VERSION - the current version of qmake
+#QMAKE_XSPEC - the shortname of the target mkspec that is resolved and stored in the QMAKESPEC variable during a target build
+#QT_HOST_BINS - location of host executables
+#QT_HOST_DATA - location of data for host executables used by qmake
+#QT_HOST_PREFIX - default prefix for all host paths
+#QT_INSTALL_ARCHDATA - location of general architecture-dependent Qt data
+#QT_INSTALL_BINS - location of Qt binaries (tools and applications)
+#QT_INSTALL_CONFIGURATION - location for Qt settings. Not applicable on Windows
+#QT_INSTALL_DATA - location of general architecture-independent Qt data
+#QT_INSTALL_DOCS - location of documentation
+#QT_INSTALL_EXAMPLES - location of examples
+#QT_INSTALL_HEADERS - location for all header files
+#QT_INSTALL_IMPORTS - location of QML 1.x extensions
+#QT_INSTALL_LIBEXECS - location of executables required by libraries at runtime
+#QT_INSTALL_LIBS - location of libraries
+#QT_INSTALL_PLUGINS - location of Qt plugins
+#QT_INSTALL_PREFIX - default prefix for all paths
+#QT_INSTALL_QML - location of QML 2.x extensions
+#QT_INSTALL_TESTS - location of Qt test cases
+#QT_INSTALL_TRANSLATIONS - location of translation information for Qt strings
+#QT_SYSROOT - the sysroot used by the target build environment
+#QT_VERSION - the Qt version. We recommend that you query Qt module specific version numbers 
+#for (var, $$list($$enumerate_vars())) {
+#    message($$var)
+#    message($$eval($$var))
+#    }
+
+
 RESOURCES += FalconView.qrc
 
 INSTALLS += target docs

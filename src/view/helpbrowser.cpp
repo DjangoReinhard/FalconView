@@ -6,7 +6,7 @@
 HelpBrowser::HelpBrowser(QWidget* parent)
  : QTextBrowser(parent)
  , engine(nullptr) {
-  this->document()->setDefaultStyleSheet(defaultStyles);
+  document()->setDefaultStyleSheet(defaultStyles);
   }
 
 
@@ -26,11 +26,11 @@ void HelpBrowser::setHelpEngine(HelpEngine *he) {
   }
 
 const QString HelpBrowser::defaultStyles("table, th, td {"
-                                         "border-width: 1px;"
-                                         "border-color: #CCCCCC;"
-                                         "border-collapse: collapse;"
+                                           "border-width: 1px;"
+                                           "border-color: #CCCCCC;"
+                                           "border-collapse: collapse;"
                                          "}"
                                          "img {vertical-align: middle; }"
                                          "th, td {"
-                                         "padding: 15px;"
+                                           "padding: 15px;"
                                          "}");

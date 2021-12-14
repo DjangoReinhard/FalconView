@@ -1,6 +1,7 @@
 #ifndef TOOLENTRY_H
 #define TOOLENTRY_H
 #include <QString>
+#include <QPixmap>
 #include <emctool.h>
 #ifdef toLine
 #undef toLine
@@ -29,6 +30,7 @@ public:
   double           frontAngle() const  { return canon.frontangle;  }
   double           backAngle() const   { return canon.backangle;   }
   int              quadrant() const    { return canon.orientation; }
+  QPixmap          icon() const        { return pm; }
   int              slot() const        { return canon.pocketno; }
   int              lineNum() const     { return serial; }
   CANON_TOOL_TABLE toCanon() const     { return canon; }
@@ -42,9 +44,11 @@ public:
   void setFrontAngle(double a);
   void setBackAngle(double a);
   void setDescription(const QString& s);
+  void setPixmap(const QPixmap& icon);
 
 private:
   QString          desc;
+  QPixmap          pm;
   int              serial;
   bool             dirty;
   CANON_TOOL_TABLE canon;

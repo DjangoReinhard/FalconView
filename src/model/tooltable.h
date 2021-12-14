@@ -3,11 +3,13 @@
 #include <toolentry.h>
 #include <QAbstractTableModel>
 #include <QListIterator>
+#include <QFileInfo>
 #include <QString>
 #include <QList>
 #include <QMap>
 class QFile;
 class QModelIndex;
+class LcProperties;
 
 /**
  * @brief The ToolTable class
@@ -17,8 +19,8 @@ class ToolTable : public QAbstractTableModel
 {
   Q_OBJECT
 public:
-  explicit ToolTable(const QString& fileName = QString());
-  explicit ToolTable(QFile& file);
+  explicit ToolTable(LcProperties& lcProps, const QString& fileName = QString());
+  explicit ToolTable(LcProperties& lcProps, QFile& file);
   explicit ToolTable(const ToolTable&& other);
   virtual ~ToolTable();
 
@@ -53,6 +55,8 @@ protected:
 private:
   QMap<int, ToolEntry*> mappedTools;
   QList<ToolEntry*>     tools;
+  LcProperties&         lcProperties;
+  QFileInfo             toolImageDir;
   ToolEntry             curTool;
   QString               fn;
   bool                  latheMode;

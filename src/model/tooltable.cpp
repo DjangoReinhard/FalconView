@@ -1,14 +1,18 @@
 #include <QFile>
 #include <QTextStream>
 #include <QRegularExpression>
+#include <QPixmap>
+#include <QIcon>
 #include <QDebug>
 #include <core.h>
+#include <lcproperties.h>
 #include <tooltable.h>
 #include <toolentry.h>
 
 
-ToolTable::ToolTable(const QString& fileName)
- : fn(fileName)
+ToolTable::ToolTable(LcProperties& lcProps, const QString& fileName)
+ : lcProperties(lcProps)
+ , fn(fileName)
  , latheMode(false) {
   QFile file(fileName);
 
@@ -16,7 +20,8 @@ ToolTable::ToolTable(const QString& fileName)
   }
 
 
-ToolTable::ToolTable(QFile& file) {
+ToolTable::ToolTable(LcProperties& lcProps, QFile& file)
+ : lcProperties(lcProps) {
   if (file.exists()) processFile(file);
   }
 
@@ -24,6 +29,7 @@ ToolTable::ToolTable(QFile& file) {
 ToolTable::ToolTable(const ToolTable&& other)
  : mappedTools(other.mappedTools)
  , tools(other.tools)
+ , lcProperties(other.lcProperties)
  , curTool(other.curTool)
  , fn(other.fn) {
   }
@@ -51,6 +57,8 @@ void ToolTable::processFile(QFile& file) {
      QString line    = in.readLine();
      int     lineNum = 0;
 
+     toolImageDir = lcProperties.toolImageDir();
+     qDebug() << "tool-image-dir: " << toolImageDir;
      while (!line.isNull()) {
            processLine(++lineNum, line);
            line = in.readLine();
@@ -88,6 +96,7 @@ void ToolTable::setDirty(bool dirty) {
 void ToolTable::processLine(int lineNum, const QString& input) {
   QString line = input.trimmed();
   QString desc;
+  QPixmap pm;
 
   if (line.indexOf(";") > 0) {
      QStringList parts = line.split(QRegularExpression("\\s*;\\s*"));
@@ -95,6 +104,28 @@ void ToolTable::processLine(int lineNum, const QString& input) {
      if (parts.size() > 1) {
         desc = parts[1];
         line = parts[0];
+
+        if (!desc.isEmpty()) {
+           parts = desc.split("|");
+
+           if (parts.size() > 1) {
+              desc = parts[0];
+              QString cat = parts[1].trimmed();
+              QFileInfo img(toolImageDir.absoluteFilePath() + "/" + cat + ".jpg");
+
+              for (;;) {
+                  if (!img.exists()) {
+                     img = QFileInfo(toolImageDir.absoluteFilePath() + "/" + cat + ".png");
+                     if (!img.exists()) break;
+                     }
+                  //TODO: load image from filesystem?
+                  pm = QPixmap(img.absoluteFilePath());
+
+                  pm = pm.scaled(150,150, Qt::KeepAspectRatio);
+                  break;
+                  }
+              }
+           }
         }
      }
   QStringList parts = line.split(QRegularExpression("\\s+"));
@@ -154,6 +185,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
                               , desc
                               , slot
                               , lineNum);
+  te->setPixmap(pm);
   tools.append(te);
   mappedTools.insert(number, te);
 //  te->dump();
@@ -166,16 +198,16 @@ int ToolTable::rowCount(const QModelIndex& p) const {
 
 
 int ToolTable::columnCount(const QModelIndex &p) const {
-  return p.isValid() ? 0 : latheMode ? 9 : 5;
+  return p.isValid() ? 0 : latheMode ? 10 : 6;
   }
 
 
 QVariant ToolTable::data(const QModelIndex& n, int role) const {
   if (!n.isValid()) return QVariant();
   if (n.row() >= tools.size() || n.row() < 0) return QVariant();
-  if (role == Qt::DisplayRole) {
-     const ToolEntry* t = tools.at(n.row());
+  const ToolEntry* t = tools.at(n.row());
 
+  if (role == Qt::DisplayRole) {
      if (latheMode) {
         switch (n.column()) {
           case 0:  return t->slot();
@@ -186,7 +218,7 @@ QVariant ToolTable::data(const QModelIndex& n, int role) const {
           case 5:  return t->quadrant();
           case 6:  return t->frontAngle();
           case 7:  return t->backAngle();
-          case 8:  return t->description();
+          case 9:  return t->description();
           default: break;
           }
         }
@@ -196,9 +228,15 @@ QVariant ToolTable::data(const QModelIndex& n, int role) const {
           case 1:  return t->number();
           case 2:  return t->length();
           case 3:  return t->diameter();
-          case 4:  return t->description();
+          case 5:  return t->description();
           default: break;
           }
+        }
+     }
+  else if (role == Qt::DecorationRole) {
+     if ((latheMode && n.column() == 8)
+      || (!latheMode && n.column() == 4)) {
+        return t->icon().scaled(24, 24, Qt::KeepAspectRatio);
         }
      }
   else if (role == Qt::TextAlignmentRole) {
@@ -232,7 +270,8 @@ QVariant ToolTable::headerData(int column, Qt::Orientation orientation, int role
           case 5:  return tr("TO");
           case 6:  return tr("FA");
           case 7:  return tr("BA");
-          case 8:  return tr("Description");
+          case 8:  return tr("S");
+          case 9:  return tr("Description");
           default: break;
           }
         }
@@ -242,7 +281,8 @@ QVariant ToolTable::headerData(int column, Qt::Orientation orientation, int role
           case 1:  return tr("Tool");
           case 2:  return tr("Len");
           case 3:  return tr("Dia");
-          case 4:  return tr("Description");
+          case 4:  return tr("S");
+          case 5:  return tr("Description");
           default: break;
           }
         }

@@ -302,7 +302,7 @@ void Core::beTaskPlanSynch() {
 Kernel::Kernel(const QString& iniFileName, const QString& appName, const QString& group)
  : cfg(appName, group)
  , lcProps(iniFileName)
- , tt(lcProps.toolTableFileName()) // tooltable: file used by linuxcnc NOT the database table
+ , tt(lcProps, lcProps.toolTableFileName()) // tooltable: file used by linuxcnc NOT the database table
  , lcIF(lcProps, tt)
  , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
  , view3D(nullptr)

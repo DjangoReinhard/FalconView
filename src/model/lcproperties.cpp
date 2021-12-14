@@ -103,6 +103,16 @@ QString LcProperties::toolTableFileName() const {
   }
 
 
+QString LcProperties::toolImageDir() const {
+  QString dir(value("EMCIO", "TOOL_IMAGE_DIR").toString());
+
+  if (dir.startsWith("~")) dir.replace("~", QDir::homePath());
+  QFileInfo fi(dir);
+
+  return fi.absoluteFilePath();
+  }
+
+
 void LcProperties::processFile(QFile& file) {
   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
      QTextStream in(&file);

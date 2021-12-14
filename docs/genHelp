@@ -14,6 +14,10 @@ images=`grep -Ro -P "\(images/(.*)\)" | sed 's%.*(images/%%' | sed 's%)%%'`
 cd ..
 cp ${project}.qhp html
 mkdir html/images 2>/dev/null
+# add images from HelpEngine
+# folder.svg
+# folder-open.svg
+# help-about.svg
 for i in $images
 do
   echo $i

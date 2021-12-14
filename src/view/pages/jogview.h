@@ -13,9 +13,11 @@ public:
   virtual ~JogView();
 
 protected:
-  virtual void connectSignals() override;
-  virtual void updateStyles() override;
-  virtual void setupUi(DynCenterWidget* parent);
+  virtual QWidget* createContent() override;
+  virtual void     connectSignals() override;
+  virtual void     updateStyles() override;
+  virtual void     keyPressEvent(QKeyEvent* event) override;
+  virtual void     setupUi(DynCenterWidget* parent);
   void jog(int axis, int step);
   void singleStep(bool singleStep);
 
