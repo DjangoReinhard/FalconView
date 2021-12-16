@@ -45,6 +45,9 @@ ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
  , pxTools(new QSortFilterProxyModel(this)) {
   setObjectName(ToolManager::className);
   setWindowTitle(ToolManager::className);
+  categories->installEventFilter(this);
+  tools->installEventFilter(this);
+  tEdit->installEventFilter(this);
   }
 
 
@@ -112,6 +115,106 @@ ToolManager::~ToolManager() {
 
 
 void ToolManager::updateStyles() {
+  }
+
+
+bool ToolManager::eventFilter(QObject* o, QEvent* event) {
+  if (event->type() == QEvent::KeyPress) {
+     QKeyEvent* e = static_cast<QKeyEvent*>(event);
+
+     switch (e->key()) {
+       case Qt::Key_Return:
+       case Qt::Key_Enter:
+            if (o == tools) {
+               qDebug() << "TM: enter (" << e->key() << ") has ts: " << e->timestamp();
+               long now = TimeStamp::rtSequence();
+
+               qDebug() << "TM: time-delta" << (now - tsMsgBox);
+               if ((now - tsMsgBox) > 400) {
+                  editTool();
+                  return true;
+                  }
+               }
+            break;
+       case Qt::Key_Escape:
+            if (o == tEdit && tEdit->isEnabled()) {  // abort editing
+               //TODO: sync changes with start editing
+               tEdit->setEnabled(false);
+               Core().showAllButCenter(true);
+               categories->show();
+               tools->show();
+               tools->setFocus();
+               return true;
+               }
+            break;
+       case Qt::Key_Space:
+            if (o == categories) {
+               QItemSelection  is  = categories->selectionModel()->selection();
+               QModelIndexList ml  = is.indexes();
+               QModelIndex     cur = ml.size() ? ml.at(0) : QModelIndex();
+
+               if (categories->isExpanded(cur)) categories->setExpanded(cur, false);
+               else                             categories->setExpanded(cur, true);
+               return true;
+               }
+            else if (o == tools) {
+               qDebug() << "space at tableView hit ...";
+               toolModel->toggleSelection(tool2Edit);
+               return true;
+               }
+            break;
+       case Qt::Key_Tab:
+       case Qt::Key_Backtab:
+            if (o == categories) {
+               tools->setFocus();
+               return true;
+               }
+            else if (o == tools) {
+               categories->setFocus();
+               return true;
+               }
+            break;
+       case Qt::Key_Insert:
+            if (o == categories) {
+               createCategory();
+               return true;
+               }
+            else if (o == tools) {
+               createTool();
+               return true;
+               }
+            break;
+       case Qt::Key_Delete:
+            if (o == categories) {
+               deleteCategory();
+               return true;
+               }
+            else if (o == tools) {
+               deleteTool();
+               return true;
+               }
+            break;
+       case Qt::Key_F6:
+            if (o == categories) {
+               renameCategory();
+               return true;
+               }
+            break;
+       case Qt::Key_F9:
+            if (o == categories || o == tools)
+               toolModel->exportTools();
+            return true;
+       case Qt::Key_S:
+            if (e->modifiers() != Qt::CTRL) break;
+       case Qt::Key_F10:
+            if (o == tEdit && tEdit->isEnabled()) {
+               saveToolChanges();
+               return true;
+               }
+            break;
+       }
+     }
+  return false;
   }
 
 
@@ -196,7 +299,6 @@ void ToolManager::currentChanged(const QModelIndex& index) {
 
   if (cid > 0) toolModel->setFilter("type = " + QString::number(cid));
   else         toolModel->setFilter("type > 0");
-//  tools->resizeColumnsToContents();
   }
 
 
@@ -293,74 +395,20 @@ void ToolManager::saveToolChanges() {
      toolModel->insertRecord(-1, tool);
      }
   else toolModel->setRecord(tool2Edit, tool);
-  if (!toolModel->submitAll()) qDebug() << "saving of tool-data failed!" << toolModel->lastError().text();
+  if (!toolModel->submitAll()) {
+     qDebug() << "saving of tool-data failed!" << toolModel->lastError().text();
+     QMessageBox::critical(this
+                         , tr("QMessageBox::error()")
+                         , tr("Saving tool data failed with ")
+                            + toolModel->lastError().text()
+                         , QMessageBox::Ok);
+     }
   tEdit->setEnabled(false);
   tEdit->resize(edSize);
   Core().showAllButCenter(true);
   categories->show();
   tools->show();  
   tools->setFocus();
-  }
-
-
-void ToolManager::keyReleaseEvent(QKeyEvent *event) {
-//  qDebug() << "released key: " << event->key();
-//  qDebug() << "\tmodifiers: "  << event->modifiers();
-
-  switch (event->key()) {    
-    case Qt::Key_Return:
-    case Qt::Key_Enter: {
-         qDebug() << "TM: enter (" << event->key() << ") has ts: " << event->timestamp();
-         long now = TimeStamp::rtSequence();
-
-         qDebug() << "TM: time-delta" << (now - tsMsgBox);
-         if (tools->hasFocus() && (now - tsMsgBox) > 400) {
-            editTool();
-            }
-         } break;
-    case Qt::Key_Escape:
-         if (tEdit->isEnabled()) {  // abort editing
-            //TODO: sync changes with start editing
-            tEdit->setEnabled(false);
-            Core().showAllButCenter(true);
-            categories->show();
-            tools->show();            
-            tools->setFocus();
-            }
-         break;
-    case Qt::Key_Space:
-         if (categories->hasFocus()) {
-            QItemSelection  is  = categories->selectionModel()->selection();
-            QModelIndexList ml  = is.indexes();
-            QModelIndex     cur = ml.size() ? ml.at(0) : QModelIndex();
-
-            if (categories->isExpanded(cur)) categories->setExpanded(cur, false);
-            else                             categories->setExpanded(cur, true);
-            }
-         else {
-            qDebug() << "space at tableView hit ...";
-            toolModel->toggleSelection(tool2Edit);
-            }
-         break;
-    case Qt::Key_Insert: {
-         if (categories->hasFocus()) createCategory();
-         else if (tools->hasFocus()) createTool();
-         } break;
-    case Qt::Key_Delete: {
-         if (categories->hasFocus()) deleteCategory();
-         else if (tools->hasFocus()) deleteTool();
-         } break;
-    case Qt::Key_F6: {
-         if (categories->hasFocus()) renameCategory();
-         } break;
-    case Qt::Key_F9:
-         toolModel->exportTools();
-         break;
-    case Qt::Key_F10:
-         if (tEdit->isEnabled()) saveToolChanges();
-         break;
-    }
-  event->setAccepted(true);
   }
 
 

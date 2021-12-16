@@ -24,6 +24,7 @@ public:
 
   int              number() const      { return canon.toolno;  }
   QString          description() const { return desc; }
+  QString          toolType() const    { return tt; }
   double           length() const      { return canon.offset.tran.z; }
   double           xOffset() const     { return canon.offset.tran.x; }
   double           diameter() const    { return canon.diameter; }
@@ -43,11 +44,14 @@ public:
   void setQuadrant(int q);
   void setFrontAngle(double a);
   void setBackAngle(double a);
+  void setSlot(int slot);
   void setDescription(const QString& s);
+  void setToolType(const QString& tt);
   void setPixmap(const QPixmap& icon);
 
 private:
   QString          desc;
+  QString          tt;
   QPixmap          pm;
   int              serial;
   bool             dirty;

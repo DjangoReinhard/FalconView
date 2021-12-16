@@ -13,6 +13,7 @@
                     <section title="3D-Preview" ref="preview"/>
                     <section title="JogView" ref="jogview"/>
                     <section title="Settings" ref="settingsnotebook">
+                        <section title="ToolManager" ref="toolmanager"/>
                         <section title="Fixtures" ref="fixturemanager"/>
                         <section title="Preferences" ref="preferences"/>
                         <section title="LC-Tools" ref="lctooltable"/>

@@ -70,19 +70,19 @@ void ToolTable::processFile(QFile& file) {
 
 bool ToolTable::save() {
   qDebug() << "ToolTable::save() - >" << fn << "<";
-  if (!QFile::rename(fn, fn + ".bak")) return false;
-  QFile file(fn);
+  if (Core().move2Backup(fn)) {
+     QFile file(fn);
 
-  if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+     if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+        for (auto t : qAsConst(tools)) {
+            qDebug() << t->number() << "at #" << t->lineNum();
+            if (!file.write(t->toLine().toStdString().c_str())) return false;
+            }
+        file.flush();
+        file.close();
 
-     for (auto t : qAsConst(tools)) {
-         qDebug() << t->number() << "at #" << t->lineNum();
-         if (!file.write(t->toLine().toStdString().c_str())) return false;
-         }
-     file.flush();
-     file.close();
-
-     return true;
+        return true;
+        }
      }
   return false;
   }
@@ -95,6 +95,7 @@ void ToolTable::setDirty(bool dirty) {
 
 void ToolTable::processLine(int lineNum, const QString& input) {
   QString line = input.trimmed();
+  QString cat;
   QString desc;
   QPixmap pm;
 
@@ -110,7 +111,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
 
            if (parts.size() > 1) {
               desc = parts[0];
-              QString cat = parts[1].trimmed();
+              cat  = parts[1].trimmed();
               QFileInfo img(toolImageDir.absoluteFilePath() + "/" + cat + ".jpg");
 
               for (;;) {
@@ -186,6 +187,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
                               , slot
                               , lineNum);
   te->setPixmap(pm);
+  te->setToolType(cat);
   tools.append(te);
   mappedTools.insert(number, te);
 //  te->dump();
@@ -236,7 +238,7 @@ QVariant ToolTable::data(const QModelIndex& n, int role) const {
   else if (role == Qt::DecorationRole) {
      if ((latheMode && n.column() == 8)
       || (!latheMode && n.column() == 4)) {
-        return t->icon().scaled(24, 24, Qt::KeepAspectRatio);
+        return t->icon().scaled(58, 58, Qt::KeepAspectRatio);
         }
      }
   else if (role == Qt::TextAlignmentRole) {
@@ -306,28 +308,30 @@ bool ToolTable::setData(const QModelIndex &index, const QVariant &value, int rol
      Core().showAllButCenter(false);
      if (latheMode) {
         switch (index.column()) {
-          case 0:  break; // no support for changing tool number!
-          case 1:  t->setLength(value.toDouble()); break;
-          case 2:  t->setXOffset(value.toDouble()); break;
-          case 3:  t->setDiameter(value.toDouble()); break;
-          case 4:  t->setQuadrant(value.toInt()); break;
-          case 5:  t->setFrontAngle(value.toDouble()); break;
-          case 6:  t->setBackAngle(value.toDouble()); break;
-          case 7:  t->setDescription(value.toString()); break;
+          case 0:  t->setSlot(value.toInt()); break;
+          case 1:  break; // no support for changing tool number!
+          case 2:  t->setLength(value.toDouble()); break;
+          case 3:  t->setXOffset(value.toDouble()); break;
+          case 4:  t->setDiameter(value.toDouble()); break;
+          case 5:  t->setQuadrant(value.toInt()); break;
+          case 6:  t->setFrontAngle(value.toDouble()); break;
+          case 7:  t->setBackAngle(value.toDouble()); break;
+          case 9:  t->setDescription(value.toString()); break;
           default: return false;
           }
         }
      else {
         switch (index.column()) {
-          case 0:  break; // no support for changing tool number!
-          case 1:  t->setLength(value.toDouble()); break;
-          case 2:  t->setDiameter(value.toDouble()); break;
-          case 3:  t->setDescription(value.toString()); break;
+          case 0:  t->setSlot(value.toInt()); break;
+          case 1:  break; // no support for changing tool number!
+          case 2:  t->setLength(value.toDouble()); break;
+          case 3:  t->setDiameter(value.toDouble()); break;
+          case 5:  t->setDescription(value.toString()); break;
           default: return false;
           }
         }
-     emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
-
+     if (index.column() != 1)
+        emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
      return true;
      }
   return false;

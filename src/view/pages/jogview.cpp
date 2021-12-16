@@ -1,4 +1,5 @@
 #include <jogview.h>
+#include <configacc.h>
 #include <valuemanager.h>
 #include <axismask.h>
 #include <core.h>
@@ -10,6 +11,8 @@
 JogView::JogView(QWidget* parent)
  : DynCenterWidget(QString(), JogView::className, false, parent)
  , ui(new Ui::JogForm()) {
+  setObjectName(JogView::className);
+  setWindowTitle(tr("JogView"));
   }
 
 
@@ -17,10 +20,18 @@ JogView::~JogView() {
   }
 
 
+//[TRAJ]
+//COORDINATES = X Y Y Z W A
+//LINEAR_UNITS = mm
+//ANGULAR_UNITS = degree
+//DEFAULT_LINEAR_VELOCITY = 20.00
+//MAX_LINEAR_VELOCITY = 200.00
 QWidget* JogView::createContent() {
   setupUi(this);
-  setObjectName(JogView::className);
-  setWindowTitle(tr("JogView"));
+  defSpeed = Core().lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble() * 60;
+  maxSpeed = Core().lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() * 60;
+  jogVelChanged();
+  sliderChanged(ui->slJog->value());
 
   return nullptr;
   }
@@ -28,29 +39,73 @@ QWidget* JogView::createContent() {
 
 void JogView::connectSignals() {
   connect(ui->cbSingleStep, &QCheckBox::toggled, this, &JogView::singleStep);
-  connect(ui->jXn, &QPushButton::clicked, this, [=]() { jog(0, -1); });
-  connect(ui->jXp, &QPushButton::clicked, this, [=]() { jog(0,  1); });
-  connect(ui->jYn, &QPushButton::clicked, this, [=]() { jog(1, -1); });
-  connect(ui->jYp, &QPushButton::clicked, this, [=]() { jog(1,  1); });
-  connect(ui->jZn, &QPushButton::clicked, this, [=]() { jog(2, -1); });
-  connect(ui->jZp, &QPushButton::clicked, this, [=]() { jog(2,  1); });
-  connect(ui->jAn, &QPushButton::clicked, this, [=]() { jog(3, -1); });
-  connect(ui->jAp, &QPushButton::clicked, this, [=]() { jog(3,  1); });
-  connect(ui->jBn, &QPushButton::clicked, this, [=]() { jog(4, -1); });
-  connect(ui->jBp, &QPushButton::clicked, this, [=]() { jog(4,  1); });
-  connect(ui->jCn, &QPushButton::clicked, this, [=]() { jog(5, -1); });
-  connect(ui->jCp, &QPushButton::clicked, this, [=]() { jog(5,  1); });
-  connect(ui->jUn, &QPushButton::clicked, this, [=]() { jog(6, -1); });
-  connect(ui->jUp, &QPushButton::clicked, this, [=]() { jog(6,  1); });
-  connect(ui->jVn, &QPushButton::clicked, this, [=]() { jog(7, -1); });
-  connect(ui->jVp, &QPushButton::clicked, this, [=]() { jog(7,  1); });
-  connect(ui->jWn, &QPushButton::clicked, this, [=]() { jog(8, -1); });
-  connect(ui->jWp, &QPushButton::clicked, this, [=]() { jog(8,  1); });
+  connect(ui->jXn, &QToolButton::clicked, this, [=]() { jog(0, -1); });
+  connect(ui->jXp, &QToolButton::clicked, this, [=]() { jog(0,  1); });
+  connect(ui->jYn, &QToolButton::clicked, this, [=]() { jog(1, -1); });
+  connect(ui->jYp, &QToolButton::clicked, this, [=]() { jog(1,  1); });
+  connect(ui->jZn, &QToolButton::clicked, this, [=]() { jog(2, -1); });
+  connect(ui->jZp, &QToolButton::clicked, this, [=]() { jog(2,  1); });
+  connect(ui->jAn, &QToolButton::clicked, this, [=]() { jog(3, -1); });
+  connect(ui->jAp, &QToolButton::clicked, this, [=]() { jog(3,  1); });
+  connect(ui->jBn, &QToolButton::clicked, this, [=]() { jog(4, -1); });
+  connect(ui->jBp, &QToolButton::clicked, this, [=]() { jog(4,  1); });
+  connect(ui->jCn, &QToolButton::clicked, this, [=]() { jog(5, -1); });
+  connect(ui->jCp, &QToolButton::clicked, this, [=]() { jog(5,  1); });
+  connect(ui->jUn, &QToolButton::clicked, this, [=]() { jog(6, -1); });
+  connect(ui->jUp, &QToolButton::clicked, this, [=]() { jog(6,  1); });
+  connect(ui->jVn, &QToolButton::clicked, this, [=]() { jog(7, -1); });
+  connect(ui->jVp, &QToolButton::clicked, this, [=]() { jog(7,  1); });
+  connect(ui->jWn, &QToolButton::clicked, this, [=]() { jog(8, -1); });
+  connect(ui->jWp, &QToolButton::clicked, this, [=]() { jog(8,  1); });
+  connect(ui->cbRapid, &QCheckBox::toggled, this, &JogView::jogVelChanged);
+  connect(ui->slJog, &QSlider::valueChanged, this, &JogView::sliderChanged);
+  connect(ui->rOOO1, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
+  connect(ui->rOO1, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
+  connect(ui->rO1, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
+  connect(ui->rO5, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
   }
 
 
+//[TRAJ]
+//COORDINATES = X Y Y Z W A
+//LINEAR_UNITS = mm
+//ANGULAR_UNITS = degree
+//DEFAULT_LINEAR_VELOCITY = 20.00
+//MAX_LINEAR_VELOCITY = 200.00
 void JogView::jog(int axis, int step) {
-  qDebug() << "jog:" << axis << "step:" << step;
+  qDebug() << "jog:"  << axis << "step:" << step;
+  qDebug() << "size:" << ui->cmdJogSpeed->size();
+  }
+
+
+void JogView::sliderChanged(const QVariant& v) {
+  qDebug() << "jog speed override:" << v;
+  double jogFactor = v.toDouble();
+  double jogSpeed  = ui->cbRapid->isChecked() ? maxSpeed : defSpeed;
+
+  jogSpeed *= jogFactor / 100.0;
+  QString templ = QString("<p><b>%1</b></p><p>&nbsp;</p><p>%2 %</p>")
+                         .arg(Core().locale().toString(jogSpeed, 'f', 0))
+                         .arg(jogFactor, 0, 'f', 0);
+
+  ui->curJog->setText(templ);
+  }
+
+
+void JogView::jogVelChanged() {
+  if (ui->cbRapid->isChecked())
+     ui->cmdJogSpeed->setText(Core().locale().toString(maxSpeed, 'f', 0));
+  else
+     ui->cmdJogSpeed->setText(Core().locale().toString(defSpeed, 'f', 0));
+  sliderChanged(ui->slJog->value());
+  }
+
+
+void JogView::stepSizeChanged() {
+  if (ui->rOOO1->isChecked())     stepSize = 0.001;
+  else if (ui->rOO1->isChecked()) stepSize = 0.01;
+  else if (ui->rO1->isChecked())  stepSize = 0.1;
+  else if (ui->rO5->isChecked())  stepSize = 0.5;
   }
 
 

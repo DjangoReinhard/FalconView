@@ -12,6 +12,7 @@ class LcProperties;
 class CenterView;
 class QCloseEvent;
 class QTranslator;
+class QLocale;
 class QWidget;
 class AxisMask;
 
@@ -31,6 +32,8 @@ public:
   QString         languagePrefix() const;
   DBConnection*   databaseConnection();
   MainWindow*     mainWindow();
+  QLocale         locale() const;
+  bool            move2Backup(const QString& fileName);
   void            activatePage(const QString& pageName);
   void            showAllButCenter(bool visible = true);
   QWidget*        stackedPage(const QString& pageName);
@@ -41,6 +44,7 @@ public:
   void            parseGCFile(const QString& fileName);
   bool            checkBE();
   void            help4Keyword(const QString& keyWord);
+  void            setLocale(const QLocale& l);
   CenterView*     viewStack();
   OcctQtViewer*   view3D();
   ToolTable&      toolTable();

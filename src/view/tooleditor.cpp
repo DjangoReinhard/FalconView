@@ -40,14 +40,11 @@ void ToolEditor::getChanges(QSqlRecord& r) {
   double dv;
   double lenTool = 0;
   QVariant   v0 = m->data(m->index(idx, 0));
-  QVariant   v1 = m->data(m->index(idx, 1));
+//  QVariant   v1 = m->data(m->index(idx, 1));
 
-//  qDebug() << "category at #" << idx << "v0" << v0 << "v1" << v1;
-
-  if (toolId < 0) {                         // neg. toolId signals new record
-     iv = ui->toolNum->text().toInt(&ok);   // so we need to read tool-number
-     if (ok) r.setValue("num", iv);
-     }
+  r.setValue("id", toolId);
+  iv = ui->toolNum->text().toInt(&ok);
+  if (ok) r.setValue("num", iv);
   iv = v0.toInt(&ok);
   if (ok) r.setValue("type", iv);
   iv = ui->eFlutes->text().toInt(&ok);
@@ -94,6 +91,7 @@ void ToolEditor::getChanges(QSqlRecord& r) {
   r.setValue("coating",  ui->eCoating->text());
 
   r.setValue("comment",  ui->eComment->document()->toPlainText());
+//  qDebug() << "record to save: " << r;
   }
 
 

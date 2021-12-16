@@ -37,6 +37,9 @@ QWidget* LCToolTable::createContent() {
   cfg.beginGroup(LCToolTable::className);
   table->horizontalHeader()->restoreState(cfg.value(Core().isLatheMode() ? "latheState": "millState").toByteArray());
   cfg.endGroup();
+  int mx = table->model()->rowCount();
+
+  for (int i=0; i < mx; ++i) table->setRowHeight(i, 60);
 
   return table;
   }
@@ -62,9 +65,21 @@ void LCToolTable::updateStyles() {
   }
 
 
-void LCToolTable::keyPressEvent(QKeyEvent *e) {
+void LCToolTable::keyReleaseEvent(QKeyEvent *e) {
   switch (e->key()) {
-    case Qt::Key_F10:
+    // just cut our keys out of default processing
+    case Qt::Key_F10: break;
+    case Qt::Key_S:
+         if (e->modifiers() == Qt::CTRL) break;
+    default:
+         DynCenterWidget::keyReleaseEvent(e);
+         break;
+    }
+  }
+
+void LCToolTable::keyPressEvent(QKeyEvent *e) {
+    switch (e->key()) {
+      case Qt::Key_F10:
          qDebug() << "LCToolTable::keyPressEvent (F10)";
 
          if (model->save()) {

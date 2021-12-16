@@ -35,7 +35,7 @@ DynFrame* CenterView::page(const QString& name) {
 
 
 DynFrame* CenterView::activatePage(const QString& name) {
-//  qDebug() << "MainView: activatePage \""  << name << "\"";
+  qDebug() << "MainView: activatePage \""  << name << "\"";
 
   if (pages.contains(name)) {
      DynFrame*       w  = pages[name];
@@ -46,7 +46,7 @@ DynFrame* CenterView::activatePage(const QString& name) {
 #endif
 
      if (l) {
-//        qDebug() << "MainView: ok, found page [" << name << "] - gonna switch view";
+        qDebug() << "MainView: ok, found page [" << name << "] - gonna switch view";
 #ifdef WANT_STACKED_LAYOUT
         l->setCurrentWidget(w);
 #else
@@ -65,6 +65,11 @@ DynFrame* CenterView::activatePage(const QString& name) {
            }
         }
      qDebug() << "MainView: sorry - no page for name >" << name << "<";
+     dump();
+     }
+  else {
+     qDebug() << "MainView: sorry - no page for name >" << name << "<";
+     dump();
      }
   return nullptr;
   }

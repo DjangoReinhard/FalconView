@@ -1,5 +1,7 @@
 #include <toolmodel.h>
 #include <dbconnection.h>
+#include <core.h>
+#include <tooltable.h>
 #include <QFileIconProvider>
 #include <QSqlRecord>
 #include <QSqlField>
@@ -193,22 +195,44 @@ int ToolModel::exportTools() {
      qDebug() << "failed to query selected tools" << q.lastError().text();
      return 0;
      }
-  int        count = 0;
-  QSqlRecord r;
+  int count = 0;
 
-  while (q.next()) {
-        r = q.record();
-        qDebug() << "Tool #" << r.value("Tools.num").toInt()
-                 << "Slot #" << (count + 1)
-                 << "with Len: " << r.value("Tools.lenTool").toDouble()
-                 << "and diameter: " << r.value("diaFlute").toDouble()
-                 << ", desc:" << r.value("comment").toString()
-                 << "and category:" << r.value("Category.name").toString();
-        ++count;
+  if (Core().move2Backup(Core().toolTable().fileName())) {
+     QFile toolTable(Core().toolTable().fileName());
+
+     if (toolTable.open(QIODevice::WriteOnly | QIODevice::Text)) {
+       QTextStream out(&toolTable);
+       QSqlRecord  r;
+
+        while (q.next()) {
+              r = q.record();
+              qDebug() << "Tool #" << r.value("Tools.num").toInt()
+                       << "Slot #" << (count + 1)
+                       << "with Len: " << r.value("Tools.lenTool").toDouble()
+                       << "and diameter: " << r.value("diaFlute").toDouble()
+                       << ", desc:" << r.value("comment").toString()
+                       << "and category:" << r.value("Category.name").toString();
+              out << "T" << r.value("Tools.num").toInt()
+                  << " P" << (count + 1)
+                  << " Z" << r.value("Tools.lenTool").toDouble()
+                  << " D" << r.value("diaFlute").toDouble()
+                  << " ; " << r.value("comment").toString()
+                  << " | " << r.value("Category.name").toString()
+                  << "\n";
+              ++count;
+              }
+        toolTable.flush();
+        toolTable.close();
+        revertAll();
+        qDebug() << "exported " << count << "tools";
+        QSqlQuery sql("update tools set selected = 0");
+
+        if (!sql.exec()) {
+           qDebug() << "failed to query selected tools" << q.lastError().text();
+           }
+        submitAll();
         }
-  qDebug() << "exported " << count << "tools";
-  revertAll();
-
+     }
   return count;
   }
 

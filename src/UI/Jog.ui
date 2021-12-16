@@ -14,211 +14,6 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="3" colspan="2">
-    <widget class="QPushButton" name="jXp">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/X+.png</normaloff>
-       <normalon>:/res/Xs+.png</normalon>:/res/X+.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>128</width>
-       <height>128</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="2">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="4" column="10">
-    <spacer name="horizontalSpacer_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="4" column="6">
-    <widget class="QPushButton" name="jUn">
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/U-.png</normaloff>
-       <normalon>:/res/Us-.png</normalon>
-       <selectedon>:/res/Us-.png</selectedon>:/res/U-.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>128</width>
-       <height>128</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="7">
-    <widget class="QPushButton" name="jWp">
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/W+.png</normaloff>
-       <normalon>:/res/Ws+.png</normalon>
-       <selectedon>:/res/Ws+.png</selectedon>:/res/W+.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>128</width>
-       <height>128</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="jZp">
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/Z+.png</normaloff>
-       <normalon>:/res/Zs+.png</normalon>
-       <selectedon>:/res/Zs+.png</selectedon>:/res/Z+.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>128</width>
-       <height>128</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="7">
-    <widget class="QPushButton" name="jWn">
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/W-.png</normaloff>
-       <normalon>:/res/Ws-.png</normalon>
-       <selectedon>:/res/Ws-.png</selectedon>:/res/W-.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>128</width>
-       <height>128</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="9">
-    <widget class="QPushButton" name="jUp">
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../FalconView.qrc">
-       <normaloff>:/res/U+.png</normaloff>
-       <normalon>:/res/Us+.png</normalon>
-       <selectedon>:/res/Us+.png</selectedon>:/res/U+.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>128</width>
-       <height>128</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="jYn">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>30</pointsize>
-      </font>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string>Y-</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3" colspan="2">
-    <widget class="QPushButton" name="jYp">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>30</pointsize>
-      </font>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string>Y+</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="3">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
@@ -233,7 +28,7 @@
     </spacer>
    </item>
    <item row="5" column="2">
-    <widget class="QPushButton" name="jZn">
+    <widget class="QToolButton" name="jZn">
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
      </property>
@@ -254,21 +49,8 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="5">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="3" column="9">
-    <widget class="QPushButton" name="jVp">
+    <widget class="QToolButton" name="jVp">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -301,210 +83,29 @@
      </property>
     </spacer>
    </item>
-   <item row="7" column="0" colspan="11">
-    <widget class="QWidget" name="widget" native="true">
+   <item row="5" column="6">
+    <widget class="QToolButton" name="jVn">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>110</height>
-      </size>
+     <property name="font">
+      <font>
+       <pointsize>30</pointsize>
+      </font>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="jAn">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/A-.png</normaloff>
-          <normalon>:/res/As-.png</normalon>
-          <selectedon>:/res/As-.png</selectedon>:/res/A-.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>128</width>
-          <height>128</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="jAp">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/A+.png</normaloff>
-          <normalon>:/res/As+.png</normalon>
-          <selectedon>:/res/As+.png</selectedon>:/res/A+.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>128</width>
-          <height>128</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="jBn">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/B-.png</normaloff>
-          <normalon>:/res/Bs-.png</normalon>
-          <selectedon>:/res/Bs-.png</selectedon>:/res/B-.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>128</width>
-          <height>128</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="jBp">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/B+.png</normaloff>
-          <normalon>:/res/Bs+.png</normalon>
-          <selectedon>:/res/Bs+.png</selectedon>:/res/B+.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>128</width>
-          <height>128</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="jCn">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/C-.png</normaloff>
-          <normalon>:/res/Cs-.png</normalon>
-          <selectedon>:/res/Cs-.png</selectedon>:/res/C-.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>128</width>
-          <height>128</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="jCp">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../FalconView.qrc">
-          <normaloff>:/res/C+.png</normaloff>
-          <normalon>:/res/Cs+.png</normalon>
-          <selectedon>:/res/Cs+.png</selectedon>:/res/C+.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>128</width>
-          <height>128</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_7">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string>V-</string>
+     </property>
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QPushButton" name="jXn">
+    <widget class="QToolButton" name="jXn">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -532,8 +133,8 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="6">
-    <widget class="QPushButton" name="jVn">
+   <item row="5" column="1">
+    <widget class="QToolButton" name="jYn">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -549,7 +150,138 @@
       <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
-      <string>V-</string>
+      <string>Y-</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="9">
+    <widget class="QToolButton" name="jUp">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/U+.png</normaloff>
+       <normalon>:/res/Us+.png</normalon>
+       <selectedon>:/res/Us+.png</selectedon>:/res/U+.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>128</width>
+       <height>128</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="11" rowspan="5">
+    <widget class="QSlider" name="slJog">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="sliderPosition">
+      <number>99</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksBelow</enum>
+     </property>
+     <property name="tickInterval">
+      <number>5</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="QLabel" name="cmdJogSpeed">
+     <property name="minimumSize">
+      <size>
+       <width>75</width>
+       <height>45</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>12.000</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="6">
+    <widget class="QToolButton" name="jUn">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/U-.png</normaloff>
+       <normalon>:/res/Us-.png</normalon>
+       <selectedon>:/res/Us-.png</selectedon>:/res/U-.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>128</width>
+       <height>128</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="7">
+    <widget class="QToolButton" name="jWp">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/W+.png</normaloff>
+       <normalon>:/res/Ws+.png</normalon>
+       <selectedon>:/res/Ws+.png</selectedon>:/res/W+.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>128</width>
+       <height>128</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3" colspan="2">
+    <widget class="QToolButton" name="jXp">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/X+.png</normaloff>
+       <normalon>:/res/Xs+.png</normalon>:/res/X+.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>128</width>
+       <height>128</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -732,6 +464,325 @@
        </spacer>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="4" column="5">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="0" colspan="11">
+    <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>110</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="jAn">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../FalconView.qrc">
+          <normaloff>:/res/A-.png</normaloff>
+          <normalon>:/res/As-.png</normalon>
+          <selectedon>:/res/As-.png</selectedon>:/res/A-.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="jAp">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../FalconView.qrc">
+          <normaloff>:/res/A+.png</normaloff>
+          <normalon>:/res/As+.png</normalon>
+          <selectedon>:/res/As+.png</selectedon>:/res/A+.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="jBn">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../FalconView.qrc">
+          <normaloff>:/res/B-.png</normaloff>
+          <normalon>:/res/Bs-.png</normalon>
+          <selectedon>:/res/Bs-.png</selectedon>:/res/B-.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="jBp">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../FalconView.qrc">
+          <normaloff>:/res/B+.png</normaloff>
+          <normalon>:/res/Bs+.png</normalon>
+          <selectedon>:/res/Bs+.png</selectedon>:/res/B+.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="jCn">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../FalconView.qrc">
+          <normaloff>:/res/C-.png</normaloff>
+          <normalon>:/res/Cs-.png</normalon>
+          <selectedon>:/res/Cs-.png</selectedon>:/res/C-.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="jCp">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../FalconView.qrc">
+          <normaloff>:/res/C+.png</normaloff>
+          <normalon>:/res/Cs+.png</normalon>
+          <selectedon>:/res/Cs+.png</selectedon>:/res/C+.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>128</width>
+          <height>128</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_7">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="10">
+    <spacer name="horizontalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="2">
+    <widget class="QToolButton" name="jZp">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/Z+.png</normaloff>
+       <normalon>:/res/Zs+.png</normalon>
+       <selectedon>:/res/Zs+.png</selectedon>:/res/Z+.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>128</width>
+       <height>128</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="7">
+    <widget class="QToolButton" name="jWn">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../FalconView.qrc">
+       <normaloff>:/res/W-.png</normaloff>
+       <normalon>:/res/Ws-.png</normalon>
+       <selectedon>:/res/Ws-.png</selectedon>:/res/W-.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>128</width>
+       <height>128</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3" colspan="2">
+    <widget class="QToolButton" name="jYp">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>30</pointsize>
+      </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string>Y+</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="11">
+    <widget class="QLabel" name="curJog">
+     <property name="text">
+      <string notr="true">&lt;p&gt;10.500&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;100%&lt;/p&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+     </property>
     </widget>
    </item>
   </layout>

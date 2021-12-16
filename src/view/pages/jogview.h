@@ -20,8 +20,14 @@ protected:
   virtual void     setupUi(DynCenterWidget* parent);
   void jog(int axis, int step);
   void singleStep(bool singleStep);
+  void stepSizeChanged();
+  void jogVelChanged();
+  void sliderChanged(const QVariant& v);
 
 private:
   Ui::JogForm* ui;
+  double       stepSize;
+  double       defSpeed;
+  double       maxSpeed;
   };
 #endif // JOGVIEW_H

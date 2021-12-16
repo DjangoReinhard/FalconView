@@ -80,8 +80,45 @@ MainWindow* Core::mainWindow() {
   }
 
 
+bool Core::move2Backup(const QString& fileName) {
+  QString   backupPat(fileName);
+  QFileInfo fi(fileName);
+  QString   extension(QString(".%1").arg(fi.completeSuffix()));
+
+  backupPat.replace(extension, ".bak%1");
+  QFileInfo check(backupPat.arg(""));
+
+  if (check.exists()) {
+     QFile last(backupPat.arg(9));
+
+     if (last.exists()) last.remove();
+     for (int i=8; i > 0; --i) {
+         QFile tmp(backupPat.arg(i));
+
+         if (tmp.exists()) tmp.rename(backupPat.arg(i+1));
+         }
+     QFile tmp(check.absoluteFilePath());
+
+     tmp.rename(backupPat.arg(1));
+     }
+  QFile file(fileName);
+
+  return file.rename(check.absoluteFilePath());
+  }
+
+
 void Core::setAppMode(ApplicationMode m) {
   core()->mainWindow->setAppMode(m);
+  }
+
+
+void Core::setLocale(const QLocale &l) {
+  core()->curLocale = l;
+  }
+
+
+QLocale Core::locale() const {
+  return core()->curLocale;
   }
 
 

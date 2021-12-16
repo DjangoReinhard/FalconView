@@ -18,6 +18,7 @@ public:
   virtual void connectSignals() override;
   virtual void updateStyles() override;
   virtual void keyPressEvent(QKeyEvent *event) override;
+  virtual void keyReleaseEvent(QKeyEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
   virtual QWidget* createContent() override;
 

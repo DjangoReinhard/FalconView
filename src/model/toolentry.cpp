@@ -106,6 +106,17 @@ void ToolEntry::setDescription(const QString &s) {
   }
 
 
+void ToolEntry::setToolType(const QString &tt) {
+  this->tt = tt;
+  dirty = true;
+  }
+
+
+void ToolEntry::setSlot(int slot) {
+  canon.pocketno = slot;
+  }
+
+
 QString ToolEntry::toLine() const {
   QString rv;
 
@@ -126,6 +137,8 @@ QString ToolEntry::toLine() const {
   if (canon.orientation) rv += QString(" Q%1").arg(canon.orientation);
   rv += " ;";
   rv += desc;
+  rv += " | ";
+  rv += tt;
   rv += "\n";
 
   return rv;

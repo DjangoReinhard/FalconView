@@ -32,9 +32,9 @@ public slots:
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 protected:
-  virtual void keyReleaseEvent(QKeyEvent *event) override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
+  virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual QWidget* createContent() override;
   void createCategory();
   void createTool();

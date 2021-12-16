@@ -85,8 +85,7 @@ void SettingsNotebook::connectSignals() {
 void SettingsNotebook::enableTabs(const QVariant& var) {
   bool enable = var.toBool();
 
-  for (int i=0; i < tw->tabBar()->count(); ++i)
-      tw->tabBar()->setTabEnabled(i, enable);
+  tw->tabBar()->setEnabled(enable);
   }
 
 
