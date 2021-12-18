@@ -34,6 +34,7 @@ QWidget* PreferencesEditor::createContent() {
 
   cbStatesInside = findChild<QCheckBox*>("cbStatesInside");
   cbHelp         = findChild<QCheckBox*>("cbHelp");
+  cbToolManager  = findChild<QCheckBox*>("cbToolManager");
   for (int i=0; i < count; ++i) {
       labels[i]      = findChild<QLineEdit*>(QString("l")      + Config().nameOf(static_cast<Config::GuiElem>(i)));
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
@@ -161,7 +162,7 @@ void PreferencesEditor::changeFont(int i) {
   }
 
 
-void PreferencesEditor::statusInsideChanged(QVariant state) {
+void PreferencesEditor::statusInsideChanged(const QVariant& state) {
   qDebug() << "PE::statusInsideChanged(" << (state.toBool() ? "TRUE" : "FALSE") << ")";
   QMessageBox::information(this
                          , tr("QMessageBox::information()")
@@ -171,7 +172,7 @@ void PreferencesEditor::statusInsideChanged(QVariant state) {
   }
 
 
-void PreferencesEditor::statusShowHelpChanged(QVariant state) {
+void PreferencesEditor::statusShowHelpChanged(const QVariant& state) {
   bool showHelp = state.toBool();
 
   qDebug() << "PE::statusShowHelpChanged(" << (showHelp ? "TRUE" : "FALSE") << ")";
@@ -183,6 +184,17 @@ void PreferencesEditor::statusShowHelpChanged(QVariant state) {
      }
   Config().setValue("showHelpAtPageChange", state.toBool());
   }
+
+
+void PreferencesEditor::statusToolMgrChanged(const QVariant& state) {
+  qDebug() << "PE::statusToolMgrChanged(" << (state.toBool() ? "TRUE" : "FALSE") << ")";
+  QMessageBox::information(this
+                         , tr("QMessageBox::information()")
+                         , tr("for this change to take effect, "
+                              "the application must be restarted."));
+  Config().setValue("activateToolMgr", state.toBool());
+  }
+
 
 bool PreferencesEditor::eventFilter(QObject* l, QEvent* event) {
   if (event->type() == QEvent::KeyPress) {

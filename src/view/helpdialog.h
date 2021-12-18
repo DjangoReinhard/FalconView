@@ -6,6 +6,7 @@
 class HelpEngine;
 class QSplitter;
 class QTextBrowser;
+class QTabWidget;
 class HelpContentWidget;
 class HelpKeywordWidget;
 class QTreeWidgetItem;
@@ -26,12 +27,14 @@ protected slots:
   void keywordItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
   void keyPressEvent(QKeyEvent* event) override;
   void closeEvent(QCloseEvent* event) override;
-  void 	sourceChanged(const QUrl &src);
+  void sourceChanged(const QUrl &src);
+  void tabChanged(int index);
 
 private:
-  QTextBrowser*  tb;
-  QSplitter*     sp;
-  HelpEngine*    he;
+  QTextBrowser*      tb;
+  QSplitter*         sp;
+  HelpEngine*        he;
+  QTabWidget*        tw;
   HelpContentWidget* cw;
   HelpKeywordWidget* kw;
   static const QString& className;

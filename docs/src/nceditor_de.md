@@ -9,6 +9,6 @@ Dateiänderungen können mit **[F10]** gespeichert oder mit **[Esc]** verworfen 
 
 Wenn zum NC-Editor gewechselt wird, dann ist der *Öffnen*-Knopf aktiv. **[Leertaste]**
 reicht aus um die Aktion auszuführen. Zur Datei-Auswahl wird der
-[Datei-Verwalter](filemanager.html) verwendet.
+[Datei-Verwalter](filemanager) verwendet.
 
 ![NC-Editor](images/NCEditor.jpg)

@@ -26,8 +26,8 @@ HelpDialog::HelpDialog(QWidget* parent)
   hb->setHelpEngine(he);
   hb->setMinimumWidth(830);
   setMinimumWidth(1100);
-  QTabWidget* tw = new QTabWidget(sp);
 
+  tw = new QTabWidget(sp);
   sp->addWidget(tw);
   sp->addWidget(tb);
   tw->addTab(cw, tr("Content"));
@@ -35,6 +35,7 @@ HelpDialog::HelpDialog(QWidget* parent)
   setWidget(sp);
   cw->expandAll();
   setTitleBarWidget(new HelpTitleBar(this));
+  connect(tw, &QTabWidget::currentChanged, this, &HelpDialog::tabChanged);
   connect(cw, &QTreeWidget::currentItemChanged, this, &HelpDialog::contentItemChanged);
   connect(kw, &QListWidget::currentItemChanged, this, &HelpDialog::keywordItemChanged);
   connect(tb, &QTextBrowser::sourceChanged, this, &HelpDialog::sourceChanged);
@@ -48,10 +49,21 @@ void HelpDialog::contentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *)
   }
 
 
-void HelpDialog::sourceChanged(const QUrl&) {
-  qDebug() << "HelpDialog::sourceChanged - " << tb->documentTitle();
-  HelpTitleBar* htb = static_cast<HelpTitleBar*>(this->titleBarWidget());
+void HelpDialog::tabChanged(int index) {
+  qDebug() << "HelpDialog::tabChanged(" << index << ")";
+  }
 
+
+void HelpDialog::sourceChanged(const QUrl& src) {
+  HelpTitleBar* htb = static_cast<HelpTitleBar*>(this->titleBarWidget());
+  int           index = tw->currentIndex();
+
+  qDebug() << "HelpDialog::sourceChanged - #" << index
+           << ":" << tb->documentTitle()
+           << " - src:" << src;
+
+  cw->sourceChanged(src);
+  kw->sourceChanged(src);
   if (htb) htb->setTitle(tb->documentTitle());
   }
 

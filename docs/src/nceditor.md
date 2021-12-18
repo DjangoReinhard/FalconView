@@ -8,6 +8,6 @@ File changes can be saved with **[F10]** or discarded with **[Esc]**.
 
 When switching to the NC editor, the *Open* button is active. **[Space]**
 is sufficient to execute the action. For file selection the
-[File manager](filemanager.html) is used.
+[File manager](filemanager) is used.
 
 ![NC-Editor](images/NCEditor.jpg)

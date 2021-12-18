@@ -201,22 +201,26 @@ int ToolModel::exportTools() {
      QFile toolTable(Core().toolTable().fileName());
 
      if (toolTable.open(QIODevice::WriteOnly | QIODevice::Text)) {
-       QTextStream out(&toolTable);
-       QSqlRecord  r;
+        QTextStream out(&toolTable);
+        QSqlRecord  r;
+        QString     s;
 
         while (q.next()) {
               r = q.record();
+              s = r.value("comment").toString();
+
+              if (s.isEmpty()) s = r.value("name").toString();
               qDebug() << "Tool #" << r.value("Tools.num").toInt()
                        << "Slot #" << (count + 1)
                        << "with Len: " << r.value("Tools.lenTool").toDouble()
                        << "and diameter: " << r.value("diaFlute").toDouble()
-                       << ", desc:" << r.value("comment").toString()
+                       << ", desc:" << s
                        << "and category:" << r.value("Category.name").toString();
               out << "T" << r.value("Tools.num").toInt()
                   << " P" << (count + 1)
                   << " Z" << r.value("Tools.lenTool").toDouble()
                   << " D" << r.value("diaFlute").toDouble()
-                  << " ; " << r.value("comment").toString()
+                  << " ; " << s
                   << " | " << r.value("Category.name").toString()
                   << "\n";
               ++count;

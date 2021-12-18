@@ -17,17 +17,22 @@ protected:
   virtual void     connectSignals() override;
   virtual void     updateStyles() override;
   virtual void     keyPressEvent(QKeyEvent* event) override;
+  virtual bool     eventFilter(QObject* src, QEvent* event) override;
   virtual void     setupUi(DynCenterWidget* parent);
-  void jog(int axis, int step);
+  void incStepSize();
+  void decStepSize();
+  void jog(QWidget* o, int axis, int step);
   void singleStep(bool singleStep);
   void stepSizeChanged();
   void jogVelChanged();
   void sliderChanged(const QVariant& v);
 
 private:
-  Ui::JogForm* ui;
-  double       stepSize;
-  double       defSpeed;
-  double       maxSpeed;
+  Ui::JogForm*         ui;
+  QList<QRadioButton*> rbl;
+  double               stepSize;
+  double               jogSpeed;
+  double               defSpeed;
+  double               maxSpeed;
   };
 #endif // JOGVIEW_H

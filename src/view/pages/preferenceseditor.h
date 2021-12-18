@@ -27,8 +27,9 @@ protected slots:
   void changeForegroundColor(int i);
   void changeBackgroundColor(int i);
   void changeFont(int i);
-  void statusInsideChanged(QVariant state);
-  void statusShowHelpChanged(QVariant state);
+  void statusInsideChanged(const QVariant& state);
+  void statusShowHelpChanged(const QVariant& state);
+  void statusToolMgrChanged(const QVariant& state);
   virtual void showEvent(QShowEvent* e) override;
 
 private:
@@ -38,6 +39,7 @@ private:
   QPushButton** fontButtons;
   QCheckBox*    cbStatesInside;
   QCheckBox*    cbHelp;
+  QCheckBox*    cbToolManager;
   int           count;
   static const QString& className;
   };

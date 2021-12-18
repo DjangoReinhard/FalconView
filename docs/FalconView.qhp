@@ -37,7 +37,7 @@
             </section>
         </toc>
         <keywords>
-            <keyword name="3D Preview" id="3D Preview" ref="preview"/>
+            <keyword name="3D-Preview" id="3D-Preview" ref="preview"/>
             <keyword name="FileManager" id="fileManager" ref="filemanager"/>
             <keyword name="FixtureManager" id="FixtureManager" ref="fixturemanager"/>
             <keyword name="JogView" id="JogView" ref="jogview"/>

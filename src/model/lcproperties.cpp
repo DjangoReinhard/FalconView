@@ -104,7 +104,7 @@ QString LcProperties::toolTableFileName() const {
 
 
 QString LcProperties::toolImageDir() const {
-  QString dir(value("EMCIO", "TOOL_IMAGE_DIR").toString());
+  QString dir(value("DISPLAY", "TOOL_IMAGE_DIR").toString());
 
   if (dir.startsWith("~")) dir.replace("~", QDir::homePath());
   QFileInfo fi(dir);

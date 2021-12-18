@@ -1,6 +1,7 @@
 #include <helpcontentwidget.h>
 #include <QDomDocument>
 #include <QHeaderView>
+#include <QUrl>
 #include <QDebug>
 
 
@@ -90,4 +91,27 @@ void HelpContentWidget::setFolderIcon(const QIcon &ico) {
 
 void HelpContentWidget::setHelpIcon(const QIcon &ico) {
   helpIcon = ico;
+  }
+
+
+void HelpContentWidget::sourceChanged(const QUrl &src) {
+//  qDebug() << "HelpContentWidget::sourceChanged(" << src << ")";
+
+  QTreeWidgetItem* node = this->invisibleRootItem();
+
+  checkNode(node, src);
+  }
+
+
+void HelpContentWidget::checkNode(QTreeWidgetItem *node, const QUrl& src) {
+  int mx = node->childCount();
+
+  //  qDebug() << "node:" << node->text(1);
+  if (node->text(1) == src.path()) {
+     setCurrentItem(node);
+     return;
+     }
+  for (int i=0; i < mx; ++i) {
+      checkNode(node->child(i), src);
+      }
   }

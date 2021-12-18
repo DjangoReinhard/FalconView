@@ -13,6 +13,7 @@ public:
 
   void parse(const QByteArray& ba, QMap<QString, QString>& keyWords);
   void setIcon(const QIcon& icon);
+  void sourceChanged(const QUrl &src);
 
 protected:
   void processChildren(const QDomElement& e, QMap<QString, QString>& keyWords);

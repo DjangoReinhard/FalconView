@@ -95,6 +95,7 @@ SOURCES += \
     src/view/helpcontentwidget.cpp \
     src/view/helpdialog.cpp \
     src/view/helpkeywordwidget.cpp \
+    src/view/jogbutton.cpp \
     src/view/pages/filemanager.cpp \
     src/view/pages/fixturemanager.cpp \
     src/view/pages/jogview.cpp \
@@ -187,6 +188,7 @@ HEADERS += \
     src/view/helpcontentwidget.h \
     src/view/helpdialog.h \
     src/view/helpkeywordwidget.h \
+    src/view/jogbutton.h \
     src/view/pages/filemanager.h \
     src/view/pages/fixturemanager.h \
     src/view/pages/jogview.h \

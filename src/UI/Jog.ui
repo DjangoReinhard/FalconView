@@ -28,9 +28,9 @@
     </spacer>
    </item>
    <item row="5" column="2">
-    <widget class="QToolButton" name="jZn">
+    <widget class="JogButton" name="jZn">
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -50,7 +50,7 @@
     </widget>
    </item>
    <item row="3" column="9">
-    <widget class="QToolButton" name="jVp">
+    <widget class="JogButton" name="jVp">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -63,7 +63,7 @@
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string>V+</string>
@@ -84,7 +84,7 @@
     </spacer>
    </item>
    <item row="5" column="6">
-    <widget class="QToolButton" name="jVn">
+    <widget class="JogButton" name="jVn">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -97,7 +97,7 @@
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string>V-</string>
@@ -105,7 +105,7 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QToolButton" name="jXn">
+    <widget class="JogButton" name="jXn">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -113,7 +113,7 @@
       </sizepolicy>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -134,7 +134,7 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QToolButton" name="jYn">
+    <widget class="JogButton" name="jYn">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -147,7 +147,7 @@
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string>Y-</string>
@@ -155,9 +155,9 @@
     </widget>
    </item>
    <item row="4" column="9">
-    <widget class="QToolButton" name="jUp">
+    <widget class="JogButton" name="jUp">
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -183,6 +183,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="sliderPosition">
       <number>99</number>
@@ -215,9 +218,9 @@
     </widget>
    </item>
    <item row="4" column="6">
-    <widget class="QToolButton" name="jUn">
+    <widget class="JogButton" name="jUn">
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -237,9 +240,9 @@
     </widget>
    </item>
    <item row="3" column="7">
-    <widget class="QToolButton" name="jWp">
+    <widget class="JogButton" name="jWp">
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -259,7 +262,7 @@
     </widget>
    </item>
    <item row="4" column="3" colspan="2">
-    <widget class="QToolButton" name="jXp">
+    <widget class="JogButton" name="jXp">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -267,7 +270,7 @@
       </sizepolicy>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -321,8 +324,11 @@
           <height>25</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
-         <string>single Step</string>
+         <string>single &amp;Step</string>
         </property>
        </widget>
       </item>
@@ -347,8 +353,11 @@
           <height>25</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
-         <string>Rapid</string>
+         <string>&amp;Rapid</string>
         </property>
        </widget>
       </item>
@@ -508,9 +517,9 @@
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="jAn">
+       <widget class="JogButton" name="jAn">
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -530,9 +539,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="jAp">
+       <widget class="JogButton" name="jAp">
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -565,9 +574,9 @@
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="jBn">
+       <widget class="JogButton" name="jBn">
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -587,9 +596,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="jBp">
+       <widget class="JogButton" name="jBp">
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -622,9 +631,9 @@
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="jCn">
+       <widget class="JogButton" name="jCn">
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -644,9 +653,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="jCp">
+       <widget class="JogButton" name="jCp">
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -708,9 +717,9 @@
     </spacer>
    </item>
    <item row="3" column="2">
-    <widget class="QToolButton" name="jZp">
+    <widget class="JogButton" name="jZp">
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -733,9 +742,9 @@
     </widget>
    </item>
    <item row="5" column="7">
-    <widget class="QToolButton" name="jWn">
+    <widget class="JogButton" name="jWn">
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -755,7 +764,7 @@
     </widget>
    </item>
    <item row="3" column="3" colspan="2">
-    <widget class="QToolButton" name="jYp">
+    <widget class="JogButton" name="jYp">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -768,7 +777,7 @@
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string>Y+</string>
@@ -787,6 +796,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>JogButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">jogbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../FalconView.qrc"/>
  </resources>

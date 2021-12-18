@@ -14,12 +14,14 @@ public:
   void setFolderIcon(const QIcon& ico);
   void setHelpIcon(const QIcon& ico);
   void parse(const QByteArray& ba, QMap<QString, QString>& pages);
+  void sourceChanged(const QUrl& src);
 
 protected:
   QTreeWidgetItem* createItem(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parent);
   QTreeWidgetItem* processElement(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parent);
   void processChildren(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parentItem = nullptr);
   void processAttributes(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* item);
+  void checkNode(QTreeWidgetItem* node, const QUrl& src);
 
 private:
   int   level;

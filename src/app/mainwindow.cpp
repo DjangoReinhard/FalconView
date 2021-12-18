@@ -594,7 +594,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   SettingsNotebook* nb = new SettingsNotebook(this);
 
   center->addPage(new DynFrame(nb, false, center));
-  nb->addPage(new ToolManager(conn, nb));
+  if (Config().value("activateToolMgr").toBool()) nb->addPage(new ToolManager(conn, nb));
   nb->addPage(new FixtureManager(Core().axisMask(), nb));
   nb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", nb));
   nb->addPage(new LCToolTable());
