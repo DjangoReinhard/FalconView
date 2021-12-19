@@ -356,8 +356,14 @@ int ToolTable::entries() const {
 
 
 const ToolEntry* ToolTable::tool(int number) const {
-  if (number < 0 || number >= tools.size()) return nullptr;
+  if (!mappedTools.contains(number)) return nullptr;
   return mappedTools[number];
+  }
+
+
+const ToolEntry* ToolTable::tool4Slot(int number) const {
+  if (number < 0 || number >= tools.size()) return nullptr;
+  return tools.at(number);
   }
 
 

@@ -29,6 +29,7 @@ public:
 
 public slots:
   void currentChanged(const QModelIndex& index);
+  void setSize(int w, int h);
   void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 protected:

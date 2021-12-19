@@ -63,9 +63,12 @@ void HelpContentWidget::processChildren(const QDomElement& e, QMap<QString, QStr
 QTreeWidgetItem* HelpContentWidget::createItem(const QDomElement &e, QMap<QString, QString>& pages, QTreeWidgetItem *parent) {
   QTreeWidgetItem* item;
 
-  if (parent) item = new QTreeWidgetItem(parent);
+  if (parent) {
+     item = new QTreeWidgetItem(parent);
+     parent->setIcon(0, folderIcon);
+     }
   else        item = new QTreeWidgetItem(this);
-  item->setIcon(0, folderIcon);
+  item->setIcon(0, pageIcon);
   processAttributes(e, pages, item);
 
   return item;
@@ -75,7 +78,7 @@ QTreeWidgetItem* HelpContentWidget::createItem(const QDomElement &e, QMap<QStrin
 QTreeWidgetItem* HelpContentWidget::processElement(const QDomElement& e, QMap<QString, QString>& pages, QTreeWidgetItem* parent) {
   QTreeWidgetItem* item = nullptr;
 
-  if (e.tagName() == "section") {
+  if (e.tagName() == "section") {     
      item = createItem(e, pages, parent);
 
      processChildren(e, pages, item);
@@ -93,6 +96,10 @@ void HelpContentWidget::setHelpIcon(const QIcon &ico) {
   helpIcon = ico;
   }
 
+
+void HelpContentWidget::setPageIcon(const QIcon &ico) {
+  pageIcon = ico;
+  }
 
 void HelpContentWidget::sourceChanged(const QUrl &src) {
 //  qDebug() << "HelpContentWidget::sourceChanged(" << src << ")";

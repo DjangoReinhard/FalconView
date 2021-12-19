@@ -591,13 +591,19 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
                     , true
                     , center);
   center->addPage(page);
-  SettingsNotebook* nb = new SettingsNotebook(this);
 
-  center->addPage(new DynFrame(nb, false, center));
-  if (Config().value("activateToolMgr").toBool()) nb->addPage(new ToolManager(conn, nb));
-  nb->addPage(new FixtureManager(Core().axisMask(), nb));
-  nb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", nb));
-  nb->addPage(new LCToolTable());
+  snb = new SettingsNotebook(this);
+  center->addPage(new DynFrame(snb, false, center));
+  if (Config().value("activateToolMgr").toBool()) {
+     qDebug() << "config says we want tool-manager!";
+     snb->addPage(new ToolManager(conn, snb));
+     }
+  else {
+     qDebug() << "No thx - No Tool-manager!";
+     }
+  snb->addPage(new FixtureManager(Core().axisMask(), snb));
+  snb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", snb));
+  snb->addPage(new LCToolTable());
   page = new DynFrame(new JogView()
                     , true
                     , center);

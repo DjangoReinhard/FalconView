@@ -2,6 +2,8 @@
 #include <toolmodel.h>
 #include <dbconnection.h>
 #include <ui_ToolEditor.h>
+#include <core.h>
+#include <QLocale>
 #include <QDebug>
 #include <QComboBox>
 #include <QSqlError>
@@ -20,6 +22,9 @@ ToolEditor::ToolEditor(QWidget *parent)
   model->setQuery("select id, name from Category");
 //  dumpModel();
   ui->setupUi(this);
+  QPixmap ni = QPixmap(QString(":/res/ToolDimensions_%1.png").arg(Core().languagePrefix()));
+
+  if (!ni.isNull()) ui->helpImage->setPixmap(ni);
   setupTabOrder();
   }
 
@@ -40,7 +45,6 @@ void ToolEditor::getChanges(QSqlRecord& r) {
   double dv;
   double lenTool = 0;
   QVariant   v0 = m->data(m->index(idx, 0));
-//  QVariant   v1 = m->data(m->index(idx, 1));
 
   r.setValue("id", toolId);
   iv = ui->toolNum->text().toInt(&ok);
@@ -98,7 +102,16 @@ void ToolEditor::getChanges(QSqlRecord& r) {
 void ToolEditor::changeEvent(QEvent* e) {
   if (e->type() == QEvent::EnabledChange && this->isEnabled()) {
      ui->eName->setFocus();
+     updateGeometry();
+     update();
      }
+  }
+
+
+void ToolEditor::resizeEvent(QResizeEvent* e) {
+  qDebug() << "TE: resize event - from" << e->oldSize() << "to size:" << e->size();
+//  tw->currentWidget()->resize(e->size());
+//  qDebug() << "SN: current widget is" << tw->currentWidget()->objectName();
   }
 
 

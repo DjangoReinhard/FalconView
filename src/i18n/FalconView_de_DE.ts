@@ -243,107 +243,139 @@
     </message>
     <message>
         <source>User Guide</source>
-        <translation type="manual">Benutzer-Handbuch</translation>
+        <translation>Benutzer-Handbuch</translation>
     </message>
     <message>
         <source>linuxCNC</source>
-        <translation type="manual">LinuxCNC</translation>
+        <translation>LinuxCNC</translation>
     </message>
     <message>
         <source>Center-Area</source>
-        <translation type="manual">Hauptbereich</translation>
+        <translation>Hauptbereich</translation>
     </message>
     <message>
         <source>NC-Editor</source>
-        <translation type="manual">NC-Editor</translation>
+        <translation>NC-Editor</translation>
     </message>
     <message>
         <source>3D-Preview</source>
-        <translation type="manual">3D-Vorschau</translation>
+        <translation>3D-Vorschau</translation>
     </message>
     <message>
         <source>FileManager</source>
-        <translation type="manual">Datei-Verwalter</translation>
+        <translation>Datei-Verwalter</translation>
     </message>
     <message>
         <source>FixtureManager</source>
-        <translation type="manual">Koordinaten-Systeme</translation>
+        <translation>Koordinaten-Systeme</translation>
     </message>
     <message>
         <source>JogView</source>
-        <translation type="manual">Handbetrieb</translation>
+        <translation>Handbetrieb</translation>
     </message>
     <message>
         <source>MDIEditor</source>
-        <translation type="manual">manuelle Befehle</translation>
+        <translation>manuelle Befehle</translation>
     </message>
     <message>
         <source>PathEditor</source>
-        <translation type="manual">aktive NC-Datei</translation>
+        <translation>aktive NC-Datei</translation>
     </message>
     <message>
         <source>TestEdit</source>
-        <translation type="manual">freie NC-Datei</translation>
+        <translation>freie NC-Datei</translation>
     </message>
     <message>
         <source>ToolEditor</source>
-        <translation type="manual">Werkzeug-Eigenschaften</translation>
+        <translation>Werkzeug-Eigenschaften</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="manual">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <source>Fixtures</source>
-        <translation type="manual">Koordinatensysteme</translation>
+        <translation>Koordinatensysteme</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="manual">Optionen</translation>
+        <translation>Optionen</translation>
     </message>
     <message>
         <source>LCToolTable</source>
-        <translation type="manual">LinuxCNC Werkzeuge</translation>
+        <translation>LinuxCNC Werkzeuge</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="manual">Werkzeugleisten</translation>
+        <translation>Werkzeugleisten</translation>
     </message>
     <message>
         <source>ApplicationMode</source>
-        <translation type="manual">Anwendungs-Modus</translation>
+        <translation>Anwendungs-Modus</translation>
     </message>
     <message>
         <source>RunMode</source>
-        <translation type="manual">Betriebsart</translation>
+        <translation>Betriebsart</translation>
     </message>
     <message>
         <source>Machine</source>
-        <translation type="manual">Maschine</translation>
+        <translation>Maschine</translation>
     </message>
     <message>
         <source>Extended</source>
-        <translation type="manual">Zusatz</translation>
+        <translation>Zusatz</translation>
     </message>
     <message>
         <source>Status-Info</source>
-        <translation type="manual">Informationen</translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <source>Position</source>
-        <translation type="manual">Werkzeug-Position</translation>
+        <translation>Werkzeug-Position</translation>
     </message>
     <message>
         <source>ToolInfo</source>
-        <translation type="manual">Werkzeug</translation>
+        <translation>Werkzeug</translation>
     </message>
     <message>
         <source>act.Codes</source>
-        <translation type="manual">aktive Befehle</translation>
+        <translation>aktive Befehle</translation>
     </message>
     <message>
         <source>SpeedInfo</source>
-        <translation type="manual">Geschwindigkeit</translation>
+        <translation>Geschwindigkeit</translation>
+    </message>
+    <message>
+        <source>3D PreviewFrame</source>
+        <translation>3D PreviewFrame</translation>
+    </message>
+    <message>
+        <source>FileManagerFrame</source>
+        <translation>FileManagerFrame</translation>
+    </message>
+    <message>
+        <source>JogViewFrame</source>
+        <translation>JogViewFrame</translation>
+    </message>
+    <message>
+        <source>MDIEditorFrame</source>
+        <translation>MDIEditorFrame</translation>
+    </message>
+    <message>
+        <source>PathEditorFrame</source>
+        <translation>PathEditorFrame</translation>
+    </message>
+    <message>
+        <source>SettingsNotebookFrame</source>
+        <translation>SettingsNotebookFrame</translation>
+    </message>
+    <message>
+        <source>SysEventViewFrame</source>
+        <translation>SysEventViewFrame</translation>
+    </message>
+    <message>
+        <source>TestEditFrame</source>
+        <translation>TestEditFrame</translation>
     </message>
 </context>
 <context>
@@ -1060,12 +1092,12 @@
     <message>
         <location filename="../UI/ToolEditor.ui" line="97"/>
         <source>max Ramp Angle</source>
-        <translation>max. Rampe</translation>
+        <translation>max. Rampenwinkel</translation>
     </message>
     <message>
         <location filename="../UI/ToolEditor.ui" line="110"/>
         <source>Flute Length</source>
-        <translation>Schneidenlänge</translation>
+        <translation>Eintauchtiefe</translation>
     </message>
     <message>
         <location filename="../UI/ToolEditor.ui" line="163"/>
@@ -1085,7 +1117,7 @@
     <message>
         <location filename="../UI/ToolEditor.ui" line="226"/>
         <source>Cut Length</source>
-        <translation>Schnitttiefe</translation>
+        <translation>Schneidenlänge</translation>
     </message>
     <message>
         <location filename="../UI/ToolEditor.ui" line="255"/>
@@ -1120,12 +1152,12 @@
     <message>
         <location filename="../UI/ToolEditor.ui" line="334"/>
         <source>Collet Diameter</source>
-        <translation>Aufnahmen-Durchmesser</translation>
+        <translation>Aufnahme-Durchmesser</translation>
     </message>
     <message>
         <location filename="../UI/ToolEditor.ui" line="341"/>
         <source>Collet Length</source>
-        <translation>Länge Aufnahme</translation>
+        <translation>Aufnahme-Länge</translation>
     </message>
     <message>
         <location filename="../UI/ToolEditor.ui" line="373"/>

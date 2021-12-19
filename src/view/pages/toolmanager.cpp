@@ -341,18 +341,34 @@ void ToolManager::deleteTool() {
   }
 
 
+void ToolManager::setSize(int w, int h) {
+  if (tEdit->isEnabled()) tEdit->resize(w, h);
+  else                    resize(w, h);
+  }
+
+
 void ToolManager::editTool() {
+//  QWidget* parentWidget = static_cast<QWidget*>(parent());
+
+//  qDebug() << "TM: gonna switch into edit mode - size:" << size();
+//  qDebug() << "TM: edit size:" << tEdit->size();
+//  qDebug() << "TM: parent size:" << (parentWidget ? parentWidget->size() : QSize());
+
   categories->hide();
   tools->hide();
   Core().showAllButCenter(false);
   tEdit->setEnabled(true);
 
-  qDebug() << "default size: " << edSize;
-  qDebug() << "self size:" << size();
-  qDebug() << "edit size:" << tEdit->size();
+//  qDebug() << "default size: " << edSize;  (-1,-1) ?!?
+//  qDebug() << "TM: in edit mode - self size:" << size();
+//  qDebug() << "TM:                edit size:" << tEdit->size();
+//  qDebug() << "TM: parent size:" << (parentWidget ? parentWidget->size() : QSize());
 
-  if (edSize.width() == -1 && edSize.height() == -1) edSize = tEdit->size();
-  tEdit->resize(size().width() - 20, size().height() - 20);
+//  if (edSize.width() == -1 && edSize.height() == -1) edSize = tEdit->size();
+//  tEdit->resize(size().width() - 20, size().height() - 20);
+//  qDebug() << "TM: after resize edit -  new size:" << tEdit->size();
+//  qDebug() << "TM: after edit resize - self size:" << size();
+//  qDebug() << "TM: parent size:" << (parentWidget ? parentWidget->size() : QSize());
 
   // data record is already loaded into editor,
   // so just inform about how to finish editing

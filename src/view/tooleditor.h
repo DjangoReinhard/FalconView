@@ -26,6 +26,7 @@ protected:
   void selectCBEntry(QComboBox* cb, const QString& name);
   virtual void changeEvent(QEvent *event) override;
   virtual bool focusNextPrevChild(bool next) override;
+  virtual void resizeEvent(QResizeEvent *event) override;
   void dumpModel();
   void setupTabOrder();
 

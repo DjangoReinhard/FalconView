@@ -1,6 +1,8 @@
 #include <settingsnb.h>
 #include <core.h>
+#include <configacc.h>
 #include <valuemanager.h>
+#include <toolmanager.h>
 #include <QVBoxLayout>
 #include <QVariant>
 #include <QTabWidget>
@@ -111,6 +113,10 @@ void SettingsNotebook::updateStyles() {
 
 void SettingsNotebook::currentChanged(int) {
   Core().setWindowTitle(tr(tw->currentWidget()->windowTitle().toStdString().c_str()));
+  if (Config().value("showHelpAtPageChange").toBool()) {
+     qDebug() << "SN: show help for page:" << tw->currentWidget()->objectName();
+     Core().help4Keyword(tw->currentWidget()->objectName());
+     }
   }
 
 
@@ -124,6 +130,27 @@ void SettingsNotebook::closeEvent(QCloseEvent* e) {
       if (w) w->closeEvent(e);
       }
   }
+
+
+void SettingsNotebook::resizeEvent(QResizeEvent* e) {
+  qDebug() << "SN: resize event - from" << e->oldSize() << "to size:" << e->size();
+  ToolManager* tm = static_cast<ToolManager*>(tw->currentWidget());
+
+  if (tm) tm->setSize(e->size().width() - 15, e->size().height() - 80);
+  qDebug() << "SN: current widget is" << tw->currentWidget()->objectName();
+  }
+
+
+void SettingsNotebook::showEvent(QShowEvent* e) {
+  DynCenterWidget::showEvent(e);
+  if (e->type() == QEvent::Show) {
+     if (Config().value("showHelpAtPageChange").toBool()) {
+        qDebug() << "SN: show help for page:" << tw->currentWidget()->objectName();
+        Core().help4Keyword(tw->currentWidget()->objectName());
+        }
+     }
+  }
+
 
 void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
   switch (e->key()) {
@@ -153,6 +180,18 @@ void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
                   << "event-ts: " << e->timestamp();
          DynCenterWidget::keyPressEvent(e); break;
     }
+  }
+
+
+void SettingsNotebook::dump() {
+  int mx = tw->count();
+
+  for (int i=0; i < mx; ++i) {
+      DynCenterWidget* page = static_cast<DynCenterWidget*>(tw->widget(i));
+
+      if (page) qDebug() << "SN: page found ->" << page->objectName() << "with title" << page->windowTitle();
+      else      qDebug() << "SN: invalid page at #" << i;
+      }
   }
 
 

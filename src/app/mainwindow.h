@@ -5,6 +5,7 @@
 #include <commandwriter.h>
 #include <applicationmode.h>
 
+class SettingsNotebook;
 class PositionStatus;
 class PreViewEditor;
 class DynDockable;
@@ -28,6 +29,7 @@ public:
 
   void setAppMode(ApplicationMode am);
   HelpDialog* helpDialog() { return dlgHelp; }
+  SettingsNotebook* settingsNotebook() const { return snb; }
 
 protected:
   void closeEvent(QCloseEvent *event)  override;
@@ -67,6 +69,7 @@ private:
   Ui::MainWindow*     ui;
   PreViewEditor*      pw;
   HelpDialog*         dlgHelp;
+  SettingsNotebook*   snb;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;

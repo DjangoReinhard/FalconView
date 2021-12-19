@@ -78,7 +78,7 @@ void HelpDialog::keywordItemChanged(QListWidgetItem *current, QListWidgetItem *)
 void HelpDialog::help4Keyword(const QString &keyWord) {
   QString document = he->document4Keyword(keyWord);
 
-  qDebug() << "HD: keyword >" << keyWord << "< \tpage:" << document;
+  qDebug() << "\tHD: keyword >" << keyWord << "< \tpage:" << document;
   if (!document.isEmpty()) tb->setSource(document);
   showHelp();
   }

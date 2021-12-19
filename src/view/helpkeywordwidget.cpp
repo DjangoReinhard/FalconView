@@ -52,7 +52,10 @@ void HelpKeywordWidget::processChildren(const QDomElement& e, QMap<QString, QStr
                 QString out(QCoreApplication::translate("HelpContentWidget", in.toStdString().c_str(), nullptr));
 
                 qDebug() << "HelpKeywords - in:" << in << "out:" << out;
-                item->setText(out);
+
+                //TODO:
+//                item->setText(out);
+                item->setText(in);
                 }
              else if (n.nodeName() == "ref") item->setToolTip(n.nodeValue());
              }

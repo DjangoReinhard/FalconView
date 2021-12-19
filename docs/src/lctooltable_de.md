@@ -30,3 +30,4 @@ Die Felder im einzelnen:
   - *Platz* ist der Platz im Werkzeugwechsler
   - *Länge* ist die Länge in Z-Richtung
   - *Durchm* ist der Werkzeug-Durchmesser
+  - *S* ist das Symbol des Werkzeuges

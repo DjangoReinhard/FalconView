@@ -6,6 +6,7 @@
    <file>res/edit-undo.png</file>
    <file>res/font.png</file>
    <file>res/help-contents.png</file>
+   <file>res/text-html.svg</file>
    <file>res/go-down.png</file>
    <file>res/go-down-01.png</file>
    <file>res/go-next.png</file>
@@ -42,6 +43,8 @@
    <file>res/Us-.png</file>
    <file>res/Ws+.png</file>
    <file>res/Ws-.png</file>
+   <file>res/ToolDimensions.png</file>
+   <file>res/ToolDimensions_de.png</file>
    <file>res/Senklochfräser01s.JPG</file>
    <file>res/Schaftfräser01s.JPG</file>
    <file>res/Gewindebohrer01s.JPG</file>

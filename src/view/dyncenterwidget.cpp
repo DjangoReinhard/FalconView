@@ -76,7 +76,10 @@ QAction* DynCenterWidget::viewAction() {
 
 void DynCenterWidget::showEvent(QShowEvent* e) {
   QWidget::showEvent(e);
-  if (e->type() == QEvent::Show) Core().help4Keyword(objectName());
+  if (e->type() == QEvent::Show) {
+     if (Config().value("showHelpAtPageChange").toBool())
+        Core().help4Keyword(objectName());
+     }
   }
 
 

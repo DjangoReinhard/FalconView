@@ -13,6 +13,7 @@ public:
 
   void setFolderIcon(const QIcon& ico);
   void setHelpIcon(const QIcon& ico);
+  void setPageIcon(const QIcon& ico);
   void parse(const QByteArray& ba, QMap<QString, QString>& pages);
   void sourceChanged(const QUrl& src);
 
@@ -26,6 +27,7 @@ protected:
 private:
   int   level;
   QIcon folderIcon;
+  QIcon pageIcon;
   QIcon helpIcon;
   };
 #endif // HELPCONTENTWIDGET_H

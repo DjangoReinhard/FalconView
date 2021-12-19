@@ -21,7 +21,7 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   kw = new HelpKeywordWidget();
   QByteArray ba = reader->fileData("FalconView.qhp");
   QByteArray bp = reader->fileData("images/folder.svg");
-  QIcon      icoF, icoL;
+  QIcon      icoF, icoL, icoP;
   QPixmap    pm;
 
   pm.loadFromData(bp);
@@ -32,11 +32,15 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   bp = reader->fileData("images/help-about.svg");
   pm.loadFromData(bp);
   icoL.addPixmap(pm);
+  bp = reader->fileData("images/text-info.svg");
+  pm.loadFromData(bp);
+  icoP.addPixmap(pm);
   cw->setFolderIcon(icoF);
+  cw->setPageIcon(icoP);
   cw->parse(ba, pages);
   kw->setIcon(icoL);
   kw->parse(ba, keyWords);
-//  tellContent();
+  tellContent();
   }
 
 

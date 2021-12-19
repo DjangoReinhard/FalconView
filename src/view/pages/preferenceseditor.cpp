@@ -60,6 +60,10 @@ void PreferencesEditor::connectSignals() {
      cbHelp->setChecked(Config().value("showHelpAtPageChange").toBool());
      connect(cbHelp, &QCheckBox::stateChanged, this, &PreferencesEditor::statusShowHelpChanged);
      }
+  if (cbToolManager) {
+     cbToolManager->setChecked(Config().value("activateToolMgr").toBool());
+     connect(cbToolManager, &QCheckBox::stateChanged, this, &PreferencesEditor::statusToolMgrChanged);
+     }
   }
 
 
@@ -176,7 +180,7 @@ void PreferencesEditor::statusShowHelpChanged(const QVariant& state) {
   bool showHelp = state.toBool();
 
   qDebug() << "PE::statusShowHelpChanged(" << (showHelp ? "TRUE" : "FALSE") << ")";
-  if (showHelp) {
+  if (!showHelp) {
      QMessageBox::information(this
                             , tr("QMessageBox::information()")
                             , tr("You can rise help window at any "

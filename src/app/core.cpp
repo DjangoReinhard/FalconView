@@ -10,6 +10,7 @@
 #include <core.h>
 #include <sysevent.h>
 #include <lcproperties.h>
+#include <settingsnb.h>
 #include <dbconnection.h>
 #include <dbhelper.h>
 #include <dynframe.h>
@@ -128,7 +129,9 @@ void Core::showAllButCenter(bool visible) {
 
 
 void Core::help4Keyword(const QString &keyWord) {
-  core()->mainWindow->helpDialog()->help4Keyword(keyWord);
+  if (core()->mainWindow) {
+     core()->mainWindow->helpDialog()->help4Keyword(keyWord);
+     }
   }
 
 
@@ -393,6 +396,45 @@ void Kernel::initialize(DBHelper& dbAssist) {
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged, this, &Kernel::updateView);
 
   setupBackend();
+#ifdef NO_CHECK_OUTPUT
+  //  HelpKeywords - in: "3D-Preview" out: "3D-Vorschau"
+  //  HelpKeywords - in: "3D Preview" out: "3D Preview"
+  //  HelpKeywords - in: "FileManager" out: "Datei-Verwalter"
+  //  HelpKeywords - in: "FixtureManager" out: "Koordinaten-Systeme"
+  //  HelpKeywords - in: "FixtureEditorForm" out: "FixtureEditorForm"
+  //  HelpKeywords - in: "JogView" out: "Handbetrieb"
+  //  HelpKeywords - in: "LCToolTable" out: "LinuxCNC Werkzeuge"
+  //  HelpKeywords - in: "MDIEditor" out: "manuelle Befehle"
+  //  HelpKeywords - in: "PathEditor" out: "aktive NC-Datei"
+  //  HelpKeywords - in: "PathEditorForm" out: "PathEditorForm"
+  //  HelpKeywords - in: "PreferencesEditor" out: "PreferencesEditor"
+  //  HelpKeywords - in: "SettingsNotebook" out: "SettingsNotebook"
+  //  HelpKeywords - in: "TestEdit" out: "freie NC-Datei"
+  //  HelpKeywords - in: "ToolEditor" out: "Werkzeug-Eigenschaften"
+  //  HelpKeywords - in: "ToolManager" out: "ToolManager"
+
+  // checks after everything is initialized ...
+  // output should be:
+
+//  CenterView contains 8  pages
+//  MainView holds page >> "3D PreviewFrame"
+//  MainView holds page >> "FileManagerFrame"
+//  MainView holds page >> "JogViewFrame"
+//  MainView holds page >> "MDIEditorFrame"
+//  MainView holds page >> "PathEditorFrame"
+//  MainView holds page >> "SettingsNotebookFrame"
+//  MainView holds page >> "SysEventViewFrame"
+//  MainView holds page >> "TestEditFrame"
+  centerView->dump();
+
+  //  SN: page found -> "ToolManager" with title "ToolManager"
+  //  SN: page found -> "FixtureManager" with title "FixtureManager"
+  //  SN: page found -> "PreferencesEditor" with title "PreferencesEditor"
+  //  SN: page found -> "LCToolTable" with title "LCToolTable"
+  mainWindow->settingsNotebook()->dump();
+
+  checkTools();
+#endif
   }
 
 
@@ -401,18 +443,18 @@ Kernel::~Kernel() {
 
 
 void Kernel::checkTools() {
-//  int              mx = tt.entries();
-//  const ToolEntry* te;
+  int              mx = tt.entries();
+  const ToolEntry* te;
 
-//  for (int i=0; i < mx; ++i) {
-//      qDebug() << "\t<<< check tool num #" << i << " <<<";
-//      te = tt.tool(i);
+  for (int i=0; i < mx; ++i) {
+      qDebug() << "\t<<< check tool entry #" << i << " <<<";
+      te = tt.tool4Slot(i);
 
-//      if (te) te->dump();
-//      else {
-//         qDebug() << "NO TOOL with num #" << i;
-//         }
-//      }
+      if (te) te->dump();
+      else {
+         qDebug() << "NO TOOL with num #" << i;
+         }
+      }
   }
 
 

@@ -27,6 +27,7 @@ public:
   ToolTable&       operator = (const ToolTable&& other);
   const ToolEntry& current() const  { return curTool; }
   const ToolEntry* tool(int num) const;
+  const ToolEntry* tool4Slot(int num) const;
   QString          fileName() const { return fn; }
   int              entries() const;
   void             dump();
