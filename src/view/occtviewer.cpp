@@ -229,42 +229,6 @@ void OcctQtViewer::setBounds(const Bnd_Box &bounds) {
   }
 
 
-void OcctQtViewer::keyPressEvent(QKeyEvent* e) {
-  if (e->modifiers() == Qt::KeyboardModifier::ControlModifier) {
-     switch (e->key()) {
-       case Qt::Key_T:
-            topView();
-            e->accept();
-            break;
-       case Qt::Key_R:
-            rightView();
-            e->accept();
-            break;
-       case Qt::Key_L:
-            leftView();
-            e->accept();
-            break;
-       case Qt::Key_B:
-            backView();
-            e->accept();
-            break;
-       case Qt::Key_3:
-            isoView();
-            e->accept();
-            break;
-       default:
-            QOpenGLWidget::keyPressEvent(e);
-            break;
-       }
-     }
-  else if (e->key() == Qt::Key_F) {
-     fitAll();
-     e->accept();
-     }
-  else QOpenGLWidget::keyPressEvent(e);
-  }
-
-
 void OcctQtViewer::fitAll() {
   myView->FitAll(myBounds, false);
   myView->Invalidate();

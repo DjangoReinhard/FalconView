@@ -51,7 +51,7 @@ void HelpKeywordWidget::processChildren(const QDomElement& e, QMap<QString, QStr
                 QString in(n.nodeValue());
                 QString out(QCoreApplication::translate("HelpContentWidget", in.toStdString().c_str(), nullptr));
 
-                qDebug() << "HelpKeywords - in:" << in << "out:" << out;
+//                qDebug() << "HelpKeywords - in:" << in << "out:" << out;
 
                 //TODO:
 //                item->setText(out);

@@ -16,6 +16,7 @@ public:
   void paintLineNumbers(QPaintEvent* event);
   int  lineNumberAreaWidth();
   void loadFile(QVariant fileName);
+  void highlightCurrentLine();
   int  numLines() const { return document()->blockCount(); }
 
 protected:
@@ -23,7 +24,6 @@ protected:
 
 private slots:
   void updateLineNumberAreaWidth(int newBlockCount);
-  void highlightCurrentLine();
   void updateLineNumberArea(const QRect& rect, int dy);
 
 private:

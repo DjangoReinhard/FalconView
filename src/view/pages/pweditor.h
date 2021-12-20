@@ -5,6 +5,7 @@ class QSplitter;
 class QLineEdit;
 class QVariant;
 class QPlainTextEdit;
+class QTextBlock;
 class QPushButton;
 class OcctQtViewer;
 class GCodeEditor;
@@ -25,17 +26,17 @@ public:
 
 public slots:
   void toggleSub();
+  void setCurrentLine(const QVariant& line);
 
 protected:
   virtual void connectSignals() override;
-//  virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent*) override;
+  virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual QWidget* createContent() override;
   void createDecorations(OcctQtViewer* v, bool sip);
 
 protected slots:
-  void setCurrentLine(const QVariant& line);
   void genPreView(const QVariant& fileName);
 
 private:

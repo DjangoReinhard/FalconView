@@ -29,6 +29,7 @@ public:
   bool            isLatheMode() const;
   bool            isSimulator() const;
   bool            showHelpAtPageChange() const;
+  void            riseError(const QString& msg);
   QString         languagePrefix() const;
   DBConnection*   databaseConnection();
   MainWindow*     mainWindow();

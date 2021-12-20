@@ -51,18 +51,13 @@ void DynFrame::closeEvent(QCloseEvent *e) {
   }
 
 
-//void DynFrame::showEvent(QShowEvent *) {
-//  Core().help4Keyword(objectName());
-//  }
-
-
 void DynFrame::keyPressEvent(QKeyEvent *e) {
-  qDebug() << "DynFrame::keyPressEvent() of" << objectName() << "ts: " << e->timestamp();
+//  qDebug() << "DynFrame::keyPressEvent() of" << objectName() << "ts: " << e->timestamp();
   dcw->keyPressEvent(e);
   }
 
 
 void DynFrame::keyReleaseEvent(QKeyEvent *e) {
-  qDebug() << "DynFrame::keyReleaseEvent() of" << objectName() << "ts: " << e->timestamp();
+//  qDebug() << "DynFrame::keyReleaseEvent() of" << objectName() << "ts: " << e->timestamp();
   dcw->keyReleaseEvent(e);
   }

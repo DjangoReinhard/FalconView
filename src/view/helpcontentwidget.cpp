@@ -2,7 +2,7 @@
 #include <QDomDocument>
 #include <QHeaderView>
 #include <QUrl>
-#include <QDebug>
+//#include <QDebug>
 
 
 HelpContentWidget::HelpContentWidget(QWidget* parent)

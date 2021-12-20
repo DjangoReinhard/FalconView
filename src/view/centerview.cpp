@@ -4,12 +4,12 @@
 #include <dyncenterwidget.h>
 #include <core.h>
 #include <QAction>
-#include <QDebug>
 #ifdef WANT_STACKED_LAYOUT
 # include <QStackedLayout>
 #else
 # include <QGridLayout>
 #endif
+#include <QDebug>
 
 
 CenterView::CenterView(QWidget* parent)
@@ -25,17 +25,17 @@ CenterView::CenterView(QWidget* parent)
 
 
 DynFrame* CenterView::page(const QString& name) {
-//  qDebug() << "MainView: requested page \"" << name << "\"";
+//  qDebug() << "CenterView: requested page \"" << name << "\"";
 
   if (pages.contains(name)) return pages[name];
-//  qDebug() << "MainView: sorry - no page with name >" << name << "<";
+//  qDebug() << "CenterView: sorry - no page with name >" << name << "<";
 
   return nullptr;
   }
 
 
 DynFrame* CenterView::activatePage(const QString& name) {
-  qDebug() << "MainView: activatePage \""  << name << "\"";
+//  qDebug() << "CenterView: activatePage \""  << name << "\"";
 
   if (pages.contains(name)) {
      DynFrame*       w  = pages[name];
@@ -46,7 +46,7 @@ DynFrame* CenterView::activatePage(const QString& name) {
 #endif
 
      if (l) {
-        qDebug() << "MainView: ok, found page [" << name << "] - gonna switch view";
+//        qDebug() << "CenterView: ok, found page [" << name << "] - gonna switch view";
 #ifdef WANT_STACKED_LAYOUT
         l->setCurrentWidget(w);
 #else
@@ -64,12 +64,12 @@ DynFrame* CenterView::activatePage(const QString& name) {
            return w;
            }
         }
-     qDebug() << "MainView: sorry - no page for name >" << name << "<";
-     dump();
+     qDebug() << "CenterView: sorry - no page for name >" << name << "<";
+//     dump();
      }
   else {
-     qDebug() << "MainView: sorry - no page for name >" << name << "<";
-     dump();
+     qDebug() << "CenterView: sorry - no page for name >" << name << "<";
+//     dump();
      }
   return nullptr;
   }
@@ -115,13 +115,13 @@ void CenterView::addPage(DynFrame* page, const QString& name) {
 
 
 void CenterView::keyPressEvent(QKeyEvent *e) {
-  qDebug() << "CenterView::keyPressEvent ...";
+//  qDebug() << "CenterView::keyPressEvent ...";
   pages[curPage]->keyPressEvent(e);
   }
 
 
 void CenterView::keyReleaseEvent(QKeyEvent *e) {
-  qDebug() << "CenterView::keyReleaseEvent ...";
+//  qDebug() << "CenterView::keyReleaseEvent ...";
   pages[curPage]->keyReleaseEvent(e);
   }
 

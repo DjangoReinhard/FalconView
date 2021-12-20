@@ -128,7 +128,7 @@
       <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../FalconView.qrc">:/res/Messerkopf01s.JPG</pixmap>
+      <pixmap resource="../../FalconView.qrc">:/res/Messerkopf.jpg</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

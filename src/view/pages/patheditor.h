@@ -1,6 +1,7 @@
 #ifndef PATHEDITOR_H
 #define PATHEDITOR_H
 #include <testEdit.h>
+class PreViewEditor;
 class QSplitter;
 class QLineEdit;
 class QVariant;
@@ -20,6 +21,7 @@ public:
 protected:
   virtual void loadFile(const QVariant& fileName) override;
   virtual void connectSignals() override;
+  virtual void fileUpdated(const QString& fileName) override;
 
 private:
   void reallyLoadFile(const QVariant& fileName);

@@ -194,6 +194,14 @@
     </message>
 </context>
 <context>
+    <name>GCodeEditor</name>
+    <message>
+        <location filename="../view/gcodeeditor.cpp" line="72"/>
+        <source>could not read file %1</source>
+        <translation>konnte Datei %1 nicht einlesen</translation>
+    </message>
+</context>
+<context>
     <name>GCodeEditorForm</name>
     <message>
         <location filename="../UI/GCodeEditor.ui" line="26"/>
@@ -201,12 +209,12 @@
         <translation>Rahmen</translation>
     </message>
     <message>
-        <location filename="../UI/GCodeEditor.ui" line="53"/>
+        <location filename="../UI/GCodeEditor.ui" line="56"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="../UI/GCodeEditor.ui" line="97"/>
+        <location filename="../UI/GCodeEditor.ui" line="103"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -237,145 +245,145 @@
 <context>
     <name>HelpContentWidget</name>
     <message>
-        <location filename="../view/helpcontentwidget.cpp" line="10"/>
+        <location filename="../view/helpcontentwidget.cpp" line="11"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
         <source>User Guide</source>
-        <translation>Benutzer-Handbuch</translation>
+        <translation type="vanished">Benutzer-Handbuch</translation>
     </message>
     <message>
         <source>linuxCNC</source>
-        <translation>LinuxCNC</translation>
+        <translation type="vanished">LinuxCNC</translation>
     </message>
     <message>
         <source>Center-Area</source>
-        <translation>Hauptbereich</translation>
+        <translation type="vanished">Hauptbereich</translation>
     </message>
     <message>
         <source>NC-Editor</source>
-        <translation>NC-Editor</translation>
+        <translation type="vanished">NC-Editor</translation>
     </message>
     <message>
         <source>3D-Preview</source>
-        <translation>3D-Vorschau</translation>
+        <translation type="vanished">3D-Vorschau</translation>
     </message>
     <message>
         <source>FileManager</source>
-        <translation>Datei-Verwalter</translation>
+        <translation type="vanished">Datei-Verwalter</translation>
     </message>
     <message>
         <source>FixtureManager</source>
-        <translation>Koordinaten-Systeme</translation>
+        <translation type="vanished">Koordinaten-Systeme</translation>
     </message>
     <message>
         <source>JogView</source>
-        <translation>Handbetrieb</translation>
+        <translation type="vanished">Handbetrieb</translation>
     </message>
     <message>
         <source>MDIEditor</source>
-        <translation>manuelle Befehle</translation>
+        <translation type="vanished">manuelle Befehle</translation>
     </message>
     <message>
         <source>PathEditor</source>
-        <translation>aktive NC-Datei</translation>
+        <translation type="vanished">aktive NC-Datei</translation>
     </message>
     <message>
         <source>TestEdit</source>
-        <translation>freie NC-Datei</translation>
+        <translation type="vanished">freie NC-Datei</translation>
     </message>
     <message>
         <source>ToolEditor</source>
-        <translation>Werkzeug-Eigenschaften</translation>
+        <translation type="vanished">Werkzeug-Eigenschaften</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <translation type="vanished">Einstellungen</translation>
     </message>
     <message>
         <source>Fixtures</source>
-        <translation>Koordinatensysteme</translation>
+        <translation type="vanished">Koordinatensysteme</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation>Optionen</translation>
+        <translation type="vanished">Optionen</translation>
     </message>
     <message>
         <source>LCToolTable</source>
-        <translation>LinuxCNC Werkzeuge</translation>
+        <translation type="vanished">LinuxCNC Werkzeuge</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation>Werkzeugleisten</translation>
+        <translation type="vanished">Werkzeugleisten</translation>
     </message>
     <message>
         <source>ApplicationMode</source>
-        <translation>Anwendungs-Modus</translation>
+        <translation type="vanished">Anwendungs-Modus</translation>
     </message>
     <message>
         <source>RunMode</source>
-        <translation>Betriebsart</translation>
+        <translation type="vanished">Betriebsart</translation>
     </message>
     <message>
         <source>Machine</source>
-        <translation>Maschine</translation>
+        <translation type="vanished">Maschine</translation>
     </message>
     <message>
         <source>Extended</source>
-        <translation>Zusatz</translation>
+        <translation type="vanished">Zusatz</translation>
     </message>
     <message>
         <source>Status-Info</source>
-        <translation>Informationen</translation>
+        <translation type="vanished">Informationen</translation>
     </message>
     <message>
         <source>Position</source>
-        <translation>Werkzeug-Position</translation>
+        <translation type="vanished">Werkzeug-Position</translation>
     </message>
     <message>
         <source>ToolInfo</source>
-        <translation>Werkzeug</translation>
+        <translation type="vanished">Werkzeug</translation>
     </message>
     <message>
         <source>act.Codes</source>
-        <translation>aktive Befehle</translation>
+        <translation type="vanished">aktive Befehle</translation>
     </message>
     <message>
         <source>SpeedInfo</source>
-        <translation>Geschwindigkeit</translation>
+        <translation type="vanished">Geschwindigkeit</translation>
     </message>
     <message>
         <source>3D PreviewFrame</source>
-        <translation>3D PreviewFrame</translation>
+        <translation type="vanished">3D PreviewFrame</translation>
     </message>
     <message>
         <source>FileManagerFrame</source>
-        <translation>FileManagerFrame</translation>
+        <translation type="vanished">FileManagerFrame</translation>
     </message>
     <message>
         <source>JogViewFrame</source>
-        <translation>JogViewFrame</translation>
+        <translation type="vanished">JogViewFrame</translation>
     </message>
     <message>
         <source>MDIEditorFrame</source>
-        <translation>MDIEditorFrame</translation>
+        <translation type="vanished">MDIEditorFrame</translation>
     </message>
     <message>
         <source>PathEditorFrame</source>
-        <translation>PathEditorFrame</translation>
+        <translation type="vanished">PathEditorFrame</translation>
     </message>
     <message>
         <source>SettingsNotebookFrame</source>
-        <translation>SettingsNotebookFrame</translation>
+        <translation type="vanished">SettingsNotebookFrame</translation>
     </message>
     <message>
         <source>SysEventViewFrame</source>
-        <translation>SysEventViewFrame</translation>
+        <translation type="vanished">SysEventViewFrame</translation>
     </message>
     <message>
         <source>TestEditFrame</source>
-        <translation>TestEditFrame</translation>
+        <translation type="vanished">TestEditFrame</translation>
     </message>
 </context>
 <context>
@@ -399,7 +407,7 @@
 <context>
     <name>HelpEngine</name>
     <message>
-        <location filename="../util/helpengine.cpp" line="102"/>
+        <location filename="../util/helpengine.cpp" line="106"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -430,22 +438,22 @@
         <translation>Y-</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="210"/>
+        <location filename="../UI/Jog.ui" line="213"/>
         <source>12.000</source>
         <translation>12.000</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="325"/>
+        <location filename="../UI/Jog.ui" line="331"/>
         <source>single &amp;Step</source>
         <translation>Einzel&amp;schritt</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="351"/>
+        <location filename="../UI/Jog.ui" line="360"/>
         <source>&amp;Rapid</source>
         <translation>&amp;Eilgang</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="774"/>
+        <location filename="../UI/Jog.ui" line="783"/>
         <source>Y+</source>
         <translation>Y+</translation>
     </message>
@@ -460,22 +468,22 @@
         <translation>V-</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="383"/>
+        <location filename="../UI/Jog.ui" line="392"/>
         <source>0,001</source>
         <translation>0,001</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="411"/>
+        <location filename="../UI/Jog.ui" line="420"/>
         <source>0,01</source>
         <translation>0,01</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="430"/>
+        <location filename="../UI/Jog.ui" line="439"/>
         <source>0,1</source>
         <translation>0,1</translation>
     </message>
     <message>
-        <location filename="../UI/Jog.ui" line="449"/>
+        <location filename="../UI/Jog.ui" line="458"/>
         <source>0,5</source>
         <translation>0,5</translation>
     </message>
@@ -483,9 +491,45 @@
 <context>
     <name>JogView</name>
     <message>
-        <location filename="../view/pages/jogview.cpp" line="15"/>
+        <location filename="../view/pages/jogview.cpp" line="16"/>
         <source>JogView</source>
         <translation>Handbedienung</translation>
+    </message>
+</context>
+<context>
+    <name>LCInterface</name>
+    <message>
+        <location filename="../util/LCInter.cpp" line="85"/>
+        <source>Error #%1 - failed to create interpreter!</source>
+        <translation>Fehler #%1 - konnte Interpreter nicht erzeugen!</translation>
+    </message>
+    <message>
+        <location filename="../util/LCInter.cpp" line="115"/>
+        <source>Error #%1 - failed to interpret init codes</source>
+        <translation>Fehler #%1 - Verarbeitung der Basisbefehle fehlgeschlagen</translation>
+    </message>
+    <message>
+        <location filename="../util/LCInter.cpp" line="128"/>
+        <source>Error #%1 - interpreter failed to execute line %2 (%3)</source>
+        <translation>Fehler #%1 - Fehler in Zeile %2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../util/LCInter.cpp" line="146"/>
+        <source>Error #%1 - failed to read line &quot;%2&quot;</source>
+        <translation>Fehler #%1 - konnte Zeile nicht lesen: &quot;%2&quot;</translation>
+    </message>
+    <message>
+        <location filename="../util/LCInter.cpp" line="153"/>
+        <source>Error #%1 - failed to execute line &quot;%2&quot;</source>
+        <translation>Fehler #%1 - konnte Zeile nicht ausführen &quot;%2&quot;</translation>
+    </message>
+    <message>
+        <source>error #%1 - failed to read line &quot;%2&quot;</source>
+        <translation type="vanished">Fehler #%1 - konnte Zeile %2 nicht lesen</translation>
+    </message>
+    <message>
+        <source>error #%1 - failed to execute line &quot;%1&quot;</source>
+        <translation type="obsolete">Fehler #%1 - konnte Zeile %2 nicht ausführen</translation>
     </message>
 </context>
 <context>
@@ -775,7 +819,7 @@
 <context>
     <name>PathEditor</name>
     <message>
-        <location filename="../view/pages/patheditor.cpp" line="24"/>
+        <location filename="../view/pages/patheditor.cpp" line="25"/>
         <source>PathEditor</source>
         <translation>GCode bearbeiten</translation>
     </message>
@@ -858,18 +902,20 @@
         <translation>Optionen</translation>
     </message>
     <message>
-        <location filename="../view/pages/preferenceseditor.cpp" line="167"/>
-        <location filename="../view/pages/preferenceseditor.cpp" line="180"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="172"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="185"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="196"/>
         <source>QMessageBox::information()</source>
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location filename="../view/pages/preferenceseditor.cpp" line="168"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="173"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="197"/>
         <source>for this change to take effect, the application must be restarted.</source>
         <translation>Zum Aktivieren dieser Änderung muss die Anwendung neu gestartet werden.</translation>
     </message>
     <message>
-        <location filename="../view/pages/preferenceseditor.cpp" line="181"/>
+        <location filename="../view/pages/preferenceseditor.cpp" line="186"/>
         <source>You can rise help window at any time hitting [F1] key.</source>
         <translation>Hilfe kann jederzeit wieder per [F1] angezeigt werden.</translation>
     </message>
@@ -882,132 +928,137 @@
         <translation>Rahmen</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="354"/>
+        <location filename="../UI/Settings.ui" line="1204"/>
         <source>DRO rel 123,999</source>
         <translation>DRO rel 123,999</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1578"/>
+        <location filename="../UI/Settings.ui" line="787"/>
         <source>Editor Line Number 109</source>
         <translation>Editor Zeile 109</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1792"/>
+        <location filename="../UI/Settings.ui" line="185"/>
         <source>Speed Info</source>
         <translation>Drehzahl</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="2049"/>
+        <location filename="../UI/Settings.ui" line="1088"/>
+        <source>activate general Tool-Manager</source>
+        <translation>allgemeine Werkzeugverwaltung verwenden</translation>
+    </message>
+    <message>
+        <location filename="../UI/Settings.ui" line="2056"/>
         <source>show Help on content change</source>
         <translation>Hilfe bei Fensterwechsel anzeigen</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1330"/>
+        <location filename="../UI/Settings.ui" line="1341"/>
         <source>state information inside 3D preview?</source>
         <translation>Status Ausgaben innerhalb 3D Vorschau anzeigen?</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="157"/>
+        <location filename="../UI/Settings.ui" line="1800"/>
         <source>DRO abs 123,999</source>
         <translation>DRO abs 123,999</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="420"/>
+        <location filename="../UI/Settings.ui" line="327"/>
         <source>Fixture Title</source>
         <translation>Nullpunkt Titel</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1814"/>
+        <location filename="../UI/Settings.ui" line="1104"/>
         <source>Line Highlight</source>
         <translation>akt. Zeile</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="664"/>
+        <location filename="../UI/Settings.ui" line="617"/>
         <source>Tool Description</source>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="642"/>
+        <location filename="../UI/Settings.ui" line="1483"/>
         <source>Preview 3D: work move</source>
         <translation>3D Vorschau: Arbeitsweg</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="135"/>
+        <location filename="../UI/Settings.ui" line="1778"/>
         <source>Preview 3D: rapid move</source>
         <translation>3D Vorschau: schnelle Positionierung</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1263"/>
+        <location filename="../UI/Settings.ui" line="977"/>
         <source>Preview 3D: Work-Limits</source>
         <translation>3D Vorschau: Grenzen des Arbeitsbereiches</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1482"/>
+        <location filename="../UI/Settings.ui" line="1991"/>
         <source>DRO dtg 123,999</source>
         <translation>DRO dtg 123,999</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="376"/>
+        <location filename="../UI/Settings.ui" line="279"/>
         <source>DRO Axis: X Y Z</source>
         <translation>DRO Axis: X Y Z</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="985"/>
+        <location filename="../UI/Settings.ui" line="929"/>
         <source>Fixture Prompt</source>
         <translation>Koordinaten-Bezeichner</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1744"/>
+        <location filename="../UI/Settings.ui" line="547"/>
         <source>Tool number</source>
         <translation>Werkzeug-Nummer</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="113"/>
+        <location filename="../UI/Settings.ui" line="479"/>
         <source>Preview 3D: WorkPiece</source>
         <translation>3D Vorschau: Werkstück Grenzen</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="398"/>
+        <location filename="../UI/Settings.ui" line="1270"/>
         <source>Fixture Edit</source>
         <translation>Koordinaten Editor</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="620"/>
+        <location filename="../UI/Settings.ui" line="907"/>
         <source>Preview 3D: passed Segments</source>
         <translation>3D Vorschau: gefahrene Wege</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1285"/>
+        <location filename="../UI/Settings.ui" line="1226"/>
         <source>actual Codes</source>
         <translation>akt. Befehle</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="257"/>
+        <location filename="../UI/Settings.ui" line="743"/>
         <source>Preview 3D: active Segment</source>
         <translation>3D Vorschau: aktueller Weg</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1460"/>
+        <location filename="../UI/Settings.ui" line="765"/>
         <source>Filename</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="572"/>
+        <location filename="../UI/Settings.ui" line="1383"/>
         <source>Feed Info</source>
         <translation>Vorschub</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1504"/>
+        <location filename="../UI/Settings.ui" line="569"/>
         <source>GCode Editor</source>
         <translation>NC-Editor</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1418"/>
+        <location filename="../UI/Settings.ui" line="1248"/>
         <source>next Toolnum</source>
         <translation>nächstes Werkzeug</translation>
     </message>
     <message>
-        <location filename="../UI/Settings.ui" line="1114"/>
+        <location filename="../UI/Settings.ui" line="1681"/>
         <source>Fixture Title (disabled)</source>
         <translation>Koordinaten-Titel</translation>
     </message>
@@ -1015,7 +1066,7 @@
 <context>
     <name>SettingsNotebook</name>
     <message>
-        <location filename="../view/settingsnb.cpp" line="18"/>
+        <location filename="../view/settingsnb.cpp" line="20"/>
         <source>SettingsNotebook</source>
         <translation>Einstellungen</translation>
     </message>
@@ -1026,6 +1077,55 @@
         <location filename="../view/status/speedstatus.cpp" line="28"/>
         <source>SpeedStatus</source>
         <translation>Vorschub-Kontrolle</translation>
+    </message>
+</context>
+<context>
+    <name>SysEvent</name>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="57"/>
+        <source>No_Error</source>
+        <translation>kein Fehler</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="58"/>
+        <source>OperatorError</source>
+        <translation>Bedienerfehler</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="59"/>
+        <source>OperatorText</source>
+        <translation>Bediener-Hinweis</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="60"/>
+        <source>OperatorDisplay</source>
+        <translation>Anzeige</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="61"/>
+        <location filename="../model/db/sysevent.cpp" line="66"/>
+        <source>SystemError</source>
+        <translation>schwerer Systemfehler</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="62"/>
+        <source>NMLError</source>
+        <translation>Schnittstellenfehler</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="63"/>
+        <source>NMLText</source>
+        <translation>Schnittstellen-Hinweis</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="64"/>
+        <source>NMLDisplay</source>
+        <translation>Schnittstellen-Information</translation>
+    </message>
+    <message>
+        <location filename="../model/db/sysevent.cpp" line="65"/>
+        <source>NMLEvent</source>
+        <translation>Schnittstellen-Ereignis</translation>
     </message>
 </context>
 <context>
@@ -1054,9 +1154,34 @@
 <context>
     <name>TestEdit</name>
     <message>
-        <location filename="../view/pages/testEdit.cpp" line="28"/>
+        <location filename="../view/pages/testEdit.cpp" line="31"/>
         <source>TestEdit</source>
         <translation>Sekundär-Editor</translation>
+    </message>
+    <message>
+        <location filename="../view/pages/testEdit.cpp" line="150"/>
+        <source>TestEdit::loadFile: %1 is invalid</source>
+        <translation>TestEdit::loadFile: %1 ist ungültig</translation>
+    </message>
+    <message>
+        <location filename="../view/pages/testEdit.cpp" line="184"/>
+        <source>Failed to write file %1</source>
+        <translation>konnte Datei %1 nicht schreiben</translation>
+    </message>
+    <message>
+        <location filename="../view/pages/testEdit.cpp" line="186"/>
+        <source>Failed to create backup of file %1</source>
+        <translation>konnte kein Backup für Datei %1 erstellen</translation>
+    </message>
+    <message>
+        <location filename="../view/pages/testEdit.cpp" line="206"/>
+        <source>QInputDialog::getText()</source>
+        <translation>Eingabe</translation>
+    </message>
+    <message>
+        <location filename="../view/pages/testEdit.cpp" line="207"/>
+        <source>Search text:</source>
+        <translation>Suchbegriff:</translation>
     </message>
 </context>
 <context>
@@ -1080,102 +1205,102 @@
 <context>
     <name>ToolEditorForm</name>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="14"/>
+        <location filename="../UI/ToolEditor.ui" line="20"/>
         <source>Form</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="80"/>
+        <location filename="../UI/ToolEditor.ui" line="189"/>
         <source>Slope Angle</source>
         <translation>Schaftwinkel</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="97"/>
+        <location filename="../UI/ToolEditor.ui" line="56"/>
         <source>max Ramp Angle</source>
         <translation>max. Rampenwinkel</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="110"/>
+        <location filename="../UI/ToolEditor.ui" line="430"/>
         <source>Flute Length</source>
         <translation>Eintauchtiefe</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="163"/>
+        <location filename="../UI/ToolEditor.ui" line="32"/>
         <source>Tool Length</source>
         <translation>Werkzeuglänge</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="180"/>
+        <location filename="../UI/ToolEditor.ui" line="417"/>
         <source>Tooth Load</source>
         <translation>Zahnlast</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="193"/>
+        <location filename="../UI/ToolEditor.ui" line="253"/>
         <source>Flute Diameter</source>
         <translation>Schneidendurchmesser</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="226"/>
+        <location filename="../UI/ToolEditor.ui" line="298"/>
         <source>Cut Length</source>
         <translation>Schneidenlänge</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="255"/>
+        <location filename="../UI/ToolEditor.ui" line="380"/>
         <source>999</source>
         <translation>999</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="287"/>
+        <location filename="../UI/ToolEditor.ui" line="172"/>
         <source>Flutes</source>
         <translation>Schneiden</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="300"/>
+        <location filename="../UI/ToolEditor.ui" line="129"/>
         <source>Tip Diameter</source>
         <translation>Spitzendurchmesser</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="313"/>
+        <location filename="../UI/ToolEditor.ui" line="96"/>
         <source>Cut Angle</source>
         <translation>Schnittwinkel</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="320"/>
+        <location filename="../UI/ToolEditor.ui" line="233"/>
         <source>Free Length</source>
         <translation>freie Länge</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="327"/>
+        <location filename="../UI/ToolEditor.ui" line="390"/>
         <source>Helix Angle</source>
         <translation>Eintauchwinkel</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="334"/>
+        <location filename="../UI/ToolEditor.ui" line="39"/>
         <source>Collet Diameter</source>
         <translation>Aufnahme-Durchmesser</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="341"/>
+        <location filename="../UI/ToolEditor.ui" line="206"/>
         <source>Collet Length</source>
         <translation>Aufnahme-Länge</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="373"/>
+        <location filename="../UI/ToolEditor.ui" line="305"/>
         <source>Part Code</source>
         <translation>Artikel-No</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="390"/>
+        <location filename="../UI/ToolEditor.ui" line="285"/>
         <source>Shank Diameter</source>
         <translation>Schaftdurchmesser</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="407"/>
+        <location filename="../UI/ToolEditor.ui" line="83"/>
         <source>Material</source>
         <translation>Werkstoff</translation>
     </message>
     <message>
-        <location filename="../UI/ToolEditor.ui" line="424"/>
+        <location filename="../UI/ToolEditor.ui" line="240"/>
         <source>Coating</source>
         <translation>Beschichtung</translation>
     </message>
@@ -1198,7 +1323,7 @@
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="224"/>
         <location filename="../view/pages/toolmanager.cpp" line="264"/>
-        <location filename="../view/pages/toolmanager.cpp" line="375"/>
+        <location filename="../view/pages/toolmanager.cpp" line="376"/>
         <source>QInputDialog::getText()</source>
         <translation>Eingabe</translation>
     </message>
@@ -1214,7 +1339,7 @@
     </message>
     <message>
         <location filename="../view/pages/toolmanager.cpp" line="317"/>
-        <location filename="../view/pages/toolmanager.cpp" line="360"/>
+        <location filename="../view/pages/toolmanager.cpp" line="361"/>
         <source>QMessageBox::information()</source>
         <translation>Hinweis</translation>
     </message>
@@ -1234,24 +1359,27 @@
         <translation>Soll dies Werkzeug gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="361"/>
+        <location filename="../view/pages/toolmanager.cpp" line="362"/>
         <source>To finish tool editing press F10 to save changes or ESC to abort.</source>
         <translation>Die Bearbeitung der Werkzeugdaten kann mit ESC abgebrochen und mit F10 gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="376"/>
+        <location filename="../view/pages/toolmanager.cpp" line="377"/>
         <source>new Category name:</source>
         <translation>neue Kategorie:</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="401"/>
-        <source>QMessageBox::error()</source>
-        <translation>Fehler</translation>
+        <location filename="../view/pages/toolmanager.cpp" line="400"/>
+        <source>saving of tool-data failed!</source>
+        <translation>speichern der Werkzeugtabelle fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../view/pages/toolmanager.cpp" line="402"/>
+        <source>QMessageBox::error()</source>
+        <translation type="vanished">Fehler</translation>
+    </message>
+    <message>
         <source>Saving tool data failed with </source>
-        <translation>Speichern fehlgeschlagen mit Fehler </translation>
+        <translation type="vanished">Speichern fehlgeschlagen mit Fehler </translation>
     </message>
 </context>
 <context>

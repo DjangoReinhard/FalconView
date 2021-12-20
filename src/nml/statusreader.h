@@ -4,6 +4,7 @@
 #include <valuemanager.h>
 class RCS_STAT_CHANNEL;
 class EMC_STAT;
+class ErrorReader;
 class PositionCalculator;
 class GCodeInfo;
 
@@ -24,6 +25,7 @@ private:
 
   RCS_STAT_CHANNEL*   cStatus;
   EMC_STAT*           status;
+  ErrorReader*        errReader;
   ValueManager        vm;
   PositionCalculator& pc;
   GCodeInfo&          gi;

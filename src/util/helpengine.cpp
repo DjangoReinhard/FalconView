@@ -40,7 +40,7 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   cw->parse(ba, pages);
   kw->setIcon(icoL);
   kw->parse(ba, keyWords);
-  tellContent();
+//  tellContent();
   }
 
 
@@ -71,7 +71,7 @@ QString  HelpEngine::document4Keyword(const QString& keyWord) const {
 
 
 QByteArray HelpEngine::fileData(const QString& file) const {
-  qDebug() << "HelpEngine::fileData(" << file << ")";
+//  qDebug() << "HelpEngine::fileData(" << file << ")";
   QString page = file + locXT;
 
   if (!helpDir.contains(page)) {
@@ -88,7 +88,7 @@ QByteArray HelpEngine::fileData(const QString& file) const {
   if (page.endsWith(".html")) {
      title = pages[file];
 
-     qDebug() << "page [" << file << "] has title: " << title;
+//     qDebug() << "page [" << file << "] has title: " << title;
 
      // markdown generates body part only, so we need to
      // add a bit to get valid html pages

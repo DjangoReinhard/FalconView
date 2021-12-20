@@ -3,6 +3,21 @@
 #include <QTime>
 
 
+SysEvent::SysEvent(EventType et)
+ : QObject(nullptr)
+ , et(et)
+ , ts(TimeStamp::rtSequence()) {
+  }
+
+
+SysEvent::SysEvent(const QString& what, EventType et)
+ : QObject(nullptr)
+ , et(et)
+ , ts(TimeStamp::rtSequence())
+ , msg(what) {
+  }
+
+
 SysEvent::SysEvent(EventType et, const QString& what, QObject *parent)
  : QObject(parent)
  , et(et)
@@ -34,4 +49,20 @@ SysEvent& SysEvent::operator=(const SysEvent &o) {
   msg = o.msg;
 
   return *this;
+  }
+
+
+QString SysEvent::toString(EventType t) {
+  switch (t) {
+    case No_Error:        return tr("No_Error");
+    case OperatorError:   return tr("OperatorError");
+    case OperatorText:    return tr("OperatorText");
+    case OperatorDisplay: return tr("OperatorDisplay");
+    case SystemError:     return tr("SystemError");
+    case NMLError:        return tr("NMLError");
+    case NMLText:         return tr("NMLText");
+    case NMLDisplay:      return tr("NMLDisplay");
+    case NMLEvent:        return tr("NMLEvent");
+    default:              return tr("SystemError");
+    }
   }

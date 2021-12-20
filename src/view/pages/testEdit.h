@@ -22,15 +22,18 @@ public:
 
 public slots:
   void openFile();
+  void saveFile();
   void fileSelected(const QString& filePath) override;
 
 protected:
   virtual QWidget* createContent() override;
   virtual void connectSignals() override;
-  virtual void updateStyles() override;
+  virtual void updateStyles() override;  
   virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent* e) override;
+  virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual void loadFile(const QVariant& fileName);
+  virtual void fileUpdated(const QString& fileName);
 
   QLineEdit*        fn;
   GCodeEditor*      ed;

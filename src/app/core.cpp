@@ -7,6 +7,7 @@
 #include <QString>
 #include <QVector3D>
 #include <QSqlError>
+#include <QMessageBox>
 #include <core.h>
 #include <sysevent.h>
 #include <lcproperties.h>
@@ -225,6 +226,16 @@ void Core::windowClosing(QCloseEvent *e) {
   core()->windowClosing(e);
   }
 
+
+void Core::riseError(const QString &msg) {
+  ValueManager().setValue("errorActive", true);
+  SysEvent se(msg);
+
+  core()->tmSysEvents->append(&se);
+  QMessageBox::critical(nullptr
+                      , SysEvent::toString(se.type())
+                      , se.what());
+  }
 
 Kernel* Core::core() {
   assert(kernel != nullptr);
@@ -554,21 +565,21 @@ bool Kernel::isLatheMode() const {
 
 
 void Kernel::parseGCode(QFile &file) {
-//  QTime start = QTime::currentTime();
+  QTime start = QTime::currentTime();
 
   lcIF.parseInline(file.fileName());
 
-//  QTime end  = QTime::currentTime();
-//  long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
+  QTime end  = QTime::currentTime();
+  long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
 
-//  qDebug() << "parsing of " << file.fileName() << " took: " << delta << "ms";
+  qDebug() << "parsing of " << file.fileName() << " took: " << delta << "ms";
   }
 
 
 void Kernel::windowClosing(QCloseEvent *e) {
   // application is going to shut down ...
   cfg.settings.beginGroup("MainWindow");
-  cfg.setValue("geometry", mainWindow->saveGeometry());
+  cfg.setValue("geometry",    mainWindow->saveGeometry());
   cfg.setValue("windowState", mainWindow->saveState());
   cfg.settings.endGroup();
   centerView->windowClosing(e);
@@ -576,7 +587,18 @@ void Kernel::windowClosing(QCloseEvent *e) {
 
 
 void Kernel::timerEvent(QTimerEvent *e) {
-  if (e->timerId() == timer.timerId()) statusReader.update();
+  if (e->timerId() == timer.timerId()) {
+     try {
+         statusReader.update();
+         }
+     catch (SysEvent* e) {
+         ValueManager().setValue("errorActive", true);
+         tmSysEvents->append(e);
+         QMessageBox::critical(nullptr
+                             , SysEvent::toString(e->type())
+                             , e->what());
+         }
+     }
   else QObject::timerEvent(e);
   }
 

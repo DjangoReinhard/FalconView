@@ -24,3 +24,4 @@ done
 cd html
 zip -u9 ../FalconView.qzh *.html images/* FalconView.qhp
 cp -a ../FalconView.qzh .
+

@@ -336,8 +336,10 @@ void ToolManager::deleteTool() {
   tsMsgBox = TimeStamp::rtSequence();
 
   if (reply == QMessageBox::No) return;
-  if (!toolModel->removeRows(tool2Edit, 1)) qDebug() << toolModel->lastError().text();
-  if (!toolModel->submitAll())              qDebug() << toolModel->lastError().text();
+  if (!toolModel->removeRows(tool2Edit, 1))
+     Core().riseError(toolModel->lastError().text());
+  if (!toolModel->submitAll())
+     Core().riseError(toolModel->lastError().text());
   }
 
 
@@ -348,27 +350,10 @@ void ToolManager::setSize(int w, int h) {
 
 
 void ToolManager::editTool() {
-//  QWidget* parentWidget = static_cast<QWidget*>(parent());
-
-//  qDebug() << "TM: gonna switch into edit mode - size:" << size();
-//  qDebug() << "TM: edit size:" << tEdit->size();
-//  qDebug() << "TM: parent size:" << (parentWidget ? parentWidget->size() : QSize());
-
   categories->hide();
   tools->hide();
   Core().showAllButCenter(false);
   tEdit->setEnabled(true);
-
-//  qDebug() << "default size: " << edSize;  (-1,-1) ?!?
-//  qDebug() << "TM: in edit mode - self size:" << size();
-//  qDebug() << "TM:                edit size:" << tEdit->size();
-//  qDebug() << "TM: parent size:" << (parentWidget ? parentWidget->size() : QSize());
-
-//  if (edSize.width() == -1 && edSize.height() == -1) edSize = tEdit->size();
-//  tEdit->resize(size().width() - 20, size().height() - 20);
-//  qDebug() << "TM: after resize edit -  new size:" << tEdit->size();
-//  qDebug() << "TM: after edit resize - self size:" << size();
-//  qDebug() << "TM: parent size:" << (parentWidget ? parentWidget->size() : QSize());
 
   // data record is already loaded into editor,
   // so just inform about how to finish editing
@@ -412,12 +397,8 @@ void ToolManager::saveToolChanges() {
      }
   else toolModel->setRecord(tool2Edit, tool);
   if (!toolModel->submitAll()) {
-     qDebug() << "saving of tool-data failed!" << toolModel->lastError().text();
-     QMessageBox::critical(this
-                         , tr("QMessageBox::error()")
-                         , tr("Saving tool data failed with ")
-                            + toolModel->lastError().text()
-                         , QMessageBox::Ok);
+     Core().riseError(tr("saving of tool-data failed!")
+                      + toolModel->lastError().text());
      }
   tEdit->setEnabled(false);
   tEdit->resize(edSize);

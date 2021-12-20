@@ -22,7 +22,16 @@ ErrorReader::ErrorReader(QObject *parent)
   }
 
 
-SysEvent ErrorReader::fetchMessage() {
+void ErrorReader::check4Error() {
+  if (!ec || !ec->valid())
+     throw new SysEvent(SysEvent::EventType::SystemError, "no error channel to read from!");
+  NMLTYPE type = ec->read();
+
+  if (type) throw fetchMessage();
+  }
+
+
+SysEvent* ErrorReader::fetchMessage() {
   if (!ec || !ec->valid()) throw new std::runtime_error("no error channel to read from!");
   NMLTYPE type = ec->read();
   SysEvent::EventType et;
@@ -58,5 +67,5 @@ SysEvent ErrorReader::fetchMessage() {
          sprintf(error_buffer, "unrecognized error %d", type);
          } break;
     }
-  return SysEvent(et, QString(error_buffer));
+  return new SysEvent(et, QString(error_buffer));
   }

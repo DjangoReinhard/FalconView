@@ -4,8 +4,10 @@
 #include <config.h>
 #include <insulatePose.h>
 #include <statusreader.h>
+#include <errorreader.h>
 #include <positioncalculator.h>
 #include <gcodeinfo.h>
+#include <QCoreApplication>
 #include <QDebug>
 #include <iostream>
 #include <ctime>
@@ -19,6 +21,7 @@ StatusReader::StatusReader(PositionCalculator& posCalc, GCodeInfo& gcodeInfo)
  : QObject(0)
  , cStatus(nullptr)
  , status(nullptr)
+ , errReader(nullptr)
  , pc(posCalc)
  , gi(gcodeInfo) {
   cStatus = new RCS_STAT_CHANNEL(emcFormat, "emcStatus", "xemc", EMC2_DEFAULT_NMLFILE);
@@ -28,6 +31,7 @@ StatusReader::StatusReader(PositionCalculator& posCalc, GCodeInfo& gcodeInfo)
      }
   else {
      status = static_cast<EMC_STAT*>(cStatus->get_address());
+     errReader = new ErrorReader(this);
      }
   createModels();
   }
@@ -91,11 +95,13 @@ void StatusReader::createModels() {
 //  qDebug() << "\tSR::createModels() ... END";
   }
 
+
 void StatusReader::update() {
   if (!cStatus || !cStatus->valid()) return;
 #ifdef WANT_BENCH
   std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 #endif
+  errReader->check4Error();
   cStatus->peek();  // get a copy :(
   vm.setValue("taskMode",    status->task.mode);
   vm.setValue("taskState",   status->task.state);

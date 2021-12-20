@@ -17,7 +17,6 @@ public:
   virtual void closeEvent(QCloseEvent* e) override;
   virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void keyReleaseEvent(QKeyEvent* e) override;
-//  virtual void showEvent(QShowEvent* e) override;
   DynCenterWidget* centerWidget() { return dcw; }
   DynCenterWidget* centerWidget() const { return dcw; }
 

@@ -1,5 +1,6 @@
 #include <gcodeeditor.h>
 #include <configacc.h>
+#include <core.h>
 #include <valuemanager.h>
 #include <QPainter>
 #include <QTextBlock>
@@ -67,6 +68,8 @@ void GCodeEditor::loadFile(QVariant name) {
 
   if (file.open(QFile::ReadOnly | QFile::Text))
      setPlainText(file.readAll());
+  else
+     Core().riseError(tr("could not read file %1").arg(name.toString()));
   }
 
 

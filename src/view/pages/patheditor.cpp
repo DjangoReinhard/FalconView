@@ -1,4 +1,5 @@
 #include <patheditor.h>
+#include <pweditor.h>
 #include <valuemanager.h>
 #include <centerview.h>
 #include <core.h>
@@ -21,13 +22,14 @@
 PathEditor::PathEditor(const QString& fileName, QWidget* parent)
  : TestEdit(fileName, parent) {
   setObjectName(PathEditor::className);
-  setWindowTitle(tr("PathEditor"));
+  setWindowTitle(tr("PathEditor"));  
   }
 
 
 void PathEditor::connectSignals() {
   connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::reallyLoadFile);
   TestEdit::connectSignals();
+//  connect(ed, &GCodeEditor::cursorPositionChanged, this, [=](){ ValueManager().setValue("curLine", ed->textCursor().block().blockNumber()); });
   }
 
 
@@ -46,5 +48,9 @@ void PathEditor::reallyLoadFile(const QVariant& fileName) {
   Core().setAppMode(ApplicationMode::Edit);
   }
 
+
+void PathEditor::fileUpdated(const QString& fileName) {
+  //TODO: ask backend to reload file
+  }
 
 const QString PathEditor::className = "PathEditor";

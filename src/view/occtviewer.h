@@ -64,7 +64,6 @@ protected:
 
   // user input events
   virtual void closeEvent(QCloseEvent* e) override;
-  virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void mousePressEvent(QMouseEvent* e) override;
   virtual void mouseReleaseEvent(QMouseEvent* e) override;
   virtual void mouseMoveEvent(QMouseEvent* e) override;

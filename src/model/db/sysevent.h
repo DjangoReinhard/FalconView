@@ -8,15 +8,20 @@ class SysEvent : public QObject
   Q_OBJECT
 public:
   enum EventType {
-    OperatorError
+    No_Error
+  , OperatorError
   , OperatorText
   , OperatorDisplay
+  , SystemError
   , NMLError
   , NMLText
   , NMLDisplay
   , NMLEvent
     };
+  static QString toString(EventType t);
 
+  explicit SysEvent(EventType et = No_Error);
+  explicit SysEvent(const QString& what, EventType et = SystemError);
   explicit SysEvent(EventType et, const QString& what, QObject *parent = nullptr);
   explicit SysEvent(EventType et, const QString& what, const QTime& when);
   explicit SysEvent(const SysEvent& o);

@@ -1,0 +1,50 @@
+#!/bin/bash
+project=FalconView
+extIN=md
+extOut=odt
+target=rednose.md
+files=(
+ src/index_de.md
+ src/integration_de.md
+ src/reference_de.md
+ src/nceditor_de.md
+ src/filemanager_de.md
+ src/preview_de.md
+ src/jogview_de.md
+ src/settingsnotebook_de.md
+ src/toolmanager_de.md
+ src/tooledit_de.md
+ src/fixturemanager_de.md
+ src/preferences_de.md
+ src/lctooltable_de.md
+ src/toolbars_de.md
+ src/tbappmode_de.md
+ src/tbrunmode_de.md
+ src/tbmachine_de.md
+ src/tbextend_de.md
+ src/info_de.md
+ src/sipos_de.md
+ src/sitool_de.md
+ src/sicodes_de.md
+ src/sispeed_de.md
+ )
+filesCount=${#files[@]}
+index=1
+
+echo "have ${filesCount} files to process"
+cat ${files[0]} > $target
+while [ "$index" -lt "$filesCount" ]
+do
+    echo ${files[$index]}
+    echo ""              >> $target
+    echo " *** "         >> $target
+    echo ""              >> $target
+    cat ${files[$index]} >> $target
+
+    ((index++))
+done
+cp $target src
+cd src
+pandoc $target -f gfm -o ${project}.pdf
+cd ..
+

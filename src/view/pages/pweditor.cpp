@@ -52,14 +52,16 @@ QWidget* PreViewEditor::createContent() {
   ed->setReadOnly(true);
   pbOpen->hide();
   pbSave->hide();
+  //TODO: check it out!
   jp = new JogView();
-//  ValueManager().setValue("fileName", "janeDoe");
   createDecorations(view3D, statusInPreview);
   Config cfg;
 
   cfg.beginGroup(PreViewEditor::className);
   spV->restoreState(cfg.value("vState").toByteArray());
   cfg.endGroup();
+  view3D->installEventFilter(this);
+  ed->installEventFilter(this);
 
   return spV;
   }
@@ -75,7 +77,7 @@ void PreViewEditor::connectSignals() {
 void PreViewEditor::showEvent(QShowEvent* e) {
   DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
-     view3D->setFocus();
+     ed->setFocus();
      view3D->fitAll();
      }
   }
@@ -88,7 +90,7 @@ void PreViewEditor::setCurrentLine(const QVariant& line) {
   QTextCursor    c0(b0);
   QTextCursor    c1(b1);
 
-//  qDebug() << "PWE::setCurrentLine(" << line << ")";
+  qDebug() << "PWE::setCurrentLine(" << line << ")";
   ed->moveCursor(QTextCursor::End);
   ed->setTextCursor(c0);
   ed->setTextCursor(c1);
@@ -102,6 +104,28 @@ void PreViewEditor::closeEvent(QCloseEvent* e) {
   cfg.setValue("vState", spV->saveState());
   cfg.endGroup();
   TestEdit::closeEvent(e);
+  }
+
+
+bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
+  if (event->type() == QEvent::KeyPress) {
+     QKeyEvent* e = static_cast<QKeyEvent*>(event);
+
+     if (e->modifiers() == Qt::CTRL) {
+        switch (e->key()) {
+          case Qt::Key_T: view3D->topView();   return true;
+          case Qt::Key_R: view3D->rightView(); return true;
+          case Qt::Key_L: view3D->leftView();  return true;
+          case Qt::Key_B: view3D->backView();  return true;
+          case Qt::Key_3: view3D->isoView();   return true;
+          }
+       }
+    else if (e->key() == Qt::Key_F) {
+       view3D->fitAll();
+       return true;
+       }
+    }
+  return false;
   }
 
 
@@ -143,7 +167,6 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
   Core().parseGCFile(fileName.toString());
-//  Core().activatePage(PreViewEditor::className);
   Core().setAppMode(ApplicationMode::Auto);
   }
 
@@ -153,7 +176,7 @@ void PreViewEditor::toggleSub() {
   QWidget* old;
 
   if (oldSub == frame) {
-     jp->initialize();
+     jp->initialize();  //TODO: initialize only once!
      old = spV->replaceWidget(1, jp);
      }
   else {

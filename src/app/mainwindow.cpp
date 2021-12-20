@@ -740,13 +740,16 @@ void MainWindow::setAppMode(ApplicationMode am) {
   ApplicationMode oam = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
   ValueManager().setValue("appMode", am);
 
-  qDebug() << "\tsetAppMode: " << am << "\twas:" << oam;
-  if (am == ApplicationMode::Auto)
-     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
-  else if (am == ApplicationMode::MDI)
-     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
-  else
-     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+  qDebug() << "MW:\tsetAppMode: " << am << "\twas:" << oam;
+  if (oam == am) this->appModeChanged(am);
+
+  //TODO: check where and when to change Taskmode!
+//  if (am == ApplicationMode::Auto)
+//     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+//  else if (am == ApplicationMode::MDI)
+//     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+//  else
+//     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
   }
 
 
@@ -805,9 +808,9 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
          else qDebug() << "mode toolbar is NOT visible";
 
     default:
-         qDebug() << "MW: pressed key: " << e->key()
-                  << "modifiers: "   << e->modifiers()
-                  << "event-ts: " << e->timestamp();
+//         qDebug() << "MW: pressed key: " << e->key()
+//                  << "modifiers: "   << e->modifiers()
+//                  << "event-ts: " << e->timestamp();
          Core().viewStack()->keyPressEvent(e);
          break;
     }
@@ -815,8 +818,8 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
 
 
 void MainWindow::keyReleaseEvent(QKeyEvent* e) {
-  qDebug() << "MW: released key: " << e->key()
-           << "modifiers: "   << e->modifiers()
-           << "event-ts: " << e->timestamp();
+//  qDebug() << "MW: released key: " << e->key()
+//           << "modifiers: "   << e->modifiers()
+//           << "event-ts: " << e->timestamp();
   Core().viewStack()->keyReleaseEvent(e);
   }

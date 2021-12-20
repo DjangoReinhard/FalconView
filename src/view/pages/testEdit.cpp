@@ -8,8 +8,11 @@
 #include <dynframe.h>
 #include <filemanager.h>
 #include <core.h>
+#include <QInputDialog>
 #include <QSplitter>
+#include <QMessageBox>
 #include <QFileDialog>
+#include <QKeyEvent>
 #include <QAction>
 #include <QLabel>
 #include <QDir>
@@ -40,9 +43,10 @@ QWidget* TestEdit::createContent() {
 
   ed = new GCodeEditor(this);
   gh = new GCodeHighlighter(ed->document());
-  ed->setFocusPolicy(Qt::NoFocus);
+//  ed->setFocusPolicy(Qt::NoFocus);
   gl->replaceWidget(placeHolder, ed);
   pbSave->setEnabled(ed->document()->isModified());
+  ed->installEventFilter(this);
 
   return rv;
   }
@@ -54,6 +58,8 @@ void TestEdit::connectSignals() {
 
     connect(pbOpen, &QPushButton::clicked, this, &TestEdit::openFile);
     connect(ed->document(), &QTextDocument::modificationChanged, pbSave, &QPushButton::setEnabled);
+//    connect(ed, &QPlainTextEdit::textChanged, this, &TestEdit::textChanged);
+    connect(pbSave, &QPushButton::clicked, this, &TestEdit::saveFile);
     connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::white))
           , &ValueModel::valueChanged
           , fn
@@ -105,6 +111,7 @@ void TestEdit::openFile() {
 
 
 void TestEdit::showEvent(QShowEvent* e) {
+  qDebug() << "TestEdit::showEvent ..."   ;
   DynCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
      if (ed->numLines() > 1) ed->setFocus();
@@ -140,7 +147,7 @@ void TestEdit::loadFile(const QVariant& fileName) {
   QFileInfo fi(fileName.toString());
 
   if (!fi.exists() || fi.size() < 1) {
-     qDebug() << "TestEdit::loadFile: >" << fileName << "< is invalid";
+     Core().riseError(tr("TestEdit::loadFile: %1 is invalid").arg(fileName.toString()));
      return;
      }
   ed->loadFile(fi.absoluteFilePath());
@@ -151,6 +158,66 @@ void TestEdit::loadFile(const QVariant& fileName) {
   if (objectName() == "TestEdit")      Core().setAppMode(ApplicationMode::XEdit);
   else if (objectName() == "PathEdit") Core().setAppMode(ApplicationMode::Edit);
   else                                 Core().setAppMode(ApplicationMode::Auto);
+  }
+
+
+void TestEdit::saveFile() {
+  QString fileName = fn->text();
+
+  if (Core().move2Backup(fileName)) {
+     QString content = ed->document()->toPlainText();
+     QFile   of(fileName);
+
+     if (of.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&of);
+
+        content.replace(',', '.');
+        out << content;
+        of.flush();
+        of.close();
+        QTextBlock  b = ed->textCursor().block();
+
+        ed->setPlainText(content);
+        ed->setTextCursor(QTextCursor(b));
+        fileUpdated(fileName);
+        }
+     else Core().riseError(tr("Failed to write file %1").arg(fileName));
+     }
+  else Core().riseError(tr("Failed to create backup of file %1").arg(fileName));
+  }
+
+
+bool TestEdit::eventFilter(QObject*, QEvent* event) {
+  if (event->type() == QEvent::KeyPress) {
+     QKeyEvent* e = static_cast<QKeyEvent*>(event);
+
+     switch (e->key()) {
+       case Qt::Key_S:
+            if (e->modifiers() == Qt::CTRL) {
+               if (pbSave->isEnabled()) {
+                  pbSave->click();
+                  return true;
+                  }
+               } break;
+       case Qt::Key_F:
+            if (e->modifiers() == Qt::CTRL) {
+               bool    ok;
+               QString text = QInputDialog::getText(this
+                                                  , tr("QInputDialog::getText()")
+                                                  , tr("Search text:")
+                                                  , QLineEdit::Normal
+                                                  , "G0"
+                                                  , &ok);
+               if (ok && !text.isEmpty()) {
+                  QTextCursor tc = ed->document()->find(text, ed->textCursor().anchor());
+
+                  if (tc.isNull()) tc = ed->document()->find(text);
+                  ed->setTextCursor(tc);
+                  }
+               } break;
+       }
+     }
+  return false;
   }
 
 
@@ -174,5 +241,7 @@ void TestEdit::updateStyles() {
   if (ncFile.exists()) loadFile(ncFile.fileName());
   }
 
+
+void TestEdit::fileUpdated(const QString&)  {}
 
 const QString& TestEdit::className = "TestEdit";

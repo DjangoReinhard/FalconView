@@ -9,7 +9,9 @@
             <section title="User Guide" ref="index">
                 <section title="linuxCNC" ref="integration"/>
                 <section title="Center-Area" ref="reference">
-                    <section title="NC-Editor" ref="nceditor"/>
+                    <section title="NC-Editor" ref="nceditor">
+                        <section title="Datei-Verwalter" ref="filemanager"/>
+                    <section>
                     <section title="3D-Preview" ref="preview"/>
                     <section title="JogView" ref="jogview"/>
                     <section title="Settings" ref="settingsnotebook">

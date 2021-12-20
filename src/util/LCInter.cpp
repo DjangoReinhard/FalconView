@@ -1,4 +1,5 @@
 #include <canon.hh>
+#include <core.h>
 #include <iostream>
 #include <tooldata.hh>
 #include <rs274ngc_interp.hh>
@@ -17,10 +18,8 @@
 #include <QThread>
 #include <QDir>
 #include <QDebug>
-
 #include <LCInter.h>
 #include <lcproperties.h>
-//#include <gcodewriter.h>
 #include <tooltable.h>
 
 //#define WANT_RAW
@@ -83,7 +82,7 @@ void LCInterface::maybeNewLine(int seqNum) {
 
 void LCInterface::parseInline(const QString& fileName) {
   int rv = -1;
-  QString msg = QString("Error #") + QString::number(rv) + " - failed to create interpreter!";
+  QString msg = tr("Error #%1 - failed to create interpreter!").arg(rv);
 
   if (!pInter) pInter = makeInterp();
   for (;;) {
@@ -110,14 +109,13 @@ void LCInterface::parseInline(const QString& fileName) {
       for (int i=0; i < codes.size(); ++i) {
           QString code = codes.at(i);
 
-//          qDebug() << "init code: <|" << code << "|>";
           if ((rv = readExec(code))) break;
           }
       if (rv > INTERP_MIN_ERROR) {
-         msg = QString("Error #") + QString::number(rv) + " - failed to interpret init codes";
+         msg = tr("Error #%1 - failed to interpret init codes").arg(rv);
          break;
          }
-      int lineNumber;
+      int lineNumber = -1;
 
       while (1) {
             if ((rv = pInter->read())) break;
@@ -127,15 +125,17 @@ void LCInterface::parseInline(const QString& fileName) {
             if (!(!rv || rv == 2)) break;
             }
       if (rv > INTERP_MIN_ERROR) {
-         msg = QString("Error #") + QString::number(rv)
-                     + " - interpreter failed to execute line "
-                     + QString::number(lineCodes.gCodes[0])
-                     + " (" + QString::number(lineNumber) + ")";
+         msg = tr("Error #%1 - interpreter failed to execute line %2 (%3)")
+                 .arg(rv)
+                 .arg(lineCodes.gCodes[0])
+                 .arg(lineNumber);
+         break;
          }
       pInter->close();
       return;
       }
-  std::cerr << msg.toStdString().c_str() << std::endl;
+  if (pInter) pInter->close();
+  Core().riseError(msg);
   }
 
 
@@ -143,14 +143,16 @@ int LCInterface::readExec(const QString &line) {
   int result = pInter->read(line.toLatin1());
 
   if (result > INTERP_MIN_ERROR) {
-     std::cerr << "IC Error #" << result << " - failed to read line \"" << line.toStdString().c_str() << "\"" << std::endl;
-
+     Core().riseError(tr("Error #%1 - failed to read line \"%2\"")
+                        .arg(result)
+                        .arg(line));
      return result;
      }
   result = pInter->execute();
   if (result > INTERP_MIN_ERROR) {
-     std::cerr << "IC Error #" << result << " - failed to execute line \"" << line.toStdString().c_str() << "\"" << std::endl;
-
+     Core().riseError(tr("Error #%1 - failed to execute line \"%2\"")
+                        .arg(result)
+                        .arg(line));
      return result;
      }
   return result;

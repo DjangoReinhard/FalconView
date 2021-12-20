@@ -89,12 +89,12 @@ void DynCenterWidget::closeEvent(QCloseEvent* e) {
 
 
 void DynCenterWidget::keyPressEvent(QKeyEvent* e) {
-  qDebug() << "DynCenterWidget::keyPressEvent of " << objectName() << "ts:" << e->timestamp();
+//  qDebug() << "DynCenterWidget::keyPressEvent of " << objectName() << "ts:" << e->timestamp();
   QWidget::keyPressEvent(e);
   }
 
 
 void DynCenterWidget::keyReleaseEvent(QKeyEvent* e) {
-  qDebug() << "DynCenterWidget::keyReleaseEvent of " << objectName() << "ts:" << e->timestamp();
+//  qDebug() << "DynCenterWidget::keyReleaseEvent of " << objectName() << "ts:" << e->timestamp();
   QWidget::keyPressEvent(e);
   }

@@ -9,9 +9,12 @@ class ErrorReader : public QObject
 {
   Q_OBJECT
 public:
-  explicit ErrorReader(QObject *parent = nullptr);
+  explicit  ErrorReader(QObject *parent = nullptr);
 
-  SysEvent fetchMessage();
+  void      check4Error();
+
+protected:
+  SysEvent* fetchMessage();
 
 private:
   NML* ec;

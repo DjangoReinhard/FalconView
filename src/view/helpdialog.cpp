@@ -5,12 +5,12 @@
 #include <helpcontentwidget.h>
 #include <helpkeywordwidget.h>
 #include <core.h>
-#include <QDebug>
 #include <QPainter>
 #include <QBitmap>
 #include <QShowEvent>
 #include <QTabWidget>
 #include <QSplitter>
+#include <QDebug>
 
 
 HelpDialog::HelpDialog(QWidget* parent)
@@ -58,9 +58,9 @@ void HelpDialog::sourceChanged(const QUrl& src) {
   HelpTitleBar* htb = static_cast<HelpTitleBar*>(this->titleBarWidget());
   int           index = tw->currentIndex();
 
-  qDebug() << "HelpDialog::sourceChanged - #" << index
-           << ":" << tb->documentTitle()
-           << " - src:" << src;
+//  qDebug() << "HelpDialog::sourceChanged - #" << index
+//           << ":" << tb->documentTitle()
+//           << " - src:" << src;
 
   cw->sourceChanged(src);
   kw->sourceChanged(src);
@@ -78,7 +78,7 @@ void HelpDialog::keywordItemChanged(QListWidgetItem *current, QListWidgetItem *)
 void HelpDialog::help4Keyword(const QString &keyWord) {
   QString document = he->document4Keyword(keyWord);
 
-  qDebug() << "\tHD: keyword >" << keyWord << "< \tpage:" << document;
+//  qDebug() << "\tHD: keyword >" << keyWord << "< \tpage:" << document;
   if (!document.isEmpty()) tb->setSource(document);
   showHelp();
   }
@@ -144,7 +144,7 @@ QSize HelpTitleBar::minimumSizeHint() const {
 
 
 void HelpTitleBar::setTitle(const QString &title) {
-  qDebug() << "Help - Titlebar::setTitle(" << title << ")";
+//  qDebug() << "Help - Titlebar::setTitle(" << title << ")";
   this->titleBar->title->setText(title);
   }
 
