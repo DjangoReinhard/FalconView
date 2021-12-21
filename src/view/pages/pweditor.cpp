@@ -54,6 +54,7 @@ QWidget* PreViewEditor::createContent() {
   pbSave->hide();
   //TODO: check it out!
   jp = new JogView();
+  jp->initialize();
   createDecorations(view3D, statusInPreview);
   Config cfg;
 
@@ -189,14 +190,9 @@ void PreViewEditor::toggleSub() {
   QWidget* oldSub = spV->widget(1);
   QWidget* old;
 
-  if (oldSub == frame) {
-     jp->initialize();  //TODO: initialize only once!
-     old = spV->replaceWidget(1, jp);
-     }
-  else {
-     old = spV->replaceWidget(1, frame);
-     }
-  qDebug() << "old widget: " << old;;
+  if (oldSub == frame) old = spV->replaceWidget(1, jp);
+  else                 old = spV->replaceWidget(1, frame);
+  qDebug() << "old widget: " << old;
   }
 
 const QString PreViewEditor::className = "3D Preview";

@@ -91,6 +91,7 @@ MainWindow::MainWindow(bool statusInPreview, QWidget *parent)
   restoreGeometry(cfg.value("geometry").toByteArray());
   restoreState(cfg.value("windowState").toByteArray());
   cfg.endGroup();
+//  ui->menubar->setVisible(false);
 //  timer.start(1000, this);
   qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
   }

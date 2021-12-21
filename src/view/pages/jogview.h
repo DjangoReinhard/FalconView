@@ -23,8 +23,9 @@ protected:
   void decStepSize();
   void jog(QWidget* o, int axis, int step);
   void singleStep(bool singleStep);
-  void stepSizeChanged();
+  void setStepSize();
   void jogVelChanged();
+  void stepSizeChanged(const QVariant& stepSize);
   void sliderChanged(const QVariant& v);
 
 private:

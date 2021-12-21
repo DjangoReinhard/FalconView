@@ -56,7 +56,7 @@ QWidget* JogView::createContent() {
   defSpeed = Core().lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble() * 60;
   maxSpeed = Core().lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() * 60;
   singleStep(ui->cbSingleStep->isChecked());
-  stepSizeChanged();
+  setStepSize();
   jogVelChanged();
   sliderChanged(ui->slJog->value());
 
@@ -65,7 +65,6 @@ QWidget* JogView::createContent() {
 
 
 void JogView::connectSignals() {
-  connect(ui->cbSingleStep, &QCheckBox::toggled, this, &JogView::singleStep);
   connect(ui->jXn, &QToolButton::clicked, this, [=]() { jog(ui->jXn, 0, -1); });
   connect(ui->jXp, &QToolButton::clicked, this, [=]() { jog(ui->jXp, 0,  1); });
   connect(ui->jYn, &QToolButton::clicked, this, [=]() { jog(ui->jYn, 1, -1); });
@@ -84,12 +83,18 @@ void JogView::connectSignals() {
   connect(ui->jVp, &QToolButton::clicked, this, [=]() { jog(ui->jVp, 7,  1); });
   connect(ui->jWn, &QToolButton::clicked, this, [=]() { jog(ui->jWn, 8, -1); });
   connect(ui->jWp, &QToolButton::clicked, this, [=]() { jog(ui->jWp, 8,  1); });
+
+  connect(ValueManager().getModel("jogFactor"), &ValueModel::valueChanged, this, &JogView::sliderChanged);
+  connect(ValueManager().getModel("jogRapid"), &ValueModel::valueChanged, ui->cbRapid, [=](const QVariant& v){ ui->cbRapid->setChecked(v.toBool()); });
+  connect(ValueManager().getModel("jogStepSize"), &ValueModel::valueChanged, this, &JogView::stepSizeChanged);
+
+  connect(ui->cbSingleStep, &QCheckBox::toggled, this, &JogView::singleStep);
   connect(ui->cbRapid, &QCheckBox::toggled, this, &JogView::jogVelChanged);
   connect(ui->slJog, &QSlider::valueChanged, this, &JogView::sliderChanged);
-  connect(ui->rOOO1, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
-  connect(ui->rOO1, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
-  connect(ui->rO1, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
-  connect(ui->rO5, &QRadioButton::toggled, this, &JogView::stepSizeChanged);
+  connect(ui->rOOO1, &QRadioButton::toggled, this, &JogView::setStepSize);
+  connect(ui->rOO1, &QRadioButton::toggled, this, &JogView::setStepSize);
+  connect(ui->rO1, &QRadioButton::toggled, this, &JogView::setStepSize);
+  connect(ui->rO5, &QRadioButton::toggled, this, &JogView::setStepSize);
   }
 
 
@@ -116,6 +121,7 @@ void JogView::sliderChanged(const QVariant& v) {
   qDebug() << "jog speed override:" << v;
   double jogFactor = v.toDouble();
 
+  ValueManager().setValue("jogFactor", v);
   jogSpeed  = (ui->cbRapid->isChecked() ? maxSpeed : defSpeed)
             * jogFactor / 100.0;
   QString templ = QString("<p><b>%1</b></p><p>&nbsp;</p><p>%2 %</p>")
@@ -127,19 +133,31 @@ void JogView::sliderChanged(const QVariant& v) {
 
 
 void JogView::jogVelChanged() {
+  ValueManager().setValue("jogRapid", ui->cbRapid->isChecked());
   if (ui->cbRapid->isChecked())
-     ui->cmdJogSpeed->setText(Core().locale().toString(maxSpeed, 'f', 0));
+     ui->cmdJogSpeed->setText(Core().locale().toString(maxSpeed, 'f', 0));     
   else
-     ui->cmdJogSpeed->setText(Core().locale().toString(defSpeed, 'f', 0));
+     ui->cmdJogSpeed->setText(Core().locale().toString(defSpeed, 'f', 0));     
   sliderChanged(ui->slJog->value());
   }
 
 
-void JogView::stepSizeChanged() {
+void JogView::stepSizeChanged(const QVariant &stepSize) {
+  double ss = stepSize.toDouble();
+
+  if (ss == 0.001)     ui->rOOO1->setChecked(true);
+  else if (ss == 0.01) ui->rOO1->setChecked(true);
+  else if (ss == 0.1)  ui->rO1->setChecked(true);
+  else if (ss == 0.5)  ui->rO5->setChecked(true);
+  }
+
+
+void JogView::setStepSize() {
   if (ui->rOOO1->isChecked())     stepSize = 0.001;
   else if (ui->rOO1->isChecked()) stepSize = 0.01;
   else if (ui->rO1->isChecked())  stepSize = 0.1;
   else if (ui->rO5->isChecked())  stepSize = 0.5;
+  ValueManager().setValue("jogStepSize", stepSize);
   }
 
 
