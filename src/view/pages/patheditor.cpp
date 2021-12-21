@@ -43,6 +43,12 @@ void PathEditor::loadFile(const QVariant& fileName) {
   }
 
 
+void PathEditor::dirtyChanged(bool dirty) {
+  ValueManager().setValue("gcodeDirty", dirty);
+  TestEdit::dirtyChanged(dirty);
+  }
+
+
 void PathEditor::reallyLoadFile(const QVariant& fileName) {
   TestEdit::loadFile(fileName);
   Core().setAppMode(ApplicationMode::Edit);

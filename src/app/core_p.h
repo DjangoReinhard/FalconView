@@ -5,7 +5,6 @@
 #include <lcproperties.h>
 #include <positioncalculator.h>
 #include <gcodeinfo.h>
-#include <syseventmodel.h>
 #include <statusreader.h>
 #include <commandwriter.h>
 #include <axismask.h>
@@ -19,6 +18,7 @@ class OcctQtViewer;
 class DBConnection;
 class DBHelper;
 class MainWindow;
+class SysEventModel;
 class SysEvent;
 class QString;
 class QFile;
@@ -31,7 +31,7 @@ protected:
   void timerEvent(QTimerEvent* event) override;
 
 protected slots:
-  void logSysEvent(int type, const QString& msg, const QTime& when);
+  void logSysEvent(const SysEvent& se);
 
 signals:
   void abortTask();

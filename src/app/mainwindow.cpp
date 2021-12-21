@@ -234,7 +234,7 @@ void MainWindow::createActions() {
                          , QIcon(":/res/SK_Messages_active.png")
                          , tr("SysEvents")
                          , new TrueCondition()
-                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::ErrMessages)
+                         , new EqualCondition(vm.getModel("errorActive"), true)
                          , this);
   mist = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                       , QIcon(":/res/SK_Cool_Mist.png")
@@ -362,7 +362,7 @@ void MainWindow::createConnections() {
   connect(wheelMode,    &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Wheel); });
   connect(jogMode,      &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Manual); });
   connect(cfgMode,      &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Settings); });
-  connect(msgMode,      &QAction::triggered, this, &MainWindow::toggleErrMessages);
+  connect(msgMode,      &QAction::triggered, this, &MainWindow::showErrMessages);
   connect(touchMode,    &QAction::triggered, this, [=](){ setAppMode(ApplicationMode::Touch); });
 
   connect(power,        &QAction::triggered, this, &MainWindow::hitPowerBtn);
@@ -374,24 +374,13 @@ void MainWindow::createConnections() {
   }
 
 
-void MainWindow::toggleErrMessages() {
-  static QString oldPage;
+void MainWindow::showErrMessages() {
+  QString curPage = Core().curPage();
+  qDebug() << "MW::showErrMessages() ...";
 
-  qDebug() << "MW::toggleErrMessages() ...";
-  if (msgMode->isChecked()) {
-     ValueManager().setValue("errorActive", true);
-     if (oldPage.isEmpty()) oldPage = Core().curPage();
-     Core().activatePage(SysEventView::className);
-     ValueManager().setValue("showAllButCenter", false);
-     }
-  else {
-     ValueManager().setValue("errorActive", false);
-     if (!oldPage.isEmpty()) {
-        Core().activatePage(oldPage);
-        oldPage.clear();
-        }
-     ValueManager().setValue("showAllButCenter", true);
-     }
+  ValueManager().setValue("lastPage", curPage.mid(0, curPage.size() - 5));
+  Core().activatePage(SysEventView::className);
+  ValueManager().setValue("showAllButCenter", false);
   }
 
 
@@ -651,6 +640,10 @@ void MainWindow::setSingleStep(bool singleStep) {
 
 
 void MainWindow::autoStart() {
+  bool gcodeDirty = ValueManager().getValue("gcodeDirty").toBool();
+
+  qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
+
 //  ApplicationMode am = ValueManager().getValue("appMode").value<ApplicationMode>();
   int am = 0;
 
@@ -763,7 +756,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
     case Qt::Key_Escape:
          if (Core().curPage() == SysEventView::className) {
             msgMode->toggle();
-            toggleErrMessages();
+            showErrMessages();
             }
          else
             qDebug() << "MW: escape pressed! But don't do anything!";

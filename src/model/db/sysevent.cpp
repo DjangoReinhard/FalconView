@@ -1,19 +1,30 @@
 #include <sysevent.h>
+#ifdef HAVE_DATETIME
+#include <QDateTime>
+#else
 #include <timestamp.h>
-#include <QTime>
+#endif
 
 
 SysEvent::SysEvent(EventType et)
  : QObject(nullptr)
  , et(et)
+#ifdef HAVE_DATETIME
+ , ts(QDateTime::currentSecsSinceEpoch()) {
+#else
  , ts(TimeStamp::rtSequence()) {
+#endif
   }
 
 
 SysEvent::SysEvent(const QString& what, EventType et)
  : QObject(nullptr)
  , et(et)
+#ifdef HAVE_DATETIME
+ , ts(QDateTime::currentSecsSinceEpoch())
+#else
  , ts(TimeStamp::rtSequence())
+#endif
  , msg(what) {
   }
 
@@ -21,17 +32,23 @@ SysEvent::SysEvent(const QString& what, EventType et)
 SysEvent::SysEvent(EventType et, const QString& what, QObject *parent)
  : QObject(parent)
  , et(et)
+#ifdef HAVE_DATETIME
+ , ts(QDateTime::currentSecsSinceEpoch())
+#else
  , ts(TimeStamp::rtSequence())
+#endif
  , msg(what) {
   }
 
 
-SysEvent::SysEvent(EventType et, const QString& what, const QTime& when)
+#ifdef HAVE_DATETIME
+SysEvent::SysEvent(EventType et, const QString& what, const QDateTime& when)
  : QObject(nullptr)
- , et(et)
- , ts(when.msecsSinceStartOfDay())
+ , et(et) 
+ , ts(when.currentSecsSinceEpoch())
  , msg(what) {
   }
+#endif
 
 
 SysEvent::SysEvent(const SysEvent& o)

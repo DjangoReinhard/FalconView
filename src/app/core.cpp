@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <core.h>
 #include <sysevent.h>
+#include <syseventmodel.h>
 #include <lcproperties.h>
 #include <settingsnb.h>
 #include <dbconnection.h>
@@ -231,11 +232,12 @@ void Core::riseError(const QString &msg) {
   ValueManager().setValue("errorActive", true);
   SysEvent se(msg);
 
-  core()->tmSysEvents->append(&se);
-  QMessageBox::critical(nullptr
+  core()->logSysEvent(se);
+  QMessageBox::critical(core()->mainWindow
                       , SysEvent::toString(se.type())
                       , se.what());
   }
+
 
 Kernel* Core::core() {
   assert(kernel != nullptr);
@@ -543,9 +545,7 @@ DBConnection* Kernel::createDatabase(DBHelper &dbAssist) {
   }
 
 
-void Kernel::logSysEvent(int type, const QString& msg, const QTime& when) {
-  SysEvent se(static_cast<SysEvent::EventType>(type), msg, when);
-
+void Kernel::logSysEvent(const SysEvent& se) {
   qDebug() << "system event" << se.type() << ":" << se.what() << " at:" << se.when();
   tmSysEvents->append(&se);
   }

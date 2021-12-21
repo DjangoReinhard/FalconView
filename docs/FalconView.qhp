@@ -23,6 +23,7 @@
                         <section title="Preferences" ref="preferences"/>
                         <section title="LC-Tools" ref="lctooltable"/>
                     </section>
+                    <section title="SysEventView" ref="sysevents"/>
                 </section>
                 <section title="Toolbars" ref="toolbars">
                     <section title="ApplicationMode" ref="tbappmode"/>

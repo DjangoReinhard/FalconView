@@ -63,13 +63,18 @@ void GCodeEditor::resizeEvent(QResizeEvent *e) {
   }
 
 
-void GCodeEditor::loadFile(QVariant name) {
+bool GCodeEditor::loadFile(QVariant name) {
   QFile file(name.toString());
 
-  if (file.open(QFile::ReadOnly | QFile::Text))
+  if (file.open(QFile::ReadOnly | QFile::Text)) {
      setPlainText(file.readAll());
+     file.close();
+
+     return true;
+     }
   else
      Core().riseError(tr("could not read file %1").arg(name.toString()));
+  return false;
   }
 
 

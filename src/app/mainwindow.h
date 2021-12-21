@@ -51,7 +51,7 @@ protected slots:
   void appModeChanged(const QVariant& appMode);
   void setSingleStep(bool singleStep);
   void hitPowerBtn();
-  void toggleErrMessages();
+  void showErrMessages();
   void toggleAllButCenter();
   void toggleAbsolute(const QVariant& absolute);
   void autoStart();

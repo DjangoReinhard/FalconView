@@ -2,9 +2,11 @@
 #define COMMANDWRITER_H
 #include <QObject>
 #include <QTime>
+#include <sysevent.h>
 class RCS_CMD_CHANNEL;
 class RCS_STAT_CHANNEL;
 class RCS_CMD_MSG;
+class SysEvent;
 class EMC_STAT;
 
 
@@ -17,7 +19,7 @@ public:
   bool isActive();
 
 signals:
-  void systemEvent(int type, const QString& msg, const QTime& when = QTime::currentTime());
+  void systemEvent(const SysEvent& se);
 
 public slots:
   void abortTask();
@@ -42,7 +44,7 @@ public slots:
   void taskPlanSynch();
 
 protected:
-  int sendCommand(RCS_CMD_MSG& msg);
+  int  sendCommand(RCS_CMD_MSG& msg);
   void sleep(double seconds);
 
 private:

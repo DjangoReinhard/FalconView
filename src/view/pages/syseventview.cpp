@@ -1,6 +1,8 @@
 #include <syseventview.h>
 #include <syseventmodel.h>
+#include <configacc.h>
 #include <valuemanager.h>
+#include <core.h>
 #include <QSortFilterProxyModel>
 #include <QShowEvent>
 #include <QHeaderView>
@@ -28,6 +30,12 @@ QWidget* SysEventView::createContent() {
   table->horizontalHeader()->setStretchLastSection(true);
   table->horizontalHeader()->setSortIndicator(1, Qt::AscendingOrder);
   table->setAlternatingRowColors(true);
+  table->installEventFilter(this);
+  Config cfg;
+
+  cfg.beginGroup(SysEventView::className);
+  table->horizontalHeader()->restoreState(cfg.value("State").toByteArray());
+  cfg.endGroup();
 
   return table;
   }
@@ -45,20 +53,25 @@ void SysEventView::updateStyles() {
   }
 
 
-void SysEventView::showEvent(QShowEvent* e) {
-  DynCenterWidget::showEvent(e);
-  if (e->type() == QEvent::Show) {
-     qDebug() << ">>>   SysEventView::showEvent - SHOW";
-     ValueManager().setValue("errorActive", true);
-     }
-  }
+bool SysEventView::eventFilter(QObject*, QEvent* event) {
+  if (event->type() == QEvent::KeyPress) {
+     QKeyEvent* e = static_cast<QKeyEvent*>(event);
 
+     switch (e->key()) {
+       case Qt::Key_Escape: {
+            qDebug() << "SEV: hit ESC ... (old page:" << ValueManager().getValue("lastPage").toString() << ")";
+            Core().activatePage(ValueManager().getValue("lastPage").toString());
+            ValueManager().setValue("errorActive", false);
+            ValueManager().setValue("showAllButCenter", true);
+            Config cfg;
 
-void SysEventView::hideEvent(QHideEvent* e) {
-  if (e->type() == QEvent::Hide) {
-     qDebug() << "<<<   SysEventView::showEvent - HIDE";
-     ValueManager().setValue("errorActive", false);
+            cfg.beginGroup(SysEventView::className);
+            cfg.setValue("State", table->horizontalHeader()->saveState());
+            cfg.endGroup();
+            } break;
+       }
      }
+  return false;
   }
 
 

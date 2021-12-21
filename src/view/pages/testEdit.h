@@ -33,6 +33,7 @@ protected:
   virtual void closeEvent(QCloseEvent* e) override;
   virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual void loadFile(const QVariant& fileName);
+  virtual void dirtyChanged(bool dirty);
   virtual void fileUpdated(const QString& fileName);
 
   QLineEdit*        fn;
@@ -42,5 +43,6 @@ protected:
 
 private:
   GCodeHighlighter* gh;
+  QString           fileName;
   };
 #endif // PWEDITOR_H

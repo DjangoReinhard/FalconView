@@ -22,6 +22,7 @@ protected:
   virtual void loadFile(const QVariant& fileName) override;
   virtual void connectSignals() override;
   virtual void fileUpdated(const QString& fileName) override;
+  virtual void dirtyChanged(bool dirty) override;
 
 private:
   void reallyLoadFile(const QVariant& fileName);

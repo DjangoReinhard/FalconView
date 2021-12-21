@@ -12,8 +12,12 @@ class SysEventModel : public QSqlTableModel
 public:
   explicit SysEventModel(DBConnection& conn, QObject *parent = nullptr);
 
-  QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+  virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+  virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
   void append(const SysEvent* e);
+
+protected:
+  int nextId();
 
 private:
   static bool  createTable();

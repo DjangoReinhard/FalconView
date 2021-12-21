@@ -43,7 +43,6 @@ QWidget* TestEdit::createContent() {
 
   ed = new GCodeEditor(this);
   gh = new GCodeHighlighter(ed->document());
-//  ed->setFocusPolicy(Qt::NoFocus);
   gl->replaceWidget(placeHolder, ed);
   pbSave->setEnabled(ed->document()->isModified());
   ed->installEventFilter(this);
@@ -57,8 +56,7 @@ void TestEdit::connectSignals() {
     Config       cfg;
 
     connect(pbOpen, &QPushButton::clicked, this, &TestEdit::openFile);
-    connect(ed->document(), &QTextDocument::modificationChanged, pbSave, &QPushButton::setEnabled);
-//    connect(ed, &QPlainTextEdit::textChanged, this, &TestEdit::textChanged);
+    connect(ed->document(), &QTextDocument::modificationChanged, this, &TestEdit::dirtyChanged);
     connect(pbSave, &QPushButton::clicked, this, &TestEdit::saveFile);
     connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::white))
           , &ValueModel::valueChanged
@@ -135,24 +133,39 @@ QString TestEdit::pageName() {
   }
 
 
+void TestEdit::dirtyChanged(bool dirty) {
+  pbSave->setEnabled(dirty);
+  if (dirty) fn->setText(this->fileName + " [*]");
+  else       fn->setText(this->fileName);
+  }
+
+
 // callback for fileManager
 void TestEdit::fileSelected(const QString& filePath) {
-  qDebug() << "TestEdit::fileSelected(" << filePath << ")";
+  qDebug() << "TestEdit::fileSelected(" << filePath << ")";  
   loadFile(filePath);
   }
 
 
 void TestEdit::loadFile(const QVariant& fileName) {
   qDebug() << "TestEdit::loadFile" << fileName;
+  QString   activeFile = ValueManager().getValue("fileName").toString();
   QFileInfo fi(fileName.toString());
 
+  if (objectName() == TestEdit::className && activeFile == fileName.toString()) {
+     Core().riseError(tr("selected file is already loaded as active gcode file."
+                         "Please use active editor - can't load a file in both editors."));
+     Core().setAppMode(ApplicationMode::XEdit);
+     return;
+     }
   if (!fi.exists() || fi.size() < 1) {
      Core().riseError(tr("TestEdit::loadFile: %1 is invalid").arg(fileName.toString()));
      return;
      }
-  ed->loadFile(fi.absoluteFilePath());
-  fn->setText(fi.absoluteFilePath());
-
+  if (ed->loadFile(fi.absoluteFilePath())) {
+     this->fileName = fi.absoluteFilePath();
+     fn->setText(this->fileName);
+     }
   // show editor again
   qDebug() << "TestEdit[" << objectName() << "] - set appmode to XEdit(6)";
   if (objectName() == "TestEdit")      Core().setAppMode(ApplicationMode::XEdit);
@@ -162,8 +175,6 @@ void TestEdit::loadFile(const QVariant& fileName) {
 
 
 void TestEdit::saveFile() {
-  QString fileName = fn->text();
-
   if (Core().move2Backup(fileName)) {
      QString content = ed->document()->toPlainText();
      QFile   of(fileName);
