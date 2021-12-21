@@ -29,7 +29,7 @@ PathEditor::PathEditor(const QString& fileName, QWidget* parent)
 void PathEditor::connectSignals() {
   connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::reallyLoadFile);
   TestEdit::connectSignals();
-//  connect(ed, &GCodeEditor::cursorPositionChanged, this, [=](){ ValueManager().setValue("curLine", ed->textCursor().block().blockNumber()); });
+  connect(ed, &GCodeEditor::cursorPositionChanged, this, [=](){ ValueManager().setValue("edLine", ed->textCursor().block().blockNumber()); });
   }
 
 

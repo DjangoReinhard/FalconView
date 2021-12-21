@@ -21,12 +21,16 @@ public slots:
   void moveCone(double x, double y, double z);
   void showMachineLimits();
   void showWorkLimits();
+
+protected slots:
   void update(const QVariant& line);
+  void highlight(const QVariant& line);
 
 private:
   Handle(AIS_Shape) cone;
   OcctQtViewer*     v3D;
   Bnd_Box           workPiece;
+  Quantity_Color    lastColor;
   QMap<long, Handle(AIS_InteractiveObject)> workPath;
   QMap<long, Handle(AIS_InteractiveObject)>::iterator lastSeg;
   };

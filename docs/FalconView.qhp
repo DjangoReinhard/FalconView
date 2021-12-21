@@ -9,11 +9,12 @@
             <section title="User Guide" ref="index">
                 <section title="linuxCNC" ref="integration"/>
                 <section title="Center-Area" ref="reference">
-                    <section title="NC-Editor" ref="nceditor">
-                        <section title="Datei-Verwalter" ref="filemanager"/>
-                    <section>
+                    <section title="PathEditor" ref="patheditor">
+                        <section title="FileManager" ref="filemanager"/>
+                    </section>
                     <section title="3D-Preview" ref="preview"/>
                     <section title="JogView" ref="jogview"/>
+                    <section title="TestEditor" ref="testeditor"/>
                     <section title="Settings" ref="settingsnotebook">
                         <section title="ToolManager" ref="toolmanager">
                             <section title="ToolEditor" ref="tooledit"/>
@@ -42,14 +43,14 @@
         </toc>
         <keywords>
             <!-- app pages (TODO: translatable user keywords !?!) -->
-            <keyword name="3D Preview" id="3D-Preview" ref="preview"/>
+            <keyword name="3D-Preview" id="3D-Preview" ref="preview"/>
             <keyword name="FileManager" id="fileManager" ref="filemanager"/>
             <keyword name="JogView" id="JogView" ref="jogview"/>
             <keyword name="MDIEditor" id="MDIEditor" ref="mdiedit"/>
-            <keyword name="PathEditor" id="PathEditor" ref="nceditor"/>
+            <keyword name="PathEditor" id="PathEditor" ref="patheditor"/>
             <keyword name="SettingsNotebook" id="SettingsNotebook" ref="settingsnotebook"/>
             <keyword name="SysEventView" id="SysEventView" ref="sysevents"/>
-            <keyword name="TestEdit" id="TestEdit" ref="nceditor"/>
+            <keyword name="TestEdit" id="TestEdit" ref="testeditor"/>
             <keyword name="ToolManager" id="ToolManager" ref="toolmanager"/>
             <keyword name="ToolEditor" id="ToolEditor" ref="tooledit"/>
             <keyword name="FixtureManager" id="FixtureManager" ref="fixturemanager"/>

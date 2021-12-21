@@ -41,6 +41,7 @@ void HelpKeywordWidget::processChildren(const QDomElement& e, QMap<QString, QStr
       if (n.isElement()) {
          QDomElement      elem = n.toElement();
          QListWidgetItem* item = new QListWidgetItem();
+         QString          name;
          int              mx   = elem.attributes().count();
 
          item->setIcon(icon);
@@ -48,19 +49,17 @@ void HelpKeywordWidget::processChildren(const QDomElement& e, QMap<QString, QStr
              const QDomNode& n = elem.attributes().item(i);
 
              if (n.nodeName() == "name") {
-                QString in(n.nodeValue());
-                QString out(QCoreApplication::translate("HelpContentWidget", in.toStdString().c_str(), nullptr));
+                name  = n.nodeValue();
+                QString out(QCoreApplication::translate("HelpContentWidget", name.toStdString().c_str(), nullptr));
 
-//                qDebug() << "HelpKeywords - in:" << in << "out:" << out;
-
-                //TODO:
-//                item->setText(out);
-                item->setText(in);
+                qDebug() << "HelpKeywords - keyword:" << name << "translated:" << out;
+                item->setText(out);
                 }
              else if (n.nodeName() == "ref") item->setToolTip(n.nodeValue());
              }
          addItem(item);
-         keyWords[item->text()] = item->toolTip();
+         // item shows translated texts, but search works with "original" keywords
+         keyWords[name] = item->toolTip();
          }
       }
   }

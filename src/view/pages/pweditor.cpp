@@ -69,7 +69,10 @@ QWidget* PreViewEditor::createContent() {
 
 void PreViewEditor::connectSignals() {
   connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::genPreView);
+  // curLine will be set by backend
   connect(ValueManager().getModel("curLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setCurrentLine);
+  // edLine is set by pathEditor
+  connect(ValueManager().getModel("edLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setEditorLine);
   TestEdit::connectSignals();
   }
 
@@ -94,6 +97,17 @@ void PreViewEditor::setCurrentLine(const QVariant& line) {
   ed->moveCursor(QTextCursor::End);
   ed->setTextCursor(c0);
   ed->setTextCursor(c1);
+  }
+
+
+void PreViewEditor::setEditorLine(const QVariant& line) {
+  QTextDocument* d  = ed->document();
+  QTextBlock     b0 = d->findBlockByLineNumber(fmax(0, line.toInt()));
+
+  qDebug() << "PWE::setEditorLine(" << line << ")";
+
+  ed->moveCursor(QTextCursor::End);
+  ed->setTextCursor(QTextCursor(b0));
   }
 
 

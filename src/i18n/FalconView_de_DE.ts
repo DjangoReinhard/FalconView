@@ -249,141 +249,131 @@
         <source>Title</source>
         <translation>Titel</translation>
     </message>
+    <!-- help-content -->
     <message>
         <source>User Guide</source>
-        <translation type="vanished">Benutzer-Handbuch</translation>
+        <translation type="manual">Benutzer-Handbuch</translation>
     </message>
     <message>
         <source>linuxCNC</source>
-        <translation type="vanished">LinuxCNC</translation>
+        <translation type="manual">LinuxCNC</translation>
     </message>
     <message>
         <source>Center-Area</source>
-        <translation type="vanished">Hauptbereich</translation>
-    </message>
-    <message>
-        <source>NC-Editor</source>
-        <translation type="vanished">NC-Editor</translation>
-    </message>
-    <message>
-        <source>3D-Preview</source>
-        <translation type="vanished">3D-Vorschau</translation>
-    </message>
-    <message>
-        <source>FileManager</source>
-        <translation type="vanished">Datei-Verwalter</translation>
-    </message>
-    <message>
-        <source>FixtureManager</source>
-        <translation type="vanished">Koordinaten-Systeme</translation>
-    </message>
-    <message>
-        <source>JogView</source>
-        <translation type="vanished">Handbetrieb</translation>
-    </message>
-    <message>
-        <source>MDIEditor</source>
-        <translation type="vanished">manuelle Befehle</translation>
+        <translation type="manual">Hauptbereich</translation>
     </message>
     <message>
         <source>PathEditor</source>
-        <translation type="vanished">aktive NC-Datei</translation>
+        <translation type="manual">aktiver NC-Editor</translation>
     </message>
     <message>
-        <source>TestEdit</source>
-        <translation type="vanished">freie NC-Datei</translation>
+        <source>FileManager</source>
+        <translation type="manual">Datei-Verwalter</translation>
     </message>
     <message>
-        <source>ToolEditor</source>
-        <translation type="vanished">Werkzeug-Eigenschaften</translation>
+        <source>3D-Preview</source>
+        <translation type="manual">3D-Vorschau</translation>
+    </message>
+    <message>
+        <source>JogView</source>
+        <translation type="manual">Handbetrieb</translation>
+    </message>
+    <message>
+        <source>MDIEditor</source>
+        <translation type="manual">manuelle Befehle</translation>
+    </message>
+    <message>
+        <source>TestEditor</source>
+        <translation type="manual">freie NC-Datei</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="vanished">Einstellungen</translation>
+        <translation type="manual">Einstellungen</translation>
+    </message>
+    <message>
+        <source>ToolManager</source>
+        <translation type="manual">Werkzeug-Verwaltung</translation>
+    </message>
+    <message>
+        <source>ToolEditor</source>
+        <translation type="manual">Werkzeug-Eigenschaften</translation>
     </message>
     <message>
         <source>Fixtures</source>
-        <translation type="vanished">Koordinatensysteme</translation>
+        <translation type="manual">Koordinatensysteme</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="vanished">Optionen</translation>
+        <translation type="manual">Optionen</translation>
     </message>
     <message>
-        <source>LCToolTable</source>
-        <translation type="vanished">LinuxCNC Werkzeuge</translation>
+        <source>LC-Tools</source>
+        <translation type="manual">LinuxCNC Werkzeuge</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="vanished">Werkzeugleisten</translation>
+        <translation type="manual">Werkzeugleisten</translation>
     </message>
     <message>
         <source>ApplicationMode</source>
-        <translation type="vanished">Anwendungs-Modus</translation>
+        <translation type="manual">Anwendungs-Modus</translation>
     </message>
     <message>
         <source>RunMode</source>
-        <translation type="vanished">Betriebsart</translation>
+        <translation type="manual">Betriebsart</translation>
     </message>
     <message>
         <source>Machine</source>
-        <translation type="vanished">Maschine</translation>
+        <translation type="manual">Maschine</translation>
     </message>
     <message>
         <source>Extended</source>
-        <translation type="vanished">Zusatz</translation>
+        <translation type="manual">Zusatz</translation>
     </message>
     <message>
         <source>Status-Info</source>
-        <translation type="vanished">Informationen</translation>
+        <translation type="manual">Informationen</translation>
     </message>
     <message>
         <source>Position</source>
-        <translation type="vanished">Werkzeug-Position</translation>
+        <translation type="manual">Werkzeug-Position</translation>
     </message>
     <message>
         <source>ToolInfo</source>
-        <translation type="vanished">Werkzeug</translation>
+        <translation type="manual">Werkzeug</translation>
     </message>
     <message>
         <source>act.Codes</source>
-        <translation type="vanished">aktive Befehle</translation>
+        <translation type="manual">aktive Befehle</translation>
     </message>
     <message>
         <source>SpeedInfo</source>
-        <translation type="vanished">Geschwindigkeit</translation>
+        <translation type="manual">Geschwindigkeit</translation>
     </message>
     <message>
-        <source>3D PreviewFrame</source>
-        <translation type="vanished">3D PreviewFrame</translation>
+        <source>G-Codes</source>
+        <translation type="manual">NC-Befehle</translation>
     </message>
     <message>
-        <source>FileManagerFrame</source>
-        <translation type="vanished">FileManagerFrame</translation>
+        <source>use case</source>
+        <translation type="manual">Abläufe</translation>
+    </message>
+    <!-- help-keywords -->
+    <message>
+        <source>SettingsNotebook</source>
+        <translation type="manual">Systemeinstellungen</translation>
     </message>
     <message>
-        <source>JogViewFrame</source>
-        <translation type="vanished">JogViewFrame</translation>
+        <source>SysEventView</source>
+        <translation type="manual">System-Ereignisse</translation>
     </message>
     <message>
-        <source>MDIEditorFrame</source>
-        <translation type="vanished">MDIEditorFrame</translation>
+        <source>PreferencesEditor</source>
+        <translation type="manual">Einstellungen</translation>
     </message>
     <message>
-        <source>PathEditorFrame</source>
-        <translation type="vanished">PathEditorFrame</translation>
-    </message>
-    <message>
-        <source>SettingsNotebookFrame</source>
-        <translation type="vanished">SettingsNotebookFrame</translation>
-    </message>
-    <message>
-        <source>SysEventViewFrame</source>
-        <translation type="vanished">SysEventViewFrame</translation>
-    </message>
-    <message>
-        <source>TestEditFrame</source>
-        <translation type="vanished">TestEditFrame</translation>
+        <source>LCToolTable</source>
+        <translation type="manual">LinuxCNC Werkzeuge</translation>
     </message>
 </context>
 <context>
@@ -522,10 +512,6 @@
         <location filename="../util/LCInter.cpp" line="153"/>
         <source>Error #%1 - failed to execute line &quot;%2&quot;</source>
         <translation>Fehler #%1 - konnte Zeile nicht ausführen &quot;%2&quot;</translation>
-    </message>
-    <message>
-        <source>error #%1 - failed to read line &quot;%2&quot;</source>
-        <translation type="vanished">Fehler #%1 - konnte Zeile %2 nicht lesen</translation>
     </message>
     <message>
         <source>error #%1 - failed to execute line &quot;%1&quot;</source>
@@ -1372,14 +1358,6 @@
         <location filename="../view/pages/toolmanager.cpp" line="400"/>
         <source>saving of tool-data failed!</source>
         <translation>speichern der Werkzeugtabelle fehlgeschlagen!</translation>
-    </message>
-    <message>
-        <source>QMessageBox::error()</source>
-        <translation type="vanished">Fehler</translation>
-    </message>
-    <message>
-        <source>Saving tool data failed with </source>
-        <translation type="vanished">Speichern fehlgeschlagen mit Fehler </translation>
     </message>
 </context>
 <context>
