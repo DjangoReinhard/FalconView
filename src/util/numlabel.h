@@ -10,15 +10,10 @@ public:
   explicit NumLabel(QWidget* parent = nullptr, int digits = 3);
   virtual ~NumLabel();
 
-  void setDependant(QLabel* client);
   void setDigits(int digits);
   void setValue(const QVariant& v);
 
-protected:
-  virtual void resizeEvent(QResizeEvent* e) override;
-
 private:
-  QLabel* client;
   int     digits;
   };
 #endif // NUMLABEL_H
