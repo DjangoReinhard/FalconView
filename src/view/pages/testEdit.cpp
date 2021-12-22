@@ -149,6 +149,8 @@ void TestEdit::fileSelected(const QString& filePath) {
 
 void TestEdit::loadFile(const QVariant& fileName) {
   qDebug() << "TestEdit::loadFile" << fileName;
+
+  if (fileName.toString().isEmpty()) return;
   QString   activeFile = ValueManager().getValue("fileName").toString();
   QFileInfo fi(fileName.toString());
 

@@ -1,13 +1,18 @@
 #ifndef POSITIONSTATUS_H
 #define POSITIONSTATUS_H
 #include <dyncenterwidget.h>
-#include <labeladapter.h>
+#include <configacc.h>
 #include <axismask.h>
 #include <QDockWidget>
 #include <QLabel>
 #include <QResizeEvent>
+namespace Ui {
+class PositionForm;
+class PositionMain;
+}
+class NumLabel;
 class QString;
-
+class QStackedLayout;
 
 class PositionStatus : public DynCenterWidget
 {
@@ -38,34 +43,21 @@ protected:
   virtual QWidget* createContent() override;
   void updatePos();
   void setActive();
+  void setStyles(Ui::PositionForm* frm, const QString& s, const QFont& f, int w);
+  void connectPos(Ui::PositionForm* frm, const QString& key, Config::GuiElem e);
 
 private:
-  QLabel* lblX;
-  QLabel* lblY;
-  QLabel* lblZ;
-  QLabel* lblA;
-  QLabel* lblB;
-  QLabel* lblC;
-  QLabel* lblU;
-  QLabel* lblV;
-  QLabel* lblW;
-  QLabel* ledX;
-  QLabel* ledY;
-  QLabel* ledZ;
-  QLabel* ledA;
-  QLabel* ledB;
-  QLabel* ledC;
-  QLabel* ledU;
-  QLabel* ledV;
-  QLabel* ledW;
-  LabelAdapter** droRel;
-  LabelAdapter** droAbs;
-  LabelAdapter** droDtg;
-  int  height;
-  bool absolute;
-  AxisMask axisMask;
-  QString  ledOn;
-  QString  ledOff;
+  Ui::PositionMain* frm;
+  Ui::PositionForm* rel;
+  Ui::PositionForm* abs;
+  Ui::PositionForm* dtg;
+  QStackedLayout*   sl;
+  QFrame*           frmRel;
+  QFrame*           frmAbs;
+  bool       absolute;
+  AxisMask   axisMask;
+  QString    ledOn;
+  QString    ledOff;
 
   static const char* widthPat;
   static const char* a[];

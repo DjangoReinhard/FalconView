@@ -14,10 +14,7 @@
 ToolStatus::ToolStatus(const QString & fileName, QWidget* parent)
  : DynCenterWidget(fileName, "ToolStatus", parent)
  , curTool(nullptr)
- , nxtTool(nullptr)
- , tlDesc(nullptr)
- , tlLen(nullptr)
- , tlRad(nullptr) {
+ , nxtTool(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
   setWindowTitle(tr("ToolStatus"));
   }
@@ -30,12 +27,12 @@ ToolStatus::~ToolStatus() {
 QWidget* ToolStatus::createContent() {
   QWidget* rv = DynCenterWidget::createContent();
 
-  tlDesc  = findChild<QLabel*>("toolDesc");
-  tlLen   = new LabelAdapter(findChild<QLabel*>("toolLen"));
-  tlRad   = new LabelAdapter(findChild<QLabel*>("toolRadius"));
+  tDesc   = findChild<QLabel*>("toolDesc");
+  tLen    = findChild<QLabel*>("toolLen");
+  tRad    = findChild<QLabel*>("toolRadius");
+  tPic    = findChild<QLabel*>("toolPic");
   curTool = new LabelAdapter(findChild<QLabel*>("curToolNum"), 0);
   nxtTool = new LabelAdapter(findChild<QLabel*>("nextToolNum"), 0);
-//  tlDesc->setText(tr(tlDesc->text().toStdString().c_str(), "ToolInfoForm"));
 
   return rv;
   }
@@ -49,9 +46,11 @@ void ToolStatus::toolChanged(const QVariant& toolNum) {
   te->dump();
   qDebug() << "< ToolInfoDockable::toolChanged(" << toolNum << ")";
   curTool->setValue(toolNum);
-  tlLen->setValue(tr("L: %1").arg(te->length()));
-  tlRad->setValue(tr("D: %1").arg(te->diameter() / 2.0));
-  tlDesc->setText(te->description());
+  tLen->setText(tr("L: %1").arg(Core().locale().toString(te->length(), 'f', 3)));
+  tRad->setText(tr("R: %1").arg(Core().locale().toString(te->diameter() / 2.0, 'f', 3)));
+  tPic->setPixmap(te->icon());
+  tDesc->setText(te->description());
+//  tDesc->setText(QString("<html><p>%1</p></html>").arg(te->description()));
   }
 
 
@@ -113,72 +112,72 @@ void ToolStatus::connectSignals() {
                  });
   connect(vm.getModel(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , tlDesc
+        , tDesc
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);
-                 tlDesc->setStyleSheet(arg);
+                 tDesc->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , tlDesc
+        , tDesc
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);
-                 tlDesc->setStyleSheet(arg);
+                 tDesc->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc), tlDesc->font())
+  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc), tDesc->font())
         , &ValueModel::valueChanged
-        , tlDesc
+        , tDesc
         , [=](){ QFont font = ValueManager().getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QFont>();
 
-                 tlDesc->setFont(font);
+                 tDesc->setFont(font);
                  });
   connect(vm.getModel(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , tlLen->label()
+        , tLen
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);
-                 tlLen->label()->setStyleSheet(arg);
+                 tLen->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , tlLen->label()
+        , tLen
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);
-                 tlLen->label()->setStyleSheet(arg);
+                 tLen->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc), tlLen->label()->font())
+  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc), tLen->font())
         , &ValueModel::valueChanged
-        , tlLen->label()
+        , tLen
         , [=](){ QFont font = ValueManager().getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QFont>();
 
-                 tlLen->label()->setFont(font);
+                 tLen->setFont(font);
                  });
   connect(vm.getModel(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , tlRad->label()
+        , tRad
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);
-                 tlRad->label()->setStyleSheet(arg);
+                 tRad->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , tlRad->label()
+        , tRad
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);
-                 tlRad->label()->setStyleSheet(arg);
+                 tRad->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc), tlRad->label()->font())
+  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc), tRad->font())
         , &ValueModel::valueChanged
-        , tlRad->label()
+        , tRad
         , [=](){ QFont font = ValueManager().getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QFont>();
 
-                 tlRad->label()->setFont(font);
+                 tRad->setFont(font);
                  });
   }
 
@@ -200,10 +199,10 @@ void ToolStatus::updateStyles() {
           .arg(vm.getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);
   QFont font = vm.getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QFont>();
 
-  tlDesc->setStyleSheet(style);
-  tlDesc->setFont(font);
-  tlLen->label()->setStyleSheet(style);
-  tlLen->label()->setFont(font);
-  tlRad->label()->setStyleSheet(style);
-  tlRad->label()->setFont(font);
+  tDesc->setStyleSheet(style);
+  tDesc->setFont(font);
+  tLen->setStyleSheet(style);
+  tLen->setFont(font);
+  tRad->setStyleSheet(style);
+  tRad->setFont(font);
   }

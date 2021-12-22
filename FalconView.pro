@@ -82,11 +82,11 @@ SOURCES += \
     src/util/HelixCurveAdaptor.cpp \
     src/util/HHelixCurveAdaptor.cpp \
     src/util/LCInter.cpp \
-    src/util/labeladapter.cpp \
     src/util/micon.cpp \
     src/util/multistateaction.cpp \
     src/util/multistatetoolbutton.cpp \
     src/util/notcondition.cpp \
+    src/util/numlabel.cpp \
     src/util/orcondition.cpp \
     src/util/smallercondition.cpp \
     src/util/timestamp.cpp \
@@ -174,12 +174,12 @@ HEADERS += \
     src/util/HelixCurveAdaptor_p.h \
     src/util/HelixCurveAdaptor.h \
     src/util/HHelixCurveAdaptor.h \
-    src/util/labeladapter.h \
     src/util/LCInter.h \
     src/util/micon.h \
     src/util/multistateaction.h \
     src/util/multistatetoolbutton.h \
     src/util/notcondition.h \
+    src/util/numlabel.h \
     src/util/orcondition.h \
     src/util/smallercondition.h \
     src/util/timestamp.h \
@@ -219,11 +219,12 @@ FORMS += \
     src/UI/HelpTitle.ui \
     src/UI/Jog.ui \
     src/UI/MDIEditor.ui \
+    src/UI/Position.ui \
+    src/UI/PositionMain.ui \
     src/UI/VCurCodes.ui \
     src/UI/GCodeEditor.ui \
     src/UI/mainwindow.ui \
     src/UI/Fixture.ui \
-    src/UI/Position.ui \
     src/UI/Settings.ui \
     src/UI/HSpeedInfo.ui \
     src/UI/VSpeedInfo.ui \

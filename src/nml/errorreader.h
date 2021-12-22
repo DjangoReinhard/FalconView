@@ -2,6 +2,7 @@
 #define ERRORREADER_H
 #include <QObject>
 #include <sysevent.h>
+#include <nml_type.hh>
 class NML;
 
 
@@ -14,7 +15,7 @@ public:
   void      check4Error();
 
 protected:
-  SysEvent* fetchMessage();
+  SysEvent* fetchMessage(NMLTYPE type);
 
 private:
   NML* ec;

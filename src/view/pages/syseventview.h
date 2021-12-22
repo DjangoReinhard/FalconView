@@ -19,6 +19,7 @@ protected:
   virtual void connectSignals() override;
   virtual void updateStyles() override;
   virtual bool eventFilter(QObject* o, QEvent* e) override;
+  virtual void showEvent(QShowEvent *event) override;
   virtual QWidget* createContent() override;
 
 private:

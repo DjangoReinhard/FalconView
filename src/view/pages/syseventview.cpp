@@ -45,6 +45,13 @@ SysEventView::~SysEventView() {
   }
 
 
+void SysEventView::showEvent(QShowEvent* e) {
+  if (e->type() == QEvent::Show) {
+     model->select();
+     }
+  }
+
+
 void SysEventView::connectSignals() {
   }
 

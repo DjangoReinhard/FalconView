@@ -24,8 +24,9 @@ protected slots:
 private:
   LabelAdapter* curTool;
   LabelAdapter* nxtTool;
-  QLabel*       tlDesc;
-  LabelAdapter* tlLen;
-  LabelAdapter* tlRad;
+  QLabel*       tDesc;
+  QLabel*       tLen;
+  QLabel*       tRad;
+  QLabel*       tPic;
   };
 #endif // TOOLSTATUS_H

@@ -282,6 +282,15 @@ void MainWindow::createActions() {
                               , new EqualCondition(vm.getModel("spindle0Dir"), 1)
                               , this);
   sg->addAction(spindleRight);
+
+  tools = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                       , QIcon(":/res/SK_Tools.png")
+                       , QIcon(":/res/SK_Tools_active.png")
+                       , tr("Tools")
+                       , new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
+                                        , new EqualCondition(vm.getModel("errorActive"), false))
+                       , new TrueCondition()
+                       , this);
   homeAll = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                          , QIcon(":/res/SK_HomeAll.png")
                          , QIcon(":/res/SK_HomeAll_active.png")
@@ -372,6 +381,8 @@ void MainWindow::createConnections() {
   connect(spindleLeft,  &QAction::triggered, this, &MainWindow::startSpindleCCW);
   connect(spindleRight, &QAction::triggered, this, &MainWindow::startSpindleCW);
   connect(spindleOff,   &QAction::triggered, this, &MainWindow::stopSpindle);
+
+  connect(tools,        &QAction::triggered, this, &MainWindow::testTools);
   }
 
 
@@ -500,6 +511,7 @@ void MainWindow::createToolBars() {
   switchTB->addAction(spindleLeft);
   switchTB->addAction(spindleOff);
   switchTB->addAction(spindleRight);
+  switchTB->addAction(tools);
   addToolBar(Qt::RightToolBarArea, switchTB);
 
   powerTB = new QToolBar(tr("Power"), this);
@@ -524,6 +536,18 @@ void MainWindow::tellStates() const {
   vm.getModel("errorActive")->dump();
   vm.getModel("showAbsolute")->dump();
   vm.getModel("singleStep")->dump();
+  }
+
+
+void MainWindow::testTools() {
+  static int       slot = 0;
+  const ToolEntry* tool    = Core().toolTable().tool4Slot(slot);
+
+  while (!tool) tool = Core().toolTable().tool4Slot(++slot);
+  ValueManager().setValue("toolInSpindle", tool->number());
+  ValueManager().setValue("pocketPrepared", ++slot);
+  qDebug() << "testTools #" << slot << " - total:" << Core().toolTable().entries();
+  if (slot >= Core().toolTable().entries()) slot = 0;
   }
 
 
@@ -754,15 +778,15 @@ void MainWindow::timerEvent(QTimerEvent* ) {
 
 void MainWindow::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
-    case Qt::Key_Escape:
-         if (Core().curPage() == SysEventView::className) {
-            msgMode->toggle();
-            showErrMessages();
-            }
-         else
-            qDebug() << "MW: escape pressed! But don't do anything!";
-         e->accept();
-         break;
+//    case Qt::Key_Escape:
+//         if (Core().curPage() == SysEventView::className) {
+//            msgMode->toggle();
+//            showErrMessages();
+//            }
+//         else
+//            qDebug() << "MW: escape pressed! But don't do anything!";
+//         e->accept();
+//         break;
     case Qt::Key_H:
          if (e->modifiers() == int(Qt::CTRL | Qt::ALT) && !ValueManager().getValue("allHomed").toBool()) {
             e->accept();

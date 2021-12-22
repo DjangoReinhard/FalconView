@@ -27,13 +27,12 @@ void ErrorReader::check4Error() {
      throw new SysEvent(SysEvent::EventType::SystemError, "no error channel to read from!");
   NMLTYPE type = ec->read();
 
-  if (type) throw fetchMessage();
+  if (type) throw fetchMessage(type);
   }
 
 
-SysEvent* ErrorReader::fetchMessage() {
+SysEvent* ErrorReader::fetchMessage(NMLTYPE type) {
   if (!ec || !ec->valid()) throw new std::runtime_error("no error channel to read from!");
-  NMLTYPE type = ec->read();
   SysEvent::EventType et;
   char error_buffer[LINELEN];
 

@@ -54,6 +54,7 @@ protected slots:
   void showErrMessages();
   void toggleAllButCenter();
   void toggleAbsolute(const QVariant& absolute);
+  void testTools();
   void autoStart();
   void autoPause();
   void autoStop();

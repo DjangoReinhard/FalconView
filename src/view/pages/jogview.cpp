@@ -118,7 +118,7 @@ void JogView::jog(QWidget* o, int axis, int step) {
 
 
 void JogView::sliderChanged(const QVariant& v) {
-  qDebug() << "jog speed override:" << v;
+//  qDebug() << "jog speed override:" << v;
   double jogFactor = v.toDouble();
 
   ValueManager().setValue("jogFactor", v);
@@ -133,7 +133,7 @@ void JogView::sliderChanged(const QVariant& v) {
 
 
 void JogView::jogVelChanged() {
-  ValueManager().setValue("jogRapid", ui->cbRapid->isChecked());
+//  ValueManager().setValue("jogRapid", ui->cbRapid->isChecked());
   if (ui->cbRapid->isChecked())
      ui->cmdJogSpeed->setText(Core().locale().toString(maxSpeed, 'f', 0));     
   else
