@@ -24,6 +24,9 @@ public:
   static const QString className;
   PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent = nullptr);
 
+  QString currentRow() const;
+  long    curLine() const;
+
 public slots:
   void toggleSub();
   void setCurrentLine(const QVariant& line);

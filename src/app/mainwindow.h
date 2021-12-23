@@ -10,6 +10,7 @@ class PositionStatus;
 class PreViewEditor;
 class DynDockable;
 class DBConnection;
+class MDIEditor;
 class GCodeViewer;
 class HelpDialog;
 class QAction;
@@ -69,6 +70,7 @@ private:
   bool                statusInPreview;
   Ui::MainWindow*     ui;
   PreViewEditor*      pw;
+  MDIEditor*          mdi;
   HelpDialog*         dlgHelp;
   SettingsNotebook*   snb;
   QAction*            startAction;

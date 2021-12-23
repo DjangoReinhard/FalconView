@@ -150,11 +150,10 @@ void MainWindow::createActions() {
                             , QIcon(":/res/SK_SingleStep.png")
                             , QIcon(":/res/SK_SingleStep_active.png")
                             , tr("Single-Step")
-                            , new AndCondition(new EqualCondition(vm.getModel("taskMode"), EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO)
-                                             , new EqualCondition(vm.getModel("errorActive"), false))
+                            , new EqualCondition(vm.getModel("errorActive"), false)
                             , new EqualCondition(vm.getModel("singleStep"), true)
                             , this);
-  singleStep->setCheckable(true);
+//  singleStep->setCheckable(true);
 
   autoMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                           , QIcon(":/res/SK_Auto.png")
@@ -188,7 +187,7 @@ void MainWindow::createActions() {
                               , QIcon(":/res/SK_TestEdit.png")
                               , QIcon(":/res/SK_TestEdit_active.png")
                               , tr("TestEdit-mode")
-                              , new TrueCondition()
+                              , new EqualCondition(vm.getModel("errorActive"), false)
                               , new EqualCondition(vm.getModel("appMode"), ApplicationMode::XEdit)
                               , this);
   cfgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
@@ -587,7 +586,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
                     , true
                     , center);
   center->addPage(page);
-  page = new DynFrame(new MDIEditor(":/src/UI/MDIEditor.ui")
+  page = new DynFrame(mdi = new MDIEditor(":/src/UI/MDIEditor.ui")
                     , true
                     , center);
   center->addPage(page);
@@ -653,8 +652,9 @@ void MainWindow::hitPowerBtn() {
   }
 
 
-void MainWindow::setSingleStep(bool singleStep) {
-  ValueManager().setValue("singleStep", singleStep);
+void MainWindow::setSingleStep(bool) {
+  qDebug() << "MW::setSingleStep()";
+  ValueManager().setValue("singleStep", !ValueManager().getValue("singleStep").toBool());
   }
 
 
@@ -662,26 +662,44 @@ void MainWindow::autoStart() {
   bool gcodeDirty = ValueManager().getValue("gcodeDirty").toBool();
 
   qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
-
-//  ApplicationMode am = ValueManager().getValue("appMode").value<ApplicationMode>();
-  int am = 0;
+  ApplicationMode am = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
 
   if (am == ApplicationMode::MDI) {
+     const QString& cmd = mdi->command();
+
+     if (cmd.isEmpty()) return;
      Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
-//     Core().beSetMDI();
-     qDebug() << "execute MDI: " << "¿what?";
+     qDebug() << "execute MDI: " << cmd;
+     Core().beSendMDICommand(cmd);
+     mdi->append(cmd);
      }
   else if (am == ApplicationMode::Auto) {
+     if (gcodeDirty) {
+        Core().riseError(tr("active GCode-file has unsaved changes. "
+                            "Please save the file before executing it."));
+        return;
+        }
      qDebug() << "start auto NC execution ...";
-     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
      if (ValueManager().getValue("singleStep").toBool()) {
-        qDebug() << "singlestep is ON";
-        Core().beSetAuto(3, 0);
+        const QString& cmd = pw->currentRow();
+
+        qDebug() << "execute single step: " << cmd;
+        if (cmd.isEmpty()) return;
+        Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+        Core().beSendMDICommand(cmd);
+
+        //TODO: advance cursor?
         }
      else {
         qDebug() << "singlestep is OFF";
-        Core().beSetAuto(0, 0);
+        Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+        Core().beTaskPlanSynch();
+        Core().beSetAuto(0, pw->curLine());
         }
+     }
+  else {
+     Core().riseError(tr("wrong application for execute. Please select"
+                         "3D-Preview or MDI for gcode-execution."));
      }
   }
 
@@ -690,7 +708,7 @@ void MainWindow::autoPause() {
   int iState = ValueManager().getValue("interpState").toInt();
 
   if (iState == EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED) {
-     Core().beSetAuto(2, 0);
+     Core().beSetAuto(2, pw->curLine());
      }
   else {
      Core().beSetAuto(1, 0);
@@ -700,8 +718,8 @@ void MainWindow::autoPause() {
 
 void MainWindow::autoStop() {
   Core().beAbortTask();
-  Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
   Core().beTaskPlanSynch();
+  Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
   }
 
 

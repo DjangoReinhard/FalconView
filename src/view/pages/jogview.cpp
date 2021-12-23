@@ -103,15 +103,18 @@ void JogView::jog(QWidget* o, int axis, int step) {
 
   if (ui->cbSingleStep->isChecked()) {
      qDebug() << "step single step of size:" << stepSize << "with:" << jogSpeed;
+     Core().beJogStep(axis, stepSize, jogSpeed);
      }
   else {
      QToolButton* tb = static_cast<QToolButton*>(o);
 
      if ((tb && tb->isChecked()) || !tb) {
         qDebug() << "start jogging with speed" << jogSpeed;
+        Core().beJogStart(axis, jogSpeed);
         }
      else {
         qDebug() << "stop jogging of axis" << axis;
+        Core().beJogStop(axis);
         }
      }
   }

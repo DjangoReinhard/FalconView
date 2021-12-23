@@ -122,6 +122,16 @@ void PreViewEditor::closeEvent(QCloseEvent* e) {
   }
 
 
+QString PreViewEditor::currentRow() const {
+  return ed->textCursor().block().text();
+  }
+
+
+long PreViewEditor::curLine() const {
+  return ed->textCursor().block().blockNumber();
+  }
+
+
 bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
   if (event->type() == QEvent::KeyPress) {
      QKeyEvent* e = static_cast<QKeyEvent*>(event);

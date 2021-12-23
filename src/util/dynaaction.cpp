@@ -24,8 +24,9 @@ DynaAction::DynaAction(const QIcon& disIco, const QIcon& enIco, const QIcon& cIc
 void DynaAction::setEnabled(bool enabled) {
 //  qDebug() << "DA[" << text() << "]: setEnabled(" << (enabled ? "ON" : "OFF") << ")";
   if (enabled) {
-     QAction::setIcon(enabledIcon);
-     QAction::setEnabled(enabled);
+     setChecked(cChecked->result());
+//     QAction::setIcon(enabledIcon);
+//     QAction::setEnabled(enabled);
      }
   else {
      QAction::setIcon(disabledIcon);
