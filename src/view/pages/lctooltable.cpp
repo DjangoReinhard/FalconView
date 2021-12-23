@@ -71,6 +71,7 @@ void LCToolTable::keyReleaseEvent(QKeyEvent *e) {
     case Qt::Key_F10: break;
     case Qt::Key_S:
          if (e->modifiers() == Qt::CTRL) break;
+         [[fallthrough]];
     default:
          DynCenterWidget::keyReleaseEvent(e);
          break;
@@ -101,6 +102,7 @@ void LCToolTable::keyPressEvent(QKeyEvent *e) {
             e->accept();
             break;
             }
+         [[fallthrough]];
     default:
          DynCenterWidget::keyPressEvent(e);
          break;

@@ -149,7 +149,7 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   QGridLayout* gl = new QGridLayout(v);
 
   v->setLayout(gl);
-  toolStat = new ToolStatus(":/src/UI/ToolInfo.ui");
+  toolStat = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
   ccStat = new CurCodesStatus(":/src/UI/VCurCodes.ui");
   posStat = new PositionStatus(":/src/UI/Position.ui", Core().axisMask());
   speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");

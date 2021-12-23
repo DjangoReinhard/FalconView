@@ -168,14 +168,17 @@ void JogView::incStepSize() {
              rbl.at(1)->setChecked(true);
              return;
              }
+             [[fallthrough]];
         case 1: if (rbl.at(i)->isChecked()) {
              rbl.at(2)->setChecked(true);
              return;
              }
+             [[fallthrough]];
         case 2: if (rbl.at(i)->isChecked()) {
              rbl.at(3)->setChecked(true);
              return;
              }
+             [[fallthrough]];
         case 3: if (rbl.at(i)->isChecked()) {
              rbl.at(0)->setChecked(true);
              return;
@@ -192,14 +195,17 @@ void JogView::decStepSize() {
              rbl.at(3)->setChecked(true);
              return;
              }
+             [[fallthrough]];
         case 1: if (rbl.at(i)->isChecked()) {
              rbl.at(0)->setChecked(true);
              return;
              }
+             [[fallthrough]];
         case 2: if (rbl.at(i)->isChecked()) {
              rbl.at(1)->setChecked(true);
              return;
              }
+             [[fallthrough]];
         case 3: if (rbl.at(i)->isChecked()) {
              rbl.at(2)->setChecked(true);
              return;
@@ -297,6 +303,7 @@ bool JogView::eventFilter(QObject*, QEvent* event) {
            ui->slJog->setValue(value);
            return true;
            }
+           [[fallthrough]];
       case Qt::Key_Down: {
            int value = ui->slJog->value() - 1;
 
@@ -304,6 +311,7 @@ bool JogView::eventFilter(QObject*, QEvent* event) {
            ui->slJog->setValue(value);
            return true;
            }
+           [[fallthrough]];
       case Qt::Key_Right:
            incStepSize();
            return true;

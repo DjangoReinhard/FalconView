@@ -1,6 +1,7 @@
 *.bak
 *.o
 *.log
+*.swp
 *~
 *.qm
 *.pro.user
@@ -8,7 +9,10 @@ lc
 docs/html
 *.qch
 *.qzh
+*.xcf
+*.txt
 /db
+rednose*
 build/*
 test/*
 oldStuff/*

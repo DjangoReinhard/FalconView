@@ -561,7 +561,7 @@ void MainWindow::createDockables(DBConnection&) {
                                                   , Core().axisMask())
                                , this));
      addDockable(Qt::LeftDockWidgetArea
-               , new DynDockable(new ToolStatus(":/src/UI/ToolInfo.ui")
+               , new DynDockable(new ToolStatus(":/src/UI/ToolInfo.ui", false)
                                , this));
      addDockable(Qt::BottomDockWidgetArea
                , new DynDockable(new SpeedStatus(":/src/UI/HSpeedInfo.ui")
@@ -577,17 +577,11 @@ void MainWindow::createDockables(DBConnection&) {
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
   CenterView* center = new CenterView(this);
-  DynFrame*   page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
-                                                         , Core().view3D()
-                                                         , statusInPreview)
+  DynFrame*   page   = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
                                   , true
                                   , center);
 
   Core().setViewStack(center);
-  center->addPage(page);
-  page = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
-                    , true
-                    , center);
   center->addPage(page);
   page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui")
                     , true
@@ -778,21 +772,13 @@ void MainWindow::timerEvent(QTimerEvent* ) {
 
 void MainWindow::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
-//    case Qt::Key_Escape:
-//         if (Core().curPage() == SysEventView::className) {
-//            msgMode->toggle();
-//            showErrMessages();
-//            }
-//         else
-//            qDebug() << "MW: escape pressed! But don't do anything!";
-//         e->accept();
-//         break;
     case Qt::Key_H:
          if (e->modifiers() == int(Qt::CTRL | Qt::ALT) && !ValueManager().getValue("allHomed").toBool()) {
             e->accept();
             homeAll->trigger();
             break;
             }
+         [[fallthrough]];
     case Qt::Key_F1:
     case Qt::Key_F2:
     case Qt::Key_F3:
@@ -824,7 +810,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
             break;
             }
          else qDebug() << "mode toolbar is NOT visible";
-
+         [[fallthrough]];
     default:
 //         qDebug() << "MW: pressed key: " << e->key()
 //                  << "modifiers: "   << e->modifiers()

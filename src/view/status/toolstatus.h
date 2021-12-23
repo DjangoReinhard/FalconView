@@ -1,7 +1,6 @@
 #ifndef TOOLSTATUS_H
 #define TOOLSTATUS_H
 #include <dyncenterwidget.h>
-class LabelAdapter;
 class QVariant;
 class QLabel;
 
@@ -10,7 +9,7 @@ class ToolStatus : public DynCenterWidget
 {
   Q_OBJECT
 public:
-  explicit ToolStatus(const QString& fileName, QWidget* parent = nullptr);
+  explicit ToolStatus(const QString& fileName, bool inPreview, QWidget* parent = nullptr);
   virtual ~ToolStatus();
 
 protected:
@@ -22,11 +21,12 @@ protected slots:
   void toolChanged(const QVariant& toolNum);
 
 private:
-  LabelAdapter* curTool;
-  LabelAdapter* nxtTool;
-  QLabel*       tDesc;
-  QLabel*       tLen;
-  QLabel*       tRad;
-  QLabel*       tPic;
+  bool    isInPreview;
+  QLabel* curTool;
+  QLabel* nxtTool;
+  QLabel* tDesc;
+  QLabel* tLen;
+  QLabel* tRad;
+  QLabel* tPic;
   };
 #endif // TOOLSTATUS_H

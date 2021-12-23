@@ -77,22 +77,17 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
   QVector3D e = end - c;
 
   double r0 = s.length();
-  double r1 = e.length();
-
+//  double r1 = e.length();
   double a0 = atan2(s.y(), s.x());
   double a1 = atan2(e.y(), e.x());
 
 //  qDebug() << "> PRE(0) - a0:" << a0 << "a1:" << a1;
-
   if (a0 < 0) a0 += 2 * M_PI;
   if (a1 < 0) a1 += 2 * M_PI;
-
 //  qDebug() << "> PRE(1) - a0:" << a0 << "a1:" << a1;
-
   double arc = a1 - a0;
 
 //  qDebug() << "> PRE(2) - arc:" << arc;
-
   if (ccw && a0 > a1 && arc < 0)       arc += 2 * M_PI;
   else if (!ccw) {
      if (a0 < a1 && arc > 0) arc -= 2 * M_PI;
@@ -100,9 +95,7 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
      hAxis.SetZ(-hAxis.Z());
      }
   arc += fullTurns * 2 * M_PI;
-
 //  qDebug() << "> PRE(3) - r0:" << r0 << "r1:" << r1 << "a0 >" << a0 << "< - a1:" << a1 << "arc:" << arc << "\n\n";
-
   Handle(Geom_BSplineCurve) aHelix;
   Geom_HelixData helDat;
   gp_Ax3 pos(gp_Pnt(center.X(), center.Y(), from.Z()), hAxis);

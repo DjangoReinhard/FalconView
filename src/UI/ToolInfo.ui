@@ -67,7 +67,7 @@
    <item row="0" column="2">
     <widget class="QLabel" name="toolLen">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -89,7 +89,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1" colspan="5">
+   <item row="2" column="1" rowspan="2" colspan="4">
     <widget class="QLabel" name="toolDesc">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -108,7 +108,7 @@
    <item row="1" column="2">
     <widget class="QLabel" name="toolRadius">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -131,7 +131,7 @@
     </widget>
    </item>
    <item row="0" column="1" rowspan="2">
-    <widget class="QLabel" name="curToolNum">
+    <widget class="NumLabel" name="curToolNum">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -165,8 +165,8 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3" rowspan="2" colspan="3">
-    <widget class="QLabel" name="nextToolNum">
+   <item row="0" column="4" rowspan="2">
+    <widget class="NumLabel" name="nextToolNum">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -191,6 +191,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NumLabel</class>
+   <extends>QLabel</extends>
+   <header>numlabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../FalconView.qrc"/>
  </resources>

@@ -109,6 +109,7 @@ void FixtureManager::keyPressEvent(QKeyEvent* e) {
             e->accept();
             break;
             }
+         [[fallthrough]];
     default: {
          qDebug() << "FM: pressed key: " << e->key()
                   << "modifiers: " << e->modifiers()

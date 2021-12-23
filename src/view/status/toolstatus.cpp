@@ -1,9 +1,9 @@
 #include <toolstatus.h>
-#include <labeladapter.h>
 #include <valuemanager.h>
 #include <configacc.h>
 #include <core.h>
 #include <tooltable.h>
+#include <QGridLayout>
 #include <QUiLoader>
 #include <QFile>
 #include <QLabel>
@@ -11,8 +11,9 @@
 #include <QDebug>
 
 
-ToolStatus::ToolStatus(const QString & fileName, QWidget* parent)
+ToolStatus::ToolStatus(const QString & fileName, bool inPreview, QWidget* parent)
  : DynCenterWidget(fileName, "ToolStatus", parent)
+ , isInPreview(inPreview)
  , curTool(nullptr)
  , nxtTool(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
@@ -25,15 +26,26 @@ ToolStatus::~ToolStatus() {
 
 
 QWidget* ToolStatus::createContent() {
-  QWidget* rv = DynCenterWidget::createContent();
+  QWidget*     rv = DynCenterWidget::createContent();
+  QGridLayout* gl = static_cast<QGridLayout*>(rv->layout());
 
   tDesc   = findChild<QLabel*>("toolDesc");
   tLen    = findChild<QLabel*>("toolLen");
   tRad    = findChild<QLabel*>("toolRadius");
   tPic    = findChild<QLabel*>("toolPic");
-  curTool = new LabelAdapter(findChild<QLabel*>("curToolNum"), 0);
-  nxtTool = new LabelAdapter(findChild<QLabel*>("nextToolNum"), 0);
+  curTool = findChild<QLabel*>("curToolNum");
+  nxtTool = findChild<QLabel*>("nextToolNum");
 
+  if (isInPreview && gl) {
+     gl->removeWidget(curTool);
+     gl->addWidget(curTool, 0, 1);
+     gl->removeWidget(tRad);
+     gl->addWidget(tRad, 0, 3);
+     gl->removeWidget(nxtTool);
+     gl->addWidget(nxtTool, 0, 4);
+     gl->removeWidget(tDesc);
+     gl->addWidget(tDesc, 1, 1, 3, 4);
+     }
   return rv;
   }
 
@@ -42,15 +54,11 @@ void ToolStatus::toolChanged(const QVariant& toolNum) {
   const ToolEntry* te = Core().toolTable().tool(toolNum.toInt());
 
   if (!te) return;
-  qDebug() << "> ToolInfoDockable::toolChanged(" << toolNum << ")";
-  te->dump();
-  qDebug() << "< ToolInfoDockable::toolChanged(" << toolNum << ")";
-  curTool->setValue(toolNum);
+  curTool->setNum(toolNum.toInt());
   tLen->setText(tr("L: %1").arg(Core().locale().toString(te->length(), 'f', 3)));
   tRad->setText(tr("R: %1").arg(Core().locale().toString(te->diameter() / 2.0, 'f', 3)));
   tPic->setPixmap(te->icon());
   tDesc->setText(te->description());
-//  tDesc->setText(QString("<html><p>%1</p></html>").arg(te->description()));
   }
 
 
@@ -58,11 +66,8 @@ void ToolStatus::connectSignals() {
   ValueManager vm;
   Config       cfg;
 
-  curTool->label()->setStyleSheet("background: white; ");
-  connect(vm.getModel("toolInSpindle", 0),  &ValueModel::valueChanged
-        , this, &ToolStatus::toolChanged);
-  connect(vm.getModel("pocketPrepared", 0),  &ValueModel::valueChanged
-        , nxtTool, [=](){ nxtTool->label()->setNum(ValueManager().getValue("pocketPrepared").toInt()); });
+  connect(vm.getModel("toolInSpindle", 0),  &ValueModel::valueChanged, this, &ToolStatus::toolChanged);
+  connect(vm.getModel("pocketPrepared", 0),  &ValueModel::valueChanged, nxtTool, [=](const QVariant& v){ nxtTool->setNum(v.toInt()); });
 
   connect(vm.getModel(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNum), QColor(Qt::white))
         , &ValueModel::valueChanged
@@ -70,7 +75,7 @@ void ToolStatus::connectSignals() {
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QColor>().rgba(), 0, 16);
-                 curTool->label()->setStyleSheet(arg);
+                 curTool->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNum), QColor(Qt::black))
         , &ValueModel::valueChanged
@@ -78,14 +83,14 @@ void ToolStatus::connectSignals() {
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QColor>().rgba(), 0, 16);
-                 curTool->label()->setStyleSheet(arg);
+                 curTool->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNum), curTool->label()->font())
+  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNum), curTool->font())
         , &ValueModel::valueChanged
         , curTool
         , [=](){ QFont font = ValueManager().getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QFont>();
 
-                 curTool->label()->setFont(font);
+                 curTool->setFont(font);
                  });
   connect(vm.getModel(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNext), QColor(Qt::white))
         , &ValueModel::valueChanged
@@ -93,7 +98,7 @@ void ToolStatus::connectSignals() {
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QColor>().rgba(), 0, 16);
-                 nxtTool->label()->setStyleSheet(arg);
+                 nxtTool->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNext), QColor(Qt::black))
         , &ValueModel::valueChanged
@@ -101,14 +106,14 @@ void ToolStatus::connectSignals() {
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QColor>().rgba(), 0, 16);
-                 nxtTool->label()->setStyleSheet(arg);
+                 nxtTool->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNext), nxtTool->label()->font())
+  connect(vm.getModel(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNext), nxtTool->font())
         , &ValueModel::valueChanged
         , nxtTool
         , [=](){ QFont font = ValueManager().getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QFont>();
 
-                 nxtTool->label()->setFont(font);
+                 nxtTool->setFont(font);
                  });
   connect(vm.getModel(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc), QColor(Qt::white))
         , &ValueModel::valueChanged
@@ -186,14 +191,14 @@ void ToolStatus::updateStyles() {
   ValueManager vm;
   Config       cfg;
 
-  curTool->label()->setStyleSheet(QString("color: #%1; background: #%2;")
+  curTool->setStyleSheet(QString("color: #%1; background: #%2;")
                                  .arg(vm.getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QColor>().rgb(), 0, 16)
                                  .arg(vm.getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QColor>().rgba(), 0, 16));
-  curTool->label()->setFont(vm.getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QFont>());
-  nxtTool->label()->setStyleSheet(QString("color: #%1; background: #%2;")
+  curTool->setFont(vm.getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNum)).value<QFont>());
+  nxtTool->setStyleSheet(QString("color: #%1; background: #%2;")
                                  .arg(vm.getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QColor>().rgb(), 0, 16)
                                  .arg(vm.getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QColor>().rgba(), 0, 16));
-  nxtTool->label()->setFont(vm.getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QFont>());
+  nxtTool->setFont(vm.getValue(QString("cfgF") + cfg.nameOf(Config::GuiElem::ToolNext)).value<QFont>());
   QString style = QString("color: #%1; background: #%2;")
           .arg(vm.getValue(QString("cfgFg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgb(), 0, 16)
           .arg(vm.getValue(QString("cfgBg") + cfg.nameOf(Config::GuiElem::ToolDesc)).value<QColor>().rgba(), 0, 16);

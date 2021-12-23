@@ -1,6 +1,6 @@
 #include <speedstatus.h>
-#include <labeladapter.h>
 #include <valuemanager.h>
+#include <numlabel.h>
 #include <configacc.h>
 #include <core.h>
 #include <QFile>
@@ -11,19 +11,7 @@
 
 
 SpeedStatus::SpeedStatus(const QString& fileName, QWidget* parent)
- : DynCenterWidget(fileName, "SpeedStatus", false, parent)
- , curFeed(nullptr)
- , curFastFeed(nullptr)
- , curSpeed(nullptr)
- , cmdFeed(nullptr)
- , cmdFastFeed(nullptr)
- , cmdSpeed(nullptr)
- , feedFactor(nullptr)
- , fastfeedFactor(nullptr)
- , speedFactor(nullptr)
- , slFeed(nullptr)
- , slFastFeed(nullptr)
- , slSpeed(nullptr) {
+ : DynCenterWidget(fileName, "SpeedStatus", false, parent) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
   setWindowTitle(tr("SpeedStatus"));
   }
@@ -36,22 +24,25 @@ SpeedStatus::~SpeedStatus() {
 QWidget* SpeedStatus::createContent() {
   QWidget* rv = DynCenterWidget::createContent();
 
-  curFeed        = new LabelAdapter(findChild<QLabel*>("curFeed"), 0);
-  curFastFeed    = new LabelAdapter(findChild<QLabel*>("curFastFeed"), 0);
-  curSpeed       = new LabelAdapter(findChild<QLabel*>("curSpeed"), 0);
-  cmdFeed        = new LabelAdapter(findChild<QLabel*>("cmdFeed"), 0);
-  cmdFastFeed    = new LabelAdapter(findChild<QLabel*>("cmdFastFeed"), 0);
-  cmdSpeed       = new LabelAdapter(findChild<QLabel*>("cmdSpeed"), 0);
-  feedFactor     = new LabelAdapter(findChild<QLabel*>("feedFactor"), 0);
-  fastfeedFactor = new LabelAdapter(findChild<QLabel*>("fastfeedFactor"), 0);
-  speedFactor    = new LabelAdapter(findChild<QLabel*>("speedFactor"), 0);
-  slFeed         = findChild<QSlider*>("slFeed");
+  cmdFastFeed    = rv->findChild<QLabel*>("cmdFastFeed");
+  cmdFeed        = rv->findChild<QLabel*>("cmdFeed");
+  cmdSpeed       = rv->findChild<QLabel*>("cmdSpeed");
+  curFastFeed    = rv->findChild<QLabel*>("curFastFeed");
+  curFeed        = rv->findChild<QLabel*>("curFeed");
+  curSpeed       = rv->findChild<QLabel*>("curSpeed");
+  fastfeedFactor = rv->findChild<QLabel*>("fastfeedFactor");
+  feedFactor     = rv->findChild<QLabel*>("feedFactor");
+  label          = rv->findChild<QLabel*>("label");
+  label_3        = rv->findChild<QLabel*>("label_3");
+  label_9        = rv->findChild<QLabel*>("label_9");
+  speedFactor    = rv->findChild<QLabel*>("speedFactor");
+  slFastFeed     = rv->findChild<QSlider*>("slFastFeed");
+  slFeed         = rv->findChild<QSlider*>("slFeed");
+  slSpeed        = rv->findChild<QSlider*>("slSpeed");
   slFeed->setTickInterval(10);
   slFeed->setTickPosition(QSlider::TicksRight);
-  slFastFeed     = findChild<QSlider*>("slFastFeed");
   slFastFeed->setTickInterval(7);
   slFastFeed->setTickPosition(QSlider::TicksRight);
-  slSpeed        = findChild<QSlider*>("slSpeed");
   slSpeed->setTickInterval(10);
   slSpeed->setTickPosition(QSlider::TicksRight);
 
@@ -67,146 +58,152 @@ void SpeedStatus::connectSignals() {
   connect(vm.getModel("rapidrate", 100),     &ValueModel::valueChanged, this, &SpeedStatus::fastFeedRateChanged);
   connect(vm.getModel("spindle0Scale", 100), &ValueModel::valueChanged, this, &SpeedStatus::speedRateChanged);
 
-  connect(vm.getModel("cmdVelocity", 0),     &ValueModel::valueChanged, cmdFeed,     &LabelAdapter::setValue);
-  connect(vm.getModel("maxVelocity", 0),     &ValueModel::valueChanged, cmdFastFeed, &LabelAdapter::setValue);
-  connect(vm.getModel("spindle0Speed", 0),   &ValueModel::valueChanged, cmdSpeed,    &LabelAdapter::setValue);
-  connect(vm.getModel("curVelocity", 0),     &ValueModel::valueChanged, curFeed,     &LabelAdapter::setValue);
-  connect(vm.getModel("curRapid", 0),        &ValueModel::valueChanged, curFastFeed, &LabelAdapter::setValue);
-  connect(vm.getModel("curSpeed", 0),        &ValueModel::valueChanged, curSpeed,    &LabelAdapter::setValue);
+  connect(vm.getModel("cmdVelocity", 0),   &ValueModel::valueChanged, cmdFeed
+       , [=](const QVariant& v){ cmdFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
+  connect(vm.getModel("maxVelocity", 0),   &ValueModel::valueChanged, cmdFastFeed
+       , [=](const QVariant& v){ cmdFastFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
+  connect(vm.getModel("spindle0Speed", 0), &ValueModel::valueChanged, cmdSpeed
+       , [=](const QVariant& v){ cmdSpeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
+  connect(vm.getModel("curVelocity", 0),   &ValueModel::valueChanged, curFeed
+       , [=](const QVariant& v){ curFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
+  connect(vm.getModel("curRapid", 0),      &ValueModel::valueChanged, curFastFeed
+       , [=](const QVariant& v){ curFastFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
+  connect(vm.getModel("curSpeed", 0),      &ValueModel::valueChanged, curSpeed
+       , [=](const QVariant& v){ curSpeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
   connect(slFeed,     &QSlider::valueChanged, this, &SpeedStatus::feedChanged);
   connect(slFastFeed, &QSlider::valueChanged, this, &SpeedStatus::fastFeedChanged);
   connect(slSpeed,    &QSlider::valueChanged, this, &SpeedStatus::speedChanged);
 
   connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , curFeed->label()
+        , curFeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 curFeed->label()->setStyleSheet(arg);
+                 curFeed->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , curFeed->label()
+        , curFeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 curFeed->label()->setStyleSheet(arg);
+                 curFeed->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), curFeed->label()->font())
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), curFeed->font())
         , &ValueModel::valueChanged
-        , curFeed->label()
-        , [=](){ curFeed->label()->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
+        , curFeed
+        , [=](){ curFeed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
                  });
 
   connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , curFastFeed->label()
+        , curFastFeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 curFastFeed->label()->setStyleSheet(arg);
+                 curFastFeed->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , curFastFeed->label()
+        , curFastFeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 curFastFeed->label()->setStyleSheet(arg);
+                 curFastFeed->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), curFastFeed->label()->font())
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), curFastFeed->font())
         , &ValueModel::valueChanged
-        , curFastFeed->label()
-        , [=](){ curFastFeed->label()->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
+        , curFastFeed
+        , [=](){ curFastFeed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
                  });
 
   connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Speed)), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , curSpeed->label()
+        , curSpeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgba(), 0, 16);
-                 curSpeed->label()->setStyleSheet(arg);
+                 curSpeed->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , curSpeed->label()
+        , curSpeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgba(), 0, 16);
-                 curSpeed->label()->setStyleSheet(arg);
+                 curSpeed->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Speed)), curSpeed->label()->font())
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Speed)), curSpeed->font())
         , &ValueModel::valueChanged
-        , curSpeed->label()
-        , [=](){ curSpeed->label()->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Speed)).value<QFont>());
-                 });
-
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::white))
-        , &ValueModel::valueChanged
-        , cmdFeed->label()
-        , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 cmdFeed->label()->setStyleSheet(arg);
-                 });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::black))
-        , &ValueModel::valueChanged
-        , cmdFeed->label()
-        , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 cmdFeed->label()->setStyleSheet(arg);
-                 });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), cmdFeed->label()->font())
-        , &ValueModel::valueChanged
-        , cmdFeed->label()
-        , [=](){ cmdFeed->label()->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
+        , curSpeed
+        , [=](){ curSpeed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Speed)).value<QFont>());
                  });
 
   connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , cmdFastFeed->label()
+        , cmdFeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 cmdFastFeed->label()->setStyleSheet(arg);
+                 cmdFeed->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , cmdFastFeed->label()
+        , cmdFeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
-                 cmdFastFeed->label()->setStyleSheet(arg);
+                 cmdFeed->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), cmdFastFeed->label()->font())
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), cmdFeed->font())
         , &ValueModel::valueChanged
-        , cmdFastFeed->label()
-        , [=](){ cmdFastFeed->label()->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
+        , cmdFeed
+        , [=](){ cmdFeed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
+                 });
+
+  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::white))
+        , &ValueModel::valueChanged
+        , cmdFastFeed
+        , [=](){ QString arg = QString("color: #%1; background: #%2;")
+                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
+                 cmdFastFeed->setStyleSheet(arg);
+                 });
+  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)), QColor(Qt::black))
+        , &ValueModel::valueChanged
+        , cmdFastFeed
+        , [=](){ QString arg = QString("color: #%1; background: #%2;")
+                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Feed)).value<QColor>().rgba(), 0, 16);
+                 cmdFastFeed->setStyleSheet(arg);
+                 });
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Feed)), cmdFastFeed->font())
+        , &ValueModel::valueChanged
+        , cmdFastFeed
+        , [=](){ cmdFastFeed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Feed)).value<QFont>());
                  });
 
   connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Speed)), QColor(Qt::white))
         , &ValueModel::valueChanged
-        , cmdSpeed->label()
+        , cmdSpeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgba(), 0, 16);
-                 cmdSpeed->label()->setStyleSheet(arg);
+                 cmdSpeed->setStyleSheet(arg);
                  });
   connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)), QColor(Qt::black))
         , &ValueModel::valueChanged
-        , cmdSpeed->label()
+        , cmdSpeed
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
                                       .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgb(), 0, 16)
                                       .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>().rgba(), 0, 16);
-                 cmdSpeed->label()->setStyleSheet(arg);
+                 cmdSpeed->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Speed)), cmdSpeed->label()->font())
+  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Speed)), cmdSpeed->font())
         , &ValueModel::valueChanged
-        , cmdSpeed->label()
-        , [=](){ cmdSpeed->label()->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Speed)).value<QFont>());
+        , cmdSpeed
+        , [=](){ cmdSpeed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Speed)).value<QFont>());
                  });
   }
 
@@ -216,7 +213,7 @@ void SpeedStatus::feedRateChanged(const QVariant& v) {
   int rate = int(v.toDouble() * 100.0);
 
   slFeed->setValue(rate);
-  feedFactor->setValue(rate);
+  feedFactor->setNum(rate);
   }
 
 
@@ -225,7 +222,7 @@ void SpeedStatus::fastFeedRateChanged(const QVariant& v) {
   int rate = int(v.toDouble() * 100.0);
 
   slFastFeed->setValue(rate);
-  fastfeedFactor->setValue(rate);
+  fastfeedFactor->setNum(rate);
   }
 
 
@@ -234,28 +231,44 @@ void SpeedStatus::speedRateChanged(const QVariant& v) {
   int rate = int(v.toDouble() * 100.0);
 
   slSpeed->setValue(rate);
-  speedFactor->setValue(rate);
+  speedFactor->setNum(rate);
   }
 
 
 // slider callback
 void SpeedStatus::feedChanged(const QVariant& v) {
   qDebug() << "SpeedInfoDockable::feedChanged(" << v << ")";
-  Core().beSetFeedOverride(v.toDouble() / 100.0);
+  if (Core().checkBE()) {
+     Core().beSetFeedOverride(v.toDouble() / 100.0);
+     }
+ else {
+     ValueManager().setValue("feedrate", v.toDouble() / 100.0);
+     }
   }
 
 
 // slider callback
 void SpeedStatus::fastFeedChanged(const QVariant& v) {
   qDebug() << "SpeedInfoDockable::fastFeedChanged(" << v << ")";
-  Core().beSetRapidOverride(v.toDouble() / 100.0);
+  if (Core().checkBE()) {
+     Core().beSetRapidOverride(v.toDouble() / 100.0);
+     }
+ else {
+     ValueManager().setValue("rapidrate", v.toDouble() / 100.0);
+     }
   }
 
 
 // slider callback
 void SpeedStatus::speedChanged(const QVariant& v) {
   qDebug() << "SpeedInfoDockable::speedChanged(" << v << ")";
-  Core().beSetSpindleOverride(v.toDouble() / 100.0);
+  if (Core().checkBE()) {
+     Core().beSetSpindleOverride(v.toDouble() / 100.0);
+     }
+  else {
+     ValueManager().setValue("spindle0Scale", v.toDouble() / 100.0);
+     }
+  qDebug() << "width: " << speedFactor->size();
   }
 
 
@@ -271,22 +284,22 @@ void SpeedStatus::updateStyles() {
   slFastFeed->setValue(int(vm.getValue("rapidrate").toDouble() * 100));
   slSpeed->setValue(int(vm.getValue("spindle0Scale").toDouble() * 100));
 
-  curFeed->label()->setStyleSheet(style);
-  curFeed->label()->setFont(font);
-  cmdFeed->label()->setStyleSheet(style);
-  cmdFeed->label()->setFont(font);
-  curFastFeed->label()->setStyleSheet(style);
-  curFastFeed->label()->setFont(font);
-  cmdFastFeed->label()->setStyleSheet(style);
-  cmdFastFeed->label()->setFont(font);
+  curFeed->setStyleSheet(style);
+  curFeed->setFont(font);
+  cmdFeed->setStyleSheet(style);
+  cmdFeed->setFont(font);
+  curFastFeed->setStyleSheet(style);
+  curFastFeed->setFont(font);
+  cmdFastFeed->setStyleSheet(style);
+  cmdFastFeed->setFont(font);
 
   colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>();
   colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Speed)).value<QColor>();
   font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::Speed)).value<QFont>();
   style = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
 
-  curSpeed->label()->setStyleSheet(style);
-  curSpeed->label()->setFont(font);
-  cmdSpeed->label()->setStyleSheet(style);
-  cmdSpeed->label()->setFont(font);
+  curSpeed->setStyleSheet(style);
+  curSpeed->setFont(font);
+  cmdSpeed->setStyleSheet(style);
+  cmdSpeed->setFont(font);
   }

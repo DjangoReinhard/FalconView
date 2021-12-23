@@ -56,7 +56,7 @@ void HelpDialog::tabChanged(int index) {
 
 void HelpDialog::sourceChanged(const QUrl& src) {
   HelpTitleBar* htb = static_cast<HelpTitleBar*>(this->titleBarWidget());
-  int           index = tw->currentIndex();
+//  int           index = tw->currentIndex();
 
 //  qDebug() << "HelpDialog::sourceChanged - #" << index
 //           << ":" << tb->documentTitle()
@@ -170,6 +170,5 @@ void HelpTitleBar::mouseReleaseEvent(QMouseEvent* e) {
          break;
     }
   }
-
 
 const QString& HelpDialog::className = "HelpDialog";

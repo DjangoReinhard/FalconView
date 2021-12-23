@@ -174,6 +174,7 @@ void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
                break;
                }
             }
+         [[fallthrough]];
     default:
          qDebug() << "SN: whatever key (" << e->key()
                   << ") pressed, modifier: " << e->modifiers()

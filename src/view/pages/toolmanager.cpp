@@ -206,6 +206,7 @@ bool ToolManager::eventFilter(QObject* o, QEvent* event) {
             return true;
        case Qt::Key_S:
             if (e->modifiers() != Qt::CTRL) break;
+            [[fallthrough]];
        case Qt::Key_F10:
             if (o == tEdit && tEdit->isEnabled()) {
                saveToolChanges();

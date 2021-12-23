@@ -119,9 +119,7 @@ void ToolTable::processLine(int lineNum, const QString& input) {
                      img = QFileInfo(toolImageDir.absoluteFilePath() + "/" + cat + ".png");
                      if (!img.exists()) break;
                      }
-                  //TODO: load image from filesystem?
                   pm = QPixmap(img.absoluteFilePath());
-
                   pm = pm.scaled(150,150, Qt::KeepAspectRatio);
                   break;
                   }
@@ -339,9 +337,9 @@ bool ToolTable::setData(const QModelIndex &index, const QVariant &value, int rol
 
 
 void ToolTable::setCurrent(int slot) {
-  qDebug() << "activate tool with slot #" << slot;
+//  qDebug() << "activate tool with slot #" << slot;
   for (const ToolEntry* te : qAsConst(tools)) {
-      qDebug() << "tool" << te->number() << "has line number" << te->lineNum() << "and slot" << te->slot();
+//      qDebug() << "tool" << te->number() << "has line number" << te->lineNum() << "and slot" << te->slot();
       if (te->slot() == slot) {
          curTool = *te;
          break;

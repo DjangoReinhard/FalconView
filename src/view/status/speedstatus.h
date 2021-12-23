@@ -1,9 +1,7 @@
 #ifndef SPEEDSTATUS_H
 #define SPEEDSTATUS_H
 #include <dyncenterwidget.h>
-class LabelAdapter;
-class QString;
-class QWidget;
+class QLabel;
 class QSlider;
 
 
@@ -15,9 +13,9 @@ public:
   virtual ~SpeedStatus();
 
 protected:
-  virtual void connectSignals() override;
-  virtual void updateStyles() override;
-  virtual QWidget* createContent() override;
+  QWidget* createContent() override;
+  void     connectSignals() override;
+  void     updateStyles() override;
 
 protected slots:
   // slider callbacks
@@ -30,17 +28,20 @@ protected slots:
   void speedRateChanged(const QVariant& v);
 
 private:
-  LabelAdapter* curFeed;
-  LabelAdapter* curFastFeed;
-  LabelAdapter* curSpeed;
-  LabelAdapter* cmdFeed;
-  LabelAdapter* cmdFastFeed;
-  LabelAdapter* cmdSpeed;
-  LabelAdapter* feedFactor;
-  LabelAdapter* fastfeedFactor;
-  LabelAdapter* speedFactor;
-  QSlider*      slFeed;
-  QSlider*      slFastFeed;
-  QSlider*      slSpeed;
+  QLabel *cmdFastFeed;
+  QLabel *cmdFeed;
+  QLabel *cmdSpeed;
+  QLabel *curFastFeed;
+  QLabel *curFeed;
+  QLabel *curSpeed;
+  QLabel *fastfeedFactor;
+  QLabel *feedFactor;
+  QLabel *label;
+  QLabel *label_3;
+  QLabel *label_9;
+  QLabel *speedFactor;
+  QSlider *slFastFeed;
+  QSlider *slFeed;
+  QSlider *slSpeed;
   };
 #endif // SPEEDSTATUS_H
