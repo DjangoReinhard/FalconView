@@ -134,10 +134,10 @@ void SettingsNotebook::closeEvent(QCloseEvent* e) {
 
 void SettingsNotebook::resizeEvent(QResizeEvent* e) {
   qDebug() << "SN: resize event - from" << e->oldSize() << "to size:" << e->size();
-  ToolManager* tm = static_cast<ToolManager*>(tw->currentWidget());
-
-  if (tm) tm->setSize(e->size().width() - 15, e->size().height() - 80);
   qDebug() << "SN: current widget is" << tw->currentWidget()->objectName();
+//  ToolManager* tm = static_cast<ToolManager*>(tw->currentWidget());
+
+//  if (tm) tm->setSize(e->size().width() - 15, e->size().height() - 80);
   }
 
 

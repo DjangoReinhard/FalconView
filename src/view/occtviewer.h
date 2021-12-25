@@ -47,7 +47,7 @@ public:
 
   const QString& getGlInfo();
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
-  virtual QSize  sizeHint()        const override { return QSize(720, 480); }
+  virtual QSize  sizeHint()        const override { return QSize(500, 400); }
   void setBounds(const Bnd_Box& bounds);
   void fitAll();
   void frontView();

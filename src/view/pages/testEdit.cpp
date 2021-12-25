@@ -245,13 +245,20 @@ void TestEdit::updateStyles() {
   ed->setStyleSheet(QString("background: #%2;")
                            .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
   ed->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
+  }
 
+
+void TestEdit::restoreState() {
+  Config       cfg;
+
+  qDebug() << "TE::restoreState() - I am" << objectName() << "- wt" << windowTitle();
   cfg.beginGroup(objectName());
   QString lastFile = cfg.value("fileName").toString();
   cfg.endGroup();
   QFile ncFile(lastFile);
 
   if (ncFile.exists()) loadFile(ncFile.fileName());
+  else                 qDebug() << "what a mess - no file to restore!";
   }
 
 

@@ -44,7 +44,7 @@ PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool s
 QWidget* PreViewEditor::createContent() {
   TestEdit::createContent();
   spV = new QSplitter(Qt::Vertical);
-  view3D->setMinimumSize(400, 400);
+  view3D->setMinimumSize(200, 200);
   frame = findChild<QFrame*>("GCodeEditorForm");
   spV->addWidget(view3D);
   spV->addWidget(frame);
@@ -79,7 +79,7 @@ void PreViewEditor::connectSignals() {
 
 
 void PreViewEditor::showEvent(QShowEvent* e) {
-  DynCenterWidget::showEvent(e);
+  TestEdit::showEvent(e);
   if (e->type() == QEvent::Show) {
      ed->setFocus();
      view3D->fitAll();
@@ -142,6 +142,7 @@ bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
           case Qt::Key_R: view3D->rightView(); return true;
           case Qt::Key_L: view3D->leftView();  return true;
           case Qt::Key_B: view3D->backView();  return true;
+          case Qt::Key_F: view3D->frontView(); return true;
           case Qt::Key_3: view3D->isoView();   return true;
           }
        }

@@ -14,6 +14,13 @@
 
 PreferencesEditor::PreferencesEditor(const QString& fileName, QWidget* parent)
  : DynCenterWidget(fileName, tr("SettingsEditor"), true, parent)
+ , labels(nullptr)
+ , bgButtons(nullptr)
+ , fontButtons(nullptr)
+ , cbStatesInside(nullptr)
+ , cbHelp(nullptr)
+ , cbPreviewCenter(nullptr)
+ , cbToolManager(nullptr)
  , count(Config().numGuiElements()) {
   setWindowTitle(PreferencesEditor::className);
   setObjectName(PreferencesEditor::className);
@@ -32,9 +39,10 @@ QWidget* PreferencesEditor::createContent() {
   fgButtons   = new QPushButton*[count];
   fontButtons = new QPushButton*[count];
 
-  cbStatesInside = findChild<QCheckBox*>("cbStatesInside");
-  cbHelp         = findChild<QCheckBox*>("cbHelp");
-  cbToolManager  = findChild<QCheckBox*>("cbToolManager");
+  cbStatesInside  = findChild<QCheckBox*>("cbStatesInside");
+  cbHelp          = findChild<QCheckBox*>("cbHelp");
+  cbPreviewCenter = findChild<QCheckBox*>("cbPreviewCenter");
+  cbToolManager   = findChild<QCheckBox*>("cbToolManager");
   for (int i=0; i < count; ++i) {
       labels[i]      = findChild<QLineEdit*>(QString("l")      + Config().nameOf(static_cast<Config::GuiElem>(i)));
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
@@ -59,6 +67,10 @@ void PreferencesEditor::connectSignals() {
   if (cbHelp) {
      cbHelp->setChecked(Config().value("showHelpAtPageChange").toBool());
      connect(cbHelp, &QCheckBox::stateChanged, this, &PreferencesEditor::statusShowHelpChanged);
+     }
+  if (cbPreviewCenter) {
+     cbPreviewCenter->setChecked(Config().value("previewIsCenter").toBool());
+     connect(cbPreviewCenter, &QCheckBox::stateChanged, this, &PreferencesEditor::previewCenterChanged);
      }
   if (cbToolManager) {
      cbToolManager->setChecked(Config().value("activateToolMgr").toBool());
@@ -187,6 +199,18 @@ void PreferencesEditor::statusShowHelpChanged(const QVariant& state) {
                                  "time hitting [F1] key."));
      }
   Config().setValue("showHelpAtPageChange", state.toBool());
+  }
+
+
+void PreferencesEditor::previewCenterChanged(const QVariant& state) {
+  bool previewIsCenter = state.toBool();
+
+  qDebug() << "PE::previewCenterChanged(" << (previewIsCenter ? "TRUE" : "FALSE") << ")";
+  QMessageBox::information(this
+                         , tr("QMessageBox::information()")
+                         , tr("for this change to take effect, "
+                              "the application must be restarted."));
+  Config().setValue("previewIsCenter", state.toBool());
   }
 
 

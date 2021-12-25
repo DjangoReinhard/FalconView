@@ -12,7 +12,8 @@ enum ApplicationMode {
   XEdit,         // 6
   Settings,      // 7
   Touch,         // 8
-  ErrMessages,   // 9
+  Help,          // 9
+  ErrMessages,   // 10
   Unknown
   };
 #endif // APPLICATIONMODE_H

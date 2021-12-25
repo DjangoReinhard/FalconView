@@ -57,6 +57,7 @@ void PathEditor::reallyLoadFile(const QVariant& fileName) {
 
 void PathEditor::fileUpdated(const QString& fileName) {
   //TODO: ask backend to reload file
+  qDebug() << "PathEdit: file" << fileName << "has been changed - need to trigger backend!";
   }
 
 const QString PathEditor::className = "PathEditor";

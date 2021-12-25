@@ -19,6 +19,7 @@ public:
   TestEdit(const QString& fileName, QWidget* parent = nullptr);
 
   QString pageName() override;
+  void    restoreState();
 
 public slots:
   void openFile();

@@ -3,6 +3,7 @@
 #include <core.h>
 #include <QVBoxLayout>
 #include <QKeyEvent>
+#include <QAction>
 #include <QFrame>
 #include <QDebug>
 
@@ -31,7 +32,7 @@ DynFrame::DynFrame(DynCenterWidget* cw, bool visualFrame, QWidget *parent)
 
 
 void DynFrame::init() {
-  dcw->initialize();
+  if (dcw) dcw->initialize();
   }
 
 
@@ -41,23 +42,30 @@ QString DynFrame::name() const {
   }
 
 
+QString DynFrame::id() const {
+  if (dcw) return dcw->objectName();
+  return objectName();
+  }
+
+
 QAction* DynFrame::viewAction() {
-  return dcw->viewAction();
+  if (dcw) return dcw->viewAction();
+  return new QAction();
   }
 
 
 void DynFrame::closeEvent(QCloseEvent *e) {
-  dcw->closeEvent(e);
+  if (dcw) dcw->closeEvent(e);
   }
 
 
 void DynFrame::keyPressEvent(QKeyEvent *e) {
 //  qDebug() << "DynFrame::keyPressEvent() of" << objectName() << "ts: " << e->timestamp();
-  dcw->keyPressEvent(e);
+  if (dcw) dcw->keyPressEvent(e);
   }
 
 
 void DynFrame::keyReleaseEvent(QKeyEvent *e) {
 //  qDebug() << "DynFrame::keyReleaseEvent() of" << objectName() << "ts: " << e->timestamp();
-  dcw->keyReleaseEvent(e);
+  if (dcw) dcw->keyReleaseEvent(e);
   }

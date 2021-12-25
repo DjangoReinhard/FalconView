@@ -74,7 +74,7 @@ QWidget* ToolManager::createContent() {
   tools->setColumnHidden(0, true);
   tools->setColumnHidden(4, true);
   tools->horizontalHeader()->setSortIndicator(3, Qt::AscendingOrder);
-  tools->setMinimumHeight(400);
+  tools->setMinimumHeight(300);
   QScrollArea* sa = new QScrollArea();
 
   tEdit->setFocusPolicy(Qt::FocusPolicy::NoFocus);

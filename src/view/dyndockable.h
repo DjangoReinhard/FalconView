@@ -11,12 +11,20 @@ class DynDockable : public QDockWidget
 public:
   DynDockable(DynCenterWidget* cw, QWidget* parent = nullptr);
 
-  void initialize();
+  void     init();
+  QString  name() const;
+  QString  id() const;
+  QAction* viewAction();
+  DynCenterWidget* centerWidget() { return dcw; }
+  DynCenterWidget* centerWidget() const { return dcw; }
 
 protected:
   static const int DockingTitleHeight = 39;
+  virtual void closeEvent(QCloseEvent* e) override;
+  virtual void keyPressEvent(QKeyEvent* e) override;
+  virtual void keyReleaseEvent(QKeyEvent* e) override;
 
 private:
-  DynCenterWidget* centerWidget;
+  DynCenterWidget* dcw;
   };
 #endif // DYNDOCKABLE_H

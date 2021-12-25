@@ -1,26 +1,30 @@
 #include <centerview.h>
-#define WANT_STACKED_LAYOUT
 #include <dynframe.h>
 #include <dyncenterwidget.h>
 #include <core.h>
 #include <QAction>
-#ifdef WANT_STACKED_LAYOUT
-# include <QStackedLayout>
-#else
-# include <QGridLayout>
-#endif
+#include <QStackedLayout>
 #include <QDebug>
 
 
 CenterView::CenterView(QWidget* parent)
- : QWidget(parent) {
-  setObjectName(tr("MainView"));
-#ifdef WANT_STACKED_LAYOUT
+ : DynCenterWidget(QString(), "PageStack", false, parent) {
+  setObjectName(tr("PageStack"));
   setLayout(new QStackedLayout);
-#else
-  setLayout(new QGridLayout);
-#endif
   layout()->setContentsMargins(0, 0, 0, 0);
+  }
+
+
+QWidget* CenterView::createContent() {
+  return nullptr;
+  }
+
+
+void CenterView::connectSignals() {
+  }
+
+
+void CenterView::updateStyles() {
   }
 
 
@@ -35,28 +39,15 @@ DynFrame* CenterView::page(const QString& name) {
 
 
 DynFrame* CenterView::activatePage(const QString& name) {
-//  qDebug() << "CenterView: activatePage \""  << name << "\"";
+  qDebug() << "CenterView: activatePage \""  << name << "\"";
 
   if (pages.contains(name)) {
-     DynFrame*       w  = pages[name];
-#ifdef WANT_STACKED_LAYOUT
+     DynFrame*       w = pages[name];
      QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
-#else
-     QGridLayout*    l = qobject_cast<QGridLayout*>(layout());
-#endif
 
      if (l) {
-//        qDebug() << "CenterView: ok, found page [" << name << "] - gonna switch view";
-#ifdef WANT_STACKED_LAYOUT
+        qDebug() << "CenterView: ok, found page [" << name << "] - gonna switch view";
         l->setCurrentWidget(w);
-#else
-        w->setVisible(true);
-        for (auto k = pages.keyBegin(); k != pages.keyEnd(); ++k) {
-            if (!k->compare(name)) continue;
-            pages[*k]->setVisible(false);
-            }
-        w->repaint();
-#endif
         curPage = name;
         if (w) {
            Core().setWindowTitle(w->name().toStdString().c_str());
@@ -64,18 +55,15 @@ DynFrame* CenterView::activatePage(const QString& name) {
            return w;
            }
         }
-     qDebug() << "CenterView: sorry - no page for name >" << name << "<";
-//     dump();
      }
-  else {
-     qDebug() << "CenterView: sorry - no page for name >" << name << "<";
-//     dump();
-     }
+  qDebug() << "CenterView: sorry - no page for name >" << name << "<";
+  dump();
+
   return nullptr;
   }
 
 
-const QString& CenterView::activePage() const {
+QString CenterView::activePage() const {
   return curPage;
   }
 
@@ -93,19 +81,11 @@ void CenterView::addPage(DynFrame* page, const QString& name) {
 
   if (pageName.isEmpty()) pageName = page->objectName();
   pages.insert(pageName, page);
-#ifdef WANT_STACKED_LAYOUT
   QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
-#else
-  QGridLayout*    l = qobject_cast<QGridLayout*>(layout());
-#endif
 
   if (l) {
      page->init();
-     l->addWidget(page
-#ifndef WANT_STACKED_LAYOUT
-                , 0, 0
-#endif
-                 );
+     l->addWidget(page);
      connect(page->viewAction(), &QAction::triggered, this, [=]() {
        Core().activatePage(page->objectName());
        });

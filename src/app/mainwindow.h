@@ -12,7 +12,7 @@ class DynDockable;
 class DBConnection;
 class MDIEditor;
 class GCodeViewer;
-class HelpDialog;
+class HelpDockable;
 class QAction;
 
 QT_BEGIN_NAMESPACE
@@ -25,11 +25,11 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
 public:
-  MainWindow(bool statusInPreview, QWidget *parent = nullptr);
+  MainWindow(bool statusInPreview, bool previewIsCenter, QWidget *parent = nullptr);
  ~MainWindow();
 
   void setAppMode(ApplicationMode am);
-  HelpDialog* helpDialog() { return dlgHelp; }
+//  HelpDockable* helpDialog() { return dlgHelp; }
   SettingsNotebook* settingsNotebook() const { return snb; }
 
 protected:
@@ -53,6 +53,7 @@ protected slots:
   void setSingleStep(bool singleStep);
   void hitPowerBtn();
   void showErrMessages();
+  void showHelp();
   void toggleAllButCenter();
   void toggleAbsolute(const QVariant& absolute);
   void testTools();
@@ -68,10 +69,11 @@ protected slots:
 
 private:
   bool                statusInPreview;
+  bool                previewIsCenter;
   Ui::MainWindow*     ui;
   PreViewEditor*      pw;
   MDIEditor*          mdi;
-  HelpDialog*         dlgHelp;
+//  HelpDockable*       dlgHelp;
   SettingsNotebook*   snb;
   QAction*            startAction;
   QAction*            pauseAction;

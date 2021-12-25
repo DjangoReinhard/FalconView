@@ -16,7 +16,7 @@
 #include <dbconnection.h>
 #include <dbhelper.h>
 #include <dynframe.h>
-#include <helpdialog.h>
+#include <helpdockable.h>
 #include <mainwindow.h>
 #include <tooltable.h>
 #include <LCInter.h>
@@ -131,9 +131,10 @@ void Core::showAllButCenter(bool visible) {
 
 
 void Core::help4Keyword(const QString &keyWord) {
-  if (core()->mainWindow) {
-     core()->mainWindow->helpDialog()->help4Keyword(keyWord);
-     }
+  qDebug() << "Core::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
+//  if (core()->mainWindow) {
+//     core()->mainWindow->helpDialog()->help4Keyword(keyWord);
+//     }
   }
 
 
@@ -209,7 +210,7 @@ ToolTable& Core::toolTable() {
   }
 
 
-const QString& Core::curPage() const {
+QString Core::curPage() const {
   return core()->centerView->activePage();
   }
 
@@ -238,6 +239,10 @@ void Core::riseError(const QString &msg) {
                       , se.what());
   }
 
+
+void Core::showHelp() {
+  setAppMode(ApplicationMode::Help);
+  }
 
 Kernel* Core::core() {
   assert(kernel != nullptr);
@@ -404,7 +409,8 @@ void Kernel::initialize(DBHelper& dbAssist) {
   ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
   view3D = new OcctQtViewer();
   ally3D.setOcctViewer(view3D);
-  mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool());
+  mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool()
+                            , cfg.value("previewIsCenter", false).toBool());
 
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged, this, &Kernel::updateView);
 

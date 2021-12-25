@@ -23,7 +23,7 @@ public:
   Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group = "SRD");
   Core() {}
 
-  const QString&  curPage() const;
+  QString         curPage() const;
   QString         helpFilename() const;
   const AxisMask& axisMask() const;
   bool            isLatheMode() const;
@@ -45,6 +45,7 @@ public:
   void            parseGCFile(const QString& fileName);
   bool            checkBE();
   void            help4Keyword(const QString& keyWord);
+  void            showHelp();
   void            setLocale(const QLocale& l);
   CenterView*     viewStack();
   OcctQtViewer*   view3D();

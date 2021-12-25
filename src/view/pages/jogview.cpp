@@ -100,17 +100,18 @@ void JogView::connectSignals() {
 
 void JogView::jog(QWidget* o, int axis, int step) {
   qDebug() << "jog:"  << axis << "dir:" << step;
+  double speed = jogSpeed / 60.0;
 
   if (ui->cbSingleStep->isChecked()) {
-     qDebug() << "step single step of size:" << stepSize << "with:" << jogSpeed;
-     Core().beJogStep(axis, stepSize, jogSpeed);
+     qDebug() << "step single step of size:" << stepSize << "with:" << speed;
+     Core().beJogStep(axis, stepSize, step * speed);
      }
   else {
      QToolButton* tb = static_cast<QToolButton*>(o);
 
      if ((tb && tb->isChecked()) || !tb) {
-        qDebug() << "start jogging with speed" << jogSpeed;
-        Core().beJogStart(axis, jogSpeed);
+        qDebug() << "start jogging with speed" << speed;
+        Core().beJogStart(axis, step * speed);
         }
      else {
         qDebug() << "stop jogging of axis" << axis;

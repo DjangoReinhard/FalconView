@@ -11,15 +11,15 @@ class DynFrame : public QWidget
 public:
   explicit DynFrame(DynCenterWidget* cw, bool visualFrame = false, QWidget *parent = nullptr);
 
-  virtual void init();
-  QAction* viewAction();
+  void     init();
   QString  name() const;
+  QString  id() const;
+  QAction* viewAction();
+  DynCenterWidget* centerWidget() { return dcw; }
+  DynCenterWidget* centerWidget() const { return dcw; }
   virtual void closeEvent(QCloseEvent* e) override;
   virtual void keyPressEvent(QKeyEvent* e) override;
   virtual void keyReleaseEvent(QKeyEvent* e) override;
-  DynCenterWidget* centerWidget() { return dcw; }
-  DynCenterWidget* centerWidget() const { return dcw; }
-
 
 private:
   QFrame*          frame;

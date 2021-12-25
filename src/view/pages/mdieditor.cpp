@@ -19,7 +19,16 @@ MDIEditor::~MDIEditor() {
 
 
 void MDIEditor::append(const QString &command) {
-  history->addItem(command);
+  int  mx    = history->count();
+  bool found = false;
+
+  for (int i = 0; i < mx; ++i) {
+      if (history->item(i)->text() == command) {
+         found = true;
+         break;
+         }
+      }
+  if (!found) history->addItem(command);
   cmd->clear();
   }
 

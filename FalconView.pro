@@ -93,11 +93,12 @@ SOURCES += \
     src/util/truecondition.cpp \
     src/view/helpbrowser.cpp \
     src/view/helpcontentwidget.cpp \
-    src/view/helpdialog.cpp \
+    src/view/helpdockable.cpp \
     src/view/helpkeywordwidget.cpp \
     src/view/jogbutton.cpp \
     src/view/pages/filemanager.cpp \
     src/view/pages/fixturemanager.cpp \
+    src/view/pages/helpview.cpp \
     src/view/pages/jogview.cpp \
     src/view/pages/lctooltable.cpp \
     src/view/pages/mdieditor.cpp \
@@ -186,11 +187,12 @@ HEADERS += \
     src/util/truecondition.h \
     src/view/helpbrowser.h \
     src/view/helpcontentwidget.h \
-    src/view/helpdialog.h \
+    src/view/helpdockable.h \
     src/view/helpkeywordwidget.h \
     src/view/jogbutton.h \
     src/view/pages/filemanager.h \
     src/view/pages/fixturemanager.h \
+    src/view/pages/helpview.h \
     src/view/pages/jogview.h \
     src/view/pages/lctooltable.h \
     src/view/pages/mdieditor.h \

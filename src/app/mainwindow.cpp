@@ -1,6 +1,6 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
-#include <helpdialog.h>
+#include <helpview.h>
 #include <occtviewer.h>
 #include <settingsnb.h>
 #include <dbconnection.h>
@@ -51,11 +51,11 @@
 #include <config.h>
 
 
-MainWindow::MainWindow(bool statusInPreview, QWidget *parent)
+MainWindow::MainWindow(bool statusInPreview, bool previewIsCenter, QWidget *parent)
  : QMainWindow(parent)
  , statusInPreview(statusInPreview)
+ , previewIsCenter(previewIsCenter)
  , ui(new Ui::MainWindow)
- , dlgHelp(nullptr)
  , startAction(nullptr)
  , pauseAction(nullptr)
  , stopAction(nullptr)
@@ -91,9 +91,20 @@ MainWindow::MainWindow(bool statusInPreview, QWidget *parent)
   restoreGeometry(cfg.value("geometry").toByteArray());
   restoreState(cfg.value("windowState").toByteArray());
   cfg.endGroup();
+
+  // there are some troubles with initialization times, so
+  // restore old files after all initialization has been finished
+  DynFrame* df = static_cast<DynFrame*>(Core().stackedPage(TestEdit::className));
+  TestEdit* te = static_cast<TestEdit*>(df->centerWidget());
+
+  if (te) te->restoreState();
+  df = static_cast<DynFrame*>(Core().stackedPage(PathEditor::className));
+  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
+
+  if (pe) pe->restoreState();
 //  ui->menubar->setVisible(false);
-//  timer.start(1000, this);
   qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
+  setAppMode(ApplicationMode::Auto);
   }
 
 
@@ -102,7 +113,7 @@ MainWindow::~MainWindow() {
 
 
 void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
-  d->initialize();
+  d->init();
   dockables.append(d);
   QMainWindow::addDockWidget(area, d);
   QAction* a = d->toggleViewAction();
@@ -117,7 +128,6 @@ void MainWindow::createActions() {
 
   ui->actionAbsPos->setIcon(MIcon(":/res/SK_PosRelative.png"
                                 , ":/res/SK_PosAbsolute.png"));
-//  qDebug() << "\tMW::createActions() ... START";
   startAction = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                              , QIcon(":/res/SK_AutoStart.png")
                              , QIcon(":/res/SK_AutoStart_active.png")
@@ -153,8 +163,6 @@ void MainWindow::createActions() {
                             , new EqualCondition(vm.getModel("errorActive"), false)
                             , new EqualCondition(vm.getModel("singleStep"), true)
                             , this);
-//  singleStep->setCheckable(true);
-
   autoMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                           , QIcon(":/res/SK_Auto.png")
                           , QIcon(":/res/SK_Auto_active.png")
@@ -305,7 +313,6 @@ void MainWindow::createActions() {
                              , QIcon(":/res/SK_PowerOff_1.png")
                              , QIcon(":/res/SK_PowerOn.png"));
   power->setShortcut(QKeySequence("CTRL+ALT+P"));
-//  qDebug() << "\tMW::createActions() ... END";
   }
 
 
@@ -337,6 +344,11 @@ void MainWindow::toggleAbsolute(const QVariant& absolute) {
   }
 
 
+void MainWindow::showHelp() {
+  setAppMode(ApplicationMode::Help);
+  }
+
+
 void MainWindow::createConnections() {
   ValueManager vm;
 
@@ -353,9 +365,10 @@ void MainWindow::createConnections() {
   connect(ui->actionleftView,  &QAction::triggered, Core().view3D(), &OcctQtViewer::leftView);
   connect(ui->actionrightView, &QAction::triggered, Core().view3D(), &OcctQtViewer::rightView);
   connect(ui->actionTopView,   &QAction::triggered, Core().view3D(), &OcctQtViewer::topView);
-  connect(ui->actionHelp,      &QAction::triggered, dlgHelp,         &HelpDialog::showHelp);
+  connect(ui->actionHelp,      &QAction::triggered, this,            &MainWindow::showHelp);
 
-  connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
+  if (!previewIsCenter)
+     connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
 
   // be actions ...
   connect(startAction,  &QAction::triggered, this, &MainWindow::autoStart);
@@ -407,6 +420,7 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
     case XEdit:       Core().activatePage(TestEdit::className); break;
     case Settings:    Core().activatePage(SettingsNotebook::className); break;
     case Touch:       Core().activatePage(tr("TouchView")); break;
+    case Help:        Core().activatePage(HelpView::className); break;
     case ErrMessages: Core().activatePage(SysEventView::className); break;
     default: break;
     }
@@ -550,9 +564,11 @@ void MainWindow::testTools() {
   }
 
 
-void MainWindow::createDockables(DBConnection&) {
-  qDebug() << "MainWindow::createDockables() - statusInPreview:"
-           << (statusInPreview ? "TRUE" : "FALSE");
+void MainWindow::createDockables(DBConnection& conn) {
+  qDebug() << "MW::createDockables() - statusInPreview:"
+           << (statusInPreview ? "YES" : "NO");
+  qDebug() << "MW::createDockables() - previewIsCenter:"
+           << (previewIsCenter ? "YES" : "NO");
 
   if (!statusInPreview) {
      addDockable(Qt::LeftDockWidgetArea
@@ -569,60 +585,90 @@ void MainWindow::createDockables(DBConnection&) {
                , new DynDockable(new CurCodesStatus(":/src/UI/HCurCodes.ui")
                                , this));
      }
-  dlgHelp = new HelpDialog(this);
-  addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
+  if (previewIsCenter) {
+     CenterView* center = new CenterView(this);
+     DynFrame*   page   = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
+                                     , true, center);
+     Core().setViewStack(center);
+     center->addPage(page);
+     page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui"), true, center);
+     center->addPage(page);
+     page = new DynFrame(mdi = new MDIEditor(":/src/UI/MDIEditor.ui"), true, center);
+     center->addPage(page);
+     page = new DynFrame(new SysEventView(conn), true, center);
+     center->addPage(page);
+     page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui"), true, center);
+     center->addPage(page);
+
+     snb = new SettingsNotebook(this);
+     center->addPage(new DynFrame(snb, false, center));
+
+     if (Config().value("activateToolMgr").toBool()) {
+        qDebug() << "config says we want tool-manager!";
+        snb->addPage(new ToolManager(conn, snb));
+        }
+     snb->addPage(new FixtureManager(Core().axisMask(), snb));
+     snb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", snb));
+     snb->addPage(new LCToolTable());
+
+     page = new DynFrame(new JogView(), true, center);
+     center->addPage(page);
+     page = new DynFrame(new HelpView(), true, center);
+     center->addPage(page);
+     addDockable(Qt::BottomDockWidgetArea, new DynDockable(center, this));
+     }
+  //TODO:
+//  dlgHelp = new HelpDockable(this);
+//  addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
   }
 
 
 void MainWindow::createMainWidgets(DBConnection& conn) {
-  CenterView* center = new CenterView(this);
-  DynFrame*   page   = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
-                                  , true
-                                  , center);
+  qDebug() << "MW::createMainWidgets() - previewIsCenter:"
+           << (previewIsCenter ? "YES" : "NO");
 
-  Core().setViewStack(center);
-  center->addPage(page);
-  page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui")
-                    , true
-                    , center);
-  center->addPage(page);
-  page = new DynFrame(mdi = new MDIEditor(":/src/UI/MDIEditor.ui")
-                    , true
-                    , center);
-  center->addPage(page);
-  page = new DynFrame(new SysEventView(conn)
-                    , true
-                    , center);
-  center->addPage(page);
-  page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui")
-                    , true
-                    , center);
-  center->addPage(page);
-
-  snb = new SettingsNotebook(this);
-  center->addPage(new DynFrame(snb, false, center));
-  if (Config().value("activateToolMgr").toBool()) {
-     qDebug() << "config says we want tool-manager!";
-     snb->addPage(new ToolManager(conn, snb));
+  if (previewIsCenter) {
+     this->setCentralWidget(Core().view3D());
      }
   else {
-     qDebug() << "No thx - No Tool-manager!";
+     CenterView* center = new CenterView(this);
+     DynFrame*   page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
+                                                            , Core().view3D()
+                                                            , statusInPreview)
+                                     , true, center);
+     Core().setViewStack(center);
+     center->addPage(page);
+     //TODO:
+     page   = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
+                         , true, center);
+     center->addPage(page);
+     page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui"), true, center);
+     center->addPage(page);
+     page = new DynFrame(mdi = new MDIEditor(":/src/UI/MDIEditor.ui"), true, center);
+     center->addPage(page);
+     page = new DynFrame(new SysEventView(conn), true, center);
+     center->addPage(page);
+     page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui"), true, center);
+     center->addPage(page);
+
+     snb = new SettingsNotebook(this);
+     center->addPage(new DynFrame(snb, false, center));
+
+     if (Config().value("activateToolMgr").toBool()) {
+        qDebug() << "config says we want tool-manager!";
+        snb->addPage(new ToolManager(conn, snb));
+        }
+     snb->addPage(new FixtureManager(Core().axisMask(), snb));
+     snb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", snb));
+     snb->addPage(new LCToolTable());
+
+     page = new DynFrame(new JogView(), true, center);
+     center->addPage(page);
+     page = new DynFrame(new HelpView(), true, center);
+     center->addPage(page);
+
+     this->setCentralWidget(center);
      }
-  snb->addPage(new FixtureManager(Core().axisMask(), snb));
-  snb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", snb));
-  snb->addPage(new LCToolTable());
-  page = new DynFrame(new JogView()
-                    , true
-                    , center);
-  center->addPage(page);
-  page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
-                                             , Core().view3D()
-                                             , statusInPreview)
-                      , true
-                      , center);
-  center->addPage(page);
-  this->setCentralWidget(center);
-//  center->dump(); //TODO!
   }
 
 
