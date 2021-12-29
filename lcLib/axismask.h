@@ -9,6 +9,7 @@ class AxisMask : public QObject
   Q_OBJECT
 public:
   explicit AxisMask(const AxisMask& other);
+  explicit AxisMask(int mask);
   explicit AxisMask(const QString& iniValue);
   virtual ~AxisMask();
 

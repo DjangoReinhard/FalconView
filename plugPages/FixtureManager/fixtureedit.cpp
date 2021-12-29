@@ -8,7 +8,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QDebug>
-#include <canon.hh>
+#include <canon_position.hh>
 
 
 FixtureEdit::FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent)

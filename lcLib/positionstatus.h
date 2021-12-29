@@ -18,8 +18,8 @@ class PositionStatus : public AbstractCenterWidget
 {
   Q_OBJECT
 public:
-  PositionStatus(const QString& fileName, const AxisMask& axisMask, QWidget* parent = nullptr);
-  PositionStatus(const QString& fileName, const AxisMask& axisMask, QWidget* parent, QString ledOn, QString ledOff);
+  PositionStatus(const QString& fileName, int axisMask, QWidget* parent = nullptr);
+  PositionStatus(const QString& fileName, int axisMask, QWidget* parent, QString ledOn, QString ledOff);
   virtual ~PositionStatus();
 
   void setLedStyles(QString onStyle, QString offStyle);

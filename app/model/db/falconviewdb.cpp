@@ -1,9 +1,9 @@
 #include <falconviewdb.h>
 #include <dbconnection.h>
-#include <toolcategorymodel.h>
 #include <timestamp.h>
 #include <syseventmodel.h>
-#include <toolmodel.h>
+//#include <toolcategorymodel.h>
+//#include <toolmodel.h>
 #include <QSqlQuery>
 #include <QSqlDriver>
 #include <QSqlDatabase>
@@ -12,6 +12,7 @@
 #include <QRegularExpression>
 #include <QDomDocument>
 #include <QVariant>
+#include <QFile>
 #include <QString>
 #include <QSqlError>
 #include <QDebug>
@@ -28,8 +29,8 @@ bool FalconViewDB::connect(const QString& name) {
 DBConnection* FalconViewDB::createDatabase(const QString&) {
   for (;;) {
       if (!conn->connect()) break;
-      if (!ToolCategoryModel::createTable()) break;
-      if (!ToolModel::createTable()) break;
+//      if (!ToolCategoryModel::createTable()) break;
+//      if (!ToolModel::createTable()) break;
       if (!SysEventModel::createTable()) break;
 
       return conn;

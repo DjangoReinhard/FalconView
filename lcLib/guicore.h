@@ -6,7 +6,7 @@ class GuiKernel;
 class OcctQtViewer;
 class DBConnection;
 class DBHelper;
-class MainWindow;
+class QMainWindow;
 class ToolTable;
 class LcProperties;
 class CenterView;
@@ -14,7 +14,6 @@ class QCloseEvent;
 class QTranslator;
 class QLocale;
 class QWidget;
-class AxisMask;
 
 
 class GuiCore : public Core
@@ -31,7 +30,7 @@ public:
   void            riseError(const QString& msg);
   QString         languagePrefix() const;
   DBConnection*   databaseConnection();
-  MainWindow*     mainWindow();
+  QMainWindow*    mainWindow();
   QLocale         locale() const;
   bool            move2Backup(const QString& fileName);
   void            activatePage(const QString& pageName);

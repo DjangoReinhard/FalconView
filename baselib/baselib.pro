@@ -16,75 +16,48 @@ INCLUDEPATH += \
 
 SOURCES += \
     abscenterwidget.cpp \
-    axismask.cpp \
-    canonif.cpp \
     configacc.cpp \
     configmgr.cpp \
     core.cpp \
     dbconnection.cpp \
     direntry.cpp \
     dirmodel.cpp \
-    dynframe.cpp \
     filemanager.cpp \
     filemodel.cpp \
     flowlayout.cpp \
-    gcodeeditor.cpp \
-    gcodehighlighter.cpp \
-    gcodeinfo.cpp \
-    graphicfactory.cpp \
-    helpcontentwidget.cpp \
-    helpengine.cpp \
-    helpkeywordwidget.cpp \
     kernel.cpp \
     kernelcreator.cpp \
-    lcproperties.cpp \
-    positioncalculator.cpp \
-    stupidtoolchangerif.cpp \
     sysevent.cpp \
     syseventmodel.cpp \
-    testEdit.cpp \
-    toolentry.cpp \
-    tooltable.cpp \
+    timestamp.cpp \
     valuemanager.cpp \
+    valuemanager.cpp \
+    valuemodel.cpp \
     valuemodel.cpp
 
 HEADERS += \
     PluginPageInterface.h \
     abscenterwidget.h \
     applicationmode.h \
-    axismask.h \
-    canonif.h \
     configacc.h \
     configmgr.h \
     core.h \
-    core_p.h \
     dbconnection.h \
     dbhelper.h \
     direntry.h \
     dirmodel.h \
-    dynframe.h \
     filemanager.h \
     filemanagerclient.h \
     filemodel.h \
     flowlayout.h \
-    gcodeeditor.h \
-    gcodehighlighter.h \
-    gcodeinfo.h \
-    graphicfactory.h \
-    helpcontentwidget.h \
-    helpengine.h \
-    helpkeywordwidget.h \
     kernel.h \
     kernelcreator.h \
-    lcproperties.h \
-    positioncalculator.h \
-    stupidtoolchangerif.h \
     sysevent.h \
     syseventmodel.h \
-    testEdit.h \
-    toolentry.h \
-    tooltable.h \
+    timestamp.h \
     valuemanager.h \
+    valuemanager.h \
+    valuemodel.h \
     valuemodel.h
 
 TRANSLATIONS += \

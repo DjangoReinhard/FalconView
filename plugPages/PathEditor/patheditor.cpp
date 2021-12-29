@@ -1,12 +1,10 @@
 #include <patheditor.h>
-#include <pweditor.h>
 #include <valuemanager.h>
 #include <centerview.h>
-#include <core.h>
+#include <guicore.h>
 #include <configacc.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
-#include <occtviewer.h>
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -35,9 +33,9 @@ void PathEditor::connectSignals() {
 
 // called from TestEdit::fileSelected
 void PathEditor::loadFile(const QVariant& fileName) {
-  if (Core().checkBE()) {
+  if (GuiCore().checkBE()) {
      qDebug() << "PathEditor::loadFile (backend active)" << fileName;
-     Core().beLoadTaskPlan(fileName.toString());
+     GuiCore().beLoadTaskPlan(fileName.toString());
      }
   else ValueManager().setValue("fileName", fileName);
   }

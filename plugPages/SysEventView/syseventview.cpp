@@ -2,7 +2,7 @@
 #include <syseventmodel.h>
 #include <configacc.h>
 #include <valuemanager.h>
-#include <core.h>
+#include <guicore.h>
 #include <QSortFilterProxyModel>
 #include <QShowEvent>
 #include <QHeaderView>
@@ -67,7 +67,7 @@ bool SysEventView::eventFilter(QObject*, QEvent* event) {
      switch (e->key()) {
        case Qt::Key_Escape: {
             qDebug() << "SEV: hit ESC ... (old page:" << ValueManager().getValue("lastPage").toString() << ")";
-            Core().activatePage(ValueManager().getValue("lastPage").toString());
+            GuiCore().activatePage(ValueManager().getValue("lastPage").toString());
             ValueManager().setValue("errorActive", false);
             ValueManager().setValue("showAllButCenter", true);
             Config cfg;

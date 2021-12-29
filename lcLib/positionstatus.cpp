@@ -14,7 +14,7 @@
 #include <ui_PositionMain.h>
 
 
-PositionStatus::PositionStatus(const QString&, const AxisMask& am, QWidget* parent)
+PositionStatus::PositionStatus(const QString&, int axisMask, QWidget* parent)
  : AbstractCenterWidget(QString(), "PositionStatus", false, parent)
  , frm(new Ui::PositionMain())
  , rel(new Ui::PositionForm())
@@ -24,14 +24,14 @@ PositionStatus::PositionStatus(const QString&, const AxisMask& am, QWidget* pare
  , frmRel(new QFrame)
  , frmAbs(new QFrame)
  , absolute(true)
- , axisMask(am)
+ , axisMask(axisMask)
  , ledOn("background: #0F0")
  , ledOff("background: red") {
   setWindowTitle(tr("PositionStatus"));
   }
 
 
-PositionStatus::PositionStatus(const QString&, const AxisMask& am, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
+PositionStatus::PositionStatus(const QString&, int axisMask, QWidget* parent, QString ledOnStyle, QString ledOffStyle)
  : AbstractCenterWidget(QString(), "PositionStatus", false, parent)
  , frm(new Ui::PositionMain())
  , rel(new Ui::PositionForm())
@@ -41,7 +41,7 @@ PositionStatus::PositionStatus(const QString&, const AxisMask& am, QWidget* pare
  , frmRel(new QFrame)
  , frmAbs(new QFrame)
  , absolute(true)
- , axisMask(am)
+ , axisMask(axisMask)
  , ledOn(ledOnStyle)
  , ledOff(ledOffStyle) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);

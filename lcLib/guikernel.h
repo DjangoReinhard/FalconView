@@ -13,7 +13,7 @@ class SysEventModel;
 class OcctQtViewer;
 class Ally3D;
 class CenterView;
-class MainWindow;
+class QMainWindow;
 class StatusReader;
 class CommandWriter;
 class QVariant;
@@ -64,13 +64,14 @@ signals:
   void setTaskState(int state);
   void taskPlanSynch();
 
+private:
   LcProperties        lcProps;
   ToolTable           tt;
   LCInterface         lcIF;
   AxisMask            mAxis;
   OcctQtViewer*       view3D;
   CenterView*         centerView;
-  MainWindow*         mainWindow;
+  QMainWindow*        mainWindow;
   Ally3D*             ally3D;
   GCodeInfo           gcodeInfo;
   PositionCalculator  positionCalculator;

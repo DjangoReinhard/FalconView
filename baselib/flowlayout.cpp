@@ -47,10 +47,9 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
+#include <flowlayout.h>
 #include <QtWidgets>
 #include <QDebug>
-#include "flowlayout.h"
 
 
 FlowLayout::FlowLayout(QWidget *parent, int margin, int hSpacing, int vSpacing)

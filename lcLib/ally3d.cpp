@@ -4,7 +4,6 @@
 #include <BRepPrimAPI_MakeCone.hxx>
 #include <valuemanager.h>
 #include <canonif.h>
-#include <guicore.h>
 
 
 Ally3D::Ally3D(QObject *parent)
@@ -40,7 +39,7 @@ void Ally3D::showMachineLimits() {
   CANON_POSITION g5xO = ci.g5xOffset(ci.selectedOffset());
   CANON_POSITION g92O = ci.g92Offset();
   double         rot  = ci.xyRotation();  //TODO!
-  LcProperties&  lcp  = GuiCore().lcProperties();
+  LcProperties&  lcp  = ci.lcProperties();
   Handle(AIS_InteractiveContext) ctx = v3D->context();
 
 //  qDebug() << "showLimits() - g5x:" << g5xO.x << "/" << g5xO.y << "/" << g5xO.z

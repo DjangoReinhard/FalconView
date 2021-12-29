@@ -23,6 +23,7 @@ public:
   CanonIF(LcProperties& lcProperties, ToolTable& toolTable);
   CanonIF();
 
+  LcProperties&     lcProperties() const            { return instance->properties; }
   CANON_UNITS       machineUnits() const            { return instance->machineUnits; }
   double            lengthUnits() const             { return instance->lengthUnits(); }
   double            feedRate() const                { return instance->canon.linearFeedRate; }

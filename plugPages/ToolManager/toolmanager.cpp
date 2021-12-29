@@ -30,7 +30,7 @@
 
 
 ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
- : DynCenterWidget(QString(), "ToolManager", false, parent)
+ : AbstractCenterWidget(QString(), "ToolManager", false, parent)
  , conn(conn)
  , spH(new QSplitter(Qt::Horizontal, this))
  , categories(new QTreeView(spH))
@@ -428,7 +428,7 @@ void ToolManager::closeEvent(QCloseEvent*) {
 
 
 void ToolManager::showEvent(QShowEvent* e) {
-  DynCenterWidget::showEvent(e);
+  AbstractCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) categories->setFocus();
   }
 

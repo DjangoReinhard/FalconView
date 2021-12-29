@@ -6,11 +6,11 @@
 #include <canonif.h>
 #include <occtviewer.h>
 #include <centerview.h>
-#include <mainwindow.h>
 #include <statusreader.h>
 #include <commandwriter.h>
 #include <syseventmodel.h>
 #include <QApplication>
+#include <QMainWindow>
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QVector3D>
@@ -91,8 +91,10 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
   view3D = new OcctQtViewer();
   ally3D->setOcctViewer(view3D);
-  mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool()
-                            , cfg.value("previewIsCenter", false).toBool());
+  qDebug() << "have to care about MainWindow!!!";
+  assert(false);
+//  mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool()
+//                            , cfg.value("previewIsCenter", false).toBool());
 
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged
         , this, &GuiKernel::updateView);

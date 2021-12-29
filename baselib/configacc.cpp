@@ -1,10 +1,10 @@
 #include <configacc.h>
 #include <core.h>
-#include <core_p.h>
+#include <kernel.h>
 #include <QColor>
 #include <QFont>
 
-#ifdef NOT_YET
+
 QColor Config::getBackground(GuiElem key) const {
   return Core().core()->cfg.getBackground(key);
   }
@@ -58,4 +58,3 @@ void Config::setValue(const QString& key, const QVariant& value) {
 QString Config::nameOf(GuiElem key) const {
   return Core().core()->cfg.geToString(key);
   }
-#endif

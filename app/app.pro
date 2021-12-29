@@ -4,7 +4,6 @@ CONFIG  += c++17
 QT      += widgets uitools sql xml
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
-
 LINUXCNC = /usr/local/src/linuxcnc-deb11
 OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
 
@@ -19,6 +18,7 @@ INCLUDEPATH += \
     view/pages \
     view/status \
     ../baselib \
+    ../lcLib \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \
     $${LINUXCNC}/src/emc/rs274ngc \
@@ -27,114 +27,48 @@ INCLUDEPATH += \
     $${OCCT}/include/opencascade
 
 SOURCES += \
-  app/guicore.cpp \
-  app/guikernel.cpp \
     app/main.cpp \
     app/mainwindow.cpp \
-    model/db/category.cpp \
-    model/db/CategoryTreeModel.cpp \
     model/db/falconviewdb.cpp \
-    model/db/toolcategorymodel.cpp \
-    model/db/toolmodel.cpp \
     model/toolcategory.cpp \
     model/tool.cpp \
-    nml/commandwriter.cpp \
-    nml/errorreader.cpp \
-    nml/statusreader.cpp \
-    rs274/linecodes.cpp \
     util/abstractcondition.cpp \
-    util/ally3d.cpp \
     util/andcondition.cpp \
     util/dynaaction.cpp \
     util/equalcondition.cpp \
     util/falsecondition.cpp \
-    util/Geom_HelixData.cpp \
-    util/HHelixCurveAdaptor.cpp \
-    util/HelixCurveAdaptor.cpp \
-    util/HelixCurveAdaptor_CylinderEvaluator.cpp \
     util/greatercondition.cpp \
-    util/LCInter.cpp \
-  util/guikernelcreator.cpp \
     util/micon.cpp \
     util/multistateaction.cpp \
     util/multistatetoolbutton.cpp \
     util/notcondition.cpp \
-    util/numlabel.cpp \
     util/orcondition.cpp \
     util/smallercondition.cpp \
-    util/timestamp.cpp \
     util/truecondition.cpp \
-    view/status/curcodesstatus.cpp \
-    view/status/positionstatus.cpp \
-    view/status/speedstatus.cpp \
-    view/status/toolstatus.cpp \
-    view/centerview.cpp \
     view/dyndockable.cpp \
-    view/occtviewer.cpp \
-    view/settingsnb.cpp \
-    view/tooleditor.cpp \
 
 HEADERS += \
-  app/guicore.h \
-  app/guikernel.h \
     app/mainwindow.h \
-    model/db/category.h \
-    model/db/CategoryTreeModel.h \
     model/db/falconviewdb.h \
-    model/db/toolcategorymodel.h \
-    model/db/toolmodel.h \
     model/toolcategory.h \
     model/tool.h \
-    nml/commandwriter.h \
-    nml/errorreader.h \
-    nml/insulatePose.h \
-    nml/statusreader.h \
-    rs274/linecodes.h \
     util/abstractcondition.h \
-    util/ally3d.h \
     util/andcondition.h \
     util/dynaaction.h \
     util/equalcondition.h \
     util/falsecondition.h \
-    util/Geom_HelixData.h \
     util/greatercondition.h \
-    util/HelixCurveAdaptor_CylinderEvaluator.h \
-    util/HelixCurveAdaptor_p.h \
-    util/HelixCurveAdaptor.h \
-    util/HHelixCurveAdaptor.h \
-    util/LCInter.h \
-  util/guikernelcreator.h \
     util/micon.h \
     util/multistateaction.h \
     util/multistatetoolbutton.h \
     util/notcondition.h \
-    util/numlabel.h \
     util/orcondition.h \
     util/smallercondition.h \
-    util/timestamp.h \
     util/truecondition.h \
-    view/status/curcodesstatus.h \
-    view/status/positionstatus.h \
-    view/status/speedstatus.h \
-    view/status/toolstatus.h \
-    view/centerview.h \
     view/dyndockable.h \
-    view/occtviewer.h \
-    view/settingsnb.h \
-    view/tooleditor.h \
 
 FORMS += \
-    UI/HCurCodes.ui \
-    UI/MDIEditor.ui \
-    UI/Position.ui \
-    UI/PositionMain.ui \
-    UI/VCurCodes.ui \
-    UI/GCodeEditor.ui \
-    UI/mainwindow.ui \
-    UI/HSpeedInfo.ui \
-    UI/VSpeedInfo.ui \
-    UI/ToolEditor.ui \
-    UI/ToolInfo.ui
+    UI/mainwindow.ui
 
 unix:!mac {
   LIBS += -Wl,-rpath=$${LINUXCNC}/lib

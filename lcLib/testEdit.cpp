@@ -3,11 +3,9 @@
 #include <configacc.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
-//#include <occtviewer.h>
-//#include <centerview.h>
 #include <dynframe.h>
 #include <filemanager.h>
-#include <core.h>
+#include <guicore.h>
 #include <QInputDialog>
 #include <QSplitter>
 #include <QMessageBox>
@@ -97,13 +95,13 @@ void TestEdit::connectSignals() {
 
 // opens fileManager
 void TestEdit::openFile() {    
-  QWidget*     w  = Core().stackedPage(FileManager::className);
+  QWidget*     w  = GuiCore().stackedPage(FileManager::className);
   DynFrame*    df = qobject_cast<DynFrame*>(w);
   FileManager* fm = qobject_cast<FileManager*>(df->centerWidget());
 
   if (fm) {
      fm->setClient(this);
-     Core().activatePage(FileManager::className);
+     GuiCore().activatePage(FileManager::className);
      }
   }
 

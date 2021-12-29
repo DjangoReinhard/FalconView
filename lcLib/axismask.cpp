@@ -27,6 +27,20 @@ AxisMask::AxisMask(const AxisMask& other)
   }
 
 
+AxisMask::AxisMask(int mask)
+ : QObject(nullptr)
+ , cntActive(0)
+ , axisMask(mask) {
+  for (int i=0; i < 9; ++i) {
+      if (mask & (1 << i)) {
+         axisSeen[i] = true;
+         ++cntActive;
+         }
+      else axisSeen[i] = false;
+      }
+  }
+
+
 AxisMask::~AxisMask() {
   }
 

@@ -2,7 +2,6 @@
 #include <guicore.h>
 #include <configacc.h>
 #include <valuemanager.h>
-#include <toolmanager.h>
 #include <QVBoxLayout>
 #include <QVariant>
 #include <QTabWidget>

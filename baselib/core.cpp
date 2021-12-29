@@ -1,23 +1,15 @@
 #include <core.h>
 #include <kernelcreator.h>
 #include <kernel.h>
-#include <QTime>
-#include <QTimerEvent>
-#include <QApplication>
-#include <QTranslator>
-#include <QString>
-#include <QVector3D>
-#include <QSqlError>
-#include <QMessageBox>
-#include <core.h>
-#include <sysevent.h>
-#include <syseventmodel.h>
-#include <lcproperties.h>
-#include <dynframe.h>
-#include <tooltable.h>
-#include <canonif.h>
 #include <configacc.h>
 #include <configmgr.h>
+#include <sysevent.h>
+#include <syseventmodel.h>
+
+#include <QApplication>
+#include <QFileInfo>
+#include <QDebug>
+
 #include <cassert>
 #include <emc.hh>
 

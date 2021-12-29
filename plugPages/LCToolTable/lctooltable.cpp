@@ -10,13 +10,13 @@
 #include <QSortFilterProxyModel>
 #include <QKeyEvent>
 #include <QDebug>
-#include <core.h>
+#include <guicore.h>
 
 
 LCToolTable::LCToolTable(QWidget* parent)
  : AbstractCenterWidget(QString(), "LCToolTable", false, parent)
  , table(new QTableView)
- , model(Core().toolTableModel())
+ , model(GuiCore().toolTableModel())
  , px(new QSortFilterProxyModel(this)) {
   setObjectName(LCToolTable::className);
   setWindowTitle(LCToolTable::className);
@@ -35,7 +35,7 @@ QWidget* LCToolTable::createContent() {
   Config cfg;
 
   cfg.beginGroup(LCToolTable::className);
-  table->horizontalHeader()->restoreState(cfg.value(Core().isLatheMode() ? "latheState": "millState").toByteArray());
+  table->horizontalHeader()->restoreState(cfg.value(GuiCore().isLatheMode() ? "latheState": "millState").toByteArray());
   cfg.endGroup();
   int mx = table->model()->rowCount();
 
@@ -50,7 +50,7 @@ LCToolTable::~LCToolTable() {
 
 
 void LCToolTable::connectSignals() {
-  connect(Core().toolTableModel(), &QAbstractTableModel::dataChanged, this, &LCToolTable::modelChanged);
+  connect(GuiCore().toolTableModel(), &QAbstractTableModel::dataChanged, this, &LCToolTable::modelChanged);
   }
 
 
@@ -114,7 +114,7 @@ void LCToolTable::closeEvent(QCloseEvent*) {
   Config cfg;
 
   cfg.beginGroup(LCToolTable::className);
-  cfg.setValue(Core().isLatheMode() ? "latheState" : "millState", table->horizontalHeader()->saveState());
+  cfg.setValue(GuiCore().isLatheMode() ? "latheState" : "millState", table->horizontalHeader()->saveState());
   cfg.endGroup();
   }
 

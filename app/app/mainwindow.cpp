@@ -1,6 +1,5 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
-#include <helpview.h>
 #include <occtviewer.h>
 #include <settingsnb.h>
 #include <dbconnection.h>
@@ -13,27 +12,31 @@
 #include <greatercondition.h>
 #include <smallercondition.h>
 #include <centerview.h>
+#include <testEdit.h>
 #include <dyndockable.h>
 #include <dynframe.h>
-#include <jogview.h>
-#include <mdieditor.h>
 #include <guicore.h>
-#include <syseventview.h>
-#include <lctooltable.h>
 #include <positionstatus.h>
 #include <toolstatus.h>
 #include <speedstatus.h>
 #include <curcodesstatus.h>
 #include <multistateaction.h>
-#include <pweditor.h>
-#include <patheditor.h>
-#include <preferenceseditor.h>
-#include <fixturemanager.h>
 #include <filemanager.h>
-#include <toolmanager.h>
 #include <micon.h>
 #include <configacc.h>
 #include <emc.hh>
+
+//#include <helpview.h>
+//#include <jogview.h>
+//#include <mdieditor.h>
+//#include <syseventview.h>
+//#include <lctooltable.h>
+//#include <pweditor.h>
+//#include <patheditor.h>
+//#include <preferenceseditor.h>
+//#include <fixturemanager.h>
+//#include <toolmanager.h>
+
 #include <QDebug>
 #include <QPushButton>
 #include <QStyle>
@@ -98,10 +101,10 @@ MainWindow::MainWindow(bool statusInPreview, bool previewIsCenter, QWidget *pare
   TestEdit* te = static_cast<TestEdit*>(df->centerWidget());
 
   if (te) te->restoreState();
-  df = static_cast<DynFrame*>(GuiCore().stackedPage(PathEditor::className));
-  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
+//  df = static_cast<DynFrame*>(GuiCore().stackedPage(PathEditor::className));
+//  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
 
-  if (pe) pe->restoreState();
+//  if (pe) pe->restoreState();
 //  ui->menubar->setVisible(false);
   qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
   setAppMode(ApplicationMode::Auto);
@@ -367,8 +370,8 @@ void MainWindow::createConnections() {
   connect(ui->actionTopView,   &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::topView);
   connect(ui->actionHelp,      &QAction::triggered, this,            &MainWindow::showHelp);
 
-  if (!previewIsCenter)
-     connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
+//  if (!previewIsCenter)
+//     connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
 
   // be actions ...
   connect(startAction,  &QAction::triggered, this, &MainWindow::autoStart);

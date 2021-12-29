@@ -14,7 +14,7 @@ class PositionStatus;
 class CurCodesStatus;
 class ToolStatus;
 class SpeedStatus;
-class JogView;
+//class JogView;
 
 
 class PreViewEditor : public TestEdit
@@ -46,7 +46,7 @@ protected slots:
 private:
   QSplitter*        spV;
   QWidget*          frame;
-  JogView*          jp;
+//  JogView*          jp;
   OcctQtViewer*     view3D;
   PositionStatus*   posStat;
   CurCodesStatus*   ccStat;

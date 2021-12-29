@@ -1,12 +1,11 @@
 #include <pweditor.h>
 #include <valuemanager.h>
 #include <configacc.h>
-#include <core.h>
+#include <guicore.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
 #include <occtviewer.h>
 #include <canonif.h>
-#include <jogview.h>
 #include <AIS_ViewCube.hxx>
 #include <AIS_InteractiveContext.hxx>
 #include <toolstatus.h>
@@ -26,10 +25,11 @@
 #include <QPushButton>
 #include <QSpacerItem>
 
+
 PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent)
  : TestEdit(fileName, parent)
  , frame(nullptr)
- , jp(nullptr)
+// , jp(nullptr)
  , view3D(view)
  , posStat(nullptr)
  , ccStat(nullptr)
@@ -52,9 +52,9 @@ QWidget* PreViewEditor::createContent() {
   ed->setReadOnly(true);
   pbOpen->hide();
   pbSave->hide();
-  //TODO: check it out!
-  jp = new JogView();
-  jp->initialize();
+//  //TODO: check it out!
+//  jp = new JogView();
+//  jp->initialize();
   createDecorations(view3D, statusInPreview);
   Config cfg;
 
@@ -162,7 +162,7 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   v->setLayout(gl);
   toolStat = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
   ccStat = new CurCodesStatus(":/src/UI/VCurCodes.ui");
-  posStat = new PositionStatus(":/src/UI/Position.ui", Core().axisMask());
+  posStat = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
   speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
   QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
   QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
@@ -192,18 +192,18 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   CanonIF().toolPath().clear();
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
-  Core().parseGCFile(fileName.toString());
-  Core().setAppMode(ApplicationMode::Auto);
+  GuiCore().parseGCFile(fileName.toString());
+  GuiCore().setAppMode(ApplicationMode::Auto);
   }
 
 
 void PreViewEditor::toggleSub() {
-  QWidget* oldSub = spV->widget(1);
-  QWidget* old;
+//  QWidget* oldSub = spV->widget(1);
+//  QWidget* old;
 
-  if (oldSub == frame) old = spV->replaceWidget(1, jp);
-  else                 old = spV->replaceWidget(1, frame);
-  qDebug() << "old widget: " << old;
+//  if (oldSub == frame) old = spV->replaceWidget(1, jp);
+//  else                 old = spV->replaceWidget(1, frame);
+//  qDebug() << "old widget: " << old;
   }
 
 const QString PreViewEditor::className = "3D Preview";

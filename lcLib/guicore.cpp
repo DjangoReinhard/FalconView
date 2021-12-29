@@ -9,7 +9,6 @@
 #include <dbhelper.h>
 #include <dynframe.h>
 #include <settingsnb.h>
-#include <mainwindow.h>
 #include <centerview.h>
 #include <tooltable.h>
 #include <configacc.h>
@@ -22,6 +21,7 @@
 #include <QVector3D>
 #include <QSqlError>
 #include <QMessageBox>
+#include <QMainWindow>
 #include <occtviewer.h>
 #include <LCInter.h>
 #include <canonif.h>
@@ -93,7 +93,7 @@ void GuiCore::setViewStack(CenterView* v) {
   }
 
 
-MainWindow* GuiCore::mainWindow() {
+QMainWindow* GuiCore::mainWindow() {
   return guiCore()->mainWindow;
   }
 
@@ -147,11 +147,6 @@ void GuiCore::setWindowTitle(const QString &title) {
                                       + " - "
                                       + title);
      }
-  }
-
-
-const AxisMask& GuiCore::axisMask() const {
-  return guiCore()->mAxis;
   }
 
 
