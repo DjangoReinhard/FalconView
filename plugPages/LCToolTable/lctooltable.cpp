@@ -14,16 +14,17 @@
 
 
 LCToolTable::LCToolTable(QWidget* parent)
- : AbstractCenterWidget(QString(), "LCToolTable", false, parent)
- , table(new QTableView)
- , model(GuiCore().toolTableModel())
- , px(new QSortFilterProxyModel(this)) {
-  setObjectName(LCToolTable::className);
-  setWindowTitle(LCToolTable::className);
+ : AbstractCenterWidget(parent)
+ , table(nullptr)
+ , model(nullptr)
+ , px(nullptr) {
   }
 
 
 QWidget* LCToolTable::createContent() {
+  table = new QTableView();
+  model = GuiCore().toolTableModel();
+  px    = new QSortFilterProxyModel(this);
   px->setSourceModel(model);
   table->setModel(px);
   table->setSelectionMode(QAbstractItemView::SingleSelection);

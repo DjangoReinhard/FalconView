@@ -2,7 +2,7 @@
 #include <toolmodel.h>
 #include <dbconnection.h>
 #include <ui_ToolEditor.h>
-#include <guicore.h>
+#include <core.h>
 #include <QLocale>
 #include <QDebug>
 #include <QComboBox>
@@ -22,7 +22,7 @@ ToolEditor::ToolEditor(QWidget *parent)
   model->setQuery("select id, name from Category");
 //  dumpModel();
   ui->setupUi(this);
-  QPixmap ni = QPixmap(QString(":/res/ToolDimensions_%1.png").arg(GuiCore().languagePrefix()));
+  QPixmap ni = QPixmap(QString(":/res/ToolDimensions_%1.png").arg(Core().languagePrefix()));
 
   if (!ni.isNull()) ui->helpImage->setPixmap(ni);
   setupTabOrder();

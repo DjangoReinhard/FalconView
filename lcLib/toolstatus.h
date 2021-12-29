@@ -9,7 +9,7 @@ class ToolStatus : public AbstractCenterWidget
 {
   Q_OBJECT
 public:
-  explicit ToolStatus(const QString& fileName, bool inPreview, QWidget* parent = nullptr);
+  explicit ToolStatus(QWidget* parent = nullptr);
   virtual ~ToolStatus();
 
 protected:

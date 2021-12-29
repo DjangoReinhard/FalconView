@@ -31,7 +31,7 @@ public:
   QString         languagePrefix() const;
   DBConnection*   databaseConnection();
   QMainWindow*    mainWindow();
-  QLocale         locale() const;
+  void            setMainWindow(QMainWindow* w);
   bool            move2Backup(const QString& fileName);
   void            activatePage(const QString& pageName);
   void            showAllButCenter(bool visible = true);

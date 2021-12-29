@@ -14,6 +14,7 @@ class HelpKeywordWidget;
 class HelpView : public AbstractCenterWidget
 {
   Q_OBJECT
+  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "helpView.json")
 public:
   explicit HelpView(QWidget* parent = nullptr);
 

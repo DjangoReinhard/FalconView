@@ -31,8 +31,6 @@ SOURCES += \
     syseventmodel.cpp \
     timestamp.cpp \
     valuemanager.cpp \
-    valuemanager.cpp \
-    valuemodel.cpp \
     valuemodel.cpp
 
 HEADERS += \
@@ -56,8 +54,6 @@ HEADERS += \
     syseventmodel.h \
     timestamp.h \
     valuemanager.h \
-    valuemanager.h \
-    valuemodel.h \
     valuemodel.h
 
 TRANSLATIONS += \

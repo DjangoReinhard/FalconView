@@ -31,8 +31,8 @@ DynFrame::DynFrame(AbstractCenterWidget* cw, bool visualFrame, QWidget *parent)
   }
 
 
-void DynFrame::init() {
-  if (dcw) dcw->initialize();
+void DynFrame::init(const QString& fileName, const QString& name, bool addScrollArea) {
+  if (dcw) dcw->initialize(fileName, name, addScrollArea);
   }
 
 

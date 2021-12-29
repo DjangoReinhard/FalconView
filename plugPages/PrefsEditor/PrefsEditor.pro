@@ -15,7 +15,15 @@ HEADERS = \
 SOURCES = \
     preferenceseditor.cpp
 
-uikit: CONFIG += debug_and_release
-
 FORMS += \
   Settings.ui
+
+unix:!mac {
+  LIBS += -Wl,-rpath=$${LINUXCNC}/lib
+  QMAKE_CXXFLAGS += -std=gnu++11
+}
+
+LIBS += \
+  -L../../baselib \
+  -lbaselib \
+

@@ -11,7 +11,7 @@ class DynDockable : public QDockWidget
 public:
   DynDockable(AbstractCenterWidget* cw, QWidget* parent = nullptr);
 
-  void     init();
+  void     init(const QString& fileName, const QString& name, bool addScrollArea = false);
   QString  name() const;
   QString  id() const;
   QAction* viewAction();
@@ -21,8 +21,8 @@ public:
 protected:
   static const int DockingTitleHeight = 39;
   virtual void closeEvent(QCloseEvent* e) override;
-  virtual void keyPressEvent(QKeyEvent* e) override;
-  virtual void keyReleaseEvent(QKeyEvent* e) override;
+//  virtual void keyPressEvent(QKeyEvent* e) override;
+//  virtual void keyReleaseEvent(QKeyEvent* e) override;
 
 private:
   AbstractCenterWidget* dcw;

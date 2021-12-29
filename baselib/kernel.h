@@ -12,12 +12,15 @@ class SysEvent;
 class Kernel : public QObject
 {
   Q_OBJECT
+public:
+  virtual void logSysEvent(const SysEvent& se);
+
 protected:
   explicit Kernel(const QString& iniFilename, const QString& appName, const QString& groupID);
+  virtual ~Kernel() = default;
 
   virtual int  axisMask() const;
   virtual void logSysEvent(const QString& msg);
-  virtual void logSysEvent(const SysEvent& se);
   virtual void initialize(DBHelper& dbAssist);
   virtual QString fileName4(const QString& fileID);
 

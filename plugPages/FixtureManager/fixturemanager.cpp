@@ -1,36 +1,48 @@
 #include <fixturemanager.h>
 #include <flowlayout.h>
 #include <fixtureedit.h>
+#include <axismask.h>
 #include <valuemanager.h>
 #include <configacc.h>
+#include <guicore.h>
 #include <QMessageBox>
 #include <QScrollArea>
 #include <QShowEvent>
 #include <QDebug>
 
 
-FixtureManager::FixtureManager(const AxisMask& mask, QWidget* parent)
- : AbstractCenterWidget(QString(), "FixtureManager", false, parent)
+FixtureManager::FixtureManager(QWidget* parent)
+ : AbstractCenterWidget(parent)
  , client(new QWidget(this))
- , axisMask(mask) {
+ , axisMask(nullptr) {
   setObjectName("FixtureManager");
   setWindowTitle(tr("FixtureManager"));
   }
 
 
 QWidget* FixtureManager::createContent() {
+  axisMask        = new AxisMask(Core().axisMask());
   FlowLayout*  fl = new FlowLayout(client);
-  QScrollArea* sa = new QScrollArea(this);
-  FixtureEdit* fe = new FixtureEdit(tr("Offsets"), 0, axisMask);
+  QScrollArea* sa = new QScrollArea(this);  
+  FixtureEdit* fe = new FixtureEdit(tr("Offsets"), 0, *axisMask);
 
   client->setLayout(fl);
-  fe->initialize();
+  fe->initialize(QString(), "Offsets");
   fl->setContentsMargins(0, 0, 0, 0);
   fl->addWidget(fe);
   for (int i=0; i < 9; ++i) {
-      if (i < 6) fe = new FixtureEdit(QString("G%1").arg(54 + i), i+1, axisMask);
-      else       fe = new FixtureEdit(QString("G59.%1").arg(i - 5), i+1, axisMask);
-      fe->initialize();
+      if (i < 6) {
+         QString id = QString("G%1").arg(54 + i);
+
+         fe = new FixtureEdit(id, i+1, *axisMask);
+         fe->initialize(QString(), id);
+         }
+      else {
+         QString id = QString("G59.%1").arg(i - 5);
+
+         fe = new FixtureEdit(id, i+1, *axisMask);
+         fe->initialize(QString(), id);
+         }
       fl->addWidget(fe);
       }
   sa->setWidgetResizable(true);

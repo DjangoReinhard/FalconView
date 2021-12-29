@@ -7,8 +7,8 @@
 #include <cmath>
 
 
-MDIEditor::MDIEditor(const QString& file, QWidget* parent)
- : AbstractCenterWidget(file, MDIEditor::className, false, parent) {
+MDIEditor::MDIEditor(QWidget* parent)
+ : AbstractCenterWidget(parent) {
   setObjectName(MDIEditor::className);
   setWindowTitle(tr("MDIEditor"));
   }

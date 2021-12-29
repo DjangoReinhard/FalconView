@@ -22,11 +22,9 @@
 #include <QPushButton>
 
 
-TestEdit::TestEdit(const QString& fileName, QWidget* parent)
- : AbstractCenterWidget(fileName, TestEdit::className, false, parent)
+TestEdit::TestEdit(QWidget* parent)
+ : AbstractCenterWidget(parent)
  , fn(nullptr) {
-  setObjectName(TestEdit::className);
-  setWindowTitle(tr("TestEdit"));
   }
 
 

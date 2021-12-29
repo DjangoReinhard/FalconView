@@ -19,9 +19,10 @@ class QKeyEvent;
 class ToolManager : public AbstractCenterWidget
 {
   Q_OBJECT
+  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "toolManager.json")
 public:
   static const QString& className;
-  explicit ToolManager(DBConnection& conn, QWidget* parent = nullptr);
+  explicit ToolManager(QWidget* parent = nullptr);
   virtual ~ToolManager();
 
   virtual void connectSignals() override;
@@ -46,7 +47,7 @@ protected:
   void saveToolChanges();
 
 private:
-  DBConnection&          conn;
+  DBConnection*          conn;
   QSplitter*             spH;
   QTreeView*             categories;
   QSplitter*             spV;

@@ -26,22 +26,24 @@
 #include <QSpacerItem>
 
 
-PreViewEditor::PreViewEditor(const QString& fileName, OcctQtViewer* view, bool statusInPreview, QWidget* parent)
- : TestEdit(fileName, parent)
+PreViewEditor::PreViewEditor(QWidget* parent)
+ : TestEdit(parent)
  , frame(nullptr)
 // , jp(nullptr)
- , view3D(view)
+ , view3D(nullptr)
  , posStat(nullptr)
  , ccStat(nullptr)
  , toolStat(nullptr)
  , speedStat(nullptr)
- , statusInPreview(statusInPreview) {
+ , statusInPreview(false) {
   setObjectName(PreViewEditor::className);
   setWindowTitle(tr("PreViewEditor"));
   }
 
 
 QWidget* PreViewEditor::createContent() {
+  view3D          = GuiCore().view3D();
+  statusInPreview = Config().value("statusInPreview").toBool();
   TestEdit::createContent();
   spV = new QSplitter(Qt::Vertical);
   view3D->setMinimumSize(200, 200);
@@ -52,6 +54,7 @@ QWidget* PreViewEditor::createContent() {
   ed->setReadOnly(true);
   pbOpen->hide();
   pbSave->hide();
+
 //  //TODO: check it out!
 //  jp = new JogView();
 //  jp->initialize();
@@ -159,18 +162,20 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   if (!sip) return;
   QGridLayout* gl = new QGridLayout(v);
 
+  qDebug() << "need to rethink create decorations!";
+  assert(!sip);
   v->setLayout(gl);
-  toolStat = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
-  ccStat = new CurCodesStatus(":/src/UI/VCurCodes.ui");
-  posStat = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
-  speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
+//  toolStat = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
+//  ccStat = new CurCodesStatus(":/src/UI/VCurCodes.ui");
+//  posStat = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
+//  speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
   QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
   QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
 
-  toolStat->initialize();
-  ccStat->initialize();
-  posStat->initialize();
-  speedStat->initialize();
+//  toolStat->initialize();
+//  ccStat->initialize();
+//  posStat->initialize();
+//  speedStat->initialize();
   gl->setColumnStretch(0, 0);
   gl->setColumnStretch(1, 1);
   gl->setColumnStretch(2, 20);

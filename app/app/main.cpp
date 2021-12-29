@@ -1,6 +1,9 @@
 #include <mainwindow.h>
+#include <testmain.h>
 #include <falconviewdb.h>
 #include <guicore.h>
+#include <guikernelcreator.h>
+#include <QCoreApplication>
 #include <QApplication>
 #include <QFileInfo>
 #include <QStyleFactory>
@@ -56,12 +59,22 @@ int main(int argc, char *argv[]) {
       // set default font for all gui elements. Needed with Qt > 6xx
       a.setFont(QFont("Noto Sans", 15));
 #endif
+#ifdef REDNOSE
       FalconViewDB dbHelper;
-      GuiCore appCore(iniFileName, "FalconView", dbHelper);
+      GuiCore      appCore(iniFileName, "FalconView", dbHelper);
 
       appCore.checkBE();
       appCore.mainWindow()->show();
+#else
+      GuiCore::setKernelCreator(new GuiKernelCreator());
+      FalconViewDB dbHelper;
+      GuiCore      appCore(iniFileName, "FalconView", dbHelper);
+      TestMain*    mainWindow = new TestMain(QCoreApplication::applicationDirPath());
 
+      appCore.setMainWindow(mainWindow);
+
+      mainWindow->show();
+#endif
       int rv = a.exec();
 
 //      qDebug() << "left event loop with rv ==" << rv;

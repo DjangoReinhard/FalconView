@@ -17,10 +17,8 @@
 #include <QPushButton>
 
 
-PathEditor::PathEditor(const QString& fileName, QWidget* parent)
- : TestEdit(fileName, parent) {
-  setObjectName(PathEditor::className);
-  setWindowTitle(tr("PathEditor"));  
+PathEditor::PathEditor(QWidget* parent)
+ : TestEdit(parent) {
   }
 
 

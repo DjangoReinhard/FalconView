@@ -25,7 +25,7 @@ GuiKernel::GuiKernel(const QString& fileName, const QString& appName, const QStr
  , view3D(nullptr)
  , centerView(nullptr)
  , mainWindow(nullptr)
- , ally3D(nullptr)
+ , ally3D(new Ally3D())
  , statusReader(nullptr)
  , commandWriter(nullptr)
  , sysEvents(nullptr) {
@@ -91,11 +91,14 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
   view3D = new OcctQtViewer();
   ally3D->setOcctViewer(view3D);
+  statusReader  = new StatusReader(positionCalculator, gcodeInfo);
+  commandWriter = new CommandWriter();
+
   qDebug() << "have to care about MainWindow!!!";
-  assert(false);
 //  mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool()
 //                            , cfg.value("previewIsCenter", false).toBool());
 
+  assert(statusReader);
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged
         , this, &GuiKernel::updateView);
   setupBackend();
@@ -105,6 +108,20 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
 bool GuiKernel::isLatheMode() const {
   return lcProps.value("DISPLAY", "LATHE").isValid()
       && lcProps.value("DISPLAY", "LATHE").toBool();
+  }
+
+
+void GuiKernel::logSysEvent(const QString& msg) {
+  SysEvent se(msg);
+
+  qDebug() << "system event" << se.type() << ":" << se.what() << " at:" << se.when();
+  sysEvents->append(&se);
+  }
+
+
+void GuiKernel::logSysEvent(const SysEvent& se) {
+  qDebug() << "system event" << se.type() << ":" << se.what() << " at:" << se.when();
+  sysEvents->append(&se);
   }
 
 

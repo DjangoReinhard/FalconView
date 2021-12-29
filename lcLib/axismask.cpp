@@ -45,6 +45,18 @@ AxisMask::~AxisMask() {
   }
 
 
+AxisMask& AxisMask::operator=(const AxisMask &other) {
+  if (&other == this) return *this;
+  cntActive = other.cntActive;
+  axisMask  = other.axisMask;
+  for (int i=0; i < 9; ++i) {
+      joint2Axis[i] = other.joint2Axis[i];
+      axisSeen[i]   = other.axisSeen[i];
+      }
+  return *this;
+  }
+
+
 void AxisMask::calcActive() {
   ValueManager vm;
 

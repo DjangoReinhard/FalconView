@@ -11,9 +11,9 @@
 #include <QDebug>
 
 
-ToolStatus::ToolStatus(const QString & fileName, bool inPreview, QWidget* parent)
- : AbstractCenterWidget(fileName, "ToolStatus", parent)
- , isInPreview(inPreview)
+ToolStatus::ToolStatus(QWidget* parent)
+ : AbstractCenterWidget(parent)
+ , isInPreview(false)
  , curTool(nullptr)
  , nxtTool(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);

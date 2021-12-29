@@ -4,6 +4,7 @@ CONFIG  += c++17
 QT      += widgets uitools sql xml
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
+DESTDIR  = ..
 LINUXCNC = /usr/local/src/linuxcnc-deb11
 OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
 
@@ -29,6 +30,7 @@ INCLUDEPATH += \
 SOURCES += \
     app/main.cpp \
     app/mainwindow.cpp \
+    app/testmain.cpp \
     model/db/falconviewdb.cpp \
     model/toolcategory.cpp \
     model/tool.cpp \
@@ -46,9 +48,11 @@ SOURCES += \
     util/smallercondition.cpp \
     util/truecondition.cpp \
     view/dyndockable.cpp \
+  view/plugindialog.cpp
 
 HEADERS += \
     app/mainwindow.h \
+    app/testmain.h \
     model/db/falconviewdb.h \
     model/toolcategory.h \
     model/tool.h \
@@ -66,6 +70,7 @@ HEADERS += \
     util/smallercondition.h \
     util/truecondition.h \
     view/dyndockable.h \
+  view/plugindialog.h
 
 FORMS += \
     UI/mainwindow.ui
@@ -74,6 +79,12 @@ unix:!mac {
   LIBS += -Wl,-rpath=$${LINUXCNC}/lib
   QMAKE_CXXFLAGS += -std=gnu++11
 }
+
+LIBS += \
+  -L../lcLib \
+  -L../baselib \
+  -llcLib \
+  -lbaselib \
 
 LIBS += \
   -L$${LINUXCNC}/lib \

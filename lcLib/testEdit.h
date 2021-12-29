@@ -19,7 +19,7 @@ class TestEdit : public AbstractCenterWidget, FileManagerClient
   Q_OBJECT
 public:
   static const QString& className;
-  TestEdit(const QString& fileName, QWidget* parent = nullptr);
+  TestEdit(QWidget* parent = nullptr);
 
   QString pageName() override;
   void    restoreState();

@@ -8,8 +8,8 @@
 #include <QDebug>
 
 
-CurCodesStatus::CurCodesStatus(const QString& fileName, QWidget* parent)
- : AbstractCenterWidget(fileName, "CurCodesStatus", false, parent)
+CurCodesStatus::CurCodesStatus(QWidget* parent)
+ : AbstractCenterWidget(parent)
  , labels(nullptr) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
   setWindowTitle(tr("CurCodesStatus"));

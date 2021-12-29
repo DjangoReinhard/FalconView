@@ -17,7 +17,7 @@ public:
   DynFrame* activatePage(const QString& name);
   QString   activePage() const;
   DynFrame* page(const QString& name);
-  void      addPage(DynFrame* page, const QString& name = QString());
+//  void      addPage(DynFrame* page, const QString& name = QString());
   void      dump() const;
   void      windowClosing(QCloseEvent* e);
 

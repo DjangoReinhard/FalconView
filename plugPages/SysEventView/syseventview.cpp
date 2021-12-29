@@ -11,10 +11,10 @@
 #include <QDebug>
 
 
-SysEventView::SysEventView(DBConnection& conn, QWidget* parent)
- : AbstractCenterWidget(QString(), "SysEventView", false, parent)
+SysEventView::SysEventView(QWidget* parent)
+ : AbstractCenterWidget(parent)
  , table(new QTableView)
- , model(new SysEventModel(conn))
+ , model(nullptr)
  , px(new QSortFilterProxyModel(this)) {
   setObjectName(SysEventView::className);
   setWindowTitle(SysEventView::className);
@@ -22,6 +22,7 @@ SysEventView::SysEventView(DBConnection& conn, QWidget* parent)
 
 
 QWidget* SysEventView::createContent() {
+  model = new SysEventModel(*Core().databaseConnection());
   px->setSourceModel(model);
   table->setModel(px);
   table->setSelectionMode(QAbstractItemView::SingleSelection);

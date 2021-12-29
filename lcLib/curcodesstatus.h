@@ -8,7 +8,8 @@ class CurCodesStatus : public AbstractCenterWidget
 {
   Q_OBJECT
 public:
-  CurCodesStatus(const QString& fileName, QWidget* parent = nullptr);
+  explicit CurCodesStatus(QWidget* parent = nullptr);
+  virtual ~CurCodesStatus() = default;
 
 protected:
   virtual void connectSignals() override;

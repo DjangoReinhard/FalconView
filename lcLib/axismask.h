@@ -13,6 +13,7 @@ public:
   explicit AxisMask(const QString& iniValue);
   virtual ~AxisMask();
 
+  AxisMask& operator =(const AxisMask& other);
   int  activeAxis() const { return cntActive; }
   bool hasXAxis()   const { return axisSeen[0]; }
   bool hasYAxis()   const { return axisSeen[1]; }

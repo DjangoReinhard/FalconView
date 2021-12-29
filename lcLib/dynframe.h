@@ -11,7 +11,7 @@ class DynFrame : public QWidget
 public:
   explicit DynFrame(AbstractCenterWidget* cw, bool visualFrame = false, QWidget *parent = nullptr);
 
-  void     init();
+  void     init(const QString& fileName, const QString& name, bool addScrollArea = false);
   QString  name() const;
   QString  id() const;
   QAction* viewAction();

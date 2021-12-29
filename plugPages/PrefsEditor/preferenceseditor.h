@@ -14,8 +14,9 @@ QT_END_NAMESPACE
 class PreferencesEditor : public AbstractCenterWidget
 {
   Q_OBJECT
+  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "prefsEditor.json")
 public:
-  PreferencesEditor(const QString& uiFile, QWidget* parent = nullptr);
+  PreferencesEditor(QWidget* parent = nullptr);
  ~PreferencesEditor();
 
   virtual void connectSignals() override;

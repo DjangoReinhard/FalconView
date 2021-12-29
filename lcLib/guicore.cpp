@@ -98,6 +98,11 @@ QMainWindow* GuiCore::mainWindow() {
   }
 
 
+void GuiCore::setMainWindow(QMainWindow *w) {
+  guiCore()->mainWindow = w;
+  }
+
+
 QWidget* GuiCore::stackedPage(const QString& pageName) {
   qDebug() << "Core: query for page: >" << pageName << "<";
 
@@ -173,7 +178,7 @@ void GuiCore::riseError(const QString &msg) {
   ValueManager().setValue("errorActive", true);
   SysEvent se(msg);
 
-  guiCore()->logSysEvent(se);
+  core()->logSysEvent(se);
   QMessageBox::critical(guiCore()->mainWindow
                       , SysEvent::toString(se.type())
                       , se.what());

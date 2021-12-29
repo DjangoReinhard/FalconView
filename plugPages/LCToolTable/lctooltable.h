@@ -12,6 +12,7 @@ QT_END_NAMESPACE
 class LCToolTable : public AbstractCenterWidget
 {
   Q_OBJECT
+  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "lcToolTable.json")
 public:
   static const QString className;
   explicit LCToolTable(QWidget* parent = nullptr);

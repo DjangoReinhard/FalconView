@@ -29,13 +29,13 @@ int Core::axisMask() const {
 
 
 Kernel* Core::core() {
-  assert(kernel != nullptr);
+//  assert(kernel);
   return kernel;
   }
 
 
 const Kernel* Core::core() const {
-  assert(kernel != nullptr);
+//  assert(kernel);
   return kernel;
   }
 
@@ -45,11 +45,11 @@ DBConnection* Core::databaseConnection() {
   }
 
 
-QString Kernel::fileName4(const QString &fileID) {
+QString Core::fileName4(const QString &fileID) const {
   if (fileID == "helpFile") {
      return QApplication::applicationDirPath() + "/../share/doc/falconview/FalconView.qzh";
      }
-  return fileName;
+  return core()->fileName;
   }
 
 

@@ -20,7 +20,16 @@ SOURCES = \
     helpdockable.cpp \
     helpview.cpp
 
-uikit: CONFIG += debug_and_release
-
 FORMS += \
   HelpTitle.ui
+
+unix:!mac {
+  LIBS += -Wl,-rpath=$${LINUXCNC}/lib
+  QMAKE_CXXFLAGS += -std=gnu++11
+}
+
+LIBS += \
+  -L../../lcLib \
+  -L../../baselib \
+  -llcLib \
+  -lbaselib \

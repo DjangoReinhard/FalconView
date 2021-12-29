@@ -10,8 +10,8 @@
 #include <QDebug>
 
 
-SpeedStatus::SpeedStatus(const QString& fileName, QWidget* parent)
- : AbstractCenterWidget(fileName, "SpeedStatus", false, parent) {
+SpeedStatus::SpeedStatus(QWidget* parent)
+ : AbstractCenterWidget(parent) {
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
   setWindowTitle(tr("SpeedStatus"));
   }
@@ -59,17 +59,17 @@ void SpeedStatus::connectSignals() {
   connect(vm.getModel("spindle0Scale", 100), &ValueModel::valueChanged, this, &SpeedStatus::speedRateChanged);
 
   connect(vm.getModel("cmdVelocity", 0),   &ValueModel::valueChanged, cmdFeed
-       , [=](const QVariant& v){ cmdFeed->setText(GuiCore().locale().toString(v.toDouble(), 'f', 0)); });
+       , [=](const QVariant& v){ cmdFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
   connect(vm.getModel("maxVelocity", 0),   &ValueModel::valueChanged, cmdFastFeed
-       , [=](const QVariant& v){ cmdFastFeed->setText(GuiCore().locale().toString(v.toDouble(), 'f', 0)); });
+       , [=](const QVariant& v){ cmdFastFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
   connect(vm.getModel("spindle0Speed", 0), &ValueModel::valueChanged, cmdSpeed
-       , [=](const QVariant& v){ cmdSpeed->setText(GuiCore().locale().toString(v.toDouble(), 'f', 0)); });
+       , [=](const QVariant& v){ cmdSpeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
   connect(vm.getModel("curVelocity", 0),   &ValueModel::valueChanged, curFeed
-       , [=](const QVariant& v){ curFeed->setText(GuiCore().locale().toString(v.toDouble(), 'f', 0)); });
+       , [=](const QVariant& v){ curFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
   connect(vm.getModel("curRapid", 0),      &ValueModel::valueChanged, curFastFeed
-       , [=](const QVariant& v){ curFastFeed->setText(GuiCore().locale().toString(v.toDouble(), 'f', 0)); });
+       , [=](const QVariant& v){ curFastFeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
   connect(vm.getModel("curSpeed", 0),      &ValueModel::valueChanged, curSpeed
-       , [=](const QVariant& v){ curSpeed->setText(GuiCore().locale().toString(v.toDouble(), 'f', 0)); });
+       , [=](const QVariant& v){ curSpeed->setText(Core().locale().toString(v.toDouble(), 'f', 0)); });
   connect(slFeed,     &QSlider::valueChanged, this, &SpeedStatus::feedChanged);
   connect(slFastFeed, &QSlider::valueChanged, this, &SpeedStatus::fastFeedChanged);
   connect(slSpeed,    &QSlider::valueChanged, this, &SpeedStatus::speedChanged);

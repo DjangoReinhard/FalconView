@@ -29,29 +29,34 @@
 #include <QDebug>
 
 
-ToolManager::ToolManager(DBConnection& conn, QWidget *parent)
- : AbstractCenterWidget(QString(), "ToolManager", false, parent)
- , conn(conn)
+ToolManager::ToolManager(QWidget *parent)
+ : AbstractCenterWidget(parent)
+ , conn(nullptr)
  , spH(new QSplitter(Qt::Horizontal, this))
  , categories(new QTreeView(spH))
  , spV(new QSplitter(Qt::Vertical, spH))
  , tools(new QTableView(spV))
- , categoryTreeModel(new CategoryTreeModel(conn))
- , categoryTableModel(new ToolCategoryModel(conn))
- , toolModel(new ToolModel(conn))
- , tEdit(new ToolEditor())
- , tsMsgBox(TimeStamp::rtSequence())
+ , categoryTreeModel(nullptr)
+ , categoryTableModel(nullptr)
+ , toolModel(nullptr)
+ , tEdit(nullptr)
+ , tsMsgBox(0)
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
-  setObjectName(ToolManager::className);
-  setWindowTitle(ToolManager::className);
-  categories->installEventFilter(this);
-  tools->installEventFilter(this);
-  tEdit->installEventFilter(this);
   }
 
 
 QWidget* ToolManager::createContent() {
+  conn = Core().databaseConnection();
+  categoryTreeModel  = new CategoryTreeModel(*conn);
+  categoryTableModel = new ToolCategoryModel(*conn);
+  toolModel          = new ToolModel(*conn);
+  tEdit              = new ToolEditor();
+  tsMsgBox           = TimeStamp::rtSequence();
+
+  categories->installEventFilter(this);
+  tools->installEventFilter(this);
+  tEdit->installEventFilter(this);
   pxCat->setSourceModel(categoryTreeModel);
   categories->setModel(pxCat);
   categories->setTabKeyNavigation(false);

@@ -14,13 +14,10 @@
 
 /*! loads widgets from uiFile and allows late initialization at page usage
  */
-AbstractCenterWidget::AbstractCenterWidget(const QString& fileName, const QString& name, bool addScrollArea, QWidget* parent)
+AbstractCenterWidget::AbstractCenterWidget(QWidget* parent)
  : QWidget(parent)
  , vAction(nullptr)
- , fileName(fileName)
- , addScrollArea(addScrollArea) {
-  setObjectName(name);
-  setWindowTitle(tr(name.toStdString().c_str()));
+ , addScrollArea(false) {
   }
 
 
@@ -54,7 +51,11 @@ QWidget* AbstractCenterWidget::createContent() {
 
 
 // offline initialization (i.e. called by MainView::addPage)
-void AbstractCenterWidget::initialize() {
+void AbstractCenterWidget::initialize(const QString& fileName, const QString& name, bool addScrollArea) {
+  this->fileName = fileName;
+  this->addScrollArea = addScrollArea;
+  setObjectName(name);
+  setWindowTitle(tr(name.toStdString().c_str()));
   QWidget* w = createContent();
 
   if (w) {

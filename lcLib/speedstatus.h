@@ -9,7 +9,7 @@ class SpeedStatus : public AbstractCenterWidget
 {
   Q_OBJECT
 public:
-  SpeedStatus(const QString& fileName, QWidget* parent = nullptr);
+  SpeedStatus(QWidget* parent = nullptr);
   virtual ~SpeedStatus();
 
 protected:

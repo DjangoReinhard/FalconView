@@ -12,8 +12,8 @@
 #include <QDebug>
 
 
-PreferencesEditor::PreferencesEditor(const QString& fileName, QWidget* parent)
- : AbstractCenterWidget(fileName, tr("SettingsEditor"), true, parent)
+PreferencesEditor::PreferencesEditor(QWidget* parent)
+ : AbstractCenterWidget(parent)
  , labels(nullptr)
  , bgButtons(nullptr)
  , fontButtons(nullptr)

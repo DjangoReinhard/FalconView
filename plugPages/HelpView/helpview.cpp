@@ -12,17 +12,21 @@
 
 
 HelpView::HelpView(QWidget* parent)
- : AbstractCenterWidget(QString(), HelpView::className, 0, parent)
- , tb(new HelpBrowser)
- , sp(new QSplitter(Qt::Horizontal, this))
- , he(new HelpEngine(Core().fileName4("help"), this))
- , cw(static_cast<HelpContentWidget*>(he->contentWidget()))
- , kw(static_cast<HelpKeywordWidget*>(he->keywordWidget())) {
-  setObjectName(HelpView::className);
+ : AbstractCenterWidget(parent)
+ , tb(nullptr)
+ , sp(nullptr)
+ , he(nullptr)
+ , cw(nullptr)
+ , kw(nullptr) {
   }
 
 
 QWidget* HelpView::createContent() {
+  tb = new HelpBrowser();
+  sp = new QSplitter(Qt::Horizontal, this);
+  he = new HelpEngine(Core().fileName4("helpFile"), this);
+  cw = static_cast<HelpContentWidget*>(he->contentWidget());
+  kw = static_cast<HelpKeywordWidget*>(he->keywordWidget());
   HelpBrowser* hb = static_cast<HelpBrowser*>(tb);
 
   hb->setHelpEngine(he);

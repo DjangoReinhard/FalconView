@@ -32,7 +32,36 @@ SOURCES = \
     toolmanager.cpp \
     toolmodel.cpp
 
-uikit: CONFIG += debug_and_release
-
 FORMS += \
   ToolEditor.ui
+
+unix:!mac {
+  LIBS += -Wl,-rpath=$${LINUXCNC}/lib
+  QMAKE_CXXFLAGS += -std=gnu++11
+}
+
+LIBS += \
+  -L../../lcLib \
+  -L../../baselib \
+  -llcLib \
+  -lbaselib \
+
+LIBS += \
+  -L$${LINUXCNC}/lib \
+  -L/usr/lib \
+  -lm \
+  -llinuxcnc \
+  -lposemath \
+  -lnml \
+  -lrs274 \
+  -llinuxcncini \
+  -lpyplugin \
+  -llinuxcnchal \
+  -ltooldata \
+  -lstdc++ \
+  -lboost_python39 \
+  -lpython3.9 \
+  -lcrypt \
+  -lpthread \
+  -ldl \
+  -lutil

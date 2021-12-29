@@ -12,7 +12,7 @@
 
 
 FixtureEdit::FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent)
- : AbstractCenterWidget(QString(), "FixtureEdit", false, parent)
+ : AbstractCenterWidget(parent)
  , ui(new Ui::FixtureEditorForm())
  , ordinal(ordinal)
  , m(mask) {
@@ -179,22 +179,6 @@ bool FixtureEdit::eventFilter(QObject *, QEvent *event) {
      }
   return false;
   }
-
-
-//void FixtureEdit::keyReleaseEvent(QKeyEvent* e) {
-//  switch (e->key()) {
-//    case Qt::Key_Enter:
-//    case Qt::Key_Return:
-//         saveFixture();
-//         e->accept();
-//         break;
-//    default:
-//         qDebug() << "FE: pressed key: " << e->key();
-//         qDebug() << "FE: modifiers: "   << e->modifiers();
-//         AbstractCenterWidget::keyReleaseEvent(e);
-//         break;
-//    }
-//}
 
 
 void FixtureEdit::saveFixture() {

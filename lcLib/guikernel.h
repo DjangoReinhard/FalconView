@@ -41,6 +41,7 @@ public:
 
 protected:
   explicit GuiKernel(const QString& iniFilename, const QString& appName, const QString& groupID);
+  virtual ~GuiKernel() = default;
 
 signals:
   void abortTask();

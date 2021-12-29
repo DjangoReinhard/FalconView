@@ -13,7 +13,7 @@
 
 
 SettingsNotebook::SettingsNotebook(QWidget *parent)
- : AbstractCenterWidget(QString(), "SettingsNotebook", false, parent)
+ : AbstractCenterWidget(parent)
  , tw(nullptr) {
   setObjectName(SettingsNotebook::className);
   setWindowTitle(tr("SettingsNotebook"));
@@ -37,13 +37,13 @@ SettingsNotebook::~SettingsNotebook() {
 
 
 void SettingsNotebook::addPage(AbstractCenterWidget* page) {
-  assert(page);
-  page->initialize();
-  page->installEventFilter(this);
-  connect(page, &AbstractCenterWidget::dataChanged, this, &SettingsNotebook::pageChanged);
+//  assert(page);
+//  page->initialize();
+//  page->installEventFilter(this);
+//  connect(page, &AbstractCenterWidget::dataChanged, this, &SettingsNotebook::pageChanged);
 
-  //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
-  tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
+//  //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
+//  tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
   }
 
 
