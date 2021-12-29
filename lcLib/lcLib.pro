@@ -13,7 +13,10 @@ INCLUDEPATH += \
     $${LINUXCNC}/src/emc/tooldata \
     $${LINUXCNC}/src \
     $${OCCT}/include/opencascade \
-    ../baselib
+    ../baselib/model \
+    ../baselib/control \
+    ../baselib/util \
+    ../baselib/view \
 
 SOURCES += \
     Geom_HelixData.cpp \

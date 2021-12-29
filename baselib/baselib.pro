@@ -7,6 +7,10 @@ LINUXCNC = /usr/local/src/linuxcnc-deb11
 OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
 
 INCLUDEPATH += \
+    model \
+    control \
+    util \
+    view \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \
     $${LINUXCNC}/src/emc/rs274ngc \
@@ -15,46 +19,46 @@ INCLUDEPATH += \
     $${OCCT}/include/opencascade
 
 SOURCES += \
-    abscenterwidget.cpp \
-    configacc.cpp \
-    configmgr.cpp \
-    core.cpp \
-    dbconnection.cpp \
-    direntry.cpp \
-    dirmodel.cpp \
-    filemanager.cpp \
-    filemodel.cpp \
-    flowlayout.cpp \
-    kernel.cpp \
-    kernelcreator.cpp \
-    sysevent.cpp \
-    syseventmodel.cpp \
-    timestamp.cpp \
-    valuemanager.cpp \
-    valuemodel.cpp
+    model/configacc.cpp \
+    model/configmgr.cpp \
+    model/direntry.cpp \
+    model/dirmodel.cpp \
+    model/filemodel.cpp \
+    model/sysevent.cpp \
+    model/syseventmodel.cpp \
+    model/valuemanager.cpp \
+    model/valuemodel.cpp \
+    control/core.cpp \
+    control/kernel.cpp \
+    util/dbconnection.cpp \
+    util/flowlayout.cpp \
+    util/kernelcreator.cpp \
+    util/timestamp.cpp \
+    view/filemanager.cpp \
+    view/abscenterwidget.cpp
 
 HEADERS += \
-    PluginPageInterface.h \
-    abscenterwidget.h \
-    applicationmode.h \
-    configacc.h \
-    configmgr.h \
-    core.h \
-    dbconnection.h \
-    dbhelper.h \
-    direntry.h \
-    dirmodel.h \
-    filemanager.h \
-    filemanagerclient.h \
-    filemodel.h \
-    flowlayout.h \
-    kernel.h \
-    kernelcreator.h \
-    sysevent.h \
-    syseventmodel.h \
-    timestamp.h \
-    valuemanager.h \
-    valuemodel.h
+    model/configacc.h \
+    model/configmgr.h \
+    model/direntry.h \
+    model/dirmodel.h \
+    model/filemodel.h \
+    model/sysevent.h \
+    model/syseventmodel.h \
+    model/valuemanager.h \
+    model/valuemodel.h \
+    control/applicationmode.h \
+    control/core.h \
+    control/filemanagerclient.h \
+    control/kernel.h \
+    util/dbconnection.h \
+    util/dbhelper.h \
+    util/flowlayout.h \
+    util/kernelcreator.h \
+    util/timestamp.h \
+    view/PluginPageInterface.h \
+    view/filemanager.h \
+    view/abscenterwidget.h
 
 TRANSLATIONS += \
     baselib_de_DE.ts

@@ -9,7 +9,10 @@ LINUXCNC = /usr/local/src/linuxcnc-deb11
 OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
 
 INCLUDEPATH += \
-    ../../baselib \
+    ../../baselib/model \
+    ../../baselib/control \
+    ../../baselib/util \
+    ../../baselib/view \
     ../../lcLib \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \

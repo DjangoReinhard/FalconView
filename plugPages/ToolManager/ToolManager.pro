@@ -8,7 +8,10 @@ DESTDIR  = ../../plugPages
 LINUXCNC = /usr/local/src/linuxcnc-deb11
 
 INCLUDEPATH += \
-    ../../baselib \
+    ../../baselib/model \
+    ../../baselib/control \
+    ../../baselib/util \
+    ../../baselib/view \
     ../../lcLib \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \

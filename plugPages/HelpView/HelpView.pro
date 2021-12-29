@@ -7,7 +7,10 @@ DEFINES *= QT_USE_QSTRINGBUILDER
 DESTDIR  = ../../plugPages
 
 INCLUDEPATH  += \
-    ../../baselib \
+    ../../baselib/model \
+    ../../baselib/control \
+    ../../baselib/util \
+    ../../baselib/view \
     ../../lcLib
 
 HEADERS = \

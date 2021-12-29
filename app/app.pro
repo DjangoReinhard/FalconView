@@ -18,7 +18,10 @@ INCLUDEPATH += \
     view \
     view/pages \
     view/status \
-    ../baselib \
+    ../baselib/model \
+    ../baselib/control \
+    ../baselib/util \
+    ../baselib/view \
     ../lcLib \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \
