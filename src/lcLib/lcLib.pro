@@ -3,6 +3,7 @@ CONFIG  += staticlib c++17
 QT      += widgets gui-private uitools sql xml
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
+DESTDIR  = ..
 LINUXCNC = /usr/local/src/linuxcnc-deb11
 OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
 

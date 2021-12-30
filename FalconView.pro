@@ -3,20 +3,20 @@ requires(qtConfig(inputdialog))
 
 TEMPLATE = subdirs
 SUBDIRS = \
-  baselib \
-  lcLib \
-  plugPages \
-  app
+  src/baselib \
+  src/lcLib \
+  src/plugPages \
+  src/app
 
-app.depends = baselib
-lcLib.depends = baselib
-plugPages.FixtureManager.depends = lcLib
-plugPages.HelpView.depends = lcLib
-plugPages.JogView.depends = lcLib
-plugPages.LCToolTable.depends = lcLib
-plugPages.MDIEditor.depends = lcLib
-plugPages.PathEditor.depends = lcLib
-plugPages.PrefsEditor.depends = baselib
-plugPages.Preview3D.depends = lcLib
-plugPages.SysEventView.depends = baselib
-plugPages.ToolManager.depends = lcLib
+src.app.depends = src/baselib
+src.lcLib.depends = src/baselib
+src.plugPages.FixtureManager.depends = src/lcLib
+src.plugPages.HelpView.depends = src/lcLib
+src.plugPages.JogView.depends = src/lcLib
+src.plugPages.LCToolTable.depends = src/lcLib
+src.plugPages.MDIEditor.depends = src/lcLib
+src.plugPages.PathEditor.depends = src/lcLib
+src.plugPages.PrefsEditor.depends = src/baselib
+src.plugPages.Preview3D.depends = src/lcLib
+src.plugPages.SysEventView.depends = src/baselib
+src.plugPages.ToolManager.depends = src/lcLib

@@ -181,7 +181,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #    }
 
 
-RESOURCES += ../FalconView.qrc
+RESOURCES += ../../FalconView.qrc
 
 INSTALLS += target docs
 
