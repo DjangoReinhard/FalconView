@@ -13,7 +13,10 @@ INCLUDEPATH  += \
     ../../baselib/control \
     ../../baselib/util \
     ../../baselib/view \
-    ../../lcLib \
+    ../../lcLib/model \
+    ../../lcLib/control \
+    ../../lcLib/util \
+    ../../lcLib/view \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \
     $${LINUXCNC}/src/emc/rs274ngc \

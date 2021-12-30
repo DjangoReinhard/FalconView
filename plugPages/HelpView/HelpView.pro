@@ -11,7 +11,10 @@ INCLUDEPATH  += \
     ../../baselib/control \
     ../../baselib/util \
     ../../baselib/view \
-    ../../lcLib
+    ../../lcLib/model \
+    ../../lcLib/control \
+    ../../lcLib/util \
+    ../../lcLib/view 
 
 HEADERS = \
     helpbrowser.h \

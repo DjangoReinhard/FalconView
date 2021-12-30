@@ -14,19 +14,20 @@ class Config
 public:
   // sync with ConfigManager::geToString(int i) !
   enum GuiElem {
-    DroAbs
-  , DroRel
+    ActCodes
+  , CurSeg
+  , DroAbs
   , DroDtg
+  , DroRel
   , DroTitle
+  , EdLinNum
+  , Feed
+  , Filename
+  , GCode
+  , Speed
   , ToolDesc
   , ToolNum
   , ToolNext
-  , ActCodes
-  , Feed
-  , Speed
-  , Filename
-  , GCode
-  , EdLinNum
   , LineHL
   , FixPrompt
   , FixTitle
@@ -34,7 +35,6 @@ public:
   , FixEdit
   , RapidMove
   , WorkMove
-  , CurSeg
   , OldSeg
   , WorkPiece
   , WorkLimit

@@ -9,20 +9,18 @@ LINUXCNC = /usr/local/src/linuxcnc-deb11
 OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
 
 INCLUDEPATH += \
-    app \
     model \
-    model/db \
-    nml  \
-    rs274 \
+    control \
     util \
     view \
-    view/pages \
-    view/status \
     ../baselib/model \
     ../baselib/control \
     ../baselib/util \
     ../baselib/view \
-    ../lcLib \
+    ../lcLib/model \
+    ../lcLib/control \
+    ../lcLib/util \
+    ../lcLib/view \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \
     $${LINUXCNC}/src/emc/rs274ngc \
@@ -30,50 +28,54 @@ INCLUDEPATH += \
     $${LINUXCNC}/src \
     $${OCCT}/include/opencascade
 
+TEST_SOURCES += \
+    test/testDB.cpp \
+    test/testengine.cpp \
+
 SOURCES += \
-    app/main.cpp \
-    app/mainwindow.cpp \
-    app/testmain.cpp \
-    model/db/falconviewdb.cpp \
-    model/toolcategory.cpp \
+    main.cpp \
+    model/falconviewdb.cpp \
     model/tool.cpp \
-    util/abstractcondition.cpp \
-    util/andcondition.cpp \
-    util/dynaaction.cpp \
-    util/equalcondition.cpp \
-    util/falsecondition.cpp \
-    util/greatercondition.cpp \
-    util/micon.cpp \
+    model/toolcategory.cpp \
+    control/dynaaction.cpp \
+    control/equalcondition.cpp \
+    control/falsecondition.cpp \
+    control/greatercondition.cpp \
+    control/mainwindow.cpp \
+    control/multistatetoolbutton.cpp \
+    control/notcondition.cpp \
+    control/orcondition.cpp \
+    control/smallercondition.cpp \
+    control/testmain.cpp \
+    control/truecondition.cpp \
+    control/abstractcondition.cpp \
+    control/andcondition.cpp \
     util/multistateaction.cpp \
-    util/multistatetoolbutton.cpp \
-    util/notcondition.cpp \
-    util/orcondition.cpp \
-    util/smallercondition.cpp \
-    util/truecondition.cpp \
     view/dyndockable.cpp \
-  view/plugindialog.cpp
+    view/micon.cpp \
+    view/plugindialog.cpp
 
 HEADERS += \
-    app/mainwindow.h \
-    app/testmain.h \
-    model/db/falconviewdb.h \
-    model/toolcategory.h \
+    model/falconviewdb.h \
     model/tool.h \
-    util/abstractcondition.h \
-    util/andcondition.h \
-    util/dynaaction.h \
-    util/equalcondition.h \
-    util/falsecondition.h \
-    util/greatercondition.h \
-    util/micon.h \
+    model/toolcategory.h \
+    control/dynaaction.h \
+    control/equalcondition.h \
+    control/falsecondition.h \
+    control/greatercondition.h \
+    control/mainwindow.h \
+    control/multistatetoolbutton.h \
+    control/notcondition.h \
+    control/orcondition.h \
+    control/smallercondition.h \
+    control/testmain.h \
+    control/truecondition.h \
+    control/abstractcondition.h \
+    control/andcondition.h \
     util/multistateaction.h \
-    util/multistatetoolbutton.h \
-    util/notcondition.h \
-    util/orcondition.h \
-    util/smallercondition.h \
-    util/truecondition.h \
     view/dyndockable.h \
-  view/plugindialog.h
+    view/micon.h \
+    view/plugindialog.h
 
 FORMS += \
     UI/mainwindow.ui
@@ -182,3 +184,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += ../FalconView.qrc
 
 INSTALLS += target docs
+
