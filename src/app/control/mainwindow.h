@@ -25,11 +25,11 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
 public:
-  MainWindow(bool statusInPreview, bool previewIsCenter, QWidget *parent = nullptr);
+  MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
+  void initialize();
   void setAppMode(ApplicationMode am);
-//  HelpDockable* helpDialog() { return dlgHelp; }
   SettingsNotebook* settingsNotebook() const { return snb; }
 
 protected:
@@ -46,6 +46,7 @@ protected:
   void createConnections();
   void createValueModels();
   void setupMenu();
+  void restoreAll();
   void tellStates() const;
 
 protected slots:
@@ -73,7 +74,6 @@ private:
   Ui::MainWindow*     ui;
   PreViewEditor*      pw;
   MDIEditor*          mdi;
-//  HelpDockable*       dlgHelp;
   SettingsNotebook*   snb;
   QAction*            startAction;
   QAction*            pauseAction;

@@ -4,7 +4,6 @@
 #include <guicore.h>
 #include <tooltable.h>
 #include <QGridLayout>
-#include <QUiLoader>
 #include <QFile>
 #include <QLabel>
 #include <QResizeEvent>
@@ -55,8 +54,8 @@ void ToolStatus::toolChanged(const QVariant& toolNum) {
 
   if (!te) return;
   curTool->setNum(toolNum.toInt());
-  tLen->setText(tr("L: %1").arg(GuiCore().locale().toString(te->length(), 'f', 3)));
-  tRad->setText(tr("R: %1").arg(GuiCore().locale().toString(te->diameter() / 2.0, 'f', 3)));
+  tLen->setText(tr("L: %1").arg(Core().locale().toString(te->length(), 'f', 3)));
+  tRad->setText(tr("R: %1").arg(Core().locale().toString(te->diameter() / 2.0, 'f', 3)));
   tPic->setPixmap(te->icon());
   tDesc->setText(te->description());
   }

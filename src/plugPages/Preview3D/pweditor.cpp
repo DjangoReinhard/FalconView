@@ -8,10 +8,10 @@
 #include <canonif.h>
 #include <AIS_ViewCube.hxx>
 #include <AIS_InteractiveContext.hxx>
-#include <toolstatus.h>
-#include <curcodesstatus.h>
-#include <positionstatus.h>
-#include <speedstatus.h>
+//#include <toolstatus.h>
+//#include <curcodesstatus.h>
+//#include <positionstatus.h>
+//#include <speedstatus.h>
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -36,7 +36,7 @@ PreViewEditor::PreViewEditor(QWidget* parent)
  , toolStat(nullptr)
  , speedStat(nullptr)
  , statusInPreview(false) {
-  setObjectName(PreViewEditor::className);
+  setObjectName("PreViewEditor");
   setWindowTitle(tr("PreViewEditor"));
   }
 
@@ -162,13 +162,13 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   if (!sip) return;
   QGridLayout* gl = new QGridLayout(v);
 
-  qDebug() << "need to rethink create decorations!";
+  qDebug() << "\tTODO: need to rethink create decorations!";
   assert(!sip);
   v->setLayout(gl);
-//  toolStat = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
-//  ccStat = new CurCodesStatus(":/src/UI/VCurCodes.ui");
-//  posStat = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
+//  ccStat    = new CurCodesStatus(":/src/UI/VCurCodes.ui");
+//  toolStat  = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
 //  speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
+//  posStat   = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
   QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
   QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
 
@@ -183,10 +183,10 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   gl->setRowStretch(0, 0);
   gl->setRowStretch(1, 1);
   gl->setRowStretch(2, 20);
-  gl->addWidget(ccStat, 0, 0, 3, 1);
-  gl->addWidget(toolStat, 0, 1, 1, 2);
-  gl->addWidget(speedStat, 0, 4, 3, 1);
-  gl->addWidget(posStat, 1, 1, 1, 1);
+//  gl->addWidget(ccStat, 0, 0, 3, 1);
+//  gl->addWidget(toolStat, 0, 1, 1, 2);
+//  gl->addWidget(speedStat, 0, 4, 3, 1);
+//  gl->addWidget(posStat, 1, 1, 1, 1);
   gl->addItem(hs, 1, 2);
   gl->addItem(vs, 2, 1);
   }

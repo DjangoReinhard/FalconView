@@ -1,6 +1,6 @@
 #include <plugindialog.h>
 #include <PluginPageInterface.h>
-
+#include <guicore.h>
 #include <QDir>
 #include <QGridLayout>
 #include <QHeaderView>
@@ -12,14 +12,14 @@
 #include <QTreeWidgetItem>
 
 
-PluginDialog::PluginDialog(const QString &path, const QStringList &fileNames, QWidget *parent)
+PluginDialog::PluginDialog(const QString&, const QStringList&, QWidget *parent)
  : QDialog(parent)
  , label(new QLabel)
  , treeWidget(new QTreeWidget)
  , okButton(new QPushButton(tr("OK"))) {
   treeWidget->setAlternatingRowColors(true);
   treeWidget->setSelectionMode(QAbstractItemView::NoSelection);
-  treeWidget->setColumnCount(1);
+  treeWidget->setColumnCount(2);
   treeWidget->header()->hide();
   okButton->setDefault(true);
 
@@ -40,31 +40,27 @@ PluginDialog::PluginDialog(const QString &path, const QStringList &fileNames, QW
   featureIcon.addPixmap(style()->standardPixmap(QStyle::SP_FileIcon));
 
   setWindowTitle(tr("Plugin Information"));
-  findPlugins(path, fileNames);
+  populateTreeWidget();
   }
 
 
-void PluginDialog::findPlugins(const QString &path, const QStringList &fileNames) {
-  label->setText(tr("found these loadable Pages\n"
-                    "(looked in %1):")
-                   .arg(QDir::toNativeSeparators(path)));
-  const QDir dir(path);
-  const auto staticInstances = QPluginLoader::staticInstances();
+void PluginDialog::populateTreeWidget() {
+  QList<QString> pages = GuiCore().pluggablePages();
 
-//  for (QObject *plugin : staticInstances)
-//      populateTreeWidget(plugin
-//                       , tr("%1 (Static Plugin)")
-//                           .arg(plugin->metaObject()->className()));
+  for (const QString& p : pages) {
+      auto pluginItem = new QTreeWidgetItem(treeWidget);
 
-  for (const QString &fileName : fileNames) {
-      QPluginLoader loader(dir.absoluteFilePath(fileName));
-      QObject*      plugin = loader.instance();
+      pluginItem->setText(0, tr("Page"));
+      pluginItem->setText(1, p);
+      pluginItem->setIcon(0, interfaceIcon);
+      }
+  pages = GuiCore().statusInfos();
 
-      if (plugin) {
-         auto pluginItem = new QTreeWidgetItem(treeWidget);
+  for (const QString& p : pages) {
+      auto pluginItem = new QTreeWidgetItem(treeWidget);
 
-         pluginItem->setText(0, fileName);
-         pluginItem->setIcon(0, featureIcon);
-         }
+      pluginItem->setText(0, tr("Info"));
+      pluginItem->setText(1, p);
+      pluginItem->setIcon(0, featureIcon);
       }
   }

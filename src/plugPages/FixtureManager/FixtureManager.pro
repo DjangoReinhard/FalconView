@@ -4,9 +4,9 @@ CONFIG  += plugin c++17
 QT      += widgets
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
-DESTDIR  = ../../plugPages
+DESTDIR  = ../../plugins
 LINUXCNC = /usr/local/src/linuxcnc-deb11
-OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
+OCCT     = /usr/local
 
 INCLUDEPATH += \
     ../../baselib/model \
@@ -33,7 +33,10 @@ SOURCES = \
     fixturemanager.cpp
 
 FORMS += \
-  Fixture.ui
+    Fixture.ui
+
+TRANSLATIONS += \
+    fixture_de_DE.ts
 
 unix:!mac {
   LIBS += -Wl,-rpath=$${LINUXCNC}/lib
@@ -41,8 +44,7 @@ unix:!mac {
 }
 
 LIBS += \
-  -L../../lcLib \
-  -L../../baselib \
+  -L../.. \
   -llcLib \
   -lbaselib \
 
@@ -66,8 +68,8 @@ LIBS += \
   -ldl \
   -lutil
 
-LIBS += -Wl,-rpath=$${OCCT}/lin64/gcc/libd \
-        -L$${OCCT}/lin64/gcc/libd
+LIBS += -Wl,-rpath=$${OCCT}/lib \
+        -L$${OCCT}/lib
 LIBS += -lTKernel -lTKMath -lTKService -lTKV3d -lTKOpenGl \
         -lTKBRep -lTKIGES -lTKSTL -lTKVRML -lTKSTEP -lTKSTEPAttr -lTKSTEP209 \
         -lTKSTEPBase -lTKGeomBase -lTKGeomAlgo -lTKG3d -lTKG2d \

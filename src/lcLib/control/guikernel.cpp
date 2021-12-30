@@ -12,6 +12,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QPluginLoader>
 #include <QFileInfo>
 #include <QVector3D>
 
@@ -29,12 +30,6 @@ GuiKernel::GuiKernel(const QString& fileName, const QString& appName, const QStr
  , statusReader(nullptr)
  , commandWriter(nullptr)
  , sysEvents(nullptr) {
-  if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
-  lcIF.setupToolTable();
-  tt.setLatheMode(isLatheMode());
-  const QString& hf = lcProps.value("HAL", "HALFILE").toString();
-
-  if (hf.contains("sim")) simulator = true;
   }
 
 
@@ -56,6 +51,13 @@ QString GuiKernel::fileName4(const QString &fileID) {
   if (fileID == "database") {
      return conn->dbName();
      }
+  else if (fileID == "plugins") {
+     QDir dir(QCoreApplication::applicationDirPath());
+
+     dir.cd("plugins");
+
+     return dir.absolutePath();
+     }
   else if (fileID == "toolTable") {
      return lcProps.toolTableFileName();
      }
@@ -64,10 +66,15 @@ QString GuiKernel::fileName4(const QString &fileID) {
 
 
 void GuiKernel::initialize(DBHelper &dbAssist) {
+  if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
+  lcIF.setupToolTable();
+  tt.setLatheMode(isLatheMode());
   CanonIF ci(lcProps, tt);
   QString   dbName = cfg.value("database").toString();
   QFileInfo db(dbName);
+  const QString& hf = lcProps.value("HAL", "HALFILE").toString();
 
+  if (hf.contains("sim")) simulator = true;
   if (!db.exists() || db.size() < 1) {
      if (dbAssist.connect(db.absoluteFilePath())) {
         conn = createDatabase(dbAssist);
@@ -94,11 +101,39 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   statusReader  = new StatusReader(positionCalculator, gcodeInfo);
   commandWriter = new CommandWriter();
 
-  qDebug() << "have to care about MainWindow!!!";
-//  mainWindow = new MainWindow(cfg.value("statusInPreview", false).toBool()
-//                            , cfg.value("previewIsCenter", false).toBool());
+  QDir pluginsDir(fileName4("plugins"));
+  const auto entryList = pluginsDir.entryList(QDir::Files);
 
-  assert(statusReader);
+  for (const QString& fileName : entryList) {
+      QString path = pluginsDir.absoluteFilePath(fileName);
+
+      if (fileName.startsWith("libsi_")) {
+         QPluginLoader loader(path);
+         QObject*      plugin = loader.instance();
+         QString       name   = fileName.mid(6, fileName.size() - 9);
+
+         if (plugin) {
+            auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
+
+            qDebug() << name << "is status info panel";
+            statusInfos[name] = iPlugin;
+            }
+         else qDebug() << fileName << "NOT a valid plugin: " << loader.errorString();
+         }
+      else if (fileName.startsWith("libpp_")) {
+         QPluginLoader loader(path);
+         QObject*      plugin = loader.instance();
+         QString       name = fileName.mid(6, fileName.size() - 9);
+
+         if (plugin) {
+            auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
+
+            qDebug() << name << "is pluggable page";
+            pages[name] = iPlugin;
+            }
+         else qDebug() << fileName << "is NOT a valid plugin:\t" << loader.errorString();
+         }
+      }
   connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged
         , this, &GuiKernel::updateView);
   setupBackend();
@@ -142,11 +177,11 @@ void GuiKernel::parseGCode(QFile &file) {
 
 
 void GuiKernel::setupBackend() {
-  if (statusReader->isActive()) {
+  if (statusReader && statusReader->isActive()) {
      qDebug() << "Well, we have an active status reader ... ;)";
      timer.start(40, this);
      }
-  if (commandWriter->isActive()) {
+  if (commandWriter && commandWriter->isActive()) {
      qDebug() << "OK, ok, ok - backend seems to be available!";
      commandWriter->moveToThread(&backendCommThread);
      connect(&backendCommThread, &QThread::finished, &backendCommThread, &QObject::deleteLater);

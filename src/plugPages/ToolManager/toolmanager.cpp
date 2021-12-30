@@ -43,6 +43,8 @@ ToolManager::ToolManager(QWidget *parent)
  , tsMsgBox(0)
  , pxCat(new QSortFilterProxyModel(this))
  , pxTools(new QSortFilterProxyModel(this)) {
+  setObjectName("ToolManager");
+  setWindowTitle(tr("ToolManager"));
   }
 
 

@@ -9,7 +9,7 @@
 
 MDIEditor::MDIEditor(QWidget* parent)
  : AbstractCenterWidget(parent) {
-  setObjectName(MDIEditor::className);
+  setObjectName("MDIEditor");
   setWindowTitle(tr("MDIEditor"));
   }
 

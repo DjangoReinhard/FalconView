@@ -20,10 +20,7 @@ public:
   PluginDialog(const QString &path, const QStringList &fileNames, QWidget *parent = nullptr);
 
 private:
-  void findPlugins(const QString &path, const QStringList &fileNames);
-  void populateTreeWidget(QObject *plugin, const QString &text);
-  void addItems(QTreeWidgetItem *pluginItem, const char *interfaceName,
-                const QStringList &features);
+  void populateTreeWidget();
 
   QLabel*      label      = nullptr;
   QTreeWidget* treeWidget = nullptr;

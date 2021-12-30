@@ -2,6 +2,7 @@
 #define GUICORE_H
 #include <core.h>
 
+class PluginPageInterface;
 class GuiKernel;
 class OcctQtViewer;
 class DBConnection;
@@ -31,6 +32,8 @@ public:
   QString         languagePrefix() const;
   DBConnection*   databaseConnection();
   QMainWindow*    mainWindow();
+  QList<QString>  pluggablePages();
+  QList<QString>  statusInfos();
   void            setMainWindow(QMainWindow* w);
   bool            move2Backup(const QString& fileName);
   void            activatePage(const QString& pageName);
@@ -49,6 +52,8 @@ public:
   ToolTable&      toolTable();
   ToolTable*      toolTableModel();
   LcProperties&   lcProperties();
+  PluginPageInterface* pluggablePage(const QString pageID);
+  PluginPageInterface* statusInfo(const QString infoID);
 
   void beAbortTask();
   void beEnableBlockDelete(bool enable);

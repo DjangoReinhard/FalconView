@@ -13,7 +13,7 @@
 JogView::JogView(QWidget* parent)
  : AbstractCenterWidget(parent)
  , ui(new Ui::JogForm()) {
-  setObjectName(JogView::className);
+  setObjectName("JogView");
   setWindowTitle(tr("JogView"));
   }
 
@@ -247,7 +247,7 @@ void JogView::singleStep(bool) {
 void JogView::setupUi(AbstractCenterWidget *parent) {
   qDebug() << "JogView::setupUi() ...";
   ui->setupUi(parent);
-  AxisMask am(GuiCore().axisMask());
+  AxisMask am(Core().axisMask());
 
   if (!am.hasXAxis()) {
      ui->jXn->hide();

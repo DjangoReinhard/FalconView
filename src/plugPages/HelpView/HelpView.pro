@@ -4,7 +4,7 @@ CONFIG  += plugin c++17
 QT      += widgets gui-private
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
-DESTDIR  = ../../plugPages
+DESTDIR  = ../../plugins
 
 INCLUDEPATH  += \
     ../../baselib/model \
@@ -14,7 +14,7 @@ INCLUDEPATH  += \
     ../../lcLib/model \
     ../../lcLib/control \
     ../../lcLib/util \
-    ../../lcLib/view 
+    ../../lcLib/view
 
 HEADERS = \
     helpbrowser.h \
@@ -27,7 +27,10 @@ SOURCES = \
     helpview.cpp
 
 FORMS += \
-  HelpTitle.ui
+    HelpTitle.ui
+
+TRANSLATIONS += \
+    helptitle_de_DE.ts
 
 unix:!mac {
   LIBS += -Wl,-rpath=$${LINUXCNC}/lib
@@ -35,7 +38,6 @@ unix:!mac {
 }
 
 LIBS += \
-  -L../../lcLib \
-  -L../../baselib \
+  -L../.. \
   -llcLib \
   -lbaselib \

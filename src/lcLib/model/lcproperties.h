@@ -24,6 +24,7 @@ public:
   QString       parameterFileName() const;
   QString       toolTableFileName() const;
   QString       toolImageDir() const;
+  QString       getPath(const QString& groupID, const QString& name) const;
   QString       baseDir() const  { return fn.absoluteDir().path(); }
   void          dump();
 

@@ -20,8 +20,27 @@ FixtureManager::FixtureManager(QWidget* parent)
   }
 
 
+void FixtureManager::activateEditor(int n) {
+  QLayout* l = client->layout();
+  int      mx = l->count();
+
+  if (n < 0)   n = 0;
+  if (n >= mx) n = mx - 1;
+  qDebug() << "FM::activateEditor(" << n << ")";
+  for (int i=0; i < mx; ++i) {
+      FixtureEdit* fe = static_cast<FixtureEdit*>(l->itemAt(i)->widget());
+
+      if (fe) {
+         fe->setEnabled(i == n, cFonts, cStyle);
+         }
+      }
+  QScrollArea* sa = static_cast<QScrollArea*>(layout()->itemAt(0)->widget());
+
+  if (sa) sa->ensureWidgetVisible(l->itemAt(n)->widget());
+  }
+
+
 QWidget* FixtureManager::createContent() {
-  axisMask        = new AxisMask(Core().axisMask());
   FlowLayout*  fl = new FlowLayout(client);
   QScrollArea* sa = new QScrollArea(this);  
   FixtureEdit* fe = new FixtureEdit(tr("Offsets"), 0, *axisMask);
@@ -53,27 +72,12 @@ QWidget* FixtureManager::createContent() {
   }
 
 
-void FixtureManager::activateEditor(int n) {
-  QLayout* l = client->layout();
-  int      mx = l->count();
-
-  if (n < 0)   n = 0;
-  if (n >= mx) n = mx - 1;
-  qDebug() << "FM::activateEditor(" << n << ")";
-  for (int i=0; i < mx; ++i) {
-      FixtureEdit* fe = static_cast<FixtureEdit*>(l->itemAt(i)->widget());
-
-      if (fe) {
-         fe->setEnabled(i == n, cFonts, cStyle);
-         }
-      }
-  QScrollArea* sa = static_cast<QScrollArea*>(layout()->itemAt(0)->widget());
-
-  if (sa) sa->ensureWidgetVisible(l->itemAt(n)->widget());
+void FixtureManager::connectSignals() {
   }
 
 
-void FixtureManager::connectSignals() {
+void FixtureManager::dbSetup(DBConnection *conn) {
+  axisMask = new AxisMask((long)(void*)conn);
   }
 
 

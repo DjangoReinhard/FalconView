@@ -2,6 +2,7 @@
 #define PLUGINPAGEINTERFACE_H
 #include <QtPlugin>
 
+class DBConnection;
 QT_BEGIN_NAMESPACE
 class QWidget;
 class QCloseEvent;
@@ -16,6 +17,7 @@ public:
 
   virtual void closeEvent(QCloseEvent* e) = 0;
   virtual void showEvent(QShowEvent* e) = 0;
+  virtual void dbSetup(DBConnection* conn) = 0;
 
   virtual QWidget* createContent() = 0;
   virtual void connectSignals() = 0;

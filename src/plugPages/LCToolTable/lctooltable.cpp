@@ -18,6 +18,8 @@ LCToolTable::LCToolTable(QWidget* parent)
  , table(nullptr)
  , model(nullptr)
  , px(nullptr) {
+  setObjectName("LCToolTable");
+  setWindowTitle(tr("LCToolTable"));
   }
 
 

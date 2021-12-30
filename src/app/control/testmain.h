@@ -12,8 +12,11 @@ class TestMain : public QMainWindow
 {
   Q_OBJECT
 public:
-  explicit TestMain(const QDir& dir, QWidget *parent = nullptr);
+  explicit TestMain(QWidget *parent = nullptr);
+  virtual ~TestMain() = default;
 
+  void initialize();
+  void checkPlugins();
   void loadPlugins();
   void pluginsAbout();
 

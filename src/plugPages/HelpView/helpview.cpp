@@ -18,6 +18,8 @@ HelpView::HelpView(QWidget* parent)
  , he(nullptr)
  , cw(nullptr)
  , kw(nullptr) {
+  setObjectName("HelpView");
+  setWindowTitle(tr("HelpView"));
   }
 
 

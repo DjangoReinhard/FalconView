@@ -16,8 +16,8 @@ SysEventView::SysEventView(QWidget* parent)
  , table(new QTableView)
  , model(nullptr)
  , px(new QSortFilterProxyModel(this)) {
-  setObjectName(SysEventView::className);
-  setWindowTitle(SysEventView::className);
+  setObjectName("SysEventView");
+  setWindowTitle(tr("SysEventView"));
   }
 
 

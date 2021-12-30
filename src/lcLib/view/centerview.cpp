@@ -76,22 +76,21 @@ void CenterView::dump() const {
   }
 
 
-//void CenterView::addPage(DynFrame* page, const QString& name) {
-//  QString pageName(name);
+void CenterView::addPage(DynFrame* page, const QString& name) {
+  QString pageName(name);
 
-//  if (pageName.isEmpty()) pageName = page->objectName();
-//  pages.insert(pageName, page);
-//  QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
+  if (pageName.isEmpty()) pageName = page->objectName();
+  pages.insert(pageName, page);
+  QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
-//  if (l) {
-////     page->init();
-//     l->addWidget(page);
-//     connect(page->viewAction(), &QAction::triggered, this, [=]() {
-//       GuiCore().activatePage(page->objectName());
-//       });
-//     }
-//  activatePage(pageName);
-//  }
+  if (l) {
+     l->addWidget(page);
+     connect(page->viewAction(), &QAction::triggered, this, [=]() {
+       GuiCore().activatePage(page->objectName());
+       });
+     }
+  activatePage(pageName);
+  }
 
 
 void CenterView::windowClosing(QCloseEvent* e) {

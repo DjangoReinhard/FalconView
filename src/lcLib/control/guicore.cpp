@@ -77,6 +77,11 @@ DBConnection* GuiCore::databaseConnection() {
   }
 
 
+void GuiCore::help4Keyword(const QString& ) {
+  qDebug() << "TODO: need to implement GuiCore::help4Keyword( ... )";
+  }
+
+
 bool GuiCore::isLatheMode() const {
   return guiCore()->lcProps.value("DISPLAY", "LATHE").isValid()
       && guiCore()->lcProps.value("DISPLAY", "LATHE").toBool();
@@ -95,6 +100,30 @@ void GuiCore::setViewStack(CenterView* v) {
 
 QMainWindow* GuiCore::mainWindow() {
   return guiCore()->mainWindow;
+  }
+
+
+QList<QString> GuiCore::pluggablePages() {
+  return guiCore()->pages.keys();
+  }
+
+
+QList<QString> GuiCore::statusInfos() {
+  return guiCore()->statusInfos.keys();
+  }
+
+
+PluginPageInterface* GuiCore::pluggablePage(const QString pageID) {
+  if (guiCore()->pages.contains(pageID))
+     return guiCore()->pages[pageID];
+  return nullptr;
+  }
+
+
+PluginPageInterface* GuiCore::statusInfo(const QString infoID) {
+  if (guiCore()->statusInfos.contains(infoID))
+     return guiCore()->statusInfos[infoID];
+  return nullptr;
   }
 
 

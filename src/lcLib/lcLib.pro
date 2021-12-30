@@ -1,11 +1,11 @@
 TEMPLATE = lib
-CONFIG  += staticlib c++17
+CONFIG  += staticlib create_prl link_prl c++17
 QT      += widgets gui-private uitools sql xml
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
 DESTDIR  = ..
 LINUXCNC = /usr/local/src/linuxcnc-deb11
-OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
+OCCT     = /usr/local
 
 INCLUDEPATH += \
     /usr/include/python3.9 \    # only linuxcnc uses python
@@ -50,9 +50,6 @@ SOURCES += \
     view/gcodeeditor.cpp \
     view/testEdit.cpp \
     view/gcodeinfo.cpp \
-    view/toolstatus.cpp \
-    view/speedstatus.cpp \
-    view/curcodesstatus.cpp \
     view/numlabel.cpp \
     view/centerview.cpp \
     view/settingsnb.cpp \
@@ -60,7 +57,6 @@ SOURCES += \
     view/helpcontentwidget.cpp \
     view/occtviewer.cpp \
     view/dynframe.cpp \
-    view/positionstatus.cpp \
 
 HEADERS += \
     model/stupidtoolchangerif.h \
@@ -88,15 +84,11 @@ HEADERS += \
     util/insulatePose.h \
     util/guikernelcreator.h \
     util/graphicfactory.h \
-    view/speedstatus.h \
     view/dynframe.h \
     view/gcodeeditor.h \
-    view/toolstatus.h \
     view/helpcontentwidget.h \
-    view/curcodesstatus.h \
     view/centerview.h \
     view/occtviewer.h \
-    view/positionstatus.h \
     view/settingsnb.h \
     view/testEdit.h \
     view/helpkeywordwidget.h \
@@ -113,15 +105,4 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    UI/GCodeEditor.ui \
-    UI/HCurCodes.ui \
-    UI/HSpeedInfo.ui \
-    UI/Position.ui \
-    UI/PositionMain.ui \
-    UI/ToolInfo.ui \
-    UI/VCurCodes.ui \
-    UI/VSpeedInfo.ui
-
-RESOURCES += \
-    lcLib.qrc
-
+    UI/GCodeEditor.ui

@@ -5,7 +5,6 @@
 #include <guicore.h>
 #include <QFile>
 #include <QSlider>
-#include <QUiLoader>
 #include <QLabel>
 #include <QDebug>
 

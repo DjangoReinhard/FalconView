@@ -16,7 +16,8 @@ DynDockable::DynDockable(AbstractCenterWidget* cw, QWidget* parent)
 
 
 void DynDockable::init(const QString& fileName, const QString& name, bool addScrollArea) {
-  dcw->initialize(fileName, name, addScrollArea);
+  assert(false);
+  dcw->initialize(fileName, name, nullptr, addScrollArea);
   }
 
 

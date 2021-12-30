@@ -88,26 +88,27 @@ QVariant LcProperties::value(const QString &groupID, const QString &name) const 
 
 
 QString LcProperties::parameterFileName() const {
-  const QString& name = value("RS274NGC", "PARAMETER_FILE").toString();
-
-  if (name.startsWith("/")) return name;
-  return baseDir() + "/" + name;
+  return getPath("RS274NGC", "PARAMETER_FILE");
   }
 
 
 QString LcProperties::toolTableFileName() const {
-  const QString& name = value("EMCIO", "TOOL_TABLE").toString();
-
-  if (name.startsWith("/")) return name;
-  return baseDir() + "/" + name;
+  return getPath("EMCIO", "TOOL_TABLE");
   }
 
 
 QString LcProperties::toolImageDir() const {
-  QString dir(value("DISPLAY", "TOOL_IMAGE_DIR").toString());
+  return getPath("DISPLAY", "TOOL_IMAGE_DIR");
+  }
 
-  if (dir.startsWith("~")) dir.replace("~", QDir::homePath());
-  QFileInfo fi(dir);
+
+QString LcProperties::getPath(const QString &groupID, const QString &name) const {
+  QString rawValue = value(groupID, name).toString();
+
+  if (rawValue.startsWith("/")) return rawValue;
+  if (rawValue.startsWith("~")) rawValue.replace("~", QDir::homePath());
+  else rawValue = baseDir() + "/" + rawValue;
+  QFileInfo fi(rawValue);
 
   return fi.absoluteFilePath();
   }

@@ -1,23 +1,50 @@
 #include <testmain.h>
 #include <plugindialog.h>
 #include <PluginPageInterface.h>
+#include <guicore.h>
+#include <abscenterwidget.h>
 #include <ui_mainwindow.h>
 #include <QPluginLoader>
+#include <QDir>
 #include <QDebug>
 
 
-TestMain::TestMain(const QDir& dir, QWidget *parent)
+TestMain::TestMain(QWidget *parent)
  : QMainWindow(parent)
- , ui(new Ui::MainWindow)
- , pluginsDir(dir) {
+ , ui(new Ui::MainWindow) {
+  }
+
+
+void TestMain::initialize() {
   ui->setupUi(this);
-  qDebug() << "app-dir:" << dir.absolutePath();
-  pluginsDir.cd("plugPages");
-  loadPlugins();
+  pluginsDir = QDir(GuiCore().fileName4("plugins"));
+
+  qDebug() << "app-dir:" << pluginsDir.absolutePath();
+//  loadPlugins();
+  checkPlugins();
 
   aboutPlugins = new QAction(tr("About &Plugins"), this);
   connect(aboutPlugins, &QAction::triggered, this, &TestMain::pluginsAbout);
   ui->menuHelp->addAction(aboutPlugins);
+  }
+
+
+void TestMain::checkPlugins() {
+  for (const QString& s : GuiCore().pluggablePages()) {
+      AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(GuiCore().pluggablePage(s));
+
+//      check page:  "FixtureManager"
+//      check page:  "HelpView"
+//      check page:  "JogView"
+//      check page:  "LCToolTable"
+//      check page:  "MDIEditor"
+//      check page:  "PathEditor"
+//      check page:  "PreferencesEditor"
+//      check page:  "PreViewEditor"
+//      check page:  "SysEventView"
+//      check page:  "ToolManager"
+      qDebug() << "check page: " << cw->objectName();
+      }
   }
 
 
@@ -38,7 +65,6 @@ void TestMain::loadPlugins() {
       pluginsDir.cdUp();
   }
 #endif
-//  pluginsDir.cd("plugins");
   const auto entryList = pluginsDir.entryList(QDir::Files);
 
   for (const QString &fileName : entryList) {

@@ -9,6 +9,7 @@
 #include <positioncalculator.h>
 #include <QThread>
 
+class PluginPageInterface;
 class SysEventModel;
 class OcctQtViewer;
 class Ally3D;
@@ -82,6 +83,8 @@ private:
   QLocale             curLocale;
   QThread             backendCommThread;
   SysEventModel*      sysEvents;
+  QMap<QString, PluginPageInterface*> pages;
+  QMap<QString, PluginPageInterface*> statusInfos;
   friend class GuiKernelCreator;
   friend class GuiCore;
   };

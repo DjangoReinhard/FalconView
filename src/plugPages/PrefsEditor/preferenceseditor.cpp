@@ -22,8 +22,8 @@ PreferencesEditor::PreferencesEditor(QWidget* parent)
  , cbPreviewCenter(nullptr)
  , cbToolManager(nullptr)
  , count(Config().numGuiElements()) {
-  setWindowTitle(PreferencesEditor::className);
-  setObjectName(PreferencesEditor::className);
+  setWindowTitle("PreferencesEditor");
+  setObjectName(tr("PreferencesEditor"));
   }
 
 

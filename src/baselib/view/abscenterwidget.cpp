@@ -50,12 +50,19 @@ QWidget* AbstractCenterWidget::createContent() {
   }
 
 
-// offline initialization (i.e. called by MainView::addPage)
-void AbstractCenterWidget::initialize(const QString& fileName, const QString& name, bool addScrollArea) {
+void AbstractCenterWidget::dbSetup(DBConnection *) {
+  }
+
+
+// offline initialization
+void AbstractCenterWidget::initialize(const QString& fileName, const QString& name, DBConnection* conn, bool addScrollArea) {
   this->fileName = fileName;
   this->addScrollArea = addScrollArea;
-  setObjectName(name);
-  setWindowTitle(tr(name.toStdString().c_str()));
+  if (!name.isEmpty()) {
+     setObjectName(name);
+     setWindowTitle(tr(name.toStdString().c_str()));
+     }
+  if (conn) dbSetup(conn);
   QWidget* w = createContent();
 
   if (w) {

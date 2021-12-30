@@ -16,15 +16,18 @@
 #include <dyndockable.h>
 #include <dynframe.h>
 #include <guicore.h>
-#include <positionstatus.h>
-#include <toolstatus.h>
-#include <speedstatus.h>
-#include <curcodesstatus.h>
 #include <multistateaction.h>
 #include <filemanager.h>
+#include <lcproperties.h>
 #include <micon.h>
 #include <configacc.h>
 #include <emc.hh>
+#include <PluginPageInterface.h>
+
+//#include <positionstatus.h>
+//#include <toolstatus.h>
+//#include <speedstatus.h>
+//#include <curcodesstatus.h>
 
 //#include <helpview.h>
 //#include <jogview.h>
@@ -44,6 +47,7 @@
 #include <math.h>
 #include <QImageReader>
 #include <QMessageBox>
+#include <QCloseEvent>
 #include <QImage>
 #include <QColorSpace>
 #include <QToolBar>
@@ -54,10 +58,10 @@
 #include <config.h>
 
 
-MainWindow::MainWindow(bool statusInPreview, bool previewIsCenter, QWidget *parent)
+MainWindow::MainWindow(/*bool statusInPreview, bool previewIsCenter,*/ QWidget *parent)
  : QMainWindow(parent)
- , statusInPreview(statusInPreview)
- , previewIsCenter(previewIsCenter)
+ , statusInPreview(false)
+ , previewIsCenter(false)
  , ui(new Ui::MainWindow)
  , startAction(nullptr)
  , pauseAction(nullptr)
@@ -75,39 +79,29 @@ MainWindow::MainWindow(bool statusInPreview, bool previewIsCenter, QWidget *pare
  , modeTB(nullptr)
  , powerTB(nullptr)
  , switchTB(nullptr) {
+  }
+
+
+void MainWindow::initialize() {
+  statusInPreview = Config().value("statusInPreview").toBool();
+  previewIsCenter = false; //Config().value("previewIsCenter").toBool();
   ui->setupUi(this);
   setObjectName("Falcon-View");
   setDockNestingEnabled(true);
+
   createActions();
   setupMenu();
+  createValueModels();
   createToolBars();
+
   createMainWidgets(*GuiCore().databaseConnection());
   createDockables(*GuiCore().databaseConnection());
-  createValueModels();
+
   createConnections();
 
-  // application window
-  resize(QSize(1920, 1200));
-  Config cfg;
-
-  cfg.beginGroup("MainWindow");
-  restoreGeometry(cfg.value("geometry").toByteArray());
-  restoreState(cfg.value("windowState").toByteArray());
-  cfg.endGroup();
-
-  // there are some troubles with initialization times, so
-  // restore old files after all initialization has been finished
-  DynFrame* df = static_cast<DynFrame*>(GuiCore().stackedPage(TestEdit::className));
-  TestEdit* te = static_cast<TestEdit*>(df->centerWidget());
-
-  if (te) te->restoreState();
-//  df = static_cast<DynFrame*>(GuiCore().stackedPage(PathEditor::className));
-//  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
-
-//  if (pe) pe->restoreState();
-//  ui->menubar->setVisible(false);
   qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
   setAppMode(ApplicationMode::Auto);
+  restoreAll();
   }
 
 
@@ -123,6 +117,113 @@ void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
 
 //  a->setEnabled(true);
 //  ui->menuView->addAction(a);
+  }
+
+
+void MainWindow::autoPause() {
+  int iState = ValueManager().getValue("interpState").toInt();
+
+//  if (iState == EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED) {
+//     GuiCore().beSetAuto(2, pw->curLine());
+//     }
+//  else {
+//     GuiCore().beSetAuto(1, 0);
+//     }
+  }
+
+
+void MainWindow::appModeChanged(const QVariant& appMode) {
+  ApplicationMode m = static_cast<ApplicationMode>(appMode.toInt());
+
+  switch (m) {
+//    case Auto:        GuiCore().activatePage(PreViewEditor::className); break;
+//    case MDI:         GuiCore().activatePage(MDIEditor::className); break;
+//    case Manual:      GuiCore().activatePage(JogView::className); break;
+//    case Edit:        GuiCore().activatePage(PathEditor::className); break;
+//    case Wheel:       GuiCore().activatePage(tr("Wheely")); break;
+//    case XEdit:       GuiCore().activatePage(TestEdit::className); break;
+//    case Settings:    GuiCore().activatePage(SettingsNotebook::className); break;
+//    case Touch:       GuiCore().activatePage(tr("TouchView")); break;
+//    case Help:        GuiCore().activatePage(HelpView::className); break;
+//    case ErrMessages: GuiCore().activatePage(SysEventView::className); break;
+//    default: break;
+    }
+  }
+
+
+void MainWindow::about() {
+  QString glInfo = GuiCore().view3D()->getGlInfo();
+
+  if (glInfo.isEmpty()) glInfo = tr("You need to switch to 3D-preview "
+                                    "at least once to get this information.");
+  else                  glInfo.replace("\n", "</li><li>");
+  QMessageBox::about(this
+                   , tr("About FalconView")
+                   , tr("<h3>FalconView</h3><p>is an application to manage "
+                        "machines controlled by linuxCNC.</p>"
+                        "<p>FalconView uses external components:<ul>"
+                        "<li><a href=\"%1\">linuxCNC v.%2</a></li>"
+                        "<li><a href=\"%3\">Open CASCADE Technology v.%4</a></li>"
+                        "<li><a href=\"%5\">Qt Toolkit v.%6</a></li></ul></p>"
+                        "<hl/><p>GL capabilities: <ul><li>%7</li></ul></p>")
+                       .arg("https://github.com/LinuxCNC/linuxcnc", PACKAGE_VERSION)
+                       .arg("https://dev.opencascade.org/release", OCC_VERSION_STRING_EXT)
+                       .arg("https://www.qt.io/download", QLatin1String(QT_VERSION_STR))
+                       .arg(glInfo)
+                       .toStdString().c_str());
+  }
+
+
+void MainWindow::autoStart() {
+  bool gcodeDirty = ValueManager().getValue("gcodeDirty").toBool();
+
+  qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
+  ApplicationMode am = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
+
+//  if (am == ApplicationMode::MDI) {
+//     const QString& cmd = mdi->command();
+
+//     if (cmd.isEmpty()) return;
+//     GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+//     qDebug() << "execute MDI: " << cmd;
+//     GuiCore().beSendMDICommand(cmd);
+//     mdi->append(cmd);
+//     }
+//  else if (am == ApplicationMode::Auto) {
+//     if (gcodeDirty) {
+//        GuiCore().riseError(tr("active GCode-file has unsaved changes. "
+//                            "Please save the file before executing it."));
+//        return;
+//        }
+//     qDebug() << "start auto NC execution ...";
+//     if (ValueManager().getValue("singleStep").toBool()) {
+//        const QString& cmd = pw->currentRow();
+
+//        qDebug() << "execute single step: " << cmd;
+//        if (cmd.isEmpty()) return;
+//        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+//        GuiCore().beSendMDICommand(cmd);
+
+//        //TODO: advance cursor?
+//        }
+//     else {
+//        qDebug() << "singlestep is OFF";
+//        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+//        GuiCore().beTaskPlanSynch();
+//        GuiCore().beSetAuto(0, pw->curLine());
+//        }
+//     }
+//  else {
+//     GuiCore().riseError(tr("wrong application for execute. Please select"
+//                         "3D-Preview or MDI for gcode-execution."));
+//     }
+  }
+
+
+void MainWindow::autoStop() {
+  GuiCore().beAbortTask();
+  GuiCore().beTaskPlanSynch();
+  GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
   }
 
 
@@ -319,36 +420,11 @@ void MainWindow::createActions() {
   }
 
 
-void MainWindow::setupMenu() {
-  ui->menuMode->addAction(editMode);
-  ui->menuMode->addAction(autoMode);
-  ui->menuMode->addAction(mdiMode);
-  ui->menuMode->addAction(testEditMode);
-  ui->menuMode->addAction(wheelMode);
-  ui->menuMode->addAction(jogMode);
-  ui->menuMode->addAction(touchMode);
-  ui->menuMode->addAction(cfgMode);
-  ui->menuMode->addAction(msgMode);
-  ui->actionHelp->setShortcut(QKeySequence::HelpContents);
-  }
-
-
 void MainWindow::createValueModels() {
   ValueManager vm;
 
   ui->actionAbsPos->setChecked(false);
   vm.setValue("showAbsolute", false);
-  }
-
-
-void MainWindow::toggleAbsolute(const QVariant& absolute) {
-  qDebug() << "Mainwindow::toggleAbsolute(" << (absolute.toBool() ? "TRUE" : "FALSE") << ")";
-  ValueManager().setValue("showAbsolute", absolute.toBool());
-  }
-
-
-void MainWindow::showHelp() {
-  setAppMode(ApplicationMode::Help);
   }
 
 
@@ -398,74 +474,6 @@ void MainWindow::createConnections() {
   connect(spindleOff,   &QAction::triggered, this, &MainWindow::stopSpindle);
 
   connect(tools,        &QAction::triggered, this, &MainWindow::testTools);
-  }
-
-
-void MainWindow::showErrMessages() {
-  QString curPage = GuiCore().curPage();
-  qDebug() << "MW::showErrMessages() ...";
-
-//  ValueManager().setValue("lastPage", curPage.mid(0, curPage.size() - 5));
-//  GuiCore().activatePage(SysEventView::className);
-//  ValueManager().setValue("showAllButCenter", false);
-  }
-
-
-void MainWindow::appModeChanged(const QVariant& appMode) {
-  ApplicationMode m = static_cast<ApplicationMode>(appMode.toInt());
-
-  switch (m) {
-//    case Auto:        GuiCore().activatePage(PreViewEditor::className); break;
-//    case MDI:         GuiCore().activatePage(MDIEditor::className); break;
-//    case Manual:      GuiCore().activatePage(JogView::className); break;
-//    case Edit:        GuiCore().activatePage(PathEditor::className); break;
-//    case Wheel:       GuiCore().activatePage(tr("Wheely")); break;
-//    case XEdit:       GuiCore().activatePage(TestEdit::className); break;
-//    case Settings:    GuiCore().activatePage(SettingsNotebook::className); break;
-//    case Touch:       GuiCore().activatePage(tr("TouchView")); break;
-//    case Help:        GuiCore().activatePage(HelpView::className); break;
-//    case ErrMessages: GuiCore().activatePage(SysEventView::className); break;
-//    default: break;
-    }
-  }
-
-
-void MainWindow::about() {
-  QString glInfo = GuiCore().view3D()->getGlInfo();
-
-  if (glInfo.isEmpty()) glInfo = tr("You need to switch to 3D-preview "
-                                    "at least once to get this information.");
-  else                  glInfo.replace("\n", "</li><li>");
-  QMessageBox::about(this
-                   , tr("About FalconView")
-                   , tr("<h3>FalconView</h3><p>is an application to manage "
-                        "machines controlled by linuxCNC.</p>"
-                        "<p>FalconView uses external components:<ul>"
-                        "<li><a href=\"%1\">linuxCNC v.%2</a></li>"
-                        "<li><a href=\"%3\">Open CASCADE Technology v.%4</a></li>"
-                        "<li><a href=\"%5\">Qt Toolkit v.%6</a></li></ul></p>"
-                        "<hl/><p>GL capabilities: <ul><li>%7</li></ul></p>")
-                       .arg("https://github.com/LinuxCNC/linuxcnc", PACKAGE_VERSION)
-                       .arg("https://dev.opencascade.org/release", OCC_VERSION_STRING_EXT)
-                      .arg("https://www.qt.io/download", QLatin1String(QT_VERSION_STR))
-                       .arg(glInfo)
-                       .toStdString().c_str());
-  }
-
-
-void MainWindow::toggleAllButCenter() {
-  ValueModel* m = ValueManager().getModel("showAllButCenter");  
-  bool visible = m->getValue().toBool();
-
-  if (!statusInPreview) {
-     for (int i=0; i < dockables.size(); ++i)
-         dockables.at(i)->setVisible(visible);
-     }
-  autoTB->setVisible(visible);
-  modeTB->setVisible(visible);
-  topTB->setVisible(visible);
-  powerTB->setVisible(visible);
-  switchTB->setVisible(visible);
   }
 
 
@@ -539,34 +547,6 @@ void MainWindow::createToolBars() {
   }
 
 
-void MainWindow::tellStates() const {
-  ValueManager vm;
-
-  qDebug() << "MW::tellStates()";
-  vm.getModel("appMode")->dump();
-  vm.getModel("allHomed")->dump();
-  vm.getModel("taskState")->dump();
-  vm.getModel("taskMode")->dump();
-  vm.getModel("interpState")->dump();
-  vm.getModel("execState")->dump();
-  vm.getModel("errorActive")->dump();
-  vm.getModel("showAbsolute")->dump();
-  vm.getModel("singleStep")->dump();
-  }
-
-
-void MainWindow::testTools() {
-//  static int       slot = 0;
-//  const ToolEntry* tool    = GuiCore().toolTable().tool4Slot(slot);
-
-//  while (!tool) tool = GuiCore().toolTable().tool4Slot(++slot);
-//  ValueManager().setValue("toolInSpindle", tool->number());
-//  ValueManager().setValue("pocketPrepared", ++slot);
-//  qDebug() << "testTools #" << slot << " - total:" << GuiCore().toolTable().entries();
-//  if (slot >= GuiCore().toolTable().entries()) slot = 0;
-  }
-
-
 void MainWindow::createDockables(DBConnection& conn) {
   qDebug() << "MW::createDockables() - statusInPreview:"
            << (statusInPreview ? "YES" : "NO");
@@ -631,15 +611,84 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
            << (previewIsCenter ? "YES" : "NO");
 
   if (previewIsCenter) {
-     this->setCentralWidget(GuiCore().view3D());
+     setCentralWidget(GuiCore().view3D());
      }
   else {
-     CenterView* center = new CenterView(this);
+     CenterView*           center = new CenterView(this);
+     AbstractCenterWidget* page   = new TestEdit();
+     SettingsNotebook*     sn     = new SettingsNotebook();
+
+     GuiCore().setViewStack(center);
+     page->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     center->addPage(new DynFrame(page, true, center));
+     page = new FileManager(GuiCore().lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX"));
+     page->initialize();
+     center->addPage(new DynFrame(page, true, center));
+
+     //TODO: add all loadable pages to centerView
+//     src/plugPages/FixtureManager/Fixture.ui
+//     src/plugPages/JogView/Jog.ui
+//     src/plugPages/MDIEditor/MDIEditor.ui
+//     src/plugPages/ToolManager/ToolEditor.ui
+//     src/plugPages/HelpView/HelpTitle.ui
+//     src/plugPages/PrefsEditor/Settings.ui
+//     src/statusInfo/Position/PositionMain.ui
+//     src/statusInfo/Position/Position.ui
+//     src/statusInfo/SpeedInfo/VSpeedInfo.ui
+//     src/statusInfo/SpeedInfo/HSpeedInfo.ui
+//     src/statusInfo/CurCodes/HCurCodes.ui
+//     src/statusInfo/CurCodes/VCurCodes.ui
+//     src/statusInfo/ToolInfo/ToolInfo.ui
+//     src/app/UI/mainwindow.ui
+//     src/lcLib/UI/GCodeEditor.ui
+     sn->initialize(QString());
+     for (const QString& s : GuiCore().pluggablePages()) {
+         AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(GuiCore().pluggablePage(s));
+
+         qDebug() << "objectName:" << cw->objectName();
+         if (cw->objectName() == "JogView") {
+            cw->initialize();
+            center->addPage(new DynFrame(cw, true, center));
+            }
+         else if (cw->objectName() == "MDIEditor") {
+            cw->initialize(":/src/plugPages/MDIEditor/MDIEditor.ui");
+            center->addPage(new DynFrame(cw, true, center));
+            }
+         else if (cw->objectName() == "PathEditor") {
+            cw->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+            center->addPage(new DynFrame(cw, true, center));
+            }
+         else if (cw->objectName() == "PreViewEditor") {
+            cw->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+            center->addPage(new DynFrame(cw, true, center));
+            }
+         else if (cw->objectName() == "SysEventView") {
+            cw->initialize(QString(), QString(), &conn);
+            center->addPage(new DynFrame(cw, true, center));
+            }
+         else if (cw->objectName() == "ToolManager") {
+            cw->initialize(QString(), QString(), &conn);
+            sn->addPage(cw);
+            }
+         else if (cw->objectName() == "FixtureManager") {
+            cw->initialize(QString(), QString(), (DBConnection*)(long)Core().axisMask());
+            sn->addPage(cw);
+            }
+         else if (cw->objectName() == "PreferencesEditor") {
+            cw->initialize(":/src/plugPages/PrefsEditor/Settings.ui");
+            sn->addPage(cw);
+            }
+         else if (cw->objectName() == "LCToolTable") {
+            cw->initialize();
+            sn->addPage(cw);
+            }
+         }
+     center->addPage(new DynFrame(sn, true, center));
+
 //     DynFrame*   page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
 //                                                            , GuiCore().view3D()
 //                                                            , statusInPreview)
 //                                     , true, center);
-//     GuiCore().setViewStack(center);
 //     center->addPage(page);
 //     //TODO:
 //     page   = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
@@ -707,71 +756,6 @@ void MainWindow::setSingleStep(bool) {
   }
 
 
-void MainWindow::autoStart() {
-  bool gcodeDirty = ValueManager().getValue("gcodeDirty").toBool();
-
-  qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
-  ApplicationMode am = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
-
-//  if (am == ApplicationMode::MDI) {
-//     const QString& cmd = mdi->command();
-
-//     if (cmd.isEmpty()) return;
-//     GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
-//     qDebug() << "execute MDI: " << cmd;
-//     GuiCore().beSendMDICommand(cmd);
-//     mdi->append(cmd);
-//     }
-//  else if (am == ApplicationMode::Auto) {
-//     if (gcodeDirty) {
-//        GuiCore().riseError(tr("active GCode-file has unsaved changes. "
-//                            "Please save the file before executing it."));
-//        return;
-//        }
-//     qDebug() << "start auto NC execution ...";
-//     if (ValueManager().getValue("singleStep").toBool()) {
-//        const QString& cmd = pw->currentRow();
-
-//        qDebug() << "execute single step: " << cmd;
-//        if (cmd.isEmpty()) return;
-//        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
-//        GuiCore().beSendMDICommand(cmd);
-
-//        //TODO: advance cursor?
-//        }
-//     else {
-//        qDebug() << "singlestep is OFF";
-//        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
-//        GuiCore().beTaskPlanSynch();
-//        GuiCore().beSetAuto(0, pw->curLine());
-//        }
-//     }
-//  else {
-//     GuiCore().riseError(tr("wrong application for execute. Please select"
-//                         "3D-Preview or MDI for gcode-execution."));
-//     }
-  }
-
-
-void MainWindow::autoPause() {
-  int iState = ValueManager().getValue("interpState").toInt();
-
-//  if (iState == EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED) {
-//     GuiCore().beSetAuto(2, pw->curLine());
-//     }
-//  else {
-//     GuiCore().beSetAuto(1, 0);
-//     }
-  }
-
-
-void MainWindow::autoStop() {
-  GuiCore().beAbortTask();
-  GuiCore().beTaskPlanSynch();
-  GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
-  }
-
-
 void MainWindow::homeAxis() {
   GuiCore().beHomeAxis(-1);
   }
@@ -788,6 +772,32 @@ void MainWindow::floodToggle() {
   ValueModel* vm = ValueManager().getModel("coolFlood");
 
   GuiCore().beEnableMist(!vm->getValue().toBool());
+  }
+
+
+void MainWindow::restoreAll() {
+  // application window
+  resize(QSize(1920, 1200));
+  Config cfg;
+
+  cfg.beginGroup("MainWindow");
+  restoreGeometry(cfg.value("geometry").toByteArray());
+  restoreState(cfg.value("windowState").toByteArray());
+  cfg.endGroup();
+
+  // there are some troubles with initialization times, so
+  // restore old files after all initialization has been finished
+  DynFrame* df = static_cast<DynFrame*>(GuiCore().stackedPage(TestEdit::className));
+  TestEdit* te = static_cast<TestEdit*>(df->centerWidget());
+
+  if (te) te->restoreState();
+
+  //TODO: restore all loaded plugins
+//  df = qobject_cast<DynFrame*>(GuiCore().stackedPage(PathEditor::className));
+//  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
+
+//  if (pe) pe->restoreState();
+  ui->menubar->setVisible(false);
   }
 
 
@@ -829,6 +839,85 @@ void MainWindow::setAppMode(ApplicationMode am) {
 //     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
 //  else
 //     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+  }
+
+
+void MainWindow::showErrMessages() {
+  QString curPage = GuiCore().curPage();
+  qDebug() << "MW::showErrMessages() ...";
+
+//  ValueManager().setValue("lastPage", curPage.mid(0, curPage.size() - 5));
+//  GuiCore().activatePage(SysEventView::className);
+//  ValueManager().setValue("showAllButCenter", false);
+  }
+
+
+void MainWindow::showHelp() {
+  setAppMode(ApplicationMode::Help);
+  }
+
+
+void MainWindow::setupMenu() {
+  ui->menuMode->addAction(editMode);
+  ui->menuMode->addAction(autoMode);
+  ui->menuMode->addAction(mdiMode);
+  ui->menuMode->addAction(testEditMode);
+  ui->menuMode->addAction(wheelMode);
+  ui->menuMode->addAction(jogMode);
+  ui->menuMode->addAction(touchMode);
+  ui->menuMode->addAction(cfgMode);
+  ui->menuMode->addAction(msgMode);
+  ui->actionHelp->setShortcut(QKeySequence::HelpContents);
+  }
+
+
+void MainWindow::tellStates() const {
+  ValueManager vm;
+
+  qDebug() << "MW::tellStates()";
+  vm.getModel("appMode")->dump();
+  vm.getModel("allHomed")->dump();
+  vm.getModel("taskState")->dump();
+  vm.getModel("taskMode")->dump();
+  vm.getModel("interpState")->dump();
+  vm.getModel("execState")->dump();
+  vm.getModel("errorActive")->dump();
+  vm.getModel("showAbsolute")->dump();
+  vm.getModel("singleStep")->dump();
+  }
+
+
+void MainWindow::testTools() {
+//  static int       slot = 0;
+//  const ToolEntry* tool    = GuiCore().toolTable().tool4Slot(slot);
+
+//  while (!tool) tool = GuiCore().toolTable().tool4Slot(++slot);
+//  ValueManager().setValue("toolInSpindle", tool->number());
+//  ValueManager().setValue("pocketPrepared", ++slot);
+//  qDebug() << "testTools #" << slot << " - total:" << GuiCore().toolTable().entries();
+//  if (slot >= GuiCore().toolTable().entries()) slot = 0;
+  }
+
+
+void MainWindow::toggleAllButCenter() {
+  ValueModel* m = ValueManager().getModel("showAllButCenter");
+  bool visible = m->getValue().toBool();
+
+  if (!statusInPreview) {
+     for (int i=0; i < dockables.size(); ++i)
+         dockables.at(i)->setVisible(visible);
+     }
+  autoTB->setVisible(visible);
+  modeTB->setVisible(visible);
+  topTB->setVisible(visible);
+  powerTB->setVisible(visible);
+  switchTB->setVisible(visible);
+  }
+
+
+void MainWindow::toggleAbsolute(const QVariant& absolute) {
+  qDebug() << "Mainwindow::toggleAbsolute(" << (absolute.toBool() ? "TRUE" : "FALSE") << ")";
+  ValueManager().setValue("showAbsolute", absolute.toBool());
   }
 
 
