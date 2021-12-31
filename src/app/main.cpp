@@ -1,6 +1,9 @@
 #include <mainwindow.h>
+#include <testmain.h>
 #include <falconviewdb.h>
-#include <core.h>
+#include <guicore.h>
+#include <guikernelcreator.h>
+#include <QCoreApplication>
 #include <QApplication>
 #include <QFileInfo>
 #include <QStyleFactory>
@@ -35,7 +38,7 @@ int main(int argc, char *argv[]) {
                                           , "../FalconView/src/i18n");
       QStringList args        = QCoreApplication::arguments();
       QString     iniFileName = findIni(args);
-      QStringList sl          = QStyleFactory::keys();
+//      QStringList sl          = QStyleFactory::keys();
 
       a.installTranslator(&translator);
 //      qDebug() << "application arguments: " << args;
@@ -44,24 +47,31 @@ int main(int argc, char *argv[]) {
       qDebug() << "country:" << country;
       qDebug() << "syslocale:" << sysLocale.name() << "\tcurrent locale:" << curLocale.name();
       qDebug() << "gonna use ini-file: " << iniFileName;
-      qDebug() << "check for styles ...";
-      for (const QString& s : sl) {
-          qDebug() << "available style: " << s;
-          }
-      qDebug() << "style check done ...";
-      QFileInfo ifi(iniFileName);
+//      qDebug() << "check for styles ...";
+//      for (const QString& s : sl) {
+//          qDebug() << "available style: " << s;
+//          }
+//      qDebug() << "style check done ...";
+      QFileInfo ifn(iniFileName);
 
-      if (!ifi.exists() || ifi.size() < 1) throw std::invalid_argument("invalid or not existant inifile");
+      if (!ifn.exists() || ifn.size() < 1) throw std::invalid_argument("invalid or not existant inifile");
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
       // set default font for all gui elements. Needed with Qt > 6xx
       a.setFont(QFont("Noto Sans", 15));
 #endif
+      GuiCore::setKernelCreator(new GuiKernelCreator());
       FalconViewDB dbHelper;
-      Core appCore(iniFileName, "FalconView", dbHelper);
+      GuiCore      appCore(iniFileName, "FalconView", curLocale, dbHelper);
+#ifndef REDNOSE
+      MainWindow* mainWindow = new MainWindow();
+#else
+      TestMain*   mainWindow = new TestMain();
+#endif
 
+      appCore.setMainWindow(mainWindow);
+      mainWindow->initialize();
       appCore.checkBE();
-      appCore.mainWindow()->show();
-
+      mainWindow->show();
       int rv = a.exec();
 
 //      qDebug() << "left event loop with rv ==" << rv;

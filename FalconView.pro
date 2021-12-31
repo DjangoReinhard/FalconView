@@ -1,246 +1,281 @@
 TEMPLATE = app
-QT += core gui gui-private uitools sql xml
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-CONFIG += c++17
-
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
+TARGET   = FalconView
+CONFIG  += c++17
+QT      += widgets gui-private uitools sql xml
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES *= QT_USE_QSTRINGBUILDER
-
-TARGET = FalconView
-
 LINUXCNC = /usr/local/src/linuxcnc-deb11
-OCCT     = /usr/local/src/build-occt-Desktop_5_15_opt-Debug
+OCCT     = /usr/local
 
 INCLUDEPATH += \
-    src/app \
-    src/model \
-    src/model/db \
-    src/nml  \
-    src/rs274 \
-    src/util \
-    src/view \
-    src/view/pages \
-    src/view/status \
     /usr/include/python3.9 \    # only linuxcnc uses python
     $${LINUXCNC}/include \
     $${LINUXCNC}/src/emc/rs274ngc \
     $${LINUXCNC}/src/emc/tooldata \
     $${LINUXCNC}/src \
-    $${OCCT}/include/opencascade
+    $${OCCT}/include/opencascade \
 
+INCLUDEPATH += \
+    src/app/control \
+    src/app/model \
+    src/app/util \
+    src/app/view \
+    src/baselib/control \
+    src/baselib/model \
+    src/baselib/util \
+    src/baselib/view \
+    src/lcLib/control \
+    src/lcLib/model \
+    src/lcLib/util \
+    src/lcLib/view \
+    src/plugPages \
+    src/statusInfo
 
 SOURCES += \
     src/app/main.cpp \
-    src/app/mainwindow.cpp \
-    src/app/core.cpp \
-    src/model/configacc.cpp \
-    src/model/configmgr.cpp \
-    src/model/db/category.cpp \
-    src/model/db/CategoryTreeModel.cpp \
-    src/model/db/dbconnection.cpp \
-    src/model/db/falconviewdb.cpp \
-    src/model/db/sysevent.cpp \
-    src/model/db/syseventmodel.cpp \
-    src/model/db/toolcategorymodel.cpp \
-    src/model/db/toolmodel.cpp \
-    src/model/direntry.cpp \
-    src/model/dirmodel.cpp \
-    src/model/filemodel.cpp \
-    src/model/gcodeinfo.cpp \
-    src/model/lcproperties.cpp \
-    src/model/positioncalculator.cpp \
-    src/model/toolcategory.cpp \
-    src/model/tool.cpp \
-    src/model/toolentry.cpp \
-    src/model/tooltable.cpp \
-    src/model/valuemanager.cpp \
-    src/model/valuemodel.cpp \
-    src/nml/commandwriter.cpp \
-    src/nml/errorreader.cpp \
-    src/nml/statusreader.cpp \
-    src/rs274/canonif.cpp \
-    src/rs274/linecodes.cpp \
-    src/rs274/stupidtoolchangerif.cpp \
-    src/util/abstractcondition.cpp \
-    src/util/ally3d.cpp \
-    src/util/andcondition.cpp \
-    src/util/axismask.cpp \
-    src/util/dynaaction.cpp \
-    src/util/equalcondition.cpp \
-    src/util/falsecondition.cpp \
-    src/util/flowlayout.cpp \
-    src/util/gcodehighlighter.cpp \
-    src/util/Geom_HelixData.cpp \
-    src/util/graphicfactory.cpp \
-    src/util/greatercondition.cpp \
-    src/util/helpengine.cpp \
-    src/util/HelixCurveAdaptor_CylinderEvaluator.cpp \
-    src/util/HelixCurveAdaptor.cpp \
-    src/util/HHelixCurveAdaptor.cpp \
-    src/util/LCInter.cpp \
-    src/util/micon.cpp \
-    src/util/multistateaction.cpp \
-    src/util/multistatetoolbutton.cpp \
-    src/util/notcondition.cpp \
-    src/util/numlabel.cpp \
-    src/util/orcondition.cpp \
-    src/util/smallercondition.cpp \
-    src/util/timestamp.cpp \
-    src/util/truecondition.cpp \
-    src/view/helpbrowser.cpp \
-    src/view/helpcontentwidget.cpp \
-    src/view/helpdockable.cpp \
-    src/view/helpkeywordwidget.cpp \
-    src/view/jogbutton.cpp \
-    src/view/pages/filemanager.cpp \
-    src/view/pages/fixturemanager.cpp \
-    src/view/pages/helpview.cpp \
-    src/view/pages/jogview.cpp \
-    src/view/pages/lctooltable.cpp \
-    src/view/pages/mdieditor.cpp \
-    src/view/pages/patheditor.cpp \
-    src/view/pages/preferenceseditor.cpp \
-    src/view/pages/pweditor.cpp \
-    src/view/pages/syseventview.cpp \
-    src/view/pages/testEdit.cpp \
-    src/view/pages/toolmanager.cpp \
-    src/view/status/curcodesstatus.cpp \
-    src/view/status/positionstatus.cpp \
-    src/view/status/speedstatus.cpp \
-    src/view/status/toolstatus.cpp \
-    src/view/centerview.cpp \
-    src/view/dyncenterwidget.cpp \
-    src/view/dyndockable.cpp \
-    src/view/dynframe.cpp \
-    src/view/fixtureedit.cpp \
-    src/view/gcodeeditor.cpp \
-    src/view/occtviewer.cpp \
-    src/view/settingsnb.cpp \
-    src/view/tooleditor.cpp \
+    src/app/control/abstractcondition.cpp \
+    src/app/control/andcondition.cpp \
+    src/app/control/dynaaction.cpp \
+    src/app/control/equalcondition.cpp \
+    src/app/control/falsecondition.cpp \
+    src/app/control/greatercondition.cpp \
+    src/app/control/mainwindow.cpp \
+    src/app/control/multistatetoolbutton.cpp \
+    src/app/control/notcondition.cpp \
+    src/app/control/orcondition.cpp \
+    src/app/control/smallercondition.cpp \
+    src/app/control/testmain.cpp \
+    src/app/control/truecondition.cpp \
+    src/app/model/falconviewdb.cpp \
+    src/app/model/tool.cpp \
+    src/app/model/toolcategory.cpp \
+    src/app/util/multistateaction.cpp \
+  src/app/view/dockable.cpp \
+    src/app/view/micon.cpp \
+    src/app/view/plugindialog.cpp \
+    src/baselib/control/core.cpp \
+    src/baselib/control/kernel.cpp \
+    src/baselib/model/configacc.cpp \
+    src/baselib/model/configmgr.cpp \
+    src/baselib/model/direntry.cpp \
+    src/baselib/model/dirmodel.cpp \
+    src/baselib/model/filemodel.cpp \
+    src/baselib/model/sysevent.cpp \
+    src/baselib/model/syseventmodel.cpp \
+    src/baselib/model/valuemanager.cpp \
+    src/baselib/model/valuemodel.cpp \
+    src/baselib/util/dbconnection.cpp \
+    src/baselib/util/flowlayout.cpp \
+    src/baselib/util/kernelcreator.cpp \
+    src/baselib/util/timestamp.cpp \
+    src/baselib/view/abscenterwidget.cpp \
+    src/baselib/view/filemanager.cpp \
+    src/lcLib/control/LCInter.cpp \
+    src/lcLib/control/axismask.cpp \
+    src/lcLib/control/canonif.cpp \
+    src/lcLib/control/commandwriter.cpp \
+    src/lcLib/control/errorreader.cpp \
+    src/lcLib/control/gcodehighlighter.cpp \
+    src/lcLib/control/guicore.cpp \
+    src/lcLib/control/guikernel.cpp \
+    src/lcLib/control/helpengine.cpp \
+    src/lcLib/control/positioncalculator.cpp \
+    src/lcLib/control/statusreader.cpp \
+    src/lcLib/model/lcproperties.cpp \
+    src/lcLib/model/linecodes.cpp \
+    src/lcLib/model/stupidtoolchangerif.cpp \
+    src/lcLib/model/toolentry.cpp \
+    src/lcLib/model/tooltable.cpp \
+    src/lcLib/util/Geom_HelixData.cpp \
+    src/lcLib/util/HHelixCurveAdaptor.cpp \
+    src/lcLib/util/HelixCurveAdaptor.cpp \
+    src/lcLib/util/HelixCurveAdaptor_CylinderEvaluator.cpp \
+    src/lcLib/util/ally3d.cpp \
+    src/lcLib/util/graphicfactory.cpp \
+    src/lcLib/util/guikernelcreator.cpp \
+  src/lcLib/view/centerpage.cpp \
+    src/lcLib/view/centerview.cpp \
+    src/lcLib/view/gcodeeditor.cpp \
+    src/lcLib/view/gcodeinfo.cpp \
+    src/lcLib/view/helpcontentwidget.cpp \
+    src/lcLib/view/helpkeywordwidget.cpp \
+    src/lcLib/view/jogbutton.cpp \
+    src/lcLib/view/numlabel.cpp \
+    src/lcLib/view/occtviewer.cpp \
+    src/lcLib/view/settingsnb.cpp \
+    src/lcLib/view/testEdit.cpp \
+    src/plugPages/FixtureManager/fixtureedit.cpp \
+    src/plugPages/FixtureManager/fixturemanager.cpp \
+    src/plugPages/HelpView/helpbrowser.cpp \
+    src/plugPages/HelpView/helpdockable.cpp \
+    src/plugPages/HelpView/helpview.cpp \
+    src/plugPages/JogView/jogview.cpp \
+    src/plugPages/LCToolTable/lctooltable.cpp \
+    src/plugPages/MDIEditor/mdieditor.cpp \
+    src/plugPages/PathEditor/patheditor.cpp \
+    src/plugPages/PrefsEditor/preferenceseditor.cpp \
+    src/plugPages/Preview3D/pweditor.cpp \
+    src/plugPages/SysEventView/syseventview.cpp \
+    src/plugPages/ToolManager/CategoryTreeModel.cpp \
+    src/plugPages/ToolManager/category.cpp \
+    src/plugPages/ToolManager/toolcategorymodel.cpp \
+    src/plugPages/ToolManager/tooleditor.cpp \
+    src/plugPages/ToolManager/toolmanager.cpp \
+    src/plugPages/ToolManager/toolmodel.cpp \
+    src/statusInfo/CurCodes/curcodesstatus.cpp \
+    src/statusInfo/Position/positionstatus.cpp \
+    src/statusInfo/SpeedInfo/speedstatus.cpp \
+    src/statusInfo/ToolInfo/toolstatus.cpp \
 
 HEADERS += \
-    src/app/applicationmode.h \
-    src/app/core_p.h \
-    src/app/mainwindow.h \
-    src/app/core.h \
-    src/model/configacc.h \
-    src/model/configmgr.h \
-    src/model/db/category.h \
-    src/model/db/CategoryTreeModel.h \
-    src/model/db/dbconnection.h \
-    src/model/db/dbhelper.h \
-    src/model/db/falconviewdb.h \
-    src/model/db/sysevent.h \
-    src/model/db/syseventmodel.h \
-    src/model/db/toolcategorymodel.h \
-    src/model/db/toolmodel.h \
-    src/model/direntry.h \
-    src/model/dirmodel.h \
-    src/model/filemodel.h \
-    src/model/gcodeinfo.h \
-    src/model/lcproperties.h \
-    src/model/positioncalculator.h \
-    src/model/toolcategory.h \
-    src/model/toolentry.h \
-    src/model/tool.h \
-    src/model/tooltable.h \
-    src/model/valuemanager.h \
-    src/model/valuemodel.h \
-    src/nml/commandwriter.h \
-    src/nml/errorreader.h \
-    src/nml/insulatePose.h \
-    src/nml/statusreader.h \
-    src/rs274/canonif.h \
-    src/rs274/linecodes.h \
-    src/rs274/stupidtoolchangerif.h \
-    src/util/abstractcondition.h \
-    src/util/ally3d.h \
-    src/util/andcondition.h \
-    src/util/axismask.h \
-    src/util/dynaaction.h \
-    src/util/equalcondition.h \
-    src/util/falsecondition.h \
-    src/util/filemanagerclient.h \
-    src/util/flowlayout.h \
-    src/util/gcodehighlighter.h \
-    src/util/Geom_HelixData.h \
-    src/util/graphicfactory.h \
-    src/util/greatercondition.h \
-    src/util/helpengine.h \
-    src/util/HelixCurveAdaptor_CylinderEvaluator.h \
-    src/util/HelixCurveAdaptor_p.h \
-    src/util/HelixCurveAdaptor.h \
-    src/util/HHelixCurveAdaptor.h \
-    src/util/LCInter.h \
-    src/util/micon.h \
-    src/util/multistateaction.h \
-    src/util/multistatetoolbutton.h \
-    src/util/notcondition.h \
-    src/util/numlabel.h \
-    src/util/orcondition.h \
-    src/util/smallercondition.h \
-    src/util/timestamp.h \
-    src/util/truecondition.h \
-    src/view/helpbrowser.h \
-    src/view/helpcontentwidget.h \
-    src/view/helpdockable.h \
-    src/view/helpkeywordwidget.h \
-    src/view/jogbutton.h \
-    src/view/pages/filemanager.h \
-    src/view/pages/fixturemanager.h \
-    src/view/pages/helpview.h \
-    src/view/pages/jogview.h \
-    src/view/pages/lctooltable.h \
-    src/view/pages/mdieditor.h \
-    src/view/pages/patheditor.h \
-    src/view/pages/preferenceseditor.h \
-    src/view/pages/pweditor.h \
-    src/view/pages/syseventview.h \
-    src/view/pages/testEdit.h \
-    src/view/pages/toolmanager.h \
-    src/view/status/curcodesstatus.h \
-    src/view/status/positionstatus.h \
-    src/view/status/speedstatus.h \
-    src/view/status/toolstatus.h \
-    src/view/centerview.h \
-    src/view/dyncenterwidget.h \
-    src/view/dyndockable.h \
-    src/view/dynframe.h \
-    src/view/fixtureedit.h \
-    src/view/gcodeeditor.h \
-    src/view/occtviewer.h \
-    src/view/settingsnb.h \
-    src/view/tooleditor.h \
+    src/app/control/abstractcondition.h \
+    src/app/control/andcondition.h \
+    src/app/control/dynaaction.h \
+    src/app/control/equalcondition.h \
+    src/app/control/falsecondition.h \
+    src/app/control/greatercondition.h \
+    src/app/control/mainwindow.h \
+    src/app/control/multistatetoolbutton.h \
+    src/app/control/notcondition.h \
+    src/app/control/orcondition.h \
+    src/app/control/smallercondition.h \
+    src/app/control/testmain.h \
+    src/app/control/truecondition.h \
+    src/app/model/falconviewdb.h \
+    src/app/model/toolcategory.h \
+    src/app/model/tool.h \
+    src/app/util/multistateaction.h \
+  src/app/view/dockable.h \
+    src/app/view/micon.h \
+    src/app/view/plugindialog.h \
+    src/baselib/control/applicationmode.h \
+    src/baselib/control/core.h \
+    src/baselib/control/filemanagerclient.h \
+    src/baselib/control/kernel.h \
+    src/baselib/model/configacc.h \
+    src/baselib/model/configmgr.h \
+    src/baselib/model/direntry.h \
+    src/baselib/model/dirmodel.h \
+    src/baselib/model/filemodel.h \
+    src/baselib/model/sysevent.h \
+    src/baselib/model/syseventmodel.h \
+    src/baselib/model/valuemanager.h \
+    src/baselib/model/valuemodel.h \
+    src/baselib/util/dbconnection.h \
+    src/baselib/util/dbhelper.h \
+    src/baselib/util/flowlayout.h \
+    src/baselib/util/kernelcreator.h \
+    src/baselib/util/timestamp.h \
+    src/baselib/view/abscenterwidget.h \
+    src/baselib/view/filemanager.h \
+    src/baselib/view/PluginPageInterface.h \
+    src/lcLib/control/axismask.h \
+    src/lcLib/control/canonif.h \
+    src/lcLib/control/commandwriter.h \
+    src/lcLib/control/errorreader.h \
+    src/lcLib/control/gcodehighlighter.h \
+    src/lcLib/control/guicore.h \
+    src/lcLib/control/guikernel.h \
+    src/lcLib/control/helpengine.h \
+    src/lcLib/control/LCInter.h \
+    src/lcLib/control/positioncalculator.h \
+    src/lcLib/control/statusreader.h \
+    src/lcLib/model/lcproperties.h \
+    src/lcLib/model/linecodes.h \
+    src/lcLib/model/stupidtoolchangerif.h \
+    src/lcLib/model/toolentry.h \
+    src/lcLib/model/tooltable.h \
+    src/lcLib/util/ally3d.h \
+    src/lcLib/util/Geom_HelixData.h \
+    src/lcLib/util/graphicfactory.h \
+    src/lcLib/util/guikernelcreator.h \
+    src/lcLib/util/HelixCurveAdaptor_CylinderEvaluator.h \
+    src/lcLib/util/HelixCurveAdaptor.h \
+    src/lcLib/util/HelixCurveAdaptor_p.h \
+    src/lcLib/util/HHelixCurveAdaptor.h \
+    src/lcLib/util/insulatePose.h \
+  src/lcLib/view/centerpage.h \
+    src/lcLib/view/centerview.h \
+    src/lcLib/view/gcodeeditor.h \
+    src/lcLib/view/gcodeinfo.h \
+    src/lcLib/view/helpcontentwidget.h \
+    src/lcLib/view/helpkeywordwidget.h \
+    src/lcLib/view/jogbutton.h \
+    src/lcLib/view/numlabel.h \
+    src/lcLib/view/occtviewer.h \
+    src/lcLib/view/settingsnb.h \
+    src/lcLib/view/testEdit.h \
+    src/plugPages/FixtureManager/fixtureedit.h \
+    src/plugPages/FixtureManager/fixturemanager.h \
+    src/plugPages/HelpView/helpbrowser.h \
+    src/plugPages/HelpView/helpdockable.h \
+    src/plugPages/HelpView/helpview.h \
+    src/plugPages/JogView/jogview.h \
+    src/plugPages/LCToolTable/lctooltable.h \
+    src/plugPages/MDIEditor/mdieditor.h \
+    src/plugPages/PathEditor/patheditor.h \
+    src/plugPages/PrefsEditor/preferenceseditor.h \
+    src/plugPages/Preview3D/pweditor.h \
+    src/plugPages/SysEventView/syseventview.h \
+    src/plugPages/ToolManager/category.h \
+    src/plugPages/ToolManager/CategoryTreeModel.h \
+    src/plugPages/ToolManager/toolcategorymodel.h \
+    src/plugPages/ToolManager/tooleditor.h \
+    src/plugPages/ToolManager/toolmanager.h \
+    src/plugPages/ToolManager/toolmodel.h \
+    src/statusInfo/CurCodes/curcodesstatus.h \
+    src/statusInfo/Position/positionstatus.h \
+    src/statusInfo/SpeedInfo/speedstatus.h \
+    src/statusInfo/ToolInfo/toolstatus.h \
 
 FORMS += \
-    src/UI/HCurCodes.ui \
-    src/UI/HelpTitle.ui \
-    src/UI/Jog.ui \
-    src/UI/MDIEditor.ui \
-    src/UI/Position.ui \
-    src/UI/PositionMain.ui \
-    src/UI/VCurCodes.ui \
-    src/UI/GCodeEditor.ui \
-    src/UI/mainwindow.ui \
-    src/UI/Fixture.ui \
-    src/UI/Settings.ui \
-    src/UI/HSpeedInfo.ui \
-    src/UI/VSpeedInfo.ui \
-    src/UI/ToolEditor.ui \
-    src/UI/ToolInfo.ui
+    src/app/UI/mainwindow.ui \
+    src/lcLib/UI/GCodeEditor.ui \
+    src/plugPages/FixtureManager/Fixture.ui \
+    src/plugPages/HelpView/HelpTitle.ui \
+    src/plugPages/JogView/Jog.ui \
+    src/plugPages/MDIEditor/MDIEditor.ui \
+    src/plugPages/PrefsEditor/Settings.ui \
+    src/plugPages/ToolManager/ToolEditor.ui \
+    src/statusInfo/CurCodes/HCurCodes.ui \
+    src/statusInfo/CurCodes/VCurCodes.ui \
+    src/statusInfo/Position/PositionMain.ui \
+    src/statusInfo/Position/Position.ui \
+    src/statusInfo/SpeedInfo/HSpeedInfo.ui \
+    src/statusInfo/SpeedInfo/VSpeedInfo.ui \
+    src/statusInfo/ToolInfo/ToolInfo.ui \
+
+TRANSLATIONS += \
+    src/app/i18n/FalconView_de_DE.ts \
+    src/baselib/baselib_de_DE.ts \
+    src/lcLib/lcLib_de_DE.ts \
+    src/plugPages/FixtureManager/fixture_de_DE.ts \
+    src/plugPages/HelpView/helptitle_de_DE.ts \
+    src/plugPages/JogView/jogview_de_DE.ts \
+    src/plugPages/LCToolTable/lctooltable_de_DE.ts \
+    src/plugPages/MDIEditor/mdieditor_de_DE.ts \
+    src/plugPages/PathEditor/patheditor_de_DE.ts \
+    src/plugPages/PrefsEditor/prefseditor_DE.ts \
+    src/plugPages/Preview3D/preview3D_de_DE.ts \
+    src/plugPages/SysEventView/syseventview_de_DE.ts \
+    src/plugPages/ToolManager/toolmanager_de_DE.ts \
+    src/statusInfo/CurCodes/curcodes_de_DE.ts \
+    src/statusInfo/Position/position_de_DE.ts \
+    src/statusInfo/SpeedInfo/speedinfo_de_DE.ts \
+    src/statusInfo/ToolInfo/toolinfo_de_DE.ts \
+
+RESOURCES += \
+    FalconView.qrc
 
 unix:!mac {
   LIBS += -Wl,-rpath=$${LINUXCNC}/lib
+  LIBS += -Wl,-rpath=$${OCCT}/lib
   QMAKE_CXXFLAGS += -std=gnu++11
 }
 
+LIBS += -L$${LINUXCNC}/lib
+LIBS += -L/usr/lib
 LIBS += \
-  -L$${LINUXCNC}/lib \
-  -L/usr/lib \
   -lm \
   -llinuxcnc \
   -lposemath \
@@ -258,8 +293,7 @@ LIBS += \
   -ldl \
   -lutil
 
-LIBS += -Wl,-rpath=$${OCCT}/lin64/gcc/libd \
-        -L$${OCCT}/lin64/gcc/libd
+LIBS += -L$${OCCT}/lib
 LIBS += -lTKernel -lTKMath -lTKService -lTKV3d -lTKOpenGl \
         -lTKBRep -lTKIGES -lTKSTL -lTKVRML -lTKSTEP -lTKSTEPAttr -lTKSTEP209 \
         -lTKSTEPBase -lTKGeomBase -lTKGeomAlgo -lTKG3d -lTKG2d \
@@ -267,67 +301,3 @@ LIBS += -lTKernel -lTKMath -lTKService -lTKV3d -lTKOpenGl \
         -lTKCDF -lTKBool -lTKBO -lTKFillet -lTKOffset -lTKLCAF -lTKCAF -lTKVCAF \
         -lTKBin -lTKXml
 
-TRANSLATIONS += \
-    src/i18n/FalconView_de_DE.ts
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
-DISTFILES += \
-    docs/FalconView.qdocconf \
-    docs/FalconView.qhp \
-    docs/genHelp \
-    docs/src/FixtureManager.qdoc \
-    docs/src/JogView.qdoc \
-    docs/src/LCToolTable.qdoc \
-    docs/src/MDIedit.qdoc \
-    docs/src/PreferencesEditor.qdoc \
-    docs/src/Preview.qdoc \
-    docs/src/SettingsNotebook.qdoc \
-    docs/src/TestEdit.qdoc \
-    docs/src/ToolEditor.qdoc \
-    docs/src/ToolManager.qdoc \
-    docs/src/fileManager.qdoc \
-    docs/src/index.qdoc \
-    docs/src/pathEdit.qdoc \
-    docs/src/reference.qdoc \
-    docs/src/startup.qdoc \
-    docs/src/usage.qdoc \
-    docs/src.de/index.qdoc \
-    docs/html/FalconView.qhcp \
-    i18n/FalconView_de_DE.ts
-
-#QMAKE_SPEC - the shortname of the host mkspec that is resolved and stored in the QMAKESPEC variable during a host build
-#QMAKE_VERSION - the current version of qmake
-#QMAKE_XSPEC - the shortname of the target mkspec that is resolved and stored in the QMAKESPEC variable during a target build
-#QT_HOST_BINS - location of host executables
-#QT_HOST_DATA - location of data for host executables used by qmake
-#QT_HOST_PREFIX - default prefix for all host paths
-#QT_INSTALL_ARCHDATA - location of general architecture-dependent Qt data
-#QT_INSTALL_BINS - location of Qt binaries (tools and applications)
-#QT_INSTALL_CONFIGURATION - location for Qt settings. Not applicable on Windows
-#QT_INSTALL_DATA - location of general architecture-independent Qt data
-#QT_INSTALL_DOCS - location of documentation
-#QT_INSTALL_EXAMPLES - location of examples
-#QT_INSTALL_HEADERS - location for all header files
-#QT_INSTALL_IMPORTS - location of QML 1.x extensions
-#QT_INSTALL_LIBEXECS - location of executables required by libraries at runtime
-#QT_INSTALL_LIBS - location of libraries
-#QT_INSTALL_PLUGINS - location of Qt plugins
-#QT_INSTALL_PREFIX - default prefix for all paths
-#QT_INSTALL_QML - location of QML 2.x extensions
-#QT_INSTALL_TESTS - location of Qt test cases
-#QT_INSTALL_TRANSLATIONS - location of translation information for Qt strings
-#QT_SYSROOT - the sysroot used by the target build environment
-#QT_VERSION - the Qt version. We recommend that you query Qt module specific version numbers 
-#for (var, $$list($$enumerate_vars())) {
-#    message($$var)
-#    message($$eval($$var))
-#    }
-
-
-RESOURCES += FalconView.qrc
-
-INSTALLS += target docs
