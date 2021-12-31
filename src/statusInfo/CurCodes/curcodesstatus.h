@@ -7,7 +7,9 @@ class QLabel;
 class CurCodesStatus : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "curCodes.json")
+#endif
 public:
   explicit CurCodesStatus(QWidget* parent = nullptr);
   virtual ~CurCodesStatus() = default;

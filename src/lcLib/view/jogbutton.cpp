@@ -1,4 +1,4 @@
-#include <jogbutton.h>
+#include "jogbutton.h"
 #include <QStylePainter>
 #include <QStyleOptionFocusRect>
 #include <QDebug>

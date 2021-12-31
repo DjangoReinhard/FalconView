@@ -17,7 +17,9 @@ class QStackedLayout;
 class PositionStatus : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "position.json")
+#endif
 public:
   PositionStatus(QWidget* parent = nullptr);
   PositionStatus(QWidget* parent, QString ledOn, QString ledOff);

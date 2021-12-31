@@ -19,10 +19,14 @@
 
 GuiKernel::GuiKernel(const QString& fileName, const QString& appName, const QString& groupID)
  : Kernel(fileName, appName, groupID)
- , lcProps(fileName)
- , tt(lcProps, lcProps.toolTableFileName())
- , lcIF(lcProps, tt)
- , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
+// , lcProps(fileName)
+// , tt(lcProps, lcProps.toolTableFileName())
+// , lcIF(lcProps, tt)
+// , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
+ , lcProps(nullptr)
+ , tt(nullptr)
+ , lcIF(nullptr)
+ , mAxis(nullptr)
  , view3D(nullptr)
  , centerView(nullptr)
  , mainWindow(nullptr)
@@ -34,7 +38,7 @@ GuiKernel::GuiKernel(const QString& fileName, const QString& appName, const QStr
 
 
 int GuiKernel::axisMask() const {
-  return mAxis.mask();
+  return mAxis->mask();
   }
 
 
@@ -47,7 +51,7 @@ DBConnection* GuiKernel::createDatabase(DBHelper& dbAssist) {
   }
 
 
-QString GuiKernel::fileName4(const QString &fileID) {
+QString GuiKernel::fileName4(const QString &fileID) const {
   if (fileID == "database") {
      return conn->dbName();
      }
@@ -59,27 +63,36 @@ QString GuiKernel::fileName4(const QString &fileID) {
      return dir.absolutePath();
      }
   else if (fileID == "toolTable") {
-     return lcProps.toolTableFileName();
+     return lcProps->toolTableFileName();
      }
   return Kernel::fileName4(fileID);
   }
 
 
-void GuiKernel::initialize(DBHelper &dbAssist) {
-  if (!mAxis.activeAxis()) mAxis.setup(lcProps.value("TRAJ", "COORDINATES").toString());
-  lcIF.setupToolTable();
-  tt.setLatheMode(isLatheMode());
-  CanonIF ci(lcProps, tt);
-  QString   dbName = cfg.value("database").toString();
+void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
+  Kernel::initialize(locale, dbAssist);
+    // , lcProps(fileName)
+    // , tt(lcProps, lcProps.toolTableFileName())
+    // , lcIF(lcProps, tt)
+    // , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
+  lcProps = new LcProperties(fileName);
+  tt = new ToolTable(*lcProps, lcProps->toolTableFileName());
+  lcIF = new LCInterface(*lcProps, *tt);
+  mAxis = new AxisMask(lcProps->value("KINS", "KINEMATICS").toString());
+  if (!mAxis->activeAxis()) mAxis->setup(lcProps->value("TRAJ", "COORDINATES").toString());
+  lcIF->setupToolTable();
+  tt->setLatheMode(isLatheMode());
+  CanonIF   ci(*lcProps, *tt);
+  QString   dbName = cfg->value("database").toString();
   QFileInfo db(dbName);
-  const QString& hf = lcProps.value("HAL", "HALFILE").toString();
+  const QString& hf = lcProps->value("HAL", "HALFILE").toString();
 
   if (hf.contains("sim")) simulator = true;
   if (!db.exists() || db.size() < 1) {
      if (dbAssist.connect(db.absoluteFilePath())) {
         conn = createDatabase(dbAssist);
-        cfg.setValue("database", conn->dbName());
-        cfg.setValue("dbType", conn->dbType());
+        cfg->setValue("database", conn->dbName());
+        cfg->setValue("dbType", conn->dbType());
         }
      else throw std::system_error(-2, std::system_category(), "could not create database");
      }
@@ -90,12 +103,12 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
      }
   sysEvents = new SysEventModel(*conn, this);
   sysEvents->setTable("SysEvents");
-  ci.setTraverseColor(cfg.getForeground(Config::GuiElem::RapidMove));
-  ci.setFeedColor(cfg.getForeground(Config::GuiElem::WorkMove));
-  ci.setLimitsColor(cfg.getForeground(Config::GuiElem::WorkLimit));
-  ci.setWorkPieceColor(cfg.getForeground(Config::GuiElem::WorkPiece));
-  ci.setCurSegColor(cfg.getForeground(Config::GuiElem::CurSeg));
-  ci.setOldSegColor(cfg.getForeground(Config::GuiElem::OldSeg));
+  ci.setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
+  ci.setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
+  ci.setLimitsColor(cfg->getForeground(Config::GuiElem::WorkLimit));
+  ci.setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));
+  ci.setCurSegColor(cfg->getForeground(Config::GuiElem::CurSeg));
+  ci.setOldSegColor(cfg->getForeground(Config::GuiElem::OldSeg));
   view3D = new OcctQtViewer();
   ally3D->setOcctViewer(view3D);
   statusReader  = new StatusReader(positionCalculator, gcodeInfo);
@@ -141,8 +154,8 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
 
 
 bool GuiKernel::isLatheMode() const {
-  return lcProps.value("DISPLAY", "LATHE").isValid()
-      && lcProps.value("DISPLAY", "LATHE").toBool();
+  return lcProps->value("DISPLAY", "LATHE").isValid()
+      && lcProps->value("DISPLAY", "LATHE").toBool();
   }
 
 
@@ -167,7 +180,7 @@ void GuiKernel::nop() const {
 void GuiKernel::parseGCode(QFile &file) {
   QTime start = QTime::currentTime();
 
-  lcIF.parseInline(file.fileName());
+  lcIF->parseInline(file.fileName());
 
   QTime end  = QTime::currentTime();
   long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
@@ -262,9 +275,9 @@ void GuiKernel::updateView(const QVariant &v) {
 
 void GuiKernel::windowClosing(QCloseEvent *e) {
   // application is going to shut down ...
-  cfg.settings.beginGroup("MainWindow");
-  cfg.setValue("geometry",    mainWindow->saveGeometry());
-  cfg.setValue("windowState", mainWindow->saveState());
-  cfg.settings.endGroup();
+  cfg->settings.beginGroup("MainWindow");
+  cfg->setValue("geometry",    mainWindow->saveGeometry());
+  cfg->setValue("windowState", mainWindow->saveState());
+  cfg->settings.endGroup();
   centerView->windowClosing(e);
   }

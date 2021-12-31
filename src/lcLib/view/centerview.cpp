@@ -1,5 +1,5 @@
 #include <centerview.h>
-#include <dynframe.h>
+#include <centerpage.h>
 #include <abscenterwidget.h>
 #include <guicore.h>
 #include <QAction>
@@ -28,21 +28,21 @@ void CenterView::updateStyles() {
   }
 
 
-DynFrame* CenterView::page(const QString& name) {
+CenterPage* CenterView::page(const QString& name) {
 //  qDebug() << "CenterView: requested page \"" << name << "\"";
 
-  if (pages.contains(name)) return pages[name];
+  if (pagePool.contains(name)) return pagePool[name];
 //  qDebug() << "CenterView: sorry - no page with name >" << name << "<";
 
   return nullptr;
   }
 
 
-DynFrame* CenterView::activatePage(const QString& name) {
+CenterPage* CenterView::activatePage(const QString& name) {
   qDebug() << "CenterView: activatePage \""  << name << "\"";
 
-  if (pages.contains(name)) {
-     DynFrame*       w = pages[name];
+  if (pagePool.contains(name)) {
+     CenterPage*     w = pagePool[name];
      QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
      if (l) {
@@ -69,18 +69,18 @@ QString CenterView::activePage() const {
 
 
 void CenterView::dump() const {
-  qDebug() << "CenterView contains" << pages.size() << " pages";
-  for (auto e = pages.constKeyValueBegin(); e != pages.constKeyValueEnd(); e++) {
+  qDebug() << "CenterView contains" << pagePool.size() << " pages";
+  for (auto e = pagePool.constKeyValueBegin(); e != pagePool.constKeyValueEnd(); e++) {
       qDebug() << "MainView holds page >>" << e->first;
       }
   }
 
 
-void CenterView::addPage(DynFrame* page, const QString& name) {
+void CenterView::addPage(CenterPage* page, const QString& name) {
   QString pageName(name);
 
   if (pageName.isEmpty()) pageName = page->objectName();
-  pages.insert(pageName, page);
+  pagePool.insert(pageName, page);
   QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
   if (l) {
@@ -93,8 +93,13 @@ void CenterView::addPage(DynFrame* page, const QString& name) {
   }
 
 
+QList<QString> CenterView::pages() const {
+  return pagePool.keys();
+  }
+
+
 void CenterView::windowClosing(QCloseEvent* e) {
-  for (auto t = pages.constKeyValueBegin(); t != pages.constKeyValueEnd(); t++) {
+  for (auto t = pagePool.constKeyValueBegin(); t != pagePool.constKeyValueEnd(); t++) {
       t->second->closeEvent(e);
       }
   }

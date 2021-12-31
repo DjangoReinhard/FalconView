@@ -1,4 +1,4 @@
-#include <mdieditor.h>
+#include "mdieditor.h"
 #include <configacc.h>
 #include <QListWidget>
 #include <QLineEdit>
@@ -41,7 +41,7 @@ void MDIEditor::closeEvent(QCloseEvent*) {
   for (int i = fmax(0, mx - 50); i < mx; ++i)
       sl.append(history->item(i)->text());
 
-  cfg.beginGroup(MDIEditor::className);
+  cfg.beginGroup("MDIEditor");
   cfg.setValue("history", sl);
   cfg.endGroup();
   }
@@ -60,7 +60,7 @@ QWidget* MDIEditor::createContent() {
 
   history->installEventFilter(this);
   cmd->installEventFilter(this);
-  cfg.beginGroup(MDIEditor::className);
+  cfg.beginGroup("MDIEditor");
   QStringList sl = cfg.value("history").toStringList();
   cfg.endGroup();
 
@@ -123,7 +123,6 @@ void MDIEditor::showEvent(QShowEvent* e) {
 void MDIEditor::updateStyles() {
   }
 
-const QString MDIEditor::className = "MDIEditor";
 const QString MDIEditor::testData[] = {
   "T1 M6"
 , "S400 M3"

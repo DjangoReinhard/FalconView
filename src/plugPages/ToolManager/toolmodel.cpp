@@ -1,4 +1,4 @@
-#include <toolmodel.h>
+#include "toolmodel.h"
 #include <dbconnection.h>
 #include <guicore.h>
 #include <tooltable.h>

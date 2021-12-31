@@ -12,23 +12,25 @@ class QLocale;
 class Core
 {
 public:
-  Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group = "SRD");
-  Core() {}
+  explicit Core();
+  explicit Core(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
+  virtual ~Core() = default;
 
-  virtual int     axisMask() const;
-  virtual QString fileName4(const QString& fileID) const;
+  virtual void    riseError(const QString& msg);
+
+  int             axisMask() const;
   DBConnection*   databaseConnection();
+  QString         fileName4(const QString& fileID) const;
+  bool            isSimulator() const;
   void            help4Keyword(const QString& keyWord);
   QString         languagePrefix() const;
   QLocale         locale() const;
-  bool            isSimulator() const;
   bool            move2Backup(const QString& fileName);
-  void            riseError(const QString& msg);
-  void            showAllButCenter(bool visible);
-  bool            showHelpAtPageChange() const;
-  void            setLocale(const QLocale& l);
   void            setAppMode(ApplicationMode m);
+  void            showAllButCenter(bool visible);
   void            showHelp();
+  bool            showHelpAtPageChange() const;
+
   static void     setKernelCreator(KernelCreator* kc);
 
 protected:

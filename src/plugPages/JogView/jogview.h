@@ -6,9 +6,10 @@
 class JogView : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "jogView.json")
+#endif
 public:
-  static const QString& className;
   explicit JogView(QWidget* parent = nullptr);
   virtual ~JogView();
 

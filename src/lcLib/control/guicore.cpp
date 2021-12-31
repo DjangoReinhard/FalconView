@@ -7,7 +7,7 @@
 #include <lcproperties.h>
 #include <dbconnection.h>
 #include <dbhelper.h>
-#include <dynframe.h>
+#include <centerpage.h>
 #include <settingsnb.h>
 #include <centerview.h>
 #include <tooltable.h>
@@ -31,24 +31,23 @@
 #include <emc.hh>
 
 
-GuiCore::GuiCore(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& groupID)
- : Core(iniFileName, appName, dbAssist, groupID) {
+GuiCore::GuiCore(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& groupID)
+ : Core(iniFileName, appName, locale, dbAssist, groupID) {
+  }
+
+
+GuiCore::GuiCore() {
+  assert(kernel);
   }
 
 
 GuiKernel* GuiCore::guiCore() {
-  GuiKernel* gk = static_cast<GuiKernel*>(Core::core());
-
-  assert(gk);
-  return gk;
+  return static_cast<GuiKernel*>(Core::core());
   }
 
 
 const GuiKernel* GuiCore::guiCore() const {
-  const GuiKernel* gk = static_cast<const GuiKernel*>(Core::core());
-
-  assert(gk);
-  return gk;
+  return static_cast<const GuiKernel*>(Core::core());
   }
 
 
@@ -63,7 +62,7 @@ void GuiCore::parseGCFile(const QString &fileName) {
 
 
 LcProperties& GuiCore::lcProperties() {
-  return guiCore()->lcProps;
+  return *guiCore()->lcProps;
   }
 
 
@@ -72,19 +71,9 @@ OcctQtViewer* GuiCore::view3D() {
   }
 
 
-DBConnection* GuiCore::databaseConnection() {
-  return guiCore()->conn;
-  }
-
-
-void GuiCore::help4Keyword(const QString& ) {
-  qDebug() << "TODO: need to implement GuiCore::help4Keyword( ... )";
-  }
-
-
 bool GuiCore::isLatheMode() const {
-  return guiCore()->lcProps.value("DISPLAY", "LATHE").isValid()
-      && guiCore()->lcProps.value("DISPLAY", "LATHE").toBool();
+  return guiCore()->lcProps->value("DISPLAY", "LATHE").isValid()
+      && guiCore()->lcProps->value("DISPLAY", "LATHE").toBool();
   }
 
 
@@ -185,7 +174,7 @@ void GuiCore::setWindowTitle(const QString &title) {
 
 
 ToolTable& GuiCore::toolTable() {
-  return guiCore()->tt;
+  return *guiCore()->tt;
   }
 
 
@@ -194,7 +183,7 @@ QString GuiCore::curPage() const {
   }
 
 ToolTable* GuiCore::toolTableModel() {
-  return &guiCore()->tt;
+  return guiCore()->tt;
   }
 
 
@@ -211,11 +200,6 @@ void GuiCore::riseError(const QString &msg) {
   QMessageBox::critical(guiCore()->mainWindow
                       , SysEvent::toString(se.type())
                       , se.what());
-  }
-
-
-void GuiCore::showHelp() {
-  setAppMode(ApplicationMode::Help);
   }
 
 

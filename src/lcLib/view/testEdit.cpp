@@ -3,7 +3,7 @@
 #include <configacc.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
-#include <dynframe.h>
+#include <centerpage.h>
 #include <filemanager.h>
 #include <guicore.h>
 #include <QInputDialog>
@@ -25,6 +25,8 @@
 TestEdit::TestEdit(QWidget* parent)
  : AbstractCenterWidget(parent)
  , fn(nullptr) {
+  setObjectName("TestEdit");
+  setWindowTitle(tr("TestEdit"));
   }
 
 
@@ -94,7 +96,7 @@ void TestEdit::connectSignals() {
 // opens fileManager
 void TestEdit::openFile() {    
   QWidget*     w  = GuiCore().stackedPage(FileManager::className);
-  DynFrame*    df = qobject_cast<DynFrame*>(w);
+  CenterPage*    df = qobject_cast<CenterPage*>(w);
   FileManager* fm = qobject_cast<FileManager*>(df->centerWidget());
 
   if (fm) {
@@ -150,7 +152,7 @@ void TestEdit::loadFile(const QVariant& fileName) {
   QString   activeFile = ValueManager().getValue("fileName").toString();
   QFileInfo fi(fileName.toString());
 
-  if (objectName() == TestEdit::className && activeFile == fileName.toString()) {
+  if (objectName() == "TestEdit" && activeFile == fileName.toString()) {
      Core().riseError(tr("selected file is already loaded as active gcode file."
                          "Please use active editor - can't load a file in both editors."));
      Core().setAppMode(ApplicationMode::XEdit);
@@ -259,5 +261,3 @@ void TestEdit::restoreState() {
 
 
 void TestEdit::fileUpdated(const QString&)  {}
-
-const QString& TestEdit::className = "TestEdit";

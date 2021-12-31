@@ -8,7 +8,9 @@ class QSlider;
 class SpeedStatus : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "speedInfo.json")
+#endif
 public:
   SpeedStatus(QWidget* parent = nullptr);
   virtual ~SpeedStatus();

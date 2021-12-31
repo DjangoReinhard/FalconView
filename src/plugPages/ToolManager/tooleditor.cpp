@@ -1,5 +1,5 @@
-#include <tooleditor.h>
-#include <toolmodel.h>
+#include "tooleditor.h"
+#include "toolmodel.h"
 #include <dbconnection.h>
 #include <ui_ToolEditor.h>
 #include <core.h>

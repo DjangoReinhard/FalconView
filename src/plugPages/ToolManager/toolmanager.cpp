@@ -1,8 +1,9 @@
-#include <toolmanager.h>
-#include <CategoryTreeModel.h>
-#include <toolcategorymodel.h>
-#include <tooleditor.h>
-#include <toolmodel.h>
+#include "toolmanager.h"
+#include "CategoryTreeModel.h"
+#include "category.h"
+#include "toolcategorymodel.h"
+#include "tooleditor.h"
+#include "toolmodel.h"
 #include <timestamp.h>
 #include <core.h>
 #include <configacc.h>
@@ -92,7 +93,7 @@ QWidget* ToolManager::createContent() {
   spV->addWidget(sa);
   Config cfg;
 
-  cfg.beginGroup(ToolManager::className);
+  cfg.beginGroup("ToolManager");
   spH->restoreState(cfg.value("hState").toByteArray());
   spV->restoreState(cfg.value("vState").toByteArray());
   int cc = tools->horizontalHeader()->count();
@@ -420,7 +421,7 @@ void ToolManager::saveToolChanges() {
 void ToolManager::closeEvent(QCloseEvent*) {
   Config cfg;
 
-  cfg.beginGroup(ToolManager::className);
+  cfg.beginGroup("ToolManager");
   cfg.setValue("hState", spH->saveState());
   cfg.setValue("vState", spV->saveState());
   int cc = tools->horizontalHeader()->count();
@@ -448,6 +449,3 @@ void ToolManager::selectionChanged(const QItemSelection& selected, const QItemSe
   tool2Edit = srcIndex.row();
   tEdit->setModel(toolModel->record(tool2Edit));
   }
-
-
-const QString& ToolManager::className = "ToolManager";

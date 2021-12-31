@@ -47,7 +47,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <category.h>
+#include "category.h"
 #include <QSqlField>
 #include <QSqlQuery>
 #include <QSqlTableModel>

@@ -1,4 +1,4 @@
-#include <pweditor.h>
+#include "pweditor.h"
 #include <valuemanager.h>
 #include <configacc.h>
 #include <guicore.h>
@@ -36,8 +36,8 @@ PreViewEditor::PreViewEditor(QWidget* parent)
  , toolStat(nullptr)
  , speedStat(nullptr)
  , statusInPreview(false) {
-  setObjectName("PreViewEditor");
-  setWindowTitle(tr("PreViewEditor"));
+  setObjectName("PreView3D");
+  setWindowTitle(tr("PreView3D"));
   }
 
 
@@ -61,7 +61,7 @@ QWidget* PreViewEditor::createContent() {
   createDecorations(view3D, statusInPreview);
   Config cfg;
 
-  cfg.beginGroup(PreViewEditor::className);
+  cfg.beginGroup("PreViewEditor");
   spV->restoreState(cfg.value("vState").toByteArray());
   cfg.endGroup();
   view3D->installEventFilter(this);
@@ -118,7 +118,7 @@ void PreViewEditor::setEditorLine(const QVariant& line) {
 void PreViewEditor::closeEvent(QCloseEvent* e) {
   Config cfg;
 
-  cfg.beginGroup(PreViewEditor::className);
+  cfg.beginGroup("PreViewEditor");
   cfg.setValue("vState", spV->saveState());
   cfg.endGroup();
   TestEdit::closeEvent(e);
@@ -210,5 +210,3 @@ void PreViewEditor::toggleSub() {
 //  else                 old = spV->replaceWidget(1, frame);
 //  qDebug() << "old widget: " << old;
   }
-
-const QString PreViewEditor::className = "3D Preview";

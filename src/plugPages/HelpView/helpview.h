@@ -14,7 +14,9 @@ class HelpKeywordWidget;
 class HelpView : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "helpView.json")
+#endif
 public:
   explicit HelpView(QWidget* parent = nullptr);
 
@@ -23,7 +25,6 @@ public:
   void saveState();
 
   virtual void closeEvent(QCloseEvent* event) override;
-  static const QString& className;
 
 protected:
   virtual QWidget* createContent() override;

@@ -53,8 +53,8 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
-#include <category.h>
 class DBConnection;
+class Category;
 
 
 class CategoryTreeModel : public QAbstractItemModel // QSqlTableModel
@@ -76,7 +76,7 @@ public:
   int           rowCount(const QModelIndex &parent = QModelIndex()) const override;
   int           columnCount(const QModelIndex &parent = QModelIndex()) const override;
   Qt::ItemFlags flags(const QModelIndex &index) const override;
-  Category*     root() const { return rootItem->child(0); }
+  Category*     root() const;
 
   bool setData(const QModelIndex &index
              , const QVariant &value

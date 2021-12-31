@@ -14,7 +14,9 @@ QT_END_NAMESPACE
 class PreferencesEditor : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "prefsEditor.json")
+#endif
 public:
   PreferencesEditor(QWidget* parent = nullptr);
  ~PreferencesEditor();
@@ -47,6 +49,5 @@ private:
   QCheckBox*    cbPreviewCenter;
   QCheckBox*    cbToolManager;
   int           count;
-  static const QString& className;
   };
 #endif // PREFERENCESEDITOR_H

@@ -1,15 +1,15 @@
-#ifndef DYNFRAME_H
-#define DYNFRAME_H
+#ifndef CENTERPAGE_H
+#define CENTERPAGE_H
 #include <QWidget>
 class AbstractCenterWidget;
 class QFrame;
 
 
-class DynFrame : public QWidget
+class CenterPage : public QWidget
 {
   Q_OBJECT
 public:
-  explicit DynFrame(AbstractCenterWidget* cw, bool visualFrame = false, QWidget *parent = nullptr);
+  explicit CenterPage(AbstractCenterWidget* cw, bool visualFrame = false, QWidget *parent = nullptr);
 
   void     init(const QString& fileName, const QString& name, bool addScrollArea = false);
   QString  name() const;
@@ -24,4 +24,4 @@ private:
   AbstractCenterWidget* dcw;
   };
 
-#endif // DYNFRAME_H
+#endif // CENTERPAGE_H

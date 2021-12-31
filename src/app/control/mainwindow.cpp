@@ -13,8 +13,8 @@
 #include <smallercondition.h>
 #include <centerview.h>
 #include <testEdit.h>
-#include <dyndockable.h>
-#include <dynframe.h>
+#include <dockable.h>
+#include <centerpage.h>
 #include <guicore.h>
 #include <multistateaction.h>
 #include <filemanager.h>
@@ -22,24 +22,25 @@
 #include <micon.h>
 #include <configacc.h>
 #include <emc.hh>
-#include <PluginPageInterface.h>
+#ifdef USE_PLUGINS
+# include <PluginPageInterface.h>
+#else
+# include <Position/positionstatus.h>
+# include <ToolInfo/toolstatus.h>
+# include <SpeedInfo/speedstatus.h>
+# include <CurCodes/curcodesstatus.h>
 
-//#include <positionstatus.h>
-//#include <toolstatus.h>
-//#include <speedstatus.h>
-//#include <curcodesstatus.h>
-
-//#include <helpview.h>
-//#include <jogview.h>
-//#include <mdieditor.h>
-//#include <syseventview.h>
-//#include <lctooltable.h>
-//#include <pweditor.h>
-//#include <patheditor.h>
-//#include <preferenceseditor.h>
-//#include <fixturemanager.h>
-//#include <toolmanager.h>
-
+# include <HelpView/helpview.h>
+# include <JogView/jogview.h>
+# include <MDIEditor/mdieditor.h>
+# include <SysEventView/syseventview.h>
+# include <LCToolTable/lctooltable.h>
+# include <Preview3D/pweditor.h>
+# include <PathEditor/patheditor.h>
+# include <PrefsEditor/preferenceseditor.h>
+# include <FixtureManager/fixturemanager.h>
+# include <ToolManager/toolmanager.h>
+#endif
 #include <QDebug>
 #include <QPushButton>
 #include <QStyle>
@@ -58,7 +59,7 @@
 #include <config.h>
 
 
-MainWindow::MainWindow(/*bool statusInPreview, bool previewIsCenter,*/ QWidget *parent)
+MainWindow::MainWindow(QWidget *parent)
  : QMainWindow(parent)
  , statusInPreview(false)
  , previewIsCenter(false)
@@ -84,7 +85,7 @@ MainWindow::MainWindow(/*bool statusInPreview, bool previewIsCenter,*/ QWidget *
 
 void MainWindow::initialize() {
   statusInPreview = Config().value("statusInPreview").toBool();
-  previewIsCenter = false; //Config().value("previewIsCenter").toBool();
+  previewIsCenter = Config().value("previewIsCenter").toBool();
   ui->setupUi(this);
   setObjectName("Falcon-View");
   setDockNestingEnabled(true);
@@ -109,26 +110,25 @@ MainWindow::~MainWindow() {
   }
 
 
-void MainWindow::addDockable(Qt::DockWidgetArea area, DynDockable* d) {
-//  d->init();
-//  dockables.append(d);
-//  QMainWindow::addDockWidget(area, d);
-//  QAction* a = d->toggleViewAction();
+void MainWindow::addDockable(Qt::DockWidgetArea area, Dockable* d) {
+  dockables.append(d);
+  QMainWindow::addDockWidget(area, d);
+  QAction* a = d->toggleViewAction();
 
-//  a->setEnabled(true);
-//  ui->menuView->addAction(a);
+  a->setEnabled(true);
+  ui->menuView->addAction(a);
   }
 
 
 void MainWindow::autoPause() {
   int iState = ValueManager().getValue("interpState").toInt();
 
-//  if (iState == EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED) {
-//     GuiCore().beSetAuto(2, pw->curLine());
-//     }
-//  else {
-//     GuiCore().beSetAuto(1, 0);
-//     }
+  if (iState == EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED) {
+     GuiCore().beSetAuto(2, pw->curLine());
+     }
+  else {
+     GuiCore().beSetAuto(1, 0);
+     }
   }
 
 
@@ -136,17 +136,17 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
   ApplicationMode m = static_cast<ApplicationMode>(appMode.toInt());
 
   switch (m) {
-//    case Auto:        GuiCore().activatePage(PreViewEditor::className); break;
-//    case MDI:         GuiCore().activatePage(MDIEditor::className); break;
-//    case Manual:      GuiCore().activatePage(JogView::className); break;
-//    case Edit:        GuiCore().activatePage(PathEditor::className); break;
-//    case Wheel:       GuiCore().activatePage(tr("Wheely")); break;
-//    case XEdit:       GuiCore().activatePage(TestEdit::className); break;
-//    case Settings:    GuiCore().activatePage(SettingsNotebook::className); break;
-//    case Touch:       GuiCore().activatePage(tr("TouchView")); break;
-//    case Help:        GuiCore().activatePage(HelpView::className); break;
-//    case ErrMessages: GuiCore().activatePage(SysEventView::className); break;
-//    default: break;
+    case Auto:        GuiCore().activatePage("PreView3D"); break;
+    case MDI:         GuiCore().activatePage("MDIEditor"); break;
+    case Manual:      GuiCore().activatePage("JogView"); break;
+    case Edit:        GuiCore().activatePage("PathEditor"); break;
+    case Wheel:       GuiCore().activatePage("Wheely"); break;
+    case XEdit:       GuiCore().activatePage("TestEdit"); break;
+    case Settings:    GuiCore().activatePage("SettingsNotebook"); break;
+    case Touch:       GuiCore().activatePage("TouchView"); break;
+    case Help:        GuiCore().activatePage("HelpView"); break;
+    case ErrMessages: GuiCore().activatePage("SysEventView"); break;
+    default: break;
     }
   }
 
@@ -180,43 +180,43 @@ void MainWindow::autoStart() {
   qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
   ApplicationMode am = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
 
-//  if (am == ApplicationMode::MDI) {
-//     const QString& cmd = mdi->command();
+  if (am == ApplicationMode::MDI) {
+     const QString& cmd = mdi->command();
 
-//     if (cmd.isEmpty()) return;
-//     GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
-//     qDebug() << "execute MDI: " << cmd;
-//     GuiCore().beSendMDICommand(cmd);
-//     mdi->append(cmd);
-//     }
-//  else if (am == ApplicationMode::Auto) {
-//     if (gcodeDirty) {
-//        GuiCore().riseError(tr("active GCode-file has unsaved changes. "
-//                            "Please save the file before executing it."));
-//        return;
-//        }
-//     qDebug() << "start auto NC execution ...";
-//     if (ValueManager().getValue("singleStep").toBool()) {
-//        const QString& cmd = pw->currentRow();
+     if (cmd.isEmpty()) return;
+     GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+     qDebug() << "execute MDI: " << cmd;
+     GuiCore().beSendMDICommand(cmd);
+     mdi->append(cmd);
+     }
+  else if (am == ApplicationMode::Auto) {
+     if (gcodeDirty) {
+        GuiCore().riseError(tr("active GCode-file has unsaved changes. "
+                            "Please save the file before executing it."));
+        return;
+        }
+     qDebug() << "start auto NC execution ...";
+     if (ValueManager().getValue("singleStep").toBool()) {
+        const QString& cmd = pw->currentRow();
 
-//        qDebug() << "execute single step: " << cmd;
-//        if (cmd.isEmpty()) return;
-//        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
-//        GuiCore().beSendMDICommand(cmd);
+        qDebug() << "execute single step: " << cmd;
+        if (cmd.isEmpty()) return;
+        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
+        GuiCore().beSendMDICommand(cmd);
 
-//        //TODO: advance cursor?
-//        }
-//     else {
-//        qDebug() << "singlestep is OFF";
-//        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
-//        GuiCore().beTaskPlanSynch();
-//        GuiCore().beSetAuto(0, pw->curLine());
-//        }
-//     }
-//  else {
-//     GuiCore().riseError(tr("wrong application for execute. Please select"
-//                         "3D-Preview or MDI for gcode-execution."));
-//     }
+        //TODO: advance cursor?
+        }
+     else {
+        qDebug() << "singlestep is OFF";
+        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
+        GuiCore().beTaskPlanSynch();
+        GuiCore().beSetAuto(0, pw->curLine());
+        }
+     }
+  else {
+     GuiCore().riseError(tr("wrong application for execute. Please select"
+                         "3D-Preview or MDI for gcode-execution."));
+     }
   }
 
 
@@ -552,57 +552,90 @@ void MainWindow::createDockables(DBConnection& conn) {
            << (statusInPreview ? "YES" : "NO");
   qDebug() << "MW::createDockables() - previewIsCenter:"
            << (previewIsCenter ? "YES" : "NO");
+  AbstractCenterWidget* cw;
 
   if (!statusInPreview) {
-//     addDockable(Qt::LeftDockWidgetArea
-//               , new DynDockable(new PositionStatus(":/src/UI/Position.ui"
-//                                                  , GuiCore().axisMask())
-//                               , this));
-//     addDockable(Qt::LeftDockWidgetArea
-//               , new DynDockable(new ToolStatus(":/src/UI/ToolInfo.ui", false)
-//                               , this));
-//     addDockable(Qt::BottomDockWidgetArea
-//               , new DynDockable(new SpeedStatus(":/src/UI/HSpeedInfo.ui")
-//                               , this));
-//     addDockable(Qt::LeftDockWidgetArea
-//               , new DynDockable(new CurCodesStatus(":/src/UI/HCurCodes.ui")
-//                               , this));
+#ifndef USE_PLUGINS
+     cw = new PositionStatus();
+     cw->initialize(":/src/statusInfo/Position/Position.ui", QString(), (DBConnection*)(long)GuiCore().axisMask());
+     addDockable(Qt::LeftDockWidgetArea, new Dockable(cw, this));
+
+     cw = new ToolStatus();
+     cw->initialize(":/src/statusInfo/ToolInfo/ToolInfo.ui");
+     addDockable(Qt::LeftDockWidgetArea, new Dockable(cw, this));
+
+     cw = new SpeedStatus();
+     cw->initialize(":/src/statusInfo/SpeedInfo/HSpeedInfo.ui");
+     addDockable(Qt::BottomDockWidgetArea, new Dockable(cw, this));
+
+     cw = new CurCodesStatus();
+     cw->initialize(":/src/statusInfo/CurCodes/HCurCodes.ui");
+     addDockable(Qt::LeftDockWidgetArea, new Dockable(cw, this));
+#endif
      }
+
   if (previewIsCenter) {
-//     CenterView* center = new CenterView(this);
-//     DynFrame*   page   = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
-//                                     , true, center);
-//     GuiCore().setViewStack(center);
-//     center->addPage(page);
-//     page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui"), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(mdi = new MDIEditor(":/src/UI/MDIEditor.ui"), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(new SysEventView(conn), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui"), true, center);
-//     center->addPage(page);
+#ifndef USE_PLUGINS
+     CenterView*           center = new CenterView(this);
+     AbstractCenterWidget* page   = new FileManager(GuiCore().lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX"));
 
-//     snb = new SettingsNotebook(this);
-//     center->addPage(new DynFrame(snb, false, center));
+     page->initialize();
+     GuiCore().setViewStack(center);
+     center->addPage(new CenterPage(page, true, center));
 
-//     if (Config().value("activateToolMgr").toBool()) {
-//        qDebug() << "config says we want tool-manager!";
-//        snb->addPage(new ToolManager(conn, snb));
-//        }
-//     snb->addPage(new FixtureManager(GuiCore().axisMask(), snb));
-//     snb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", snb));
-//     snb->addPage(new LCToolTable());
+     page = new TestEdit();
+     page->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     center->addPage(new CenterPage(page, true, center));
 
-//     page = new DynFrame(new JogView(), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(new HelpView(), true, center);
-//     center->addPage(page);
-//     addDockable(Qt::BottomDockWidgetArea, new DynDockable(center, this));
+     page = mdi = new MDIEditor();
+     page->initialize(":/src/plugPages/MDIEditor/MDIEditor.ui");
+     center->addPage(new CenterPage(page, true, center));
+
+     page = new SysEventView();
+     page->initialize(QString(), QString(), &conn);
+     center->addPage(new CenterPage(page, true, center));
+
+     page = new PathEditor();
+     page->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     center->addPage(new CenterPage(page, true, center));
+
+     snb = new SettingsNotebook(this);
+     snb->initialize();
+
+     if (Config().value("activateToolMgr").toBool()) {
+        qDebug() << "config says we want tool-manager!";
+        page = new ToolManager(snb);
+        page->initialize(QString(), QString(), &conn);
+        snb->addPage(page);
+        }
+     page = new FixtureManager(snb);
+     page->initialize(QString(), QString(), (DBConnection*)(long)GuiCore().axisMask());
+     snb->addPage(page);
+
+     page = new PreferencesEditor(snb);
+     page->initialize(":/src/plugPages/PrefsEditor/Settings.ui", QString(), nullptr, true);
+     snb->addPage(page);
+
+     page = new LCToolTable(snb);
+     page->initialize();
+     snb->addPage(page);
+
+     page = new JogView();
+     page->initialize();
+     center->addPage(new CenterPage(page, true, center));
+
+     page = new HelpView();
+     page->initialize();
+     center->addPage(new CenterPage(page, true, center));
+     center->addPage(new CenterPage(snb, false, center));
+     addDockable(Qt::BottomDockWidgetArea, new Dockable(center, this));
+#endif
      }
   //TODO:
+#ifndef USE_PLUGINS
 //  dlgHelp = new HelpDockable(this);
 //  addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
+#endif
   }
 
 
@@ -613,18 +646,21 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
   if (previewIsCenter) {
      setCentralWidget(GuiCore().view3D());
      }
-  else {
+  else {    
      CenterView*           center = new CenterView(this);
      AbstractCenterWidget* page   = new TestEdit();
-     SettingsNotebook*     sn     = new SettingsNotebook();
 
      GuiCore().setViewStack(center);
      page->initialize(":/src/lcLib/UI/GCodeEditor.ui");
-     center->addPage(new DynFrame(page, true, center));
+     center->addPage(new CenterPage(page, true, center));
+
      page = new FileManager(GuiCore().lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX"));
      page->initialize();
-     center->addPage(new DynFrame(page, true, center));
+     center->addPage(new CenterPage(page, true, center));
 
+     page = snb = new SettingsNotebook();
+     snb->initialize();
+#ifdef USE_PLUGINS
      //TODO: add all loadable pages to centerView
 //     src/plugPages/FixtureManager/Fixture.ui
 //     src/plugPages/JogView/Jog.ui
@@ -641,30 +677,29 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
 //     src/statusInfo/ToolInfo/ToolInfo.ui
 //     src/app/UI/mainwindow.ui
 //     src/lcLib/UI/GCodeEditor.ui
-     sn->initialize(QString());
      for (const QString& s : GuiCore().pluggablePages()) {
          AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(GuiCore().pluggablePage(s));
 
          qDebug() << "objectName:" << cw->objectName();
          if (cw->objectName() == "JogView") {
             cw->initialize();
-            center->addPage(new DynFrame(cw, true, center));
+            center->addPage(new CenterPage(cw, true, center));
             }
          else if (cw->objectName() == "MDIEditor") {
             cw->initialize(":/src/plugPages/MDIEditor/MDIEditor.ui");
-            center->addPage(new DynFrame(cw, true, center));
+            center->addPage(new CenterPage(cw, true, center));
             }
          else if (cw->objectName() == "PathEditor") {
             cw->initialize(":/src/lcLib/UI/GCodeEditor.ui");
-            center->addPage(new DynFrame(cw, true, center));
+            center->addPage(new CenterPage(cw, true, center));
             }
          else if (cw->objectName() == "PreViewEditor") {
             cw->initialize(":/src/lcLib/UI/GCodeEditor.ui");
-            center->addPage(new DynFrame(cw, true, center));
+            center->addPage(new CenterPage(cw, true, center));
             }
          else if (cw->objectName() == "SysEventView") {
             cw->initialize(QString(), QString(), &conn);
-            center->addPage(new DynFrame(cw, true, center));
+            center->addPage(new CenterPage(cw, true, center));
             }
          else if (cw->objectName() == "ToolManager") {
             cw->initialize(QString(), QString(), &conn);
@@ -675,7 +710,7 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
             sn->addPage(cw);
             }
          else if (cw->objectName() == "PreferencesEditor") {
-            cw->initialize(":/src/plugPages/PrefsEditor/Settings.ui");
+            cw->initialize(":/src/plugPages/PrefsEditor/Settings.ui", QString(), nullptr, true);
             sn->addPage(cw);
             }
          else if (cw->objectName() == "LCToolTable") {
@@ -683,42 +718,58 @@ void MainWindow::createMainWidgets(DBConnection& conn) {
             sn->addPage(cw);
             }
          }
-     center->addPage(new DynFrame(sn, true, center));
+     center->addPage(new CenterPage(snb, true, center));
+#else
+     page = pw = new PreViewEditor();
+     page->initialize(":/src/lcLib/UI/GCodeEditor.ui"
+                    , QString()
+                    , (DBConnection*)GuiCore().view3D());
+     center->addPage(new CenterPage(page, true, center));
 
-//     DynFrame*   page   = new DynFrame(pw = new PreViewEditor(":/src/UI/GCodeEditor.ui"
-//                                                            , GuiCore().view3D()
-//                                                            , statusInPreview)
-//                                     , true, center);
-//     center->addPage(page);
-//     //TODO:
-//     page   = new DynFrame(new FileManager(QDir(QDir::homePath() + "/linuxcnc/nc_files"))
-//                         , true, center);
-//     center->addPage(page);
-//     page = new DynFrame(new TestEdit(":/src/UI/GCodeEditor.ui"), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(mdi = new MDIEditor(":/src/UI/MDIEditor.ui"), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(new SysEventView(conn), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(new PathEditor(":/src/UI/GCodeEditor.ui"), true, center);
-//     center->addPage(page);
+     //TODO:
+     page = new TestEdit(center);
+     page->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     center->addPage(new CenterPage(page, true, center));
 
-//     snb = new SettingsNotebook(this);
-//     center->addPage(new DynFrame(snb, false, center));
+     page = mdi = new MDIEditor(center);
+     page->initialize(":/src/plugPages/MDIEditor/MDIEditor.ui");
+     center->addPage(new CenterPage(page, true, center));
 
-//     if (Config().value("activateToolMgr").toBool()) {
-//        qDebug() << "config says we want tool-manager!";
-//        snb->addPage(new ToolManager(conn, snb));
-//        }
-//     snb->addPage(new FixtureManager(GuiCore().axisMask(), snb));
-//     snb->addPage(new PreferencesEditor(":/src/UI/Settings.ui", snb));
-//     snb->addPage(new LCToolTable());
+     page = new SysEventView(center);
+     page->initialize(QString(), QString(), &conn);
+     center->addPage(new CenterPage(page, true, center));
 
-//     page = new DynFrame(new JogView(), true, center);
-//     center->addPage(page);
-//     page = new DynFrame(new HelpView(), true, center);
-//     center->addPage(page);
+     page = new PathEditor(center);
+     page->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     center->addPage(new CenterPage(page, true, center));
 
+     if (Config().value("activateToolMgr").toBool()) {
+        qDebug() << "config says we want tool-manager!";
+        page = new ToolManager(snb);
+        page->initialize(QString(), QString(), &conn);
+        snb->addPage(page);
+        }
+     page = new FixtureManager(snb);
+     page->initialize(QString(), QString(), (DBConnection*)(long)GuiCore().axisMask());
+     snb->addPage(page);
+
+     page = new PreferencesEditor(snb);
+     page->initialize(":/src/plugPages/PrefsEditor/Settings.ui", QString(), nullptr, true);
+     snb->addPage(page);
+
+     page = new LCToolTable(snb);
+     page->initialize();
+     snb->addPage(page);
+     center->addPage(new CenterPage(snb, false, center));
+
+     page = new JogView();
+     page->initialize();
+     center->addPage(new CenterPage(page, true, center));
+
+     page = new HelpView();
+     page->initialize();
+     center->addPage(new CenterPage(page, true, center));
+#endif
      this->setCentralWidget(center);
      }
   }
@@ -777,7 +828,7 @@ void MainWindow::floodToggle() {
 
 void MainWindow::restoreAll() {
   // application window
-  resize(QSize(1920, 1200));
+  resize(QSize(1920, 1000));
   Config cfg;
 
   cfg.beginGroup("MainWindow");
@@ -787,13 +838,13 @@ void MainWindow::restoreAll() {
 
   // there are some troubles with initialization times, so
   // restore old files after all initialization has been finished
-  DynFrame* df = static_cast<DynFrame*>(GuiCore().stackedPage(TestEdit::className));
-  TestEdit* te = static_cast<TestEdit*>(df->centerWidget());
+//  CenterPage* df = static_cast<CenterPage*>(GuiCore().stackedPage(TestEdit::className));
+//  TestEdit* te = static_cast<TestEdit*>(df->centerWidget());
 
-  if (te) te->restoreState();
+//  if (te) te->restoreState();
 
   //TODO: restore all loaded plugins
-//  df = qobject_cast<DynFrame*>(GuiCore().stackedPage(PathEditor::className));
+//  df = qobject_cast<CenterPage*>(GuiCore().stackedPage(PathEditor::className));
 //  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
 
 //  if (pe) pe->restoreState();
@@ -831,14 +882,6 @@ void MainWindow::setAppMode(ApplicationMode am) {
 
   qDebug() << "MW:\tsetAppMode: " << am << "\twas:" << oam;
   if (oam == am) this->appModeChanged(am);
-
-  //TODO: check where and when to change Taskmode!
-//  if (am == ApplicationMode::Auto)
-//     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
-//  else if (am == ApplicationMode::MDI)
-//     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MDI);
-//  else
-//     Core().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
   }
 
 
@@ -846,9 +889,9 @@ void MainWindow::showErrMessages() {
   QString curPage = GuiCore().curPage();
   qDebug() << "MW::showErrMessages() ...";
 
-//  ValueManager().setValue("lastPage", curPage.mid(0, curPage.size() - 5));
-//  GuiCore().activatePage(SysEventView::className);
-//  ValueManager().setValue("showAllButCenter", false);
+  ValueManager().setValue("lastPage", curPage.mid(0, curPage.size() - 5));
+  setAppMode(ApplicationMode::ErrMessages);
+  ValueManager().setValue("showAllButCenter", false);
   }
 
 
@@ -896,6 +939,16 @@ void MainWindow::testTools() {
 //  ValueManager().setValue("pocketPrepared", ++slot);
 //  qDebug() << "testTools #" << slot << " - total:" << GuiCore().toolTable().entries();
 //  if (slot >= GuiCore().toolTable().entries()) slot = 0;
+  CenterView*    center = GuiCore().viewStack();
+  QList<QString> pp     = center->pages();
+
+  for (const QString& n : pp) {
+      CenterPage* cp = center->page(n);
+
+      qDebug() << cp->name() << "\thas sizeHint\t" << cp->minimumSizeHint()
+               << "\tmin. Height:\t" << cp->minimumHeight();
+      }
+  snb->dump();
   }
 
 

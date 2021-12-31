@@ -1,4 +1,4 @@
-#include <curcodesstatus.h>
+#include "curcodesstatus.h"
 #include <valuemanager.h>
 #include <configacc.h>
 #include <core.h>

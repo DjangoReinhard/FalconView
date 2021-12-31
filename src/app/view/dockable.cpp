@@ -1,44 +1,38 @@
-#include <dyndockable.h>
+#include <dockable.h>
 #include <abscenterwidget.h>
 #include <QLayout>
 #include <QAction>
 
 
-DynDockable::DynDockable(AbstractCenterWidget* cw, QWidget* parent)
+Dockable::Dockable(AbstractCenterWidget* cw, QWidget* parent)
  : QDockWidget(cw->windowTitle(), parent)
  , dcw(cw) {
+  dcw->setParent(this);
   setObjectName(QString("%1Dockable").arg(cw->objectName()));
-//  titleBarWidget()->setWindowTitle(dcw->windowTitle());
   setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
   layout()->setContentsMargins(0, 0, 0, 0);
   setWidget(cw);
   }
 
 
-void DynDockable::init(const QString& fileName, const QString& name, bool addScrollArea) {
-  assert(false);
-  dcw->initialize(fileName, name, nullptr, addScrollArea);
-  }
-
-
-QString DynDockable::name() const {
+QString Dockable::name() const {
   if (dcw) return dcw->windowTitle();
   return objectName();
   }
 
 
-QString DynDockable::id() const {
+QString Dockable::id() const {
   if (dcw) return dcw->objectName();
   return objectName();
   }
 
 
-void DynDockable::closeEvent(QCloseEvent* e) {
+void Dockable::closeEvent(QCloseEvent* e) {
   if (dcw) dcw->closeEvent(e);
   }
 
 
-QAction* DynDockable::viewAction() {
+QAction* Dockable::viewAction() {
   if (dcw) return dcw->viewAction();
   return new QAction();
   }

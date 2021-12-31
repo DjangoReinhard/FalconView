@@ -1,4 +1,4 @@
-#include <helpbrowser.h>
+#include "helpbrowser.h"
 #include <helpengine.h>
 #include <QDebug>
 

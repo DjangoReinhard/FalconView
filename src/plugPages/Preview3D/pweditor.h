@@ -20,9 +20,10 @@ class SpeedStatus;
 class PreViewEditor : public TestEdit
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "preview3D.json")
+#endif
 public:
-  static const QString className;
   PreViewEditor(QWidget* parent = nullptr);
 
   QString currentRow() const;

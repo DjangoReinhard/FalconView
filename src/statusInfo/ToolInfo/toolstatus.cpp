@@ -1,4 +1,4 @@
-#include <toolstatus.h>
+#include "toolstatus.h"
 #include <valuemanager.h>
 #include <configacc.h>
 #include <guicore.h>

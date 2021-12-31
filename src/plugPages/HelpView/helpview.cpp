@@ -1,5 +1,5 @@
-#include <helpview.h>
-#include <helpbrowser.h>
+#include "helpview.h"
+#include "helpbrowser.h"
 #include <helpengine.h>
 #include <helpcontentwidget.h>
 #include <helpkeywordwidget.h>
@@ -98,7 +98,7 @@ void HelpView::help4Keyword(const QString &keyWord) {
 void HelpView::closeEvent(QCloseEvent*) {
   Config cfg;
 
-  cfg.beginGroup(HelpView::className);
+  cfg.beginGroup("HelpView");
   cfg.setValue("state", sp->saveState());
   cfg.setValue("geometry", saveGeometry());
   cfg.endGroup();
@@ -122,11 +122,9 @@ bool HelpView::eventFilter(QObject*, QEvent* event) {
 void HelpView::restoreState() {
   Config cfg;
 
-  cfg.beginGroup(HelpView::className);
+  cfg.beginGroup("HelpView");
   sp->restoreState(cfg.value("state").toByteArray());
   restoreGeometry(cfg.value("geometry").toByteArray());
   cfg.endGroup();
   cw->setFocus();
   }
-
-const QString& HelpView::className = "HelpView";

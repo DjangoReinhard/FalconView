@@ -13,9 +13,10 @@ QT_END_NAMESPACE
 class SysEventView : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "sysEventView.json")
+#endif
 public:
-  static const QString className;
   explicit SysEventView(QWidget* parent = nullptr);
   virtual ~SysEventView();
 

@@ -12,8 +12,9 @@ QT_END_NAMESPACE
 class FixtureManager : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "fixtureManager.json")
-  Q_INTERFACES(PluginPageInterface)
+#endif
 public:
   FixtureManager(QWidget* parent = nullptr);
 

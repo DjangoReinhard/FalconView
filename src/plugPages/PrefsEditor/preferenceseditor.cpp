@@ -1,4 +1,4 @@
-#include <preferenceseditor.h>
+#include "preferenceseditor.h"
 #include <configacc.h>
 #include <QLineEdit>
 #include <QColor>
@@ -256,6 +256,3 @@ bool PreferencesEditor::eventFilter(QObject* l, QEvent* event) {
     }
   return false;
   }
-
-
-const QString& PreferencesEditor::className = "PreferencesEditor";

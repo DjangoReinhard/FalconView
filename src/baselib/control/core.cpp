@@ -14,12 +14,17 @@
 #include <emc.hh>
 
 
-Core::Core(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group) {
+Core::Core(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group) {
   if (!kernel) {
      assert(kc);
      kernel = kc->kernel(iniFileName, appName, group);
-     kernel->initialize(dbAssist);
+     kernel->initialize(locale, dbAssist);
      }
+  }
+
+
+Core::Core() {
+  assert(kernel);
   }
 
 
@@ -29,13 +34,11 @@ int Core::axisMask() const {
 
 
 Kernel* Core::core() {
-//  assert(kernel);
   return kernel;
   }
 
 
 const Kernel* Core::core() const {
-//  assert(kernel);
   return kernel;
   }
 
@@ -46,10 +49,15 @@ DBConnection* Core::databaseConnection() {
 
 
 QString Core::fileName4(const QString &fileID) const {
-  if (fileID == "helpFile") {
-     return QApplication::applicationDirPath() + "/../share/doc/falconview/FalconView.qzh";
-     }
-  return core()->fileName;
+  return core()->fileName4(fileID);
+  }
+
+
+void Core::help4Keyword(const QString &keyWord) {
+  qDebug() << "Core::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
+//  if (core()->mainWindow) {
+//     core()->mainWindow->helpDialog()->help4Keyword(keyWord);
+//     }
   }
 
 
@@ -60,6 +68,11 @@ void Core::setKernelCreator(KernelCreator* kc) {
 
 bool Core::isSimulator() const {
   return core()->simulator;
+  }
+
+
+QLocale Core::locale() const {
+  return *core()->locale;
   }
 
 
@@ -95,36 +108,8 @@ void Core::setAppMode(ApplicationMode m) {
   }
 
 
-void Core::setLocale(const QLocale &l) {
-  core()->locale = l;
-  }
-
-
-QLocale Core::locale() const {
-  return core()->locale;
-  }
-
-
-void Core::showAllButCenter(bool visible) {
-  ValueManager().setValue("showAllButCenter", visible);
-  }
-
-
-void Core::help4Keyword(const QString &keyWord) {
-  qDebug() << "Core::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
-//  if (core()->mainWindow) {
-//     core()->mainWindow->helpDialog()->help4Keyword(keyWord);
-//     }
-  }
-
-
-bool Core::showHelpAtPageChange() const {
-  return core()->cfg.value("showHelpAtPageChange").toBool();
-  }
-
-
 QString Core::languagePrefix() const {
-  return core()->locale.name().mid(0, 2);
+  return core()->locale->name().mid(0, 2);
   }
 
 
@@ -136,10 +121,20 @@ void Core::riseError(const QString &msg) {
   }
 
 
+void Core::showAllButCenter(bool visible) {
+  ValueManager().setValue("showAllButCenter", visible);
+  }
+
+
 void Core::showHelp() {
   setAppMode(ApplicationMode::Help);
   }
 
+
+bool Core::showHelpAtPageChange() const {
+  return core()->cfg->value("showHelpAtPageChange").toBool();
+  }
+
 Kernel*        Core::kernel  = nullptr;
-KernelCreator* Core::kc = nullptr;
+KernelCreator* Core::kc      = nullptr;
 int            Core::checked = -1;

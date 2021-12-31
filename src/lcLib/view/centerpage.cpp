@@ -1,4 +1,4 @@
-#include <dynframe.h>
+#include <centerpage.h>
 #include <abscenterwidget.h>
 #include <core.h>
 #include <QVBoxLayout>
@@ -8,7 +8,7 @@
 #include <QDebug>
 
 
-DynFrame::DynFrame(AbstractCenterWidget* cw, bool visualFrame, QWidget *parent)
+CenterPage::CenterPage(AbstractCenterWidget* cw, bool visualFrame, QWidget *parent)
  : QWidget(parent)
  , frame(nullptr)
  , dcw(cw) {
@@ -31,30 +31,30 @@ DynFrame::DynFrame(AbstractCenterWidget* cw, bool visualFrame, QWidget *parent)
   }
 
 
-void DynFrame::init(const QString& fileName, const QString& name, bool addScrollArea) {
+void CenterPage::init(const QString& fileName, const QString& name, bool addScrollArea) {
   assert(false);
   if (dcw) dcw->initialize(fileName, name, nullptr, addScrollArea);
   }
 
 
-QString DynFrame::name() const {
+QString CenterPage::name() const {
   if (dcw) return dcw->windowTitle();
   return objectName();
   }
 
 
-QString DynFrame::id() const {
+QString CenterPage::id() const {
   if (dcw) return dcw->objectName();
   return objectName();
   }
 
 
-QAction* DynFrame::viewAction() {
+QAction* CenterPage::viewAction() {
   if (dcw) return dcw->viewAction();
   return new QAction();
   }
 
 
-void DynFrame::closeEvent(QCloseEvent *e) {
+void CenterPage::closeEvent(QCloseEvent *e) {
   if (dcw) dcw->closeEvent(e);
   }

@@ -1,4 +1,4 @@
-#include <fixtureedit.h>
+#include "fixtureedit.h"
 #include <valuemanager.h>
 #include <canonif.h>
 #include <axismask.h>

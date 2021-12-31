@@ -1,6 +1,6 @@
-#include <helpdockable.h>
+#include "helpdockable.h"
+#include "helpview.h"
 #include <configacc.h>
-#include <helpview.h>
 #include <QMouseEvent>
 #include <QDebug>
 
@@ -120,7 +120,7 @@ HelpTitleBar::HelpTitleBar(QWidget *parent)
 
 
 QSize HelpTitleBar::minimumSizeHint() const {
-  return QSize(1100, 40);
+  return QSize(300, 40);
   }
 
 

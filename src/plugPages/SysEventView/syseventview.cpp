@@ -1,4 +1,4 @@
-#include <syseventview.h>
+#include "syseventview.h"
 #include <syseventmodel.h>
 #include <configacc.h>
 #include <valuemanager.h>
@@ -34,7 +34,7 @@ QWidget* SysEventView::createContent() {
   table->installEventFilter(this);
   Config cfg;
 
-  cfg.beginGroup(SysEventView::className);
+  cfg.beginGroup("SysEventView");
   table->horizontalHeader()->restoreState(cfg.value("State").toByteArray());
   cfg.endGroup();
 
@@ -73,7 +73,7 @@ bool SysEventView::eventFilter(QObject*, QEvent* event) {
             ValueManager().setValue("showAllButCenter", true);
             Config cfg;
 
-            cfg.beginGroup(SysEventView::className);
+            cfg.beginGroup("SysEventView");
             cfg.setValue("State", table->horizontalHeader()->saveState());
             cfg.endGroup();
             } break;
@@ -81,6 +81,3 @@ bool SysEventView::eventFilter(QObject*, QEvent* event) {
      }
   return false;
   }
-
-
-const QString SysEventView::className = "SysEventView";

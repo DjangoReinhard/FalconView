@@ -6,7 +6,8 @@
 Kernel::Kernel(const QString& fileName, const QString& appName, const QString& groupID)
  : QObject(nullptr)
  , simulator(false)
- , cfg(appName, groupID)
+ , cfg(new ConfigManager(appName, groupID))
+ , locale(nullptr)
  , conn(nullptr)
  , fileName(fileName)
  , appName(appName)
@@ -19,12 +20,13 @@ int Kernel::axisMask() const {
   }
 
 
-QString Kernel::fileName4(const QString&) {
+QString Kernel::fileName4(const QString&) const {
   return fileName;
   }
 
 
-void Kernel::initialize(DBHelper&) {
+void Kernel::initialize(const QLocale& locale, DBHelper&) {
+  this->locale = new QLocale(locale);
   }
 
 

@@ -18,6 +18,7 @@ public:
   void initialize();
   void checkPlugins();
   void loadPlugins();
+  void testPlugin();
   void pluginsAbout();
 
 private:

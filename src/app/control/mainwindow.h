@@ -8,7 +8,7 @@
 class SettingsNotebook;
 class PositionStatus;
 class PreViewEditor;
-class DynDockable;
+class Dockable;
 class DBConnection;
 class MDIEditor;
 class GCodeViewer;
@@ -38,7 +38,7 @@ protected:
   void keyReleaseEvent(QKeyEvent* event) override;
   void timerEvent(QTimerEvent* event) override;
   void about();
-  void addDockable(Qt::DockWidgetArea area, DynDockable* dockable);
+  void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
   void createActions();
   void createToolBars();
   void createDockables(DBConnection& conn);
@@ -107,6 +107,6 @@ private:
   int                 line;
   QBasicTimer         timer;
 
-  QList<DynDockable*> dockables;
+  QList<Dockable*> dockables;
   };
 #endif // MAINWINDOW_H

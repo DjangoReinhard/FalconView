@@ -1,4 +1,4 @@
-#include <lctooltable.h>
+#include "lctooltable.h"
 #include <tooltable.h>
 #include <configacc.h>
 #include <QWidget>
@@ -37,7 +37,7 @@ QWidget* LCToolTable::createContent() {
   table->setAlternatingRowColors(true);
   Config cfg;
 
-  cfg.beginGroup(LCToolTable::className);
+  cfg.beginGroup("LCToolTable");
   table->horizontalHeader()->restoreState(cfg.value(GuiCore().isLatheMode() ? "latheState": "millState").toByteArray());
   cfg.endGroup();
   int mx = table->model()->rowCount();
@@ -116,10 +116,7 @@ void LCToolTable::keyPressEvent(QKeyEvent *e) {
 void LCToolTable::closeEvent(QCloseEvent*) {
   Config cfg;
 
-  cfg.beginGroup(LCToolTable::className);
+  cfg.beginGroup("LCToolTable");
   cfg.setValue(GuiCore().isLatheMode() ? "latheState" : "millState", table->horizontalHeader()->saveState());
   cfg.endGroup();
   }
-
-
-const QString LCToolTable::className = "LCToolTable";

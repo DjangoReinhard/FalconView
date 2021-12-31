@@ -1,4 +1,4 @@
-#include <jogview.h>
+#include "jogview.h"
 #include <configacc.h>
 #include <valuemanager.h>
 #include <lcproperties.h>
@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QKeyEvent>
 #include <QButtonGroup>
+#include <QToolButton>
 #include <QTranslator>
 
 
@@ -359,5 +360,3 @@ void JogView::keyPressEvent(QKeyEvent* e) {
        }
      }
   }
-
-const QString& JogView::className = "JogView";

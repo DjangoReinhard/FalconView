@@ -47,9 +47,9 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <CategoryTreeModel.h>
+#include "CategoryTreeModel.h"
+#include "category.h"
 #include <dbconnection.h>
-#include <category.h>
 #include <QtWidgets>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -188,6 +188,11 @@ bool CategoryTreeModel::removeRows(int position, int rows, const QModelIndex &pa
   endRemoveRows();
 
   return success;
+  }
+
+
+Category* CategoryTreeModel::root() const {
+  return rootItem->child(0);
   }
 
 

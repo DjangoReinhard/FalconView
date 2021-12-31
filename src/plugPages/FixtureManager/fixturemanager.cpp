@@ -1,6 +1,6 @@
-#include <fixturemanager.h>
+#include "fixturemanager.h"
+#include "fixtureedit.h"
 #include <flowlayout.h>
-#include <fixtureedit.h>
 #include <axismask.h>
 #include <valuemanager.h>
 #include <configacc.h>

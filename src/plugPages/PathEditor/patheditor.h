@@ -14,9 +14,10 @@ class GCodeHighlighter;
 class PathEditor : public TestEdit
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "pathEditor.json")
+#endif
 public:
-  static const QString className;
   PathEditor(QWidget* parent = nullptr);
 
 protected:

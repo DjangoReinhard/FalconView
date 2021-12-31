@@ -8,7 +8,9 @@ class QLabel;
 class ToolStatus : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "toolInfo.json")
+#endif
 public:
   explicit ToolStatus(QWidget* parent = nullptr);
   virtual ~ToolStatus();

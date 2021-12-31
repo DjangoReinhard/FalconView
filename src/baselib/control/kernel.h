@@ -21,12 +21,12 @@ protected:
 
   virtual int  axisMask() const;
   virtual void logSysEvent(const QString& msg);
-  virtual void initialize(DBHelper& dbAssist);
-  virtual QString fileName4(const QString& fileID);
+  virtual void initialize(const QLocale& locale, DBHelper& dbAssist);
+  virtual QString fileName4(const QString& fileID) const;
 
   bool                simulator;
-  ConfigManager       cfg;
-  QLocale             locale;
+  ConfigManager*      cfg;
+  QLocale*            locale;
   DBConnection*       conn;
   QString             fileName;
   QString             appName;

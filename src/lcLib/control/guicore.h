@@ -20,40 +20,34 @@ class QWidget;
 class GuiCore : public Core
 {
 public:
-  GuiCore(const QString& iniFileName, const QString& appName, DBHelper& dbAssist, const QString& group = "SRD");
-  GuiCore() {}
+  explicit GuiCore();
+  explicit GuiCore(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
+  virtual ~GuiCore() = default;
 
-  QString         curPage() const;
-  QString         helpFilename() const;
-  bool            isLatheMode() const;
-  bool            isSimulator() const;
-  bool            showHelpAtPageChange() const;
-  void            riseError(const QString& msg);
-  QString         languagePrefix() const;
-  DBConnection*   databaseConnection();
-  QMainWindow*    mainWindow();
-  QList<QString>  pluggablePages();
-  QList<QString>  statusInfos();
-  void            setMainWindow(QMainWindow* w);
-  bool            move2Backup(const QString& fileName);
-  void            activatePage(const QString& pageName);
-  void            showAllButCenter(bool visible = true);
-  QWidget*        stackedPage(const QString& pageName);
-  void            setViewStack(CenterView* v);
-  void            setWindowTitle(const QString& title);
-  void            windowClosing(QCloseEvent* e);
-  void            parseGCFile(const QString& fileName);
-  bool            checkBE();
-  void            help4Keyword(const QString& keyWord);
-  void            showHelp();
-  void            setLocale(const QLocale& l);
-  CenterView*     viewStack();
-  OcctQtViewer*   view3D();
-  ToolTable&      toolTable();
-  ToolTable*      toolTableModel();
-  LcProperties&   lcProperties();
+  virtual void         riseError(const QString& msg);
+
+  void                 activatePage(const QString& pageName);
+  bool                 checkBE();
+  QString              curPage() const;
+  QString              helpFilename() const;
+  bool                 isLatheMode() const;
+  bool                 isSimulator() const;
+  LcProperties&        lcProperties();
+  QMainWindow*         mainWindow();
+  void                 parseGCFile(const QString& fileName);
   PluginPageInterface* pluggablePage(const QString pageID);
+  QList<QString>       pluggablePages();
+  void                 setMainWindow(QMainWindow* w);
+  void                 setViewStack(CenterView* v);
+  void                 setWindowTitle(const QString& title);
+  QWidget*             stackedPage(const QString& pageName);
   PluginPageInterface* statusInfo(const QString infoID);
+  QList<QString>       statusInfos();
+  ToolTable&           toolTable();
+  ToolTable*           toolTableModel();
+  OcctQtViewer*        view3D();
+  CenterView*          viewStack();
+  void                 windowClosing(QCloseEvent* e);
 
   void beAbortTask();
   void beEnableBlockDelete(bool enable);

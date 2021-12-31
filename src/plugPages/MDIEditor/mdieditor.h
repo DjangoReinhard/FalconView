@@ -11,9 +11,10 @@ QT_END_NAMESPACE
 class MDIEditor : public AbstractCenterWidget
 {
   Q_OBJECT
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "mdiEditor.json")
+#endif
 public:
-  static const QString className;
   explicit MDIEditor(QWidget* parent = nullptr);
   virtual ~MDIEditor();
 

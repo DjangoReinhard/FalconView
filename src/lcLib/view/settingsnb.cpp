@@ -37,13 +37,12 @@ SettingsNotebook::~SettingsNotebook() {
 
 
 void SettingsNotebook::addPage(AbstractCenterWidget* page) {
-//  assert(page);
-//  page->initialize();
-//  page->installEventFilter(this);
-//  connect(page, &AbstractCenterWidget::dataChanged, this, &SettingsNotebook::pageChanged);
+  assert(page);
+  page->installEventFilter(this);
+  connect(page, &AbstractCenterWidget::dataChanged, this, &SettingsNotebook::pageChanged);
 
-//  //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
-//  tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
+  //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
+  tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
   }
 
 
@@ -191,6 +190,8 @@ void SettingsNotebook::dump() {
 
       if (page) qDebug() << "SN: page found ->" << page->objectName() << "with title" << page->windowTitle();
       else      qDebug() << "SN: invalid page at #" << i;
+      qDebug() << "page has min. sizeHint:\t" << page->minimumSizeHint()
+               << "\tand min height:\t"       << page->minimumHeight();
       }
   }
 

@@ -25,11 +25,9 @@ INCLUDEPATH  += \
     $${OCCT}/include/opencascade
 
 HEADERS = \
-    jogbutton.h \
     jogview.h
 
 SOURCES = \
-    jogbutton.cpp \
     jogview.cpp
 
 FORMS += \

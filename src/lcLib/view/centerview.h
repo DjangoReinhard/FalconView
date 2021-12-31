@@ -2,7 +2,7 @@
 #define CENTERVIEW_H
 #include <abscenterwidget.h>
 #include <QMap>
-class DynFrame;
+class CenterPage;
 class QKeyEvent;
 class QCloseEvent;
 class Kernel;
@@ -14,12 +14,13 @@ class CenterView : public AbstractCenterWidget
 public:
   CenterView(QWidget* parent = nullptr);
 
-  DynFrame* activatePage(const QString& name);
-  QString   activePage() const;
-  DynFrame* page(const QString& name);
-  void      addPage(DynFrame* page, const QString& name = QString());
-  void      dump() const;
-  void      windowClosing(QCloseEvent* e);
+  CenterPage*    activatePage(const QString& name);
+  QString        activePage() const;
+  CenterPage*    page(const QString& name);
+  QList<QString> pages() const;
+  void           addPage(CenterPage* page, const QString& name = QString());
+  void           dump() const;
+  void           windowClosing(QCloseEvent* e);
 
 protected:
   virtual QWidget* createContent() override;
@@ -27,8 +28,8 @@ protected:
   virtual void updateStyles() override;
 
 private:
-  QMap<QString, DynFrame*> pages;
-  QString                  curPage;
+  QMap<QString, CenterPage*> pagePool;
+  QString                    curPage;
   friend class Kernel;
   };
 #endif // CENTERVIEW_H

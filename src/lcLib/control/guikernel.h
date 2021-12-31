@@ -26,15 +26,15 @@ class GuiKernel : public Kernel
 {
   Q_OBJECT
 public:
-  virtual int axisMask() const override;
+  virtual int     axisMask() const override;
+  DBConnection*   createDatabase(DBHelper& dbAssist);
+  virtual void    logSysEvent(const QString& msg) override;
+  virtual void    logSysEvent(const SysEvent& se) override;
+  virtual void    initialize(const QLocale& locale, DBHelper& dbAssist) override;
+  virtual QString fileName4(const QString& fileID) const override;
+  virtual void    timerEvent(QTimerEvent* e) override;
+  virtual void    windowClosing(QCloseEvent* e);
   bool isLatheMode() const;
-  DBConnection* createDatabase(DBHelper& dbAssist);
-  virtual void logSysEvent(const QString& msg) override;
-  virtual void logSysEvent(const SysEvent& se) override;
-  virtual void initialize(DBHelper& dbAssist) override;
-  virtual QString fileName4(const QString& fileID) override;
-  virtual void timerEvent(QTimerEvent* e) override;
-  virtual void windowClosing(QCloseEvent* e);
   void nop() const;
   void parseGCode(QFile& file);
   void setupBackend();
@@ -67,10 +67,10 @@ signals:
   void taskPlanSynch();
 
 private:
-  LcProperties        lcProps;
-  ToolTable           tt;
-  LCInterface         lcIF;
-  AxisMask            mAxis;
+  LcProperties*       lcProps;
+  ToolTable*          tt;
+  LCInterface*        lcIF;
+  AxisMask*           mAxis;
   OcctQtViewer*       view3D;
   CenterView*         centerView;
   QMainWindow*        mainWindow;
@@ -79,8 +79,6 @@ private:
   PositionCalculator  positionCalculator;
   StatusReader*       statusReader;
   CommandWriter*      commandWriter;
-  QBasicTimer         timer;
-  QLocale             curLocale;
   QThread             backendCommThread;
   SysEventModel*      sysEvents;
   QMap<QString, PluginPageInterface*> pages;

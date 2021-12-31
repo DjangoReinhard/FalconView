@@ -1,4 +1,4 @@
-#include <speedstatus.h>
+#include "speedstatus.h"
 #include <valuemanager.h>
 #include <numlabel.h>
 #include <configacc.h>

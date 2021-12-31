@@ -2,7 +2,11 @@
 #include <plugindialog.h>
 #include <PluginPageInterface.h>
 #include <guicore.h>
+#include <centerpage.h>
 #include <abscenterwidget.h>
+#include <configacc.h>
+#include <valuemanager.h>
+#include <valuemodel.h>
 #include <ui_mainwindow.h>
 #include <QPluginLoader>
 #include <QDir>
@@ -20,12 +24,22 @@ void TestMain::initialize() {
   pluginsDir = QDir(GuiCore().fileName4("plugins"));
 
   qDebug() << "app-dir:" << pluginsDir.absolutePath();
-//  loadPlugins();
+  bool   statusInPreview = Config().value("statusInPreview").toBool();
+  bool   showHelpAtPageChange = Config().value("showHelpAtPageChange").toBool();
+  ValueManager().setValue("statusInPreview", statusInPreview);
+  ValueManager().setValue("showHelpAtPageChange", showHelpAtPageChange);
+  QColor bgHLLine = ValueManager().getValue("cfgBg" + Config().nameOf(Config::GuiElem::LineHL)).value<QColor>();
+  QColor fgHLLine = ValueManager().getValue("cfgFg" + Config().nameOf(Config::GuiElem::LineHL)).value<QColor>();
+
+  qDebug() << "highlight colors: " << bgHLLine << fgHLLine;
+
   checkPlugins();
 
   aboutPlugins = new QAction(tr("About &Plugins"), this);
   connect(aboutPlugins, &QAction::triggered, this, &TestMain::pluginsAbout);
   ui->menuHelp->addAction(aboutPlugins);
+
+  testPlugin();
   }
 
 
@@ -96,4 +110,14 @@ void TestMain::pluginsAbout() {
   PluginDialog dialog(pluginsDir.path(), pluginFileNames, this);
 
   dialog.exec();
+  }
+
+
+void TestMain::testPlugin() {
+  QString pluginName("PathEditor");
+  PluginPageInterface*  iP = GuiCore().pluggablePage(pluginName);
+  AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(iP);
+
+  cw->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+  layout()->replaceWidget(ui->tbd, new CenterPage(cw, true, this));
   }

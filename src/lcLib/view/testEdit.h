@@ -18,7 +18,6 @@ class TestEdit : public AbstractCenterWidget, FileManagerClient
 {
   Q_OBJECT
 public:
-  static const QString& className;
   TestEdit(QWidget* parent = nullptr);
 
   QString pageName() override;

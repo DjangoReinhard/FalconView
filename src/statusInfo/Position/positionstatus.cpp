@@ -1,4 +1,4 @@
-#include <positionstatus.h>
+#include "positionstatus.h"
 #include <valuemanager.h>
 #include <numlabel.h>
 #include <core.h>

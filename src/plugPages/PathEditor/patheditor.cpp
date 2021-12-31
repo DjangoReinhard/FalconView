@@ -1,4 +1,4 @@
-#include <patheditor.h>
+#include "patheditor.h"
 #include <valuemanager.h>
 #include <centerview.h>
 #include <guicore.h>
@@ -57,5 +57,3 @@ void PathEditor::fileUpdated(const QString& fileName) {
   //TODO: ask backend to reload file
   qDebug() << "PathEdit: file" << fileName << "has been changed - need to trigger backend!";
   }
-
-const QString PathEditor::className = "PathEditor";

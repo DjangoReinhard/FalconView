@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 #endif
       GuiCore::setKernelCreator(new GuiKernelCreator());
       FalconViewDB dbHelper;
-      GuiCore      appCore(iniFileName, "FalconView", dbHelper);
+      GuiCore      appCore(iniFileName, "FalconView", curLocale, dbHelper);
 #ifndef REDNOSE
       MainWindow* mainWindow = new MainWindow();
 #else
