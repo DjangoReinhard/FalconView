@@ -13,7 +13,8 @@ enum ApplicationMode {
   Settings,      // 7
   Touch,         // 8
   Help,          // 9
-  ErrMessages,   // 10
+  SelectFile,    // 10
+  ErrMessages,   // 11
   Unknown
   };
 #endif // APPLICATIONMODE_H

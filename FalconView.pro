@@ -68,11 +68,10 @@ SOURCES += \
     src/baselib/util/flowlayout.cpp \
     src/baselib/util/kernelcreator.cpp \
     src/baselib/util/timestamp.cpp \
-    src/baselib/view/abscenterwidget.cpp \
-    src/baselib/view/filemanager.cpp \
     src/lcLib/control/LCInter.cpp \
     src/lcLib/control/axismask.cpp \
     src/lcLib/control/canonif.cpp \
+    src/lcLib/control/canonifsettings.cpp \
     src/lcLib/control/commandwriter.cpp \
     src/lcLib/control/errorreader.cpp \
     src/lcLib/control/gcodehighlighter.cpp \
@@ -93,7 +92,10 @@ SOURCES += \
     src/lcLib/util/ally3d.cpp \
     src/lcLib/util/graphicfactory.cpp \
     src/lcLib/util/guikernelcreator.cpp \
-  src/lcLib/view/centerpage.cpp \
+    src/lcLib/util/pluginpagefactory.cpp \
+    src/lcLib/view/abscenterwidget.cpp \
+    src/lcLib/view/filemanager.cpp \
+    src/lcLib/view/centerpage.cpp \
     src/lcLib/view/centerview.cpp \
     src/lcLib/view/gcodeeditor.cpp \
     src/lcLib/view/gcodeinfo.cpp \
@@ -145,7 +147,7 @@ HEADERS += \
     src/app/model/toolcategory.h \
     src/app/model/tool.h \
     src/app/util/multistateaction.h \
-  src/app/view/dockable.h \
+    src/app/view/dockable.h \
     src/app/view/micon.h \
     src/app/view/plugindialog.h \
     src/baselib/control/applicationmode.h \
@@ -166,11 +168,10 @@ HEADERS += \
     src/baselib/util/flowlayout.h \
     src/baselib/util/kernelcreator.h \
     src/baselib/util/timestamp.h \
-    src/baselib/view/abscenterwidget.h \
-    src/baselib/view/filemanager.h \
     src/baselib/view/PluginPageInterface.h \
     src/lcLib/control/axismask.h \
     src/lcLib/control/canonif.h \
+    src/lcLib/control/canonifsettings.h \
     src/lcLib/control/commandwriter.h \
     src/lcLib/control/errorreader.h \
     src/lcLib/control/gcodehighlighter.h \
@@ -194,7 +195,10 @@ HEADERS += \
     src/lcLib/util/HelixCurveAdaptor_p.h \
     src/lcLib/util/HHelixCurveAdaptor.h \
     src/lcLib/util/insulatePose.h \
-  src/lcLib/view/centerpage.h \
+    src/lcLib/util/pluginpagefactory.h \
+    src/lcLib/view/abscenterwidget.h \
+    src/lcLib/view/filemanager.h \
+    src/lcLib/view/centerpage.h \
     src/lcLib/view/centerview.h \
     src/lcLib/view/gcodeeditor.h \
     src/lcLib/view/gcodeinfo.h \

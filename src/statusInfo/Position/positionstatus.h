@@ -14,6 +14,7 @@ class NumLabel;
 class QString;
 class QStackedLayout;
 
+
 class PositionStatus : public AbstractCenterWidget
 {
   Q_OBJECT

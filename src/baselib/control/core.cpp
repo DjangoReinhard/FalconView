@@ -28,28 +28,35 @@ Core::Core() {
   }
 
 
+// dumb, but plugins have their own copy of statics :(
+Core::Core(void* pFromOuterAdressSpace) {
+  if (!kernel) kernel = (Kernel*)pFromOuterAdressSpace;
+  assert(kernel);
+  }
+
+
 int Core::axisMask() const {
-  return core()->axisMask();
+  return kernel->axisMask();
   }
 
 
-Kernel* Core::core() {
-  return kernel;
-  }
+//Kernel* Core::core() {
+//  return kernel;
+//  }
 
 
-const Kernel* Core::core() const {
-  return kernel;
-  }
+//const Kernel* Core::core() const {
+//  return kernel;
+//  }
 
 
 DBConnection* Core::databaseConnection() {
-  return core()->conn;
+  return kernel->conn;
   }
 
 
 QString Core::fileName4(const QString &fileID) const {
-  return core()->fileName4(fileID);
+  return kernel->fileName4(fileID);
   }
 
 
@@ -67,12 +74,12 @@ void Core::setKernelCreator(KernelCreator* kc) {
 
 
 bool Core::isSimulator() const {
-  return core()->simulator;
+  return kernel->simulator;
   }
 
 
 QLocale Core::locale() const {
-  return *core()->locale;
+  return *kernel->locale;
   }
 
 
@@ -109,7 +116,7 @@ void Core::setAppMode(ApplicationMode m) {
 
 
 QString Core::languagePrefix() const {
-  return core()->locale->name().mid(0, 2);
+  return kernel->locale->name().mid(0, 2);
   }
 
 
@@ -117,7 +124,7 @@ void Core::riseError(const QString &msg) {
   ValueManager().setValue("errorActive", true);
   SysEvent se(msg);
 
-  core()->logSysEvent(se);
+  kernel->logSysEvent(se);
   }
 
 
@@ -132,7 +139,7 @@ void Core::showHelp() {
 
 
 bool Core::showHelpAtPageChange() const {
-  return core()->cfg->value("showHelpAtPageChange").toBool();
+  return kernel->cfg->value("showHelpAtPageChange").toBool();
   }
 
 Kernel*        Core::kernel  = nullptr;

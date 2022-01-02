@@ -4,6 +4,7 @@
 #include <QIcon>
 class FalconViewDB;
 class DBConnection;
+class GuiCore;
 
 
 class ToolModel : public QSqlTableModel
@@ -21,11 +22,13 @@ public:
   int      nextId();
   bool     existsToolNum(int toolNum);
   void     toggleSelection(int row);
+  void     setCore(GuiCore* core);
 
 private:
   static bool  createTable();
-  QIcon  ui;
-  QIcon  ci;
+  QIcon    ui;
+  QIcon    ci;
+  GuiCore* core;
   friend class FalconViewDB;
   };
 #endif // TOOLMODEL_H

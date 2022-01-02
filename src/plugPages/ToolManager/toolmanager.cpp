@@ -1,12 +1,12 @@
 #include "toolmanager.h"
+#include "tooleditor.h"
+#include "toolmodel.h"
+#include <guicore.h>
+#include <configacc.h>
 #include "CategoryTreeModel.h"
 #include "category.h"
 #include "toolcategorymodel.h"
-#include "tooleditor.h"
-#include "toolmodel.h"
 #include <timestamp.h>
-#include <core.h>
-#include <configacc.h>
 #include <QAbstractButton>
 #include <QTreeView>
 #include <QTableView>
@@ -50,13 +50,14 @@ ToolManager::ToolManager(QWidget *parent)
 
 
 QWidget* ToolManager::createContent() {
-  conn = Core().databaseConnection();
+  conn = core->databaseConnection();
   categoryTreeModel  = new CategoryTreeModel(*conn);
   categoryTableModel = new ToolCategoryModel(*conn);
   toolModel          = new ToolModel(*conn);
-  tEdit              = new ToolEditor();
+  tEdit              = new ToolEditor(core->languagePrefix());
   tsMsgBox           = TimeStamp::rtSequence();
 
+  toolModel->setCore(core);
   categories->installEventFilter(this);
   tools->installEventFilter(this);
   tEdit->installEventFilter(this);
@@ -91,19 +92,17 @@ QWidget* ToolManager::createContent() {
   sa->setWidget(tEdit);
   spV->addWidget(tools);
   spV->addWidget(sa);
-  Config cfg;
-
-  cfg.beginGroup("ToolManager");
-  spH->restoreState(cfg.value("hState").toByteArray());
-  spV->restoreState(cfg.value("vState").toByteArray());
+  cfg->beginGroup("ToolManager");
+  spH->restoreState(cfg->value("hState").toByteArray());
+  spV->restoreState(cfg->value("vState").toByteArray());
   int cc = tools->horizontalHeader()->count();
-  QList<QVariant> cwl = cfg.value("cw").toList();
+  QList<QVariant> cwl = cfg->value("cw").toList();
 
   if (cc > cwl.size()) cc = cwl.size();
   for (int i=0; i < cc; ++i) {
       tools->setColumnWidth(i, cwl.at(i).toInt());
       }
-  cfg.endGroup();
+  cfg->endGroup();
   categories->expandAll();
 
   return spH;
@@ -148,7 +147,7 @@ bool ToolManager::eventFilter(QObject* o, QEvent* event) {
             if (o == tEdit && tEdit->isEnabled()) {  // abort editing
                //TODO: sync changes with start editing
                tEdit->setEnabled(false);
-               Core().showAllButCenter(true);
+               core->showAllButCenter(true);
                categories->show();
                tools->show();
                tools->setFocus();
@@ -346,9 +345,9 @@ void ToolManager::deleteTool() {
 
   if (reply == QMessageBox::No) return;
   if (!toolModel->removeRows(tool2Edit, 1))
-     Core().riseError(toolModel->lastError().text());
+     core->riseError(toolModel->lastError().text());
   if (!toolModel->submitAll())
-     Core().riseError(toolModel->lastError().text());
+     core->riseError(toolModel->lastError().text());
   }
 
 
@@ -361,7 +360,7 @@ void ToolManager::setSize(int w, int h) {
 void ToolManager::editTool() {
   categories->hide();
   tools->hide();
-  Core().showAllButCenter(false);
+  core->showAllButCenter(false);
   tEdit->setEnabled(true);
 
   // data record is already loaded into editor,
@@ -406,12 +405,12 @@ void ToolManager::saveToolChanges() {
      }
   else toolModel->setRecord(tool2Edit, tool);
   if (!toolModel->submitAll()) {
-     Core().riseError(tr("saving of tool-data failed!")
+     core->riseError(tr("saving of tool-data failed!")
                       + toolModel->lastError().text());
      }
   tEdit->setEnabled(false);
   tEdit->resize(edSize);
-  Core().showAllButCenter(true);
+  core->showAllButCenter(true);
   categories->show();
   tools->show();  
   tools->setFocus();
@@ -419,19 +418,17 @@ void ToolManager::saveToolChanges() {
 
 
 void ToolManager::closeEvent(QCloseEvent*) {
-  Config cfg;
-
-  cfg.beginGroup("ToolManager");
-  cfg.setValue("hState", spH->saveState());
-  cfg.setValue("vState", spV->saveState());
+  cfg->beginGroup("ToolManager");
+  cfg->setValue("hState", spH->saveState());
+  cfg->setValue("vState", spV->saveState());
   int cc = tools->horizontalHeader()->count();
   QList<QVariant> cwl;
 
   for (int i=0; i < cc; ++i) {
       cwl.append(tools->columnWidth(i));
       }
-  cfg.setValue("cw", cwl);
-  cfg.endGroup();
+  cfg->setValue("cw", cwl);
+  cfg->endGroup();
   }
 
 

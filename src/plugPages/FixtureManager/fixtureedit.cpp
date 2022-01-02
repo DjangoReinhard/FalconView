@@ -1,8 +1,7 @@
 #include "fixtureedit.h"
-#include <valuemanager.h>
-#include <canonif.h>
 #include <axismask.h>
-#include <configacc.h>
+#include <valuemanager.h>
+#include <guicore.h>
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QLabel>
@@ -199,60 +198,60 @@ void FixtureEdit::saveFixture() {
   double dv = userData.toDouble(&ok);
 
   if (ok) {
-     CANON_POSITION to     = CanonIF().toolOffset();
+     CANON_POSITION to     = core->toolOffset();
      double         curPos = 0;
 
      switch (axis) {
        case 0: {
-            curPos = ValueManager().getValue("absX").toDouble();
+            curPos = vm->getValue("absX").toDouble();
             qDebug() << "FixEd: curPos (X)" << curPos;
             curPos -= to.x;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 1: {
-            curPos = ValueManager().getValue("absY").toDouble();
+            curPos = vm->getValue("absY").toDouble();
             qDebug() << "FixEd: curPos (Y)" << curPos;
             curPos -= to.y;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 2: {
-            curPos = ValueManager().getValue("absZ").toDouble();
+            curPos = vm->getValue("absZ").toDouble();
             qDebug() << "FixEd: curPos (Z)" << curPos;
             curPos -= to.z;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 3: {
-            curPos = ValueManager().getValue("absA").toDouble();
+            curPos = vm->getValue("absA").toDouble();
             qDebug() << "FixEd: curPos (A)" << curPos;
             curPos -= to.a;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 4: {
-            curPos = ValueManager().getValue("absB").toDouble();
+            curPos = vm->getValue("absB").toDouble();
             qDebug() << "FixEd: curPos (B)" << curPos;
             curPos -= to.b;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 5: {
-            curPos = ValueManager().getValue("absC").toDouble();
+            curPos = vm->getValue("absC").toDouble();
             qDebug() << "FixEd: curPos (C)" << curPos;
             curPos -= to.c;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 6: {
-            curPos = ValueManager().getValue("absU").toDouble();
+            curPos = vm->getValue("absU").toDouble();
             qDebug() << "FixEd: curPos (U)" << curPos;
             curPos -= to.u;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 7: {
-            curPos = ValueManager().getValue("absV").toDouble();
+            curPos = vm->getValue("absV").toDouble();
             qDebug() << "FixEd: curPos (V)" << curPos;
             curPos -= to.v;
             qDebug() << "FixEd: applied tool offset: " << curPos;
             } break;
        case 8: {
-            curPos = ValueManager().getValue("absw").toDouble();
+            curPos = vm->getValue("absw").toDouble();
             qDebug() << "FixEd: curPos (W)" << curPos;
             curPos -= to.w;
             qDebug() << "FixEd: applied tool offset: " << curPos;

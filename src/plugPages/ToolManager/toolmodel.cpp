@@ -197,8 +197,8 @@ int ToolModel::exportTools() {
      }
   int count = 0;
 
-  if (GuiCore().move2Backup(GuiCore().toolTable().fileName())) {
-     QFile toolTable(GuiCore().toolTable().fileName());
+  if (core->move2Backup(core->toolTable().fileName())) {
+     QFile toolTable(core->toolTable().fileName());
 
      if (toolTable.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&toolTable);
@@ -272,4 +272,9 @@ bool ToolModel::existsToolNum(int toolNum) {
   revertAll();
 
   return count > 0;
+  }
+
+
+void ToolModel::setCore(GuiCore *core) {
+  this->core = core;
   }

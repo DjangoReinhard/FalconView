@@ -1,8 +1,10 @@
 #ifndef GUICORE_H
 #define GUICORE_H
 #include <core.h>
+#include <canon.hh>
 
 class PluginPageInterface;
+class AbstractCenterWidget;
 class GuiKernel;
 class OcctQtViewer;
 class DBConnection;
@@ -43,6 +45,7 @@ public:
   QWidget*             stackedPage(const QString& pageName);
   PluginPageInterface* statusInfo(const QString infoID);
   QList<QString>       statusInfos();
+  CANON_POSITION       toolOffset() const;
   ToolTable&           toolTable();
   ToolTable*           toolTableModel();
   OcctQtViewer*        view3D();
@@ -71,7 +74,10 @@ public:
   void beTaskPlanSynch();
 
 private:
+  explicit         GuiCore(void* p);
   GuiKernel*       guiCore();
   const GuiKernel* guiCore() const;
+  friend class CanonIF;
+  friend class AbstractCenterWidget;
   };
 #endif

@@ -31,12 +31,6 @@ CenterPage::CenterPage(AbstractCenterWidget* cw, bool visualFrame, QWidget *pare
   }
 
 
-void CenterPage::init(const QString& fileName, const QString& name, bool addScrollArea) {
-  assert(false);
-  if (dcw) dcw->initialize(fileName, name, nullptr, addScrollArea);
-  }
-
-
 QString CenterPage::name() const {
   if (dcw) return dcw->windowTitle();
   return objectName();

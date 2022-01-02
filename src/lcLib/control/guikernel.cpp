@@ -3,7 +3,7 @@
 #include <dbconnection.h>
 #include <configacc.h>
 #include <ally3d.h>
-#include <canonif.h>
+#include <canonifsettings.h>
 #include <occtviewer.h>
 #include <centerview.h>
 #include <statusreader.h>
@@ -19,10 +19,6 @@
 
 GuiKernel::GuiKernel(const QString& fileName, const QString& appName, const QString& groupID)
  : Kernel(fileName, appName, groupID)
-// , lcProps(fileName)
-// , tt(lcProps, lcProps.toolTableFileName())
-// , lcIF(lcProps, tt)
-// , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
  , lcProps(nullptr)
  , tt(nullptr)
  , lcIF(nullptr)
@@ -71,10 +67,6 @@ QString GuiKernel::fileName4(const QString &fileID) const {
 
 void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
   Kernel::initialize(locale, dbAssist);
-    // , lcProps(fileName)
-    // , tt(lcProps, lcProps.toolTableFileName())
-    // , lcIF(lcProps, tt)
-    // , mAxis(lcProps.value("KINS", "KINEMATICS").toString())
   lcProps = new LcProperties(fileName);
   tt = new ToolTable(*lcProps, lcProps->toolTableFileName());
   lcIF = new LCInterface(*lcProps, *tt);
@@ -82,7 +74,7 @@ void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
   if (!mAxis->activeAxis()) mAxis->setup(lcProps->value("TRAJ", "COORDINATES").toString());
   lcIF->setupToolTable();
   tt->setLatheMode(isLatheMode());
-  CanonIF   ci(*lcProps, *tt);
+  canonIF = new CanonIFSettings(*lcProps, *tt);
   QString   dbName = cfg->value("database").toString();
   QFileInfo db(dbName);
   const QString& hf = lcProps->value("HAL", "HALFILE").toString();
@@ -103,12 +95,12 @@ void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
      }
   sysEvents = new SysEventModel(*conn, this);
   sysEvents->setTable("SysEvents");
-  ci.setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
-  ci.setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
-  ci.setLimitsColor(cfg->getForeground(Config::GuiElem::WorkLimit));
-  ci.setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));
-  ci.setCurSegColor(cfg->getForeground(Config::GuiElem::CurSeg));
-  ci.setOldSegColor(cfg->getForeground(Config::GuiElem::OldSeg));
+  canonIF->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
+  canonIF->setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
+  canonIF->setLimitsColor(cfg->getForeground(Config::GuiElem::WorkLimit));
+  canonIF->setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));
+  canonIF->setCurSegColor(cfg->getForeground(Config::GuiElem::CurSeg));
+  canonIF->setOldSegColor(cfg->getForeground(Config::GuiElem::OldSeg));
   view3D = new OcctQtViewer();
   ally3D->setOcctViewer(view3D);
   statusReader  = new StatusReader(positionCalculator, gcodeInfo);

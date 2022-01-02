@@ -15,7 +15,7 @@
 SettingsNotebook::SettingsNotebook(QWidget *parent)
  : AbstractCenterWidget(parent)
  , tw(nullptr) {
-  setObjectName(SettingsNotebook::className);
+  setObjectName("SettingsNotebook");
   setWindowTitle(tr("SettingsNotebook"));
   }
 
@@ -77,7 +77,7 @@ bool SettingsNotebook::eventFilter(QObject*, QEvent* event) {
 
 void SettingsNotebook::connectSignals() {
   connect(tw, &QTabWidget::currentChanged, this, &SettingsNotebook::currentChanged);
-  connect(ValueManager().getModel("showAllButCenter"), &ValueModel::valueChanged
+  connect(vm->getModel("showAllButCenter"), &ValueModel::valueChanged
         , this, &SettingsNotebook::enableTabs);
   }
 
@@ -110,10 +110,10 @@ void SettingsNotebook::updateStyles() {
 
 
 void SettingsNotebook::currentChanged(int) {
-  GuiCore().setWindowTitle(tr(tw->currentWidget()->windowTitle().toStdString().c_str()));
-  if (Config().value("showHelpAtPageChange").toBool()) {
+  core->setWindowTitle(tr(tw->currentWidget()->windowTitle().toStdString().c_str()));
+  if (cfg->value("showHelpAtPageChange").toBool()) {
      qDebug() << "SN: show help for page:" << tw->currentWidget()->objectName();
-     GuiCore().help4Keyword(tw->currentWidget()->objectName());
+     core->help4Keyword(tw->currentWidget()->objectName());
      }
   }
 
@@ -142,9 +142,9 @@ void SettingsNotebook::resizeEvent(QResizeEvent* e) {
 void SettingsNotebook::showEvent(QShowEvent* e) {
   AbstractCenterWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
-     if (Config().value("showHelpAtPageChange").toBool()) {
+     if (cfg->value("showHelpAtPageChange").toBool()) {
         qDebug() << "SN: show help for page:" << tw->currentWidget()->objectName();
-        GuiCore().help4Keyword(tw->currentWidget()->objectName());
+        core->help4Keyword(tw->currentWidget()->objectName());
         }
      }
   }
@@ -223,6 +223,3 @@ QString SettingsNotebook::loadStyles(QTabWidget::TabPosition tp) {
      }
   return rv;
   }
-
-
-const QString SettingsNotebook::className = "SettingsNotebook";

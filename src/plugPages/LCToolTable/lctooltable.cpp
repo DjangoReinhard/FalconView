@@ -1,6 +1,7 @@
 #include "lctooltable.h"
 #include <tooltable.h>
 #include <configacc.h>
+#include <guicore.h>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QVariant>
@@ -10,7 +11,6 @@
 #include <QSortFilterProxyModel>
 #include <QKeyEvent>
 #include <QDebug>
-#include <guicore.h>
 
 
 LCToolTable::LCToolTable(QWidget* parent)
@@ -25,7 +25,7 @@ LCToolTable::LCToolTable(QWidget* parent)
 
 QWidget* LCToolTable::createContent() {
   table = new QTableView();
-  model = GuiCore().toolTableModel();
+  model = core->toolTableModel();
   px    = new QSortFilterProxyModel(this);
   px->setSourceModel(model);
   table->setModel(px);
@@ -35,11 +35,9 @@ QWidget* LCToolTable::createContent() {
   table->horizontalHeader()->setStretchLastSection(true);
   table->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
   table->setAlternatingRowColors(true);
-  Config cfg;
-
-  cfg.beginGroup("LCToolTable");
-  table->horizontalHeader()->restoreState(cfg.value(GuiCore().isLatheMode() ? "latheState": "millState").toByteArray());
-  cfg.endGroup();
+  cfg->beginGroup("LCToolTable");
+  table->horizontalHeader()->restoreState(cfg->value(core->isLatheMode() ? "latheState": "millState").toByteArray());
+  cfg->endGroup();
   int mx = table->model()->rowCount();
 
   for (int i=0; i < mx; ++i) table->setRowHeight(i, 60);
@@ -53,13 +51,13 @@ LCToolTable::~LCToolTable() {
 
 
 void LCToolTable::connectSignals() {
-  connect(GuiCore().toolTableModel(), &QAbstractTableModel::dataChanged, this, &LCToolTable::modelChanged);
+  connect(core->toolTableModel(), &QAbstractTableModel::dataChanged, this, &LCToolTable::modelChanged);
   }
 
 
 void LCToolTable::modelChanged() {
   model->setDirty();
-  Core().showAllButCenter(false);
+  core->showAllButCenter(false);
   emit dataChanged(this, true);
   }
 
@@ -88,7 +86,7 @@ void LCToolTable::keyPressEvent(QKeyEvent *e) {
 
          if (model->save()) {
             model->setDirty(false);
-            Core().showAllButCenter(true);
+            core->showAllButCenter(true);
             emit dataChanged(this, false);
             }
          e->accept();
@@ -99,7 +97,7 @@ void LCToolTable::keyPressEvent(QKeyEvent *e) {
 
             if (model->save()) {
                model->setDirty(false);
-               Core().showAllButCenter(true);
+               core->showAllButCenter(true);
                emit dataChanged(this, false);
                }
             e->accept();
@@ -114,9 +112,7 @@ void LCToolTable::keyPressEvent(QKeyEvent *e) {
 
 
 void LCToolTable::closeEvent(QCloseEvent*) {
-  Config cfg;
-
-  cfg.beginGroup("LCToolTable");
-  cfg.setValue(GuiCore().isLatheMode() ? "latheState" : "millState", table->horizontalHeader()->saveState());
-  cfg.endGroup();
+  cfg->beginGroup("LCToolTable");
+  cfg->setValue(core->isLatheMode() ? "latheState" : "millState", table->horizontalHeader()->saveState());
+  cfg->endGroup();
   }

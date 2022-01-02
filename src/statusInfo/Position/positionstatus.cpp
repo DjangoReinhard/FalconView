@@ -1,7 +1,7 @@
 #include "positionstatus.h"
 #include <valuemanager.h>
+#include <guicore.h>
 #include <numlabel.h>
-#include <core.h>
 #include <QtUiTools/QUiLoader>
 #include <QFontMetrics>
 #include <QStackedLayout>
@@ -27,6 +27,7 @@ PositionStatus::PositionStatus(QWidget* parent)
  , axisMask(0)
  , ledOn("background: #0F0")
  , ledOff("background: red") {
+  setObjectName("PositionStatus");
   setWindowTitle(tr("PositionStatus"));
   }
 
@@ -44,8 +45,9 @@ PositionStatus::PositionStatus(QWidget* parent, QString ledOnStyle, QString ledO
  , axisMask(0)
  , ledOn(ledOnStyle)
  , ledOff(ledOffStyle) {
-  setFocusPolicy(Qt::FocusPolicy::NoFocus);
+  setObjectName("PositionStatus");
   setWindowTitle(tr("PositionStatus"));
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
   }
 
 
@@ -54,7 +56,7 @@ PositionStatus::~PositionStatus() {
 
 
 QWidget* PositionStatus::createContent() {
-  axisMask = AxisMask(Core().axisMask());
+  axisMask = AxisMask(core->axisMask());
   frm->setupUi(this);
   rel->setupUi(frmRel);
   abs->setupUi(frmAbs);
@@ -108,12 +110,10 @@ void PositionStatus::setStyles(Ui::PositionForm* frm, const QString& s, const QF
   }
 
 
-void PositionStatus::updateStyles() {
-  ValueManager vm;
-  Config       cfg;
-  QColor       colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroAbs)).value<QColor>();
-  QColor       colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroAbs)).value<QColor>();
-  QFont        font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::DroAbs)).value<QFont>();
+  void PositionStatus::updateStyles() {
+  QColor       colBg = vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroAbs)).value<QColor>();
+  QColor       colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroAbs)).value<QColor>();
+  QFont        font  = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::DroAbs)).value<QFont>();
   QFontMetrics fm(font);
   QRect        r = fm.boundingRect(widthPat);
 
@@ -122,9 +122,9 @@ void PositionStatus::updateStyles() {
           , font
           , r.width());
 
-  colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroDtg)).value<QColor>();
-  colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroDtg)).value<QColor>();
-  font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::DroDtg)).value<QFont>();
+  colBg = vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroDtg)).value<QColor>();
+  colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroDtg)).value<QColor>();
+  font  = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::DroDtg)).value<QFont>();
   fm    = QFontMetrics(font);
   r     = fm.boundingRect(widthPat);
 
@@ -133,9 +133,9 @@ void PositionStatus::updateStyles() {
           , font
           , r.width());
 
-  colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroRel)).value<QColor>();
-  colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroRel)).value<QColor>();
-  font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::DroRel)).value<QFont>();
+  colBg = vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroRel)).value<QColor>();
+  colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroRel)).value<QColor>();
+  font  = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::DroRel)).value<QFont>();
   fm    = QFontMetrics(font);
   r     = fm.boundingRect(widthPat);
 
@@ -144,9 +144,9 @@ void PositionStatus::updateStyles() {
           , font
           , r.width());
 
-  colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>();
-  colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>();
-  font  = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>();
+  colBg = vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>();
+  colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>();
+  font  = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>();
   QString style = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
 
   frm->lX->setStyleSheet(style);
@@ -172,235 +172,229 @@ void PositionStatus::updateStyles() {
 
 
 void PositionStatus::connectPos(Ui::PositionForm* frm, const QString& key, Config::GuiElem e) {
-  ValueManager vm;
-  Config       cfg;
+  connect(vm->getModel(key + "X", 0), &ValueModel::valueChanged, frm->X, &NumLabel::setValue);
+  connect(vm->getModel(key + "Y", 0), &ValueModel::valueChanged, frm->Y, &NumLabel::setValue);
+  connect(vm->getModel(key + "Z", 0), &ValueModel::valueChanged, frm->Z, &NumLabel::setValue);
+  connect(vm->getModel(key + "A", 0), &ValueModel::valueChanged, frm->A, &NumLabel::setValue);
+  connect(vm->getModel(key + "B", 0), &ValueModel::valueChanged, frm->B, &NumLabel::setValue);
+  connect(vm->getModel(key + "C", 0), &ValueModel::valueChanged, frm->C, &NumLabel::setValue);
+  connect(vm->getModel(key + "U", 0), &ValueModel::valueChanged, frm->U, &NumLabel::setValue);
+  connect(vm->getModel(key + "V", 0), &ValueModel::valueChanged, frm->V, &NumLabel::setValue);
+  connect(vm->getModel(key + "W", 0), &ValueModel::valueChanged, frm->W, &NumLabel::setValue);
 
-  connect(vm.getModel(key + "X", 0), &ValueModel::valueChanged, frm->X, &NumLabel::setValue);
-  connect(vm.getModel(key + "Y", 0), &ValueModel::valueChanged, frm->Y, &NumLabel::setValue);
-  connect(vm.getModel(key + "Z", 0), &ValueModel::valueChanged, frm->Z, &NumLabel::setValue);
-  connect(vm.getModel(key + "A", 0), &ValueModel::valueChanged, frm->A, &NumLabel::setValue);
-  connect(vm.getModel(key + "B", 0), &ValueModel::valueChanged, frm->B, &NumLabel::setValue);
-  connect(vm.getModel(key + "C", 0), &ValueModel::valueChanged, frm->C, &NumLabel::setValue);
-  connect(vm.getModel(key + "U", 0), &ValueModel::valueChanged, frm->U, &NumLabel::setValue);
-  connect(vm.getModel(key + "V", 0), &ValueModel::valueChanged, frm->V, &NumLabel::setValue);
-  connect(vm.getModel(key + "W", 0), &ValueModel::valueChanged, frm->W, &NumLabel::setValue);
-
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->X
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->X->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->X
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->X->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->X->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->X->font())
         , &ValueModel::valueChanged
         , frm->X
-        , [=](){ frm->X->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->X->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->Y
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->Y->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->Y
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->Y->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->Y->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->Y->font())
         , &ValueModel::valueChanged
         , frm->Y
-        , [=](){ frm->Y->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->Y->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->Z
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->Z->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->Z
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->Z->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->Z->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->Z->font())
         , &ValueModel::valueChanged
         , frm->Z
-        , [=](){ frm->Z->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->Z->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->A
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->A->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->A
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->A->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->A->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->A->font())
         , &ValueModel::valueChanged
         , frm->A
-        , [=](){ frm->A->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->A->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->B
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->B->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->B
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->B->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->B->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->B->font())
         , &ValueModel::valueChanged
         , frm->B
-        , [=](){ frm->B->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->B->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->C
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->C->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->C
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->C->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->C->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->C->font())
         , &ValueModel::valueChanged
         , frm->C
-        , [=](){ frm->C->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->C->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->U
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->U->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->U
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->U->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->U->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->U->font())
         , &ValueModel::valueChanged
         , frm->U
-        , [=](){ frm->U->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->U->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->V
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->V->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->V
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->V->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->V->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->V->font())
         , &ValueModel::valueChanged
         , frm->V
-        , [=](){ frm->V->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->V->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->W
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->W->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(e)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(e)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->W
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(e)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(e)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(e)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(e)).value<QColor>().rgba(), 0, 16);
                  frm->W->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(e)), frm->W->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(e)), frm->W->font())
         , &ValueModel::valueChanged
         , frm->W
-        , [=](){ frm->W->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(e)).value<QFont>()); });
+        , [=](){ frm->W->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(e)).value<QFont>()); });
   }
 
 void PositionStatus::connectSignals() {
-  ValueManager vm;
-  Config       cfg;
-
-  connect(vm.getModel("showAbsolute", false), &ValueModel::valueChanged, this, &PositionStatus::setAbsolute);
+  connect(vm->getModel("showAbsolute", false), &ValueModel::valueChanged, this, &PositionStatus::setAbsolute);
   for (int i=0; i < 9; ++i) {
       QString modelKey = QString("homedJoint%1").arg(axisMask.joint4Axis(i));
 
       switch (i) {
-        case 0: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 0: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setXHomed); break;
-        case 1: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 1: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setYHomed); break;
-        case 2: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 2: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setZHomed); break;
-        case 3: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 3: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setAHomed); break;
-        case 4: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 4: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setBHomed); break;
-        case 5: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 5: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setCHomed); break;
-        case 6: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 6: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setUHomed); break;
-        case 7: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 7: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setVHomed); break;
-        case 8: connect(vm.getModel(modelKey, false),  &ValueModel::valueChanged
+        case 8: connect(vm->getModel(modelKey, false),  &ValueModel::valueChanged
                       , this, &PositionStatus::setWHomed); break;
         }
       }
@@ -408,194 +402,194 @@ void PositionStatus::connectSignals() {
   connectPos(rel, "rel", Config::GuiElem::DroRel);
   connectPos(dtg, "dtg", Config::GuiElem::DroDtg);
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lX
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lX->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lX
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lX->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lX->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lX->font())
         , &ValueModel::valueChanged
         , frm->lX
-        , [=](){ frm->lX->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lX->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lY
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lY->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lY
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lY->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lY->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lY->font())
         , &ValueModel::valueChanged
         , frm->lY
-        , [=](){ frm->lY->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lY->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lZ
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lZ->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lZ
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lZ->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lZ->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lZ->font())
         , &ValueModel::valueChanged
         , frm->lZ
-        , [=](){ frm->lZ->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lZ->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lA
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lA->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lA
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lA->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lA->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lA->font())
         , &ValueModel::valueChanged
         , frm->lA
-        , [=](){ frm->lA->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lA->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lB
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lB->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lB
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lB->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lB->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lB->font())
         , &ValueModel::valueChanged
         , frm->lB
-        , [=](){ frm->lB->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lB->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lC
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lC->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lC
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lC->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lC->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lC->font())
         , &ValueModel::valueChanged
         , frm->lC
-        , [=](){ frm->lC->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lC->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lU
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lU->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lU
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lU->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lU->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lU->font())
         , &ValueModel::valueChanged
         , frm->lU
-        , [=](){ frm->lU->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lU->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lV
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lV->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lV
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lV->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lV->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lV->font())
         , &ValueModel::valueChanged
         , frm->lV
-        , [=](){ frm->lV->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lV->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
 
-  connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
+  connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::white))
         , &ValueModel::valueChanged
         , frm->lW
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lW->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
+  connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)), QColor(Qt::black))
         , &ValueModel::valueChanged
         , frm->lW
         , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                      .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
-                                      .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
+                                      .arg(ValueManager().getValue("cfgFg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgb(), 0, 16)
+                                      .arg(ValueManager().getValue("cfgBg" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QColor>().rgba(), 0, 16);
                  frm->lW->setStyleSheet(arg);
                  });
-  connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)), frm->lW->font())
+  connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)), frm->lW->font())
         , &ValueModel::valueChanged
         , frm->lW
-        , [=](){ frm->lW->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
+        , [=](){ frm->lW->setFont(ValueManager().getValue("cfgF" + cfg->nameOf(Config::GuiElem::DroTitle)).value<QFont>()); });
   }
 
 

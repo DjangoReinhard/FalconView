@@ -55,8 +55,8 @@ QWidget* JogView::createContent() {
   ui->rO1->installEventFilter(this);
   ui->rO5->installEventFilter(this);
   ui->slJog->installEventFilter(this);
-  defSpeed = GuiCore().lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble() * 60;
-  maxSpeed = GuiCore().lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() * 60;
+  defSpeed = core->lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble() * 60;
+  maxSpeed = core->lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() * 60;
   singleStep(ui->cbSingleStep->isChecked());
   setStepSize();
   jogVelChanged();
@@ -86,9 +86,9 @@ void JogView::connectSignals() {
   connect(ui->jWn, &QToolButton::clicked, this, [=]() { jog(ui->jWn, 8, -1); });
   connect(ui->jWp, &QToolButton::clicked, this, [=]() { jog(ui->jWp, 8,  1); });
 
-  connect(ValueManager().getModel("jogFactor"), &ValueModel::valueChanged, this, &JogView::sliderChanged);
-  connect(ValueManager().getModel("jogRapid"), &ValueModel::valueChanged, ui->cbRapid, [=](const QVariant& v){ ui->cbRapid->setChecked(v.toBool()); });
-  connect(ValueManager().getModel("jogStepSize"), &ValueModel::valueChanged, this, &JogView::stepSizeChanged);
+  connect(vm->getModel("jogFactor"),   &ValueModel::valueChanged, this, &JogView::sliderChanged);
+  connect(vm->getModel("jogRapid"),    &ValueModel::valueChanged, ui->cbRapid, [=](const QVariant& v){ ui->cbRapid->setChecked(v.toBool()); });
+  connect(vm->getModel("jogStepSize"), &ValueModel::valueChanged, this, &JogView::stepSizeChanged);
 
   connect(ui->cbSingleStep, &QCheckBox::toggled, this, &JogView::singleStep);
   connect(ui->cbRapid, &QCheckBox::toggled, this, &JogView::jogVelChanged);
@@ -106,18 +106,18 @@ void JogView::jog(QWidget* o, int axis, int step) {
 
   if (ui->cbSingleStep->isChecked()) {
      qDebug() << "step single step of size:" << stepSize << "with:" << speed;
-     GuiCore().beJogStep(axis, stepSize, step * speed);
+     core->beJogStep(axis, stepSize, step * speed);
      }
   else {
      QToolButton* tb = static_cast<QToolButton*>(o);
 
      if ((tb && tb->isChecked()) || !tb) {
         qDebug() << "start jogging with speed" << speed;
-        GuiCore().beJogStart(axis, step * speed);
+        core->beJogStart(axis, step * speed);
         }
      else {
         qDebug() << "stop jogging of axis" << axis;
-        GuiCore().beJogStop(axis);
+        core->beJogStop(axis);
         }
      }
   }
@@ -127,11 +127,11 @@ void JogView::sliderChanged(const QVariant& v) {
 //  qDebug() << "jog speed override:" << v;
   double jogFactor = v.toDouble();
 
-  ValueManager().setValue("jogFactor", v);
+  vm->setValue("jogFactor", v);
   jogSpeed  = (ui->cbRapid->isChecked() ? maxSpeed : defSpeed)
             * jogFactor / 100.0;
   QString templ = QString("<p><b>%1</b></p><p>&nbsp;</p><p>%2 %</p>")
-                         .arg(GuiCore().locale().toString(jogSpeed, 'f', 0))
+                         .arg(core->locale().toString(jogSpeed, 'f', 0))
                          .arg(jogFactor, 0, 'f', 0);
 
   ui->curJog->setText(templ);
@@ -139,11 +139,11 @@ void JogView::sliderChanged(const QVariant& v) {
 
 
 void JogView::jogVelChanged() {
-//  ValueManager().setValue("jogRapid", ui->cbRapid->isChecked());
+//  vm->setValue("jogRapid", ui->cbRapid->isChecked());
   if (ui->cbRapid->isChecked())
-     ui->cmdJogSpeed->setText(GuiCore().locale().toString(maxSpeed, 'f', 0));
+     ui->cmdJogSpeed->setText(core->locale().toString(maxSpeed, 'f', 0));
   else
-     ui->cmdJogSpeed->setText(GuiCore().locale().toString(defSpeed, 'f', 0));
+     ui->cmdJogSpeed->setText(core->locale().toString(defSpeed, 'f', 0));
   sliderChanged(ui->slJog->value());
   }
 
@@ -163,7 +163,7 @@ void JogView::setStepSize() {
   else if (ui->rOO1->isChecked()) stepSize = 0.01;
   else if (ui->rO1->isChecked())  stepSize = 0.1;
   else if (ui->rO5->isChecked())  stepSize = 0.5;
-  ValueManager().setValue("jogStepSize", stepSize);
+  vm->setValue("jogStepSize", stepSize);
   }
 
 
@@ -248,7 +248,7 @@ void JogView::singleStep(bool) {
 void JogView::setupUi(AbstractCenterWidget *parent) {
   qDebug() << "JogView::setupUi() ...";
   ui->setupUi(parent);
-  AxisMask am(Core().axisMask());
+  AxisMask am(core->axisMask());
 
   if (!am.hasXAxis()) {
      ui->jXn->hide();

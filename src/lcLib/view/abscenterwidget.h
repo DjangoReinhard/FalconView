@@ -7,6 +7,10 @@ QT_BEGIN_NAMESPACE
 class CenterView;
 class DBConnection;
 class SettingsNotebook;
+class PluginPageFactory;
+class ValueManager;
+class GuiCore;
+class Config;
 class QString;
 class QAction;
 class QFile;
@@ -20,8 +24,7 @@ class AbstractCenterWidget : public QWidget, public PluginPageInterface
   Q_OBJECT
   Q_INTERFACES(PluginPageInterface)
 public:
-  void     initialize(const QString& fileName = QString(), const QString& name = QString(), DBConnection* conn = nullptr, bool addScrollArea = false);
-  QAction* viewAction();
+  QAction*     viewAction();
 
   // called by central widget stack
   virtual void closeEvent(QCloseEvent* e) override;
@@ -34,12 +37,18 @@ protected:
   explicit AbstractCenterWidget(QWidget* parent = nullptr);
   virtual ~AbstractCenterWidget() = default;
 
+  virtual void initialize(const QString& uiFile = QString(), const QString& name = QString(), bool addScrollArea = false);
+  virtual void patch(void* pk, void* pc, void* pv, void* pu = nullptr);
   virtual QWidget* createContent() override;
-  virtual void dbSetup(DBConnection* conn) override;
+
+  GuiCore*      core;
+  Config*       cfg;
+  ValueManager* vm;
 
 private:
-  QAction*     vAction;
-  QString      fileName;
-  bool         addScrollArea;
+  QAction*      vAction;
+  QString       fileName;
+  bool          addScrollArea;
+  friend class PluginPageFactory;
   };
 #endif // ABSCENTERWIDGET_H

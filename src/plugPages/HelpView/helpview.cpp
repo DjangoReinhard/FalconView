@@ -4,7 +4,7 @@
 #include <helpcontentwidget.h>
 #include <helpkeywordwidget.h>
 #include <configacc.h>
-#include <core.h>
+#include <guicore.h>
 #include <QSplitter>
 #include <QVBoxLayout>
 #include <QKeyEvent>
@@ -26,7 +26,7 @@ HelpView::HelpView(QWidget* parent)
 QWidget* HelpView::createContent() {
   tb = new HelpBrowser();
   sp = new QSplitter(Qt::Horizontal, this);
-  he = new HelpEngine(Core().fileName4("helpFile"), this);
+  he = new HelpEngine(core->fileName4("helpFile"), this);
   cw = static_cast<HelpContentWidget*>(he->contentWidget());
   kw = static_cast<HelpKeywordWidget*>(he->keywordWidget());
   HelpBrowser* hb = static_cast<HelpBrowser*>(tb);
@@ -96,12 +96,10 @@ void HelpView::help4Keyword(const QString &keyWord) {
 
 
 void HelpView::closeEvent(QCloseEvent*) {
-  Config cfg;
-
-  cfg.beginGroup("HelpView");
-  cfg.setValue("state", sp->saveState());
-  cfg.setValue("geometry", saveGeometry());
-  cfg.endGroup();
+  cfg->beginGroup("HelpView");
+  cfg->setValue("state", sp->saveState());
+  cfg->setValue("geometry", saveGeometry());
+  cfg->endGroup();
   }
 
 
@@ -120,11 +118,9 @@ bool HelpView::eventFilter(QObject*, QEvent* event) {
 
 
 void HelpView::restoreState() {
-  Config cfg;
-
-  cfg.beginGroup("HelpView");
-  sp->restoreState(cfg.value("state").toByteArray());
-  restoreGeometry(cfg.value("geometry").toByteArray());
-  cfg.endGroup();
+  cfg->beginGroup("HelpView");
+  sp->restoreState(cfg->value("state").toByteArray());
+  restoreGeometry(cfg->value("geometry").toByteArray());
+  cfg->endGroup();
   cw->setFocus();
   }

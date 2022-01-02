@@ -34,11 +34,16 @@ public:
   static void     setKernelCreator(KernelCreator* kc);
 
 protected:
-  Kernel*               core();
-  const Kernel*         core() const;
+//  explicit              Core(const Core& other); // used by factory
+//  Core&                 operator=(const Core& other);
+//  Kernel*               core();
+//  const Kernel*         core() const;
+  explicit              Core(void* p); // for plugins
   static Kernel*        kernel;
   static KernelCreator* kc;
   static int            checked;
   friend class Config;
+  friend class AbstractCenterWidget;
+  friend class PluginPageFactory;
   };
 #endif

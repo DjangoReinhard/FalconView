@@ -52,7 +52,7 @@ SOURCES += \
     control/abstractcondition.cpp \
     control/andcondition.cpp \
     util/multistateaction.cpp \
-    view/dyndockable.cpp \
+    view/dockable.cpp \
     view/micon.cpp \
     view/plugindialog.cpp
 
@@ -74,7 +74,7 @@ HEADERS += \
     control/abstractcondition.h \
     control/andcondition.h \
     util/multistateaction.h \
-    view/dyndockable.h \
+    view/dockable.h \
     view/micon.h \
     view/plugindialog.h
 

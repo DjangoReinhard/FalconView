@@ -39,6 +39,7 @@ protected:
   virtual void closeEvent(QCloseEvent*) override;
   virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual QWidget* createContent() override;
+  virtual void patch(void* pk, void* pc, void* pv, void* pu = nullptr) override;
   void createDecorations(OcctQtViewer* v, bool sip);
 
 protected slots:

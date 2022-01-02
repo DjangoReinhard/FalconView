@@ -1,8 +1,6 @@
 #include "patheditor.h"
 #include <valuemanager.h>
-#include <centerview.h>
 #include <guicore.h>
-#include <configacc.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
 #include <QSplitter>
@@ -25,31 +23,31 @@ PathEditor::PathEditor(QWidget* parent)
 
 
 void PathEditor::connectSignals() {
-  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::reallyLoadFile);
+  connect(vm->getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::reallyLoadFile);
   TestEdit::connectSignals();
-  connect(ed, &GCodeEditor::cursorPositionChanged, this, [=](){ ValueManager().setValue("edLine", ed->textCursor().block().blockNumber()); });
+  connect(ed, &GCodeEditor::cursorPositionChanged, this, [=](){ vm->setValue("edLine", ed->textCursor().block().blockNumber()); });
   }
 
 
 // called from TestEdit::fileSelected
 void PathEditor::loadFile(const QVariant& fileName) {
-  if (GuiCore().checkBE()) {
+  if (core->checkBE()) {
      qDebug() << "PathEditor::loadFile (backend active)" << fileName;
-     GuiCore().beLoadTaskPlan(fileName.toString());
+     core->beLoadTaskPlan(fileName.toString());
      }
-  else ValueManager().setValue("fileName", fileName);
+  else vm->setValue("fileName", fileName);
   }
 
 
 void PathEditor::dirtyChanged(bool dirty) {
-  ValueManager().setValue("gcodeDirty", dirty);
+  vm->setValue("gcodeDirty", dirty);
   TestEdit::dirtyChanged(dirty);
   }
 
 
 void PathEditor::reallyLoadFile(const QVariant& fileName) {
   TestEdit::loadFile(fileName);
-  Core().setAppMode(ApplicationMode::Edit);
+  core->setAppMode(ApplicationMode::Edit);
   }
 
 

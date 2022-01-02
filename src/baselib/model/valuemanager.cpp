@@ -3,37 +3,39 @@
 
 
 ValueManager::ValueManager() {
+  if (!instance) instance = new ValueHolder();
+  assert(instance);
   }
 
 
-ValueManager::ValueHolder* ValueManager::getInstance() {
-  if (!instance) instance = new ValueHolder();
-  return ValueManager::instance;
+ValueManager::ValueManager(void* pFromOuterAddressSpace) {
+  if (!instance) instance = (ValueHolder*)pFromOuterAddressSpace;
+  assert(instance);
   }
 
 
 ValueModel* ValueManager::getModel(const QString& name, QVariant defaultValue) {
   ValueModel* vm = nullptr;
 
-  if (!getInstance()->models.contains(name)) {
+  if (!instance->models.contains(name)) {
      vm = new ValueModel(name, defaultValue);
 
-     getInstance()->models[name] = vm;
+     instance->models[name] = vm;
      }
-  else vm = getInstance()->models.value(name, nullptr);
+  else vm = instance->models.value(name, nullptr);
 
   return vm;
   }
 
 
 void ValueManager::setValue(const QString& name, const QVariant& value) {
-  if (!getInstance()->models.contains(name)) {
+  if (!instance->models.contains(name)) {
      ValueModel* vm = new ValueModel(name, value);
 
-     getInstance()->models[name] = vm;
+     instance->models[name] = vm;
      }
   else {
-     ValueModel* vm = getInstance()->models.value(name);
+     ValueModel* vm = instance->models.value(name);
 
      vm->setValue(value);
      }
@@ -41,8 +43,8 @@ void ValueManager::setValue(const QString& name, const QVariant& value) {
 
 
 QVariant ValueManager::getValue(const QString& name) {
-  if (getInstance()->models.contains(name)) {
-     ValueModel* vm = getInstance()->models.value(name);
+  if (instance->models.contains(name)) {
+     ValueModel* vm = instance->models.value(name);
 
      return vm->getValue();
      }
@@ -51,7 +53,7 @@ QVariant ValueManager::getValue(const QString& name) {
 
 
 void ValueManager::dump() {
-  getInstance()->dump();
+  instance->dump();
   }
 
 

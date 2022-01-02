@@ -1,11 +1,11 @@
 #include <testEdit.h>
 #include <valuemanager.h>
 #include <configacc.h>
+#include <guicore.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
 #include <centerpage.h>
 #include <filemanager.h>
-#include <guicore.h>
 #include <QInputDialog>
 #include <QSplitter>
 #include <QMessageBox>
@@ -50,58 +50,56 @@ QWidget* TestEdit::createContent() {
 
 
 void TestEdit::connectSignals() {
-    ValueManager vm;
-    Config       cfg;
-
     connect(pbOpen, &QPushButton::clicked, this, &TestEdit::openFile);
     connect(ed->document(), &QTextDocument::modificationChanged, this, &TestEdit::dirtyChanged);
     connect(pbSave, &QPushButton::clicked, this, &TestEdit::saveFile);
-    connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::white))
+    connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::Filename)), QColor(Qt::white))
           , &ValueModel::valueChanged
           , fn
           , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                        .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
+                                        .arg(vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                        .arg(vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
                    fn->setStyleSheet(arg);
                    });
-    connect(vm.getModel(QString("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)), QColor(Qt::black))
+    connect(vm->getModel(QString("cfgFg" + cfg->nameOf(Config::GuiElem::Filename)), QColor(Qt::black))
           , &ValueModel::valueChanged
           , fn
           , [=](){ QString arg = QString("color: #%1; background: #%2;")
-                                        .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
+                                        .arg(vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                                        .arg(vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16);
                    fn->setStyleSheet(arg);
                    });
-    connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::Filename)), fn->font())
+    connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::Filename)), fn->font())
           , &ValueModel::valueChanged
           , fn
-          , [=](){ fn->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
+          , [=](){ fn->setFont(vm->getValue("cfgF" + cfg->nameOf(Config::GuiElem::Filename)).value<QFont>());
                    });
 
-    connect(vm.getModel(QString("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)), QColor(Qt::white))
+    connect(vm->getModel(QString("cfgBg" + cfg->nameOf(Config::GuiElem::GCode)), QColor(Qt::white))
           , &ValueModel::valueChanged
           , ed
           , [=](){ QString arg = QString("background: #%2;")
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16);
+                                        .arg(vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16);
                    ed->setStyleSheet(arg);
                    });
-    connect(vm.getModel(QString("cfgF" + cfg.nameOf(Config::GuiElem::GCode)), ed->font())
+    connect(vm->getModel(QString("cfgF" + cfg->nameOf(Config::GuiElem::GCode)), ed->font())
           , &ValueModel::valueChanged
           , ed
-          , [=](){ ed->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
+          , [=](){ ed->setFont(vm->getValue("cfgF" + cfg->nameOf(Config::GuiElem::GCode)).value<QFont>());
                    });
   }
 
 
 // opens fileManager
 void TestEdit::openFile() {    
-  QWidget*     w  = GuiCore().stackedPage(FileManager::className);
-  CenterPage*    df = qobject_cast<CenterPage*>(w);
-  FileManager* fm = qobject_cast<FileManager*>(df->centerWidget());
+  QWidget*     w   = core->stackedPage(FileManager::className);
+  CenterPage*  chk = reinterpret_cast<CenterPage*>(w);
+  FileManager* fm  = reinterpret_cast<FileManager*>(chk->centerWidget());
 
   if (fm) {
      fm->setClient(this);
-     GuiCore().activatePage(FileManager::className);
+     core->setAppMode(ApplicationMode::SelectFile);
+//     core->activatePage(FileManager::className);
      }
   }
 
@@ -118,11 +116,9 @@ void TestEdit::showEvent(QShowEvent* e) {
 
 void TestEdit::closeEvent(QCloseEvent*) {
   qDebug() << "TestEdit[" << objectName() << "] - " << fn->text();
-  Config cfg;
-
-  cfg.beginGroup(objectName());
-  cfg.setValue("fileName", fn->text());
-  cfg.endGroup();
+  cfg->beginGroup(objectName());
+  cfg->setValue("fileName", fn->text());
+  cfg->endGroup();
   }
 
 
@@ -149,17 +145,17 @@ void TestEdit::loadFile(const QVariant& fileName) {
   qDebug() << "TestEdit::loadFile" << fileName;
 
   if (fileName.toString().isEmpty()) return;
-  QString   activeFile = ValueManager().getValue("fileName").toString();
+  QString   activeFile = vm->getValue("fileName").toString();
   QFileInfo fi(fileName.toString());
 
   if (objectName() == "TestEdit" && activeFile == fileName.toString()) {
-     Core().riseError(tr("selected file is already loaded as active gcode file."
+     core->riseError(tr("selected file is already loaded as active gcode file."
                          "Please use active editor - can't load a file in both editors."));
-     Core().setAppMode(ApplicationMode::XEdit);
+     core->setAppMode(ApplicationMode::XEdit);
      return;
      }
   if (!fi.exists() || fi.size() < 1) {
-     Core().riseError(tr("TestEdit::loadFile: %1 is invalid").arg(fileName.toString()));
+     core->riseError(tr("TestEdit::loadFile: %1 is invalid").arg(fileName.toString()));
      return;
      }
   if (ed->loadFile(fi.absoluteFilePath())) {
@@ -168,14 +164,14 @@ void TestEdit::loadFile(const QVariant& fileName) {
      }
   // show editor again
   qDebug() << "TestEdit[" << objectName() << "] - set appmode to XEdit(6)";
-  if (objectName() == "TestEdit")      Core().setAppMode(ApplicationMode::XEdit);
-  else if (objectName() == "PathEdit") Core().setAppMode(ApplicationMode::Edit);
-  else                                 Core().setAppMode(ApplicationMode::Auto);
+  if (objectName() == "TestEdit")      core->setAppMode(ApplicationMode::XEdit);
+  else if (objectName() == "PathEdit") core->setAppMode(ApplicationMode::Edit);
+  else                                 core->setAppMode(ApplicationMode::Auto);
   }
 
 
 void TestEdit::saveFile() {
-  if (Core().move2Backup(fileName)) {
+  if (core->move2Backup(fileName)) {
      QString content = ed->document()->toPlainText();
      QFile   of(fileName);
 
@@ -192,9 +188,9 @@ void TestEdit::saveFile() {
         ed->setTextCursor(QTextCursor(b));
         fileUpdated(fileName);
         }
-     else Core().riseError(tr("Failed to write file %1").arg(fileName));
+     else core->riseError(tr("Failed to write file %1").arg(fileName));
      }
-  else Core().riseError(tr("Failed to create backup of file %1").arg(fileName));
+  else core->riseError(tr("Failed to create backup of file %1").arg(fileName));
   }
 
 
@@ -233,26 +229,21 @@ bool TestEdit::eventFilter(QObject*, QEvent* event) {
 
 
 void TestEdit::updateStyles() {
-  ValueManager vm;
-  Config       cfg;
-
   fn->setStyleSheet(QString("color: #%1; background: #%2;")
-                           .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
-                           .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16));
-  fn->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::Filename)).value<QFont>());
+                           .arg(vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::Filename)).value<QColor>().rgb(), 0, 16)
+                           .arg(vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::Filename)).value<QColor>().rgba(), 0, 16));
+  fn->setFont(vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::Filename)).value<QFont>());
   ed->setStyleSheet(QString("background: #%2;")
-                           .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
-  ed->setFont(vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::GCode)).value<QFont>());
+                           .arg(vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::GCode)).value<QColor>().rgba(), 0, 16));
+  ed->setFont(vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::GCode)).value<QFont>());
   }
 
 
 void TestEdit::restoreState() {
-  Config       cfg;
-
   qDebug() << "TE::restoreState() - I am" << objectName() << "- wt" << windowTitle();
-  cfg.beginGroup(objectName());
-  QString lastFile = cfg.value("fileName").toString();
-  cfg.endGroup();
+  cfg->beginGroup(objectName());
+  QString lastFile = cfg->value("fileName").toString();
+  cfg->endGroup();
   QFile ncFile(lastFile);
 
   if (ncFile.exists()) loadFile(ncFile.fileName());

@@ -3,9 +3,11 @@
 #undef toLine
 #endif
 #include <canonif.h>
+#include <canonifsettings.h>
 #include <tooltable.h>
 #include <lcproperties.h>
-#include <core.h>
+#include <guicore.h>
+#include <guikernel.h>
 #include <axismask.h>
 #include <AIS_Shape.hxx>
 #include <gce_MakeDir.hxx>
@@ -13,192 +15,92 @@
 #include <QDebug>
 
 
-CanonIF::CanonIF(LcProperties& properties, ToolTable& toolTable) {
-  if (instance) throw std::runtime_error("already initialized canon settings!");
-  instance = new IFSettings(properties, toolTable);
-  }
+//CanonIF::CanonIF(LcProperties& properties, ToolTable& toolTable) {
+//  if (instance()) throw std::runtime_error("already initialized canon settings!");
+//  }
 
 
 CanonIF::CanonIF() {
-  if (!instance) throw std::runtime_error("wrong call sequence - canon NOT initialized!");
-  }
-
-
-CanonIF::IFSettings::IFSettings(LcProperties& lcProperties, ToolTable& toolTable)
- : properties(lcProperties)
- , toolTable(toolTable) {
-  QString lu  = properties.value("TRAJ", "LINEAR_UNITS").toString();
-  QString pfn = properties.value("TRAJ", "POSITION_FILE").toString();
-  QFile   pf  = QFile(properties.baseDir() + "/" + pfn);
-
-  if (!lu.compare("mm"))      machineUnits = CANON_UNITS_MM;
-  else if (!lu.compare("cm")) machineUnits = CANON_UNITS_CM;
-  else                        machineUnits = CANON_UNITS_INCHES;
-  canon.lengthUnits = machineUnits;
-  canon.activePlane = CANON_PLANE_XY;
-  canon.motionMode  = CANON_EXACT_PATH;
-  canon.motionTolerance   = 0.01;
-  canon.naivecamTolerance = 0.01;
-  canon.feed_mode         = CANON_SYNCHED;
-  iTraverseRate = properties.value("AXIS_X", "MAX_VELOCITY").toDouble();
-  canon.linearFeedRate = iTraverseRate / 4;
-
-  if (pf.open(QIODevice::ReadOnly | QIODevice::Text)) {
-     QTextStream in(&pf);
-     QString line = in.readLine();
-     double  dv;
-     bool    ok;
-
-     for (int i=0; !line.isNull(); ++i, line=in.readLine()) {
-         dv = line.toDouble(&ok);
-
-         if (ok) {
-            if (dv < 0.0001) dv = 0;
-            switch (i) {
-              case 0: canon.endPoint.x = dv; break;
-              case 1: canon.endPoint.y = dv; break;
-              case 2: canon.endPoint.z = dv; break;
-              case 3: canon.endPoint.a = dv; break;
-              case 4: canon.endPoint.b = dv; break;
-              case 5: canon.endPoint.c = dv; break;
-              case 6: canon.endPoint.u = dv; break;
-              case 7: canon.endPoint.v = dv; break;
-              case 8: canon.endPoint.w = dv; break;
-              default: break;
-              }
-            }
-         }
-     pf.close();
-     }
-  }
-
-/**
- * @brief CanonIF::IFSettings::lengthUnits
- * @return factor to convert jobUnits into machineUnits
- */
-double CanonIF::IFSettings::lengthUnits() const {
-   switch (machineUnits) {
-     case CANON_UNITS_CM:
-          switch (canon.lengthUnits) {
-            case CANON_UNITS_CM: return 1;
-            case CANON_UNITS_MM: return 10;
-            default:             return 2.54;
-            } break;
-     case CANON_UNITS_MM:
-          switch (canon.lengthUnits) {
-            case CANON_UNITS_CM: return 0.1;
-            case CANON_UNITS_MM: return 1;
-            default:             return 25.4;
-            } break;
-     default:
-          switch (canon.lengthUnits) {
-            case CANON_UNITS_CM: return 1/2.54;
-            case CANON_UNITS_MM: return 1/25.4;
-            default:             return 1;
-            } break;
-     }
-  }
-
-
-void CanonIF::IFSettings::setG5xOffset(int i, const CANON_POSITION &p) {
-  if (i < 0)      i = 0;
-  else if (i > 8) i = 8;
-  selectedOffset    = i;
-  g5xOffsets[i] = p;
-  }
-
-
-CANON_POSITION CanonIF::IFSettings::g5xOffset(int i) const {
-  if (i < 0)      i = 0;
-  else if (i > 8) i = 8;
-  return g5xOffsets[i];
-  }
-
-
-CANON_DIRECTION CanonIF::IFSettings::spindleDir(int spindle) const {
-  if (spindle < 0)                        spindle = 0;
-  else if (spindle > EMCMOT_MAX_SPINDLES) spindle = EMCMOT_MAX_SPINDLES - 1;
-  return static_cast<CANON_DIRECTION>(canon.spindle[spindle].dir);
-  }
-
-
-double CanonIF::IFSettings::spindleSpeed(int spindle) const {
-  if (spindle < 0)                        spindle = 0;
-  else if (spindle > EMCMOT_MAX_SPINDLES) spindle = EMCMOT_MAX_SPINDLES - 1;
-  return canon.spindle[spindle].speed;
-  }
-
-
-CANON_TOOL_TABLE CanonIF::IFSettings::toolEntry(int ttIndex) const {
-  if (!ttIndex) return toolTable.current().toCanon();
-  const ToolEntry* te = toolTable.tool(ttIndex);
-
-  if (!te) return ToolEntry().toCanon();
-  return te->toCanon();
-  }
-
-
-void CanonIF::IFSettings::changeTool(int slot) {
-  toolTable.setCurrent(slot);
-  changer.setCurrentTool(slot);
-  ToolEntry ct = toolTable.current();
-
-  canon.toolOffset = ct.toCanon().offset;
-  }
-
-
-void CanonIF::IFSettings::setEndPoint(const CANON_POSITION &p) {
-  canon.endPoint = p;
+  if (!instance()) throw std::runtime_error("wrong call sequence - canon NOT initialized!");
   }
 
 
 void CanonIF::appendShape(int lineNum, opencascade::handle<AIS_InteractiveObject> shape) {
-  instance->toolPath.insert(lineNum, shape);
-  }
-
-static Quantity_Color convertColor(const QColor& c) {
-  return Quantity_Color((double)(c.red()   / 255.0)
-                      , (double)(c.green() / 255.0)
-                      , (double)(c.blue()  / 255.0), Quantity_TOC_RGB);
+  instance()->toolPath.insert(lineNum, shape);
   }
 
 
-void CanonIF::IFSettings::setTraverseColor(const QColor &c) {
-  colTraverse = convertColor(c);
+LcProperties&     CanonIF::lcProperties() const            { return instance()->properties; }
+CANON_UNITS       CanonIF::machineUnits() const            { return instance()->machineUnits; }
+double            CanonIF::lengthUnits() const             { return instance()->lengthUnits(); }
+double            CanonIF::feedRate() const                { return instance()->canon.linearFeedRate; }
+double            CanonIF::traverseRate() const            { return instance()->iTraverseRate; }
+bool              CanonIF::isFeedOverrideEnabled() const   { return instance()->feedOverride; }
+bool              CanonIF::isAdaptiveFeedEnabled() const   { return instance()->adaptiveFeed; }
+bool              CanonIF::isFeedHoldActive() const        { return instance()->feedHold; }
+bool              CanonIF::isFloodActive() const           { return instance()->floodActive; }
+bool              CanonIF::isMistActive() const            { return instance()->mistActive; }
+int               CanonIF::activeSpindle() const           { return instance()->canon.spindle_num; }
+CANON_PLANE       CanonIF::activePlane() const             { return instance()->canon.activePlane; }
+CANON_MOTION_MODE CanonIF::motionMode() const              { return instance()->canon.motionMode; }
+GraphicFactory    CanonIF::graphicFactory() const          { return instance()->gf; }
+double            CanonIF::motionTolerance() const         { return instance()->canon.motionTolerance; }
+double            CanonIF::naiveTolerance() const          { return instance()->canon.naivecamTolerance; }
+double            CanonIF::posX() const                    { return instance()->canon.endPoint.x; }
+double            CanonIF::posY() const                    { return instance()->canon.endPoint.y; }
+double            CanonIF::posZ() const                    { return instance()->canon.endPoint.z; }
+double            CanonIF::posA() const                    { return instance()->canon.endPoint.a; }
+double            CanonIF::posB() const                    { return instance()->canon.endPoint.b; }
+double            CanonIF::posC() const                    { return instance()->canon.endPoint.c; }
+double            CanonIF::posU() const                    { return instance()->canon.endPoint.u; }
+double            CanonIF::posV() const                    { return instance()->canon.endPoint.v; }
+double            CanonIF::posW() const                    { return instance()->canon.endPoint.w; }
+int               CanonIF::lastSlot() const                { return instance()->changer.slot4ToolInSpindle(); }
+int               CanonIF::nextSlot() const                { return instance()->changer.nextTool(); }
+Quantity_Color    CanonIF::traverseColor() const           { return instance()->colTraverse; }
+Quantity_Color    CanonIF::feedColor() const               { return instance()->colFeed; }
+Quantity_Color    CanonIF::limitColor() const              { return instance()->colLimits; }
+Quantity_Color    CanonIF::curSegColor() const             { return instance()->colCurSeg; }
+Quantity_Color    CanonIF::oldSegColor() const             { return instance()->colOldSeg; }
+Quantity_Color    CanonIF::workPieceColor() const          { return instance()->colWorkPiece; }
+CANON_TOOL_TABLE  CanonIF::toolEntry(int ttIndex)          { return instance()->toolEntry(ttIndex); }
+CANON_POSITION    CanonIF::g5xOffset(int i) const          { return instance()->g5xOffset(i); }
+CANON_POSITION    CanonIF::g92Offset() const               { return instance()->canon.g92Offset; }
+double            CanonIF::xyRotation() const              { return instance()->canon.xy_rotation; }
+int               CanonIF::selectedOffset() const          { return instance()->selectedOffset; }
+bool              CanonIF::isSpeedOverrideEnabled(int spindle) const  { return instance()->isSpeedOverrideEnabled(spindle); }
+double            CanonIF::spindleSpeed(int spindle) const { return instance()->spindleSpeed(spindle); }
+CANON_DIRECTION   CanonIF::spindleDir(int spindle) const   { return instance()->spindleDir(spindle); }
+CANON_POSITION    CanonIF::toolOffset() const              { return instance()->canon.toolOffset; }
+CANON_POSITION    CanonIF::endPoint() const                { return instance()->canon.endPoint; }
+QString           CanonIF::parameterFilename() const       { return instance()->properties.parameterFileName(); }
+QMap<long, Handle(AIS_InteractiveObject)>& CanonIF::toolPath() { return instance()->toolPath; }
+void CanonIF::changeTool(int ttIndex)       { instance()->changeTool(ttIndex); }
+void CanonIF::selectTool(int tool)          { instance()->changer.selectNextTool(tool); }
+void CanonIF::setLengthUnits(CANON_UNITS u) { instance()->setJobUnits(u); }
+void CanonIF::selectPlane(CANON_PLANE pl)   { instance()->selectPlane(pl); }
+void CanonIF::setMotionMode(CANON_MOTION_MODE mode, double tol) { instance()->setMotionMode(mode, tol); }
+void CanonIF::setEndPoint(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
+  instance()->setEndPoint(CANON_POSITION(x, y, z, a, b, c, u, v, w));
   }
-
-
-void CanonIF::IFSettings::setFeedColor(const QColor &c) {
-  colFeed = convertColor(c);
+void CanonIF::setEndPoint(const CANON_POSITION& p) { instance()->setEndPoint(p); }
+void CanonIF::setG5xOffset(int i, double x, double y, double z, double a, double b, double c, double u, double v, double w) {
+  instance()->setG5xOffset(i, CANON_POSITION(x, y, z, a, b, c, u, v, w));
   }
-
-
-void CanonIF::IFSettings::setLimitsColor(const QColor &c) {
-  colLimits = convertColor(c);
+void CanonIF::setG92Offset(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
+  instance()->setG92Offset(CANON_POSITION(x, y, z, a, b, c, u, v, w));
   }
-
-
-void CanonIF::IFSettings::setCurSegColor(const QColor &c) {
-  colCurSeg = convertColor(c);
-  }
-
-
-void CanonIF::IFSettings::setOldSegColor(const QColor &c) {
-  colOldSeg = convertColor(c);
-  }
-
-
-void CanonIF::IFSettings::setWorkPieceColor(const QColor &c) {
-  colWorkPiece = convertColor(c);
-  }
-
-
-void CanonIF::IFSettings::setMotionMode(CANON_MOTION_MODE mode, double) {
-  canon.motionMode      = mode;
-  }
-
-CanonIF::IFSettings* CanonIF::instance = nullptr;
-
+void CanonIF::setXYRotation(double r)                  { instance()->setXYRotation(r); }
+void CanonIF::setSpindleMode(int spindle, double mode) { instance()->setSpindleMode(spindle, mode); }
+void CanonIF::setTraverseColor(const QColor& c)        { instance()->setTraverseColor(c); }
+void CanonIF::setFeedColor(const QColor& c)            { instance()->setFeedColor(c); }
+void CanonIF::setLimitsColor(const QColor& c)          { instance()->setLimitsColor(c); }
+void CanonIF::setCurSegColor(const QColor& c)          { instance()->setCurSegColor(c); }
+void CanonIF::setOldSegColor(const QColor& c)          { instance()->setOldSegColor(c); }
+void CanonIF::setWorkPieceColor(const QColor& c)       { instance()->setWorkPieceColor(c); }
+void CanonIF::setToolOffset(EmcPose offset)            { instance()->setToolOffset(offset); }
+CanonIFSettings* CanonIF::instance()                   { return GuiCore().guiCore()->canonIF; }
+const CanonIFSettings* CanonIF::instance() const       { return GuiCore().guiCore()->canonIF; }
 ///////////////////////////////////////////////////////////////////////////////
 /// Interpreter helper functions
 ///////////////////////////////////////////////////////////////////////////////
@@ -796,7 +698,7 @@ void STRAIGHT_FEED(int lineno, double x, double y, double z
   }
 
 
-void CANON_UPDATE_END_POINT(double x, double y, double z, double a, double b, double c, double u, double v, double w) {    
+void CANON_UPDATE_END_POINT(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
   CanonIF().setEndPoint(x, y, z, a, b, c, u, v, w);
   }
 

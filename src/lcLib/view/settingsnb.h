@@ -10,7 +10,6 @@ class SettingsNotebook : public AbstractCenterWidget
 {
   Q_OBJECT
 public:
-  static const QString className;
   explicit SettingsNotebook(QWidget *parent = nullptr);
   virtual ~SettingsNotebook();
 

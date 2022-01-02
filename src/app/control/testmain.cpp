@@ -115,9 +115,9 @@ void TestMain::pluginsAbout() {
 
 void TestMain::testPlugin() {
   QString pluginName("PathEditor");
-  PluginPageInterface*  iP = GuiCore().pluggablePage(pluginName);
-  AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(iP);
+//  PluginPageInterface*  iP = GuiCore().pluggablePage(pluginName);
+//  AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(iP);
 
-  cw->initialize(":/src/lcLib/UI/GCodeEditor.ui");
-  layout()->replaceWidget(ui->tbd, new CenterPage(cw, true, this));
+//  cw->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+//  layout()->replaceWidget(ui->tbd, new CenterPage(cw, true, this));
   }

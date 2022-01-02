@@ -1,6 +1,6 @@
 #include <abscenterwidget.h>
 #include <configacc.h>
-#include <core.h>
+#include <guicore.h>
 #include <QString>
 #include <QFrame>
 #include <QAction>
@@ -16,6 +16,9 @@
  */
 AbstractCenterWidget::AbstractCenterWidget(QWidget* parent)
  : QWidget(parent)
+ , core(nullptr)
+ , cfg(nullptr)
+ , vm(nullptr)
  , vAction(nullptr)
  , addScrollArea(false) {
   }
@@ -50,19 +53,19 @@ QWidget* AbstractCenterWidget::createContent() {
   }
 
 
-void AbstractCenterWidget::dbSetup(DBConnection *) {
-  }
-
-
 // offline initialization
-void AbstractCenterWidget::initialize(const QString& fileName, const QString& name, DBConnection* conn, bool addScrollArea) {
+void AbstractCenterWidget::initialize(const QString& fileName, const QString& name, bool addScrollArea) {
+  if (!core) {
+     core = new GuiCore();
+     cfg  = new Config();
+     vm   = new ValueManager();
+     }
   this->fileName = fileName;
   this->addScrollArea = addScrollArea;
   if (!name.isEmpty()) {
      setObjectName(name);
      setWindowTitle(tr(name.toStdString().c_str()));
      }
-  if (conn) dbSetup(conn);
   QWidget* w = createContent();
 
   if (w) {
@@ -73,6 +76,15 @@ void AbstractCenterWidget::initialize(const QString& fileName, const QString& na
   connectSignals();
   updateStyles();
   layout()->invalidate();
+  }
+
+
+void AbstractCenterWidget::patch(void *pk, void *pc, void *pv, void*) {
+  core = new GuiCore(pk);
+  cfg  = new Config(pc);
+  vm   = new ValueManager(pv);
+
+  qDebug() << "ACW - core:" << core->kernel << "\tgiven:" << pk;
   }
 
 

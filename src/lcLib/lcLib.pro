@@ -23,8 +23,11 @@ INCLUDEPATH += \
     control \
     util \
     view \
+    ../plugPages \
+    ../statusInfo \
 
 SOURCES += \
+    control/canonifsettings.cpp \
     model/tooltable.cpp \
     model/toolentry.cpp \
     model/linecodes.cpp \
@@ -48,18 +51,23 @@ SOURCES += \
     util/HelixCurveAdaptor_CylinderEvaluator.cpp \
     util/ally3d.cpp \
     util/Geom_HelixData.cpp \
+    util/pluginpagefactory.cpp \
+    view/abscenterwidget.cpp \
+    view/filemanager.cpp \
     view/gcodeeditor.cpp \
     view/testEdit.cpp \
     view/gcodeinfo.cpp \
+    view/jogbutton.cpp \
     view/numlabel.cpp \
     view/centerview.cpp \
     view/settingsnb.cpp \
     view/helpkeywordwidget.cpp \
     view/helpcontentwidget.cpp \
     view/occtviewer.cpp \
-    view/dynframe.cpp \
+    view/centerpage.cpp \
 
 HEADERS += \
+    control/canonifsettings.h \
     model/stupidtoolchangerif.h \
     model/lcproperties.h \
     model/toolentry.h \
@@ -85,11 +93,15 @@ HEADERS += \
     util/insulatePose.h \
     util/guikernelcreator.h \
     util/graphicfactory.h \
-    view/dynframe.h \
+    util/pluginpagefactory.h \
+    view/abscenterwidget.h \
+    view/centerpage.h \
+    view/filemanager.h \
     view/gcodeeditor.h \
     view/helpcontentwidget.h \
     view/centerview.h \
     view/occtviewer.h \
+    view/jogbutton.h \
     view/settingsnb.h \
     view/testEdit.h \
     view/helpkeywordwidget.h \

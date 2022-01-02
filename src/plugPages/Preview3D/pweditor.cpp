@@ -42,8 +42,8 @@ PreViewEditor::PreViewEditor(QWidget* parent)
 
 
 QWidget* PreViewEditor::createContent() {
-  view3D          = GuiCore().view3D();
-  statusInPreview = Config().value("statusInPreview").toBool();
+  qDebug() << "view3D address in plugin: " << view3D;
+  statusInPreview = cfg->value("statusInPreview").toBool();
   TestEdit::createContent();
   spV = new QSplitter(Qt::Vertical);
   view3D->setMinimumSize(200, 200);
@@ -59,11 +59,9 @@ QWidget* PreViewEditor::createContent() {
 //  jp = new JogView();
 //  jp->initialize();
   createDecorations(view3D, statusInPreview);
-  Config cfg;
-
-  cfg.beginGroup("PreViewEditor");
-  spV->restoreState(cfg.value("vState").toByteArray());
-  cfg.endGroup();
+  cfg->beginGroup("PreViewEditor");
+  spV->restoreState(cfg->value("vState").toByteArray());
+  cfg->endGroup();
   view3D->installEventFilter(this);
   ed->installEventFilter(this);
 
@@ -72,11 +70,11 @@ QWidget* PreViewEditor::createContent() {
 
 
 void PreViewEditor::connectSignals() {
-  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::genPreView);
+  connect(vm->getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::genPreView);
   // curLine will be set by backend
-  connect(ValueManager().getModel("curLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setCurrentLine);
+  connect(vm->getModel("curLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setCurrentLine);
   // edLine is set by pathEditor
-  connect(ValueManager().getModel("edLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setEditorLine);
+  connect(vm->getModel("edLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setEditorLine);
   TestEdit::connectSignals();
   }
 
@@ -116,11 +114,9 @@ void PreViewEditor::setEditorLine(const QVariant& line) {
 
 
 void PreViewEditor::closeEvent(QCloseEvent* e) {
-  Config cfg;
-
-  cfg.beginGroup("PreViewEditor");
-  cfg.setValue("vState", spV->saveState());
-  cfg.endGroup();
+  cfg->beginGroup("PreViewEditor");
+  cfg->setValue("vState", spV->saveState());
+  cfg->endGroup();
   TestEdit::closeEvent(e);
   }
 
@@ -197,10 +193,15 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
   CanonIF().toolPath().clear();
   ed->loadFile(fileName);
   fn->setText(fileName.toString());
-  GuiCore().parseGCFile(fileName.toString());
-  GuiCore().setAppMode(ApplicationMode::Auto);
+  core->parseGCFile(fileName.toString());
+  core->setAppMode(ApplicationMode::Auto);
   }
 
+
+void PreViewEditor::patch(void *pk, void *pc, void *pv, void *pu) {
+  TestEdit::patch(pk, pc, pv, pu);
+  view3D = (OcctQtViewer*)pu;
+  }
 
 void PreViewEditor::toggleSub() {
 //  QWidget* oldSub = spV->widget(1);

@@ -1,10 +1,10 @@
 #include "fixturemanager.h"
 #include "fixtureedit.h"
 #include <flowlayout.h>
-#include <axismask.h>
 #include <valuemanager.h>
 #include <configacc.h>
 #include <guicore.h>
+#include <axismask.h>
 #include <QMessageBox>
 #include <QScrollArea>
 #include <QShowEvent>
@@ -41,6 +41,7 @@ void FixtureManager::activateEditor(int n) {
 
 
 QWidget* FixtureManager::createContent() {
+  axisMask = new AxisMask(core->axisMask());
   FlowLayout*  fl = new FlowLayout(client);
   QScrollArea* sa = new QScrollArea(this);  
   FixtureEdit* fe = new FixtureEdit(tr("Offsets"), 0, *axisMask);
@@ -76,32 +77,26 @@ void FixtureManager::connectSignals() {
   }
 
 
-void FixtureManager::dbSetup(DBConnection *conn) {
-  axisMask = new AxisMask((long)(void*)conn);
-  }
-
 
 void FixtureManager::updateStyles() {
-  ValueManager vm;
-  Config       cfg;
-  QColor       colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::FixTitle)).value<QColor>();
-  QColor       colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::FixTitle)).value<QColor>();
+  QColor       colBg = vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::FixTitle)).value<QColor>();
+  QColor       colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::FixTitle)).value<QColor>();
 
-  cFonts[0] = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::FixTitle)).value<QFont>();
+  cFonts[0] = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::FixTitle)).value<QFont>();
   cStyle[0] = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
 
-  colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::FixDisabledTitle)).value<QColor>();
-  colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::FixDisabledTitle)).value<QColor>();
-  cFonts[1] = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::FixDisabledTitle)).value<QFont>();
+  colBg = vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::FixDisabledTitle)).value<QColor>();
+  colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::FixDisabledTitle)).value<QColor>();
+  cFonts[1] = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::FixDisabledTitle)).value<QFont>();
   cStyle[1] = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
 
-  colBg = vm.getValue("cfgBg" + cfg.nameOf(Config::GuiElem::FixPrompt)).value<QColor>();
-  colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::FixPrompt)).value<QColor>();
-  cFonts[2] = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::FixPrompt)).value<QFont>();
+  colBg = vm->getValue("cfgBg" + cfg->nameOf(Config::GuiElem::FixPrompt)).value<QColor>();
+  colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::FixPrompt)).value<QColor>();
+  cFonts[2] = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::FixPrompt)).value<QFont>();
   cStyle[2] = QString("color: #%1; background: #%2;").arg(colFg.rgb(), 0, 16).arg(colBg.rgba(), 0, 16);
 
-  colFg = vm.getValue("cfgFg" + cfg.nameOf(Config::GuiElem::FixEdit)).value<QColor>();
-  cFonts[3] = vm.getValue("cfgF"  + cfg.nameOf(Config::GuiElem::FixEdit)).value<QFont>();
+  colFg = vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::FixEdit)).value<QColor>();
+  cFonts[3] = vm->getValue("cfgF"  + cfg->nameOf(Config::GuiElem::FixEdit)).value<QFont>();
   cStyle[3] = QString("color: #%1;").arg(colFg.rgb(), 0, 16);
   activateEditor(0);
   }

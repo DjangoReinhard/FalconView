@@ -1,9 +1,9 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 #include <QObject>
-#include <configmgr.h>
 #include <QBasicTimer>
 #include <QLocale>
+#include <configmgr.h>
 class DBHelper;
 class DBConnection;
 class SysEvent;

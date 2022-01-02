@@ -34,16 +34,15 @@ void MDIEditor::append(const QString &command) {
 
 
 void MDIEditor::closeEvent(QCloseEvent*) {
-  Config cfg;
   QStringList sl;
   int mx = history->count();
 
   for (int i = fmax(0, mx - 50); i < mx; ++i)
       sl.append(history->item(i)->text());
 
-  cfg.beginGroup("MDIEditor");
-  cfg.setValue("history", sl);
-  cfg.endGroup();
+  cfg->beginGroup("MDIEditor");
+  cfg->setValue("history", sl);
+  cfg->endGroup();
   }
 
 QString MDIEditor::command() const {
@@ -56,13 +55,11 @@ QWidget* MDIEditor::createContent() {
 
   history = rv->findChild<QListWidget*>("history");
   cmd     = rv->findChild<QLineEdit*>("command");
-  Config cfg;
-
   history->installEventFilter(this);
   cmd->installEventFilter(this);
-  cfg.beginGroup("MDIEditor");
-  QStringList sl = cfg.value("history").toStringList();
-  cfg.endGroup();
+  cfg->beginGroup("MDIEditor");
+  QStringList sl = cfg->value("history").toStringList();
+  cfg->endGroup();
 
   for (const QString& s : sl) {
       qDebug() << "history command: " << s;
@@ -76,9 +73,9 @@ QWidget* MDIEditor::createContent() {
 
 
 void MDIEditor::createTestData() {
-  for (int i=0; !testData[i].isEmpty(); ++i) {
-      history->addItem(testData[i]);
-      }
+//  for (int i=0; !testData[i].isEmpty(); ++i) {
+//      history->addItem(testData[i]);
+//      }
   }
 
 
@@ -123,13 +120,13 @@ void MDIEditor::showEvent(QShowEvent* e) {
 void MDIEditor::updateStyles() {
   }
 
-const QString MDIEditor::testData[] = {
-  "T1 M6"
-, "S400 M3"
-, "F100"
-, "G21 G40 G80"
-, "T3 M6"
-, "T6 M6"
-, "G0 G90 G54 X0 Y0"
-, ""
-  };
+//const QString MDIEditor::testData[] = {
+//  "T1 M6"
+//, "S400 M3"
+//, "F100"
+//, "G21 G40 G80"
+//, "T3 M6"
+//, "T6 M6"
+//, "G0 G90 G54 X0 Y0"
+//, ""
+//  };

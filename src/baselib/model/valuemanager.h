@@ -2,6 +2,7 @@
 #define VALUEMANAGER_H
 #include <valuemodel.h>
 #include <QString>
+class AbstractCenterWidget;
 
 
 class ValueManager
@@ -25,10 +26,12 @@ protected:
 
     QMap<QString, ValueModel*> models;
     };
-  ValueHolder* getInstance();
 
 private:
+  ValueManager(void* p);
   static ValueHolder* instance;
+  friend class AbstractCenterWidget;
+  friend class PluginPageFactory;
   };
 
 #endif // VALUEMANAGER_H

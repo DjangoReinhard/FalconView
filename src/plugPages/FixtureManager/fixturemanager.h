@@ -26,7 +26,6 @@ protected:
   virtual void keyPressEvent(QKeyEvent* event) override;
   virtual void showEvent(QShowEvent *event) override;
   virtual QWidget* createContent() override;
-  virtual void dbSetup(DBConnection* conn) override;
 
 private:
   QWidget*  client;

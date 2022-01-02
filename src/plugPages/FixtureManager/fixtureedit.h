@@ -27,5 +27,6 @@ private:
   int                    ordinal;
   QList<QLineEdit*>      edits;
   const AxisMask&        m;
+  friend class FixtureManager;
   };
 #endif // FIXTUREEDIT_H

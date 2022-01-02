@@ -1,6 +1,6 @@
+#include <guikernel.h>
 #include <guicore.h>
 #include <kernelcreator.h>
-#include <guikernel.h>
 #include <ally3d.h>
 #include <sysevent.h>
 #include <syseventmodel.h>
@@ -29,6 +29,7 @@
 #include <commandwriter.h>
 #include <cassert>
 #include <emc.hh>
+#include <canonifsettings.h>
 
 
 GuiCore::GuiCore(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& groupID)
@@ -41,33 +42,59 @@ GuiCore::GuiCore() {
   }
 
 
+GuiCore::GuiCore(void* pFromOuterAdressSpace)
+ : Core(pFromOuterAdressSpace) {
+  }
+
+
+void GuiCore::activatePage(const QString& pageName) {
+  qDebug() << "Core: activate page with name >" << pageName << "<";
+
+  guiCore()->centerView->activatePage(QString("%1Frame").arg(pageName));
+  }
+
+
+bool GuiCore::checkBE() {
+  if (checked < 0) {
+     bool rv = guiCore()->statusReader->isActive()
+            && guiCore()->commandWriter->isActive();
+
+     checked = 1;
+     if (!rv) {
+        ValueManager vm;
+
+        checked = 0;
+        qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
+
+        vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+        vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
+        vm.setValue("allHomed", true);
+        vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
+        vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
+        vm.setValue("errorActive", false);
+        }
+    }
+  return checked == 1;
+  }
+
+
+QString GuiCore::curPage() const {
+  return guiCore()->centerView->activePage();
+  }
+
+
 GuiKernel* GuiCore::guiCore() {
-  return static_cast<GuiKernel*>(Core::core());
+  return static_cast<GuiKernel*>(kernel);
   }
 
 
 const GuiKernel* GuiCore::guiCore() const {
-  return static_cast<const GuiKernel*>(Core::core());
-  }
-
-
-void GuiCore::parseGCFile(const QString &fileName) {
-  QFile gcFile(fileName);
-
-  if (gcFile.exists()) {
-     guiCore()->parseGCode(gcFile);
-     guiCore()->ally3D->showPath(CanonIF().toolPath());
-     }
+  return static_cast<const GuiKernel*>(kernel);
   }
 
 
 LcProperties& GuiCore::lcProperties() {
   return *guiCore()->lcProps;
-  }
-
-
-OcctQtViewer* GuiCore::view3D() {
-  return guiCore()->view3D;
   }
 
 
@@ -79,6 +106,16 @@ bool GuiCore::isLatheMode() const {
 
 bool GuiCore::isSimulator() const {
   return guiCore()->simulator;
+  }
+
+
+void GuiCore::parseGCFile(const QString &fileName) {
+  QFile gcFile(fileName);
+
+  if (gcFile.exists()) {
+     guiCore()->parseGCode(gcFile);
+     guiCore()->ally3D->showPath(CanonIF().toolPath());
+     }
   }
 
 
@@ -128,39 +165,14 @@ QWidget* GuiCore::stackedPage(const QString& pageName) {
   }
 
 
+OcctQtViewer* GuiCore::view3D() {
+  qDebug() << "GuiCore: kernel is:" << guiCore();
+  return guiCore()->view3D;
+  }
+
+
 CenterView* GuiCore::viewStack() {
   return guiCore()->centerView;
-  }
-
-
-bool GuiCore::checkBE() {
-  if (checked < 0) {
-     bool rv = guiCore()->statusReader->isActive()
-            && guiCore()->commandWriter->isActive();
-
-     checked = 1;
-     if (!rv) {
-        ValueManager vm;
-
-        checked = 0;
-        qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
-
-        vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
-        vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
-        vm.setValue("allHomed", true);
-        vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
-        vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
-        vm.setValue("errorActive", false);
-        }
-    }
-  return checked == 1;
-  }
-
-
-void GuiCore::activatePage(const QString& pageName) {
-  qDebug() << "Core: activate page with name >" << pageName << "<";
-
-  guiCore()->centerView->activatePage(QString("%1Frame").arg(pageName));
   }
 
 
@@ -173,14 +185,15 @@ void GuiCore::setWindowTitle(const QString &title) {
   }
 
 
+CANON_POSITION  GuiCore::toolOffset() const {
+  return guiCore()->canonIF->canon.toolOffset;
+  }
+
+
 ToolTable& GuiCore::toolTable() {
   return *guiCore()->tt;
   }
 
-
-QString GuiCore::curPage() const {
-  return guiCore()->centerView->activePage();
-  }
 
 ToolTable* GuiCore::toolTableModel() {
   return guiCore()->tt;
@@ -196,7 +209,7 @@ void GuiCore::riseError(const QString &msg) {
   ValueManager().setValue("errorActive", true);
   SysEvent se(msg);
 
-  core()->logSysEvent(se);
+  kernel->logSysEvent(se);
   QMessageBox::critical(guiCore()->mainWindow
                       , SysEvent::toString(se.type())
                       , se.what());

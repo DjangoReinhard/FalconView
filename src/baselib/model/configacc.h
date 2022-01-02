@@ -4,6 +4,7 @@
 #include <QString>
 #include <QSettings>
 class ConfigManager;
+class AbstractCenterWidget;
 class QColor;
 class QFont;
 class QFile;
@@ -41,6 +42,7 @@ public:
   , LastKey
     };
 
+  explicit Config();
   QColor   getBackground(GuiElem key) const;
   QColor   getForeground(GuiElem key) const;
   QFont    getFont(GuiElem key) const;
@@ -53,5 +55,11 @@ public:
   void     setValue(const QString& key, const QVariant& value);
   QString  nameOf(GuiElem key) const;
   int      numGuiElements() const { return LastKey; }
+
+private:
+  explicit Config(void* p);
+  static ConfigManager* cfg;
+  friend class AbstractCenterWidget;
+  friend class PluginPageFactory;
   };
 #endif // CONFIG_H

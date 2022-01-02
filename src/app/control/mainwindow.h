@@ -13,6 +13,7 @@ class DBConnection;
 class MDIEditor;
 class GCodeViewer;
 class HelpDockable;
+class PluginPageFactory;
 class QAction;
 
 QT_BEGIN_NAMESPACE
@@ -41,8 +42,8 @@ protected:
   void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
   void createActions();
   void createToolBars();
-  void createDockables(DBConnection& conn);
-  void createMainWidgets(DBConnection& conn);
+  void createDockables();
+  void createMainWidgets();
   void createConnections();
   void createValueModels();
   void setupMenu();
@@ -72,9 +73,10 @@ private:
   bool                statusInPreview;
   bool                previewIsCenter;
   Ui::MainWindow*     ui;
+  PluginPageFactory*  ppFactory;
+  SettingsNotebook*   snb;
   PreViewEditor*      pw;
   MDIEditor*          mdi;
-  SettingsNotebook*   snb;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;

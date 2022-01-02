@@ -16,7 +16,7 @@ class ToolEditor : public QWidget
 {
   Q_OBJECT
 public:
-  explicit ToolEditor(QWidget *parent = nullptr);
+  explicit ToolEditor(const QString& langPrefix, QWidget *parent = nullptr);
 
   void getChanges(QSqlRecord& r);
   void setModel(const QSqlRecord& r);

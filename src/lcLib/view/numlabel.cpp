@@ -1,8 +1,8 @@
 #include <numlabel.h>
-#include <guicore.h>
 #include <QLocale>
 #include <QResizeEvent>
 #include <QDebug>
+#include <guicore.h>
 
 
 NumLabel::NumLabel(QWidget* parent, int digits)

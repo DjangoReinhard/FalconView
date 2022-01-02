@@ -1,5 +1,6 @@
 #include "preferenceseditor.h"
 #include <configacc.h>
+#include <valuemanager.h>
 #include <QLineEdit>
 #include <QColor>
 #include <QFont>
@@ -21,7 +22,7 @@ PreferencesEditor::PreferencesEditor(QWidget* parent)
  , cbHelp(nullptr)
  , cbPreviewCenter(nullptr)
  , cbToolManager(nullptr)
- , count(Config().numGuiElements()) {
+ , count(0) {
   setWindowTitle("PreferencesEditor");
   setObjectName(tr("PreferencesEditor"));
   }
@@ -34,6 +35,7 @@ PreferencesEditor::~PreferencesEditor() {
 QWidget* PreferencesEditor::createContent() {
   QWidget* rv = AbstractCenterWidget::createContent();
 
+  count       = cfg->numGuiElements();
   labels      = new QLineEdit*[count];
   bgButtons   = new QPushButton*[count];
   fgButtons   = new QPushButton*[count];
@@ -44,10 +46,10 @@ QWidget* PreferencesEditor::createContent() {
   cbPreviewCenter = findChild<QCheckBox*>("cbPreviewCenter");
   cbToolManager   = findChild<QCheckBox*>("cbToolManager");
   for (int i=0; i < count; ++i) {
-      labels[i]      = findChild<QLineEdit*>(QString("l")      + Config().nameOf(static_cast<Config::GuiElem>(i)));
-      bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
-      fgButtons[i]   = findChild<QPushButton*>(QString("fg")   + Config().nameOf(static_cast<Config::GuiElem>(i)));
-      fontButtons[i] = findChild<QPushButton*>(QString("font") + Config().nameOf(static_cast<Config::GuiElem>(i)));
+      labels[i]      = findChild<QLineEdit*>(QString("l")      + cfg->nameOf(static_cast<Config::GuiElem>(i)));
+      bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + cfg->nameOf(static_cast<Config::GuiElem>(i)));
+      fgButtons[i]   = findChild<QPushButton*>(QString("fg")   + cfg->nameOf(static_cast<Config::GuiElem>(i)));
+      fontButtons[i] = findChild<QPushButton*>(QString("font") + cfg->nameOf(static_cast<Config::GuiElem>(i)));
       if (labels[i]) labels[i]->installEventFilter(this);
       }
   return rv;
@@ -61,19 +63,19 @@ void PreferencesEditor::connectSignals() {
       if (fontButtons[i]) connect(fontButtons[i], &QPushButton::pressed, this, [=](){ changeFont(i); });
       }
   if (cbStatesInside) {
-     cbStatesInside->setChecked(Config().value("statusInPreview").toBool());
+     cbStatesInside->setChecked(cfg->value("statusInPreview").toBool());
      connect(cbStatesInside, &QCheckBox::stateChanged, this, &PreferencesEditor::statusInsideChanged);
      }
   if (cbHelp) {
-     cbHelp->setChecked(Config().value("showHelpAtPageChange").toBool());
+     cbHelp->setChecked(cfg->value("showHelpAtPageChange").toBool());
      connect(cbHelp, &QCheckBox::stateChanged, this, &PreferencesEditor::statusShowHelpChanged);
      }
   if (cbPreviewCenter) {
-     cbPreviewCenter->setChecked(Config().value("previewIsCenter").toBool());
+     cbPreviewCenter->setChecked(cfg->value("previewIsCenter").toBool());
      connect(cbPreviewCenter, &QCheckBox::stateChanged, this, &PreferencesEditor::previewCenterChanged);
      }
   if (cbToolManager) {
-     cbToolManager->setChecked(Config().value("activateToolMgr").toBool());
+     cbToolManager->setChecked(cfg->value("activateToolMgr").toBool());
      connect(cbToolManager, &QCheckBox::stateChanged, this, &PreferencesEditor::statusToolMgrChanged);
      }
   }
@@ -93,50 +95,48 @@ void PreferencesEditor::showEvent(QShowEvent* e) {
 
 
 void PreferencesEditor::setupLabels() {
-  ValueManager vm;
-  Config cfg;
   QString keyBg, keyFg, keyF;
   QColor colBg;
   QColor colFg;
   QFont font;
 
   for (int i=0; i < count; ++i) {
-      keyBg = QString("cfgBg") + cfg.nameOf(static_cast<Config::GuiElem>(i));
-      colBg = cfg.value(keyBg, QColor(204, 205, 206)).value<QColor>();
-      keyFg = QString("cfgFg") + cfg.nameOf(static_cast<Config::GuiElem>(i));
-      colFg = cfg.value(keyFg, QColor(Qt::black)).value<QColor>();
-      keyF  = QString("cfgF") + cfg.nameOf(static_cast<Config::GuiElem>(i));
-      font  = cfg.value(keyF, QFont("Hack", 12)).value<QFont>();
-      vm.setValue(keyBg, colBg);
-      vm.setValue(keyFg, colFg);
-      vm.setValue(keyF,  font);
+      keyBg = QString("cfgBg") + cfg->nameOf(static_cast<Config::GuiElem>(i));
+      colBg = cfg->value(keyBg, QColor(204, 205, 206)).value<QColor>();
+      keyFg = QString("cfgFg") + cfg->nameOf(static_cast<Config::GuiElem>(i));
+      colFg = cfg->value(keyFg, QColor(Qt::black)).value<QColor>();
+      keyF  = QString("cfgF") + cfg->nameOf(static_cast<Config::GuiElem>(i));
+      font  = cfg->value(keyF, QFont("Hack", 12)).value<QFont>();
+      vm->setValue(keyBg, colBg);
+      vm->setValue(keyFg, colFg);
+      vm->setValue(keyF,  font);
 
-      connect(vm.getModel(keyBg, colBg)
+      connect(vm->getModel(keyBg, colBg)
             , &ValueModel::valueChanged
             , labels[i]
             , [=](){
                    QString arg = QString("color: #%1; background: #%2;")
-                                        .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
+                                        .arg(vm->getValue("cfgFg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
+                                        .arg(vm->getValue("cfgBg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
                    labels[i]->setStyleSheet(arg);
                      });
-      connect(vm.getModel(keyFg, QColor(Qt::black))
+      connect(vm->getModel(keyFg, QColor(Qt::black))
             , &ValueModel::valueChanged
             , labels[i]
             , [=](){
                    QString arg = QString("color: #%1; background: #%2;")
-                                        .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
-                                        .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
+                                        .arg(vm->getValue("cfgFg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
+                                        .arg(vm->getValue("cfgBg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
                    labels[i]->setStyleSheet(arg);
                      });
-      connect(vm.getModel("cfgF" + cfg.nameOf(static_cast<Config::GuiElem>(i)), labels[i]->font())
+      connect(vm->getModel("cfgF" + cfg->nameOf(static_cast<Config::GuiElem>(i)), labels[i]->font())
             , &ValueModel::valueChanged
             , labels[i]
-            , [=](){ labels[i]->setFont(ValueManager().getValue("cfgF" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QFont>()); });
+            , [=](){ labels[i]->setFont(vm->getValue("cfgF" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QFont>()); });
 
       QString ss = QString("color: #%1; background: #%2;")
-                          .arg(ValueManager().getValue("cfgFg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
-                          .arg(ValueManager().getValue("cfgBg" + cfg.nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
+                          .arg(vm->getValue("cfgFg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
+                          .arg(vm->getValue("cfgBg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
 //      qDebug() << cfg.nameOf(static_cast<Config::GuiElem>(i)) << " => " << ss << " <= ";
       labels[i]->setStyleSheet(ss);
       labels[i]->setFont(font);
@@ -145,36 +145,36 @@ void PreferencesEditor::setupLabels() {
 
 
 void PreferencesEditor::changeBackgroundColor(int i) {
-  const QColor oc    = Config().getBackground(static_cast<Config::GuiElem>(i));
+  const QColor oc    = cfg->getBackground(static_cast<Config::GuiElem>(i));
   const QColor color = QColorDialog::getColor(oc
                                             , this
                                             , "Select Background Color"
                                             , QColorDialog::ShowAlphaChannel);
 
-  if (color.isValid()) Config().setBackground(static_cast<Config::GuiElem>(i), color);
+  if (color.isValid()) cfg->setBackground(static_cast<Config::GuiElem>(i), color);
   }
 
 
 void PreferencesEditor::changeForegroundColor(int i) {
-  const QColor oc    = Config().getForeground(static_cast<Config::GuiElem>(i));
+  const QColor oc    = cfg->getForeground(static_cast<Config::GuiElem>(i));
   const QColor color = QColorDialog::getColor(oc
                                             , this
                                             , "Select Foreground Color");
 
-  if (color.isValid()) Config().setForeground(static_cast<Config::GuiElem>(i), color);
+  if (color.isValid()) cfg->setForeground(static_cast<Config::GuiElem>(i), color);
   }
 
 
 void PreferencesEditor::changeFont(int i) {
   bool  ok;
-  QFont of   = Config().getFont(static_cast<Config::GuiElem>(i));
+  QFont of   = cfg->getFont(static_cast<Config::GuiElem>(i));
   QFont font = QFontDialog::getFont(&ok
                                   , of
                                   , this
                                   , "Select Font"
                                   , QFontDialog::ScalableFonts);
 
-  if (ok) Config().setFont(static_cast<Config::GuiElem>(i), font);
+  if (ok) cfg->setFont(static_cast<Config::GuiElem>(i), font);
   }
 
 
@@ -184,7 +184,7 @@ void PreferencesEditor::statusInsideChanged(const QVariant& state) {
                          , tr("QMessageBox::information()")
                          , tr("for this change to take effect, "
                               "the application must be restarted."));
-  Config().setValue("statusInPreview", state.toBool());
+  cfg->setValue("statusInPreview", state.toBool());
   }
 
 
@@ -198,7 +198,7 @@ void PreferencesEditor::statusShowHelpChanged(const QVariant& state) {
                             , tr("You can rise help window at any "
                                  "time hitting [F1] key."));
      }
-  Config().setValue("showHelpAtPageChange", state.toBool());
+  cfg->setValue("showHelpAtPageChange", state.toBool());
   }
 
 
@@ -210,7 +210,7 @@ void PreferencesEditor::previewCenterChanged(const QVariant& state) {
                          , tr("QMessageBox::information()")
                          , tr("for this change to take effect, "
                               "the application must be restarted."));
-  Config().setValue("previewIsCenter", state.toBool());
+  cfg->setValue("previewIsCenter", state.toBool());
   }
 
 
@@ -220,7 +220,7 @@ void PreferencesEditor::statusToolMgrChanged(const QVariant& state) {
                          , tr("QMessageBox::information()")
                          , tr("for this change to take effect, "
                               "the application must be restarted."));
-  Config().setValue("activateToolMgr", state.toBool());
+  cfg->setValue("activateToolMgr", state.toBool());
   }
 
 

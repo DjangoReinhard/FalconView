@@ -1,6 +1,5 @@
 #include "helpdockable.h"
 #include "helpview.h"
-#include <configacc.h>
 #include <QMouseEvent>
 #include <QDebug>
 

@@ -2,15 +2,13 @@
 #include "toolmodel.h"
 #include <dbconnection.h>
 #include <ui_ToolEditor.h>
-#include <core.h>
-#include <QLocale>
 #include <QDebug>
 #include <QComboBox>
 #include <QSqlError>
 #include <QSqlRecord>
 
 
-ToolEditor::ToolEditor(QWidget *parent)
+ToolEditor::ToolEditor(const QString& langPrefix, QWidget *parent)
  : QWidget(parent)
  , ui(new Ui::ToolEditorForm)
  , model(new QSqlQueryModel)
@@ -22,7 +20,7 @@ ToolEditor::ToolEditor(QWidget *parent)
   model->setQuery("select id, name from Category");
 //  dumpModel();
   ui->setupUi(this);
-  QPixmap ni = QPixmap(QString(":/res/ToolDimensions_%1.png").arg(Core().languagePrefix()));
+  QPixmap ni = QPixmap(QString(":/res/ToolDimensions_%1.png").arg(langPrefix));
 
   if (!ni.isNull()) ui->helpImage->setPixmap(ni);
   setupTabOrder();

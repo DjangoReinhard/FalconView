@@ -35,9 +35,7 @@ SOURCES += \
     util/dbconnection.cpp \
     util/flowlayout.cpp \
     util/kernelcreator.cpp \
-    util/timestamp.cpp \
-    view/filemanager.cpp \
-    view/abscenterwidget.cpp
+    util/timestamp.cpp
 
 HEADERS += \
     model/configacc.h \
@@ -58,9 +56,7 @@ HEADERS += \
     util/flowlayout.h \
     util/kernelcreator.h \
     util/timestamp.h \
-    view/PluginPageInterface.h \
-    view/filemanager.h \
-    view/abscenterwidget.h
+    view/PluginPageInterface.h
 
 TRANSLATIONS += \
     baselib_de_DE.ts

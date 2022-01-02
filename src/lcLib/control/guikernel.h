@@ -1,13 +1,13 @@
 #ifndef GUIKERNEL_H
 #define GUIKERNEL_H
 #include <kernel.h>
-#include <lcproperties.h>
 #include <tooltable.h>
-#include <LCInter.h>
 #include <axismask.h>
 #include <gcodeinfo.h>
 #include <positioncalculator.h>
 #include <QThread>
+#include <lcproperties.h>
+#include <LCInter.h>
 
 class PluginPageInterface;
 class SysEventModel;
@@ -18,6 +18,7 @@ class QMainWindow;
 class StatusReader;
 class CommandWriter;
 class QVariant;
+class CanonIFSettings;
 class QTimerEvent;
 class QCloseEvent;
 
@@ -67,24 +68,25 @@ signals:
   void taskPlanSynch();
 
 private:
-  LcProperties*       lcProps;
-  ToolTable*          tt;
-  LCInterface*        lcIF;
-  AxisMask*           mAxis;
-  OcctQtViewer*       view3D;
-  CenterView*         centerView;
-  QMainWindow*        mainWindow;
-  Ally3D*             ally3D;
-  GCodeInfo           gcodeInfo;
-  PositionCalculator  positionCalculator;
-  StatusReader*       statusReader;
-  CommandWriter*      commandWriter;
-  QThread             backendCommThread;
-  SysEventModel*      sysEvents;
+  LcProperties*      lcProps;
+  ToolTable*         tt;
+  LCInterface*       lcIF;
+  AxisMask*          mAxis;
+  OcctQtViewer*      view3D;
+  CenterView*        centerView;
+  QMainWindow*       mainWindow;
+  Ally3D*            ally3D;
+  GCodeInfo          gcodeInfo;
+  PositionCalculator positionCalculator;
+  StatusReader*      statusReader;
+  CommandWriter*     commandWriter;
+  QThread            backendCommThread;
+  SysEventModel*     sysEvents;
+  CanonIFSettings*   canonIF;
   QMap<QString, PluginPageInterface*> pages;
   QMap<QString, PluginPageInterface*> statusInfos;
   friend class GuiKernelCreator;
   friend class GuiCore;
+  friend class CanonIF;
   };
-
 #endif // GUIKERNEL_H
