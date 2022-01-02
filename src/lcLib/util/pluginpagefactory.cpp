@@ -10,13 +10,13 @@
 #include <filemanager.h>
 #include <settingsnb.h>
 #include <testEdit.h>
+#include <helpview.h>
 #ifndef USE_PLUGINS
 # include <Position/positionstatus.h>
 # include <ToolInfo/toolstatus.h>
 # include <SpeedInfo/speedstatus.h>
 # include <CurCodes/curcodesstatus.h>
 
-# include <HelpView/helpview.h>
 # include <JogView/jogview.h>
 # include <MDIEditor/mdieditor.h>
 # include <SysEventView/syseventview.h>
@@ -64,6 +64,11 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
      rv = new TestEdit();
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
      rv->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     }
+  else if (name == "HelpView") {
+     rv = new HelpView();
+     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
+     rv->initialize();
      }
   else if (name == "Preview3D") {
 #ifndef USE_PLUGINS
@@ -148,16 +153,6 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
   else if (name == "JogView") {
 #ifndef USE_PLUGINS
      rv = new JogView();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
-  else if (name == "HelpView") {
-#ifndef USE_PLUGINS
-     rv = new HelpView();
 #else
      if (!rv) return rv;
      assert(rv);

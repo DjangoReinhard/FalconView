@@ -9,7 +9,7 @@
 #include <dbhelper.h>
 #include <centerpage.h>
 #include <settingsnb.h>
-#include <centerview.h>
+#include <pagestack.h>
 #include <tooltable.h>
 #include <configacc.h>
 #include <configmgr.h>
@@ -119,7 +119,7 @@ void GuiCore::parseGCFile(const QString &fileName) {
   }
 
 
-void GuiCore::setViewStack(CenterView* v) {
+void GuiCore::setViewStack(PageStack* v) {
   guiCore()->centerView = v;
   }
 
@@ -171,7 +171,7 @@ OcctQtViewer* GuiCore::view3D() {
   }
 
 
-CenterView* GuiCore::viewStack() {
+PageStack* GuiCore::viewStack() {
   return guiCore()->centerView;
   }
 

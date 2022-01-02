@@ -11,7 +11,7 @@
 #include <equalcondition.h>
 #include <greatercondition.h>
 #include <smallercondition.h>
-#include <centerview.h>
+#include <pagestack.h>
 #include <testEdit.h>
 #include <dockable.h>
 #include <centerpage.h>
@@ -23,18 +23,18 @@
 #include <configacc.h>
 #include <emc.hh>
 #include <pluginpagefactory.h>
+#include <Preview3D/pweditor.h>
+#include <MDIEditor/mdieditor.h>
+#include <helpdockable.h>
 #ifndef USE_PLUGINS
 # include <Position/positionstatus.h>
 # include <ToolInfo/toolstatus.h>
 # include <SpeedInfo/speedstatus.h>
 # include <CurCodes/curcodesstatus.h>
 
-# include <HelpView/helpview.h>
 # include <JogView/jogview.h>
-# include <MDIEditor/mdieditor.h>
 # include <SysEventView/syseventview.h>
 # include <LCToolTable/lctooltable.h>
-# include <Preview3D/pweditor.h>
 # include <PathEditor/patheditor.h>
 # include <PrefsEditor/preferenceseditor.h>
 # include <FixtureManager/fixturemanager.h>
@@ -119,7 +119,6 @@ void MainWindow::addDockable(Qt::DockWidgetArea area, Dockable* d) {
 
 
 void MainWindow::autoPause() {
-#ifndef USE_PLUGINS
   int iState = ValueManager().getValue("interpState").toInt();
 
   if (iState == EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED) {
@@ -128,7 +127,6 @@ void MainWindow::autoPause() {
   else {
      GuiCore().beSetAuto(1, 0);
      }
-#endif
   }
 
 
@@ -145,8 +143,14 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
     case Settings:    GuiCore().activatePage("SettingsNotebook"); break;
     case SelectFile:  GuiCore().activatePage("FileManager"); break;
     case Touch:       GuiCore().activatePage("TouchView"); break;
-    case Help:        GuiCore().activatePage("HelpView"); break;
     case ErrMessages: GuiCore().activatePage("SysEventView"); break;
+    case Help:
+#ifdef HELP_IS_CENTER_PAGE
+      GuiCore().activatePage("HelpView");
+#else
+      dlgHelp->showHelp();
+#endif
+      break;
     default: break;
     }
   }
@@ -176,13 +180,12 @@ void MainWindow::about() {
 
 
 void MainWindow::autoStart() {
-#ifndef USE_PLUGINS
   bool gcodeDirty = ValueManager().getValue("gcodeDirty").toBool();
 
   qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
   ApplicationMode am = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
 
-  if (am == ApplicationMode::MDI) {
+  if (mdi && am == ApplicationMode::MDI) {
      const QString& cmd = mdi->command();
 
      if (cmd.isEmpty()) return;
@@ -191,7 +194,7 @@ void MainWindow::autoStart() {
      GuiCore().beSendMDICommand(cmd);
      mdi->append(cmd);
      }
-  else if (am == ApplicationMode::Auto) {
+  else if (pw && am == ApplicationMode::Auto) {
      if (gcodeDirty) {
         GuiCore().riseError(tr("active GCode-file has unsaved changes. "
                             "Please save the file before executing it."));
@@ -219,7 +222,6 @@ void MainWindow::autoStart() {
      GuiCore().riseError(tr("wrong application for execute. Please select"
                          "3D-Preview or MDI for gcode-execution."));
      }
-#endif
   }
 
 
@@ -447,7 +449,7 @@ void MainWindow::createConnections() {
   connect(ui->actionleftView,  &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::leftView);
   connect(ui->actionrightView, &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::rightView);
   connect(ui->actionTopView,   &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::topView);
-  connect(ui->actionHelp,      &QAction::triggered, this,            &MainWindow::showHelp);
+  connect(ui->actionHelp,      &QAction::triggered, this,               &MainWindow::showHelp);
 
 //  if (!previewIsCenter)
 //     connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
@@ -551,10 +553,8 @@ void MainWindow::createToolBars() {
 
 
 void MainWindow::createDockables() {
-  qDebug() << "MW::createDockables() - statusInPreview:"
-           << (statusInPreview ? "YES" : "NO");
-  qDebug() << "MW::createDockables() - previewIsCenter:"
-           << (previewIsCenter ? "YES" : "NO");
+  qDebug() << "MW::createDockables() - statusInPreview:" << (statusInPreview ? "YES" : "NO");
+  qDebug() << "MW::createDockables() - previewIsCenter:" << (previewIsCenter ? "YES" : "NO");
 
   if (!statusInPreview) {
     for (const QString& s : { "Position", "ToolInfo", "SpeedInfo", "CurCodes"}) {
@@ -564,70 +564,20 @@ void MainWindow::createDockables() {
         addDockable(Qt::LeftDockWidgetArea, new Dockable(cw, this));
         }
      }
-
   if (previewIsCenter) {
-     CenterView*           center = new CenterView(this);
+     PageStack* stack = new PageStack(this);
 
-     GuiCore().setViewStack(center);     
-     center->addPage(new CenterPage(ppFactory->createCenterPage("FileManager")
-                                  , true
-                                  , center));
-     center->addPage(new CenterPage(ppFactory->createCenterPage("TestEdit")
-                                  , true
-                                  , center));
-     center->addPage(new CenterPage(ppFactory->createCenterPage("MDIEditor")
-                                  , true
-                                  , center));
-     center->addPage(new CenterPage(ppFactory->createCenterPage("SysEventView")
-                                  , true
-                                  , center));
-     center->addPage(new CenterPage(ppFactory->createCenterPage("PathEditor")
-                                  , true
-                                  , center));
-     snb = qobject_cast<SettingsNotebook*>(ppFactory->createCenterPage("SettingsNotebook"));
-     assert(snb);
-     if (Config().value("activateToolMgr").toBool()) {
-        qDebug() << "config says we want tool-manager!";
-        snb->addPage(ppFactory->createCenterPage("ToolManager"));
-        }
-     snb->addPage(ppFactory->createCenterPage("FixtureManager"));
-     snb->addPage(ppFactory->createCenterPage("PreferencesEditor"));
-     snb->addPage(ppFactory->createCenterPage("LCToolTable"));
-     center->addPage(new CenterPage(ppFactory->createCenterPage("JogView")
-                                  , true
-                                  , center));
-     center->addPage(new CenterPage(ppFactory->createCenterPage("HelpView")
-                                  , true
-                                  , center));
-     center->addPage(new CenterPage(snb, false, center));
-     addDockable(Qt::BottomDockWidgetArea, new Dockable(center, this));
-     }
-  //TODO:
-#ifndef USE_PLUGINS
-//  dlgHelp = new HelpDockable(this);
-//  addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
-#endif
-  }
-
-
-void MainWindow::createMainWidgets() {
-  qDebug() << "MW::createMainWidgets() - previewIsCenter:"
-           << (previewIsCenter ? "YES" : "NO");
-
-  if (previewIsCenter) {
-     setCentralWidget(GuiCore().view3D());
-     // other pages are dockables!
-     }
-  else {    
-     CenterView*           center = new CenterView(this);
-
-     GuiCore().setViewStack(center);
+     GuiCore().setViewStack(stack);
      AbstractCenterWidget* cw;
 
-     for (const QString& s : { "FileManager", "Preview3D", "TestEdit", "MDIEditor"
-                             , "SysEventView", "PathEditor", "JogView", "HelpView" }) {
+     for (const QString& s : { "FileManager", "TestEdit", "MDIEditor" /* , "Preview3D" */
+                             , "SysEventView", "PathEditor", "JogView" }) {
          cw = ppFactory->createCenterPage(s);
-         if (cw) center->addPage(new CenterPage(cw, true, center));
+         if (cw) {
+            if (s == "MDIEditor")      mdi = reinterpret_cast<MDIEditor*>(cw);
+            else if (s == "Preview3D") pw  = reinterpret_cast<PreViewEditor*>(cw);
+            stack->addPage(new CenterPage(cw, true, stack));
+            }
          }
      snb = qobject_cast<SettingsNotebook*>(ppFactory->createCenterPage("SettingsNotebook"));
      assert(snb);
@@ -640,8 +590,57 @@ void MainWindow::createMainWidgets() {
          cw = ppFactory->createCenterPage(s);
          if (cw) snb->addPage(cw);
          }
-     center->addPage(new CenterPage(snb, false, center));
-     this->setCentralWidget(center);
+     stack->addPage(new CenterPage(snb, false, stack));
+     addDockable(Qt::BottomDockWidgetArea, new Dockable(stack, this));
+     }
+  //TODO:
+  AbstractCenterWidget* cw = ppFactory->createCenterPage("HelpView");
+  HelpView*             hv = reinterpret_cast<HelpView*>(cw);
+
+  if (hv) {
+     dlgHelp = new HelpDockable(hv, this);
+     showHelp();
+//     addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
+     }
+  }
+
+
+void MainWindow::createMainWidgets() {
+  qDebug() << "MW::createMainWidgets() - previewIsCenter:"
+           << (previewIsCenter ? "YES" : "NO");
+
+  if (previewIsCenter) {
+     setCentralWidget(GuiCore().view3D());
+     // other pages are dockables!
+     }
+  else {    
+     PageStack* stack = new PageStack(this);
+
+     GuiCore().setViewStack(stack);
+     AbstractCenterWidget* cw;
+
+     for (const QString& s : { "FileManager", "Preview3D", "TestEdit", "MDIEditor"
+                             , "SysEventView", "PathEditor", "JogView" }) {
+         cw = ppFactory->createCenterPage(s);
+         if (cw) {
+            if (s == "MDIEditor")      mdi = reinterpret_cast<MDIEditor*>(cw);
+            else if (s == "Preview3D") pw  = reinterpret_cast<PreViewEditor*>(cw);
+            stack->addPage(new CenterPage(cw, true, stack));
+            }
+         }
+     snb = qobject_cast<SettingsNotebook*>(ppFactory->createCenterPage("SettingsNotebook"));
+     assert(snb);
+     if (Config().value("activateToolMgr").toBool()) {
+        qDebug() << "config says we want tool-manager!";
+        cw = ppFactory->createCenterPage("ToolManager");
+        if (cw) snb->addPage(cw);
+        }
+     for (const QString& s : { "FixtureManager", "PrefsEditor", "LCToolTable" }) {
+         cw = ppFactory->createCenterPage(s);
+         if (cw) snb->addPage(cw);
+         }
+     stack->addPage(new CenterPage(snb, false, stack));
+     this->setCentralWidget(stack);
      }
   }
 
@@ -767,7 +766,11 @@ void MainWindow::showErrMessages() {
 
 
 void MainWindow::showHelp() {
+#ifdef HELP_IS_CENTER_PAGE
   setAppMode(ApplicationMode::Help);
+#else
+  if (dlgHelp) dlgHelp->showHelp();
+#endif
   }
 
 
@@ -810,7 +813,7 @@ void MainWindow::testTools() {
 //  ValueManager().setValue("pocketPrepared", ++slot);
 //  qDebug() << "testTools #" << slot << " - total:" << GuiCore().toolTable().entries();
 //  if (slot >= GuiCore().toolTable().entries()) slot = 0;
-  CenterView*    center = GuiCore().viewStack();
+  PageStack*    center = GuiCore().viewStack();
   QList<QString> pp     = center->pages();
 
   for (const QString& n : pp) {
@@ -874,6 +877,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
          if (modeTB->isVisible()) {
             qDebug() << "mode toolbar is visible";
             switch (e->key()) {
+              case Qt::Key_F1:  ValueManager().setValue("appMode", ApplicationMode::Help); break;
               case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
               case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
               case Qt::Key_F4:  ValueManager().setValue("appMode", ApplicationMode::MDI); break;

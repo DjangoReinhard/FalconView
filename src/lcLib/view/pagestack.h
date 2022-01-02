@@ -1,5 +1,5 @@
-#ifndef CENTERVIEW_H
-#define CENTERVIEW_H
+#ifndef PAGESTACK_H
+#define PAGESTACK_H
 #include <abscenterwidget.h>
 #include <QMap>
 class CenterPage;
@@ -8,11 +8,11 @@ class QCloseEvent;
 class Kernel;
 
 
-class CenterView : public AbstractCenterWidget
+class PageStack : public AbstractCenterWidget
 {
   Q_OBJECT
 public:
-  CenterView(QWidget* parent = nullptr);
+  PageStack(QWidget* parent = nullptr);
 
   CenterPage*    activatePage(const QString& name);
   QString        activePage() const;
@@ -32,4 +32,4 @@ private:
   QString                    curPage;
   friend class Kernel;
   };
-#endif // CENTERVIEW_H
+#endif // PAGESTACK_H

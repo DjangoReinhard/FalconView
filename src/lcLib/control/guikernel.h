@@ -13,7 +13,7 @@ class PluginPageInterface;
 class SysEventModel;
 class OcctQtViewer;
 class Ally3D;
-class CenterView;
+class PageStack;
 class QMainWindow;
 class StatusReader;
 class CommandWriter;
@@ -73,7 +73,7 @@ private:
   LCInterface*       lcIF;
   AxisMask*          mAxis;
   OcctQtViewer*      view3D;
-  CenterView*        centerView;
+  PageStack*        centerView;
   QMainWindow*       mainWindow;
   Ally3D*            ally3D;
   GCodeInfo          gcodeInfo;

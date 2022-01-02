@@ -34,10 +34,6 @@ public:
   static void     setKernelCreator(KernelCreator* kc);
 
 protected:
-//  explicit              Core(const Core& other); // used by factory
-//  Core&                 operator=(const Core& other);
-//  Kernel*               core();
-//  const Kernel*         core() const;
   explicit              Core(void* p); // for plugins
   static Kernel*        kernel;
   static KernelCreator* kc;

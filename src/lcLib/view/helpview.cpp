@@ -20,12 +20,14 @@ HelpView::HelpView(QWidget* parent)
  , kw(nullptr) {
   setObjectName("HelpView");
   setWindowTitle(tr("HelpView"));
+  setMinimumSize(800, 800);
   }
 
 
 QWidget* HelpView::createContent() {
   tb = new HelpBrowser();
   sp = new QSplitter(Qt::Horizontal, this);
+  qDebug() << "HelpEngine - helpfile is:" << core->fileName4("helpFile");
   he = new HelpEngine(core->fileName4("helpFile"), this);
   cw = static_cast<HelpContentWidget*>(he->contentWidget());
   kw = static_cast<HelpKeywordWidget*>(he->keywordWidget());

@@ -27,7 +27,8 @@ INCLUDEPATH += \
     $${LINUXCNC}/src/emc/rs274ngc \
     $${LINUXCNC}/src/emc/tooldata \
     $${LINUXCNC}/src \
-    $${OCCT}/include/opencascade
+    $${OCCT}/include/opencascade \
+    ../plugPages
 
 TEST_SOURCES += \
     test/testDB.cpp \

@@ -56,7 +56,9 @@ HEADERS += \
     util/flowlayout.h \
     util/kernelcreator.h \
     util/timestamp.h \
-    view/PluginPageInterface.h
+    view/GCodeViewerInterface.h \
+    view/PluginPageInterface.h \
+    view/mdieditorinterface.h
 
 TRANSLATIONS += \
     baselib_de_DE.ts

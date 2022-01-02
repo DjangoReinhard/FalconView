@@ -101,6 +101,9 @@ SOURCES += \
     src/lcLib/view/gcodeinfo.cpp \
     src/lcLib/view/helpcontentwidget.cpp \
     src/lcLib/view/helpkeywordwidget.cpp \
+    src/lcLib/view/helpbrowser.cpp \
+    src/lcLib/view/helpdockable.cpp \
+    src/lcLib/view/helpview.cpp \
     src/lcLib/view/jogbutton.cpp \
     src/lcLib/view/numlabel.cpp \
     src/lcLib/view/occtviewer.cpp \
@@ -108,9 +111,6 @@ SOURCES += \
     src/lcLib/view/testEdit.cpp \
     src/plugPages/FixtureManager/fixtureedit.cpp \
     src/plugPages/FixtureManager/fixturemanager.cpp \
-    src/plugPages/HelpView/helpbrowser.cpp \
-    src/plugPages/HelpView/helpdockable.cpp \
-    src/plugPages/HelpView/helpview.cpp \
     src/plugPages/JogView/jogview.cpp \
     src/plugPages/LCToolTable/lctooltable.cpp \
     src/plugPages/MDIEditor/mdieditor.cpp \
@@ -204,6 +204,9 @@ HEADERS += \
     src/lcLib/view/gcodeinfo.h \
     src/lcLib/view/helpcontentwidget.h \
     src/lcLib/view/helpkeywordwidget.h \
+    src/lcLib/view/helpbrowser.h \
+    src/lcLib/view/helpdockable.h \
+    src/lcLib/view/helpview.h \
     src/lcLib/view/jogbutton.h \
     src/lcLib/view/numlabel.h \
     src/lcLib/view/occtviewer.h \
@@ -211,9 +214,6 @@ HEADERS += \
     src/lcLib/view/testEdit.h \
     src/plugPages/FixtureManager/fixtureedit.h \
     src/plugPages/FixtureManager/fixturemanager.h \
-    src/plugPages/HelpView/helpbrowser.h \
-    src/plugPages/HelpView/helpdockable.h \
-    src/plugPages/HelpView/helpview.h \
     src/plugPages/JogView/jogview.h \
     src/plugPages/LCToolTable/lctooltable.h \
     src/plugPages/MDIEditor/mdieditor.h \
@@ -235,8 +235,8 @@ HEADERS += \
 FORMS += \
     src/app/UI/mainwindow.ui \
     src/lcLib/UI/GCodeEditor.ui \
+    src/lcLib/UI/HelpTitle.ui \
     src/plugPages/FixtureManager/Fixture.ui \
-    src/plugPages/HelpView/HelpTitle.ui \
     src/plugPages/JogView/Jog.ui \
     src/plugPages/MDIEditor/MDIEditor.ui \
     src/plugPages/PrefsEditor/Settings.ui \
@@ -254,7 +254,6 @@ TRANSLATIONS += \
     src/baselib/baselib_de_DE.ts \
     src/lcLib/lcLib_de_DE.ts \
     src/plugPages/FixtureManager/fixture_de_DE.ts \
-    src/plugPages/HelpView/helptitle_de_DE.ts \
     src/plugPages/JogView/jogview_de_DE.ts \
     src/plugPages/LCToolTable/lctooltable_de_DE.ts \
     src/plugPages/MDIEditor/mdieditor_de_DE.ts \

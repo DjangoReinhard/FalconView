@@ -1,6 +1,7 @@
 #ifndef MDIEDITOR_H
 #define MDIEDITOR_H
 #include <abscenterwidget.h>
+#include <mdieditorinterface.h>
 
 QT_BEGIN_NAMESPACE
 class QLineEdit;
@@ -8,18 +9,18 @@ class QListWidget;
 QT_END_NAMESPACE
 
 
-class MDIEditor : public AbstractCenterWidget
+class MDIEditor : public AbstractCenterWidget, public MDIEditorInterface
 {
   Q_OBJECT
 #ifdef USE_PLUGINS
-  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "mdiEditor.json")
+  Q_PLUGIN_METADATA(IID "MDIEditorInterface_iid" FILE "mdiEditor.json")
 #endif
 public:
   explicit MDIEditor(QWidget* parent = nullptr);
   virtual ~MDIEditor();
 
-  void             append(const QString& command);
-  QString          command() const;
+  virtual void     append(const QString& command) override;
+  virtual QString  command() const override;
   virtual QWidget* createContent() override;
   virtual void     connectSignals() override;
   virtual void     updateStyles() override;

@@ -1,7 +1,6 @@
 TEMPLATE = subdirs
 SUBDIRS  = \
    FixtureManager \
-   HelpView \
    JogView \
    LCToolTable \
    MDIEditor \

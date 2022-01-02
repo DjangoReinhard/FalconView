@@ -23,8 +23,6 @@ INCLUDEPATH += \
     control \
     util \
     view \
-    ../plugPages \
-    ../statusInfo \
 
 SOURCES += \
     control/canonifsettings.cpp \
@@ -55,11 +53,14 @@ SOURCES += \
     view/abscenterwidget.cpp \
     view/filemanager.cpp \
     view/gcodeeditor.cpp \
+    view/helpbrowser.cpp \
+    view/helpdockable.cpp \
+    view/helpview.cpp \
+    view/pagestack.cpp \
     view/testEdit.cpp \
     view/gcodeinfo.cpp \
     view/jogbutton.cpp \
     view/numlabel.cpp \
-    view/centerview.cpp \
     view/settingsnb.cpp \
     view/helpkeywordwidget.cpp \
     view/helpcontentwidget.cpp \
@@ -98,10 +99,13 @@ HEADERS += \
     view/centerpage.h \
     view/filemanager.h \
     view/gcodeeditor.h \
+    view/helpbrowser.h \
+    view/helpdockable.h \
+    view/helpview.h \
     view/helpcontentwidget.h \
-    view/centerview.h \
     view/occtviewer.h \
     view/jogbutton.h \
+    view/pagestack.h \
     view/settingsnb.h \
     view/testEdit.h \
     view/helpkeywordwidget.h \
@@ -118,4 +122,5 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    UI/HelpTitle.ui \
     UI/GCodeEditor.ui

@@ -12,7 +12,7 @@ class DBHelper;
 class QMainWindow;
 class ToolTable;
 class LcProperties;
-class CenterView;
+class PageStack;
 class QCloseEvent;
 class QTranslator;
 class QLocale;
@@ -40,7 +40,7 @@ public:
   PluginPageInterface* pluggablePage(const QString pageID);
   QList<QString>       pluggablePages();
   void                 setMainWindow(QMainWindow* w);
-  void                 setViewStack(CenterView* v);
+  void                 setViewStack(PageStack* v);
   void                 setWindowTitle(const QString& title);
   QWidget*             stackedPage(const QString& pageName);
   PluginPageInterface* statusInfo(const QString infoID);
@@ -49,7 +49,7 @@ public:
   ToolTable&           toolTable();
   ToolTable*           toolTableModel();
   OcctQtViewer*        view3D();
-  CenterView*          viewStack();
+  PageStack*           viewStack();
   void                 windowClosing(QCloseEvent* e);
 
   void beAbortTask();

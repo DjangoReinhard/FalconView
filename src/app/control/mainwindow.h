@@ -77,6 +77,7 @@ private:
   SettingsNotebook*   snb;
   PreViewEditor*      pw;
   MDIEditor*          mdi;
+  HelpDockable*       dlgHelp;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;

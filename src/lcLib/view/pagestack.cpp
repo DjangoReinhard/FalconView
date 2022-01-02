@@ -1,4 +1,4 @@
-#include <centerview.h>
+#include <pagestack.h>
 #include <centerpage.h>
 #include <abscenterwidget.h>
 #include <guicore.h>
@@ -7,7 +7,7 @@
 #include <QDebug>
 
 
-CenterView::CenterView(QWidget* parent)
+PageStack::PageStack(QWidget* parent)
  : AbstractCenterWidget(parent) {
   setObjectName(tr("PageStack"));
   setLayout(new QStackedLayout);
@@ -15,20 +15,20 @@ CenterView::CenterView(QWidget* parent)
   }
 
 
-QWidget* CenterView::createContent() {
+QWidget* PageStack::createContent() {
   return nullptr;
   }
 
 
-void CenterView::connectSignals() {
+void PageStack::connectSignals() {
   }
 
 
-void CenterView::updateStyles() {
+void PageStack::updateStyles() {
   }
 
 
-CenterPage* CenterView::page(const QString& name) {
+CenterPage* PageStack::page(const QString& name) {
 //  qDebug() << "CenterView: requested page \"" << name << "\"";
 
   if (pagePool.contains(name)) return pagePool[name];
@@ -38,7 +38,7 @@ CenterPage* CenterView::page(const QString& name) {
   }
 
 
-CenterPage* CenterView::activatePage(const QString& name) {
+CenterPage* PageStack::activatePage(const QString& name) {
   qDebug() << "CenterView: activatePage \""  << name << "\"";
 
   if (pagePool.contains(name)) {
@@ -63,12 +63,12 @@ CenterPage* CenterView::activatePage(const QString& name) {
   }
 
 
-QString CenterView::activePage() const {
+QString PageStack::activePage() const {
   return curPage;
   }
 
 
-void CenterView::dump() const {
+void PageStack::dump() const {
   qDebug() << "CenterView contains" << pagePool.size() << " pages";
   for (auto e = pagePool.constKeyValueBegin(); e != pagePool.constKeyValueEnd(); e++) {
       qDebug() << "MainView holds page >>" << e->first;
@@ -76,7 +76,7 @@ void CenterView::dump() const {
   }
 
 
-void CenterView::addPage(CenterPage* page, const QString& name) {
+void PageStack::addPage(CenterPage* page, const QString& name) {
   QString pageName(name);
 
   if (pageName.isEmpty()) pageName = page->objectName();
@@ -93,12 +93,12 @@ void CenterView::addPage(CenterPage* page, const QString& name) {
   }
 
 
-QList<QString> CenterView::pages() const {
+QList<QString> PageStack::pages() const {
   return pagePool.keys();
   }
 
 
-void CenterView::windowClosing(QCloseEvent* e) {
+void PageStack::windowClosing(QCloseEvent* e) {
   for (auto t = pagePool.constKeyValueBegin(); t != pagePool.constKeyValueEnd(); t++) {
       t->second->closeEvent(e);
       }

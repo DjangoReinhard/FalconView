@@ -40,16 +40,6 @@ int Core::axisMask() const {
   }
 
 
-//Kernel* Core::core() {
-//  return kernel;
-//  }
-
-
-//const Kernel* Core::core() const {
-//  return kernel;
-//  }
-
-
 DBConnection* Core::databaseConnection() {
   return kernel->conn;
   }

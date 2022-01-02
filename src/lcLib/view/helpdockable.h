@@ -1,6 +1,6 @@
 #ifndef HELPDOCKABLE_H
 #define HELPDOCKABLE_H
-#include <ui_HelpTitle.h>
+//#include <ui_HelpTitle.h>
 #include <QDockWidget>
 //#include <QPixmap>
 class HelpView;
@@ -12,12 +12,16 @@ class HelpView;
 //class QTreeWidgetItem;
 //class QListWidgetItem;
 
+namespace Ui {
+  class HelpTitle;
+}
+
 
 class HelpDockable : public QDockWidget
 {
   Q_OBJECT
 public:
-  HelpDockable(QWidget* parent = nullptr);
+  HelpDockable(HelpView* view, QWidget* parent = nullptr);
 
   void showHelp();
   void help4Keyword(const QString& keyWord);
@@ -27,7 +31,7 @@ protected:
 
 //  void contentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 //  void keywordItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-//  void keyPressEvent(QKeyEvent* event) override;
+  void keyPressEvent(QKeyEvent* event) override;
 //  void sourceChanged(const QUrl &src);
 //  void tabChanged(int index);
 

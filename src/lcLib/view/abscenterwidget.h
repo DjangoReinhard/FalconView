@@ -4,7 +4,7 @@
 #include <PluginPageInterface.h>
 
 QT_BEGIN_NAMESPACE
-class CenterView;
+class PageStack;
 class DBConnection;
 class SettingsNotebook;
 class PluginPageFactory;

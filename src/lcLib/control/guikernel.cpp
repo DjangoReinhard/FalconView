@@ -5,7 +5,7 @@
 #include <ally3d.h>
 #include <canonifsettings.h>
 #include <occtviewer.h>
-#include <centerview.h>
+#include <pagestack.h>
 #include <statusreader.h>
 #include <commandwriter.h>
 #include <syseventmodel.h>
@@ -57,6 +57,9 @@ QString GuiKernel::fileName4(const QString &fileID) const {
      dir.cd("plugins");
 
      return dir.absolutePath();
+     }  
+  else if (fileID == "helpFile") {
+     return QApplication::applicationDirPath() + "/../share/doc/falconview/FalconView.qzh";
      }
   else if (fileID == "toolTable") {
      return lcProps->toolTableFileName();

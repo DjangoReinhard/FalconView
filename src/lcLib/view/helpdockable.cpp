@@ -1,13 +1,16 @@
 #include "helpdockable.h"
 #include "helpview.h"
+#include <ui_HelpTitle.h>
 #include <QMouseEvent>
 #include <QDebug>
 
 
-HelpDockable::HelpDockable(QWidget* parent)
+HelpDockable::HelpDockable(HelpView* view, QWidget* parent)
  : QDockWidget(tr("Help"), parent)
- , hv(new HelpView()) {
+ , hv(view) {
+  setTitleBarWidget(new HelpTitleBar(this));
   hv->restoreState();
+  this->setWidget(hv);
   }
 
 
@@ -27,6 +30,26 @@ void HelpDockable::showHelp() {
 
 void HelpDockable::closeEvent(QCloseEvent* e) {
   if (hv) hv->closeEvent(e);
+  }
+
+
+void HelpDockable::keyPressEvent(QKeyEvent* e) {
+//  qDebug() << "HelpDLG: pressed key: " << e->key()
+//           << "modifiers: "   << e->modifiers()
+//           << "event-ts: " << e->timestamp();
+  switch (e->key()) {
+    case Qt::Key_Escape:
+         hide();
+         break;
+    case Qt::Key_Right:
+    case Qt::Key_Left:
+    case Qt::Key_Up:
+    case Qt::Key_Down:
+         break;
+    default:
+         QDockWidget::keyPressEvent(e);
+         break;
+    }
   }
 
 
@@ -61,26 +84,6 @@ void HelpDockable::keywordItemChanged(QListWidgetItem *current, QListWidgetItem 
   const QString& page = current->toolTip();
 
   tb->setSource(page);
-  }
-
-
-void HelpDockable::keyPressEvent(QKeyEvent* e) {
-//  qDebug() << "HelpDLG: pressed key: " << e->key()
-//           << "modifiers: "   << e->modifiers()
-//           << "event-ts: " << e->timestamp();
-  switch (e->key()) {
-    case Qt::Key_Escape:
-         close();
-         break;
-    case Qt::Key_Right:
-    case Qt::Key_Left:
-    case Qt::Key_Up:
-    case Qt::Key_Down:
-         break;
-    default:
-         QDockWidget::keyPressEvent(e);
-         break;
-    }
   }
 
 

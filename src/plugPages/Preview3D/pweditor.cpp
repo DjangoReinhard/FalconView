@@ -203,6 +203,12 @@ void PreViewEditor::patch(void *pk, void *pc, void *pv, void *pu) {
   view3D = (OcctQtViewer*)pu;
   }
 
+
+void PreViewEditor::updateStyles() {
+  TestEdit::updateStyles();
+  }
+
+
 void PreViewEditor::toggleSub() {
 //  QWidget* oldSub = spV->widget(1);
 //  QWidget* old;
