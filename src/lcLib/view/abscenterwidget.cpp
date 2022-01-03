@@ -103,6 +103,6 @@ void AbstractCenterWidget::showEvent(QShowEvent* e) {
   QWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
      if (Config().value("showHelpAtPageChange").toBool())
-        Core().help4Keyword(objectName());
+        if (core) core->help4Keyword(objectName());
      }
   }

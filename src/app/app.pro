@@ -36,9 +36,8 @@ TEST_SOURCES += \
 
 SOURCES += \
     main.cpp \
-    model/falconviewdb.cpp \
-    model/tool.cpp \
-    model/toolcategory.cpp \
+    control/abstractcondition.cpp \
+    control/andcondition.cpp \
     control/dynaaction.cpp \
     control/equalcondition.cpp \
     control/falsecondition.cpp \
@@ -50,8 +49,9 @@ SOURCES += \
     control/smallercondition.cpp \
     control/testmain.cpp \
     control/truecondition.cpp \
-    control/abstractcondition.cpp \
-    control/andcondition.cpp \
+    model/falconviewdb.cpp \
+    model/tool.cpp \
+    model/toolcategory.cpp \
     util/multistateaction.cpp \
     view/dockable.cpp \
     view/micon.cpp \

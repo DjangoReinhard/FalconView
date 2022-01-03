@@ -144,13 +144,6 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
     case SelectFile:  GuiCore().activatePage("FileManager"); break;
     case Touch:       GuiCore().activatePage("TouchView"); break;
     case ErrMessages: GuiCore().activatePage("SysEventView"); break;
-    case Help:
-#ifdef HELP_IS_CENTER_PAGE
-      GuiCore().activatePage("HelpView");
-#else
-      dlgHelp->showHelp();
-#endif
-      break;
     default: break;
     }
   }
@@ -597,11 +590,7 @@ void MainWindow::createDockables() {
   AbstractCenterWidget* cw = ppFactory->createCenterPage("HelpView");
   HelpView*             hv = reinterpret_cast<HelpView*>(cw);
 
-  if (hv) {
-     dlgHelp = new HelpDockable(hv, this);
-     showHelp();
-//     addDockWidget(Qt::BottomDockWidgetArea, dlgHelp);
-     }
+  if (hv) dlgHelp = new HelpDockable(hv, this);
   }
 
 
@@ -674,6 +663,11 @@ void MainWindow::hitPowerBtn() {
 void MainWindow::setSingleStep(bool) {
   qDebug() << "MW::setSingleStep()";
   ValueManager().setValue("singleStep", !ValueManager().getValue("singleStep").toBool());
+  }
+
+
+HelpDockable* MainWindow::helpDialog() {
+  return dlgHelp;
   }
 
 
@@ -877,7 +871,8 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
          if (modeTB->isVisible()) {
             qDebug() << "mode toolbar is visible";
             switch (e->key()) {
-              case Qt::Key_F1:  ValueManager().setValue("appMode", ApplicationMode::Help); break;
+//              case Qt::Key_F1:  ValueManager().setValue("appMode", ApplicationMode::Help); break;
+              case Qt::Key_F1:  if (dlgHelp) dlgHelp->showHelp(); break;
               case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
               case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
               case Qt::Key_F4:  ValueManager().setValue("appMode", ApplicationMode::MDI); break;

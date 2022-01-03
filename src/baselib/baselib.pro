@@ -21,6 +21,8 @@ INCLUDEPATH += \
     $${OCCT}/include/opencascade
 
 SOURCES += \
+    control/core.cpp \
+    control/kernel.cpp \
     model/configacc.cpp \
     model/configmgr.cpp \
     model/direntry.cpp \
@@ -30,14 +32,16 @@ SOURCES += \
     model/syseventmodel.cpp \
     model/valuemanager.cpp \
     model/valuemodel.cpp \
-    control/core.cpp \
-    control/kernel.cpp \
     util/dbconnection.cpp \
     util/flowlayout.cpp \
     util/kernelcreator.cpp \
     util/timestamp.cpp
 
 HEADERS += \
+    control/applicationmode.h \
+    control/core.h \
+    control/filemanagerclient.h \
+    control/kernel.h \
     model/configacc.h \
     model/configmgr.h \
     model/direntry.h \
@@ -47,10 +51,6 @@ HEADERS += \
     model/syseventmodel.h \
     model/valuemanager.h \
     model/valuemodel.h \
-    control/applicationmode.h \
-    control/core.h \
-    control/filemanagerclient.h \
-    control/kernel.h \
     util/dbconnection.h \
     util/dbhelper.h \
     util/flowlayout.h \

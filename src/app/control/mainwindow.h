@@ -29,6 +29,7 @@ public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
+  HelpDockable* helpDialog();
   void initialize();
   void setAppMode(ApplicationMode am);
   SettingsNotebook* settingsNotebook() const { return snb; }

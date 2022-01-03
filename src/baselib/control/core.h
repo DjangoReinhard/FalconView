@@ -22,13 +22,11 @@ public:
   DBConnection*   databaseConnection();
   QString         fileName4(const QString& fileID) const;
   bool            isSimulator() const;
-  void            help4Keyword(const QString& keyWord);
   QString         languagePrefix() const;
   QLocale         locale() const;
   bool            move2Backup(const QString& fileName);
   void            setAppMode(ApplicationMode m);
   void            showAllButCenter(bool visible);
-  void            showHelp();
   bool            showHelpAtPageChange() const;
 
   static void     setKernelCreator(KernelCreator* kc);

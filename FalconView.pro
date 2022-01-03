@@ -50,7 +50,7 @@ SOURCES += \
     src/app/model/tool.cpp \
     src/app/model/toolcategory.cpp \
     src/app/util/multistateaction.cpp \
-  src/app/view/dockable.cpp \
+    src/app/view/dockable.cpp \
     src/app/view/micon.cpp \
     src/app/view/plugindialog.cpp \
     src/baselib/control/core.cpp \
@@ -96,7 +96,7 @@ SOURCES += \
     src/lcLib/view/abscenterwidget.cpp \
     src/lcLib/view/filemanager.cpp \
     src/lcLib/view/centerpage.cpp \
-    src/lcLib/view/centerview.cpp \
+    src/lcLib/view/pagestack.cpp \
     src/lcLib/view/gcodeeditor.cpp \
     src/lcLib/view/gcodeinfo.cpp \
     src/lcLib/view/helpcontentwidget.cpp \
@@ -169,6 +169,9 @@ HEADERS += \
     src/baselib/util/kernelcreator.h \
     src/baselib/util/timestamp.h \
     src/baselib/view/PluginPageInterface.h \
+    src/baselib/view/PluginPageInterface.h \
+    src/baselib/view/mdieditorinterface.h \
+    src/lcLib/control/LCInter.h \
     src/lcLib/control/axismask.h \
     src/lcLib/control/canonif.h \
     src/lcLib/control/canonifsettings.h \
@@ -178,7 +181,6 @@ HEADERS += \
     src/lcLib/control/guicore.h \
     src/lcLib/control/guikernel.h \
     src/lcLib/control/helpengine.h \
-    src/lcLib/control/LCInter.h \
     src/lcLib/control/positioncalculator.h \
     src/lcLib/control/statusreader.h \
     src/lcLib/model/lcproperties.h \
@@ -186,26 +188,26 @@ HEADERS += \
     src/lcLib/model/stupidtoolchangerif.h \
     src/lcLib/model/toolentry.h \
     src/lcLib/model/tooltable.h \
-    src/lcLib/util/ally3d.h \
     src/lcLib/util/Geom_HelixData.h \
+    src/lcLib/util/HHelixCurveAdaptor.h \
+    src/lcLib/util/HelixCurveAdaptor.h \
+    src/lcLib/util/HelixCurveAdaptor_CylinderEvaluator.h \
+    src/lcLib/util/HelixCurveAdaptor_p.h \
+    src/lcLib/util/ally3d.h \
     src/lcLib/util/graphicfactory.h \
     src/lcLib/util/guikernelcreator.h \
-    src/lcLib/util/HelixCurveAdaptor_CylinderEvaluator.h \
-    src/lcLib/util/HelixCurveAdaptor.h \
-    src/lcLib/util/HelixCurveAdaptor_p.h \
-    src/lcLib/util/HHelixCurveAdaptor.h \
     src/lcLib/util/insulatePose.h \
     src/lcLib/util/pluginpagefactory.h \
     src/lcLib/view/abscenterwidget.h \
-    src/lcLib/view/filemanager.h \
     src/lcLib/view/centerpage.h \
-    src/lcLib/view/centerview.h \
+    src/lcLib/view/pagestack.h \
+    src/lcLib/view/filemanager.h \
     src/lcLib/view/gcodeeditor.h \
     src/lcLib/view/gcodeinfo.h \
-    src/lcLib/view/helpcontentwidget.h \
-    src/lcLib/view/helpkeywordwidget.h \
     src/lcLib/view/helpbrowser.h \
+    src/lcLib/view/helpcontentwidget.h \
     src/lcLib/view/helpdockable.h \
+    src/lcLib/view/helpkeywordwidget.h \
     src/lcLib/view/helpview.h \
     src/lcLib/view/jogbutton.h \
     src/lcLib/view/numlabel.h \

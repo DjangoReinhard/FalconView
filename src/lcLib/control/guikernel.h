@@ -73,7 +73,7 @@ private:
   LCInterface*       lcIF;
   AxisMask*          mAxis;
   OcctQtViewer*      view3D;
-  PageStack*        centerView;
+  PageStack*         centerView;
   QMainWindow*       mainWindow;
   Ally3D*            ally3D;
   GCodeInfo          gcodeInfo;

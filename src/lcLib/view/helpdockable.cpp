@@ -1,6 +1,7 @@
 #include "helpdockable.h"
 #include "helpview.h"
 #include <ui_HelpTitle.h>
+#include <configacc.h>
 #include <QMouseEvent>
 #include <QDebug>
 
@@ -8,9 +9,16 @@
 HelpDockable::HelpDockable(HelpView* view, QWidget* parent)
  : QDockWidget(tr("Help"), parent)
  , hv(view) {
+  setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
   setTitleBarWidget(new HelpTitleBar(this));
-  hv->restoreState();
+  Config cfg;
+
+  layout()->setContentsMargins(0, 0, 0, 0);
   this->setWidget(hv);
+  cfg.beginGroup("Help");
+  restoreGeometry(cfg.value("geometry").toByteArray());
+  cfg.endGroup();
+  hv->restoreState();
   }
 
 
@@ -30,6 +38,11 @@ void HelpDockable::showHelp() {
 
 void HelpDockable::closeEvent(QCloseEvent* e) {
   if (hv) hv->closeEvent(e);
+  Config cfg;
+
+  cfg.beginGroup("Help");
+  cfg.setValue("geometry", saveGeometry());
+  cfg.endGroup();
   }
 
 

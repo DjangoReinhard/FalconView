@@ -50,14 +50,6 @@ QString Core::fileName4(const QString &fileID) const {
   }
 
 
-void Core::help4Keyword(const QString &keyWord) {
-  qDebug() << "Core::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
-//  if (core()->mainWindow) {
-//     core()->mainWindow->helpDialog()->help4Keyword(keyWord);
-//     }
-  }
-
-
 void Core::setKernelCreator(KernelCreator* kc) {
   Core::kc = kc;
   }
@@ -120,11 +112,6 @@ void Core::riseError(const QString &msg) {
 
 void Core::showAllButCenter(bool visible) {
   ValueManager().setValue("showAllButCenter", visible);
-  }
-
-
-void Core::showHelp() {
-  setAppMode(ApplicationMode::Help);
   }
 
 

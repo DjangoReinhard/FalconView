@@ -93,8 +93,11 @@ const GuiKernel* GuiCore::guiCore() const {
   }
 
 
-LcProperties& GuiCore::lcProperties() {
-  return *guiCore()->lcProps;
+void GuiCore::help4Keyword(const QString &keyWord) {
+  qDebug() << "Core::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
+//  if (guiCore()->mainWindow->helpDialog()) {
+//     guiCore()->mainWindow->helpDialog()->help4Keyword(keyWord);
+//     }
   }
 
 
@@ -106,6 +109,11 @@ bool GuiCore::isLatheMode() const {
 
 bool GuiCore::isSimulator() const {
   return guiCore()->simulator;
+  }
+
+
+LcProperties& GuiCore::lcProperties() {
+  return *guiCore()->lcProps;
   }
 
 

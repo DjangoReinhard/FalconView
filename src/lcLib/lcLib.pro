@@ -25,92 +25,92 @@ INCLUDEPATH += \
     view \
 
 SOURCES += \
-    control/canonifsettings.cpp \
-    model/tooltable.cpp \
-    model/toolentry.cpp \
-    model/linecodes.cpp \
-    model/lcproperties.cpp \
-    model/stupidtoolchangerif.cpp \
-    control/positioncalculator.cpp \
-    control/guikernel.cpp \
-    control/errorreader.cpp \
-    control/canonif.cpp \
-    control/axismask.cpp \
     control/LCInter.cpp \
+    control/axismask.cpp \
+    control/canonif.cpp \
+    control/canonifsettings.cpp \
     control/commandwriter.cpp \
-    control/guicore.cpp \
-    control/helpengine.cpp \
-    control/statusreader.cpp \
+    control/errorreader.cpp \
     control/gcodehighlighter.cpp \
-    util/HelixCurveAdaptor.cpp \
-    util/guikernelcreator.cpp \
-    util/graphicfactory.cpp \
+    control/guicore.cpp \
+    control/guikernel.cpp \
+    control/helpengine.cpp \
+    control/positioncalculator.cpp \
+    control/statusreader.cpp \
+    model/lcproperties.cpp \
+    model/linecodes.cpp \
+    model/stupidtoolchangerif.cpp \
+    model/toolentry.cpp \
+    model/tooltable.cpp \
+    util/Geom_HelixData.cpp \
     util/HHelixCurveAdaptor.cpp \
+    util/HelixCurveAdaptor.cpp \
     util/HelixCurveAdaptor_CylinderEvaluator.cpp \
     util/ally3d.cpp \
-    util/Geom_HelixData.cpp \
+    util/graphicfactory.cpp \
+    util/guikernelcreator.cpp \
     util/pluginpagefactory.cpp \
     view/abscenterwidget.cpp \
+    view/centerpage.cpp \
     view/filemanager.cpp \
     view/gcodeeditor.cpp \
-    view/helpbrowser.cpp \
-    view/helpdockable.cpp \
-    view/helpview.cpp \
-    view/pagestack.cpp \
-    view/testEdit.cpp \
     view/gcodeinfo.cpp \
+    view/helpbrowser.cpp \
+    view/helpcontentwidget.cpp \
+    view/helpdockable.cpp \
+    view/helpkeywordwidget.cpp \
+    view/helpview.cpp \
     view/jogbutton.cpp \
     view/numlabel.cpp \
-    view/settingsnb.cpp \
-    view/helpkeywordwidget.cpp \
-    view/helpcontentwidget.cpp \
     view/occtviewer.cpp \
-    view/centerpage.cpp \
+    view/pagestack.cpp \
+    view/settingsnb.cpp \
+    view/testEdit.cpp \
 
 HEADERS += \
+    control/LCInter.h \
+    control/axismask.h \
+    control/canonif.h \
     control/canonifsettings.h \
-    model/stupidtoolchangerif.h \
+    control/commandwriter.h \
+    control/errorreader.h \
+    control/gcodehighlighter.h \
+    control/guicore.h \
+    control/guikernel.h \
+    control/helpengine.h \
+    control/positioncalculator.h \
+    control/statusreader.h \
     model/lcproperties.h \
+    model/linecodes.h \
+    model/stupidtoolchangerif.h \
     model/toolentry.h \
     model/tooltable.h \
-    model/linecodes.h \
-    control/canonif.h \
-    control/helpengine.h \
-    control/guicore.h \
-    control/LCInter.h \
-    control/gcodehighlighter.h \
-    control/statusreader.h \
-    control/commandwriter.h \
-    control/positioncalculator.h \
-    control/axismask.h \
-    control/guikernel.h \
-    control/errorreader.h \
-    util/HHelixCurveAdaptor.h \
-    util/ally3d.h \
-    util/HelixCurveAdaptor_CylinderEvaluator.h \
     util/Geom_HelixData.h \
-    util/HelixCurveAdaptor_p.h \
+    util/HHelixCurveAdaptor.h \
     util/HelixCurveAdaptor.h \
-    util/insulatePose.h \
-    util/guikernelcreator.h \
+    util/HelixCurveAdaptor_CylinderEvaluator.h \
+    util/HelixCurveAdaptor_p.h \
+    util/ally3d.h \
     util/graphicfactory.h \
+    util/guikernelcreator.h \
+    util/insulatePose.h \
     util/pluginpagefactory.h \
     view/abscenterwidget.h \
     view/centerpage.h \
     view/filemanager.h \
     view/gcodeeditor.h \
+    view/gcodeinfo.h \
     view/helpbrowser.h \
-    view/helpdockable.h \
-    view/helpview.h \
     view/helpcontentwidget.h \
-    view/occtviewer.h \
+    view/helpdockable.h \
+    view/helpkeywordwidget.h \
+    view/helpview.h \
     view/jogbutton.h \
+    view/numlabel.h \
+    view/occtviewer.h \
     view/pagestack.h \
     view/settingsnb.h \
     view/testEdit.h \
-    view/helpkeywordwidget.h \
-    view/gcodeinfo.h \
-    view/numlabel.h \
 
 TRANSLATIONS += \
     lcLib_de_DE.ts

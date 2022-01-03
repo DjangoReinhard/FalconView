@@ -34,6 +34,7 @@ public:
   QString              helpFilename() const;
   bool                 isLatheMode() const;
   bool                 isSimulator() const;
+  void                 help4Keyword(const QString& keyWord);
   LcProperties&        lcProperties();
   QMainWindow*         mainWindow();
   void                 parseGCFile(const QString& fileName);
