@@ -5,7 +5,8 @@
     <name>PreViewEditor</name>
     <message>
         <location filename="pweditor.cpp" line="40"/>
-        <source>PreViewEditor</source>
+        <source>PreView3D</source>
+        <oldsource>PreViewEditor</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

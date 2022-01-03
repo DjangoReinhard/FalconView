@@ -72,7 +72,7 @@
 <context>
     <name>JogView</name>
     <message>
-        <location filename="jogview.cpp" line="17"/>
+        <location filename="jogview.cpp" line="18"/>
         <source>JogView</source>
         <translation type="unfinished"></translation>
     </message>

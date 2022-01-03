@@ -60,8 +60,8 @@
 <context>
     <name>PositionStatus</name>
     <message>
-        <location filename="positionstatus.cpp" line="30"/>
-        <location filename="positionstatus.cpp" line="48"/>
+        <location filename="positionstatus.cpp" line="31"/>
+        <location filename="positionstatus.cpp" line="49"/>
         <source>PositionStatus</source>
         <translation type="unfinished"></translation>
     </message>

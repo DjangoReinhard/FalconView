@@ -133,55 +133,60 @@
 <context>
     <name>ToolManager</name>
     <message>
-        <location filename="toolmanager.cpp" line="230"/>
-        <location filename="toolmanager.cpp" line="270"/>
-        <location filename="toolmanager.cpp" line="382"/>
+        <location filename="toolmanager.cpp" line="48"/>
+        <source>ToolManager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="toolmanager.cpp" line="232"/>
+        <location filename="toolmanager.cpp" line="272"/>
+        <location filename="toolmanager.cpp" line="384"/>
         <source>QInputDialog::getText()</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="231"/>
+        <location filename="toolmanager.cpp" line="233"/>
         <source>Category name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="271"/>
+        <location filename="toolmanager.cpp" line="273"/>
         <source>Tool number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="323"/>
-        <location filename="toolmanager.cpp" line="367"/>
+        <location filename="toolmanager.cpp" line="325"/>
+        <location filename="toolmanager.cpp" line="369"/>
         <source>QMessageBox::information()</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="324"/>
+        <location filename="toolmanager.cpp" line="326"/>
         <source>This category has attached tools or sub-categories and cannot be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="339"/>
+        <location filename="toolmanager.cpp" line="341"/>
         <source>QMessageBox::question()</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="340"/>
+        <location filename="toolmanager.cpp" line="342"/>
         <source>Should this tool be deleted?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="368"/>
+        <location filename="toolmanager.cpp" line="370"/>
         <source>To finish tool editing press F10 to save changes or ESC to abort.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="383"/>
+        <location filename="toolmanager.cpp" line="385"/>
         <source>new Category name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="406"/>
+        <location filename="toolmanager.cpp" line="408"/>
         <source>saving of tool-data failed!</source>
         <translation type="unfinished"></translation>
     </message>

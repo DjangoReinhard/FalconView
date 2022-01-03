@@ -17,61 +17,44 @@
 <context>
     <name>FileManager</name>
     <message>
-        <location filename="view/filemanager.cpp" line="98"/>
-        <location filename="view/filemanager.cpp" line="120"/>
         <source>QInputDialog::getText()</source>
-        <translation>Eingabe</translation>
+        <translation type="vanished">Eingabe</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="99"/>
-        <location filename="view/filemanager.cpp" line="121"/>
         <source>name of Directory: </source>
-        <translation>Name des Verzeichnisses: </translation>
+        <translation type="vanished">Name des Verzeichnisses: </translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="271"/>
-        <location filename="view/filemanager.cpp" line="314"/>
         <source>QMessageBox::critical()</source>
-        <translation>Fehler</translation>
+        <translation type="vanished">Fehler</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="272"/>
         <source>There is already file %1 marked for copy. Do you want to abort that copy operation and start a new copy?</source>
-        <translation>Datei %1 ist bereits zum Kopieren vorgemerkt. Soll die Vormerkung storniert und eine neue Kopieraktion gestartet werden?</translation>
+        <translation type="vanished">Datei %1 ist bereits zum Kopieren vorgemerkt. Soll die Vormerkung storniert und eine neue Kopieraktion gestartet werden?</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="284"/>
-        <location filename="view/filemanager.cpp" line="295"/>
-        <location filename="view/filemanager.cpp" line="327"/>
-        <location filename="view/filemanager.cpp" line="338"/>
         <source>QMessageBox::information()</source>
-        <translation>Hinweis</translation>
+        <translation type="vanished">Hinweis</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="285"/>
-        <location filename="view/filemanager.cpp" line="296"/>
         <source>file %1 has been marked for copy. To finish copy operation goto desired destination directory and press [Enter].</source>
-        <translation>Datei %1 wurde zum Kopieren vorgemerkt. Um die Aktion abzuschließen, wählen Sie das gewünschte Verzeichnis aus und drücken [Enter].</translation>
+        <translation type="vanished">Datei %1 wurde zum Kopieren vorgemerkt. Um die Aktion abzuschließen, wählen Sie das gewünschte Verzeichnis aus und drücken [Enter].</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="315"/>
         <source>There is already file %1 marked for move. Do you want to abort that move operation and start a new move?</source>
-        <translation>Datei %1 wurde bereits zum Verschieben vorgemerkt. Soll die Verschiebung storniert und eine neue Verschiebeaktion gestartet werden?</translation>
+        <translation type="vanished">Datei %1 wurde bereits zum Verschieben vorgemerkt. Soll die Verschiebung storniert und eine neue Verschiebeaktion gestartet werden?</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="328"/>
         <source>file %1 has been marked for move. To finish move operation goto desired destination directory and press [Enter].</source>
-        <translation>Datei %1 wurde zum Verschieben vorgemerkt. Um die Aktion abzuschließen, wählen Sie das gewünschte Verzeichnis aus und drücken [Enter].</translation>
+        <translation type="vanished">Datei %1 wurde zum Verschieben vorgemerkt. Um die Aktion abzuschließen, wählen Sie das gewünschte Verzeichnis aus und drücken [Enter].</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="339"/>
         <source>file %1 has been marked for move. To finish move operation goto desired destination directory and press Enter</source>
-        <translation>Datei %1 wurde zum Verschieben vorgemerkt. Um die Aktion abzuschließen, wählen Sie das gewünschte Verzeichnis aus und drücken [Enter].</translation>
+        <translation type="vanished">Datei %1 wurde zum Verschieben vorgemerkt. Um die Aktion abzuschließen, wählen Sie das gewünschte Verzeichnis aus und drücken [Enter].</translation>
     </message>
     <message>
-        <location filename="view/filemanager.cpp" line="387"/>
         <source>&lt;p&gt;no textfile&lt;/p&gt;</source>
-        <translation>&lt;p&gt;keine Textdatei&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;p&gt;keine Textdatei&lt;/p&gt;</translation>
     </message>
 </context>
 <context>

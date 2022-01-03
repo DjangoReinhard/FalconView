@@ -22,12 +22,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolstatus.cpp" line="57"/>
+        <location filename="toolstatus.cpp" line="58"/>
         <source>L: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="toolstatus.cpp" line="58"/>
+        <location filename="toolstatus.cpp" line="59"/>
         <source>R: %1</source>
         <translation type="unfinished"></translation>
     </message>

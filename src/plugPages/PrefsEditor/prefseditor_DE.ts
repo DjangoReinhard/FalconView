@@ -4,6 +4,11 @@
 <context>
     <name>PreferencesEditor</name>
     <message>
+        <location filename="preferenceseditor.cpp" line="27"/>
+        <source>PreferencesEditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="preferenceseditor.cpp" line="184"/>
         <location filename="preferenceseditor.cpp" line="197"/>
         <location filename="preferenceseditor.cpp" line="210"/>

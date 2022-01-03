@@ -10,7 +10,7 @@ docs/html
 *.qch
 *.qzh
 *.xcf
-*.txt
+*.text
 /db
 rednose*
 build/*

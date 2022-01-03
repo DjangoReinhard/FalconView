@@ -62,7 +62,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="fixturemanager.cpp" line="27"/>
+        <location filename="fixturemanager.cpp" line="47"/>
         <source>Offsets</source>
         <translation type="unfinished"></translation>
     </message>
