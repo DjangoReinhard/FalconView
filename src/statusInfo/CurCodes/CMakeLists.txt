@@ -32,7 +32,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(SOURCES
-    curcodes.cpp
+    curcodesstatus.cpp
     )
 set(FORMS
     HCurCodes.ui
@@ -52,8 +52,8 @@ target_include_directories(ppCurCodes
                            PRIVATE ${OpenCASCADE_INCLUDE_DIR}
                            )
 target_link_libraries(ppCurCodes
-                      PRIVATE favi_BaseLib
-                      PRIVATE favi_lcLib
+                      PRIVATE FVBaseLib
+                      PRIVATE FVlcLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Gui
                       PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
                       PRIVATE Qt${QT_VERSION_MAJOR}::Core

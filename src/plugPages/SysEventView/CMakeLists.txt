@@ -47,8 +47,8 @@ target_include_directories(ppSysEventView
                            PRIVATE ${OpenCASCADE_INCLUDE_DIR}
                            )
 target_link_libraries(ppSysEventView
-                      PRIVATE favi_BaseLib
-                      PRIVATE favi_lcLib
+                      PRIVATE FVBaseLib
+                      PRIVATE FVlcLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Gui
                       PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
                       PRIVATE Qt${QT_VERSION_MAJOR}::Core

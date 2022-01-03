@@ -1,29 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(lcLib LANGUAGES CXX)
-set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "Qt5 Toolkit")
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
-set(LinuxCNC_DIR      "/usr/local/src/linuxcnc-deb11" CACHE PATH "LinuxCNC")
 set(CMAKE_BUILD_TYPE  Debug)
 add_compile_definitions(USE_PLUGINS)
-
-find_package(Qt5 REQUIRED COMPONENTS
-             Gui
-             Widgets
-             Core
-             Sql
-             UiTools
-             Xml
-             LinguistTools
-             )
-find_package(OpenCASCADE COMPONENTS
-             FoundationClasses
-             ModelingData
-             ModelingAlgorithms
-             Visualization
-             ApplicationFramework
-             Draw
-             PATHS ${OpenCASCADE_DIR} NO_DEFAULT_PATH
-             )
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -88,6 +66,7 @@ target_include_directories(FVlcLib
                            PUBLIC model
                            PUBLIC util
                            PUBLIC view
+                           SYSTEM  /usr/include/python3.9
                            PRIVATE ../plugPages
                            PRIVATE ${LinuxCNC_DIR}/include
                            PRIVATE ${LinuxCNC_DIR}/src
@@ -96,7 +75,7 @@ target_include_directories(FVlcLib
                            PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
                            PRIVATE ${OpenCASCADE_INCLUDE_DIR}
                            )
-target_link_libraries(FalconView
+target_link_libraries(FVlcLib
                       PRIVATE FVBaseLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Gui
                       PRIVATE Qt${QT_VERSION_MAJOR}::Widgets

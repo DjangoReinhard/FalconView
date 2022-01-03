@@ -1,6 +1,9 @@
 #ifndef LINECODES_H
 #define LINECODES_H
 #include <interp_base.hh>
+#if defined(toLine)
+#undef toLine
+#endif
 
 
 class LineCodes

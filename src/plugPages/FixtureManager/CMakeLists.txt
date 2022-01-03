@@ -1,29 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(FixtureManager LANGUAGES CXX)
-set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "Qt5 Toolkit")
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
-set(LinuxCNC_DIR      "/usr/local/src/linuxcnc-deb11" CACHE PATH "LinuxCNC")
 set(CMAKE_BUILD_TYPE  Debug)
 add_compile_definitions(USE_PLUGINS)
-
-find_package(Qt5 REQUIRED COMPONENTS
-             Gui
-             Widgets
-             Core
-             Sql
-             UiTools
-             Xml
-             LinguistTools
-             )
-find_package(OpenCASCADE COMPONENTS
-             FoundationClasses
-             ModelingData
-             ModelingAlgorithms
-             Visualization
-             ApplicationFramework
-             Draw
-             PATHS ${OpenCASCADE_DIR} NO_DEFAULT_PATH
-             )
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -38,7 +16,6 @@ set(SOURCES
 set(FORMS
     Fixture.ui
     )
-
 set(TS_FILES
     fixture_de_DE.ts
     )
@@ -52,22 +29,16 @@ target_include_directories(ppFixtureManager
                            PRIVATE ${OpenCASCADE_INCLUDE_DIR}
                            )
 target_link_libraries(ppFixtureManager
-                      PRIVATE favi_BaseLib
-                      PRIVATE favi_lcLib
+                      PRIVATE FVBaseLib
+                      PRIVATE FVlcLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Gui
                       PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
                       PRIVATE Qt${QT_VERSION_MAJOR}::Core
                       PRIVATE Qt${QT_VERSION_MAJOR}::Sql
                       PRIVATE Qt${QT_VERSION_MAJOR}::UiTools
                       PRIVATE Qt${QT_VERSION_MAJOR}::Xml
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcnc
-                      PRIVATE ${LinuxCNC_DIR}/lib/posemath
-                      PRIVATE ${LinuxCNC_DIR}/lib/nml
-                      PRIVATE ${LinuxCNC_DIR}/lib/rs274
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcncini
-                      PRIVATE ${LinuxCNC_DIR}/lib/pyplugin
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcnchal
-                      PRIVATE ${LinuxCNC_DIR}/lib/tooldata
+                      PRIVATE ${LIB_LC} ${LIB_PM} ${LIB_NML} ${LIB_RS}
+                      PRIVATE ${LIB_LCI} ${LIB_PP} ${LIB_LH} ${LIB_TD}
                       PRIVATE m stdc++ boost_python39 python3.9 crypt pthread dl util
                       TKernel TKMath TKService TKV3d TKOpenGl
                       TKBRep TKIGES TKSTL TKVRML TKSTEP TKSTEPAttr TKSTEP209

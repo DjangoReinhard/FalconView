@@ -56,8 +56,8 @@ target_include_directories(ppToolManager
                            PRIVATE ${OpenCASCADE_INCLUDE_DIR}
                            )
 target_link_libraries(ppToolManager
-                      PRIVATE favi_BaseLib
-                      PRIVATE favi_lcLib
+                      PRIVATE FVBaseLib
+                      PRIVATE FVlcLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Gui
                       PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
                       PRIVATE Qt${QT_VERSION_MAJOR}::Core

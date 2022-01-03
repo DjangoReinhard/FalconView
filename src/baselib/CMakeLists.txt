@@ -1,29 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(BaseLib LANGUAGES CXX)
-set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "Qt5 Toolkit")
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
-set(LinuxCNC_DIR      "/usr/local/src/linuxcnc-deb11" CACHE PATH "LinuxCNC")
 set(CMAKE_BUILD_TYPE  Debug)
 add_compile_definitions(USE_PLUGINS)
-
-find_package(Qt5 REQUIRED COMPONENTS
-             Gui
-             Widgets
-             Core
-             Sql
-             UiTools
-             Xml
-             LinguistTools
-             )
-find_package(OpenCASCADE COMPONENTS
-             FoundationClasses
-             ModelingData
-             ModelingAlgorithms
-             Visualization
-             ApplicationFramework
-             Draw
-             PATHS ${OpenCASCADE_DIR} NO_DEFAULT_PATH
-             )
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
