@@ -22,6 +22,7 @@ class PreViewEditor : public TestEdit, public GCodeViewerInterface
 {
   Q_OBJECT
 #ifdef USE_PLUGINS
+  Q_INTERFACES(GCodeViewerInterface)
   Q_PLUGIN_METADATA(IID "GCodeViewerInterface_iid" FILE "preview3D.json")
 #endif
 public:

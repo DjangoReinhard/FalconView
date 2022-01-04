@@ -24,7 +24,12 @@ if [ -d ${distBase} ]; then
     echo "dist directory already exists. STOP!"
     exit
 fi
-
+if [ -x ${app} ]; then
+    echo "app ok"
+else
+    echo "missing application file! STOP!"
+    exit
+fi
 mkdir -p ${appDir} 2>/dev/null
 mkdir -p ${helpDir} 2>/dev/null
 mkdir -p ${pluginDir} 2>/dev/null

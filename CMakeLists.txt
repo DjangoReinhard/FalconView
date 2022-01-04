@@ -41,7 +41,7 @@ add_subdirectory(src)
 add_subdirectory(docs)
 add_custom_target(Dummy)
 add_dependencies(FalconView HelpFile)
-add_dependencies(FalconView Dummy)
+add_dependencies(Dummy FalconView)
 add_custom_command(TARGET Dummy POST_BUILD
     COMMAND ${PROJECT_SOURCE_DIR}/buildFinish ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
     DEPENDS $<TARGET_FILE:FalconView>

@@ -13,6 +13,7 @@ class MDIEditor : public AbstractCenterWidget, public MDIEditorInterface
 {
   Q_OBJECT
 #ifdef USE_PLUGINS
+  Q_INTERFACES(MDIEditorInterface)
   Q_PLUGIN_METADATA(IID "MDIEditorInterface_iid" FILE "mdiEditor.json")
 #endif
 public:

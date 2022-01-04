@@ -54,12 +54,17 @@ QString GuiKernel::fileName4(const QString &fileID) const {
   else if (fileID == "plugins") {
      QDir dir(QCoreApplication::applicationDirPath());
 
-     dir.cd("plugins");
+     dir.cd("../plugins");
 
      return dir.absolutePath();
      }  
   else if (fileID == "helpFile") {
-     return QApplication::applicationDirPath() + "/../share/doc/falconview/FalconView.qzh";
+     QDir dir(QApplication::applicationDirPath());
+
+     //+ "/../share/doc/falconview/FalconView.qzh";
+     dir.cd("../help/FalconView.qzh");
+
+     return dir.absolutePath();
      }
   else if (fileID == "toolTable") {
      return lcProps->toolTableFileName();
