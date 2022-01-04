@@ -1,15 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
+#--------------------------------   LIB   ------------------------------------
 project(lcLib LANGUAGES CXX)
-set(CMAKE_BUILD_TYPE  Debug)
-add_compile_definitions(USE_PLUGINS)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-set(SOURCES
+#-----------------------------------------------------------------------------
+include(FalconView)
+add_library(FVlcLib STATIC
     control/LCInter.cpp
     control/axismask.cpp
     control/canonif.cpp
@@ -52,16 +46,10 @@ set(SOURCES
     view/settingsnb.cpp
     view/testEdit.cpp
     )
-set(FORMS
-    UI/GCodeEditor.ui
-    UI/HelpTitle.ui
-    )
 set(TS_FILES
     lcLib_de_DE.ts
     )
-add_library(FVlcLib STATIC ${SOURCES} ${FORMS})
 target_include_directories(FVlcLib
-                           PUBLIC UI
                            PUBLIC control
                            PUBLIC model
                            PUBLIC util
@@ -83,21 +71,13 @@ target_link_libraries(FVlcLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Sql
                       PRIVATE Qt${QT_VERSION_MAJOR}::UiTools
                       PRIVATE Qt${QT_VERSION_MAJOR}::Xml
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcnc
-                      PRIVATE ${LinuxCNC_DIR}/lib/posemath
-                      PRIVATE ${LinuxCNC_DIR}/lib/nml
-                      PRIVATE ${LinuxCNC_DIR}/lib/rs274
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcncini
-                      PRIVATE ${LinuxCNC_DIR}/lib/pyplugin
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcnchal
-                      PRIVATE ${LinuxCNC_DIR}/lib/tooldata
                       PRIVATE m stdc++ boost_python39 python3.9 crypt pthread dl util
-                      TKernel TKMath TKService TKV3d TKOpenGl
-                      TKBRep TKIGES TKSTL TKVRML TKSTEP TKSTEPAttr TKSTEP209
-                      TKSTEPBase TKGeomBase TKGeomAlgo TKG3d TKG2d
-                      TKXSBase TKShHealing TKHLR TKTopAlgo TKMesh TKPrim
-                      TKCDF TKBool TKBO TKFillet TKOffset TKLCAF TKCAF TKVCAF
-                      TKBin TKXml
+                      PRIVATE TKernel TKMath TKService TKV3d TKOpenGl
+                      PRIVATE TKBRep TKIGES TKSTL TKVRML TKSTEP TKSTEPAttr TKSTEP209
+                      PRIVATE TKSTEPBase TKGeomBase TKGeomAlgo TKG3d TKG2d
+                      PRIVATE TKXSBase TKShHealing TKHLR TKTopAlgo TKMesh TKPrim
+                      PRIVATE TKCDF TKBool TKBO TKFillet TKOffset TKLCAF TKCAF TKVCAF
+                      PRIVATE TKBin TKXml
                       )
 if(COMMAND qt_create_translation)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})

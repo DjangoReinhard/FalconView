@@ -1,0 +1,36 @@
+#!/bin/bash
+src=$1
+shift
+dst=$1
+echo ""
+echo "buildFinish: $src => $dst"
+app=$(find $dst -name FalconView)
+help=$(find $dst -name FalconView.qzh)
+plugins=$(find $dst -name *.so)
+
+#echo "found application: " ${app}
+#echo "found help-file..: " ${help}
+#for i in ${plugins}; do
+#    echo "found plugin: " $i
+#done
+
+distBase=${dst}/dist
+appDir=${distBase}/bin
+helpDir=${distBase}/help
+pluginDir=${distBase}/plugins
+
+if [ -d ${distBase} ]; then
+    echo ""
+    echo "dist directory already exists. STOP!"
+    exit
+fi
+
+mkdir -p ${appDir} 2>/dev/null
+mkdir -p ${helpDir} 2>/dev/null
+mkdir -p ${pluginDir} 2>/dev/null
+
+cp -a ${app} ${appDir}
+cp -a ${help} ${helpDir}
+for i in ${plugins}; do
+    cp -a $i ${pluginDir}
+done

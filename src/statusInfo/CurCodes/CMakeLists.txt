@@ -1,49 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
+#------------------------------   PLUGIN   -----------------------------------
 project(CurCodes LANGUAGES CXX)
-set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "Qt5 Toolkit")
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
-set(LinuxCNC_DIR      "/usr/local/src/linuxcnc-deb11" CACHE PATH "LinuxCNC")
-set(CMAKE_BUILD_TYPE  Debug)
-add_compile_definitions(USE_PLUGINS)
-
-find_package(Qt5 REQUIRED COMPONENTS
-             Gui
-             Widgets
-             Core
-             Sql
-             UiTools
-             Xml
-             LinguistTools
-             )
-find_package(OpenCASCADE COMPONENTS
-             FoundationClasses
-             ModelingData
-             ModelingAlgorithms
-             Visualization
-             ApplicationFramework
-             Draw
-             PATHS ${OpenCASCADE_DIR} NO_DEFAULT_PATH
-             )
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-set(SOURCES
+#-----------------------------------------------------------------------------
+include(FalconView)
+add_library(siCurCodes SHARED
     curcodesstatus.cpp
     )
-set(FORMS
-    HCurCodes.ui
-    VCurCodes.ui
-    )
-
 set(TS_FILES
     curcodes_de_DE.ts
     )
-add_library(ppCurCodes SHARED ${SOURCES} ${FORMS})
-target_include_directories(ppCurCodes
+target_include_directories(siCurCodes
                            PRIVATE ${LinuxCNC_DIR}/include
                            PRIVATE ${LinuxCNC_DIR}/src
                            PRIVATE ${LinuxCNC_DIR}/src/emc/rs274ngc
@@ -51,7 +17,7 @@ target_include_directories(ppCurCodes
                            PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
                            PRIVATE ${OpenCASCADE_INCLUDE_DIR}
                            )
-target_link_libraries(ppCurCodes
+target_link_libraries(siCurCodes
                       PRIVATE FVBaseLib
                       PRIVATE FVlcLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Gui
@@ -60,14 +26,8 @@ target_link_libraries(ppCurCodes
                       PRIVATE Qt${QT_VERSION_MAJOR}::Sql
                       PRIVATE Qt${QT_VERSION_MAJOR}::UiTools
                       PRIVATE Qt${QT_VERSION_MAJOR}::Xml
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcnc
-                      PRIVATE ${LinuxCNC_DIR}/lib/posemath
-                      PRIVATE ${LinuxCNC_DIR}/lib/nml
-                      PRIVATE ${LinuxCNC_DIR}/lib/rs274
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcncini
-                      PRIVATE ${LinuxCNC_DIR}/lib/pyplugin
-                      PRIVATE ${LinuxCNC_DIR}/lib/linuxcnchal
-                      PRIVATE ${LinuxCNC_DIR}/lib/tooldata
+                      PRIVATE ${LC_LibLC} ${LC_LibPM} ${LC_LibNML} ${LC_LibRS274}
+                      PRIVATE ${LC_LibLCI} ${LC_LibPP} ${LC_LibHal} ${LC_LibTD}
                       PRIVATE m stdc++ boost_python39 python3.9 crypt pthread dl util
                       TKernel TKMath TKService TKV3d TKOpenGl
                       TKBRep TKIGES TKSTL TKVRML TKSTEP TKSTEPAttr TKSTEP209
@@ -81,5 +41,4 @@ if(COMMAND qt_create_translation)
 else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
-
 

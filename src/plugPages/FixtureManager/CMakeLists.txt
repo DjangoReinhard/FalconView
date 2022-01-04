@@ -1,25 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
+#------------------------------   PLUGIN   -----------------------------------
 project(FixtureManager LANGUAGES CXX)
-set(CMAKE_BUILD_TYPE  Debug)
-add_compile_definitions(USE_PLUGINS)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-set(SOURCES
+#-----------------------------------------------------------------------------
+include(FalconView)
+add_library(ppFixtureManager SHARED
     fixturemanager.cpp
     fixtureedit.cpp
-    )
-set(FORMS
-    Fixture.ui
     )
 set(TS_FILES
     fixture_de_DE.ts
     )
-add_library(ppFixtureManager SHARED ${SOURCES} ${FORMS})
 target_include_directories(ppFixtureManager
                            PRIVATE ${LinuxCNC_DIR}/include
                            PRIVATE ${LinuxCNC_DIR}/src
@@ -37,9 +27,10 @@ target_link_libraries(ppFixtureManager
                       PRIVATE Qt${QT_VERSION_MAJOR}::Sql
                       PRIVATE Qt${QT_VERSION_MAJOR}::UiTools
                       PRIVATE Qt${QT_VERSION_MAJOR}::Xml
-                      PRIVATE ${LIB_LC} ${LIB_PM} ${LIB_NML} ${LIB_RS}
-                      PRIVATE ${LIB_LCI} ${LIB_PP} ${LIB_LH} ${LIB_TD}
-                      PRIVATE m stdc++ boost_python39 python3.9 crypt pthread dl util
+                      PRIVATE ${LC_LibLC} ${LC_LibPM} ${LC_LibNML} ${LC_LibRS274}
+                      PRIVATE ${LC_LibLCI} ${LC_LibPP} ${LC_LibHal} ${LC_LibTD}
+                      PRIVATE m stdc++ boost_python39 python3.9 crypt
+                      PRIVATE pthread dl util
                       TKernel TKMath TKService TKV3d TKOpenGl
                       TKBRep TKIGES TKSTL TKVRML TKSTEP TKSTEPAttr TKSTEP209
                       TKSTEPBase TKGeomBase TKGeomAlgo TKG3d TKG2d
@@ -52,5 +43,4 @@ if(COMMAND qt_create_translation)
 else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
-
 
