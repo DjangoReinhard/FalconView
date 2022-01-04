@@ -1,0 +1,38 @@
+#!/bin/bash
+src=$1
+shift
+dst=$1
+shift
+files=$*
+xIn=md
+xOut=html
+
+#echo ""
+#echo "cgenHelp: source directory: ${src}"
+#echo "cgenHelp: target directory: ${dst}"
+mkdir ${dst}/html 2>/dev/null
+rm ${dst}/FalconView.qzh 2>/dev/null
+for i in ${files}; do
+    fi=$(basename ${i})
+    fo=${fi%.$xIn}.$xOut
+#    echo "process file >${fi}< => <${fo}>"
+    cat ${src}/${i} | gfm | fixhtml -e ${src}/htmlEntities.def > ${dst}/html/${fo}
+done
+
+cd ${src}/src
+images=$(grep -Ro -P "\(images/(.*)\)" | sed 's%.*(images/%%' | sed 's%)%%')
+cd ..
+# add icons for helpengine widgets
+images="${images} folder.svg folder-open.svg help-about.svg text-info.svg"
+
+mkdir ${dst}/html/images 2>/dev/null
+for i in $images
+do
+#  echo $i
+  cp ${src}/src/images/$i ${dst}/html/images
+done
+
+cd ${dst}/html
+zip -u9 ${dst}/FalconView.qzh *.html images/* ${src}/FalconView.qhp
+
+
