@@ -37,6 +37,86 @@ find_library(LC_LibPP    pyplugin REQUIRED PATHS ${LinuxCNC_DIR}/lib )
 find_library(LC_LibHal   linuxcnchal REQUIRED PATHS ${LinuxCNC_DIR}/lib )
 find_library(LC_LibTD    tooldata REQUIRED PATHS ${LinuxCNC_DIR}/lib )
 
+add_library(IFlinuxCNC    INTERFACE)
+add_library(IFQt          INTERFACE)
+add_library(IFOpenCASCADE INTERFACE)
+add_library(IFStandard    INTERFACE)
+target_include_directories(IFlinuxCNC
+                           INTERFACE /usr/include/python3.9
+                           INTERFACE ${LinuxCNC_DIR}/include
+                           INTERFACE ${LinuxCNC_DIR}/src
+                           INTERFACE ${LinuxCNC_DIR}/src/emc/rs274ngc
+                           INTERFACE ${LinuxCNC_DIR}/src/emc/tooldata
+                           )
+target_link_libraries(IFlinuxCNC
+                      INTERFACE ${LC_LibLC}
+                      INTERFACE ${LC_LibPM}
+                      INTERFACE ${LC_LibNML}
+                      INTERFACE ${LC_LibRS274}
+                      INTERFACE ${LC_LibLCI}
+                      INTERFACE ${LC_LibPP}
+                      INTERFACE ${LC_LibHal}
+                      INTERFACE ${LC_LibTD}
+                      )
+target_include_directories(IFQt
+                           INTERFACE ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+                           )
+target_link_libraries(IFQt
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Gui
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Widgets
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Core
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Sql
+                      INTERFACE Qt${QT_VERSION_MAJOR}::UiTools
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Xml
+                      )
+target_include_directories(IFOpenCASCADE
+                           INTERFACE ${OpenCASCADE_INCLUDE_DIR}
+                           )
+target_link_libraries(IFOpenCASCADE
+                      INTERFACE TKernel
+                      INTERFACE TKMath
+                      INTERFACE TKService
+                      INTERFACE TKV3d
+                      INTERFACE TKOpenGl
+                      INTERFACE TKBRep
+                      INTERFACE TKIGES
+                      INTERFACE TKSTL
+                      INTERFACE TKVRML
+                      INTERFACE TKSTEP
+                      INTERFACE TKSTEPAttr
+                      INTERFACE TKSTEP209
+                      INTERFACE TKSTEPBase
+                      INTERFACE TKGeomBase
+                      INTERFACE TKGeomAlgo
+                      INTERFACE TKG3d
+                      INTERFACE TKG2d
+                      INTERFACE TKXSBase
+                      INTERFACE TKShHealing
+                      INTERFACE TKHLR
+                      INTERFACE TKTopAlgo
+                      INTERFACE TKMesh
+                      INTERFACE TKPrim
+                      INTERFACE TKCDF
+                      INTERFACE TKBool
+                      INTERFACE TKBO
+                      INTERFACE TKFillet
+                      INTERFACE TKOffset
+                      INTERFACE TKLCAF
+                      INTERFACE TKCAF
+                      INTERFACE TKVCAF
+                      INTERFACE TKBin
+                      INTERFACE TKXml
+                      )
+target_link_libraries(IFStandard
+                      INTERFACE m
+                      INTERFACE stdc++
+                      INTERFACE boost_python39
+                      INTERFACE python3.9
+                      INTERFACE crypt
+                      INTERFACE pthread
+                      INTERFACE dl
+                      INTERFACE util
+                      )
 add_subdirectory(src)
 add_subdirectory(docs)
 add_custom_target(Dummy)
