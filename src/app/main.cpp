@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
                                           , "_"
                                           , "../FalconView/src/i18n");
       QStringList args        = QCoreApplication::arguments();
-      QString     iniFileName = findIni(args);
+//      QString     iniFileName = findIni(args);
 //      QStringList sl          = QStyleFactory::keys();
 
       a.installTranslator(&translator);
@@ -46,22 +46,22 @@ int main(int argc, char *argv[]) {
       qDebug() << "language:" << lang;
       qDebug() << "country:" << country;
       qDebug() << "syslocale:" << sysLocale.name() << "\tcurrent locale:" << curLocale.name();
-      qDebug() << "gonna use ini-file: " << iniFileName;
+//      qDebug() << "gonna use ini-file: " << iniFileName;
 //      qDebug() << "check for styles ...";
 //      for (const QString& s : sl) {
 //          qDebug() << "available style: " << s;
 //          }
 //      qDebug() << "style check done ...";
-      QFileInfo ifn(iniFileName);
+//      QFileInfo ifn(iniFileName);
 
-      if (!ifn.exists() || ifn.size() < 1) throw std::invalid_argument("invalid or not existant inifile");
+//      if (!ifn.exists() || ifn.size() < 1) throw std::invalid_argument("invalid or not existant inifile");
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
       // set default font for all gui elements. Needed with Qt > 6xx
       a.setFont(QFont("Noto Sans", 15));
 #endif
       GuiCore::setKernelCreator(new GuiKernelCreator());
       FalconViewDB dbHelper;
-      GuiCore      appCore(iniFileName, "FalconView", curLocale, dbHelper);
+      GuiCore      appCore(args, "FalconView", curLocale, dbHelper);
 #ifndef REDNOSE
       MainWindow* mainWindow = new MainWindow();
 #else

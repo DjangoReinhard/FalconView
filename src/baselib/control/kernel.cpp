@@ -3,13 +3,13 @@
 #include <QDebug>
 
 
-Kernel::Kernel(const QString& fileName, const QString& appName, const QString& groupID)
+Kernel::Kernel(const QStringList& appArgs, const QString& appName, const QString& groupID)
  : QObject(nullptr)
  , simulator(false)
  , cfg(new ConfigManager(appName, groupID))
  , locale(nullptr)
  , conn(nullptr)
- , fileName(fileName)
+ , appArgs(appArgs)
  , appName(appName)
  , groupID(groupID) {
   }
@@ -21,12 +21,13 @@ int Kernel::axisMask() const {
 
 
 QString Kernel::fileName4(const QString&) const {
-  return fileName;
+  return QString();
   }
 
 
 void Kernel::initialize(const QLocale& locale, DBHelper&) {
   this->locale = new QLocale(locale);
+  processAppArgs(appArgs);
   }
 
 
@@ -37,4 +38,8 @@ void Kernel::logSysEvent(const QString &msg) {
 
 void Kernel::logSysEvent(const SysEvent& se) {
   qDebug() << "system event" << se.type() << ":" << se.what() << " at:" << se.when();
+  }
+
+
+void Kernel::processAppArgs(const QStringList& args) {
   }

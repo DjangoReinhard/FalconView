@@ -71,13 +71,55 @@ target_link_libraries(FVlcLib
                       PRIVATE Qt${QT_VERSION_MAJOR}::Sql
                       PRIVATE Qt${QT_VERSION_MAJOR}::UiTools
                       PRIVATE Qt${QT_VERSION_MAJOR}::Xml
-                      PRIVATE m stdc++ boost_python39 python3.9 crypt pthread dl util
-                      PRIVATE TKernel TKMath TKService TKV3d TKOpenGl
-                      PRIVATE TKBRep TKIGES TKSTL TKVRML TKSTEP TKSTEPAttr TKSTEP209
-                      PRIVATE TKSTEPBase TKGeomBase TKGeomAlgo TKG3d TKG2d
-                      PRIVATE TKXSBase TKShHealing TKHLR TKTopAlgo TKMesh TKPrim
-                      PRIVATE TKCDF TKBool TKBO TKFillet TKOffset TKLCAF TKCAF TKVCAF
-                      PRIVATE TKBin TKXml
+                      PRIVATE ${LC_LibLC}
+                      PRIVATE ${LC_LibPM}
+                      PRIVATE ${LC_LibNML}
+                      PRIVATE ${LC_LibRS274}
+                      PRIVATE ${LC_LibLCI}
+                      PRIVATE ${LC_LibPP}
+                      PRIVATE ${LC_LibHal}
+                      PRIVATE ${LC_LibTD}
+                      PRIVATE TKernel
+                      PRIVATE TKMath
+                      PRIVATE TKService
+                      PRIVATE TKV3d
+                      PRIVATE TKOpenGl
+                      PRIVATE TKBRep
+                      PRIVATE TKIGES
+                      PRIVATE TKSTL
+                      PRIVATE TKVRML
+                      PRIVATE TKSTEP
+                      PRIVATE TKSTEPAttr
+                      PRIVATE TKSTEP209
+                      PRIVATE TKSTEPBase
+                      PRIVATE TKGeomBase
+                      PRIVATE TKGeomAlgo
+                      PRIVATE TKG3d
+                      PRIVATE TKG2d
+                      PRIVATE TKXSBase
+                      PRIVATE TKShHealing
+                      PRIVATE TKHLR
+                      PRIVATE TKTopAlgo
+                      PRIVATE TKMesh
+                      PRIVATE TKPrim
+                      PRIVATE TKCDF
+                      PRIVATE TKBool
+                      PRIVATE TKBO
+                      PRIVATE TKFillet
+                      PRIVATE TKOffset
+                      PRIVATE TKLCAF
+                      PRIVATE TKCAF
+                      PRIVATE TKVCAF
+                      PRIVATE TKBin
+                      PRIVATE TKXml
+                      PRIVATE m
+                      PRIVATE stdc++
+                      PRIVATE boost_python39
+                      PRIVATE python3.9
+                      PRIVATE crypt
+                      PRIVATE pthread
+                      PRIVATE dl
+                      PRIVATE util
                       )
 if(COMMAND qt_create_translation)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})

@@ -24,7 +24,11 @@
 
 TestEdit::TestEdit(QWidget* parent)
  : AbstractCenterWidget(parent)
- , fn(nullptr) {
+ , fn(nullptr)
+ , ed(nullptr)
+ , pbOpen(nullptr)
+ , pbSave(nullptr)
+ , gh(nullptr) {
   setObjectName("TestEdit");
   setWindowTitle(tr("TestEdit"));
   }
@@ -33,15 +37,23 @@ TestEdit::TestEdit(QWidget* parent)
 QWidget* TestEdit::createContent() {
   QWidget* rv = AbstractCenterWidget::createContent();
 
+//  qDebug() << "TE: search for elements from UI-file";
   fn     = findChild<QLineEdit*>("fileName");
+//  qDebug() << "TE: fileName:" << fn;
   pbOpen = findChild<QPushButton*>("pbOpen");
+//  qDebug() << "TE: pbOpen:" << pbOpen;
   pbSave = findChild<QPushButton*>("pbSave");
+//  qDebug() << "TE: pbSave:" << pbSave;
   QGridLayout* gl = findChild<QGridLayout*>("gridLayout");
+//  qDebug() << "TE: gridLayout:" << gl;
   QWidget* placeHolder = findChild<QWidget*>("widget");
+//  qDebug() << "TE: placeHolder:" << placeHolder;
 
   ed = new GCodeEditor(this);
   gh = new GCodeHighlighter(ed->document());
+//  qDebug() << "TE: gonna replace placeholder";
   gl->replaceWidget(placeHolder, ed);
+//  qDebug() << "TE: done";
   pbSave->setEnabled(ed->document()->isModified());
   ed->installEventFilter(this);
 
@@ -91,7 +103,7 @@ void TestEdit::connectSignals() {
 
 
 // opens fileManager
-void TestEdit::openFile() {    
+void TestEdit::openFile() {
   QWidget*     w   = core->stackedPage(FileManager::className);
   CenterPage*  chk = reinterpret_cast<CenterPage*>(w);
   FileManager* fm  = reinterpret_cast<FileManager*>(chk->centerWidget());
@@ -136,7 +148,7 @@ void TestEdit::dirtyChanged(bool dirty) {
 
 // callback for fileManager
 void TestEdit::fileSelected(const QString& filePath) {
-  qDebug() << "TestEdit::fileSelected(" << filePath << ")";  
+  qDebug() << "TestEdit::fileSelected(" << filePath << ")";
   loadFile(filePath);
   }
 

@@ -1,5 +1,5 @@
 TEMPLATE = lib
-TARGET   = $$qtLibraryTarget(pp_SysEventView)
+TARGET   = $$qtLibraryTarget(ppSysEventView)
 CONFIG  += plugin link_prl c++17
 QT      += widgets sql
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0

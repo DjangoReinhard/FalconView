@@ -14,10 +14,10 @@
 #include <emc.hh>
 
 
-Core::Core(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group) {
+Core::Core(const QStringList& appArgs, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group) {
   if (!kernel) {
      assert(kc);
-     kernel = kc->kernel(iniFileName, appName, group);
+     kernel = kc->kernel(appArgs, appName, group);
      kernel->initialize(locale, dbAssist);
      }
   }

@@ -17,8 +17,8 @@
 #include <QVector3D>
 
 
-GuiKernel::GuiKernel(const QString& fileName, const QString& appName, const QString& groupID)
- : Kernel(fileName, appName, groupID)
+GuiKernel::GuiKernel(const QStringList& appArgs, const QString& appName, const QString& groupID)
+ : Kernel(appArgs, appName, groupID)
  , lcProps(nullptr)
  , tt(nullptr)
  , lcIF(nullptr)
@@ -49,24 +49,23 @@ DBConnection* GuiKernel::createDatabase(DBHelper& dbAssist) {
 
 QString GuiKernel::fileName4(const QString &fileID) const {
   if (fileID == "database") {
+     qDebug() << "GK::fileName4(" << fileID << ") => " << conn->dbName();
      return conn->dbName();
      }
+  else if (fileID == "ini") {
+     qDebug() << "GK::fileName4(" << fileID << ") => " << iniFileName;
+     return iniFileName;
+     }
   else if (fileID == "plugins") {
-     QDir dir(QCoreApplication::applicationDirPath());
-
-     dir.cd("../plugins");
-
-     return dir.absolutePath();
-     }  
+     qDebug() << "GK::fileName4(" << fileID << ") => " << pluginDir;
+     return pluginDir;
+     }
   else if (fileID == "helpFile") {
-     QDir dir(QApplication::applicationDirPath());
-
-     //+ "/../share/doc/falconview/FalconView.qzh";
-     dir.cd("../help/FalconView.qzh");
-
-     return dir.absolutePath();
+     qDebug() << "GK::fileName4(" << fileID << ") => " << helpFileName;
+     return helpFileName;
      }
   else if (fileID == "toolTable") {
+     qDebug() << "GK::fileName4(" << fileID << ") => " << lcProps->toolTableFileName();
      return lcProps->toolTableFileName();
      }
   return Kernel::fileName4(fileID);
@@ -74,8 +73,14 @@ QString GuiKernel::fileName4(const QString &fileID) const {
 
 
 void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
+  QDir dir(QCoreApplication::applicationDirPath());
+
+  dir.cd("plugins");
+  pluginDir = dir.absolutePath();
+  dir.cd("../help");
+  helpFileName = dir.absolutePath() + "/FalconView.qzh";
   Kernel::initialize(locale, dbAssist);
-  lcProps = new LcProperties(fileName);
+  lcProps = new LcProperties(fileName4("ini"));
   tt = new ToolTable(*lcProps, lcProps->toolTableFileName());
   lcIF = new LCInterface(*lcProps, *tt);
   mAxis = new AxisMask(lcProps->value("KINS", "KINEMATICS").toString());
@@ -120,10 +125,10 @@ void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
   for (const QString& fileName : entryList) {
       QString path = pluginsDir.absoluteFilePath(fileName);
 
-      if (fileName.startsWith("libsi_")) {
+      if (fileName.startsWith("libsi")) {
          QPluginLoader loader(path);
          QObject*      plugin = loader.instance();
-         QString       name   = fileName.mid(6, fileName.size() - 9);
+         QString       name   = fileName.mid(5, fileName.size() - 8);
 
          if (plugin) {
             auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
@@ -133,10 +138,11 @@ void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
             }
          else qDebug() << fileName << "NOT a valid plugin: " << loader.errorString();
          }
-      else if (fileName.startsWith("libpp_")) {
+      else if (fileName.startsWith("libpp")) {
          QPluginLoader loader(path);
+
          QObject*      plugin = loader.instance();
-         QString       name = fileName.mid(6, fileName.size() - 9);
+         QString       name = fileName.mid(5, fileName.size() - 8);
 
          if (plugin) {
             auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
@@ -186,6 +192,24 @@ void GuiKernel::parseGCode(QFile &file) {
   long delta = end.msecsSinceStartOfDay() - start.msecsSinceStartOfDay();
 
   qDebug() << "parsing of " << file.fileName() << " took: " << delta << "ms";
+  }
+
+
+void GuiKernel::processAppArgs(const QStringList &args) {
+  int mx = args.size();
+
+  if (mx < 2) return;
+  for (int i=0; i < mx; ++i) {
+      if (args[i] == "-ini" && mx > (i+1)) {
+         iniFileName = args[++i];
+         }
+      else if (args[i] == "-help" && mx > (i+1)) {
+         helpFileName = args[++i];
+         }
+      else if (args[i] == "-plugins" && mx > (i+1)) {
+         pluginDir = args[++i];
+         }
+      }
   }
 
 

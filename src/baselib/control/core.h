@@ -13,7 +13,7 @@ class Core
 {
 public:
   explicit Core();
-  explicit Core(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
+  explicit Core(const QStringList& appArgs, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
   virtual ~Core() = default;
 
   virtual void    riseError(const QString& msg);

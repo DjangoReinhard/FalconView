@@ -23,7 +23,7 @@ class GuiCore : public Core
 {
 public:
   explicit GuiCore();
-  explicit GuiCore(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
+  explicit GuiCore(const QStringList& appArgs, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
   virtual ~GuiCore() = default;
 
   virtual void         riseError(const QString& msg);

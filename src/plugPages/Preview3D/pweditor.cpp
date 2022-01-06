@@ -200,6 +200,7 @@ void PreViewEditor::genPreView(const QVariant& fileName) {
 
 void PreViewEditor::patch(void *pk, void *pc, void *pv, void *pu) {
   TestEdit::patch(pk, pc, pv, pu);
+  qDebug() << "PVE: viewer has address:" << pu;
   view3D = (OcctQtViewer*)pu;
   }
 

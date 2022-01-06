@@ -42,8 +42,10 @@ public:
   void updateView(const QVariant& pos);
 
 protected:
-  explicit GuiKernel(const QString& iniFilename, const QString& appName, const QString& groupID);
+  explicit GuiKernel(const QStringList& appArgs, const QString& appName, const QString& groupID);
   virtual ~GuiKernel() = default;
+
+  virtual void processAppArgs(const QStringList& args) override;
 
 signals:
   void abortTask();
@@ -83,6 +85,9 @@ private:
   QThread            backendCommThread;
   SysEventModel*     sysEvents;
   CanonIFSettings*   canonIF;
+  QString            iniFileName;
+  QString            helpFileName;
+  QString            pluginDir;
   QMap<QString, PluginPageInterface*> pages;
   QMap<QString, PluginPageInterface*> statusInfos;
   friend class GuiKernelCreator;

@@ -9,7 +9,6 @@ set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "CMake search-path"
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
 set(OpenCASCADE_DIR   "/usr/local/lib/cmake/opencascade" CACHE PATH "OpenCascade 7.6.0")
 set(LinuxCNC_DIR      "/usr/local/src/linuxcnc-deb11" CACHE PATH "LinuxCNC")
-set(DistDIR           ${PROJECT_BINARY_DIR}/dist CACHE PATH "build-result")
 find_package(Qt5 REQUIRED COMPONENTS
              Gui
              Widgets
@@ -39,12 +38,36 @@ find_library(LC_LibTD    tooldata REQUIRED PATHS ${LinuxCNC_DIR}/lib )
 
 add_subdirectory(src)
 add_subdirectory(docs)
-add_custom_target(Dummy)
+add_custom_target(Dummy ALL
+                  COMMAND ${PROJECT_SOURCE_DIR}/scripts/buildFinish ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
+                  DEPENDS FalconView
+                          ppFixtureManager
+                          ppJogView
+                          ppLCToolTable
+                          ppMDIEditor
+                          ppPathEditor
+                          ppPrefsEditor
+                          ppPreview3D
+                          ppSysEventView
+                          ppToolManager
+                          siCurCodes
+                          siPosition
+                          siSpeedInfo
+                          siToolInfo
+                  )
 add_dependencies(FalconView HelpFile)
-add_dependencies(Dummy FalconView)
-add_custom_command(TARGET Dummy POST_BUILD
-    COMMAND ${PROJECT_SOURCE_DIR}/buildFinish ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
-    DEPENDS $<TARGET_FILE:FalconView>
-    COMMENT "finish build"
-    )
-
+#                  DEPENDS $<TARGET_FILE:FalconView>
+#                         $<TARGET_FILE:ppFixtureManager>
+#                         $<TARGET_FILE:ppJogView>
+#                         $<TARGET_FILE:ppLCToolTable>
+#                         $<TARGET_FILE:ppMDIEditor>
+#                         $<TARGET_FILE:ppPathEditor>
+#                         $<TARGET_FILE:ppPrefsEditor>
+#                         $<TARGET_FILE:ppPreview3D>
+#                         $<TARGET_FILE:ppSysEventView>
+#                         $<TARGET_FILE:ppToolManager>
+#                         $<TARGET_FILE:siCurCodes>
+#                         $<TARGET_FILE:siPosition>
+#                         $<TARGET_FILE:siSpeedInfo>
+#                         $<TARGET_FILE:siToolInfo>
+#

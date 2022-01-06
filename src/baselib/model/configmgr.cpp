@@ -51,6 +51,7 @@ QFont ConfigManager::getFont(int index) {
 
 
 QVariant ConfigManager::value(const QString& key, const QVariant& defaultValue) const {
+//  qDebug() << "CfgMgr::value(" << key << "\tdefault:" << defaultValue;
   return settings.value(key, defaultValue);
   }
 

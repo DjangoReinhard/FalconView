@@ -16,19 +16,20 @@ public:
   virtual void logSysEvent(const SysEvent& se);
 
 protected:
-  explicit Kernel(const QString& iniFilename, const QString& appName, const QString& groupID);
+  explicit Kernel(const QStringList& appArgs, const QString& appName, const QString& groupID);
   virtual ~Kernel() = default;
 
   virtual int  axisMask() const;
   virtual void logSysEvent(const QString& msg);
   virtual void initialize(const QLocale& locale, DBHelper& dbAssist);
   virtual QString fileName4(const QString& fileID) const;
+  virtual void processAppArgs(const QStringList& args);
 
   bool                simulator;
   ConfigManager*      cfg;
   QLocale*            locale;
-  DBConnection*       conn;
-  QString             fileName;
+  DBConnection*       conn;  
+  QStringList         appArgs;
   QString             appName;
   QString             groupID;
   QBasicTimer         timer;

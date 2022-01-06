@@ -32,8 +32,8 @@
 #include <canonifsettings.h>
 
 
-GuiCore::GuiCore(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& groupID)
- : Core(iniFileName, appName, locale, dbAssist, groupID) {
+GuiCore::GuiCore(const QStringList& appArgs, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& groupID)
+ : Core(appArgs, appName, locale, dbAssist, groupID) {
   }
 
 
