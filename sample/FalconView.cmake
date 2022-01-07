@@ -1,6 +1,7 @@
 #
 # common settings for FalconView
 #
+include(GNUInstallDirs)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)

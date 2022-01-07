@@ -177,17 +177,17 @@
 <context>
     <name>GCodeEditorForm</name>
     <message>
-        <location filename="../../lcLib/UI/GCodeEditor.ui" line="26"/>
+        <location filename="../../lcLib/view/GCodeEditor.ui" line="26"/>
         <source>Frame</source>
         <translation>Rahmen</translation>
     </message>
     <message>
-        <location filename="../../lcLib/UI/GCodeEditor.ui" line="56"/>
+        <location filename="../../lcLib/view/GCodeEditor.ui" line="56"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="../../lcLib/UI/GCodeEditor.ui" line="103"/>
+        <location filename="../../lcLib/view/GCodeEditor.ui" line="103"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -371,12 +371,12 @@
 <context>
     <name>HelpTitle</name>
     <message>
-        <location filename="../../lcLib/UI/HelpTitle.ui" line="20"/>
+        <location filename="../../lcLib/view/HelpTitle.ui" line="20"/>
         <source>Form</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../../lcLib/UI/HelpTitle.ui" line="79"/>
+        <location filename="../../lcLib/view/HelpTitle.ui" line="79"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -426,7 +426,7 @@
     <message>
         <location filename="../../plugPages/JogView/Jog.ui" line="760"/>
         <source>11.988</source>
-        <translation type="unfinished">11.988</translation>
+        <translation>11.988</translation>
     </message>
     <message>
         <location filename="../../plugPages/JogView/Jog.ui" line="856"/>
@@ -494,21 +494,25 @@
     <name>MainWindow</name>
     <message>
         <location filename="../UI/mainwindow.ui" line="60"/>
+        <location filename="../control/mainwindow.ui" line="60"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Prototype for linuxcnc with dockable widgets.&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;Each dockable can be dragged to different position. See &lt;a href=&quot;https://doc.qt.io/qt-5/qdockwidget.html#details&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;QT documentation&lt;/span&gt;&lt;/a&gt; for further information.&lt;/p&gt;&lt;p&gt;The &lt;span style=&quot; font-weight:600;&quot;&gt;DRO dockable&lt;/span&gt; is special. It contains switchable dro for &lt;span style=&quot; font-style:italic;&quot;&gt;relative&lt;/span&gt; and &lt;span style=&quot; font-style:italic;&quot;&gt;absolute&lt;/span&gt; position. Furthermore the &lt;span style=&quot; font-style:italic;&quot;&gt;fontsize changes&lt;/span&gt; with the hight of the widget.&lt;/p&gt;&lt;p&gt;If it can&apos;t be dragged to the desired position, drop it at the desktop. Then shrink its size to minimum and then try again to drop to that location.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="92"/>
+        <location filename="../control/mainwindow.ui" line="92"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="97"/>
+        <location filename="../control/mainwindow.ui" line="97"/>
         <source>View</source>
         <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="113"/>
+        <location filename="../control/mainwindow.ui" line="113"/>
         <source>File</source>
         <comment>what</comment>
         <translation>Datei</translation>
@@ -516,96 +520,116 @@
     <message>
         <location filename="../UI/mainwindow.ui" line="127"/>
         <location filename="../UI/mainwindow.ui" line="241"/>
+        <location filename="../control/mainwindow.ui" line="127"/>
+        <location filename="../control/mainwindow.ui" line="241"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="141"/>
+        <location filename="../control/mainwindow.ui" line="141"/>
         <source>open</source>
         <translation>öffnen</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="147"/>
+        <location filename="../control/mainwindow.ui" line="147"/>
         <source>open GCode file in editor</source>
         <translation>Datei in Editor laden</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="152"/>
+        <location filename="../control/mainwindow.ui" line="152"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="163"/>
+        <location filename="../control/mainwindow.ui" line="163"/>
         <source>Absolute Position</source>
         <translation>absolute Koordinaten</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="169"/>
+        <location filename="../control/mainwindow.ui" line="169"/>
         <source>choose whether to display absolute/relative Coordinates</source>
         <translation>umschalten zwischen absoluter und relativer Positionsanzeige</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="185"/>
+        <location filename="../control/mainwindow.ui" line="185"/>
         <source>FrontView</source>
         <translation>Vorderansicht</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="196"/>
+        <location filename="../control/mainwindow.ui" line="196"/>
         <source>rightView</source>
         <translation>Ansicht von rechts</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="204"/>
+        <location filename="../control/mainwindow.ui" line="204"/>
         <source>leftView</source>
         <translation>Ansicht von links</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="212"/>
+        <location filename="../control/mainwindow.ui" line="212"/>
         <source>BackView</source>
         <translation>Rückansicht</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="220"/>
+        <location filename="../control/mainwindow.ui" line="220"/>
         <source>TopView</source>
         <translation>Ansicht von oben</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="228"/>
+        <location filename="../control/mainwindow.ui" line="228"/>
         <source>3D-View</source>
         <translation>3D Ansicht</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="236"/>
+        <location filename="../control/mainwindow.ui" line="236"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="246"/>
+        <location filename="../control/mainwindow.ui" line="246"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="254"/>
+        <location filename="../control/mainwindow.ui" line="254"/>
         <source>Jog-Simulator</source>
         <translation>Fahr-Simulator</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="144"/>
+        <location filename="../control/mainwindow.ui" line="144"/>
         <source>open gcode file</source>
         <translation>NC-Datei öffnen</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="155"/>
+        <location filename="../control/mainwindow.ui" line="155"/>
         <source>exit application and shutdown backend</source>
         <translation>Anwendung und Hintergrunddienste beenden</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="166"/>
+        <location filename="../control/mainwindow.ui" line="166"/>
         <source>toggle between absolute and relative position</source>
         <translation>wechseln zwischen absoluter und relativer Positionsanzeige</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="180"/>
+        <location filename="../control/mainwindow.ui" line="180"/>
         <source>Dockables</source>
         <translation>bewegliche Komponenten</translation>
     </message>
@@ -706,12 +730,12 @@
     <message>
         <location filename="../control/mainwindow.cpp" line="192"/>
         <source>active GCode-file has unsaved changes. Please save the file before executing it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die GCode-Datei des aktuellen Jobs wurde verändert. Der Job kann erst nach Speichern der Änderungen gestartet werden.</translation>
     </message>
     <message>
         <location filename="../control/mainwindow.cpp" line="215"/>
         <source>wrong application for execute. Please select3D-Preview or MDI for gcode-execution.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falscher Anwendungsmodes zum Ausführen von GCode-Befehlen. Bitte zu MDI oder 3D-Vorschau wechseln.</translation>
     </message>
     <message>
         <location filename="../control/mainwindow.cpp" line="352"/>
@@ -764,6 +788,7 @@
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="122"/>
+        <location filename="../control/mainwindow.ui" line="122"/>
         <location filename="../control/mainwindow.cpp" line="507"/>
         <source>Mode</source>
         <translation>Modus</translation>
@@ -791,22 +816,22 @@
     <message>
         <location filename="../view/plugindialog.cpp" line="19"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../view/plugindialog.cpp" line="42"/>
         <source>Plugin Information</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../view/plugindialog.cpp" line="53"/>
         <source>Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Seite</translation>
     </message>
     <message>
         <location filename="../view/plugindialog.cpp" line="62"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
 </context>
 <context>
@@ -854,7 +879,7 @@
     <message>
         <location filename="../../statusInfo/Position/Position.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
 </context>
 <context>
@@ -963,7 +988,7 @@
     <message>
         <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2068"/>
         <source>3D-Preview is Center only</source>
-        <translation type="unfinished"></translation>
+        <translation>3D-Vorschau ist alleiniges Zentrum</translation>
     </message>
     <message>
         <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2085"/>

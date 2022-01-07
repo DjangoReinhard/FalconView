@@ -1,6 +1,4 @@
-# Handbetrieb
-
-![Handbetrieb](images/JogView.jpg)
+# Handbetrieb ![Handbetrieb](images/SK_Manual.png)
 
 Diese Seite dient dem Verfahren der Maschine auf Knopfdruck. Dabei gibt es unterschiedliche Bewegungsarten:
 - Auf Knopfdruck bewegt sich die betreffende Achse um einen Schritt (**Einzelschritt**), wobei die Schrittgröße einstellbar ist (rechts oben).
@@ -11,10 +9,12 @@ Die Bewegung kann dabei entweder mit der konfigurierten Geschwindigkeit für Han
 Auch hier gilt wieder, dass nur die Knöpfe für die konfigurierten Achsen der
 Maschine angezeigt werden.
 
+![Handbetrieb](images/JogView.jpg)
+
 Als Tastaturkürzel dient der **Bezeichner der Achse**, wobei die Großbuchstaben für
 positive Richtung und die Kleinbuchstaben für negative Richtung stehen. Also ein
 kleines **x** bewegt die X-Achse in negative Richtung, ein großes **X** bewegt die
-X-Achse in positiver Richtung (Großes X bedeutet *Umschalttaste* + *x*).
+X-Achse in positiver Richtung (Großes X bedeutet [*Umschalttaste* + *x*] ).
 
 Weitere Tastenkombinationen:
 - **[Pfeiltasten rechts/links]** - verändert die Schrittgröße für den Einzelschritt-Modus

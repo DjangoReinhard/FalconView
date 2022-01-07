@@ -1,4 +1,4 @@
-# System-Systemereignisse
+# System-Systemereignisse ![Meldungen](images/SK_Messages.png)
 
 zeigt eine Übersicht der Systemereignisse. Die Tabelle hat rein informativen Charakter, d.h. es kann nichts bearbeitet werden.
 

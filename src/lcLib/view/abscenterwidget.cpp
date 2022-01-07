@@ -106,7 +106,13 @@ QAction* AbstractCenterWidget::viewAction() {
 void AbstractCenterWidget::showEvent(QShowEvent* e) {
   QWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
-     if (Config().value("showHelpAtPageChange").toBool())
-        if (core) core->help4Keyword(objectName());
+//     qDebug() << "ACW: check if help should be popped";
+     if (cfg && cfg->value("showHelpAtPageChange").toBool()) {
+//        qDebug() << "ACW: config says YES";
+        if (core) {
+//           qDebug() << "ACW: ask core for popping help";
+           core->help4Keyword(objectName());
+           }
+        }
      }
   }

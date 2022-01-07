@@ -13,8 +13,9 @@
                         <section title="FileManager" ref="filemanager"/>
                     </section>
                     <section title="3D-Preview" ref="preview"/>
-                    <section title="JogView" ref="jogview"/>
+                    <section title="MDI-Editor" ref="mdiedit"/>
                     <section title="TestEditor" ref="testeditor"/>
+                    <section title="JogView" ref="jogview"/>
                     <section title="Settings" ref="settingsnotebook">
                         <section title="ToolManager" ref="toolmanager">
                             <section title="ToolEditor" ref="tooledit"/>

@@ -4,15 +4,16 @@ requires(qtConfig(inputdialog))
 TEMPLATE = subdirs
 POST_TARGETDEPS = copy
 SUBDIRS = \
+  src/app \
   src/baselib \
   src/lcLib \
   src/plugPages \
   src/statusInfo \
-  src/app
+  docs
 
-QMAKE_EXTRA_TARGETS = copy
-
-copy.commands = cd ../FalconView && for i in $( find . -name *.qm ); do cp $i i18n; done
+#QMAKE_EXTRA_TARGETS = copy
+#
+#copy.commands = cd ../FalconView && for i in $( find . -name *.qm ); do cp $i i18n; done
 
 #src.app.depends = src/baselib
 #src.lcLib.depends = src/baselib

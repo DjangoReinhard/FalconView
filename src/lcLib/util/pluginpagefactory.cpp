@@ -44,6 +44,9 @@ PluginPageFactory::PluginPageFactory()
 
 
 PluginPageFactory::~PluginPageFactory() {
+  delete core;
+  delete cfg;
+  delete vm;
   }
 
 

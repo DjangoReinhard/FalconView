@@ -9,6 +9,8 @@
 #include <dbhelper.h>
 #include <centerpage.h>
 #include <settingsnb.h>
+#include <pluginpagefactory.h>
+#include <helpdockable.h>
 #include <pagestack.h>
 #include <tooltable.h>
 #include <configacc.h>
@@ -94,10 +96,10 @@ const GuiKernel* GuiCore::guiCore() const {
 
 
 void GuiCore::help4Keyword(const QString &keyWord) {
-  qDebug() << "Core::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
-//  if (guiCore()->mainWindow->helpDialog()) {
-//     guiCore()->mainWindow->helpDialog()->help4Keyword(keyWord);
-//     }
+//  qDebug() << "GuiCore::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
+  if (guiCore()->help) {
+     guiCore()->help->help4Keyword(keyWord);
+     }
   }
 
 
@@ -154,6 +156,10 @@ PluginPageInterface* GuiCore::pluggablePage(const QString pageID) {
   }
 
 
+void GuiCore::showHelp() const {
+  if (guiCore()->help) guiCore()->help->showHelp();
+  }
+
 PluginPageInterface* GuiCore::statusInfo(const QString infoID) {
   if (guiCore()->statusInfos.contains(infoID))
      return guiCore()->statusInfos[infoID];
@@ -162,7 +168,12 @@ PluginPageInterface* GuiCore::statusInfo(const QString infoID) {
 
 
 void GuiCore::setMainWindow(QMainWindow *w) {
+  PluginPageFactory     ppf;
+  AbstractCenterWidget* cw  = ppf.createCenterPage("HelpView");
+  HelpView*             hv  = reinterpret_cast<HelpView*>(cw);
+
   guiCore()->mainWindow = w;
+  guiCore()->help       = new HelpDockable(hv, w);
   }
 
 

@@ -93,15 +93,12 @@ void HelpView::help4Keyword(const QString &keyWord) {
 
 //  qDebug() << "\tHD: keyword >" << keyWord << "< \tpage:" << document;
   if (!document.isEmpty()) tb->setSource(document);
-//  Core().setAppMode(ApplicationMode::Help);
   }
 
 
 void HelpView::closeEvent(QCloseEvent*) {
-  cfg->beginGroup("HelpView");
-  cfg->setValue("state", sp->saveState());
-  cfg->setValue("geometry", saveGeometry());
-  cfg->endGroup();
+  qDebug() << "HelpView::closeEvent ...";
+  saveState();
   }
 
 
@@ -122,7 +119,11 @@ bool HelpView::eventFilter(QObject*, QEvent* event) {
 void HelpView::restoreState() {
   cfg->beginGroup("HelpView");
   sp->restoreState(cfg->value("state").toByteArray());
-  restoreGeometry(cfg->value("geometry").toByteArray());
-  cfg->endGroup();
   cw->setFocus();
+  }
+
+
+void HelpView::saveState() {
+  cfg->beginGroup("HelpView");
+  cfg->setValue("state", sp->saveState());
   }

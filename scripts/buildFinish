@@ -6,12 +6,14 @@ echo ""
 echo "buildFinish: $src => $dst"
 distBase=${dst}/dist
 appDir=${distBase}
+langDir=${distBase}/i18n
 helpDir=${distBase}/help
 pluginDir=${distBase}/plugins
 rm -rf ${distBase}
 app=$(find $dst -name FalconView)
 help=$(find $dst -name FalconView.qzh)
 plugins=$(find $dst -name *.so)
+langFiles=$(find $src -name *.qm)
 if [ -x ${app} ]; then
     echo "app ok"
 else
@@ -29,3 +31,8 @@ for i in ${plugins}; do
     echo "copy plugin: " $i
     cp -a $i ${pluginDir}
 done
+for i in ${langFiles}; do
+    echo "copy i18n: " $i
+    cp -a $i ${langDir}
+done
+

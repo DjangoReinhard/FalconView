@@ -11,14 +11,11 @@ HelpDockable::HelpDockable(HelpView* view, QWidget* parent)
  , hv(view) {
   setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
   setTitleBarWidget(new HelpTitleBar(this));
-  Config cfg;
-
+  qDebug() << "0) HelpView->parent:" << view->parentWidget();
   layout()->setContentsMargins(0, 0, 0, 0);
   this->setWidget(hv);
-  cfg.beginGroup("Help");
-  restoreGeometry(cfg.value("geometry").toByteArray());
-  cfg.endGroup();
-  hv->restoreState();
+  qDebug() << "1) HelpView->parent:" << view->parentWidget();
+  this->hide();
   }
 
 
@@ -33,6 +30,11 @@ void HelpDockable::showHelp() {
   QDockWidget::show();
   raise();
   activateWindow();
+  Config cfg;
+
+  hv->restoreState();
+  restoreGeometry(cfg.value("geometry").toByteArray());
+  cfg.endGroup();
   }
 
 
@@ -40,7 +42,6 @@ void HelpDockable::closeEvent(QCloseEvent* e) {
   if (hv) hv->closeEvent(e);
   Config cfg;
 
-  cfg.beginGroup("Help");
   cfg.setValue("geometry", saveGeometry());
   cfg.endGroup();
   }
@@ -52,7 +53,7 @@ void HelpDockable::keyPressEvent(QKeyEvent* e) {
 //           << "event-ts: " << e->timestamp();
   switch (e->key()) {
     case Qt::Key_Escape:
-         hide();
+         close();
          break;
     case Qt::Key_Right:
     case Qt::Key_Left:

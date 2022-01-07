@@ -18,7 +18,6 @@ for i in ${files}; do
 #    echo "process file >${fi}< => <${fo}>"
     cat ${src}/${i} | gfm | fixhtml -e ${src}/htmlEntities.def > ${dst}/html/${fo}
 done
-
 cd ${src}/src
 images=$(grep -Ro -P "\(images/(.*)\)" | sed 's%.*(images/%%' | sed 's%)%%')
 cd ..
@@ -31,8 +30,8 @@ do
 #  echo $i
   cp ${src}/src/images/$i ${dst}/html/images
 done
-
+cp ${src}/FalconView.qhp ${dst}/html
 cd ${dst}/html
-zip -u9 ${dst}/FalconView.qzh *.html images/* ${src}/FalconView.qhp
+zip -u9 ${dst}/FalconView.qzh *.html images/* FalconView.qhp
 
 

@@ -38,6 +38,6 @@ protected:
 private:
   QListWidget* history;
   QLineEdit*   cmd;
-//  static const QString testData[];
+  static const QString testData[];
   };
 #endif // MDIEDITOR_H

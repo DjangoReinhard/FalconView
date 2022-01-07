@@ -9,5 +9,4 @@
 | ![Wheel](images/SK_Wheel.png) | handwheel | moves the axes by handwheel |
 | ![jog](images/SK_Manual.png) | manual mode | moves the axes by keystroke |
 | ![cfg](images/SK_Settings.png) | settings | changes system settings |
-| ![touch](images/SK_Touch.png) | touch probe | helps to touch the workpiece |
-
+| ![touch](images/SK_Touch.png) | touch probe | helps to measure the workpiece |

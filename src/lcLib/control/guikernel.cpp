@@ -77,7 +77,8 @@ void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
 
   dir.cd("plugins");
   pluginDir = dir.absolutePath();
-  dir.cd("../help");
+  dir.cd("..");
+  dir.cd("help");
   helpFileName = dir.absolutePath() + "/FalconView.qzh";
   Kernel::initialize(locale, dbAssist);
   lcProps = new LcProperties(fileName4("ini"));

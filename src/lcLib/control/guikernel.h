@@ -12,6 +12,7 @@
 class PluginPageInterface;
 class SysEventModel;
 class OcctQtViewer;
+class HelpDockable;
 class Ally3D;
 class PageStack;
 class QMainWindow;
@@ -77,6 +78,7 @@ private:
   OcctQtViewer*      view3D;
   PageStack*         centerView;
   QMainWindow*       mainWindow;
+  HelpDockable*      help;
   Ally3D*            ally3D;
   GCodeInfo          gcodeInfo;
   PositionCalculator positionCalculator;

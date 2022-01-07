@@ -442,7 +442,7 @@ void MainWindow::createConnections() {
   connect(ui->actionleftView,  &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::leftView);
   connect(ui->actionrightView, &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::rightView);
   connect(ui->actionTopView,   &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::topView);
-  connect(ui->actionHelp,      &QAction::triggered, this,               &MainWindow::showHelp);
+  connect(ui->actionHelp,      &QAction::triggered, this,      [=]() { GuiCore().showHelp(); });
 
 //  if (!previewIsCenter)
 //     connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
@@ -586,11 +586,11 @@ void MainWindow::createDockables() {
      stack->addPage(new CenterPage(snb, false, stack));
      addDockable(Qt::BottomDockWidgetArea, new Dockable(stack, this));
      }
-  //TODO:
-  AbstractCenterWidget* cw = ppFactory->createCenterPage("HelpView");
-  HelpView*             hv = reinterpret_cast<HelpView*>(cw);
+  //TODO: remove
+//  AbstractCenterWidget* cw = ppFactory->createCenterPage("HelpView");
+//  HelpView*             hv = reinterpret_cast<HelpView*>(cw);
 
-  if (hv) dlgHelp = new HelpDockable(hv, this);
+//  if (hv) dlgHelp = new HelpDockable(hv, this);
   }
 
 
@@ -666,9 +666,9 @@ void MainWindow::setSingleStep(bool) {
   }
 
 
-HelpDockable* MainWindow::helpDialog() {
-  return dlgHelp;
-  }
+//HelpDockable* MainWindow::helpDialog() {
+//  return dlgHelp;
+//  }
 
 
 void MainWindow::homeAxis() {
@@ -759,13 +759,13 @@ void MainWindow::showErrMessages() {
   }
 
 
-void MainWindow::showHelp() {
-#ifdef HELP_IS_CENTER_PAGE
-  setAppMode(ApplicationMode::Help);
-#else
-  if (dlgHelp) dlgHelp->showHelp();
-#endif
-  }
+//void MainWindow::showHelp() {
+//#ifdef HELP_IS_CENTER_PAGE
+//  setAppMode(ApplicationMode::Help);
+//#else
+//  if (dlgHelp) dlgHelp->showHelp();
+//#endif
+//  }
 
 
 void MainWindow::setupMenu() {
@@ -872,7 +872,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
             qDebug() << "mode toolbar is visible";
             switch (e->key()) {
 //              case Qt::Key_F1:  ValueManager().setValue("appMode", ApplicationMode::Help); break;
-              case Qt::Key_F1:  if (dlgHelp) dlgHelp->showHelp(); break;
+              case Qt::Key_F1:  GuiCore().showHelp(); break;
               case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
               case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
               case Qt::Key_F4:  ValueManager().setValue("appMode", ApplicationMode::MDI); break;

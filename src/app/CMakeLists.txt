@@ -107,4 +107,9 @@ if(COMMAND qt_create_translation)
 else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
-
+install(TARGETS FalconView
+        CONFIGURATIONS Debug
+        RUNTIME DESTINATION Debug/bin)
+install(TARGETS FalconView
+        CONFIGURATIONS Release
+        RUNTIME DESTINATION Release/bin)

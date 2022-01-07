@@ -45,6 +45,7 @@ void MDIEditor::closeEvent(QCloseEvent*) {
   cfg->endGroup();
   }
 
+
 QString MDIEditor::command() const {
   return cmd->text().toUpper().replace(",", ".");
   }
@@ -73,9 +74,9 @@ QWidget* MDIEditor::createContent() {
 
 
 void MDIEditor::createTestData() {
-//  for (int i=0; !testData[i].isEmpty(); ++i) {
-//      history->addItem(testData[i]);
-//      }
+  for (int i=0; !testData[i].isEmpty(); ++i) {
+      history->addItem(testData[i]);
+      }
   }
 
 
@@ -113,20 +114,23 @@ bool MDIEditor::eventFilter(QObject*, QEvent* event) {
 
 
 void MDIEditor::showEvent(QShowEvent* e) {
-  if (e->type() == QEvent::Show) cmd->setFocus();
+  if (e->type() == QEvent::Show) {
+     cmd->setFocus();
+     }
+  AbstractCenterWidget::showEvent(e);
   }
 
 
 void MDIEditor::updateStyles() {
   }
 
-//const QString MDIEditor::testData[] = {
-//  "T1 M6"
-//, "S400 M3"
-//, "F100"
-//, "G21 G40 G80"
-//, "T3 M6"
-//, "T6 M6"
-//, "G0 G90 G54 X0 Y0"
-//, ""
-//  };
+const QString MDIEditor::testData[] = {
+  "T1 M6"
+, "S400 M3"
+, "F100"
+, "G21 G40 G80"
+, "T3 M6"
+, "T6 M6"
+, "G0 G90 G54 X0 Y0"
+, ""
+  };

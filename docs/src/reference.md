@@ -1,6 +1,5 @@
-# description
+# Description
 
-## central areas (1)
+## central area (1)
 
 ![Reference](images/FV006.jpg)
-

@@ -43,6 +43,7 @@ public:
   void                 setMainWindow(QMainWindow* w);
   void                 setViewStack(PageStack* v);
   void                 setWindowTitle(const QString& title);
+  void                 showHelp() const;
   QWidget*             stackedPage(const QString& pageName);
   PluginPageInterface* statusInfo(const QString infoID);
   QList<QString>       statusInfos();

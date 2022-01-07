@@ -29,7 +29,7 @@ public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
-  HelpDockable* helpDialog();
+//  HelpDockable* helpDialog();
   void initialize();
   void setAppMode(ApplicationMode am);
   SettingsNotebook* settingsNotebook() const { return snb; }
@@ -56,7 +56,7 @@ protected slots:
   void setSingleStep(bool singleStep);
   void hitPowerBtn();
   void showErrMessages();
-  void showHelp();
+//  void showHelp();
   void toggleAllButCenter();
   void toggleAbsolute(const QVariant& absolute);
   void testTools();
@@ -78,7 +78,7 @@ private:
   SettingsNotebook*   snb;
   PreViewEditor*      pw;
   MDIEditor*          mdi;
-  HelpDockable*       dlgHelp;
+//  HelpDockable*       dlgHelp;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;
