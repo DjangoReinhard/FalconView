@@ -22,6 +22,7 @@ else
 fi
 mkdir -p ${appDir} 2>/dev/null
 mkdir -p ${helpDir} 2>/dev/null
+mkdir -p ${langDir} 2>/dev/null
 mkdir -p ${pluginDir} 2>/dev/null
 echo "copy application: " ${app}
 cp -a ${app} ${appDir}

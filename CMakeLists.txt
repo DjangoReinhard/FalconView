@@ -10,7 +10,7 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
 set(OpenCASCADE_DIR   "/usr/local/lib/cmake/opencascade" CACHE PATH "OpenCascade 7.6.0")
 set(LinuxCNC_DIR      "/usr/local/src/linuxcnc-deb11" CACHE PATH "LinuxCNC")
 set(CMAKE_INSTALL_MESSAGE ALWAYS)
-set(CMAKE_INSTALL_PREFIX "/d/linux/QtI/" CACHE PATH "installation prefix")
+set(CMAKE_INSTALL_PREFIX "/d/linux/QtI" CACHE PATH "test installation" FORCE)
 find_package(Qt5 REQUIRED COMPONENTS
              Gui
              Widgets
@@ -58,22 +58,22 @@ add_custom_target(Dummy ALL
                           siToolInfo
                   )
 add_dependencies(FalconView HelpFile)
-set(TS_FILES
-    src/baselib/baselib_de_DE.ts
-    src/lcLib/lcLib_de_DE.ts
-    src/app/i18n/FalconView_de_DE.ts
-    src/plugPages/SysEventView/syseventview_de_DE.ts
-    src/plugPages/LCToolTable/lctooltable_de_DE.ts
-    src/plugPages/FixtureManager/fixture_de_DE.ts
-    src/plugPages/JogView/jogview_de_DE.ts
-    src/plugPages/PathEditor/patheditor_de_DE.ts
-    src/plugPages/Preview3D/preview3D_de_DE.ts
-    src/plugPages/MDIEditor/mdieditor_de_DE.ts
-    src/plugPages/ToolManager/toolmanager_de_DE.ts
-    src/plugPages/PrefsEditor/prefseditor_DE.ts
-    src/statusInfo/Position/position_de_DE.ts
-    src/statusInfo/SpeedInfo/speedinfo_de_DE.ts
-    src/statusInfo/CurCodes/curcodes_de_DE.ts
-    src/statusInfo/ToolInfo/toolinfo_de_DE.ts
-    )
-
+#set(TS_FILES
+#    src/baselib/baselib_de_DE.ts
+#    src/lcLib/lcLib_de_DE.ts
+#    src/app/i18n/FalconView_de_DE.ts
+#    src/plugPages/SysEventView/syseventview_de_DE.ts
+#    src/plugPages/LCToolTable/lctooltable_de_DE.ts
+#    src/plugPages/FixtureManager/fixture_de_DE.ts
+#    src/plugPages/JogView/jogview_de_DE.ts
+#    src/plugPages/PathEditor/patheditor_de_DE.ts
+#    src/plugPages/Preview3D/preview3D_de_DE.ts
+#    src/plugPages/MDIEditor/mdieditor_de_DE.ts
+#    src/plugPages/ToolManager/toolmanager_de_DE.ts
+#    src/plugPages/PrefsEditor/prefseditor_DE.ts
+#    src/statusInfo/Position/position_de_DE.ts
+#    src/statusInfo/SpeedInfo/speedinfo_de_DE.ts
+#    src/statusInfo/CurCodes/curcodes_de_DE.ts
+#    src/statusInfo/ToolInfo/toolinfo_de_DE.ts
+#    )
+#
