@@ -6,52 +6,52 @@
     <message>
         <location filename="Fixture.ui" line="66"/>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="114"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="162"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="178"/>
         <source>W</source>
-        <translation type="unfinished"></translation>
+        <translation>W</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="194"/>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="226"/>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="242"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="271"/>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation>B</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="319"/>
         <source>A</source>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="Fixture.ui" line="348"/>
         <source>G54</source>
-        <translation type="unfinished"></translation>
+        <translation>G54</translation>
     </message>
 </context>
 <context>
@@ -59,12 +59,12 @@
     <message>
         <location filename="fixturemanager.cpp" line="19"/>
         <source>FixtureManager</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordinatensysteme</translation>
     </message>
     <message>
         <location filename="fixturemanager.cpp" line="47"/>
         <source>Offsets</source>
-        <translation type="unfinished"></translation>
+        <translation>Korrektur</translation>
     </message>
 </context>
 </TS>

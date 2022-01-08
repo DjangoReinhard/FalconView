@@ -176,9 +176,9 @@ void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
             }
          [[fallthrough]];
     default:
-         qDebug() << "SN: whatever key (" << e->key()
-                  << ") pressed, modifier: " << e->modifiers()
-                  << "event-ts: " << e->timestamp();
+//         qDebug() << "SN: whatever key (" << e->key()
+//                  << ") pressed, modifier: " << e->modifiers()
+//                  << "event-ts: " << e->timestamp();
          AbstractCenterWidget::keyPressEvent(e); break;
     }
   }

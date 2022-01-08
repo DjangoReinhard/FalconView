@@ -86,9 +86,4 @@ if(COMMAND qt_create_translation)
 else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
-install(TARGETS ppToolManager
-        CONFIGURATIONS Debug
-        LIBRARY DESTINATION Debug/plugins)
-install(TARGETS ppToolManager
-        CONFIGURATIONS Release
-        LIBRARY DESTINATION Release/plugins)
+

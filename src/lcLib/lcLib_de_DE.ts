@@ -78,13 +78,15 @@
     </message>
     <message>
         <location filename="UI/GCodeEditor.ui" line="56"/>
-        <source>Open</source>
-        <translation>Öffnen</translation>
+        <source>&amp;Open</source>
+        <oldsource>Open</oldsource>
+        <translation>Öff&amp;nen</translation>
     </message>
     <message>
         <location filename="UI/GCodeEditor.ui" line="103"/>
-        <source>Save</source>
-        <translation>Speichern</translation>
+        <source>&amp;Save</source>
+        <oldsource>Save</oldsource>
+        <translation>&amp;Speichern</translation>
     </message>
 </context>
 <context>
@@ -96,127 +98,127 @@
     </message>
     <message>
         <source>User Guide</source>
-        <translation type="manuell">Benutzer-Handbuch</translation>
+        <translation type="vanished">Benutzer-Handbuch</translation>
     </message>
     <message>
         <source>linuxCNC</source>
-        <translation type="manuell">LinuxCNC</translation>
+        <translation type="vanished">LinuxCNC</translation>
     </message>
     <message>
         <source>Center-Area</source>
-        <translation type="manuell">Hauptbereich</translation>
+        <translation type="vanished">Hauptbereich</translation>
     </message>
     <message>
         <source>PathEditor</source>
-        <translation type="manuell">aktiver NC-Editor</translation>
+        <translation type="vanished">aktiver NC-Editor</translation>
     </message>
     <message>
         <source>FileManager</source>
-        <translation type="manuell">Datei-Verwalter</translation>
+        <translation type="vanished">Datei-Verwalter</translation>
     </message>
     <message>
         <source>3D-Preview</source>
-        <translation type="manuell">3D-Vorschau</translation>
+        <translation type="vanished">3D-Vorschau</translation>
     </message>
     <message>
         <source>JogView</source>
-        <translation type="manuell">Handbetrieb</translation>
+        <translation type="vanished">Handbetrieb</translation>
     </message>
     <message>
         <source>MDIEditor</source>
-        <translation type="manuell">manuelle Befehle</translation>
+        <translation type="vanished">manuelle Befehle</translation>
     </message>
     <message>
         <source>TestEditor</source>
-        <translation type="manuell">freie NC-Datei</translation>
+        <translation type="vanished">freie NC-Datei</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="manuell">Einstellungen</translation>
+        <translation type="vanished">Einstellungen</translation>
     </message>
     <message>
         <source>ToolManager</source>
-        <translation type="manuell">Werkzeug-Verwaltung</translation>
+        <translation type="vanished">Werkzeug-Verwaltung</translation>
     </message>
     <message>
         <source>ToolEditor</source>
-        <translation type="manuell">Werkzeug-Eigenschaften</translation>
+        <translation type="vanished">Werkzeug-Eigenschaften</translation>
     </message>
     <message>
         <source>Fixtures</source>
-        <translation type="manuell">Koordinatensysteme</translation>
+        <translation type="vanished">Koordinatensysteme</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="manuell">Optionen</translation>
+        <translation type="vanished">Optionen</translation>
     </message>
     <message>
         <source>LC-Tools</source>
-        <translation type="manuell">LinuxCNC Werkzeuge</translation>
+        <translation type="vanished">LinuxCNC Werkzeuge</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="manuell">Werkzeugleisten</translation>
+        <translation type="vanished">Werkzeugleisten</translation>
     </message>
     <message>
         <source>ApplicationMode</source>
-        <translation type="manuell">Anwendungs-Modus</translation>
+        <translation type="vanished">Anwendungs-Modus</translation>
     </message>
     <message>
         <source>RunMode</source>
-        <translation type="manuell">Betriebsart</translation>
+        <translation type="vanished">Betriebsart</translation>
     </message>
     <message>
         <source>Machine</source>
-        <translation type="manuell">Maschine</translation>
+        <translation type="vanished">Maschine</translation>
     </message>
     <message>
         <source>Extended</source>
-        <translation type="manuell">Zusatz</translation>
+        <translation type="vanished">Zusatz</translation>
     </message>
     <message>
         <source>Status-Info</source>
-        <translation type="manuell">Informationen</translation>
+        <translation type="vanished">Informationen</translation>
     </message>
     <message>
         <source>Position</source>
-        <translation type="manuell">Werkzeug-Position</translation>
+        <translation type="vanished">Werkzeug-Position</translation>
     </message>
     <message>
         <source>ToolInfo</source>
-        <translation type="manuell">Werkzeug</translation>
+        <translation type="vanished">Werkzeug</translation>
     </message>
     <message>
         <source>act.Codes</source>
-        <translation type="manuell">aktive Befehle</translation>
+        <translation type="vanished">aktive Befehle</translation>
     </message>
     <message>
         <source>SpeedInfo</source>
-        <translation type="manuell">Geschwindigkeit</translation>
+        <translation type="vanished">Geschwindigkeit</translation>
     </message>
     <message>
         <source>G-Codes</source>
-        <translation type="manuell">NC-Befehle</translation>
+        <translation type="vanished">NC-Befehle</translation>
     </message>
     <message>
         <source>use case</source>
-        <translation type="manuell">Abläufe</translation>
+        <translation type="vanished">Abläufe</translation>
     </message>
     <message>
         <source>SettingsNotebook</source>
-        <translation type="manuell">Systemeinstellungen</translation>
+        <translation type="vanished">Systemeinstellungen</translation>
     </message>
     <message>
         <source>SysEventView</source>
-        <translation type="manuell">System-Ereignisse</translation>
+        <translation type="vanished">System-Ereignisse</translation>
     </message>
     <message>
         <source>PreferencesEditor</source>
-        <translation type="manuell">Einstellungen</translation>
+        <translation type="vanished">Einstellungen</translation>
     </message>
     <message>
         <source>LCToolTable</source>
-        <translation type="manuell">LinuxCNC Werkzeuge</translation>
+        <translation type="vanished">LinuxCNC Werkzeuge</translation>
     </message>
 </context>
 <context>
@@ -345,7 +347,7 @@
     <message>
         <location filename="view/testEdit.cpp" line="226"/>
         <source>Search text:</source>
-        <translation>Suchbegriff</translation>
+        <translation>Suchbegriff:</translation>
     </message>
 </context>
 <context>

@@ -6,12 +6,12 @@
     <message>
         <location filename="ToolInfo.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rahmen</translation>
     </message>
     <message>
         <location filename="ToolInfo.ui" line="101"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This could be a very long description of whatever kind loaded from tooltable comments&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dies könne eine sehr sehr lange Werkzeugbeschreibung sein&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -19,7 +19,7 @@
     <message>
         <location filename="toolstatus.cpp" line="19"/>
         <source>ToolStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeug-Info</translation>
     </message>
     <message>
         <location filename="toolstatus.cpp" line="58"/>

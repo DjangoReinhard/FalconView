@@ -7,7 +7,7 @@
         <location filename="pweditor.cpp" line="40"/>
         <source>PreView3D</source>
         <oldsource>PreViewEditor</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>3D-Vorschau</translation>
     </message>
 </context>
 </TS>

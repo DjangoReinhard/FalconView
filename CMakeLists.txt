@@ -7,8 +7,10 @@ set(CMAKE_MODULE_PATH /d/linux/cmake)
 include(FalconView RESULT_VARIABLE ConfigBase)
 set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "CMake search-path")
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
-set(OpenCASCADE_DIR   "/usr/local/lib/cmake/opencascade" CACHE PATH "OpenCascade 7.6.0")
-set(LinuxCNC_DIR      "/usr/local/src/linuxcnc-deb11" CACHE PATH "LinuxCNC")
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/src/linuxcnc-deb11")
+set(OpenCASCADE_DIR "/usr/local/lib/cmake/opencascade" CACHE PATH "OpenCascade 7.6.0")
+set(ENV{EMC2_HOME} "/usr/local/src/linuxcnc-deb11")
+#set(LinuxCNC_DIR    "/usr/local/src/linuxcnc-deb11" CACHE PATH "linuxcnc-dev")
 set(CMAKE_INSTALL_MESSAGE ALWAYS)
 set(CMAKE_INSTALL_PREFIX "/d/linux/QtI" CACHE PATH "test installation" FORCE)
 find_package(Qt5 REQUIRED COMPONENTS
@@ -29,6 +31,8 @@ find_package(OpenCASCADE COMPONENTS
              Draw
              PATHS ${OpenCASCADE_DIR} NO_DEFAULT_PATH
              )
+find_package(linuxCNC MODULE REQUIRED)
+
 find_library(LC_LibLC    linuxcnc REQUIRED PATHS ${LinuxCNC_DIR}/lib )
 find_library(LC_LibPM    posemath REQUIRED PATHS ${LinuxCNC_DIR}/lib )
 find_library(LC_LibNML   nml REQUIRED PATHS ${LinuxCNC_DIR}/lib )
@@ -40,7 +44,7 @@ find_library(LC_LibTD    tooldata REQUIRED PATHS ${LinuxCNC_DIR}/lib )
 
 add_subdirectory(src)
 add_subdirectory(docs)
-add_custom_target(Dummy ALL
+add_custom_target(build_Finish ALL
                   COMMAND ${PROJECT_SOURCE_DIR}/scripts/buildFinish ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
                   DEPENDS FalconView
                           ppFixtureManager

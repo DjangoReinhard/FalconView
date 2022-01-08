@@ -712,7 +712,6 @@ void MainWindow::restoreAll() {
 //  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
 
 //  if (pe) pe->restoreState();
-  ui->menubar->setVisible(false);
   }
 
 
@@ -779,6 +778,7 @@ void MainWindow::setupMenu() {
   ui->menuMode->addAction(cfgMode);
   ui->menuMode->addAction(msgMode);
   ui->actionHelp->setShortcut(QKeySequence::HelpContents);
+//  ui->menubar->setVisible(false);
   }
 
 
@@ -881,7 +881,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
               case Qt::Key_F7:  ValueManager().setValue("appMode", ApplicationMode::Manual); break;
               case Qt::Key_F8:  ValueManager().setValue("appMode", ApplicationMode::Touch); break;
               case Qt::Key_F9:  ValueManager().setValue("appMode", ApplicationMode::Settings); break;
-              case Qt::Key_F10: ValueManager().setValue("appMode", ApplicationMode::ErrMessages); break;
+              case Qt::Key_F10: showErrMessages(); break;
               case Qt::Key_F11: startAction->trigger(); break;
               case Qt::Key_F12: stopAction->trigger(); break;
               }

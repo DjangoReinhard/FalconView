@@ -75,7 +75,7 @@ void HelpKeywordWidget::sourceChanged(const QUrl &src) {
 //  QString keyWord = src.path().mid(0, ndx);
   int mx = count();
 
-  qDebug() << "HelpKeywordWidget::sourceChanged(" << src << ")"; // -> kw:" << keyWord;
+//  qDebug() << "HelpKeywordWidget::sourceChanged(" << src << ")"; // -> kw:" << keyWord;
   for (int i=0; i < mx; ++i) {
       QListWidgetItem* item = this->item(i);
 

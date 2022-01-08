@@ -6,7 +6,7 @@
     <message>
         <location filename="CategoryTreeModel.cpp" line="64"/>
         <source>Tool-Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugtyp</translation>
     </message>
 </context>
 <context>
@@ -14,17 +14,17 @@
     <message>
         <location filename="toolcategorymodel.cpp" line="37"/>
         <source>id</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="toolcategorymodel.cpp" line="38"/>
         <source>name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="toolcategorymodel.cpp" line="39"/>
         <source>parent</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltern</translation>
     </message>
 </context>
 <context>
@@ -32,102 +32,102 @@
     <message>
         <location filename="ToolEditor.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="32"/>
         <source>Tool Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeuglänge</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="39"/>
         <source>Collet Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnahmendurchmesser</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="56"/>
         <source>max Ramp Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintauchwinkel gerade</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="83"/>
         <source>Material</source>
-        <translation type="unfinished"></translation>
+        <translation>Material</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="96"/>
         <source>Cut Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Spitzenwinkel</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="129"/>
         <source>Tip Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Spitzendurchmesser</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="172"/>
         <source>Flutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneiden</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="189"/>
         <source>Slope Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaftwinkel</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="206"/>
         <source>Collet Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnahmenlänge</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="233"/>
         <source>Free Length</source>
-        <translation type="unfinished"></translation>
+        <translation>freie Länge</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="240"/>
         <source>Coating</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschichtung</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="253"/>
         <source>Flute Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneidendurchmesser</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="285"/>
         <source>Shank Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaftdurchmesser</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="298"/>
         <source>Cut Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneidenlänge</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="305"/>
         <source>Part Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel-Nummer</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="380"/>
         <source>999</source>
-        <translation type="unfinished"></translation>
+        <translation>999</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="390"/>
         <source>Helix Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintauchwinkel Spirale</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="417"/>
         <source>Tooth Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahnlast</translation>
     </message>
     <message>
         <location filename="ToolEditor.ui" line="430"/>
         <source>Flute Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintauchlänge</translation>
     </message>
 </context>
 <context>
@@ -135,60 +135,60 @@
     <message>
         <location filename="toolmanager.cpp" line="48"/>
         <source>ToolManager</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeug-Verwaltung</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="232"/>
         <location filename="toolmanager.cpp" line="272"/>
         <location filename="toolmanager.cpp" line="384"/>
         <source>QInputDialog::getText()</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="233"/>
         <source>Category name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategorie-Bezeichner:</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="273"/>
         <source>Tool number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeug-Nummer:</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="325"/>
         <location filename="toolmanager.cpp" line="369"/>
         <source>QMessageBox::information()</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinweis</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="326"/>
         <source>This category has attached tools or sub-categories and cannot be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Kategorie sind noch Werkzeuge zugeordnet. Sie kann deshalb nicht gelöscht werden.</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="341"/>
         <source>QMessageBox::question()</source>
-        <translation type="unfinished"></translation>
+        <translation>Sicherheits-Abfrage</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="342"/>
         <source>Should this tool be deleted?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soll dies Werkzeug gelöscht werden?</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="370"/>
         <source>To finish tool editing press F10 to save changes or ESC to abort.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Bearbeitung der Werkzeugeigenschaften kann mit [F10] gespeichert, oder via [Esc] abgebrochen werden.</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="385"/>
         <source>new Category name:</source>
-        <translation type="unfinished"></translation>
+        <translation>neue Werkzeugkategorie:</translation>
     </message>
     <message>
         <location filename="toolmanager.cpp" line="408"/>
         <source>saving of tool-data failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern der Werkzeugdaten fehlgeschlagen!</translation>
     </message>
 </context>
 <context>
@@ -197,7 +197,7 @@
         <location filename="toolmodel.cpp" line="91"/>
         <location filename="toolmodel.cpp" line="125"/>
         <source>id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ID</translation>
     </message>
     <message>
         <location filename="toolmodel.cpp" line="92"/>
@@ -346,7 +346,7 @@
     <message>
         <location filename="toolmodel.cpp" line="131"/>
         <source>Flutes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schneiden</translation>
     </message>
     <message>
         <location filename="toolmodel.cpp" line="132"/>

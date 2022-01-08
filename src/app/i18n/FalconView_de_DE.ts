@@ -183,13 +183,21 @@
     </message>
     <message>
         <location filename="../../lcLib/view/GCodeEditor.ui" line="56"/>
-        <source>Open</source>
-        <translation>Öffnen</translation>
+        <source>&amp;Open</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../lcLib/view/GCodeEditor.ui" line="103"/>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="vanished">Öffnen</translation>
+    </message>
+    <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation type="vanished">Speichern</translation>
     </message>
 </context>
 <context>
@@ -696,7 +704,7 @@
     <message>
         <location filename="../control/mainwindow.cpp" line="398"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeuge</translation>
     </message>
     <message>
         <location filename="../control/mainwindow.cpp" line="406"/>
@@ -887,47 +895,47 @@
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="324"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="343"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="362"/>
         <source>Z</source>
-        <translation type="unfinished">Z</translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="381"/>
         <source>A</source>
-        <translation type="unfinished">A</translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="400"/>
         <source>B</source>
-        <translation type="unfinished">B</translation>
+        <translation>B</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="419"/>
         <source>C</source>
-        <translation type="unfinished">C</translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="438"/>
         <source>U</source>
-        <translation type="unfinished">U</translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="457"/>
         <source>V</source>
-        <translation type="unfinished">V</translation>
+        <translation>V</translation>
     </message>
     <message>
         <location filename="../../statusInfo/Position/PositionMain.ui" line="476"/>
         <source>W</source>
-        <translation type="unfinished">W</translation>
+        <translation>W</translation>
     </message>
 </context>
 <context>
@@ -1215,7 +1223,7 @@
     <message>
         <location filename="../control/testmain.cpp" line="38"/>
         <source>About &amp;Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>über &amp;Plugins</translation>
     </message>
 </context>
 <context>

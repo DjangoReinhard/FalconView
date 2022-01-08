@@ -40,6 +40,7 @@ public:
   void                 parseGCFile(const QString& fileName);
   PluginPageInterface* pluggablePage(const QString pageID);
   QList<QString>       pluggablePages();
+  void                 setAppMode4PageID(const QString& pageID);
   void                 setMainWindow(QMainWindow* w);
   void                 setViewStack(PageStack* v);
   void                 setWindowTitle(const QString& title);

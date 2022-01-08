@@ -5,7 +5,7 @@
     <name>SysEventView</name>
     <message>
         <source>SysEventView</source>
-        <translation type="unfinished"></translation>
+        <translation>System-Ereignisse</translation>
     </message>
 </context>
 </TS>
