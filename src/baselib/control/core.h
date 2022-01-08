@@ -7,13 +7,14 @@ class KernelCreator;
 class DBConnection;
 class DBHelper;
 class QLocale;
+class QApplication;
 
 
 class Core
 {
 public:
   explicit Core();
-  explicit Core(const QStringList& appArgs, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
+  explicit Core(QApplication& app, const QString& appName, DBHelper& dbAssist, const QString& group = "SRD");
   virtual ~Core() = default;
 
   virtual void    riseError(const QString& msg);

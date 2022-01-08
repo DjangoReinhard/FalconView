@@ -17,8 +17,8 @@
 #include <QVector3D>
 
 
-GuiKernel::GuiKernel(const QStringList& appArgs, const QString& appName, const QString& groupID)
- : Kernel(appArgs, appName, groupID)
+GuiKernel::GuiKernel(QApplication& app, const QString& appName, const QString& groupID)
+ : Kernel(app, appName, groupID)
  , lcProps(nullptr)
  , tt(nullptr)
  , lcIF(nullptr)
@@ -56,6 +56,10 @@ QString GuiKernel::fileName4(const QString &fileID) const {
      qDebug() << "GK::fileName4(" << fileID << ") => " << iniFileName;
      return iniFileName;
      }
+  else if (fileID == "i18n") {
+     qDebug() << "GK::fileName4(" << fileID << ") => " << langDir;
+     return langDir;
+     }
   else if (fileID == "plugins") {
      qDebug() << "GK::fileName4(" << fileID << ") => " << pluginDir;
      return pluginDir;
@@ -72,7 +76,7 @@ QString GuiKernel::fileName4(const QString &fileID) const {
   }
 
 
-void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
+void GuiKernel::initialize(DBHelper &dbAssist) {
   QDir dir(QCoreApplication::applicationDirPath());
 
   dir.cd("plugins");
@@ -80,7 +84,10 @@ void GuiKernel::initialize(const QLocale& locale, DBHelper &dbAssist) {
   dir.cd("..");
   dir.cd("help");
   helpFileName = dir.absolutePath() + "/FalconView.qzh";
-  Kernel::initialize(locale, dbAssist);
+  dir.cd("..");
+  dir.cd("i18n");
+  langDir = dir.absolutePath();
+  Kernel::initialize(dbAssist);
   lcProps = new LcProperties(fileName4("ini"));
   tt = new ToolTable(*lcProps, lcProps->toolTableFileName());
   lcIF = new LCInterface(*lcProps, *tt);
@@ -199,7 +206,7 @@ void GuiKernel::parseGCode(QFile &file) {
 void GuiKernel::processAppArgs(const QStringList &args) {
   int mx = args.size();
 
-  if (mx < 2) return;
+  if (mx < 2) usage();
   for (int i=0; i < mx; ++i) {
       if (args[i] == "-ini" && mx > (i+1)) {
          iniFileName = args[++i];
@@ -207,10 +214,16 @@ void GuiKernel::processAppArgs(const QStringList &args) {
       else if (args[i] == "-help" && mx > (i+1)) {
          helpFileName = args[++i];
          }
+      else if (args[i] == "-i18n" && mx > (i+1)) {
+         langDir = args[++i];
+         }
       else if (args[i] == "-plugins" && mx > (i+1)) {
          pluginDir = args[++i];
          }
       }
+  QFileInfo iniFI(iniFileName);
+
+  if (!iniFI.exists()) usage();
   }
 
 
@@ -297,6 +310,18 @@ void GuiKernel::updateView(const QVariant &v) {
   ally3D->moveCone(p.x(), p.y(), p.z());
   }
 
+
+void GuiKernel::usage() {
+  std::cerr << std::endl << "FalconView V"  << version().toStdString().c_str() << std::endl
+            << std::endl << "please specify the path to INI-file of your linuxCNC machine." << std::endl
+            << std::endl << "supported options:"
+            << std::endl << "\t-ini\t\t<mandatory>\tpath to INI-file of linuxCNC"
+            << std::endl << "\t-help\t\t[optional]\tpath to FalconView helpfile"
+            << std::endl << "\t-plugins\t[optional]\tpath to plugin-directory"
+            << std::endl << "\t-i18n\t\t[optional]\tpath to translation files"
+            << std::endl << std::endl;
+  exit(-1);
+  }
 
 void GuiKernel::windowClosing(QCloseEvent *e) {
   // application is going to shut down ...

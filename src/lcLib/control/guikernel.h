@@ -32,7 +32,7 @@ public:
   DBConnection*   createDatabase(DBHelper& dbAssist);
   virtual void    logSysEvent(const QString& msg) override;
   virtual void    logSysEvent(const SysEvent& se) override;
-  virtual void    initialize(const QLocale& locale, DBHelper& dbAssist) override;
+  virtual void    initialize(DBHelper& dbAssist) override;
   virtual QString fileName4(const QString& fileID) const override;
   virtual void    timerEvent(QTimerEvent* e) override;
   virtual void    windowClosing(QCloseEvent* e);
@@ -43,9 +43,10 @@ public:
   void updateView(const QVariant& pos);
 
 protected:
-  explicit GuiKernel(const QStringList& appArgs, const QString& appName, const QString& groupID);
+  explicit GuiKernel(QApplication& app, const QString& appName, const QString& groupID);
   virtual ~GuiKernel() = default;
 
+  virtual void usage();
   virtual void processAppArgs(const QStringList& args) override;
 
 signals:

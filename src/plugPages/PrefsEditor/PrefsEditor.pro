@@ -33,7 +33,7 @@ FORMS += \
     Settings.ui
 
 TRANSLATIONS += \
-    prefseditor_DE.ts
+    prefseditor_de_DE.ts
 
 unix:!mac {
   LIBS += -Wl,-rpath=$${LINUXCNC}/lib

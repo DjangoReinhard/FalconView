@@ -2,6 +2,6 @@
 #include <kernel.h>
 
 
-Kernel* KernelCreator::kernel(const QStringList& appArgs, const QString& appName, const QString& groupID) {
-  return new Kernel(appArgs, appName, groupID);
+Kernel* KernelCreator::kernel(QApplication& app, const QString& appName, const QString& groupID) {
+  return new Kernel(app, appName, groupID);
   }
