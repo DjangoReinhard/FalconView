@@ -10,7 +10,6 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/src/linuxcnc-deb11")
 set(OpenCASCADE_DIR "/usr/local/lib/cmake/opencascade" CACHE PATH "OpenCascade 7.6.0")
 set(ENV{EMC2_HOME} "/usr/local/src/linuxcnc-deb11")
-#set(LinuxCNC_DIR    "/usr/local/src/linuxcnc-deb11" CACHE PATH "linuxcnc-dev")
 set(CMAKE_INSTALL_MESSAGE ALWAYS)
 set(CMAKE_INSTALL_PREFIX "/d/linux/QtI" CACHE PATH "test installation" FORCE)
 find_package(Qt5 REQUIRED COMPONENTS
@@ -32,15 +31,68 @@ find_package(OpenCASCADE COMPONENTS
              PATHS ${OpenCASCADE_DIR} NO_DEFAULT_PATH
              )
 find_package(linuxCNC MODULE REQUIRED)
-
-find_library(LC_LibLC    linuxcnc REQUIRED PATHS ${LinuxCNC_DIR}/lib )
-find_library(LC_LibPM    posemath REQUIRED PATHS ${LinuxCNC_DIR}/lib )
-find_library(LC_LibNML   nml REQUIRED PATHS ${LinuxCNC_DIR}/lib )
-find_library(LC_LibRS274 rs274 REQUIRED PATHS ${LinuxCNC_DIR}/lib )
-find_library(LC_LibLCI   linuxcncini REQUIRED PATHS ${LinuxCNC_DIR}/lib )
-find_library(LC_LibPP    pyplugin REQUIRED PATHS ${LinuxCNC_DIR}/lib )
-find_library(LC_LibHal   linuxcnchal REQUIRED PATHS ${LinuxCNC_DIR}/lib )
-find_library(LC_LibTD    tooldata REQUIRED PATHS ${LinuxCNC_DIR}/lib )
+add_library(IFQt          INTERFACE)
+add_library(IFOpenCASCADE INTERFACE)
+add_library(IFStandard    INTERFACE)
+target_include_directories(IFQt
+                           INTERFACE ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+                           )
+target_link_libraries(IFQt
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Gui
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Widgets
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Core
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Sql
+                      INTERFACE Qt${QT_VERSION_MAJOR}::UiTools
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Xml
+                      )
+target_include_directories(IFOpenCASCADE
+                           INTERFACE ${OpenCASCADE_INCLUDE_DIR}
+                           )
+target_link_libraries(IFOpenCASCADE
+                      INTERFACE TKernel
+                      INTERFACE TKMath
+                      INTERFACE TKService
+                      INTERFACE TKV3d
+                      INTERFACE TKOpenGl
+                      INTERFACE TKBRep
+                      INTERFACE TKIGES
+                      INTERFACE TKSTL
+                      INTERFACE TKVRML
+                      INTERFACE TKSTEP
+                      INTERFACE TKSTEPAttr
+                      INTERFACE TKSTEP209
+                      INTERFACE TKSTEPBase
+                      INTERFACE TKGeomBase
+                      INTERFACE TKGeomAlgo
+                      INTERFACE TKG3d
+                      INTERFACE TKG2d
+                      INTERFACE TKXSBase
+                      INTERFACE TKShHealing
+                      INTERFACE TKHLR
+                      INTERFACE TKTopAlgo
+                      INTERFACE TKMesh
+                      INTERFACE TKPrim
+                      INTERFACE TKCDF
+                      INTERFACE TKBool
+                      INTERFACE TKBO
+                      INTERFACE TKFillet
+                      INTERFACE TKOffset
+                      INTERFACE TKLCAF
+                      INTERFACE TKCAF
+                      INTERFACE TKVCAF
+                      INTERFACE TKBin
+                      INTERFACE TKXml
+                      )
+target_link_libraries(IFStandard
+                      INTERFACE m
+                      INTERFACE stdc++
+                      INTERFACE boost_python39
+                      INTERFACE python3.9
+                      INTERFACE crypt
+                      INTERFACE pthread
+                      INTERFACE dl
+                      INTERFACE util
+                      )
 
 add_subdirectory(src)
 add_subdirectory(docs)

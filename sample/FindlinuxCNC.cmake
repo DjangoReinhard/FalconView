@@ -1,28 +1,41 @@
 #
 # linuxCNC project import defintion
 #
-set(_ENV_linuxCNC "")
+set(_linuxCNC "")
 if(DEFINED ENV{EMC2_HOME})
-    file(TO_CMAKE_PATH "$ENV{EMC2_HOME}" _ENV_linuxCNC)
+  file(TO_CMAKE_PATH "$ENV{EMC2_HOME}" _linuxCNC)
+  if(_linuxCNC AND IS_DIRECTORY "${_linuxCNC}")
+    set(linuxCNC_DIR ${_linuxCNC} CACHE PATH "linuxCNC")
+  endif()
 endif()
-if(_ENV_linuxCNC AND IS_DIRECTORY "${_ENV_linuxCNC}")
-  set(LinuxCNC_DIR ${_ENV_linuxCNC} CACHE PATH "linuxCNC")
-  if(EXISTS "${_ENV_linuxCNC}/include/linuxcnc.h")
-    set(linuxCNC_INCLUDE_DIRS ${_ENV_linuxCNC}/include
-                              ${_ENV_linuxCNC}/src
-                              ${_ENV_linuxCNC}/src/emc/rs274ngc
-                              ${_ENV_linuxCNC}/src/emc/tooldata
-        )
+
+if(linuxCNC_DIR AND IS_DIRECTORY "${linuxCNC_DIR}")
+  add_library(IFlinuxCNC INTERFACE)
+  add_library(LinuxCNC::IFlinuxCNC ALIAS IFlinuxCNC)
+  if(EXISTS "${linuxCNC_DIR}/include/linuxcnc.h")
+    target_include_directories(IFlinuxCNC SYSTEM BEFORE
+                               INTERFACE ${linuxCNC_DIR}/include
+                               INTERFACE ${linuxCNC_DIR}/src
+                               INTERFACE ${linuxCNC_DIR}/src/emc/rs274ngc
+                               INTERFACE ${linuxCNC_DIR}/src/emc/tooldata
+                               INTERFACE /usr/include/python3.9
+                               )
   endif()
-  if(EXISTS "${_ENV_linuxCNC}/lib/liblinuxcnc.a")
-    set(linuxCNC_LIBRARIES ${_ENV_linuxCNC}/lib/liblinuxcnc.a
-                           ${_ENV_linuxCNC}/lib/libposemath.so
-                           ${_ENV_linuxCNC}/lib/libnml.so
-                           ${_ENV_linuxCNC}/lib/librs274.so
-                           ${_ENV_linuxCNC}/lib/liblinuxcncini.so
-                           ${_ENV_linuxCNC}/lib/libpyplugin.so
-                           ${_ENV_linuxCNC}/lib/liblinuxcnchal.so
-                           ${_ENV_linuxCNC}/lib/libtooldata.so
-        )
+  if(EXISTS "${linuxCNC_DIR}/lib/liblinuxcnc.a")
+    target_link_libraries(IFlinuxCNC
+                          INTERFACE ${linuxCNC_DIR}/lib/liblinuxcnc.a
+                          INTERFACE ${linuxCNC_DIR}/lib/libposemath.so
+                          INTERFACE ${linuxCNC_DIR}/lib/libnml.so
+                          INTERFACE ${linuxCNC_DIR}/lib/librs274.so
+                          INTERFACE ${linuxCNC_DIR}/lib/liblinuxcncini.so
+                          INTERFACE ${linuxCNC_DIR}/lib/libpyplugin.so
+                          INTERFACE ${linuxCNC_DIR}/lib/liblinuxcnchal.so
+                          INTERFACE ${linuxCNC_DIR}/lib/libtooldata.so
+                          )
+    target_link_directories(IFlinuxCNC BEFORE
+                            INTERFACE ${linuxCNC_DIR}/lib
+                            )
   endif()
+else()
+    set(linuxCNC_DIR-NOT_FOUND "" CACHE PATH "linuxCNC")
 endif()

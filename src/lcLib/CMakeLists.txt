@@ -55,83 +55,16 @@ target_include_directories(FVlcLib
                            PUBLIC util
                            PUBLIC view
                            PRIVATE ../plugPages
-                           PRIVATE linuxCNC
-#                           SYSTEM  /usr/include/python3.9
-#                           PRIVATE ${LinuxCNC_DIR}/include
-#                           PRIVATE ${LinuxCNC_DIR}/src
-#                           PRIVATE ${LinuxCNC_DIR}/src/emc/rs274ngc
-#                           PRIVATE ${LinuxCNC_DIR}/src/emc/tooldata
-#                           PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
-#                           PRIVATE ${OpenCASCADE_INCLUDE_DIR}
                            )
 target_link_libraries(FVlcLib
                       PRIVATE FVBaseLib
-                      PRIVATE linuxCNC
-#                      PRIVATE Qt${QT_VERSION_MAJOR}::Gui
-#                      PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
-#                      PRIVATE Qt${QT_VERSION_MAJOR}::Core
-#                      PRIVATE Qt${QT_VERSION_MAJOR}::Sql
-#                      PRIVATE Qt${QT_VERSION_MAJOR}::UiTools
-#                      PRIVATE Qt${QT_VERSION_MAJOR}::Xml
-#                      PRIVATE ${LC_LibLC}
-#                      PRIVATE ${LC_LibPM}
-#                      PRIVATE ${LC_LibNML}
-#                      PRIVATE ${LC_LibRS274}
-#                      PRIVATE ${LC_LibLCI}
-#                      PRIVATE ${LC_LibPP}
-#                      PRIVATE ${LC_LibHal}
-#                      PRIVATE ${LC_LibTD}
-#                      PRIVATE TKernel
-#                      PRIVATE TKMath
-#                      PRIVATE TKService
-#                      PRIVATE TKV3d
-#                      PRIVATE TKOpenGl
-#                      PRIVATE TKBRep
-#                      PRIVATE TKIGES
-#                      PRIVATE TKSTL
-#                      PRIVATE TKVRML
-#                      PRIVATE TKSTEP
-#                      PRIVATE TKSTEPAttr
-#                      PRIVATE TKSTEP209
-#                      PRIVATE TKSTEPBase
-#                      PRIVATE TKGeomBase
-#                      PRIVATE TKGeomAlgo
-#                      PRIVATE TKG3d
-#                      PRIVATE TKG2d
-#                      PRIVATE TKXSBase
-#                      PRIVATE TKShHealing
-#                      PRIVATE TKHLR
-#                      PRIVATE TKTopAlgo
-#                      PRIVATE TKMesh
-#                      PRIVATE TKPrim
-#                      PRIVATE TKCDF
-#                      PRIVATE TKBool
-#                      PRIVATE TKBO
-#                      PRIVATE TKFillet
-#                      PRIVATE TKOffset
-#                      PRIVATE TKLCAF
-#                      PRIVATE TKCAF
-#                      PRIVATE TKVCAF
-#                      PRIVATE TKBin
-#                      PRIVATE TKXml
-#                      PRIVATE m
-#                      PRIVATE stdc++
-#                      PRIVATE boost_python39
-#                      PRIVATE python3.9
-#                      PRIVATE crypt
-#                      PRIVATE pthread
-#                      PRIVATE dl
-#                      PRIVATE util
                       )
-                  get_target_property(XX FVlcLib INCLUDE_DIRECTORIES)
-                  get_target_property(YY FVlcLib SOURCES)
-                  get_target_property(ZZ FVlcLib INTERFACE_LINK_LIBRARIES)
-                  get_target_property(AA linuxCNC INCLUDE_DIRECTORIES)
-message("target: ${XX}")
-message("tarsrc: ${YY}")
-message("tar_LL: ${ZZ}")
-message("lc_inc: ${ZZ}")
-
+use_interface_libraries(FVlcLib
+                        IFlinuxCNC
+                        IFQt
+                        IFOpenCASCADE
+                        IFStandard
+                        )
 if(COMMAND qt_create_translation)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
@@ -139,3 +72,40 @@ else()
 endif()
 
 
+#  ##============================================================================
+#  ## https://stackoverflow.com/questions/32183975/how-to-print-all-the-properties-of-a-target-in-cmake/56738858#56738858
+#  ## https://stackoverflow.com/a/56738858/3743145
+#  ## Get all properties that cmake supports
+#  execute_process(COMMAND cmake --help-property-list OUTPUT_VARIABLE CMAKE_PROPERTY_LIST)
+#  ## Convert command output into a CMake list
+#  STRING(REGEX REPLACE ";" "\\\\;" CMAKE_PROPERTY_LIST "${CMAKE_PROPERTY_LIST}")
+#  STRING(REGEX REPLACE "\n" ";" CMAKE_PROPERTY_LIST "${CMAKE_PROPERTY_LIST}")
+#  list(REMOVE_DUPLICATES CMAKE_PROPERTY_LIST)
+#  
+#  function(print_target_properties tgt)
+#      if(NOT TARGET ${tgt})
+#        message("There is no target named '${tgt}'")
+#        return()
+#      endif()
+#  
+#      foreach (prop ${CMAKE_PROPERTY_LIST})
+#          string(REPLACE "<CONFIG>" "${CMAKE_BUILD_TYPE}" prop ${prop})
+#          get_target_property(propval ${tgt} ${prop})
+#          if (propval)
+#              message ("${tgt} ${prop} = ${propval}")
+#          endif()
+#      endforeach(prop)
+#  endfunction(print_target_properties)
+#  ##----------------------------------------------------------------------------
+#  
+#  message("    --------")
+#  print_target_properties(IFlinuxCNC)
+#  message("    --------")
+#  print_target_properties(IFQt)
+#  message("    --------")
+#  print_target_properties(IFOpenCASCADE)
+#  message("    --------")
+#  print_target_properties(IFStandard)
+#  message("    --------")
+#  print_target_properties(FVlcLib)
+#  message("    --------")
