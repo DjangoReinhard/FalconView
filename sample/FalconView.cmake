@@ -40,7 +40,7 @@ function(use_interface_libraries)
           get_target_property(_IF_LIBS  ${ifl} INTERFACE_LINK_LIBRARIES)
           if(_IF_INCS AND _INC_DIRS)
              set_target_properties(${tgt} PROPERTIES
-                                   INCLUDE_DIRECTORIES "${_IF_INCS};${_INC_DIRS}"
+                                   INCLUDE_DIRECTORIES "${_INC_DIRS};${_IF_INCS}"
                                    )
           elseif(_IF_INCS)
              set_target_properties(${tgt} PROPERTIES
@@ -49,7 +49,7 @@ function(use_interface_libraries)
           endif()
           if(_IF_LIBS AND _LNK_LIBS)
              set_target_properties(${tgt} PROPERTIES
-                                   LINK_LIBRARIES "${_IF_LIBS};${_LNK_LIBS}"
+                                   LINK_LIBRARIES "${_LNK_LIBS};${_IF_LIBS}"
                                    )
           else()
              set_target_properties(${tgt} PROPERTIES
@@ -62,5 +62,10 @@ function(use_interface_libraries)
           unset(_IF_INCS)
           unset(_IF_LIBS)
   endforeach()
+  get_target_property(_LIBS ${tgt} LINK_LIBRARIES)
+  list(REMOVE_DUPLICATES _LIBS)
+  set_target_properties(${tgt} PROPERTIES
+                        LINK_LIBRARIES "${_LIBS}"
+                        )
 endfunction(use_interface_libraries)
 
