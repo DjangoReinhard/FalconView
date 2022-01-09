@@ -1,0 +1,39 @@
+#!/bin/bash
+src=$1
+shift
+dst=$1
+echo ""
+echo "buildFinish: $src => $dst"
+distBase=${dst}/dist
+appDir=${distBase}
+langDir=${distBase}/i18n
+helpDir=${distBase}/help
+pluginDir=${distBase}/plugins
+rm -rf ${distBase}
+app=$(find $dst -name FalconView)
+help=$(find $dst -name FalconView.qzh)
+plugins=$(find $dst -name *.so)
+langFiles=$(find $src -name *.qm)
+if [ -x ${app} ]; then
+    echo "app ok"
+else
+    echo "missing application file! STOP!"
+    exit
+fi
+mkdir -p ${appDir} 2>/dev/null
+mkdir -p ${helpDir} 2>/dev/null
+mkdir -p ${langDir} 2>/dev/null
+mkdir -p ${pluginDir} 2>/dev/null
+echo "copy application: " ${app}
+cp -a ${app} ${appDir}
+echo "copy help-file..: " ${help}
+cp -a ${help} ${helpDir}
+for i in ${plugins}; do
+    echo "copy plugin: " $i
+    cp -a $i ${pluginDir}
+done
+for i in ${langFiles}; do
+    echo "copy i18n: " $i
+    cp -a $i ${langDir}
+done
+

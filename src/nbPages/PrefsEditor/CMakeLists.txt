@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.16)
 #---------------------------   PLUGIN   --------------------------------------
-project(LCToolTable LANGUAGES CXX)
+project(PrefsEditor LANGUAGES CXX)
 #-----------------------------------------------------------------------------
 include(FalconView)
-add_library(ppLCToolTable MODULE
-    lctooltable.cpp
+add_library(nbPrefsEditor MODULE
+    preferenceseditor.cpp
     )
 set(TS_FILES
-    lctooltable_de_DE.ts
+    prefseditor_DE.ts
     )
-target_link_libraries(ppLCToolTable
+target_link_libraries(nbPrefsEditor
                       PRIVATE FVBaseLib
                       PRIVATE FVlcLib
                       )
-use_interface_libraries(ppLCToolTable
+use_interface_libraries(nbPrefsEditor
                         IFlinuxCNC
                         IFQt
                         IFOpenCASCADE

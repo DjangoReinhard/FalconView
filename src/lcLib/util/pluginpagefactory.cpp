@@ -51,7 +51,7 @@ PluginPageFactory::~PluginPageFactory() {
 
 
 AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
-  AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().pluggablePage(name));
+  AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().pluggableMainPage(name));
 
   if (rv) {
      qDebug() << "PPF: process loaded plugin for page named: " << name;
@@ -116,7 +116,27 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
      rv->initialize(":/src/lcLib/view/GCodeEditor.ui");
      }
-  else if (name == "ToolManager") {
+  else if (name == "JogView") {
+#ifndef USE_PLUGINS
+     rv = new JogView();
+#else
+     if (!rv) return rv;
+     assert(rv);
+#endif
+     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
+     rv->initialize();
+     }
+  return rv;
+  }
+
+
+AbstractCenterWidget* PluginPageFactory::createNotebookPage(const QString& name) {
+  AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().pluggableNotebookPage(name));
+
+  if (rv) {
+     qDebug() << "PPF: process loaded plugin for page named: " << name;
+     }
+  if (name == "ToolManager") {
 #ifndef USE_PLUGINS
      rv = new ToolManager();
 #else
@@ -144,21 +164,11 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
      assert(rv);
 #endif
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/plugPages/PrefsEditor/Settings.ui", QString(), true);
+     rv->initialize(":/src/nbPages/PrefsEditor/Settings.ui", QString(), true);
      }
   else if (name == "LCToolTable") {
 #ifndef USE_PLUGINS
      rv = new LCToolTable();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
-  else if (name == "JogView") {
-#ifndef USE_PLUGINS
-     rv = new JogView();
 #else
      if (!rv) return rv;
      assert(rv);

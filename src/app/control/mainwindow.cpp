@@ -576,11 +576,11 @@ void MainWindow::createDockables() {
      assert(snb);
      if (Config().value("activateToolMgr").toBool()) {
         qDebug() << "config says we want tool-manager!";
-        cw = ppFactory->createCenterPage("ToolManager");
+        cw = ppFactory->createNotebookPage("ToolManager");
         if (cw) snb->addPage(cw);
         }
      for (const QString& s : { "FixtureManager", "PrefsEditor", "LCToolTable" }) {
-         cw = ppFactory->createCenterPage(s);
+         cw = ppFactory->createNotebookPage(s);
          if (cw) snb->addPage(cw);
          }
      stack->addPage(new CenterPage(snb, false, stack));
@@ -621,11 +621,11 @@ void MainWindow::createMainWidgets() {
      assert(snb);
      if (Config().value("activateToolMgr").toBool()) {
         qDebug() << "config says we want tool-manager!";
-        cw = ppFactory->createCenterPage("ToolManager");
+        cw = ppFactory->createNotebookPage("ToolManager");
         if (cw) snb->addPage(cw);
         }
      for (const QString& s : { "FixtureManager", "PrefsEditor", "LCToolTable" }) {
-         cw = ppFactory->createCenterPage(s);
+         cw = ppFactory->createNotebookPage(s);
          if (cw) snb->addPage(cw);
          }
      stack->addPage(new CenterPage(snb, false, stack));

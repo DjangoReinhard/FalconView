@@ -101,11 +101,11 @@
    <file>res/Tools_backup.xml</file>
    <file>res/BottomTabButtonStyles.css</file>
    <file>res/TopTabButtonStyles.css</file>
-   <file>src/plugPages/FixtureManager/Fixture.ui</file>
+   <file>src/nbPages/FixtureManager/Fixture.ui</file>
+   <file>src/nbPages/ToolManager/ToolEditor.ui</file>
+   <file>src/nbPages/PrefsEditor/Settings.ui</file>
    <file>src/plugPages/JogView/Jog.ui</file>
    <file>src/plugPages/MDIEditor/MDIEditor.ui</file>
-   <file>src/plugPages/ToolManager/ToolEditor.ui</file>
-   <file>src/plugPages/PrefsEditor/Settings.ui</file>
    <file>src/statusInfo/Position/PositionMain.ui</file>
    <file>src/statusInfo/Position/Position.ui</file>
    <file>src/statusInfo/SpeedInfo/VSpeedInfo.ui</file>

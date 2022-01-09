@@ -91,7 +91,8 @@ private:
   QString            iniFileName;
   QString            helpFileName;
   QString            pluginDir;
-  QMap<QString, PluginPageInterface*> pages;
+  QMap<QString, PluginPageInterface*> mainPages;
+  QMap<QString, PluginPageInterface*> nbPages;
   QMap<QString, PluginPageInterface*> statusInfos;
   friend class GuiKernelCreator;
   friend class GuiCore;

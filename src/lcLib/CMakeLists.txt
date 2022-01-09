@@ -54,6 +54,7 @@ target_include_directories(FVlcLib
                            PUBLIC model
                            PUBLIC util
                            PUBLIC view
+                           PRIVATE ../nbPages
                            PRIVATE ../plugPages
                            )
 target_link_libraries(FVlcLib

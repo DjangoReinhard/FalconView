@@ -45,7 +45,7 @@ PluginDialog::PluginDialog(const QString&, const QStringList&, QWidget *parent)
 
 
 void PluginDialog::populateTreeWidget() {
-  QList<QString> pages = GuiCore().pluggablePages();
+  QList<QString> pages = GuiCore().pluggableMainPages();
 
   for (const QString& p : pages) {
       auto pluginItem = new QTreeWidgetItem(treeWidget);

@@ -3,18 +3,18 @@ cmake_minimum_required(VERSION 3.16)
 project(FixtureManager LANGUAGES CXX)
 #-----------------------------------------------------------------------------
 include(FalconView)
-add_library(ppFixtureManager MODULE
+add_library(nbFixtureManager MODULE
     fixturemanager.cpp
     fixtureedit.cpp
     )
 set(TS_FILES
     fixture_de_DE.ts
     )
-target_link_libraries(ppFixtureManager
+target_link_libraries(nbFixtureManager
                       PRIVATE FVBaseLib
                       PRIVATE FVlcLib
                       )
-use_interface_libraries(ppFixtureManager
+use_interface_libraries(nbFixtureManager
                         IFlinuxCNC
                         IFQt
                         IFOpenCASCADE

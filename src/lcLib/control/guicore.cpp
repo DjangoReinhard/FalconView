@@ -124,14 +124,26 @@ QMainWindow* GuiCore::mainWindow() {
   }
 
 
-QList<QString> GuiCore::pluggablePages() {
-  return guiCore()->pages.keys();
+QList<QString> GuiCore::pluggableMainPages() {
+  return guiCore()->mainPages.keys();
   }
 
 
-PluginPageInterface* GuiCore::pluggablePage(const QString pageID) {
-  if (guiCore()->pages.contains(pageID))
-     return guiCore()->pages[pageID];
+PluginPageInterface* GuiCore::pluggableMainPage(const QString pageID) {
+  if (guiCore()->mainPages.contains(pageID))
+     return guiCore()->mainPages[pageID];
+  return nullptr;
+  }
+
+
+QList<QString> GuiCore::pluggableNotebookPages() {
+  return guiCore()->nbPages.keys();
+  }
+
+
+PluginPageInterface* GuiCore::pluggableNotebookPage(const QString pageID) {
+  if (guiCore()->nbPages.contains(pageID))
+     return guiCore()->nbPages[pageID];
   return nullptr;
   }
 

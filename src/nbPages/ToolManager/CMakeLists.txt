@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(ToolManager LANGUAGES CXX)
 #-----------------------------------------------------------------------------
 include(FalconView)
-add_library(ppToolManager MODULE
+add_library(nbToolManager MODULE
     toolmanager.cpp
     toolmodel.cpp
     tooleditor.cpp
@@ -14,11 +14,11 @@ add_library(ppToolManager MODULE
 set(TS_FILES
     toolmanager_de_DE.ts
     )
-target_link_libraries(ppToolManager
+target_link_libraries(nbToolManager
                       PRIVATE FVBaseLib
                       PRIVATE FVlcLib
                       )
-use_interface_libraries(ppToolManager
+use_interface_libraries(nbToolManager
                         IFlinuxCNC
                         IFQt
                         IFOpenCASCADE

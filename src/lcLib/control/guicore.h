@@ -38,8 +38,10 @@ public:
   LcProperties&        lcProperties();
   QMainWindow*         mainWindow();
   void                 parseGCFile(const QString& fileName);
-  PluginPageInterface* pluggablePage(const QString pageID);
-  QList<QString>       pluggablePages();
+  PluginPageInterface* pluggableMainPage(const QString pageID);
+  QList<QString>       pluggableMainPages();
+  PluginPageInterface* pluggableNotebookPage(const QString pageID);
+  QList<QString>       pluggableNotebookPages();
   void                 setAppMode4PageID(const QString& pageID);
   void                 setMainWindow(QMainWindow* w);
   void                 setViewStack(PageStack* v);

@@ -16,6 +16,7 @@ public:
 
   AbstractCenterWidget* createDockable(const   QString& name, bool horizontal = true);
   AbstractCenterWidget* createCenterPage(const QString& name);
+  AbstractCenterWidget* createNotebookPage(const QString& name);
 
 private:
   GuiCore*      core;

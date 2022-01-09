@@ -155,8 +155,22 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
          if (plugin) {
             auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
 
-            qDebug() << name << "is pluggable page";
-            pages[name] = iPlugin;
+            qDebug() << name << "is pluggable center page";
+            mainPages[name] = iPlugin;
+            }
+         else qDebug() << fileName << "is NOT a valid plugin:\t" << loader.errorString();
+         }
+      else if (fileName.startsWith("libnb")) {
+         QPluginLoader loader(path);
+
+         QObject*      plugin = loader.instance();
+         QString       name = fileName.mid(5, fileName.size() - 8);
+
+         if (plugin) {
+            auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
+
+            qDebug() << name << "is pluggable notebook page";
+            nbPages[name] = iPlugin;
             }
          else qDebug() << fileName << "is NOT a valid plugin:\t" << loader.errorString();
          }

@@ -35,6 +35,7 @@ target_include_directories(FalconView
                            PUBLIC model
                            PUBLIC util
                            PUBLIC view
+                           PRIVATE ../nbPages
                            PRIVATE ../plugPages
                            )
 target_link_libraries(FalconView

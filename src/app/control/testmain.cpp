@@ -44,8 +44,8 @@ void TestMain::initialize() {
 
 
 void TestMain::checkPlugins() {
-  for (const QString& s : GuiCore().pluggablePages()) {
-      AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(GuiCore().pluggablePage(s));
+  for (const QString& s : GuiCore().pluggableMainPages()) {
+      AbstractCenterWidget* cw = static_cast<AbstractCenterWidget*>(GuiCore().pluggableMainPage(s));
 
 //      check page:  "FixtureManager"
 //      check page:  "HelpView"
