@@ -79,8 +79,17 @@ void LCToolTable::keyReleaseEvent(QKeyEvent *e) {
     }
   }
 
+
 void LCToolTable::keyPressEvent(QKeyEvent *e) {
     switch (e->key()) {
+      case Qt::Key_Escape:
+           qDebug() << "LCToolTable::keyPressEvent (Escape)";
+
+           model->setDirty(false);
+           core->showAllButCenter(true);
+           emit dataChanged(this, false);
+           e->accept();
+           break;
       case Qt::Key_F10:
          qDebug() << "LCToolTable::keyPressEvent (F10)";
 

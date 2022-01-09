@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(PathEditor LANGUAGES CXX)
 #-----------------------------------------------------------------------------
 include(FalconView)
-add_library(ppPathEditor SHARED
+add_library(ppPathEditor MODULE
     patheditor.cpp
     )
 set(TS_FILES
@@ -12,11 +12,13 @@ set(TS_FILES
 target_link_libraries(ppPathEditor
                       PRIVATE FVBaseLib
                       PRIVATE FVlcLib
-                      PRIVATE IFQt
-                      PRIVATE IFLinuxCNC
-                      PRIVATE IFOpenCASCADE
-                      PRIVATE IFStandard
                       )
+use_interface_libraries(ppPathEditor
+                        IFlinuxCNC
+                        IFQt
+                        IFOpenCASCADE
+                        IFStandard
+                        )
 if(COMMAND qt_create_translation)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

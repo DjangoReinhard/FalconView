@@ -5,7 +5,7 @@
     <name>LCToolTable</name>
     <message>
         <source>LCToolTable</source>
-        <translation type="unfinished"></translation>
+        <translation>LC-Werkzeuge</translation>
     </message>
 </context>
 </TS>

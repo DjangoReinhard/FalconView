@@ -442,7 +442,7 @@ void MainWindow::createConnections() {
   connect(ui->actionleftView,  &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::leftView);
   connect(ui->actionrightView, &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::rightView);
   connect(ui->actionTopView,   &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::topView);
-  connect(ui->actionHelp,      &QAction::triggered, this,               &MainWindow::showHelp);
+  connect(ui->actionHelp,      &QAction::triggered, this,      [=]() { GuiCore().showHelp(); });
 
 //  if (!previewIsCenter)
 //     connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
@@ -586,11 +586,11 @@ void MainWindow::createDockables() {
      stack->addPage(new CenterPage(snb, false, stack));
      addDockable(Qt::BottomDockWidgetArea, new Dockable(stack, this));
      }
-  //TODO:
-  AbstractCenterWidget* cw = ppFactory->createCenterPage("HelpView");
-  HelpView*             hv = reinterpret_cast<HelpView*>(cw);
+  //TODO: remove
+//  AbstractCenterWidget* cw = ppFactory->createCenterPage("HelpView");
+//  HelpView*             hv = reinterpret_cast<HelpView*>(cw);
 
-  if (hv) dlgHelp = new HelpDockable(hv, this);
+//  if (hv) dlgHelp = new HelpDockable(hv, this);
   }
 
 
@@ -666,9 +666,9 @@ void MainWindow::setSingleStep(bool) {
   }
 
 
-HelpDockable* MainWindow::helpDialog() {
-  return dlgHelp;
-  }
+//HelpDockable* MainWindow::helpDialog() {
+//  return dlgHelp;
+//  }
 
 
 void MainWindow::homeAxis() {
@@ -712,7 +712,6 @@ void MainWindow::restoreAll() {
 //  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
 
 //  if (pe) pe->restoreState();
-  ui->menubar->setVisible(false);
   }
 
 
@@ -759,13 +758,13 @@ void MainWindow::showErrMessages() {
   }
 
 
-void MainWindow::showHelp() {
-#ifdef HELP_IS_CENTER_PAGE
-  setAppMode(ApplicationMode::Help);
-#else
-  if (dlgHelp) dlgHelp->showHelp();
-#endif
-  }
+//void MainWindow::showHelp() {
+//#ifdef HELP_IS_CENTER_PAGE
+//  setAppMode(ApplicationMode::Help);
+//#else
+//  if (dlgHelp) dlgHelp->showHelp();
+//#endif
+//  }
 
 
 void MainWindow::setupMenu() {
@@ -779,6 +778,7 @@ void MainWindow::setupMenu() {
   ui->menuMode->addAction(cfgMode);
   ui->menuMode->addAction(msgMode);
   ui->actionHelp->setShortcut(QKeySequence::HelpContents);
+//  ui->menubar->setVisible(false);
   }
 
 
@@ -872,7 +872,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
             qDebug() << "mode toolbar is visible";
             switch (e->key()) {
 //              case Qt::Key_F1:  ValueManager().setValue("appMode", ApplicationMode::Help); break;
-              case Qt::Key_F1:  if (dlgHelp) dlgHelp->showHelp(); break;
+              case Qt::Key_F1:  GuiCore().showHelp(); break;
               case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
               case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
               case Qt::Key_F4:  ValueManager().setValue("appMode", ApplicationMode::MDI); break;
@@ -881,7 +881,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
               case Qt::Key_F7:  ValueManager().setValue("appMode", ApplicationMode::Manual); break;
               case Qt::Key_F8:  ValueManager().setValue("appMode", ApplicationMode::Touch); break;
               case Qt::Key_F9:  ValueManager().setValue("appMode", ApplicationMode::Settings); break;
-              case Qt::Key_F10: ValueManager().setValue("appMode", ApplicationMode::ErrMessages); break;
+              case Qt::Key_F10: showErrMessages(); break;
               case Qt::Key_F11: startAction->trigger(); break;
               case Qt::Key_F12: stopAction->trigger(); break;
               }

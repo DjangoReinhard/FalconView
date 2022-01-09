@@ -2,6 +2,6 @@
 #include <guikernel.h>
 
 
-Kernel* GuiKernelCreator::kernel(const QString& fileName, const QString& appName, const QString& groupID) {
-  return new GuiKernel(fileName, appName, groupID);
+Kernel* GuiKernelCreator::kernel(QApplication& app, const QString& appName, const QString& groupID) {
+  return new GuiKernel(app, appName, groupID);
   }

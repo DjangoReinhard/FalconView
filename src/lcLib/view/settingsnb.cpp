@@ -25,7 +25,7 @@ QWidget* SettingsNotebook::createContent() {
 
   tw = new QTabWidget();
   tw->setTabPosition(tp);
-  tw->setTabShape(QTabWidget::TabShape::Rounded); 
+  tw->setTabShape(QTabWidget::TabShape::Rounded);
   tw->setStyleSheet(loadStyles(tp));
 
   return tw;
@@ -132,10 +132,12 @@ void SettingsNotebook::closeEvent(QCloseEvent* e) {
 
 void SettingsNotebook::resizeEvent(QResizeEvent* e) {
   qDebug() << "SN: resize event - from" << e->oldSize() << "to size:" << e->size();
-  qDebug() << "SN: current widget is" << tw->currentWidget()->objectName();
-//  ToolManager* tm = static_cast<ToolManager*>(tw->currentWidget());
+  if (tw && tw->currentWidget()) {
+     qDebug() << "SN: current widget is" << tw->currentWidget()->objectName();
+    //  ToolManager* tm = static_cast<ToolManager*>(tw->currentWidget());
 
-//  if (tm) tm->setSize(e->size().width() - 15, e->size().height() - 80);
+    //  if (tm) tm->setSize(e->size().width() - 15, e->size().height() - 80);
+     }
   }
 
 
@@ -174,9 +176,9 @@ void SettingsNotebook::keyPressEvent(QKeyEvent* e) {
             }
          [[fallthrough]];
     default:
-         qDebug() << "SN: whatever key (" << e->key()
-                  << ") pressed, modifier: " << e->modifiers()
-                  << "event-ts: " << e->timestamp();
+//         qDebug() << "SN: whatever key (" << e->key()
+//                  << ") pressed, modifier: " << e->modifiers()
+//                  << "event-ts: " << e->timestamp();
          AbstractCenterWidget::keyPressEvent(e); break;
     }
   }

@@ -44,12 +44,18 @@ PluginPageFactory::PluginPageFactory()
 
 
 PluginPageFactory::~PluginPageFactory() {
+  delete core;
+  delete cfg;
+  delete vm;
   }
 
 
 AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
   AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().pluggablePage(name));
 
+  if (rv) {
+     qDebug() << "PPF: process loaded plugin for page named: " << name;
+     }
   if (name == "FileManager") {
      rv = new FileManager(GuiCore().lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX"));
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
@@ -63,7 +69,7 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
   else if (name == "TestEdit") {
      rv = new TestEdit();
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     rv->initialize(":/src/lcLib/view/GCodeEditor.ui");
      }
   else if (name == "HelpView") {
      rv = new HelpView();
@@ -78,7 +84,7 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
      assert(rv);
 #endif
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance, GuiCore().view3D());
-     rv->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     rv->initialize(":/src/lcLib/view/GCodeEditor.ui");
      }
   else if (name == "MDIEditor") {
 #ifndef USE_PLUGINS
@@ -108,7 +114,7 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
      assert(rv);
 #endif
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/lcLib/UI/GCodeEditor.ui");
+     rv->initialize(":/src/lcLib/view/GCodeEditor.ui");
      }
   else if (name == "ToolManager") {
 #ifndef USE_PLUGINS

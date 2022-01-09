@@ -1157,4 +1157,5 @@ int GET_EXTERNAL_OFFSET_APPLIED() {
 
 EmcPose GET_EXTERNAL_OFFSETS(){
 //  qDebug() << "NCanon: get external offsets ...";
+  return EmcPose();
   }

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(SysEventView LANGUAGES CXX)
 #-----------------------------------------------------------------------------
 include(FalconView)
-add_library(ppSysEventView SHARED
+add_library(ppSysEventView MODULE
     syseventview.cpp
     )
 set(TS_FILES
@@ -12,11 +12,13 @@ set(TS_FILES
 target_link_libraries(ppSysEventView
                       PRIVATE FVBaseLib
                       PRIVATE FVlcLib
-                      PRIVATE IFQt
-                      PRIVATE IFLinuxCNC
-                      PRIVATE IFOpenCASCADE
-                      PRIVATE IFStandard
                       )
+use_interface_libraries(ppSysEventView
+                        IFlinuxCNC
+                        IFQt
+                        IFOpenCASCADE
+                        IFStandard
+                        )
 if(COMMAND qt_create_translation)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

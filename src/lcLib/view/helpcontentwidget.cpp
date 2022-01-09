@@ -67,7 +67,7 @@ QTreeWidgetItem* HelpContentWidget::createItem(const QDomElement &e, QMap<QStrin
      item = new QTreeWidgetItem(parent);
      parent->setIcon(0, folderIcon);
      }
-  else        item = new QTreeWidgetItem(this);
+  else item = new QTreeWidgetItem(this);
   item->setIcon(0, pageIcon);
   processAttributes(e, pages, item);
 

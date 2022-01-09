@@ -1,7 +1,6 @@
 # Integration in linuxCNC
 
-*linuxCNC* consists of several background services, which are started by the utility program
-"linuxcnc". The configuration of the machine is done via an
+*linuxCNC* consists of several background services, which are started by the utility program "linuxcnc". The configuration of the machine is done via an
 INI file, which contains several sections.
 
 The section important for integration is **[DISPLAY]**. There is stored, which
@@ -16,11 +15,10 @@ DISPLAY = FalconView
 ```
 
 For this to work, **FalconView** must be able to be called without path specification
-(e.g. via softlink in */usr/local/bin*)
+(i.e. via softlink in */usr/local/bin*)
 
 Otherwise the absolute path must be entered in the ini file, for example like this:
 
 ```
 DISPLAY = /opt/FalconView/FalconView
 ```
-

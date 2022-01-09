@@ -23,7 +23,7 @@ class GuiCore : public Core
 {
 public:
   explicit GuiCore();
-  explicit GuiCore(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& group = "SRD");
+  explicit GuiCore(QApplication& app, const QString& appName, DBHelper& dbAssist, const QString& group = "SRD");
   virtual ~GuiCore() = default;
 
   virtual void         riseError(const QString& msg);
@@ -40,9 +40,11 @@ public:
   void                 parseGCFile(const QString& fileName);
   PluginPageInterface* pluggablePage(const QString pageID);
   QList<QString>       pluggablePages();
+  void                 setAppMode4PageID(const QString& pageID);
   void                 setMainWindow(QMainWindow* w);
   void                 setViewStack(PageStack* v);
   void                 setWindowTitle(const QString& title);
+  void                 showHelp() const;
   QWidget*             stackedPage(const QString& pageName);
   PluginPageInterface* statusInfo(const QString infoID);
   QList<QString>       statusInfos();

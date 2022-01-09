@@ -66,12 +66,12 @@ bool SysEventView::eventFilter(QObject*, QEvent* event) {
      switch (e->key()) {
        case Qt::Key_Escape: {
             qDebug() << "SEV: hit ESC ... (old page:" << vm->getValue("lastPage").toString() << ")";
-            GuiCore().activatePage(vm->getValue("lastPage").toString());
             vm->setValue("errorActive", false);
             vm->setValue("showAllButCenter", true);
             cfg->beginGroup("SysEventView");
             cfg->setValue("State", table->horizontalHeader()->saveState());
             cfg->endGroup();
+            core->setAppMode4PageID(vm->getValue("lastPage").toString());
             } break;
        }
      }

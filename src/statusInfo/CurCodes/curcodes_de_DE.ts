@@ -6,7 +6,7 @@
     <message>
         <location filename="HCurCodes.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rahmen</translation>
     </message>
 </context>
 <context>
@@ -14,7 +14,7 @@
     <message>
         <location filename="curcodesstatus.cpp" line="15"/>
         <source>CurCodesStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>aktive Befehle</translation>
     </message>
 </context>
 <context>
@@ -22,7 +22,7 @@
     <message>
         <location filename="VCurCodes.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rahmen</translation>
     </message>
 </context>
 </TS>

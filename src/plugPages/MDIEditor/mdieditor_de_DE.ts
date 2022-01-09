@@ -6,7 +6,7 @@
     <message>
         <location filename="MDIEditor.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
 </context>
 <context>
@@ -14,7 +14,7 @@
     <message>
         <location filename="mdieditor.cpp" line="13"/>
         <source>MDIEditor</source>
-        <translation type="unfinished"></translation>
+        <translation>MDIEditor</translation>
     </message>
 </context>
 </TS>

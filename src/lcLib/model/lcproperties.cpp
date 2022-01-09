@@ -148,7 +148,7 @@ void LcProperties::processLine(const QString &input) {
          bool ok;
          qlonglong lv = value.toLongLong(&ok, 0);
 
-         if (ok) {             
+         if (ok) {
 //            qDebug() << "\tadd value as integer [" << name << "] => " << lv << "\twas: " << value;
 
             if (lv > INT_MIN && lv < INT_MAX) {
@@ -165,7 +165,7 @@ void LcProperties::processLine(const QString &input) {
          else {
             double dv = value.toDouble(&ok);
 
-            if (ok) {                
+            if (ok) {
 //               qDebug() << "\tadd value as double  [" << name << "] => " << dv << "\twas: " << value;
                QVariant v(dv);
 

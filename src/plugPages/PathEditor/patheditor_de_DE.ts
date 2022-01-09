@@ -5,7 +5,7 @@
     <name>PathEditor</name>
     <message>
         <source>PathEditor</source>
-        <translation type="unfinished"></translation>
+        <translation>GCode Editor</translation>
     </message>
 </context>
 </TS>

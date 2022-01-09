@@ -29,12 +29,12 @@ target_include_directories(FVBaseLib
                            PUBLIC util
                            PUBLIC view
                            )
-target_link_libraries(FVBaseLib
-                      PRIVATE IFQt
-                      PRIVATE IFLinuxCNC
-                      PRIVATE IFOpenCASCADE
-                      PRIVATE IFStandard
-                      )
+use_interface_libraries(FVBaseLib
+                        IFlinuxCNC
+                        IFQt
+                        IFOpenCASCADE
+                        IFStandard
+                        )
 if(COMMAND qt_create_translation)
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

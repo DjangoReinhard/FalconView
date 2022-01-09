@@ -30,14 +30,18 @@ void AbstractCenterWidget::closeEvent(QCloseEvent* e) {
 
 
 QWidget* AbstractCenterWidget::createContent() {
+  qDebug() << "ACW::createContent()";
   QFile     uiDesc(fileName);
   QWidget*  rv = nullptr;
 
   if (uiDesc.exists()) {
      QUiLoader loader;
+//     qDebug() << "ACW: gonna load ui-file";
      QWidget*  w = loader.load(&uiDesc, this);
 
+//     qDebug() << "ACW: loading done";
      uiDesc.close();
+     qDebug() << "ACW: resource closed.";
      if (w) {
         if (addScrollArea) {
            QScrollArea* sa = new QScrollArea(this);
@@ -84,7 +88,7 @@ void AbstractCenterWidget::patch(void *pk, void *pc, void *pv, void*) {
   cfg  = new Config(pc);
   vm   = new ValueManager(pv);
 
-  qDebug() << "ACW - core:" << core->kernel << "\tgiven:" << pk;
+  qDebug() << "page:" << objectName() << "ACW - core:" << core->kernel << "\tgiven:" << pk;
   }
 
 
@@ -102,7 +106,13 @@ QAction* AbstractCenterWidget::viewAction() {
 void AbstractCenterWidget::showEvent(QShowEvent* e) {
   QWidget::showEvent(e);
   if (e->type() == QEvent::Show) {
-     if (Config().value("showHelpAtPageChange").toBool())
-        if (core) core->help4Keyword(objectName());
+//     qDebug() << "ACW: check if help should be popped";
+     if (cfg && cfg->value("showHelpAtPageChange").toBool()) {
+//        qDebug() << "ACW: config says YES";
+        if (core) {
+//           qDebug() << "ACW: ask core for popping help";
+           core->help4Keyword(objectName());
+           }
+        }
      }
   }

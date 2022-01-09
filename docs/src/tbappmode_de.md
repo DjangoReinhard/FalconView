@@ -9,4 +9,4 @@
 | ![Wheel](images/SK_Wheel.png) | Handrad | bewegt die Achsen per Handrad |
 | ![jog](images/SK_Manual.png) | Handbetrieb | bewegt die Achsen auf Tastendruck |
 | ![cfg](images/SK_Settings.png) | Einstellungen | ändert Systemeinstellungen |
-| ![touch](images/SK_Touch.png) | Taster | hilft beim Antasten des Werkstückes |
+| ![touch](images/SK_Touch.png) | Taster | hilft beim Ausmessen des Werkstückes |

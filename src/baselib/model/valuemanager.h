@@ -10,7 +10,7 @@ class ValueManager
 public:
   ValueManager();
 
-  ValueModel* getModel(const QString& name, QVariant defaultValue = QVariant());
+  ValueModel* getModel(const QString& name, const QVariant& defaultValue = QVariant());
   QVariant    getValue(const QString& name);
   void        setValue(const QString& name, const QVariant& value);
   void        dump();

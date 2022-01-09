@@ -14,7 +14,7 @@ ValueManager::ValueManager(void* pFromOuterAddressSpace) {
   }
 
 
-ValueModel* ValueManager::getModel(const QString& name, QVariant defaultValue) {
+ValueModel* ValueManager::getModel(const QString& name, const QVariant& defaultValue) {
   ValueModel* vm = nullptr;
 
   if (!instance->models.contains(name)) {

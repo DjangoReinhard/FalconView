@@ -6,7 +6,7 @@
     <message>
         <location filename="Position.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
 </context>
 <context>
@@ -63,7 +63,7 @@
         <location filename="positionstatus.cpp" line="31"/>
         <location filename="positionstatus.cpp" line="49"/>
         <source>PositionStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeug-Position</translation>
     </message>
 </context>
 </TS>

@@ -41,12 +41,12 @@
     <message>
         <location filename="Jog.ui" line="815"/>
         <source>single &amp;Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Einzel&amp;schritt</translation>
     </message>
     <message>
         <location filename="Jog.ui" line="837"/>
         <source>&amp;Rapid</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eilgang</translation>
     </message>
     <message>
         <location filename="Jog.ui" line="856"/>
@@ -74,7 +74,7 @@
     <message>
         <location filename="jogview.cpp" line="18"/>
         <source>JogView</source>
-        <translation type="unfinished"></translation>
+        <translation>manuell Fahren</translation>
     </message>
 </context>
 </TS>

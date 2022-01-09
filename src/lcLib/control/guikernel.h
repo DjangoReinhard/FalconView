@@ -12,6 +12,7 @@
 class PluginPageInterface;
 class SysEventModel;
 class OcctQtViewer;
+class HelpDockable;
 class Ally3D;
 class PageStack;
 class QMainWindow;
@@ -31,7 +32,7 @@ public:
   DBConnection*   createDatabase(DBHelper& dbAssist);
   virtual void    logSysEvent(const QString& msg) override;
   virtual void    logSysEvent(const SysEvent& se) override;
-  virtual void    initialize(const QLocale& locale, DBHelper& dbAssist) override;
+  virtual void    initialize(DBHelper& dbAssist) override;
   virtual QString fileName4(const QString& fileID) const override;
   virtual void    timerEvent(QTimerEvent* e) override;
   virtual void    windowClosing(QCloseEvent* e);
@@ -42,8 +43,11 @@ public:
   void updateView(const QVariant& pos);
 
 protected:
-  explicit GuiKernel(const QString& iniFilename, const QString& appName, const QString& groupID);
+  explicit GuiKernel(QApplication& app, const QString& appName, const QString& groupID);
   virtual ~GuiKernel() = default;
+
+  virtual void usage();
+  virtual void processAppArgs(const QStringList& args) override;
 
 signals:
   void abortTask();
@@ -75,6 +79,7 @@ private:
   OcctQtViewer*      view3D;
   PageStack*         centerView;
   QMainWindow*       mainWindow;
+  HelpDockable*      help;
   Ally3D*            ally3D;
   GCodeInfo          gcodeInfo;
   PositionCalculator positionCalculator;
@@ -83,6 +88,9 @@ private:
   QThread            backendCommThread;
   SysEventModel*     sysEvents;
   CanonIFSettings*   canonIF;
+  QString            iniFileName;
+  QString            helpFileName;
+  QString            pluginDir;
   QMap<QString, PluginPageInterface*> pages;
   QMap<QString, PluginPageInterface*> statusInfos;
   friend class GuiKernelCreator;

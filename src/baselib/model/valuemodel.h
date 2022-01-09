@@ -10,13 +10,13 @@ class ValueModel : public QObject
 public:
   explicit ValueModel(const QString& name, const QVariant& value = 0);
 
-  void            setValue(const QVariant& value);
-  const QVariant& getValue() const { return v; };
-  const QString&  getName()  const { return n; };
-  void            dump() const;
+  void     setValue(const QVariant& value);
+  QVariant getValue() const { return v; };
+  QString  getName()  const { return n; };
+  void     dump() const;
 
 signals:
-  void valueChanged(QVariant newValue);
+  void valueChanged(const QVariant& newValue);
 
 private:
   QVariant v;

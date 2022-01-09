@@ -9,6 +9,8 @@
 #include <dbhelper.h>
 #include <centerpage.h>
 #include <settingsnb.h>
+#include <pluginpagefactory.h>
+#include <helpdockable.h>
 #include <pagestack.h>
 #include <tooltable.h>
 #include <configacc.h>
@@ -32,8 +34,8 @@
 #include <canonifsettings.h>
 
 
-GuiCore::GuiCore(const QString& iniFileName, const QString& appName, const QLocale& locale, DBHelper& dbAssist, const QString& groupID)
- : Core(iniFileName, appName, locale, dbAssist, groupID) {
+GuiCore::GuiCore(QApplication& app, const QString& appName, DBHelper& dbAssist, const QString& groupID)
+ : Core(app, appName, dbAssist, groupID) {
   }
 
 
@@ -94,10 +96,10 @@ const GuiKernel* GuiCore::guiCore() const {
 
 
 void GuiCore::help4Keyword(const QString &keyWord) {
-  qDebug() << "Core::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
-//  if (guiCore()->mainWindow->helpDialog()) {
-//     guiCore()->mainWindow->helpDialog()->help4Keyword(keyWord);
-//     }
+//  qDebug() << "GuiCore::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
+  if (guiCore()->help) {
+     guiCore()->help->help4Keyword(keyWord);
+     }
   }
 
 
@@ -117,21 +119,6 @@ LcProperties& GuiCore::lcProperties() {
   }
 
 
-void GuiCore::parseGCFile(const QString &fileName) {
-  QFile gcFile(fileName);
-
-  if (gcFile.exists()) {
-     guiCore()->parseGCode(gcFile);
-     guiCore()->ally3D->showPath(CanonIF().toolPath());
-     }
-  }
-
-
-void GuiCore::setViewStack(PageStack* v) {
-  guiCore()->centerView = v;
-  }
-
-
 QMainWindow* GuiCore::mainWindow() {
   return guiCore()->mainWindow;
   }
@@ -142,17 +129,47 @@ QList<QString> GuiCore::pluggablePages() {
   }
 
 
-QList<QString> GuiCore::statusInfos() {
-  return guiCore()->statusInfos.keys();
-  }
-
-
 PluginPageInterface* GuiCore::pluggablePage(const QString pageID) {
   if (guiCore()->pages.contains(pageID))
      return guiCore()->pages[pageID];
   return nullptr;
   }
 
+
+void GuiCore::parseGCFile(const QString &fileName) {
+  QFile gcFile(fileName);
+
+  if (gcFile.exists()) {
+     guiCore()->parseGCode(gcFile);
+     guiCore()->ally3D->showPath(CanonIF().toolPath());
+     }
+  }
+
+
+void GuiCore::riseError(const QString &msg) {
+  ValueManager().setValue("errorActive", true);
+  SysEvent se(msg);
+
+  kernel->logSysEvent(se);
+  QMessageBox::critical(guiCore()->mainWindow
+                      , SysEvent::toString(se.type())
+                      , se.what());
+  }
+
+
+void GuiCore::setViewStack(PageStack* v) {
+  guiCore()->centerView = v;
+  }
+
+
+QList<QString> GuiCore::statusInfos() {
+  return guiCore()->statusInfos.keys();
+  }
+
+
+void GuiCore::showHelp() const {
+  if (guiCore()->help) guiCore()->help->showHelp();
+  }
 
 PluginPageInterface* GuiCore::statusInfo(const QString infoID) {
   if (guiCore()->statusInfos.contains(infoID))
@@ -161,8 +178,27 @@ PluginPageInterface* GuiCore::statusInfo(const QString infoID) {
   }
 
 
+void GuiCore::setAppMode4PageID(const QString& pageID) {
+  if (pageID == "PreView3D")             ValueManager().setValue("appMode", ApplicationMode::Auto);
+  else if (pageID == "MDIEditor")        ValueManager().setValue("appMode", ApplicationMode::MDI);
+  else if (pageID == "JogView")          ValueManager().setValue("appMode", ApplicationMode::Manual);
+  else if (pageID == "PathEditor")       ValueManager().setValue("appMode", ApplicationMode::Edit);
+  else if (pageID == "Wheely")           ValueManager().setValue("appMode", ApplicationMode::Wheel);
+  else if (pageID == "TestEdit")         ValueManager().setValue("appMode", ApplicationMode::XEdit);
+  else if (pageID == "SettingsNotebook") ValueManager().setValue("appMode", ApplicationMode::Settings);
+  else if (pageID == "FileManager")      ValueManager().setValue("appMode", ApplicationMode::SelectFile);
+  else if (pageID == "TouchView")        ValueManager().setValue("appMode", ApplicationMode::Touch);
+  else if (pageID == "SysEventView")     ValueManager().setValue("appMode", ApplicationMode::ErrMessages);
+  }
+
+
 void GuiCore::setMainWindow(QMainWindow *w) {
+  PluginPageFactory     ppf;
+  AbstractCenterWidget* cw  = ppf.createCenterPage("HelpView");
+  HelpView*             hv  = reinterpret_cast<HelpView*>(cw);
+
   guiCore()->mainWindow = w;
+  guiCore()->help       = new HelpDockable(hv, w);
   }
 
 
@@ -170,17 +206,6 @@ QWidget* GuiCore::stackedPage(const QString& pageName) {
   qDebug() << "Core: query for page: >" << pageName << "<";
 
   return guiCore()->centerView->page(QString("%1Frame").arg(pageName));
-  }
-
-
-OcctQtViewer* GuiCore::view3D() {
-  qDebug() << "GuiCore: kernel is:" << guiCore();
-  return guiCore()->view3D;
-  }
-
-
-PageStack* GuiCore::viewStack() {
-  return guiCore()->centerView;
   }
 
 
@@ -208,19 +233,19 @@ ToolTable* GuiCore::toolTableModel() {
   }
 
 
-void GuiCore::windowClosing(QCloseEvent *e) {
-  guiCore()->windowClosing(e);
+OcctQtViewer* GuiCore::view3D() {
+  qDebug() << "GuiCore: kernel is:" << guiCore();
+  return guiCore()->view3D;
   }
 
 
-void GuiCore::riseError(const QString &msg) {
-  ValueManager().setValue("errorActive", true);
-  SysEvent se(msg);
+PageStack* GuiCore::viewStack() {
+  return guiCore()->centerView;
+  }
 
-  kernel->logSysEvent(se);
-  QMessageBox::critical(guiCore()->mainWindow
-                      , SysEvent::toString(se.type())
-                      , se.what());
+
+void GuiCore::windowClosing(QCloseEvent *e) {
+  guiCore()->windowClosing(e);
   }
 
 

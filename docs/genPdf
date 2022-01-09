@@ -7,9 +7,11 @@ files=(
  src/index_de.md
  src/integration_de.md
  src/reference_de.md
- src/nceditor_de.md
+ src/patheditor_de.md
  src/filemanager_de.md
  src/preview_de.md
+ src/mdiedit_de.md
+ src/testeditor_de.md
  src/jogview_de.md
  src/settingsnotebook_de.md
  src/toolmanager_de.md
@@ -36,15 +38,27 @@ cat ${files[0]} > $target
 while [ "$index" -lt "$filesCount" ]
 do
     echo ${files[$index]}
-    echo ""              >> $target
-    echo " *** "         >> $target
-    echo ""              >> $target
+    echo ''              >> $target
+    echo ''              >> $target
+    echo ''              >> $target
+    echo ' --- '         >> $target
+#    echo '```{=openxml}' >> $target
+#    echo '<w:p>'         >> $target
+#    echo '  <w:r>'       >> $target
+#    echo '    <w:br w:type="page"/>' >> $target
+#    echo '  </w:r>'      >> $target
+#    echo '</w:p>'        >> $target
+#    echo '```'           >> $target
+#    echo '\pagebreak '   >> $target
+    echo ''              >> $target
+    echo ''              >> $target
     cat ${files[$index]} >> $target
 
     ((index++))
 done
 cp $target src
 cd src
-pandoc $target -f gfm -o ${project}.pdf
+#pandoc $target -f gfm -o ${project}.pdf
+cat $target | gfm | fixhtml -e ../htmlEntities.def > ../html/${project}.html
 cd ..
 

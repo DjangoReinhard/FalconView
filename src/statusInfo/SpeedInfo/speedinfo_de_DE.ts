@@ -6,7 +6,7 @@
     <message>
         <location filename="HSpeedInfo.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rahmen</translation>
     </message>
     <message>
         <location filename="HSpeedInfo.ui" line="105"/>
@@ -29,7 +29,7 @@
     <message>
         <location filename="speedstatus.cpp" line="15"/>
         <source>SpeedStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschub-Info</translation>
     </message>
 </context>
 <context>
@@ -37,7 +37,7 @@
     <message>
         <location filename="VSpeedInfo.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rahmen</translation>
     </message>
     <message>
         <location filename="VSpeedInfo.ui" line="111"/>
