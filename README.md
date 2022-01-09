@@ -7,6 +7,14 @@ Subwindows like position or speed override can arranged anywhere
 around the central preview pane.
 Alternatively, the status displays can be shown in the 3D preview.
 
+## update 01.2022
+- migrated to cmake build system (tested from commandline as well as from QtCreator)
+- most main pages are plugins, that get loaded at runtime
+- general toolmanager is able to generate tooltable for linuxCNC
+- helpfile is complete for every available page and translated in english and german
+- basic functions are already tested against LinuxCNC
+- screen configuration is saved at application exit, so that it comes up as left
+
 ## Build
 
 **FalconView** uses these dependencies:
@@ -39,4 +47,3 @@ Alternatively, the status displays can be shown in the 3D preview.
 
 - a configuration with inline status controls
 [![Inline](sample/FalconView_Inline03s.jpg)](sample/FalconView_03.jpg)
-
