@@ -18,7 +18,7 @@ class TestEdit : public AbstractCenterWidget, FileManagerClient
 {
   Q_OBJECT
 public:
-  TestEdit(QWidget* parent = nullptr);
+  TestEdit(const QString& fileName = ":/src/lcLib/view/GCodeEditor.ui", QWidget* parent = nullptr);
 
   QString pageName() override;
   void    restoreState();

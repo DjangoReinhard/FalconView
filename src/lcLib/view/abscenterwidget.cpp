@@ -14,13 +14,27 @@
 
 /*! loads widgets from uiFile and allows late initialization at page usage
  */
-AbstractCenterWidget::AbstractCenterWidget(QWidget* parent)
+AbstractCenterWidget::AbstractCenterWidget(const QString& fileName, QWidget* parent)
  : QWidget(parent)
  , core(nullptr)
  , cfg(nullptr)
  , vm(nullptr)
  , vAction(nullptr)
+ , uiFileName(fileName)
  , addScrollArea(false) {
+  }
+
+
+/*! loads widgets from uiFile and allows late initialization at page usage
+ */
+AbstractCenterWidget::AbstractCenterWidget(const QString& fileName, bool adScrollArea, QWidget* parent)
+ : QWidget(parent)
+ , core(nullptr)
+ , cfg(nullptr)
+ , vm(nullptr)
+ , vAction(nullptr)
+ , uiFileName(fileName)
+ , addScrollArea(adScrollArea) {
   }
 
 
@@ -31,7 +45,7 @@ void AbstractCenterWidget::closeEvent(QCloseEvent* e) {
 
 QWidget* AbstractCenterWidget::createContent() {
   qDebug() << "ACW::createContent()";
-  QFile     uiDesc(fileName);
+  QFile     uiDesc(fileName());
   QWidget*  rv = nullptr;
 
   if (uiDesc.exists()) {
@@ -57,15 +71,18 @@ QWidget* AbstractCenterWidget::createContent() {
   }
 
 
+QString AbstractCenterWidget::fileName() const {
+  return uiFileName;
+  }
+
+
 // offline initialization
-void AbstractCenterWidget::initialize(const QString& fileName, const QString& name, bool addScrollArea) {
+void AbstractCenterWidget::initialize(const QString& name) {
   if (!core) {
      core = new GuiCore();
      cfg  = new Config();
      vm   = new ValueManager();
      }
-  this->fileName = fileName;
-  this->addScrollArea = addScrollArea;
   if (!name.isEmpty()) {
      setObjectName(name);
      setWindowTitle(tr(name.toStdString().c_str()));

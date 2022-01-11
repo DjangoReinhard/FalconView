@@ -22,8 +22,8 @@
 #include <QPushButton>
 
 
-TestEdit::TestEdit(QWidget* parent)
- : AbstractCenterWidget(parent)
+TestEdit::TestEdit(const QString& fileName, QWidget* parent)
+ : AbstractCenterWidget(fileName, parent)
  , fn(nullptr)
  , ed(nullptr)
  , pbOpen(nullptr)
@@ -111,7 +111,6 @@ void TestEdit::openFile() {
   if (fm) {
      fm->setClient(this);
      core->setAppMode(ApplicationMode::SelectFile);
-//     core->activatePage(FileManager::className);
      }
   }
 

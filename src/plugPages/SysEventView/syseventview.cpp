@@ -12,7 +12,7 @@
 
 
 SysEventView::SysEventView(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , table(new QTableView)
  , model(nullptr)
  , px(new QSortFilterProxyModel(this)) {

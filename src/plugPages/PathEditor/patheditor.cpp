@@ -16,7 +16,8 @@
 
 
 PathEditor::PathEditor(QWidget* parent)
- : TestEdit(parent) {
+ : TestEdit() {
+  if (parent) setParent(parent);
   setObjectName("PathEditor");
   setWindowTitle(tr("PathEditor"));
   }

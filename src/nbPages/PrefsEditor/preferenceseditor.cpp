@@ -14,7 +14,7 @@
 
 
 PreferencesEditor::PreferencesEditor(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(":/src/nbPages/PrefsEditor/Settings.ui", true, parent)
  , labels(nullptr)
  , bgButtons(nullptr)
  , fontButtons(nullptr)
@@ -25,6 +25,7 @@ PreferencesEditor::PreferencesEditor(QWidget* parent)
  , count(0) {
   setWindowTitle("PreferencesEditor");
   setObjectName(tr("PreferencesEditor"));
+
   }
 
 

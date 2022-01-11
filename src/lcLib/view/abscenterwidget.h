@@ -34,11 +34,13 @@ signals:
   void dataChanged(AbstractCenterWidget* w, const QVariant& changed);
 
 protected:
-  explicit AbstractCenterWidget(QWidget* parent = nullptr);
+  explicit AbstractCenterWidget(const QString& fileName, QWidget* parent = nullptr);
+  explicit AbstractCenterWidget(const QString& fileName, bool addScroolArea, QWidget* parent = nullptr);
   virtual ~AbstractCenterWidget() = default;
 
-  virtual void initialize(const QString& uiFile = QString(), const QString& name = QString(), bool addScrollArea = false);
-  virtual void patch(void* pk, void* pc, void* pv, void* pu = nullptr);
+  virtual void     initialize(const QString& name = QString());
+  virtual QString  fileName() const;
+  virtual void     patch(void* pk, void* pc, void* pv, void* pu = nullptr);
   virtual QWidget* createContent() override;
 
   GuiCore*      core;
@@ -47,7 +49,7 @@ protected:
 
 private:
   QAction*      vAction;
-  QString       fileName;
+  QString       uiFileName;
   bool          addScrollArea;
   friend class PluginPageFactory;
   };

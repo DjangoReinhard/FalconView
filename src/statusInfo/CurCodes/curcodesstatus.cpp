@@ -9,7 +9,8 @@
 
 
 CurCodesStatus::CurCodesStatus(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
+ , isVertical(false)
  , labels(nullptr) {
   setObjectName("CurCodesStatus");
   setWindowTitle(tr("CurCodesStatus"));
@@ -116,4 +117,10 @@ void CurCodesStatus::updateStyles() {
       labels[i]->setStyleSheet(styles);
       labels[i]->setFont(font);
       }
+  }
+
+
+QString CurCodesStatus::fileName() const {
+  if (isVertical) return ":/src/statusInfo/CurCodes/VCurCodes.ui";
+  return ":/src/statusInfo/CurCodes/HCurCodes.ui";
   }

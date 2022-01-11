@@ -13,7 +13,7 @@
 
 
 SettingsNotebook::SettingsNotebook(QWidget *parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , tw(nullptr) {
   setObjectName("SettingsNotebook");
   setWindowTitle(tr("SettingsNotebook"));
@@ -26,6 +26,7 @@ QWidget* SettingsNotebook::createContent() {
   tw = new QTabWidget();
   tw->setTabPosition(tp);
   tw->setTabShape(QTabWidget::TabShape::Rounded);
+  tw->setUsesScrollButtons(true);
   tw->setStyleSheet(loadStyles(tp));
 
   return tw;

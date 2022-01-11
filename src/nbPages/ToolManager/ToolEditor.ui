@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -444,7 +444,7 @@
    <item row="0" column="5" rowspan="12">
     <widget class="QLabel" name="helpImage">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -456,7 +456,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../FalconView.qrc">:/res/ToolDimensions.png</pixmap>
+      <pixmap resource="../../../FalconView.qrc">:/res/ToolDimensions.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>false</bool>
@@ -533,7 +533,7 @@
   <tabstop>eComment</tabstop>
  </tabstops>
  <resources>
-  <include location="../../FalconView.qrc"/>
+  <include location="../../../FalconView.qrc"/>
  </resources>
  <connections/>
 </ui>

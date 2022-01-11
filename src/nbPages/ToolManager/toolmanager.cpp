@@ -31,7 +31,7 @@
 
 
 ToolManager::ToolManager(QWidget *parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , conn(nullptr)
  , spH(new QSplitter(Qt::Horizontal, this))
  , categories(new QTreeView(spH))
@@ -362,6 +362,7 @@ void ToolManager::editTool() {
   tools->hide();
   core->showAllButCenter(false);
   tEdit->setEnabled(true);
+  tEdit->update();
 
   // data record is already loaded into editor,
   // so just inform about how to finish editing

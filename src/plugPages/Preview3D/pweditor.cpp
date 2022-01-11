@@ -27,9 +27,8 @@
 
 
 PreViewEditor::PreViewEditor(QWidget* parent)
- : TestEdit(parent)
+ : TestEdit()
  , frame(nullptr)
-// , jp(nullptr)
  , view3D(nullptr)
  , posStat(nullptr)
  , ccStat(nullptr)
@@ -38,6 +37,7 @@ PreViewEditor::PreViewEditor(QWidget* parent)
  , statusInPreview(false) {
   setObjectName("PreView3D");
   setWindowTitle(tr("PreView3D"));
+  if (parent) setParent(parent);
   }
 
 
@@ -54,10 +54,7 @@ QWidget* PreViewEditor::createContent() {
   ed->setReadOnly(true);
   pbOpen->hide();
   pbSave->hide();
-
-//  //TODO: check it out!
-//  jp = new JogView();
-//  jp->initialize();
+  //TODO: move!
   createDecorations(view3D, statusInPreview);
   cfg->beginGroup("PreViewEditor");
   spV->restoreState(cfg->value("vState").toByteArray());

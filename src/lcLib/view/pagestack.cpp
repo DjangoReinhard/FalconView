@@ -8,7 +8,7 @@
 
 
 PageStack::PageStack(QWidget* parent)
- : AbstractCenterWidget(parent) {
+ : AbstractCenterWidget(QString(), parent) {
   setObjectName(tr("PageStack"));
   setLayout(new QStackedLayout);
   layout()->setContentsMargins(0, 0, 0, 0);

@@ -12,7 +12,7 @@
 
 
 JogView::JogView(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , ui(new Ui::JogForm()) {
   setObjectName("JogView");
   setWindowTitle(tr("JogView"));

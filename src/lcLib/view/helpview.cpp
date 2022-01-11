@@ -12,7 +12,7 @@
 
 
 HelpView::HelpView(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , tb(nullptr)
  , sp(nullptr)
  , he(nullptr)

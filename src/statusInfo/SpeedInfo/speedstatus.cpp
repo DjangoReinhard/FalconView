@@ -10,7 +10,8 @@
 
 
 SpeedStatus::SpeedStatus(QWidget* parent)
- : AbstractCenterWidget(parent) {
+ : AbstractCenterWidget(QString(), parent)
+ , isVertical(false) {
   setObjectName("SpeedStatus");
   setWindowTitle(tr("SpeedStatus"));
   setFocusPolicy(Qt::FocusPolicy::NoFocus);
@@ -202,6 +203,12 @@ void SpeedStatus::connectSignals() {
         , cmdSpeed
         , [=](){ cmdSpeed->setFont(vm->getValue("cfgF" + cfg->nameOf(Config::GuiElem::Speed)).value<QFont>());
                  });
+  }
+
+
+QString SpeedStatus::fileName() const {
+  if (isVertical) return ":/src/statusInfo/SpeedInfo/VSpeedInfo.ui";
+  return ":/src/statusInfo/SpeedInfo/HSpeedInfo.ui";
   }
 
 

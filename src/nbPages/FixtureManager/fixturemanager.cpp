@@ -12,7 +12,7 @@
 
 
 FixtureManager::FixtureManager(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , client(new QWidget(this))
  , axisMask(nullptr) {
   setObjectName("FixtureManager");
@@ -47,7 +47,7 @@ QWidget* FixtureManager::createContent() {
   FixtureEdit* fe = new FixtureEdit(tr("Offsets"), 0, *axisMask);
 
   client->setLayout(fl);
-  fe->initialize(QString(), "Offsets");
+  fe->initialize("Offsets");
   fl->setContentsMargins(0, 0, 0, 0);
   fl->addWidget(fe);
   for (int i=0; i < 9; ++i) {
@@ -55,13 +55,13 @@ QWidget* FixtureManager::createContent() {
          QString id = QString("G%1").arg(54 + i);
 
          fe = new FixtureEdit(id, i+1, *axisMask);
-         fe->initialize(QString(), id);
+         fe->initialize(id);
          }
       else {
          QString id = QString("G59.%1").arg(i - 5);
 
          fe = new FixtureEdit(id, i+1, *axisMask);
-         fe->initialize(QString(), id);
+         fe->initialize(id);
          }
       fl->addWidget(fe);
       }

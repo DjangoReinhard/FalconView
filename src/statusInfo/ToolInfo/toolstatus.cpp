@@ -11,7 +11,7 @@
 
 
 ToolStatus::ToolStatus(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(":/src/statusInfo/ToolInfo/ToolInfo.ui", parent)
  , isInPreview(false)
  , curTool(nullptr)
  , nxtTool(nullptr) {

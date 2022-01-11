@@ -11,7 +11,7 @@
 
 
 FixtureEdit::FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , ui(new Ui::FixtureEditorForm())
  , ordinal(ordinal)
  , m(mask) {

@@ -16,9 +16,10 @@ public:
   virtual ~SpeedStatus();
 
 protected:
-  QWidget* createContent() override;
-  void     connectSignals() override;
-  void     updateStyles() override;
+  virtual QWidget* createContent() override;
+  virtual void     connectSignals() override;
+  virtual QString  fileName() const override;
+  virtual void     updateStyles() override;
 
 protected slots:
   // slider callbacks
@@ -31,6 +32,7 @@ protected slots:
   void speedRateChanged(const QVariant& v);
 
 private:
+  bool    isVertical;
   QLabel *cmdFastFeed;
   QLabel *cmdFeed;
   QLabel *cmdSpeed;

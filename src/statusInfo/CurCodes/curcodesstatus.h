@@ -15,11 +15,13 @@ public:
   virtual ~CurCodesStatus() = default;
 
 protected:
-  virtual void connectSignals() override;
-  virtual void updateStyles() override;
+  virtual void     connectSignals() override;
+  virtual QString  fileName() const override;
+  virtual void     updateStyles() override;
   virtual QWidget* createContent() override;
 
 private:
+  bool     isVertical;
   QLabel** labels;
   };
 #endif // CURCODESSTATUS_H

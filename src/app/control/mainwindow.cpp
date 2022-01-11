@@ -550,7 +550,9 @@ void MainWindow::createDockables() {
   qDebug() << "MW::createDockables() - previewIsCenter:" << (previewIsCenter ? "YES" : "NO");
 
   if (!statusInPreview) {
-    for (const QString& s : { "Position", "ToolInfo", "SpeedInfo", "CurCodes"}) {
+    QList<QString> pages = GuiCore().statusInfos();
+
+    for (const QString& s : pages) {
         AbstractCenterWidget* cw = ppFactory->createDockable(s);
 
         if (!cw) continue;
@@ -562,9 +564,11 @@ void MainWindow::createDockables() {
 
      GuiCore().setViewStack(stack);
      AbstractCenterWidget* cw;
+     QList<QString> pages = GuiCore().pluggableMainPages();
 
-     for (const QString& s : { "FileManager", "TestEdit", "MDIEditor" /* , "Preview3D" */
-                             , "SysEventView", "PathEditor", "JogView" }) {
+     pages.append("FileManager"); // append statically linked pages
+     pages.append("TestEdit");
+     for (const QString& s : pages) {
          cw = ppFactory->createCenterPage(s);
          if (cw) {
             if (s == "MDIEditor")      mdi = reinterpret_cast<MDIEditor*>(cw);
@@ -572,25 +576,18 @@ void MainWindow::createDockables() {
             stack->addPage(new CenterPage(cw, true, stack));
             }
          }
+     // settings-notebook is statically linked
      snb = qobject_cast<SettingsNotebook*>(ppFactory->createCenterPage("SettingsNotebook"));
      assert(snb);
-     if (Config().value("activateToolMgr").toBool()) {
-        qDebug() << "config says we want tool-manager!";
-        cw = ppFactory->createNotebookPage("ToolManager");
-        if (cw) snb->addPage(cw);
-        }
-     for (const QString& s : { "FixtureManager", "PrefsEditor", "LCToolTable" }) {
+     pages = GuiCore().pluggableNotebookPages();
+
+     for (const QString& s : pages) {
          cw = ppFactory->createNotebookPage(s);
          if (cw) snb->addPage(cw);
          }
      stack->addPage(new CenterPage(snb, false, stack));
      addDockable(Qt::BottomDockWidgetArea, new Dockable(stack, this));
      }
-  //TODO: remove
-//  AbstractCenterWidget* cw = ppFactory->createCenterPage("HelpView");
-//  HelpView*             hv = reinterpret_cast<HelpView*>(cw);
-
-//  if (hv) dlgHelp = new HelpDockable(hv, this);
   }
 
 
@@ -607,9 +604,11 @@ void MainWindow::createMainWidgets() {
 
      GuiCore().setViewStack(stack);
      AbstractCenterWidget* cw;
+     QList<QString> pages = GuiCore().pluggableMainPages();
 
-     for (const QString& s : { "FileManager", "Preview3D", "TestEdit", "MDIEditor"
-                             , "SysEventView", "PathEditor", "JogView" }) {
+     pages.append("FileManager");  // append statically linked pages
+     pages.append("TestEdit");
+     for (const QString& s : pages) {
          cw = ppFactory->createCenterPage(s);
          if (cw) {
             if (s == "MDIEditor")      mdi = reinterpret_cast<MDIEditor*>(cw);
@@ -617,14 +616,12 @@ void MainWindow::createMainWidgets() {
             stack->addPage(new CenterPage(cw, true, stack));
             }
          }
+     // settings-notebook is statically linked
      snb = qobject_cast<SettingsNotebook*>(ppFactory->createCenterPage("SettingsNotebook"));
      assert(snb);
-     if (Config().value("activateToolMgr").toBool()) {
-        qDebug() << "config says we want tool-manager!";
-        cw = ppFactory->createNotebookPage("ToolManager");
-        if (cw) snb->addPage(cw);
-        }
-     for (const QString& s : { "FixtureManager", "PrefsEditor", "LCToolTable" }) {
+     pages = GuiCore().pluggableNotebookPages();
+
+     for (const QString& s : pages) {
          cw = ppFactory->createNotebookPage(s);
          if (cw) snb->addPage(cw);
          }

@@ -1,7 +1,8 @@
 QTabWidget::pane    { border-bottom: 2px solid #C2C7CB; }
 QTabWidget::tab-bar { left: 1px; }
 /*
- * Style the tab using the tab sub-control. Note that it reads QTabBar _not_ QTabWidget
+ * Style the tab using the tab sub-control.
+ * Note that it reads QTabBar _not_ QTabWidget
  */
 QTabBar::tab {
   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,

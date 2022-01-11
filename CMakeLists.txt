@@ -34,11 +34,9 @@ find_package(linuxCNC MODULE REQUIRED)
 add_library(IFQt          INTERFACE)
 add_library(IFOpenCASCADE INTERFACE)
 add_library(IFStandard    INTERFACE)
-target_include_directories(IFQt
-                           INTERFACE ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
-                           )
 target_link_libraries(IFQt
                       INTERFACE Qt${QT_VERSION_MAJOR}::Gui
+                      INTERFACE Qt${QT_VERSION_MAJOR}::GuiPrivate
                       INTERFACE Qt${QT_VERSION_MAJOR}::Widgets
                       INTERFACE Qt${QT_VERSION_MAJOR}::Core
                       INTERFACE Qt${QT_VERSION_MAJOR}::Sql

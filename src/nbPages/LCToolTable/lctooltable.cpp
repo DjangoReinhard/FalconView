@@ -14,7 +14,7 @@
 
 
 LCToolTable::LCToolTable(QWidget* parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , table(nullptr)
  , model(nullptr)
  , px(nullptr) {

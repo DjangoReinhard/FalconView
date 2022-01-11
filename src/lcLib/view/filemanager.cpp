@@ -24,7 +24,7 @@
 
 
 FileManager::FileManager(const QDir& baseDir, QWidget *parent)
- : AbstractCenterWidget(parent)
+ : AbstractCenterWidget(QString(), parent)
  , spH(new QSplitter(Qt::Horizontal, this))
  , spV(new QSplitter(Qt::Vertical, this))
  , dirs(new QTreeView(spV))

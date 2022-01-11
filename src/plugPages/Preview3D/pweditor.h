@@ -52,7 +52,6 @@ protected slots:
 private:
   QSplitter*        spV;
   QWidget*          frame;
-//  JogView*          jp;
   OcctQtViewer*     view3D;
   PositionStatus*   posStat;
   CurCodesStatus*   ccStat;

@@ -54,78 +54,36 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
   AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().pluggableMainPage(name));
 
   if (rv) {
-     qDebug() << "PPF: process loaded plugin for page named: " << name;
+     qDebug() << "PPF: process loaded plugin for center page named: " << name;
      }
-  if (name == "FileManager") {
-     rv = new FileManager(GuiCore().lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX"));
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
-  else if (name == "SettingsNotebook") {
-     rv = new SettingsNotebook();
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
-  else if (name == "TestEdit") {
-     rv = new TestEdit();
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/lcLib/view/GCodeEditor.ui");
-     }
-  else if (name == "HelpView") {
-     rv = new HelpView();
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
+  if (name == "FileManager")           rv = new FileManager(GuiCore().lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX"));
+  else if (name == "SettingsNotebook") rv = new SettingsNotebook();
+  else if (name == "TestEdit")         rv = new TestEdit();
+  else if (name == "HelpView")         rv = new HelpView();
   else if (name == "Preview3D") {
 #ifndef USE_PLUGINS
      rv = new PreViewEditor();
-#else
+#endif
      if (!rv) return rv;
      assert(rv);
-#endif
      rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance, GuiCore().view3D());
-     rv->initialize(":/src/lcLib/view/GCodeEditor.ui");
-     }
-  else if (name == "MDIEditor") {
-#ifndef USE_PLUGINS
-     rv = new MDIEditor();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/plugPages/MDIEditor/MDIEditor.ui");
-     }
-  else if (name == "SysEventView") {
-#ifndef USE_PLUGINS
-     rv = new SysEventView();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
      rv->initialize();
+
+     return rv;
      }
-  else if (name == "PathEditor") {
+  else {
 #ifndef USE_PLUGINS
-     rv = new PathEditor();
-#else
-     if (!rv) return rv;
-     assert(rv);
+     if (name == "MDIEditor") rv = new MDIEditor();
+     else if (name = "SysEventView") rv = SysEventView();
+     else if (name = "PathEditor") rv = PathEditor();
+     else if (name = "JogView") rv = JogView();
 #endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/lcLib/view/GCodeEditor.ui");
      }
-  else if (name == "JogView") {
-#ifndef USE_PLUGINS
-     rv = new JogView();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
+  if (!rv) return rv;
+  assert(rv);
+  rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
+  rv->initialize();
+
   return rv;
   }
 
@@ -134,48 +92,20 @@ AbstractCenterWidget* PluginPageFactory::createNotebookPage(const QString& name)
   AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().pluggableNotebookPage(name));
 
   if (rv) {
-     qDebug() << "PPF: process loaded plugin for page named: " << name;
+     qDebug() << "PPF: process loaded plugin for notebook page named: " << name;
      }
-  if (name == "ToolManager") {
 #ifndef USE_PLUGINS
-     rv = new ToolManager();
+  if (name == "ToolManager")         rv = new ToolManager();
+  else if (name == "FixtureManager") rv = new FixtureManager();
+  else if (name == "PrefsEditor")    rv = new PreferencesEditor();
+  else if (name == "LCToolTable")    rv = new LCToolTable();
 #else
-     if (!rv) return rv;
-     assert(rv);
+  if (!rv) return rv;
+  assert(rv);
 #endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
-  else if (name == "FixtureManager") {
-#ifndef USE_PLUGINS
-     rv = new FixtureManager();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
-  else if (name == "PrefsEditor") {
-#ifndef USE_PLUGINS
-     rv = new PreferencesEditor();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/nbPages/PrefsEditor/Settings.ui", QString(), true);
-     }
-  else if (name == "LCToolTable") {
-#ifndef USE_PLUGINS
-     rv = new LCToolTable();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize();
-     }
+  rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
+  rv->initialize();
+
   return rv;
   }
 
@@ -183,47 +113,20 @@ AbstractCenterWidget* PluginPageFactory::createNotebookPage(const QString& name)
 AbstractCenterWidget* PluginPageFactory::createDockable(const QString& name, bool horizontal) {
   AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().statusInfo(name));
 
-  if (name == "Position") {
-#ifndef USE_PLUGINS
-     rv = new PositionStatus();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/statusInfo/Position/Position.ui");
+  if (rv) {
+     qDebug() << "PPF: process loaded plugin for dockable named: " << name;
      }
-  else if (name == "ToolInfo") {
 #ifndef USE_PLUGINS
-     rv = new ToolStatus();
+  if (name == "Position")       rv = new PositionStatus();
+  else if (name == "ToolInfo")  rv = new ToolStatus();
+  else if (name == "SpeedInfo") rv = new SpeedStatus();
+  else if (name == "CurCodes")  rv = new CurCodesStatus();
 #else
-     if (!rv) return rv;
-     assert(rv);
+  if (!rv) return rv;
+  assert(rv);
 #endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(":/src/statusInfo/ToolInfo/ToolInfo.ui");
-     }
-  else if (name == "SpeedInfo") {
-#ifndef USE_PLUGINS
-     rv = new SpeedStatus();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(horizontal ? ":/src/statusInfo/SpeedInfo/HSpeedInfo.ui"
-                               : ":/src/statusInfo/SpeedInfo/VSpeedInfo.ui");
-     }
-  else if (name == "CurCodes") {
-#ifndef USE_PLUGINS
-     rv = new CurCodesStatus();
-#else
-     if (!rv) return rv;
-     assert(rv);
-#endif
-     rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
-     rv->initialize(horizontal ? ":/src/statusInfo/CurCodes/HCurCodes.ui"
-                               : ":/src/statusInfo/CurCodes/VCurCodes.ui" );
-     }
+  rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
+  rv->initialize();
+
   return rv;
   }
