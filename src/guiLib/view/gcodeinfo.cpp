@@ -1,6 +1,6 @@
 #include <gcodeinfo.h>
+#include <guicore.h>
 #include <QString>
-#include <interp_base.hh>
 #include <QDebug>
 
 
@@ -14,7 +14,9 @@ void GCodeInfo::update(int* activeGCodes
                      , int* activeMCodes
                      , const QString& fileName
                      , int curLine) {
-  for (int i=1; i < ACTIVE_G_CODES; ++i) {
+  int mx = GuiCore().activeGCodes();
+
+  for (int i=1; i < mx; ++i) {
       QString k = QString("GC%1").arg(i);
       QString v = " ";
 
@@ -26,7 +28,9 @@ void GCodeInfo::update(int* activeGCodes
       qDebug() << "< active GCode(" << i << "):" << k << "\t" << v << "\traw:" << activeGCodes[i];
       vm.setValue(k, v);
       }
-  for (int i=1; i < ACTIVE_M_CODES; ++i) {
+  mx = GuiCore().activeMCodes();
+
+  for (int i=1; i < mx; ++i) {
       QString k = QString("MC%1").arg(i);
       QString v = " ";
 

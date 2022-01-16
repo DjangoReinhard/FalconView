@@ -3,14 +3,15 @@
 #include <dbconnection.h>
 #include <valuemanager.h>
 #include <configacc.h>
-#include <axismask.h>
+//#include <axismask.h>
 #include <guicore.h>
-#include <guikernel.h>
-#include <lcproperties.h>
+//#include <guikernel.h>
+//#include <lcproperties.h>
 #include <filemanager.h>
 #include <settingsnb.h>
 #include <testEdit.h>
 #include <helpview.h>
+#include <QDir>
 #ifndef USE_PLUGINS
 # include <Position/positionstatus.h>
 # include <ToolInfo/toolstatus.h>
@@ -35,8 +36,8 @@ PluginPageFactory::PluginPageFactory()
   core     = new GuiCore();
   cfg      = new Config();
   vm       = new ValueManager();
-  Kernel*       check  = GuiCore().kernel;
-  OcctQtViewer* view3D = GuiCore().view3D();
+  KernelInterface* check  = GuiCore().kernel;
+  OcctQtViewer*    view3D = GuiCore().view3D();
 
   qDebug() << "kernel address in main-app: " << check
            << "view3D address in main-app: " << view3D;
@@ -56,7 +57,7 @@ AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
   if (rv) {
      qDebug() << "PPF: process loaded plugin for center page named: " << name;
      }
-  if (name == "FileManager")           rv = new FileManager(GuiCore().lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX"));
+  if (name == "FileManager")           rv = new FileManager(QDir(GuiCore().fileName4("nc_files")));
   else if (name == "SettingsNotebook") rv = new SettingsNotebook();
   else if (name == "TestEdit")         rv = new TestEdit();
   else if (name == "HelpView")         rv = new HelpView();

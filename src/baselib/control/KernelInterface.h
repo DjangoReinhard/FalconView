@@ -1,6 +1,6 @@
 #ifndef KERNELINTERFACE_H
 #define KERNELINTERFACE_H
-#include <QObject>
+//#include <QObject>
 class ConfigManager;
 class DBConnection;
 class DBHelper;
@@ -10,9 +10,9 @@ class QLocale;
 class QStringList;
 
 
-class KernelInterface : public QObject
+class KernelInterface // : public QObject
 {
-  Q_OBJECT
+//  Q_OBJECT
 public:
   virtual int            axisMask() const                        = 0;
   virtual ConfigManager* config() const                          = 0;

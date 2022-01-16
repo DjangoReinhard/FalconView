@@ -1,6 +1,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 #include <KernelInterface.h>
+#include <QObject>
 #include <QBasicTimer>
 #include <QLocale>
 #include <configmgr.h>
@@ -9,7 +10,7 @@ class DBConnection;
 class SysEvent;
 
 
-class Kernel : public KernelInterface
+class Kernel : public QObject , public virtual KernelInterface
 {
   Q_OBJECT
 public:
@@ -20,7 +21,7 @@ public:
   virtual QString        fileName4(const QString& fileID) const override;
   virtual void           initialize(DBHelper& dbAssist) override;
   virtual bool           isSimulator() const override;
-  virtual QLocale        locale() const;
+  virtual QLocale        locale() const override;
   virtual void           logSysEvent(const QString& msg) override;
   virtual void           logSysEvent(const SysEvent& se) override;
   virtual void           processAppArgs(const QStringList& args) override;

@@ -16,6 +16,7 @@ add_library(FVBaseLib STATIC
     model/syseventmodel.cpp
     model/valuemanager.cpp
     model/valuemodel.cpp
+    util/axismask.cpp
     util/dbconnection.cpp
     util/flowlayout.cpp
     util/kernelcreator.cpp

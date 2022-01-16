@@ -1,6 +1,6 @@
 #ifndef CANONIFSETTINGS_H
 #define CANONIFSETTINGS_H
-//#include <graphicfactory.h>
+#include <graphicfactory.h>
 #include <lcproperties.h>
 #include <axismask.h>
 #include <stupidtoolchangerif.h>
@@ -59,7 +59,7 @@ private:
   CANON_POSITION      g5xOffsets[9];
   CANON_UNITS         machineUnits;
   StupidToolChangerIF changer;
-//  GraphicFactory      gf;
+  GraphicFactory      gf;
   double              iTraverseRate;
   bool                floodActive;
   bool                mistActive;

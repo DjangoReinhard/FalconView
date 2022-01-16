@@ -6,10 +6,10 @@
 #include <QString>
 #include <QList>
 #include <QMap>
+#include <toolentry.h>
 #if defined(toLine)
 # undef toLine
 #endif
-#include <toolentry.h>
 class QFile;
 class QModelIndex;
 class LcProperties;

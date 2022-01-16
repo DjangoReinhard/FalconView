@@ -1,7 +1,7 @@
 #include "jogview.h"
 #include <configacc.h>
 #include <valuemanager.h>
-#include <lcproperties.h>
+//#include <lcproperties.h>
 #include <axismask.h>
 #include <guicore.h>
 #include <QDebug>
@@ -55,8 +55,8 @@ QWidget* JogView::createContent() {
   ui->rO1->installEventFilter(this);
   ui->rO5->installEventFilter(this);
   ui->slJog->installEventFilter(this);
-  defSpeed = core->lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble() * 60;
-  maxSpeed = core->lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() * 60;
+  defSpeed = core->defaultVelocity();
+  maxSpeed = core->maxVelocity();
   singleStep(ui->cbSingleStep->isChecked());
   setStepSize();
   jogVelChanged();

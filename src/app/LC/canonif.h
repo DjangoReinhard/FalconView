@@ -1,6 +1,5 @@
 #ifndef CANONIF_H
 #define CANONIF_H
-//#include <graphicfactory.h>
 //#include <lcproperties.h>
 //#include <axismask.h>
 //#include <stupidtoolchangerif.h>

@@ -6,7 +6,7 @@
 class GuiKernelCreator : public KernelCreator
 {
 public:
-  virtual Kernel* kernel(QApplication& app, const QString& appName, const QString& groupID);
+  virtual KernelInterface* kernel(QApplication& app, const QString& appName, const QString& groupID);
   };
 
 #endif // GUIKERNELCREATOR_H

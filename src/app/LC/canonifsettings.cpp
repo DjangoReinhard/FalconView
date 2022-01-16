@@ -1,5 +1,8 @@
 #define CANONIF_CPP
 #include <canonifsettings.h>
+#ifdef toLine
+# undef toLine
+#endif
 #include <tooltable.h>
 #include <toolentry.h>
 #include <cmath>

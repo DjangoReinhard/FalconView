@@ -5,7 +5,7 @@
 #include <QVector3D>
 class PluginPageInterface;
 class AbstractCenterWidget;
-class GuiKernel;
+class GuiKernelInterface;
 class OcctQtViewer;
 class DBConnection;
 class DBHelper;
@@ -30,8 +30,11 @@ public:
   virtual void         riseError(const QString& msg) override;
 
   void                 activatePage(const QString& pageName);
+  int                  activeGCodes() const;
+  int                  activeMCodes() const;
   bool                 checkBE();
   QString              curPage() const;
+  double               defaultVelocity(int jointNum = 0) const;
   QString              helpFilename() const;
   bool                 isLatheMode() const;
   bool                 isSimulator() const;
@@ -39,10 +42,10 @@ public:
   LcProperties&        lcProperties();
   std::pair<QVector3D, QVector3D> machineLimits() const;
   QMainWindow*         mainWindow();
-//  void                 processGCodeFile(const QString& fileName);
-  PluginPageInterface* pluggableMainPage(const QString pageID);
+  double               maxVelocity(int jointNum = 0) const;
+  PluginPageInterface* pluggableMainPage(const QString& pageID);
   QList<QString>       pluggableMainPages();
-  PluginPageInterface* pluggableNotebookPage(const QString pageID);
+  PluginPageInterface* pluggableNotebookPage(const QString& pageID);
   QList<QString>       pluggableNotebookPages();
   void                 setAppMode4PageID(const QString& pageID);
   void                 setMainWindow(QMainWindow* w);
@@ -50,7 +53,7 @@ public:
   void                 setWindowTitle(const QString& title);
   void                 showHelp() const;
   QWidget*             stackedPage(const QString& pageName);
-  PluginPageInterface* statusInfo(const QString infoID);
+  PluginPageInterface* statusInfo(const QString& infoID);
   QList<QString>       statusInfos();
   Pos9                 toolOffset() const;
   ToolTable&           toolTable();

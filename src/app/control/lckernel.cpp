@@ -1,3 +1,4 @@
+#ifdef REDNOSE
 #include <lckernel.h>
 #include <axismask.h>
 #include <ally3d.h>
@@ -88,3 +89,4 @@ public:
 
 LCKernel::LCKernel() {
   }
+#endif

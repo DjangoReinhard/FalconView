@@ -1,5 +1,6 @@
 #ifndef LCKERNEL_H
 #define LCKERNEL_H
+#ifdef REDNOSE
 #include <guikernel.h>
 #include <AIS_InteractiveObject.hxx>
 class DBConnection;
@@ -10,7 +11,7 @@ class PluginPageInterface;
 class Pos9;
 class ToolTable;
 
-class QList;
+class QList<QString>;
 class QLocale;
 class QMainWindow;
 class QString;
@@ -188,4 +189,5 @@ protected slots:
   virtual void         timerEvent(QTimerEvent* e) override;
   virtual void         usage();
   };
+#endif
 #endif // LCKERNEL_H

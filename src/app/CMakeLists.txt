@@ -12,6 +12,7 @@ add_executable(FalconView
     control/falsecondition.cpp
     control/greatercondition.cpp
     control/lckernel.cpp
+    control/guikernel.cpp
     control/mainwindow.cpp
     control/multistatetoolbutton.cpp
     control/notcondition.cpp
@@ -19,7 +20,6 @@ add_executable(FalconView
     control/smallercondition.cpp
     control/testmain.cpp
     control/truecondition.cpp
-    LC/axismask.cpp
     LC/canonif.cpp
     LC/canonifsettings.cpp
     LC/commandwriter.cpp
@@ -35,10 +35,11 @@ add_executable(FalconView
     model/falconviewdb.cpp
     model/toolcategory.cpp
     model/tool.cpp
-    test/testDB.cpp
-    test/testengine.cpp
     util/multistateaction.cpp
+    util/guikernelcreator.cpp
+    util/pluginpagefactory.cpp
     view/dockable.cpp
+    view/lctooltable.cpp
     view/micon.cpp
     view/plugindialog.cpp
     ../../FalconView.qrc

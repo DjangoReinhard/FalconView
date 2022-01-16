@@ -213,7 +213,7 @@ void TestEngine::testOrCondition() {
 
 void TestEngine::testBoolean() {
   ValueModel     v("equal", true);
-  qualCondition c(&v, false);
+  EqualCondition c(&v, false);
 
   connect(&c, &AbstractCondition::conditionChanged, this, &TestEngine::updateCondition);
 

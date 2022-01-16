@@ -6,7 +6,6 @@ include(FalconView)
 add_library(FVguiLib STATIC
     control/gcodehighlighter.cpp
     control/guicore.cpp
-    control/guikernel.cpp
     control/helpengine.cpp
     util/Geom_HelixData.cpp
     util/HHelixCurveAdaptor.cpp
@@ -14,8 +13,6 @@ add_library(FVguiLib STATIC
     util/HelixCurveAdaptor_CylinderEvaluator.cpp
     util/ally3d.cpp
     util/graphicfactory.cpp
-    util/guikernelcreator.cpp
-    util/pluginpagefactory.cpp
     view/abscenterwidget.cpp
     view/centerpage.cpp
     view/filemanager.cpp

@@ -1,5 +1,5 @@
-#include <guikernel.h>
 #include <guicore.h>
+#include <GuiKernelInterface.h>
 #include <kernelcreator.h>
 #include <pos9.h>
 #include <ally3d.h>
@@ -9,7 +9,7 @@
 #include <dbhelper.h>
 #include <centerpage.h>
 #include <settingsnb.h>
-#include <pluginpagefactory.h>
+//#include <pluginpagefactory.h>
 #include <helpdockable.h>
 #include <pagestack.h>
 #include <configacc.h>
@@ -58,104 +58,117 @@ GuiCore::GuiCore(void* pFromOuterAdressSpace)
 void GuiCore::activatePage(const QString& pageName) {
   qDebug() << "Core: activate page with name >" << pageName << "<";
 
-  guiCore()->centerView->activatePage(QString("%1Frame").arg(pageName));
+  guiCore()->activatePage(QString("%1Frame").arg(pageName));
+  }
+
+
+int GuiCore::activeGCodes() const {
+  return guiCore()->activeGCodes();
+  }
+
+
+int GuiCore::activeMCodes() const {
+  return guiCore()->activeMCodes();
   }
 
 
 bool GuiCore::checkBE() {
-  if (checked < 0) {
-     bool rv = guiCore()->statusReader->isActive()
-            && guiCore()->commandWriter->isActive();
+//  if (checked < 0) {
+//     bool rv = guiCore()->statusReader->isActive()
+//            && guiCore()->commandWriter->isActive();
 
-     checked = 1;
-     if (!rv) {
-        ValueManager vm;
+//     checked = 1;
+//     if (!rv) {
+//        ValueManager vm;
 
-        checked = 0;
-        qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
+//        checked = 0;
+//        qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
 
-        vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
-        vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
-        vm.setValue("allHomed", true);
-        vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
-        vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
-        vm.setValue("errorActive", false);
-        }
-    }
-  return checked == 1;
+//        vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+//        vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
+//        vm.setValue("allHomed", true);
+//        vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
+//        vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
+//        vm.setValue("errorActive", false);
+//        }
+//    }
+//  return checked == 1;
+  return guiCore()->checkBE();
   }
 
 
 QString GuiCore::curPage() const {
-  return guiCore()->centerView->activePage();
+  return guiCore()->activePage();
   }
 
 
-GuiKernel* GuiCore::guiCore() {
-  return static_cast<GuiKernel*>(kernel);
+GuiKernelInterface* GuiCore::guiCore() {
+  return dynamic_cast<GuiKernelInterface*>(kernel);
   }
 
 
-const GuiKernel* GuiCore::guiCore() const {
-  return static_cast<const GuiKernel*>(kernel);
+const GuiKernelInterface* GuiCore::guiCore() const {
+  return dynamic_cast<const GuiKernelInterface*>(kernel);
+  }
+
+
+double GuiCore::defaultVelocity(int jointNum) const {
+  return guiCore()->defaultVelocity(jointNum);
+  }
+
+
+double GuiCore::maxVelocity(int jointNum) const {
+  return guiCore()->maxVelocity(jointNum);
   }
 
 
 void GuiCore::help4Keyword(const QString &keyWord) {
-//  qDebug() << "GuiCore::help4Keyword(" << keyWord << ") NEEDS to get REIMPLEMENTED !!!";
-  if (guiCore()->help) {
-     guiCore()->help->help4Keyword(keyWord);
-     }
+  guiCore()->help4Keyword(keyWord);
   }
 
 
 bool GuiCore::isLatheMode() const {
-  return guiCore()->lcProps->value("DISPLAY", "LATHE").isValid()
-      && guiCore()->lcProps->value("DISPLAY", "LATHE").toBool();
+  return guiCore()->isLatheMode();
   }
 
 
 bool GuiCore::isSimulator() const {
-  return guiCore()->simulator;
+  return guiCore()->isSimulator();
   }
 
 
 LcProperties& GuiCore::lcProperties() {
-  return *guiCore()->lcProps;
+  return guiCore()->lcProperties();
   }
 
 
 std::pair<QVector3D, QVector3D> GuiCore::machineLimits() const {
-  return guiCore()->lcIF->machineLimits();
+  return guiCore()->machineLimits();
   }
 
 
 QMainWindow* GuiCore::mainWindow() {
-  return guiCore()->mainWindow;
+  return guiCore()->mainWindow();
   }
 
 
 QList<QString> GuiCore::pluggableMainPages() {
-  return guiCore()->mainPages.keys();
+  return guiCore()->pluggableMainPages();
   }
 
 
-PluginPageInterface* GuiCore::pluggableMainPage(const QString pageID) {
-  if (guiCore()->mainPages.contains(pageID))
-     return guiCore()->mainPages[pageID];
-  return nullptr;
+PluginPageInterface* GuiCore::pluggableMainPage(const QString& pageID) {
+  return guiCore()->pluggableMainPage(pageID);
   }
 
 
 QList<QString> GuiCore::pluggableNotebookPages() {
-  return guiCore()->nbPages.keys();
+  return guiCore()->pluggableNotebookPages();
   }
 
 
-PluginPageInterface* GuiCore::pluggableNotebookPage(const QString pageID) {
-  if (guiCore()->nbPages.contains(pageID))
-     return guiCore()->nbPages[pageID];
-  return nullptr;
+PluginPageInterface* GuiCore::pluggableNotebookPage(const QString& pageID) {
+  return guiCore()->pluggableNotebookPage(pageID);
   }
 
 
@@ -171,30 +184,29 @@ void GuiCore::riseError(const QString &msg) {
   SysEvent se(msg);
 
   kernel->logSysEvent(se);
-  QMessageBox::critical(guiCore()->mainWindow
+  QMessageBox::critical(guiCore()->mainWindow()
                       , SysEvent::toString(se.type())
                       , se.what());
   }
 
 
 void GuiCore::setViewStack(PageStack* v) {
-  guiCore()->centerView = v;
-  }
-
-
-QList<QString> GuiCore::statusInfos() {
-  return guiCore()->statusInfos.keys();
+  guiCore()->setViewStack(v);
   }
 
 
 void GuiCore::showHelp() const {
-  if (guiCore()->help) guiCore()->help->showHelp();
+  guiCore()->showHelp();
   }
 
-PluginPageInterface* GuiCore::statusInfo(const QString infoID) {
-  if (guiCore()->statusInfos.contains(infoID))
-     return guiCore()->statusInfos[infoID];
-  return nullptr;
+
+QList<QString> GuiCore::statusInfos() {
+  return guiCore()->statusInfos();
+  }
+
+
+PluginPageInterface* GuiCore::statusInfo(const QString& infoID) {
+  return guiCore()->statusInfo(infoID);
   }
 
 
@@ -213,28 +225,17 @@ void GuiCore::setAppMode4PageID(const QString& pageID) {
 
 
 void GuiCore::setMainWindow(QMainWindow *w) {
-  PluginPageFactory     ppf;
-  AbstractCenterWidget* cw  = ppf.createCenterPage("HelpView");
-  HelpView*             hv  = reinterpret_cast<HelpView*>(cw);
-
-  guiCore()->mainWindow = w;
-  guiCore()->help       = new HelpDockable(hv, w);
+  guiCore()->setMainWindow(w);
   }
 
 
 QWidget* GuiCore::stackedPage(const QString& pageName) {
-  qDebug() << "Core: query for page: >" << pageName << "<";
-
-  return guiCore()->centerView->page(QString("%1Frame").arg(pageName));
+  return guiCore()->stackedPage(QString("%1Frame").arg(pageName));
   }
 
 
 void GuiCore::setWindowTitle(const QString &title) {
-  if (guiCore()->mainWindow) {
-     guiCore()->mainWindow->setWindowTitle(guiCore()->mainWindow->objectName()
-                                      + " - "
-                                      + title);
-     }
+  guiCore()->setWindowTitle(title);
   }
 
 
@@ -245,23 +246,23 @@ Pos9 GuiCore::toolOffset() const {
 
 
 ToolTable& GuiCore::toolTable() {
-  return *guiCore()->tt;
+  return guiCore()->toolTable();
   }
 
 
 ToolTable* GuiCore::toolTableModel() {
-  return guiCore()->tt;
+  return guiCore()->toolTableModel();
   }
 
 
 OcctQtViewer* GuiCore::view3D() {
   qDebug() << "GuiCore: kernel is:" << guiCore();
-  return guiCore()->view3D;
+  return guiCore()->view3D();
   }
 
 
 PageStack* GuiCore::viewStack() {
-  return guiCore()->centerView;
+  return guiCore()->viewStack();
   }
 
 
@@ -271,100 +272,100 @@ void GuiCore::windowClosing(QCloseEvent *e) {
 
 
 void GuiCore::beAbortTask() {
-  emit guiCore()->abortTask();
+  guiCore()->beAbortTask();
   }
 
 
 void GuiCore::beEnableBlockDelete(bool enable) {
-    emit guiCore()->enableBlockDelete(enable);
+    guiCore()->beEnableBlockDelete(enable);
     }
 
 
 void GuiCore::beEnableFlood(bool enable) {
-    emit guiCore()->enableFlood(enable);
+    guiCore()->beEnableFlood(enable);
     }
 
 
 void GuiCore::beEnableMist(bool enable) {
-    emit guiCore()->enableMist(enable);
+    guiCore()->beEnableMist(enable);
     }
 
 
 void GuiCore::beEnableOptionalStop(bool enable) {
-    emit guiCore()->enableOptionalStop(enable);
+    guiCore()->beEnableOptionalStop(enable);
     }
 
 
 void GuiCore::beSetSpindleOverride(double rate) {
-    emit guiCore()->setSpindleOverride(rate);
+    guiCore()->beSetSpindleOverride(rate);
     }
 
 
 void GuiCore::beJogStep(int axis, double stepSize, double speed) {
-    emit guiCore()->jogStep(axis, stepSize, speed);
+    guiCore()->beJogStep(axis, stepSize, speed);
     }
 
 
 void GuiCore::beJogStart(int axis, double speed) {
-    emit guiCore()->jogStart(axis, speed);
+    guiCore()->beJogStart(axis, speed);
     }
 
 
 void GuiCore::beJogStop(int axis) {
-    emit guiCore()->jogStop(axis);
+    guiCore()->beJogStop(axis);
     }
 
 
 void GuiCore::beHomeAxis(int jointNum) {
-    emit guiCore()->homeAxis(jointNum);
+    guiCore()->beHomeAxis(jointNum);
     }
 
 
 void GuiCore::beLoadTaskPlan(const QString& gcodeFile) {
-    emit guiCore()->loadTaskPlan(gcodeFile);
+    guiCore()->beLoadTaskPlan(gcodeFile);
     }
 
 
 void GuiCore::beLoadToolTable(const QString& toolTableFile) {
-    emit guiCore()->loadToolTable(toolTableFile);
+    guiCore()->beLoadToolTable(toolTableFile);
     }
 
 
 void GuiCore::beSendMDICommand(const QString& command) {
-    emit guiCore()->sendMDICommand(command);
+    guiCore()->beSendMDICommand(command);
     }
 
 
 void GuiCore::beSetAuto(int autoMode, int line) {
-    emit guiCore()->setAuto(autoMode, line);
+    guiCore()->beSetAuto(autoMode, line);
     }
 
 
 void GuiCore::beSetFeedOverride(double rate) {
-    emit guiCore()->setFeedOverride(rate);
+    guiCore()->beSetFeedOverride(rate);
     }
 
 
 void GuiCore::beSetRapidOverride(double rate) {
-    emit guiCore()->setRapidOverride(rate);
+    guiCore()->beSetRapidOverride(rate);
     }
 
 
 void GuiCore::beSetSpindle(bool enable, int speed, int direction) {
-    emit guiCore()->setSpindle(enable, speed, direction);
+    guiCore()->beSetSpindle(enable, speed, direction);
     }
 
 
 void GuiCore::beSetTaskMode(int mode) {
-    emit guiCore()->setTaskMode(mode);
+    guiCore()->beSetTaskMode(mode);
     }
 
 
 void GuiCore::beSetTaskState(int state) {
-    emit guiCore()->setTaskState(state);
+    guiCore()->beSetTaskState(state);
     }
 
 
 void GuiCore::beTaskPlanSynch() {
-    emit guiCore()->taskPlanSynch();
+    guiCore()->beTaskPlanSynch();
     }

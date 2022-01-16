@@ -6,8 +6,9 @@
 #include <axismask.h>
 #include <stupidtoolchangerif.h>
 #include <core.h>
+#include <graphicfactory.h>
 //#include <guikernel.h>
-//#include <graphicfactory.h>
+#include <graphicfactory.h>
 
 #include <AIS_Shape.hxx>
 #include <gce_MakeDir.hxx>
@@ -44,7 +45,7 @@ bool              CanonIF::isMistActive() const            { return p->mistActiv
 int               CanonIF::activeSpindle() const           { return p->canon.spindle_num; }
 CANON_PLANE       CanonIF::activePlane() const             { return p->canon.activePlane; }
 CANON_MOTION_MODE CanonIF::motionMode() const              { return p->canon.motionMode; }
-//GraphicFactory    CanonIF::graphicFactory() const          { return p->gf; }
+GraphicFactory    CanonIF::graphicFactory() const          { return p->gf; }
 double            CanonIF::motionTolerance() const         { return p->canon.motionTolerance; }
 double            CanonIF::naiveTolerance() const          { return p->canon.naivecamTolerance; }
 double            CanonIF::posX() const                    { return p->canon.endPoint.x; }
@@ -93,7 +94,7 @@ void CanonIF::setG92Offset(double x, double y, double z, double a, double b, dou
   }
 void CanonIF::setXYRotation(double r)                  { p->setXYRotation(r); }
 void CanonIF::setSpindleMode(int spindle, double mode) { p->setSpindleMode(spindle, mode); }
-void CanonIF::setTraverseColor(const QColor& c)        { p->setTraverseColor(c); }
+//void CanonIF::setTraverseColor(const QColor& c)        { p->setTraverseColor(c); }
 //void CanonIF::setFeedColor(const QColor& c)            { p->setFeedColor(c); }
 //void CanonIF::setLimitsColor(const QColor& c)          { p->setLimitsColor(c); }
 //void CanonIF::setCurSegColor(const QColor& c)          { p->setCurSegColor(c); }
