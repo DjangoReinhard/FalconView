@@ -4,14 +4,12 @@
 #include <guicore.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
-#include <occtviewer.h>
-#include <canonif.h>
-#include <AIS_ViewCube.hxx>
-#include <AIS_InteractiveContext.hxx>
+//#include <canonif.h>
 //#include <toolstatus.h>
 //#include <curcodesstatus.h>
 //#include <positionstatus.h>
 //#include <speedstatus.h>
+
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -24,6 +22,10 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QSpacerItem>
+
+#include <occtviewer.h>
+#include <AIS_ViewCube.hxx>
+#include <AIS_InteractiveContext.hxx>
 
 
 PreViewEditor::PreViewEditor(QWidget* parent)
@@ -67,7 +69,6 @@ QWidget* PreViewEditor::createContent() {
 
 
 void PreViewEditor::connectSignals() {
-  connect(vm->getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::genPreView);
   // curLine will be set by backend
   connect(vm->getModel("curLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setCurrentLine);
   // edLine is set by pathEditor
@@ -185,14 +186,14 @@ void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
   }
 
 
-void PreViewEditor::genPreView(const QVariant& fileName) {
-  qDebug() << "PreViewEditor::genPreView" << fileName;
-  CanonIF().toolPath().clear();
-  ed->loadFile(fileName);
-  fn->setText(fileName.toString());
-  core->parseGCFile(fileName.toString());
-  core->setAppMode(ApplicationMode::Auto);
-  }
+//void PreViewEditor::genPreView(const QVariant& fileName) {
+//  qDebug() << "PreViewEditor::genPreView" << fileName;
+//  CanonIF().toolPath().clear();
+//  ed->loadFile(fileName);
+//  fn->setText(fileName.toString());
+////  core->parseGCFile(fileName.toString());
+////  core->setAppMode(ApplicationMode::Auto);
+//  }
 
 
 void PreViewEditor::patch(void *pk, void *pc, void *pv, void *pu) {

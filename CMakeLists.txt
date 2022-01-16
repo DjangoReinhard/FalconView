@@ -6,12 +6,11 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_MODULE_PATH /d/linux/cmake)
 include(FalconView RESULT_VARIABLE ConfigBase)
 set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "CMake search-path")
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/lib/cmake/opencascade")
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/src/linuxcnc-deb11")
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ";/usr/local/lib/cmake/opencascade")
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ";/usr/local/src/linuxcnc-deb11")
 set(OpenCASCADE_DIR "/usr/local/lib/cmake/opencascade" CACHE PATH "OpenCascade 7.6.0")
 set(ENV{EMC2_HOME} "/usr/local/src/linuxcnc-deb11")
-set(CMAKE_INSTALL_MESSAGE ALWAYS)
-set(CMAKE_INSTALL_PREFIX "/d/linux/QtI" CACHE PATH "test installation" FORCE)
+### ------ don't change settings below this line ---- ###
 find_package(Qt5 REQUIRED COMPONENTS
              Gui
              Widgets

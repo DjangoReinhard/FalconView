@@ -11,10 +11,9 @@ set(TS_FILES
     )
 target_link_libraries(ppSysEventView
                       PRIVATE FVBaseLib
-                      PRIVATE FVlcLib
+                      PRIVATE FVguiLib
                       )
 use_interface_libraries(ppSysEventView
-                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

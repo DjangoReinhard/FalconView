@@ -114,7 +114,7 @@
    <file>src/statusInfo/CurCodes/VCurCodes.ui</file>
    <file>src/statusInfo/ToolInfo/ToolInfo.ui</file>
    <file>src/app/control/mainwindow.ui</file>
-   <file>src/lcLib/view/GCodeEditor.ui</file>
-   <file>src/lcLib/view/HelpTitle.ui</file>
+   <file>src/guiLib/view/GCodeEditor.ui</file>
+   <file>src/guiLib/view/HelpTitle.ui</file>
  </qresource>
 </RCC>

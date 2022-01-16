@@ -2,7 +2,7 @@
 #define CORE_H
 #include <QString>
 #include <applicationmode.h>
-class Kernel;
+class KernelInterface;
 class KernelCreator;
 class DBConnection;
 class DBHelper;
@@ -33,10 +33,10 @@ public:
   static void     setKernelCreator(KernelCreator* kc);
 
 protected:
-  explicit              Core(void* p); // for plugins
-  static Kernel*        kernel;
-  static KernelCreator* kc;
-  static int            checked;
+  explicit                Core(void* p); // for plugins
+  static KernelInterface* kernel;
+  static KernelCreator*   kc;
+  static int              checked;
   friend class Config;
   friend class AbstractCenterWidget;
   friend class PluginPageFactory;

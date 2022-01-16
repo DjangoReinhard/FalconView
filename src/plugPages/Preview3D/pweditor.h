@@ -46,7 +46,7 @@ protected:
   void createDecorations(OcctQtViewer* v, bool sip);
 
 protected slots:
-  void genPreView(const QVariant& fileName);
+//  void genPreView(const QVariant& fileName);
   void setEditorLine(const QVariant& line);
 
 private:

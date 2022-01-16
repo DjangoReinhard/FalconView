@@ -5,7 +5,7 @@
 #include <QFont>
 
 Config::Config() {
-  if (!Config::cfg) Config::cfg = Core().kernel->cfg;
+  if (!Config::cfg) Config::cfg = Core().kernel->config();
   assert(Config::cfg);
   }
 

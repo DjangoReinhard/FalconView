@@ -12,10 +12,9 @@ set(TS_FILES
     )
 target_link_libraries(nbFixtureManager
                       PRIVATE FVBaseLib
-                      PRIVATE FVlcLib
+                      PRIVATE FVguiLib
                       )
 use_interface_libraries(nbFixtureManager
-                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

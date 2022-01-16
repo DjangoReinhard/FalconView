@@ -2,12 +2,13 @@
 #include <axismask.h>
 #include <valuemanager.h>
 #include <guicore.h>
+#include <pos9.h>
+
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QLabel>
 #include <QLayout>
 #include <QDebug>
-#include <canon_position.hh>
 
 
 FixtureEdit::FixtureEdit(const QString& title, int ordinal, const AxisMask& mask, QWidget* parent)
@@ -198,8 +199,8 @@ void FixtureEdit::saveFixture() {
   double dv = userData.toDouble(&ok);
 
   if (ok) {
-     CANON_POSITION to     = core->toolOffset();
-     double         curPos = 0;
+     Pos9   to     = core->toolOffset();
+     double curPos = 0;
 
      switch (axis) {
        case 0: {

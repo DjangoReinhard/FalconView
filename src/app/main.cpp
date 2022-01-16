@@ -3,6 +3,7 @@
 #include <falconviewdb.h>
 #include <guicore.h>
 #include <guikernelcreator.h>
+
 #include <QCoreApplication>
 #include <QApplication>
 #include <QFileInfo>

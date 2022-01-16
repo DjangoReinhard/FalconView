@@ -48,3 +48,21 @@ QTabBar::tab:last {
 QTabBar::tab:only-one {
   margin: 0; /* if there is only one tab, we don't want overlapping margins */
   }
+
+QTabBar::scroller {
+/*  width: 20px; / * the width of the scroll buttons */
+  margin: 0;
+  }
+/*
+QTabBar QToolButton {
+  / * the scroll buttons are tool buttons * /
+  border-image: url(scrollbutton.png) 2;
+  border-width: 2px;
+  }
+QTabBar QToolButton::right-arrow {
+  image: url(rightarrow.png); / * the arrow mark in the tool buttons * /
+  }
+QTabBar QToolButton::left-arrow {
+  image: url(leftarrow.png);
+  }
+*/
