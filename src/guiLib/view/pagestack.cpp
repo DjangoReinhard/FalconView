@@ -29,10 +29,11 @@ void PageStack::updateStyles() {
 
 
 CenterPage* PageStack::page(const QString& name) {
-//  qDebug() << "CenterView: requested page \"" << name << "\"";
+  qDebug() << "CenterView: requested page \"" << name << "\"";
 
   if (pagePool.contains(name)) return pagePool[name];
-//  qDebug() << "CenterView: sorry - no page with name >" << name << "<";
+  qDebug() << "CenterView: sorry - no page with name >" << name << "<";
+  dump();
 
   return nullptr;
   }

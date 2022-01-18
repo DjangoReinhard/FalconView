@@ -28,37 +28,42 @@ SOURCES += \
     model/direntry.cpp \
     model/dirmodel.cpp \
     model/filemodel.cpp \
+    model/pos9.cpp \
     model/sysevent.cpp \
     model/syseventmodel.cpp \
     model/valuemanager.cpp \
     model/valuemodel.cpp \
+    util/axismask.cpp \
     util/dbconnection.cpp \
     util/flowlayout.cpp \
     util/kernelcreator.cpp \
-    util/timestamp.cpp
+    util/timestamp.cpp \
 
 HEADERS += \
     control/applicationmode.h \
     control/core.h \
     control/filemanagerclient.h \
     control/kernel.h \
+    control/KernelInterface.h \
     model/configacc.h \
     model/configmgr.h \
     model/direntry.h \
     model/dirmodel.h \
     model/filemodel.h \
+    model/pos9.h \
     model/sysevent.h \
     model/syseventmodel.h \
     model/valuemanager.h \
     model/valuemodel.h \
+    util/axismask.h \
     util/dbconnection.h \
     util/dbhelper.h \
     util/flowlayout.h \
     util/kernelcreator.h \
     util/timestamp.h \
     view/GCodeViewerInterface.h \
+    view/mdieditorinterface.h \
     view/PluginPageInterface.h \
-    view/mdieditorinterface.h
 
 TRANSLATIONS += \
     baselib_de_DE.ts

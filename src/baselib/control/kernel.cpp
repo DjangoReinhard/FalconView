@@ -1,3 +1,4 @@
+#ifdef REDNOSE
 #include <kernel.h>
 #include <sysevent.h>
 #include <QApplication>
@@ -114,3 +115,4 @@ QLocale* Kernel::setupTranslators() {
 QString Kernel::version() const {
   return "0.1";
   }
+#endif

@@ -1,4 +1,5 @@
 #include <guikernel.h>
+#include <applicationmode.h>
 #include <dbhelper.h>
 #include <dbconnection.h>
 #include <configacc.h>
@@ -7,6 +8,7 @@
 #include <helpdockable.h>
 #include <pluginpagefactory.h>
 #include <canonif.h>
+#include <configmgr.h>
 #include <tooltable.h>
 #include <axismask.h>
 #include <pos9.h>
@@ -23,15 +25,25 @@
 #include <QPluginLoader>
 #include <QFile>
 #include <QFileInfo>
+#include <QTranslator>
 #include <QVector3D>
 
 #include <occtviewer.h>
 
+#include <emc.hh>
+
 
 GuiKernel::GuiKernel(int maxGCodes, int maxMCodes, QApplication& app, const QString& appName, const QString& groupID)
- : Kernel(app, appName, groupID)
- , maxGCodes(maxGCodes)
+ : maxGCodes(maxGCodes)
  , maxMCodes(maxMCodes)
+ , checked(-1)
+ , simulator(false)
+ , app(app)
+ , cfg(new ConfigManager(appName, groupID))
+ , curLocale(nullptr)
+ , conn(nullptr)
+ , appName(appName)
+ , groupID(groupID)
  , lcProps(nullptr)
  , tt(nullptr)
  , lcIF(nullptr)
@@ -161,14 +173,19 @@ void GuiKernel::beTaskPlanSynch() {
     }
 
 
-//ConfigManager* GuiKernel::config() const {
-//  return cfg;
-//  }
+ConfigManager* GuiKernel::config() const {
+  return cfg;
+  }
 
 
-//ConfigManager* GuiKernel::config() {
-//  return cfg;
-//  }
+ConfigManager* GuiKernel::config() {
+  return cfg;
+  }
+
+
+DBConnection*  GuiKernel::databaseConnection() {
+  return conn;
+  }
 
 
 DBConnection* GuiKernel::createDatabase(DBHelper& dbAssist) {
@@ -180,36 +197,33 @@ DBConnection* GuiKernel::createDatabase(DBHelper& dbAssist) {
   }
 
 
-//DBConnection* GuiKernel::databaseConnection() {
-//  return conn;
-//  }
-
-
 bool GuiKernel::isSimulator() const {
   return false;
   }
 
 
-//QLocale GuiKernel::locale() const {
-//  return *curLocale;
-//  }
-
-void    GuiKernel::activatePage(const QString& pageName) {
+void GuiKernel::activatePage(const QString& pageName) {
+  centerView->activatePage(pageName);
   }
 
 
 QString GuiKernel::activePage() const {
-  return "";
+  return centerView->activePage();
   }
 
 
 QString GuiKernel::curPage() const {
-  return "";
+  return centerView->activePage();
   }
 
 
 void GuiKernel::help4Keyword(const QString& keyWord) {
   if (help) help->help4Keyword(keyWord);
+  }
+
+
+QLocale GuiKernel::locale() const {
+  return *curLocale;
   }
 
 
@@ -229,51 +243,92 @@ QList<QString> GuiKernel::pluggableNotebookPages() const {
 
 
 void GuiKernel::setAppMode4PageID(const QString& pageID) {
+  if (pageID == "PreView3D")             ValueManager().setValue("appMode", ApplicationMode::Auto);
+  else if (pageID == "MDIEditor")        ValueManager().setValue("appMode", ApplicationMode::MDI);
+  else if (pageID == "JogView")          ValueManager().setValue("appMode", ApplicationMode::Manual);
+  else if (pageID == "PathEditor")       ValueManager().setValue("appMode", ApplicationMode::Edit);
+  else if (pageID == "Wheely")           ValueManager().setValue("appMode", ApplicationMode::Wheel);
+  else if (pageID == "TestEdit")         ValueManager().setValue("appMode", ApplicationMode::XEdit);
+  else if (pageID == "SettingsNotebook") ValueManager().setValue("appMode", ApplicationMode::Settings);
+  else if (pageID == "FileManager")      ValueManager().setValue("appMode", ApplicationMode::SelectFile);
+  else if (pageID == "TouchView")        ValueManager().setValue("appMode", ApplicationMode::Touch);
+  else if (pageID == "SysEventView")     ValueManager().setValue("appMode", ApplicationMode::ErrMessages);
   }
 
 
 PageStack* GuiKernel::viewStack() {
-
+  return centerView;
   }
 
 
-bool                            GuiKernel::checkBE() {
+bool GuiKernel::checkBE() {
+  if (checked < 0) {
+     bool rv = statusReader->isActive()
+            && commandWriter->isActive();
 
+     checked = 1;
+     if (!rv) {
+        ValueManager vm;
+
+        checked = 0;
+        qDebug() << ">>> Kernel::simulateStartOfBE() <<<";
+
+        vm.setValue("taskMode", EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+        vm.setValue("taskState", EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON);
+        vm.setValue("allHomed", true);
+        vm.setValue("execState", EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE);
+        vm.setValue("interpState", EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE);
+        vm.setValue("errorActive", false);
+        }
+    }
+  return checked == 1;
   }
 
 
-LcProperties&                   GuiKernel::lcProperties() {
-
+LcProperties& GuiKernel::lcProperties() {
+  return *lcProps;
   }
 
 
-const LcProperties&             GuiKernel::lcProperties() const {
-
+const LcProperties& GuiKernel::lcProperties() const {
+  return *lcProps;
   }
 
 
 std::pair<QVector3D, QVector3D> GuiKernel::machineLimits() const {
+  CANON_POSITION p5x = canonIF->g5xOffset();
+  CANON_POSITION p92 = canonIF->g92Offset();
+  QVector3D vMin, vMax;
 
+  vMin.setX(lcProps->value("AXIS_X", "MIN_LIMIT").toDouble() - p5x.x - p92.x);
+  vMin.setY(lcProps->value("AXIS_Y", "MIN_LIMIT").toDouble() - p5x.y - p92.y);
+  vMin.setZ(lcProps->value("AXIS_Z", "MIN_LIMIT").toDouble() - p5x.z - p92.z);
+
+  vMax.setX(lcProps->value("AXIS_X", "MAX_LIMIT").toDouble() - p5x.x - p92.x);
+  vMax.setY(lcProps->value("AXIS_Y", "MAX_LIMIT").toDouble() - p5x.y - p92.y);
+  vMax.setZ(lcProps->value("AXIS_Z", "MAX_LIMIT").toDouble() - p5x.z - p92.z);
+
+  return std::pair<QVector3D, QVector3D>(vMin, vMax);
   }
 
 
-Pos9                            GuiKernel::toolOffset() const {
-
+Pos9 GuiKernel::toolOffset() const {
+  return Pos9();
   }
 
 
-ToolTable&                      GuiKernel::toolTable() {
-
+ToolTable& GuiKernel::toolTable() {
+  return *tt;
   }
 
 
-ToolTable*                      GuiKernel::toolTableModel() {
-
+ToolTable* GuiKernel::toolTableModel() {
+  return tt;
   }
 
 
-OcctQtViewer*                   GuiKernel::view3D() {
-
+OcctQtViewer* GuiKernel::view3D() {
+  return v3D;
   }
 
 
@@ -307,7 +362,7 @@ QString GuiKernel::fileName4(const QString &fileID) const {
      qDebug() << "GK::fileName4(" << fileID << ") => " << lcProps->toolTableFileName();
      return lcProps->toolTableFileName();
      }
-  return Kernel::fileName4(fileID);
+  return QString();
   }
 
 
@@ -322,7 +377,8 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   dir.cd("..");
   dir.cd("i18n");
   langDir = dir.absolutePath();
-  Kernel::initialize(dbAssist);
+  processAppArgs(app.arguments());
+  curLocale = setupTranslators();
   /** ==================================================== */
   lcProps = new LcProperties(fileName4("ini"));
   tt = new ToolTable(*lcProps, lcProps->toolTableFileName());
@@ -352,19 +408,11 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
      conn = dbAssist.dbConnection();
      if (!conn) throw std::system_error(-2, std::system_category(), "could not access database");
      }
-  sysEvents = new SysEventModel(*conn, (Kernel*)this);
+  sysEvents = new SysEventModel(*conn, this);
   sysEvents->setTable("SysEvents");
   nc_files = lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX");
-
-  //TODO: convert to values
-//  canonIF->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
-//  canonIF->setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
-//  canonIF->setLimitsColor(cfg->getForeground(Config::GuiElem::WorkLimit));
-//  canonIF->setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));
-//  canonIF->setCurSegColor(cfg->getForeground(Config::GuiElem::CurSeg));
-//  canonIF->setOldSegColor(cfg->getForeground(Config::GuiElem::OldSeg));
-
-  ally3D->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
+  canonIF->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
+  canonIF->setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
   ally3D->setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
   ally3D->setLimitsColor(cfg->getForeground(Config::GuiElem::WorkLimit));
   ally3D->setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));
@@ -426,9 +474,9 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
          else qDebug() << fileName << "is NOT a valid plugin:\t" << loader.errorString();
          }
       }
-  Kernel::connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged
+  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged
         , this, &GuiKernel::processGCodeFile);
-  Kernel::connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged
+  connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged
         , this, &GuiKernel::updateView);  
   setupBackend();
   }
@@ -458,7 +506,11 @@ double GuiKernel::defaultVelocity(int jointNum) const {
 //  QString groupID = QString("JOINT_%1").arg(jointNum);
 
 //  return lcProperties().value(groupID, "HOME_SEARCH_VEL").toDouble() + 60;
-  return lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble() + 60;
+  double v = lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble();
+
+  qDebug() << "GuiKernel::default vel: " << v;
+
+  return v * 60;
   }
 
 
@@ -466,11 +518,44 @@ double GuiKernel::maxVelocity(int jointNum) const {
 //  QString groupID = QString("JOINT_%1").arg(jointNum);
 
 //  return lcProperties().value(groupID, "MAX_VELOCITY").toDouble() + 60;
-  return lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() + 60;
+  return lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() * 60;
   }
 
 
 void GuiKernel::nop() const {
+  }
+
+
+QLocale* GuiKernel::setupTranslators() {
+  QLocale           sysLocale;
+  QLocale::Language lang    = sysLocale.language();
+  QLocale::Country  country = sysLocale.country();
+  QLocale*          curLocale = new QLocale(lang, country);
+  QDir              i18nDir(langDir);
+  const auto        entryList = i18nDir.entryList(QDir::Files);
+  bool              ok;
+
+  qDebug() << "language:" << lang;
+  qDebug() << "country:" << country;
+  qDebug() << "syslocale:" << sysLocale.name() << "\tcurrent locale:" << curLocale->name();
+
+  for (const QString& s : entryList) {
+      QString      name = s.mid(0, s.size() - 9);
+      QTranslator* tr   = new QTranslator();
+
+      ok = tr->load(*curLocale, name, "_", i18nDir.absolutePath());
+
+      qDebug() << "translation-messages:" << name << (ok ? "loaded" : "FAILED to load");
+
+      if (ok) app.installTranslator(tr);
+      else    delete tr;
+      }
+  return curLocale;
+  }
+
+
+QString GuiKernel::version() const {
+  return "0.1";
   }
 
 
@@ -479,11 +564,6 @@ PluginPageInterface* GuiKernel::pluggableMainPage(const QString& pageID) const {
      return mainPages[pageID];
   return nullptr;
   }
-
-
-//QList<QString> GuiKernel::pluggableNotebookPages() const {
-//  return nbPages.keys();
-//  }
 
 
 PluginPageInterface* GuiKernel::pluggableNotebookPage(const QString& pageID) const {
@@ -554,59 +634,59 @@ void GuiKernel::setViewStack(PageStack *v) {
 void GuiKernel::setupBackend() {
   if (statusReader && statusReader->isActive()) {
      qDebug() << "Well, we have an active status reader ... ;)";
-     timer.start(40, (Kernel*)this);
+     timer.start(40, this);
      }
   if (commandWriter && commandWriter->isActive()) {
      qDebug() << "OK, ok, ok - backend seems to be available!";
      commandWriter->moveToThread(&backendCommThread);
-     Kernel::connect(&backendCommThread, &QThread::finished, &backendCommThread, &QObject::deleteLater);
+     connect(&backendCommThread, &QThread::finished, &backendCommThread, &QObject::deleteLater);
 
-     Kernel::connect(this, &GuiKernel::abortTask, commandWriter, &CommandWriter::abortTask);
-     Kernel::connect(this, &GuiKernel::enableBlockDelete, commandWriter, &CommandWriter::enableBlockDelete);
-     Kernel::connect(this, &GuiKernel::enableFlood, commandWriter, &CommandWriter::enableFlood);
-     Kernel::connect(this, &GuiKernel::enableMist, commandWriter, &CommandWriter::enableMist);
-     Kernel::connect(this, &GuiKernel::enableOptionalStop, commandWriter, &CommandWriter::enableOptionalStop);
-     Kernel::connect(this, &GuiKernel::setSpindleOverride, commandWriter, &CommandWriter::setSpindleOverride);
-     Kernel::connect(this, &GuiKernel::jogStep, commandWriter, &CommandWriter::jogStep);
-     Kernel::connect(this, &GuiKernel::jogStart, commandWriter, &CommandWriter::jogStart);
-     Kernel::connect(this, &GuiKernel::jogStop, commandWriter, &CommandWriter::jogStop);
-     Kernel::connect(this, &GuiKernel::homeAxis, commandWriter, &CommandWriter::homeAxis);
-     Kernel::connect(this, &GuiKernel::loadTaskPlan, commandWriter, &CommandWriter::loadTaskPlan);
-     Kernel::connect(this, &GuiKernel::loadToolTable, commandWriter, &CommandWriter::loadToolTable);
-     Kernel::connect(this, &GuiKernel::sendMDICommand, commandWriter, &CommandWriter::sendMDICommand);
-     Kernel::connect(this, &GuiKernel::setAuto, commandWriter, &CommandWriter::setAuto);
-     Kernel::connect(this, &GuiKernel::setFeedOverride, commandWriter, &CommandWriter::setFeedOverride);
-     Kernel::connect(this, &GuiKernel::setRapidOverride, commandWriter, &CommandWriter::setRapidOverride);
-     Kernel::connect(this, &GuiKernel::setSpindle, commandWriter, &CommandWriter::setSpindle);
-     Kernel::connect(this, &GuiKernel::setTaskMode, commandWriter, &CommandWriter::setTaskMode);
-     Kernel::connect(this, &GuiKernel::setTaskState, commandWriter, &CommandWriter::setTaskState);
-     Kernel::connect(this, &GuiKernel::taskPlanSynch, commandWriter, &CommandWriter::taskPlanSynch);
+     connect(this, &GuiKernel::abortTask, commandWriter, &CommandWriter::abortTask);
+     connect(this, &GuiKernel::enableBlockDelete, commandWriter, &CommandWriter::enableBlockDelete);
+     connect(this, &GuiKernel::enableFlood, commandWriter, &CommandWriter::enableFlood);
+     connect(this, &GuiKernel::enableMist, commandWriter, &CommandWriter::enableMist);
+     connect(this, &GuiKernel::enableOptionalStop, commandWriter, &CommandWriter::enableOptionalStop);
+     connect(this, &GuiKernel::setSpindleOverride, commandWriter, &CommandWriter::setSpindleOverride);
+     connect(this, &GuiKernel::jogStep, commandWriter, &CommandWriter::jogStep);
+     connect(this, &GuiKernel::jogStart, commandWriter, &CommandWriter::jogStart);
+     connect(this, &GuiKernel::jogStop, commandWriter, &CommandWriter::jogStop);
+     connect(this, &GuiKernel::homeAxis, commandWriter, &CommandWriter::homeAxis);
+     connect(this, &GuiKernel::loadTaskPlan, commandWriter, &CommandWriter::loadTaskPlan);
+     connect(this, &GuiKernel::loadToolTable, commandWriter, &CommandWriter::loadToolTable);
+     connect(this, &GuiKernel::sendMDICommand, commandWriter, &CommandWriter::sendMDICommand);
+     connect(this, &GuiKernel::setAuto, commandWriter, &CommandWriter::setAuto);
+     connect(this, &GuiKernel::setFeedOverride, commandWriter, &CommandWriter::setFeedOverride);
+     connect(this, &GuiKernel::setRapidOverride, commandWriter, &CommandWriter::setRapidOverride);
+     connect(this, &GuiKernel::setSpindle, commandWriter, &CommandWriter::setSpindle);
+     connect(this, &GuiKernel::setTaskMode, commandWriter, &CommandWriter::setTaskMode);
+     connect(this, &GuiKernel::setTaskState, commandWriter, &CommandWriter::setTaskState);
+     connect(this, &GuiKernel::taskPlanSynch, commandWriter, &CommandWriter::taskPlanSynch);
 
-     Kernel::connect(commandWriter, SIGNAL(systemEvent(const SysEvent&)), (Kernel*)this, SLOT(riseError(const SysEvent&)));
+     connect(commandWriter, SIGNAL(systemEvent(SysEvent)), this, SLOT(riseError(SysEvent)));
      backendCommThread.start();
      }
   else {
      qDebug() << "Bad luck this time. Sorry but no backend!";
-     Kernel::connect(this, &GuiKernel::abortTask, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::enableBlockDelete, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::enableFlood, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::enableMist, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::enableOptionalStop, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::setSpindleOverride, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::jogStep, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::jogStart, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::jogStop, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::homeAxis, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::loadTaskPlan, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::loadToolTable, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::sendMDICommand, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::setAuto, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::setFeedOverride, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::setRapidOverride, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::setSpindle, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::setTaskMode, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::setTaskState, this, &GuiKernel::nop);
-     Kernel::connect(this, &GuiKernel::taskPlanSynch, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::abortTask, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::enableBlockDelete, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::enableFlood, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::enableMist, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::enableOptionalStop, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::setSpindleOverride, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::jogStep, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::jogStart, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::jogStop, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::homeAxis, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::loadTaskPlan, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::loadToolTable, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::sendMDICommand, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::setAuto, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::setFeedOverride, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::setRapidOverride, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::setSpindle, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::setTaskMode, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::setTaskState, this, &GuiKernel::nop);
+     connect(this, &GuiKernel::taskPlanSynch, this, &GuiKernel::nop);
      }
   }
 
@@ -625,7 +705,7 @@ void GuiKernel::showHelp() const {
 
 
 QWidget* GuiKernel::stackedPage(const QString &pageName) {
-  return centerView->page(QString("%1Frame").arg(pageName));
+  return centerView->page(pageName);
   }
 
 QList<QString> GuiKernel::statusInfos() const {
@@ -653,7 +733,7 @@ void GuiKernel::timerEvent(QTimerEvent *e) {
                              , e->what());
          }
      }
-  else Kernel::timerEvent(e);
+  else QObject::timerEvent(e);
   }
 
 
@@ -665,7 +745,7 @@ void GuiKernel::updateView(const QVariant &v) {
 
 
 void GuiKernel::usage() {
-  std::cerr << std::endl << "FalconView V"  << Kernel::version().toStdString().c_str() << std::endl
+  std::cerr << std::endl << "FalconView V"  << version().toStdString().c_str() << std::endl
             << std::endl << "please specify the path to INI-file of your linuxCNC machine." << std::endl
             << std::endl << "supported options:"
             << std::endl << "\t-ini\t\t<mandatory>\tpath to INI-file of linuxCNC"

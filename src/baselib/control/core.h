@@ -33,10 +33,10 @@ public:
   static void     setKernelCreator(KernelCreator* kc);
 
 protected:
-  explicit                Core(void* p); // for plugins
+  explicit Core(void* p); // for plugins
   static KernelInterface* kernel;
-  static KernelCreator*   kc;
-  static int              checked;
+  static KernelCreator*      kc;
+  static int                 checked;
   friend class Config;
   friend class AbstractCenterWidget;
   friend class PluginPageFactory;

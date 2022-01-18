@@ -8,6 +8,6 @@ class KernelInterface;
 class KernelCreator
 {
 public:
-  virtual KernelInterface* kernel(QApplication& app, const QString& appName, const QString& groupID);
+  virtual KernelInterface* kernel(QApplication& app, const QString& appName, const QString& groupID) = 0;
   };
 #endif // KERNELCREATOR_H

@@ -142,7 +142,9 @@ double CanonIFSettings::spindleSpeed(int spindle) const {
 CANON_TOOL_TABLE CanonIFSettings::canonTool(int ttIndex) const {
   CANON_TOOL_TABLE ctt;
   if (!ttIndex) return ctt;
-  toolTable.tool(ttIndex)->toCanon(&ctt);
+  const ToolEntry* te = toolTable.tool(ttIndex);
+
+  if (te) te->toCanon(&ctt);
 
   return ctt;
   }
@@ -169,21 +171,21 @@ void CanonIFSettings::setEndPoint(const CANON_POSITION& p) {
   }
 
 
-//static Quantity_Color convertColor(const QColor& c) {
-//  return Quantity_Color((double)(c.red()   / 255.0)
-//                      , (double)(c.green() / 255.0)
-//                      , (double)(c.blue()  / 255.0), Quantity_TOC_RGB);
-//  }
+static Quantity_Color convertColor(const QColor& c) {
+  return Quantity_Color((double)(c.red()   / 255.0)
+                      , (double)(c.green() / 255.0)
+                      , (double)(c.blue()  / 255.0), Quantity_TOC_RGB);
+  }
 
 
-//void CanonIFSettings::setTraverseColor(const QColor &c) {
-//  colTraverse = convertColor(c);
-//  }
+void CanonIFSettings::setTraverseColor(const QColor &c) {
+  colTraverse = convertColor(c);
+  }
 
 
-//void CanonIFSettings::setFeedColor(const QColor &c) {
-//  colFeed = convertColor(c);
-//  }
+void CanonIFSettings::setFeedColor(const QColor &c) {
+  colFeed = convertColor(c);
+  }
 
 
 //void CanonIFSettings::setLimitsColor(const QColor &c) {

@@ -4,7 +4,7 @@
 <context>
     <name>PreViewEditor</name>
     <message>
-        <location filename="pweditor.cpp" line="40"/>
+        <location filename="pweditor.cpp" line="41"/>
         <source>PreView3D</source>
         <oldsource>PreViewEditor</oldsource>
         <translation>3D-Vorschau</translation>

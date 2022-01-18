@@ -7,7 +7,6 @@
 #include <stupidtoolchangerif.h>
 #include <core.h>
 #include <graphicfactory.h>
-//#include <guikernel.h>
 #include <graphicfactory.h>
 
 #include <AIS_Shape.hxx>
@@ -19,6 +18,7 @@
 
 CanonIF::CanonIF(LcProperties& properties, ToolTable& toolTable) {
   if (p) throw std::runtime_error("already initialized canon settings!");
+  p = new CanonIFSettings(properties, toolTable);
   }
 
 
@@ -59,12 +59,6 @@ double            CanonIF::posV() const                    { return p->canon.end
 double            CanonIF::posW() const                    { return p->canon.endPoint.w; }
 int               CanonIF::lastSlot() const                { return p->changer.slot4ToolInSpindle(); }
 int               CanonIF::nextSlot() const                { return p->changer.nextTool(); }
-//Quantity_Color    CanonIF::traverseColor() const           { return p->colTraverse; }
-//Quantity_Color    CanonIF::feedColor() const               { return p->colFeed; }
-//Quantity_Color    CanonIF::limitColor() const              { return p->colLimits; }
-//Quantity_Color    CanonIF::curSegColor() const             { return p->colCurSeg; }
-//Quantity_Color    CanonIF::oldSegColor() const             { return p->colOldSeg; }
-//Quantity_Color    CanonIF::workPieceColor() const          { return p->colWorkPiece; }
 CANON_TOOL_TABLE  CanonIF::toolEntry(int ttIndex)          { return p->canonTool(ttIndex); }
 CANON_POSITION    CanonIF::g5xOffset(int i) const          { return p->g5xOffset(i); }
 CANON_POSITION    CanonIF::g92Offset() const               { return p->canon.g92Offset; }
@@ -76,6 +70,12 @@ CANON_DIRECTION   CanonIF::spindleDir(int spindle) const   { return p->spindleDi
 CANON_POSITION    CanonIF::toolOffset() const              { return p->canon.toolOffset; }
 CANON_POSITION    CanonIF::endPoint() const                { return p->canon.endPoint; }
 QString           CanonIF::parameterFilename() const       { return p->properties.parameterFileName(); }
+Quantity_Color    CanonIF::feedColor() const               { return p->colFeed; }
+Quantity_Color    CanonIF::traverseColor() const           { return p->colTraverse; }
+//Quantity_Color    CanonIF::curSegColor() const             { return p->colCurSeg; }
+//Quantity_Color    CanonIF::limitsColor() const             { return p->colLimits; }
+//Quantity_Color    CanonIF::oldSegColor() const             { return p->colOldSeg; }
+//Quantity_Color    CanonIF::workPieceColor() const          { return p->colWorkPiece; }
 QMap<long, Handle(AIS_InteractiveObject)>& CanonIF::toolPath() { return p->toolPath; }
 void CanonIF::changeTool(int ttIndex)       { p->changeTool(ttIndex); }
 void CanonIF::selectTool(int tool)          { p->changer.selectNextTool(tool); }
@@ -92,14 +92,14 @@ void CanonIF::setG5xOffset(int i, double x, double y, double z, double a, double
 void CanonIF::setG92Offset(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
   p->setG92Offset(CANON_POSITION(x, y, z, a, b, c, u, v, w));
   }
-void CanonIF::setXYRotation(double r)                  { p->setXYRotation(r); }
-void CanonIF::setSpindleMode(int spindle, double mode) { p->setSpindleMode(spindle, mode); }
-//void CanonIF::setTraverseColor(const QColor& c)        { p->setTraverseColor(c); }
-//void CanonIF::setFeedColor(const QColor& c)            { p->setFeedColor(c); }
-//void CanonIF::setLimitsColor(const QColor& c)          { p->setLimitsColor(c); }
+void CanonIF::setFeedColor(const QColor& c)            { p->setFeedColor(c); }
+void CanonIF::setTraverseColor(const QColor& c)        { p->setTraverseColor(c); }
 //void CanonIF::setCurSegColor(const QColor& c)          { p->setCurSegColor(c); }
+//void CanonIF::setLimitsColor(const QColor& c)          { p->setLimitsColor(c); }
 //void CanonIF::setOldSegColor(const QColor& c)          { p->setOldSegColor(c); }
 //void CanonIF::setWorkPieceColor(const QColor& c)       { p->setWorkPieceColor(c); }
+void CanonIF::setXYRotation(double r)                  { p->setXYRotation(r); }
+void CanonIF::setSpindleMode(int spindle, double mode) { p->setSpindleMode(spindle, mode); }
 void CanonIF::setToolOffset(EmcPose offset)            { p->setToolOffset(offset); }
 CanonIFSettings* CanonIF::p = nullptr;
 ///////////////////////////////////////////////////////////////////////////////
@@ -552,7 +552,7 @@ void STRAIGHT_TRAVERSE(int lineno, double x, double y, double z
   if (lineno > 0)   {
      Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(sp.x, sp.y, sp.z)
                                                             , gp_Pnt(ep.x, ep.y, ep.z));
-//     shape->SetColor(ci.traverseColor());
+     shape->SetColor(ci.traverseColor());
      ci.appendShape(lineno, shape);
      }
   ci.setEndPoint(ep);
@@ -596,8 +596,8 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
 
         if (rotation > 0) shape = ci.graphicFactory().createHelix(sp, ep, center, axis, true);
         else              shape = ci.graphicFactory().createHelix(sp, ep, center, axis, false);
-//        shape->SetColor(ci.feedColor());
         ci.appendShape(lineno, shape);
+        shape->SetColor(ci.feedColor());
         ci.setEndPoint(ep.X(), ep.Y(), ep.Z(), a, b, c, u, v, w);
 
         return;
@@ -674,7 +674,7 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
      shape = ci.graphicFactory().createHelix(sp, ep, center, axis, rotation > 0,  fullTurn);
      }
   if (shape) {
-//     shape->SetColor(ci.feedColor());
+     shape->SetColor(ci.feedColor());
      ci.appendShape(lineno, shape);
      }
   ci.setEndPoint(endpt);
@@ -693,7 +693,7 @@ void STRAIGHT_FEED(int lineno, double x, double y, double z
 
   Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(sp.x, sp.y, sp.z)
                                                          , gp_Pnt(ep.x, ep.y, ep.z));
-//  shape->SetColor(ci.feedColor());
+  shape->SetColor(ci.feedColor());
   ci.appendShape(lineno, shape);
   ci.setEndPoint(ep);
   }

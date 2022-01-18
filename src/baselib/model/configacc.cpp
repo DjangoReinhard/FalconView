@@ -1,6 +1,7 @@
 #include <configacc.h>
+#include <configmgr.h>
 #include <core.h>
-#include <kernel.h>
+#include <KernelInterface.h>
 #include <QColor>
 #include <QFont>
 

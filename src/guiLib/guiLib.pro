@@ -19,7 +19,6 @@ INCLUDEPATH += \
     ../baselib/control \
     ../baselib/util \
     ../baselib/view \
-    model \
     control \
     util \
     view \
@@ -27,16 +26,13 @@ INCLUDEPATH += \
 SOURCES += \
     control/gcodehighlighter.cpp \
     control/guicore.cpp \
-    control/guikernel.cpp \
     control/helpengine.cpp \
+    util/ally3d.cpp \
     util/Geom_HelixData.cpp \
-    util/HHelixCurveAdaptor.cpp \
+    util/graphicfactory.cpp \
     util/HelixCurveAdaptor.cpp \
     util/HelixCurveAdaptor_CylinderEvaluator.cpp \
-    util/ally3d.cpp \
-    util/graphicfactory.cpp \
-    util/guikernelcreator.cpp \
-    util/pluginpagefactory.cpp \
+    util/HHelixCurveAdaptor.cpp \
     view/abscenterwidget.cpp \
     view/centerpage.cpp \
     view/filemanager.cpp \
@@ -57,18 +53,15 @@ SOURCES += \
 HEADERS += \
     control/gcodehighlighter.h \
     control/guicore.h \
-    control/guikernel.h \
+    control/GuiKernelInterface.h \
     control/helpengine.h \
-    util/Geom_HelixData.h \
-    util/HHelixCurveAdaptor.h \
-    util/HelixCurveAdaptor.h \
-    util/HelixCurveAdaptor_CylinderEvaluator.h \
-    util/HelixCurveAdaptor_p.h \
     util/ally3d.h \
+    util/Geom_HelixData.h \
     util/graphicfactory.h \
-    util/guikernelcreator.h \
-    util/insulatePose.h \
-    util/pluginpagefactory.h \
+    util/HelixCurveAdaptor_CylinderEvaluator.h \
+    util/HelixCurveAdaptor.h \
+    util/HelixCurveAdaptor_p.h \
+    util/HHelixCurveAdaptor.h \
     view/abscenterwidget.h \
     view/centerpage.h \
     view/filemanager.h \

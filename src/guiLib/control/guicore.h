@@ -9,10 +9,12 @@ class GuiKernelInterface;
 class OcctQtViewer;
 class DBConnection;
 class DBHelper;
+class KernelCreator;
 class ToolTable;
 class LcProperties;
 class PageStack;
 class Pos9;
+class QApplication;
 class QMainWindow;
 class QCloseEvent;
 class QTranslator;
@@ -27,19 +29,23 @@ public:
   explicit GuiCore(QApplication& app, const QString& appName, DBHelper& dbAssist, const QString& group = "SRD");
   virtual ~GuiCore() = default;
 
-  virtual void         riseError(const QString& msg) override;
-
+  void                 riseError(const QString& msg);
   void                 activatePage(const QString& pageName);
   int                  activeGCodes() const;
   int                  activeMCodes() const;
+  int                  axisMask() const;
   bool                 checkBE();
   QString              curPage() const;
+//  DBConnection*        databaseConnection();
   double               defaultVelocity(int jointNum = 0) const;
   QString              helpFilename() const;
   bool                 isLatheMode() const;
-  bool                 isSimulator() const;
+//  bool                 isSimulator() const;
   void                 help4Keyword(const QString& keyWord);
   LcProperties&        lcProperties();
+//  QString              languagePrefix() const;
+//  QLocale              locale() const;
+//  bool                 move2Backup(const QString& fileName);
   std::pair<QVector3D, QVector3D> machineLimits() const;
   QMainWindow*         mainWindow();
   double               maxVelocity(int jointNum = 0) const;
@@ -52,6 +58,9 @@ public:
   void                 setViewStack(PageStack* v);
   void                 setWindowTitle(const QString& title);
   void                 showHelp() const;
+//  void                 showAllButCenter(bool visible);
+//  bool                 showHelpAtPageChange() const;
+
   QWidget*             stackedPage(const QString& pageName);
   PluginPageInterface* statusInfo(const QString& infoID);
   QList<QString>       statusInfos();
@@ -83,10 +92,15 @@ public:
   void beSetTaskState(int state);
   void beTaskPlanSynch();
 
+  static void setKernelCreator(KernelCreator* kc);
+
 private:
   explicit GuiCore(void* p);
-  GuiKernelInterface*       guiCore();
-  const GuiKernelInterface* guiCore() const;
+//  GuiKernelInterface*       guiCore();
+//  const GuiKernelInterface* guiCore() const;
+//  static GuiKernelInterface* kernel;
+//  static KernelCreator*      kc;
+//  static int                 checked;
   friend class AbstractCenterWidget;
   };
 #endif

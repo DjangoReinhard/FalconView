@@ -22,9 +22,9 @@ static Quantity_Color convertColor(const QColor& c) {
   }
 
 
-void Ally3D::setTraverseColor(const QColor &c) {
-  colTraverse = convertColor(c);
-  }
+//void Ally3D::setTraverseColor(const QColor &c) {
+//  colTraverse = convertColor(c);
+//  }
 
 
 void Ally3D::setFeedColor(const QColor &c) {
@@ -78,17 +78,9 @@ void Ally3D::showMachineLimits() {
   std::pair<QVector3D, QVector3D> ml = GuiCore().machineLimits();
   gp_Pnt cMin(ml.first.x(), ml.first.y(), ml.first.z());
   gp_Pnt cMax(ml.second.x(), ml.second.y(), ml.second.z());
-  Handle(AIS_InteractiveContext) ctx = v3D->context();
-
-//  gp_Pnt cMin(lcp.value("AXIS_X", "MIN_LIMIT").toDouble() - g5xO.x - g92O.x
-//            , lcp.value("AXIS_Y", "MIN_LIMIT").toDouble() - g5xO.y - g92O.y
-//            , lcp.value("AXIS_Z", "MIN_LIMIT").toDouble() - g5xO.z - g92O.z);
-//  gp_Pnt cMax(lcp.value("AXIS_X", "MAX_LIMIT").toDouble() - g5xO.x - g92O.x
-//            , lcp.value("AXIS_Y", "MAX_LIMIT").toDouble() - g5xO.y - g92O.y
-//            , lcp.value("AXIS_Z", "MAX_LIMIT").toDouble() - g5xO.z - g92O.z);
-
-  Handle(AIS_Shape) shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                                         , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
+  Handle(AIS_InteractiveContext) ctx   = v3D->context();
+  Handle(AIS_Shape)              shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                                                            , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
   shape->SetColor(colLimits);
   ctx->Display(shape, AIS_Shaded, 0, false);
   shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
@@ -215,16 +207,16 @@ void Ally3D::showPath(const QMap<long, Handle(AIS_InteractiveObject)>& path) {
   if (!v3D) return;
   Handle(AIS_InteractiveContext) ctx = v3D->context();
 
-  workPath.clear();
+//  if (workPath.size()) workPath.clear();
   workPath = path;
   ctx->RemoveAll(false);
-  gp_Pnt  cMin, cMax, p;
-  Bnd_Box bb;
-  gp_Dir  axis = gp::DZ();
-  gp_Ax2  aplace(gp_Pnt(0, 0, 0), axis);
-  Quantity_Color    col;
-  Quantity_Color    tc = colFeed;
-  TopoDS_Shape      topo_cone = BRepPrimAPI_MakeCone(aplace, 0.001, 10, 20).Shape();
+  gp_Pnt         cMin, cMax, p;
+  Bnd_Box        bb;
+  gp_Dir         axis = gp::DZ();
+  gp_Ax2         aplace(gp_Pnt(0, 0, 0), axis);
+  Quantity_Color col;
+  Quantity_Color tc        = colFeed;
+  TopoDS_Shape   topo_cone = BRepPrimAPI_MakeCone(aplace, 0.001, 10, 20).Shape();
 
   cone = new AIS_Shape(topo_cone);
   for (const Handle(AIS_InteractiveObject)& anObject : qAsConst(workPath)) {

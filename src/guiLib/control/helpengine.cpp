@@ -40,7 +40,7 @@ HelpEngine::HelpEngine(const QString& helpFile, QObject *parent)
   cw->parse(ba, pages);
   kw->setIcon(icoL);
   kw->parse(ba, keyWords);
-  tellContent();
+//  tellContent();
   }
 
 

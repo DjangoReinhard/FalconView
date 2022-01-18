@@ -103,6 +103,7 @@ void MainWindow::initialize() {
   qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
   setAppMode(ApplicationMode::Auto);
   restoreAll();
+  tellStates();
   }
 
 

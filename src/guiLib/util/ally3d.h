@@ -16,7 +16,7 @@ public:
   explicit Ally3D(QObject *parent = nullptr);
 
   void setOcctViewer(OcctQtViewer* view3D);
-  void setTraverseColor(const QColor& c);
+//  void setTraverseColor(const QColor& c);
   void setFeedColor(const QColor& c);
   void setLimitsColor(const QColor& c);
   void setCurSegColor(const QColor& c);
@@ -38,9 +38,9 @@ private:
   OcctQtViewer*     v3D;
   GraphicFactory*   facGraph;
   Bnd_Box           workPiece;
-  Quantity_Color    lastColor;
+//  Quantity_Color    lastColor;
+//  Quantity_Color    colTraverse;
   Quantity_Color    colFeed;
-  Quantity_Color    colTraverse;
   Quantity_Color    colLimits;
   Quantity_Color    colCurSeg;
   Quantity_Color    colOldSeg;

@@ -1,5 +1,6 @@
 #ifndef KERNEL_H
 #define KERNEL_H
+#ifdef REDNOSE
 #include <KernelInterface.h>
 #include <QObject>
 #include <QBasicTimer>
@@ -47,3 +48,4 @@ protected:
   friend class KernelCreator;
   };
 #endif // KERNEL_H
+#endif

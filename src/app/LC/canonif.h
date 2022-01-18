@@ -1,9 +1,5 @@
 #ifndef CANONIF_H
 #define CANONIF_H
-//#include <lcproperties.h>
-//#include <axismask.h>
-//#include <stupidtoolchangerif.h>
-
 #include <QObject>
 #include <QColor>
 
@@ -21,6 +17,7 @@ struct CanonConfig_t;
 class  LcProperties;
 class  GraphicFactory;
 class  AIS_InteractiveObject;
+class  Quantity_Color;
 
 
 /**
@@ -61,12 +58,6 @@ public:
   double            posW() const;
   int               lastSlot() const;
   int               nextSlot() const;
-//  Quantity_Color    traverseColor() const;
-//  Quantity_Color    feedColor() const;
-//  Quantity_Color    limitColor() const;
-//  Quantity_Color    curSegColor() const;
-//  Quantity_Color    oldSegColor() const;
-//  Quantity_Color    workPieceColor() const;
   CANON_TOOL_TABLE  toolEntry(int ttIndex);
   CANON_POSITION    g5xOffset(int i=0) const;
   CANON_POSITION    g92Offset() const;
@@ -80,6 +71,13 @@ public:
   QString           parameterFilename() const;
   double            convert(double v);
   void              appendShape(int lineNum, Handle(AIS_InteractiveObject) shape);
+  Quantity_Color    feedColor() const;
+  Quantity_Color    traverseColor() const;
+//  Quantity_Color    curSegColor() const;
+//  Quantity_Color    limitsColor() const;
+//  Quantity_Color    oldSegColor() const;
+//  Quantity_Color    workPieceColor() const;
+
   QMap<long, Handle(AIS_InteractiveObject)>& toolPath();
   void changeTool(int ttIndex);
   void selectTool(int tool);
@@ -91,13 +89,13 @@ public:
   void setG5xOffset(int i, double x, double y, double z, double a, double b, double c, double u, double v, double w);
   void setG92Offset(double x, double y, double z, double a, double b, double c, double u, double v, double w);
   void setXYRotation(double r);
-  void setSpindleMode(int spindle, double mode);
+  void setFeedColor(const QColor& c);
   void setTraverseColor(const QColor& c);
-//  void setFeedColor(const QColor& c);
-//  void setLimitsColor(const QColor& c);
 //  void setCurSegColor(const QColor& c);
+//  void setLimitsColor(const QColor& c);
 //  void setOldSegColor(const QColor& c);
 //  void setWorkPieceColor(const QColor& c);
+  void setSpindleMode(int spindle, double mode);
   void setToolOffset(EmcPose offset);
 
 private:

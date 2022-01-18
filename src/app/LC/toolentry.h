@@ -17,6 +17,7 @@ public:
   ToolEntry(const ToolEntry* p = nullptr);
   ToolEntry(int num, double length, double x, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum);
   ToolEntry(const ToolEntry& other);
+  ToolEntry(ToolEntry&& other);
  ~ToolEntry();
 
   ToolEntry& operator = (const ToolEntry& other);

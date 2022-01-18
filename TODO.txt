@@ -17,3 +17,8 @@ Ally3D::showMachineLimits()
 
 PreViewEditor::genPreView( fileName )
        ... toolPath
+
+
+TODO:
+-----
+gcode viewer (preview)

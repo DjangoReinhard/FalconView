@@ -6,7 +6,8 @@ POST_TARGETDEPS = copy
 SUBDIRS = \
   src/app \
   src/baselib \
-  src/lcLib \
+  src/guiLib \
+  src/nbPages \
   src/plugPages \
   src/statusInfo \
   docs

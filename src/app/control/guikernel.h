@@ -1,9 +1,10 @@
 #ifndef GUIKERNEL_H
 #define GUIKERNEL_H
 #include <kernel.h>
-#include <GuiKernelInterface.h>
+#include <KernelInterface.h>
 #include <gcodeinfo.h>
 #include <positioncalculator.h>
+#include <QBasicTimer>
 #include <QThread>
 
 class PluginPageInterface;
@@ -18,28 +19,30 @@ class PageStack;
 class QMainWindow;
 class StatusReader;
 class CommandWriter;
-class QVariant;
 class CanonIF;
 class LCInterface;
+class QApplication;
+class QVariant;
 class QTimerEvent;
 class QCloseEvent;
 
 
-class GuiKernel : public Kernel, public GuiKernelInterface
+class GuiKernel : public QObject, public KernelInterface
 {
   Q_OBJECT
 public:
   virtual int            axisMask() const override;
-//  virtual ConfigManager* config() const override;
-//  virtual ConfigManager* config() override;
+  virtual ConfigManager* config() const override;
+  virtual ConfigManager* config() override;
   virtual DBConnection*  createDatabase(DBHelper& dbAssist);
-//  virtual DBConnection*  databaseConnection() override;
+  virtual DBConnection*  databaseConnection() override;
   virtual QString        fileName4(const QString& fileID) const override;
   virtual void           initialize(DBHelper& dbAssist) override;
-//  virtual QLocale        locale() const override;
+  virtual QLocale        locale() const override;
   virtual void           logSysEvent(const QString& msg) override;
   virtual void           logSysEvent(const SysEvent& se) override;
-  virtual void           timerEvent(QTimerEvent* e) override;
+  virtual QLocale*       setupTranslators() override;
+  virtual QString        version() const override;
 
   virtual void                 activatePage(const QString& pageName) override;
   virtual int                  activeGCodes() const override;
@@ -64,6 +67,7 @@ public:
   virtual QList<QString>       statusInfos() const override;
   virtual PageStack*           viewStack() override;
 
+  virtual void timerEvent(QTimerEvent* e);
   virtual void beAbortTask();
   virtual void beEnableBlockDelete(bool enable);
   virtual void beEnableFlood(bool enable);
@@ -94,13 +98,11 @@ public:
   virtual void                            nop() const override;
   virtual void                            processGCodeFile(const QVariant& fileName) override;
   virtual void                            setupBackend() override;
-//  virtual QLocale*                        setupTranslators() override;
   virtual Pos9                            toolOffset() const override;
   virtual ToolTable&                      toolTable() override;
   virtual ToolTable*                      toolTableModel() override;
   virtual void                            updateView(const QVariant& pos) override;
   virtual OcctQtViewer*                   view3D() override;
-//  virtual QString                         version() const override;
   virtual void                            windowClosing(QCloseEvent* e) override;
 
 protected:
@@ -135,6 +137,16 @@ signals:
 private:
   const int          maxGCodes;
   const int          maxMCodes;
+  int                checked;
+  bool               simulator;
+  QApplication&      app;
+  ConfigManager*     cfg;
+  QLocale*           curLocale;
+  DBConnection*      conn;
+  QString            appName;
+  QString            groupID;
+  QString            langDir;
+  QBasicTimer        timer;
   LcProperties*      lcProps;
   ToolTable*         tt;
   LCInterface*       lcIF;

@@ -140,7 +140,7 @@
     <message>
         <location filename="toolmanager.cpp" line="232"/>
         <location filename="toolmanager.cpp" line="272"/>
-        <location filename="toolmanager.cpp" line="384"/>
+        <location filename="toolmanager.cpp" line="385"/>
         <source>QInputDialog::getText()</source>
         <translation>Eingabe</translation>
     </message>
@@ -156,7 +156,7 @@
     </message>
     <message>
         <location filename="toolmanager.cpp" line="325"/>
-        <location filename="toolmanager.cpp" line="369"/>
+        <location filename="toolmanager.cpp" line="370"/>
         <source>QMessageBox::information()</source>
         <translation>Hinweis</translation>
     </message>
@@ -176,17 +176,17 @@
         <translation>Soll dies Werkzeug gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="370"/>
+        <location filename="toolmanager.cpp" line="371"/>
         <source>To finish tool editing press F10 to save changes or ESC to abort.</source>
         <translation>Die Bearbeitung der Werkzeugeigenschaften kann mit [F10] gespeichert, oder via [Esc] abgebrochen werden.</translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="385"/>
+        <location filename="toolmanager.cpp" line="386"/>
         <source>new Category name:</source>
         <translation>neue Werkzeugkategorie:</translation>
     </message>
     <message>
-        <location filename="toolmanager.cpp" line="408"/>
+        <location filename="toolmanager.cpp" line="409"/>
         <source>saving of tool-data failed!</source>
         <translation>Speichern der Werkzeugdaten fehlgeschlagen!</translation>
     </message>

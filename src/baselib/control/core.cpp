@@ -1,6 +1,6 @@
 #include <core.h>
 #include <kernelcreator.h>
-#include <kernel.h>
+#include <KernelInterface.h>
 #include <configacc.h>
 #include <configmgr.h>
 #include <sysevent.h>
@@ -29,7 +29,7 @@ Core::Core() {
 
 // dumb, but plugins have their own copy of statics :(
 Core::Core(void* pFromOuterAdressSpace) {
-  if (!kernel) kernel = (Kernel*)pFromOuterAdressSpace;
+  if (!kernel) kernel = (KernelInterface*)pFromOuterAdressSpace;
   assert(kernel);
   }
 

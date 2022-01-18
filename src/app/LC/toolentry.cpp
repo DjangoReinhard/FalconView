@@ -87,6 +87,12 @@ ToolEntry::ToolEntry(const ToolEntry& other)
   }
 
 
+ToolEntry::ToolEntry(ToolEntry&& other)
+ : p(other.p) {
+  other.p = nullptr;
+  }
+
+
 ToolEntry::~ToolEntry() {
   delete p;
   }

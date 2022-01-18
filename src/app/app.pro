@@ -10,8 +10,9 @@ LINUXCNC = /usr/local/src/linuxcnc-deb11
 OCCT     = /usr/local
 
 INCLUDEPATH += \
-    model \
     control \
+    LC \
+    model \
     util \
     view \
     ../baselib/model \
@@ -42,6 +43,8 @@ SOURCES += \
     control/equalcondition.cpp \
     control/falsecondition.cpp \
     control/greatercondition.cpp \
+    control/guikernel.cpp \
+    control/lckernel.cpp \
     control/mainwindow.cpp \
     control/multistatetoolbutton.cpp \
     control/notcondition.cpp \
@@ -49,22 +52,39 @@ SOURCES += \
     control/smallercondition.cpp \
     control/testmain.cpp \
     control/truecondition.cpp \
+    LC/canonif.cpp \
+    LC/canonifsettings.cpp \
+    LC/commandwriter.cpp \
+    LC/errorreader.cpp \
+    LC/LCInter.cpp \
+    LC/lcproperties.cpp \
+    LC/positioncalculator.cpp \
+    LC/statusreader.cpp \
+    LC/stupidtoolchangerif.cpp \
+    LC/toolentry.cpp \
+    LC/tooltable.cpp \
     model/falconviewdb.cpp \
-    model/tool.cpp \
     model/toolcategory.cpp \
+    model/tool.cpp \
+    test/testDB.cpp \
+    test/testengine.cpp \
+    util/guikernelcreator.cpp \
     util/multistateaction.cpp \
+    util/pluginpagefactory.cpp \
     view/dockable.cpp \
+    view/lctooltable.cpp \
     view/micon.cpp \
-    view/plugindialog.cpp
+    view/plugindialog.cpp \
 
 HEADERS += \
-    model/falconviewdb.h \
-    model/tool.h \
-    model/toolcategory.h \
+    control/abstractcondition.h \
+    control/andcondition.h \
     control/dynaaction.h \
     control/equalcondition.h \
     control/falsecondition.h \
     control/greatercondition.h \
+    control/guikernel.h \
+    control/lckernel.h \
     control/mainwindow.h \
     control/multistatetoolbutton.h \
     control/notcondition.h \
@@ -72,12 +92,28 @@ HEADERS += \
     control/smallercondition.h \
     control/testmain.h \
     control/truecondition.h \
-    control/abstractcondition.h \
-    control/andcondition.h \
+    LC/canonif.h \
+    LC/canonifsettings.h \
+    LC/commandwriter.h \
+    LC/errorreader.h \
+    LC/insulatePose.h \
+    LC/LCInter.h \
+    LC/lcproperties.h \
+    LC/positioncalculator.h \
+    LC/statusreader.h \
+    LC/stupidtoolchangerif.h \
+    LC/toolentry.h \
+    LC/tooltable.h \
+    model/falconviewdb.h \
+    model/toolcategory.h \
+    model/tool.h \
+    util/guikernelcreator.h \
     util/multistateaction.h \
+    util/pluginpagefactory.h \
     view/dockable.h \
+    view/lctooltable.h \
     view/micon.h \
-    view/plugindialog.h
+    view/plugindialog.h \
 
 FORMS += \
     UI/mainwindow.ui
@@ -89,7 +125,7 @@ unix:!mac {
 
 LIBS += \
   -L.. \
-  -llcLib \
+  -lguiLib \
   -lbaselib \
 
 LIBS += \

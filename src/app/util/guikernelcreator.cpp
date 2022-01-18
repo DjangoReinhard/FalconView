@@ -1,4 +1,5 @@
 #include <guikernelcreator.h>
+#include <GuiKernelInterface.h>
 #include <guikernel.h>
 #include "rs274ngc.hh"
 
