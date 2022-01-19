@@ -157,7 +157,6 @@ void TestEdit::loadFile(const QVariant& fileName) {
 
   if (fileName.toString().isEmpty()) return;
   QString   activeFile = vm->getValue("fileName").toString();
-  QFileInfo fi(fileName.toString());
 
   if (objectName() == "TestEdit" && activeFile == fileName.toString()) {
      core->riseError(tr("selected file is already loaded as active gcode file."
@@ -165,6 +164,17 @@ void TestEdit::loadFile(const QVariant& fileName) {
      core->setAppMode(ApplicationMode::XEdit);
      return;
      }
+  reallyLoadFile(fileName);
+  // show editor again
+  qDebug() << "TestEdit[" << objectName() << "] - set appmode to XEdit(6)";
+  if (objectName() == "TestEdit")      core->setAppMode(ApplicationMode::XEdit);
+  else if (objectName() == "PathEdit") core->setAppMode(ApplicationMode::Edit);
+  }
+
+
+void TestEdit::reallyLoadFile(const QVariant &fileName) {
+  QFileInfo fi(fileName.toString());
+
   if (!fi.exists() || fi.size() < 1) {
      core->riseError(tr("TestEdit::loadFile: %1 is invalid").arg(fileName.toString()));
      return;
@@ -173,11 +183,6 @@ void TestEdit::loadFile(const QVariant& fileName) {
      this->fileName = fi.absoluteFilePath();
      fn->setText(this->fileName);
      }
-  // show editor again
-  qDebug() << "TestEdit[" << objectName() << "] - set appmode to XEdit(6)";
-  if (objectName() == "TestEdit")      core->setAppMode(ApplicationMode::XEdit);
-  else if (objectName() == "PathEdit") core->setAppMode(ApplicationMode::Edit);
-  else                                 core->setAppMode(ApplicationMode::Auto);
   }
 
 

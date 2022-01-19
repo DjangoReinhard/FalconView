@@ -31,13 +31,14 @@ public slots:
 protected:
   virtual QWidget* createContent() override;
   virtual void connectSignals() override;
-  virtual void updateStyles() override;  
-  virtual void showEvent(QShowEvent *event) override;
   virtual void closeEvent(QCloseEvent* e) override;
-  virtual bool eventFilter(QObject*, QEvent* e) override;
-  virtual void loadFile(const QVariant& fileName);
   virtual void dirtyChanged(bool dirty);
+  virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual void fileUpdated(const QString& fileName);
+  virtual void loadFile(const QVariant& fileName);
+  virtual void reallyLoadFile(const QVariant& fileName);
+  virtual void showEvent(QShowEvent *event) override;
+  virtual void updateStyles() override;
 
   QLineEdit*        fn;
   GCodeEditor*      ed;

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 ##################################   TOP   ###################################
 project(FalconView     VERSION 0.1)
 ##############################################################################
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_MODULE_PATH /d/linux/cmake)
 include(FalconView RESULT_VARIABLE ConfigBase)
 set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "CMake search-path")

@@ -11,6 +11,7 @@
 #include <settingsnb.h>
 #include <testEdit.h>
 #include <helpview.h>
+#include <lctooltable.h>
 #include <QDir>
 #ifndef USE_PLUGINS
 # include <Position/positionstatus.h>
@@ -21,7 +22,6 @@
 # include <JogView/jogview.h>
 # include <MDIEditor/mdieditor.h>
 # include <SysEventView/syseventview.h>
-# include <LCToolTable/lctooltable.h>
 # include <Preview3D/pweditor.h>
 # include <PathEditor/patheditor.h>
 # include <PrefsEditor/preferenceseditor.h>
@@ -95,11 +95,11 @@ AbstractCenterWidget* PluginPageFactory::createNotebookPage(const QString& name)
   if (rv) {
      qDebug() << "PPF: process loaded plugin for notebook page named: " << name;
      }
+  if (name == "LCToolTable")         rv = new LCToolTable();
 #ifndef USE_PLUGINS
-  if (name == "ToolManager")         rv = new ToolManager();
+  else if (name == "ToolManager")    rv = new ToolManager();
   else if (name == "FixtureManager") rv = new FixtureManager();
   else if (name == "PrefsEditor")    rv = new PreferencesEditor();
-  else if (name == "LCToolTable")    rv = new LCToolTable();
 #else
   if (!rv) return rv;
   assert(rv);

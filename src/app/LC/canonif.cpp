@@ -72,10 +72,6 @@ CANON_POSITION    CanonIF::endPoint() const                { return p->canon.end
 QString           CanonIF::parameterFilename() const       { return p->properties.parameterFileName(); }
 Quantity_Color    CanonIF::feedColor() const               { return p->colFeed; }
 Quantity_Color    CanonIF::traverseColor() const           { return p->colTraverse; }
-//Quantity_Color    CanonIF::curSegColor() const             { return p->colCurSeg; }
-//Quantity_Color    CanonIF::limitsColor() const             { return p->colLimits; }
-//Quantity_Color    CanonIF::oldSegColor() const             { return p->colOldSeg; }
-//Quantity_Color    CanonIF::workPieceColor() const          { return p->colWorkPiece; }
 QMap<long, Handle(AIS_InteractiveObject)>& CanonIF::toolPath() { return p->toolPath; }
 void CanonIF::changeTool(int ttIndex)       { p->changeTool(ttIndex); }
 void CanonIF::selectTool(int tool)          { p->changer.selectNextTool(tool); }
@@ -94,10 +90,6 @@ void CanonIF::setG92Offset(double x, double y, double z, double a, double b, dou
   }
 void CanonIF::setFeedColor(const QColor& c)            { p->setFeedColor(c); }
 void CanonIF::setTraverseColor(const QColor& c)        { p->setTraverseColor(c); }
-//void CanonIF::setCurSegColor(const QColor& c)          { p->setCurSegColor(c); }
-//void CanonIF::setLimitsColor(const QColor& c)          { p->setLimitsColor(c); }
-//void CanonIF::setOldSegColor(const QColor& c)          { p->setOldSegColor(c); }
-//void CanonIF::setWorkPieceColor(const QColor& c)       { p->setWorkPieceColor(c); }
 void CanonIF::setXYRotation(double r)                  { p->setXYRotation(r); }
 void CanonIF::setSpindleMode(int spindle, double mode) { p->setSpindleMode(spindle, mode); }
 void CanonIF::setToolOffset(EmcPose offset)            { p->setToolOffset(offset); }

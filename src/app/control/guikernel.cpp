@@ -577,6 +577,7 @@ void GuiKernel::processGCodeFile(const QVariant& fileName) {
   QFile gcFile(fileName.toString());
 
   if (!gcFile.exists()) return;
+  canonIF->toolPath().clear();
   lcIF->parseInline(gcFile.fileName());
 
   QTime end  = QTime::currentTime();

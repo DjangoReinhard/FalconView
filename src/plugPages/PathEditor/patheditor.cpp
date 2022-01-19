@@ -47,7 +47,7 @@ void PathEditor::dirtyChanged(bool dirty) {
 
 
 void PathEditor::reallyLoadFile(const QVariant& fileName) {
-  TestEdit::loadFile(fileName);
+  TestEdit::reallyLoadFile(fileName);
   core->setAppMode(ApplicationMode::Edit);
   }
 

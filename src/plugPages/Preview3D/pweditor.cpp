@@ -57,7 +57,7 @@ QWidget* PreViewEditor::createContent() {
   pbOpen->hide();
   pbSave->hide();
   //TODO: move!
-  createDecorations(view3D, statusInPreview);
+//  createDecorations(view3D, statusInPreview);
   cfg->beginGroup("PreViewEditor");
   spV->restoreState(cfg->value("vState").toByteArray());
   cfg->endGroup();
@@ -73,6 +73,7 @@ void PreViewEditor::connectSignals() {
   connect(vm->getModel("curLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setCurrentLine);
   // edLine is set by pathEditor
   connect(vm->getModel("edLine", 0), &ValueModel::valueChanged, this, &PreViewEditor::setEditorLine);
+  connect(vm->getModel("fileName", " "), &ValueModel::valueChanged, this, &PreViewEditor::reallyLoadFile);
   TestEdit::connectSignals();
   }
 
@@ -152,38 +153,38 @@ bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
   }
 
 
-void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
-  if (!sip) return;
-  QGridLayout* gl = new QGridLayout(v);
+//void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
+//  if (!sip) return;
+//  QGridLayout* gl = new QGridLayout(v);
 
-  qDebug() << "\tTODO: need to rethink create decorations!";
-  assert(!sip);
-  v->setLayout(gl);
-//  ccStat    = new CurCodesStatus(":/src/UI/VCurCodes.ui");
-//  toolStat  = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
-//  speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
-//  posStat   = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
-  QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
-  QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
+//  qDebug() << "\tTODO: need to rethink create decorations!";
+//  assert(!sip);
+//  v->setLayout(gl);
+////  ccStat    = new CurCodesStatus(":/src/UI/VCurCodes.ui");
+////  toolStat  = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
+////  speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
+////  posStat   = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
+//  QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
+//  QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
 
-//  toolStat->initialize();
-//  ccStat->initialize();
-//  posStat->initialize();
-//  speedStat->initialize();
-  gl->setColumnStretch(0, 0);
-  gl->setColumnStretch(1, 1);
-  gl->setColumnStretch(2, 20);
-  gl->setColumnStretch(3, 0);
-  gl->setRowStretch(0, 0);
-  gl->setRowStretch(1, 1);
-  gl->setRowStretch(2, 20);
-//  gl->addWidget(ccStat, 0, 0, 3, 1);
-//  gl->addWidget(toolStat, 0, 1, 1, 2);
-//  gl->addWidget(speedStat, 0, 4, 3, 1);
-//  gl->addWidget(posStat, 1, 1, 1, 1);
-  gl->addItem(hs, 1, 2);
-  gl->addItem(vs, 2, 1);
-  }
+////  toolStat->initialize();
+////  ccStat->initialize();
+////  posStat->initialize();
+////  speedStat->initialize();
+//  gl->setColumnStretch(0, 0);
+//  gl->setColumnStretch(1, 1);
+//  gl->setColumnStretch(2, 20);
+//  gl->setColumnStretch(3, 0);
+//  gl->setRowStretch(0, 0);
+//  gl->setRowStretch(1, 1);
+//  gl->setRowStretch(2, 20);
+////  gl->addWidget(ccStat, 0, 0, 3, 1);
+////  gl->addWidget(toolStat, 0, 1, 1, 2);
+////  gl->addWidget(speedStat, 0, 4, 3, 1);
+////  gl->addWidget(posStat, 1, 1, 1, 1);
+//  gl->addItem(hs, 1, 2);
+//  gl->addItem(vs, 2, 1);
+//  }
 
 
 //void PreViewEditor::genPreView(const QVariant& fileName) {
@@ -208,11 +209,11 @@ void PreViewEditor::updateStyles() {
   }
 
 
-void PreViewEditor::toggleSub() {
-//  QWidget* oldSub = spV->widget(1);
-//  QWidget* old;
+//void PreViewEditor::toggleSub() {
+////  QWidget* oldSub = spV->widget(1);
+////  QWidget* old;
 
-//  if (oldSub == frame) old = spV->replaceWidget(1, jp);
-//  else                 old = spV->replaceWidget(1, frame);
-//  qDebug() << "old widget: " << old;
-  }
+////  if (oldSub == frame) old = spV->replaceWidget(1, jp);
+////  else                 old = spV->replaceWidget(1, frame);
+////  qDebug() << "old widget: " << old;
+//  }
