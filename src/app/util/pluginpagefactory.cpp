@@ -3,10 +3,7 @@
 #include <dbconnection.h>
 #include <valuemanager.h>
 #include <configacc.h>
-//#include <axismask.h>
 #include <guicore.h>
-//#include <guikernel.h>
-//#include <lcproperties.h>
 #include <filemanager.h>
 #include <settingsnb.h>
 #include <testEdit.h>
@@ -111,7 +108,7 @@ AbstractCenterWidget* PluginPageFactory::createNotebookPage(const QString& name)
   }
 
 
-AbstractCenterWidget* PluginPageFactory::createDockable(const QString& name, bool horizontal) {
+AbstractCenterWidget* PluginPageFactory::createDockable(const QString& name, bool flag) {
   AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().statusInfo(name));
 
   if (rv) {
@@ -126,7 +123,7 @@ AbstractCenterWidget* PluginPageFactory::createDockable(const QString& name, boo
   if (!rv) return rv;
   assert(rv);
 #endif
-  rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance);
+  rv->patch(GuiCore::kernel, Config::cfg, ValueManager::instance, nullptr, flag);
   rv->initialize();
 
   return rv;

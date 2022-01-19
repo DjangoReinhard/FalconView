@@ -230,6 +230,12 @@ void SpeedStatus::fastFeedRateChanged(const QVariant& v) {
   }
 
 
+void SpeedStatus::patch(void *pk, void *pc, void *pv, void* pu, bool flag) {
+  AbstractCenterWidget::patch(pk, pc, pv, pu, flag);
+  isVertical = flag;
+  }
+
+
 // backend callback (backend uses factor, frontend percent
 void SpeedStatus::speedRateChanged(const QVariant& v) {
   int rate = int(v.toDouble() * 100.0);

@@ -100,7 +100,7 @@ void AbstractCenterWidget::initialize(const QString& name) {
   }
 
 
-void AbstractCenterWidget::patch(void *pk, void *pc, void *pv, void*) {
+void AbstractCenterWidget::patch(void *pk, void *pc, void *pv, void*, bool) {
   core = new GuiCore(pk);
   cfg  = new Config(pc);
   vm   = new ValueManager(pv);

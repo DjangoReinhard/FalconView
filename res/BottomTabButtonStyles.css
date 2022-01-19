@@ -53,16 +53,18 @@ QTabBar::scroller {
 /*  width: 20px; / * the width of the scroll buttons */
   margin: 0;
   }
-/*
 QTabBar QToolButton {
-  / * the scroll buttons are tool buttons * /
+  /* the scroll buttons are tool buttons * /
   border-image: url(scrollbutton.png) 2;
   border-width: 2px;
+  */
+  margin: 0;
   }
 QTabBar QToolButton::right-arrow {
-  image: url(rightarrow.png); / * the arrow mark in the tool buttons * /
+  /* image: url(rightarrow.png); / * the arrow mark in the tool buttons */
+  margin-left: 10px;
   }
 QTabBar QToolButton::left-arrow {
-  image: url(leftarrow.png);
+  /* image: url(leftarrow.png); */
+  margin-right: 10px;
   }
-*/

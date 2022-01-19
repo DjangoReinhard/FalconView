@@ -11,11 +11,6 @@ class QPushButton;
 class OcctQtViewer;
 class GCodeEditor;
 class GCodeHighlighter;
-class PositionStatus;
-class CurCodesStatus;
-class ToolStatus;
-class SpeedStatus;
-//class JogView;
 
 
 class PreViewEditor : public TestEdit, public GCodeViewerInterface
@@ -32,7 +27,6 @@ public:
   virtual long    curLine() const override;
 
 public slots:
-//  void toggleSub();
   void setCurrentLine(const QVariant& line);
 
 protected:
@@ -42,21 +36,15 @@ protected:
   virtual void closeEvent(QCloseEvent*) override;
   virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual QWidget* createContent() override;
-  virtual void patch(void* pk, void* pc, void* pv, void* pu = nullptr) override;
-//  void createDecorations(OcctQtViewer* v, bool sip);
+  virtual void patch(void* pk, void* pc, void* pv, void* pu = nullptr, bool flag = false) override;
 
 protected slots:
-//  void genPreView(const QVariant& fileName);
   void setEditorLine(const QVariant& line);
 
 private:
   QSplitter*        spV;
   QWidget*          frame;
   OcctQtViewer*     view3D;
-  PositionStatus*   posStat;
-  CurCodesStatus*   ccStat;
-  ToolStatus*       toolStat;
-  SpeedStatus*      speedStat;
-  bool              statusInPreview;
+  bool              previewIsCenter;
   };
 #endif // PWEDITOR_H

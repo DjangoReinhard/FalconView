@@ -107,6 +107,18 @@ void CurCodesStatus::connectSignals() {
   }
 
 
+QString CurCodesStatus::fileName() const {
+  if (isVertical) return ":/src/statusInfo/CurCodes/VCurCodes.ui";
+  return ":/src/statusInfo/CurCodes/HCurCodes.ui";
+  }
+
+
+void CurCodesStatus::patch(void *pk, void *pc, void *pv, void* pu, bool flag) {
+  AbstractCenterWidget::patch(pk, pc, pv, pu, flag);
+  isVertical = flag;
+  }
+
+
 void CurCodesStatus::updateStyles() {
   QString styles = QString("color: #%1; background: #%2;")
                           .arg(vm->getValue("cfgFg" + cfg->nameOf(Config::GuiElem::ActCodes)).value<QColor>().rgb(),  0, 16)
@@ -117,10 +129,4 @@ void CurCodesStatus::updateStyles() {
       labels[i]->setStyleSheet(styles);
       labels[i]->setFont(font);
       }
-  }
-
-
-QString CurCodesStatus::fileName() const {
-  if (isVertical) return ":/src/statusInfo/CurCodes/VCurCodes.ui";
-  return ":/src/statusInfo/CurCodes/HCurCodes.ui";
   }
