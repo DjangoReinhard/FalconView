@@ -102,52 +102,52 @@
 <context>
     <name>FixtureEditorForm</name>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="66"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="66"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="114"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="114"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="162"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="162"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="178"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="178"/>
         <source>W</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="194"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="194"/>
         <source>Z</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="226"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="226"/>
         <source>V</source>
         <translation>V</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="242"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="242"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="271"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="271"/>
         <source>B</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="319"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="319"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../../plugPages/FixtureManager/Fixture.ui" line="348"/>
+        <location filename="../../nbPages/FixtureManager/Fixture.ui" line="348"/>
         <source>G54</source>
         <translation>G54</translation>
     </message>
@@ -177,17 +177,17 @@
 <context>
     <name>GCodeEditorForm</name>
     <message>
-        <location filename="../../lcLib/view/GCodeEditor.ui" line="26"/>
+        <location filename="../../guiLib/view/GCodeEditor.ui" line="26"/>
         <source>Frame</source>
         <translation>Rahmen</translation>
     </message>
     <message>
-        <location filename="../../lcLib/view/GCodeEditor.ui" line="56"/>
+        <location filename="../../guiLib/view/GCodeEditor.ui" line="56"/>
         <source>&amp;Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../lcLib/view/GCodeEditor.ui" line="103"/>
+        <location filename="../../guiLib/view/GCodeEditor.ui" line="103"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -379,12 +379,12 @@
 <context>
     <name>HelpTitle</name>
     <message>
-        <location filename="../../lcLib/view/HelpTitle.ui" line="20"/>
+        <location filename="../../guiLib/view/HelpTitle.ui" line="20"/>
         <source>Form</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../../lcLib/view/HelpTitle.ui" line="79"/>
+        <location filename="../../guiLib/view/HelpTitle.ui" line="79"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -467,28 +467,41 @@
 <context>
     <name>LCInterface</name>
     <message>
+        <location filename="../LC/LCInter.cpp" line="145"/>
         <source>Error #%1 - failed to create interpreter!</source>
-        <translation type="vanished">Fehler #%1 - konnte Interpreter nicht erzeugen!</translation>
+        <translation>Fehler #%1 - konnte Interpreter nicht erzeugen!</translation>
     </message>
     <message>
+        <location filename="../LC/LCInter.cpp" line="175"/>
         <source>Error #%1 - failed to interpret init codes</source>
-        <translation type="vanished">Fehler #%1 - Verarbeitung der Basisbefehle fehlgeschlagen</translation>
+        <translation>Fehler #%1 - Verarbeitung der Basisbefehle fehlgeschlagen</translation>
     </message>
     <message>
+        <location filename="../LC/LCInter.cpp" line="188"/>
         <source>Error #%1 - interpreter failed to execute line %2 (%3)</source>
-        <translation type="vanished">Fehler #%1 - Fehler in Zeile %2 (%3)</translation>
+        <translation>Fehler #%1 - Fehler in Zeile %2 (%3)</translation>
     </message>
     <message>
+        <location filename="../LC/LCInter.cpp" line="206"/>
         <source>Error #%1 - failed to read line &quot;%2&quot;</source>
-        <translation type="vanished">Fehler #%1 - konnte Zeile nicht lesen: &quot;%2&quot;</translation>
+        <translation>Fehler #%1 - konnte Zeile nicht lesen: &quot;%2&quot;</translation>
     </message>
     <message>
+        <location filename="../LC/LCInter.cpp" line="213"/>
         <source>Error #%1 - failed to execute line &quot;%2&quot;</source>
-        <translation type="vanished">Fehler #%1 - konnte Zeile nicht ausführen &quot;%2&quot;</translation>
+        <translation>Fehler #%1 - konnte Zeile nicht ausführen &quot;%2&quot;</translation>
     </message>
     <message>
         <source>error #%1 - failed to execute line &quot;%1&quot;</source>
         <translation type="obsolete">Fehler #%1 - konnte Zeile %2 nicht ausführen</translation>
+    </message>
+</context>
+<context>
+    <name>LCToolTable</name>
+    <message>
+        <location filename="../view/lctooltable.cpp" line="22"/>
+        <source>LCToolTable</source>
+        <translation type="unfinished">LinuxCNC Werkzeuge</translation>
     </message>
 </context>
 <context>
@@ -642,72 +655,72 @@
         <translation>bewegliche Komponenten</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="236"/>
+        <location filename="../control/mainwindow.cpp" line="238"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="246"/>
+        <location filename="../control/mainwindow.cpp" line="248"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="255"/>
+        <location filename="../control/mainwindow.cpp" line="257"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="264"/>
+        <location filename="../control/mainwindow.cpp" line="266"/>
         <source>Single-Step</source>
         <translation>Einzelschritt</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="271"/>
+        <location filename="../control/mainwindow.cpp" line="273"/>
         <source>Auto-mode</source>
         <translation>Ablauf</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="280"/>
+        <location filename="../control/mainwindow.cpp" line="282"/>
         <source>MDI-mode</source>
         <translation>manuelle Eingabe</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="290"/>
+        <location filename="../control/mainwindow.cpp" line="292"/>
         <source>Edit-mode</source>
         <translation>aktive Datei bearbeiten</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="299"/>
+        <location filename="../control/mainwindow.cpp" line="301"/>
         <source>TestEdit-mode</source>
         <translation>Testdatei bearbeiten</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="306"/>
+        <location filename="../control/mainwindow.cpp" line="308"/>
         <source>Settings-mode</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="315"/>
+        <location filename="../control/mainwindow.cpp" line="317"/>
         <source>Manual-mode</source>
         <translation>händische Bedienung</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="324"/>
+        <location filename="../control/mainwindow.cpp" line="326"/>
         <source>Wheel-mode</source>
         <translation>Handrad</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="345"/>
+        <location filename="../control/mainwindow.cpp" line="347"/>
         <source>SysEvents</source>
         <translation>System-Aktionen</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="398"/>
+        <location filename="../control/mainwindow.cpp" line="400"/>
         <source>Tools</source>
         <translation>Werkzeuge</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="406"/>
+        <location filename="../control/mainwindow.cpp" line="408"/>
         <source>Home-all</source>
         <translation>Achsen referenzieren</translation>
     </message>
@@ -716,57 +729,57 @@
         <translation type="vanished">Taster</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="155"/>
+        <location filename="../control/mainwindow.cpp" line="157"/>
         <source>You need to switch to 3D-preview at least once to get this information.</source>
         <translation>Für diese Information muss zumindest einmal in die 3D-Vorschau gewechselt werden.</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="160"/>
+        <location filename="../control/mainwindow.cpp" line="162"/>
         <source>&lt;h3&gt;FalconView&lt;/h3&gt;&lt;p&gt;is an application to manage machines controlled by linuxCNC.&lt;/p&gt;&lt;p&gt;FalconView uses external components:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;%1&quot;&gt;linuxCNC v.%2&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%3&quot;&gt;Open CASCADE Technology v.%4&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%5&quot;&gt;Qt Toolkit v.%6&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;hl/&gt;&lt;p&gt;GL capabilities: &lt;ul&gt;&lt;li&gt;%7&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</source>
         <translation>&lt;h3&gt;FalconView&lt;/h3&gt;&lt;p&gt;ist eine Anwendung zur Steuerung  von CNC-Maschinen, die via linuxCNC getrieben werden.&lt;/p&gt;&lt;p&gt;FalconView verwendet externe Komponenten:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;%1&quot;&gt;linuxCNC v.%2&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%3&quot;&gt;Open CASCADE Technology v.%4&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;%5&quot;&gt;Qt Toolkit v.%6&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;hl/&gt;&lt;p&gt;GL Fähigkeiten: &lt;ul&gt;&lt;li&gt;%7&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="520"/>
+        <location filename="../control/mainwindow.cpp" line="522"/>
         <source>TOP</source>
         <translation>TOP</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="335"/>
+        <location filename="../control/mainwindow.cpp" line="337"/>
         <source>Touch-mode</source>
         <translation>Taster-Modus</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="192"/>
+        <location filename="../control/mainwindow.cpp" line="194"/>
         <source>active GCode-file has unsaved changes. Please save the file before executing it.</source>
         <translation>Die GCode-Datei des aktuellen Jobs wurde verändert. Der Job kann erst nach Speichern der Änderungen gestartet werden.</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="215"/>
+        <location filename="../control/mainwindow.cpp" line="217"/>
         <source>wrong application for execute. Please select3D-Preview or MDI for gcode-execution.</source>
         <translation>Falscher Anwendungsmodes zum Ausführen von GCode-Befehlen. Bitte zu MDI oder 3D-Vorschau wechseln.</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="352"/>
+        <location filename="../control/mainwindow.cpp" line="354"/>
         <source>cool-Mist</source>
         <translation>MinimalmengenKühlung</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="360"/>
+        <location filename="../control/mainwindow.cpp" line="362"/>
         <source>cool-Flood</source>
         <translation>Flutkühlung</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="370"/>
+        <location filename="../control/mainwindow.cpp" line="372"/>
         <source>spindle-CCW</source>
         <translation>Spindel gegen Uhrzeigersinn</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="379"/>
+        <location filename="../control/mainwindow.cpp" line="381"/>
         <source>spindle-Off</source>
         <translation>Spindel anhalten</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="388"/>
+        <location filename="../control/mainwindow.cpp" line="390"/>
         <source>spindle-CW</source>
         <translation>Spindel im Uhrzeigersinn</translation>
     </message>
@@ -775,39 +788,39 @@
         <translation type="vanished">heißer Reifen</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="159"/>
+        <location filename="../control/mainwindow.cpp" line="161"/>
         <source>About FalconView</source>
         <translation>Über FalconView</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="482"/>
+        <location filename="../control/mainwindow.cpp" line="484"/>
         <source>close application?</source>
         <translation>Anwendung beenden?</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="483"/>
+        <location filename="../control/mainwindow.cpp" line="485"/>
         <source>&lt;p&gt;closing the application means shutting down the backend and stopping all services IF ui has been started by linuxcnc start-helper&lt;/p&gt;</source>
         <translation>&lt;p&gt;Anwendung schließen bedeutet, dass auch die Hintergrunddienste beendet werden, wenn FalconView über linuxCNC gestartet wurde&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="498"/>
+        <location filename="../control/mainwindow.cpp" line="500"/>
         <source>Auto</source>
         <translation>Automatisch</translation>
     </message>
     <message>
         <location filename="../UI/mainwindow.ui" line="122"/>
         <location filename="../control/mainwindow.ui" line="122"/>
-        <location filename="../control/mainwindow.cpp" line="507"/>
+        <location filename="../control/mainwindow.cpp" line="509"/>
         <source>Mode</source>
         <translation>Modus</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="528"/>
+        <location filename="../control/mainwindow.cpp" line="530"/>
         <source>Switch</source>
         <translation>Schalter</translation>
     </message>
     <message>
-        <location filename="../control/mainwindow.cpp" line="539"/>
+        <location filename="../control/mainwindow.cpp" line="541"/>
         <source>Power</source>
         <translation>Hauptschalter</translation>
     </message>
@@ -974,147 +987,147 @@
 <context>
     <name>SettingsEditor</name>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="14"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="14"/>
         <source>Frame</source>
         <translation>Rahmen</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1878"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1878"/>
         <source>DRO rel 123,999</source>
         <translation>DRO rel 123,999</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1285"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1285"/>
         <source>Editor Line Number 109</source>
         <translation>Editor Zeile 109</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1553"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1553"/>
         <source>Speed Info</source>
         <translation>Drehzahl</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2068"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="2068"/>
         <source>3D-Preview is Center only</source>
         <translation>3D-Vorschau ist alleiniges Zentrum</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2085"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="2085"/>
         <source>activate general Tool-Manager</source>
         <translation>allgemeine Werkzeugverwaltung verwenden</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2075"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="2075"/>
         <source>show Help on content change</source>
         <translation>Hilfe bei Fensterwechsel anzeigen</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2061"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="2061"/>
         <source>state information inside 3D preview?</source>
         <translation>Status Ausgaben innerhalb 3D Vorschau anzeigen?</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="286"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="286"/>
         <source>DRO abs 123,999</source>
         <translation>DRO abs 123,999</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1333"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1333"/>
         <source>Fixture Title</source>
         <translation>Nullpunkt Titel</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1479"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1479"/>
         <source>Line Highlight</source>
         <translation>akt. Zeile</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1595"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1595"/>
         <source>Tool Description</source>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="596"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="596"/>
         <source>Preview 3D: work move</source>
         <translation>3D Vorschau: Arbeitsweg</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="548"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="548"/>
         <source>Preview 3D: rapid move</source>
         <translation>3D Vorschau: schnelle Positionierung</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1643"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1643"/>
         <source>Preview 3D: Work-Limits</source>
         <translation>3D Vorschau: Grenzen des Arbeitsbereiches</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1717"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1717"/>
         <source>DRO dtg 123,999</source>
         <translation>DRO dtg 123,999</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2020"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="2020"/>
         <source>DRO Axis: X Y Z</source>
         <translation>DRO Axis: X Y Z</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="766"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="766"/>
         <source>Fixture Prompt</source>
         <translation>Koordinaten-Bezeichner</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1900"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1900"/>
         <source>Tool number</source>
         <translation>Werkzeug-Nummer</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="406"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="406"/>
         <source>Preview 3D: WorkPiece</source>
         <translation>3D Vorschau: Werkstück Grenzen</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1739"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1739"/>
         <source>Fixture Edit</source>
         <translation>Koordinaten Editor</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="526"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="526"/>
         <source>Preview 3D: passed Segments</source>
         <translation>3D Vorschau: gefahrene Wege</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="670"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="670"/>
         <source>actual Codes</source>
         <translation>akt. Befehle</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="86"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="86"/>
         <source>Preview 3D: active Segment</source>
         <translation>3D Vorschau: aktueller Weg</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="2042"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="2042"/>
         <source>Filename</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="160"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="160"/>
         <source>Feed Info</source>
         <translation>Vorschub</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1217"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1217"/>
         <source>GCode Editor</source>
         <translation>NC-Editor</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="1065"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="1065"/>
         <source>next Toolnum</source>
         <translation>nächstes Werkzeug</translation>
     </message>
     <message>
-        <location filename="../../plugPages/PrefsEditor/Settings.ui" line="721"/>
+        <location filename="../../nbPages/PrefsEditor/Settings.ui" line="721"/>
         <source>Fixture Title (disabled)</source>
         <translation>Koordinaten-Titel</translation>
     </message>
@@ -1244,102 +1257,102 @@
 <context>
     <name>ToolEditorForm</name>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="20"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="20"/>
         <source>Form</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="189"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="189"/>
         <source>Slope Angle</source>
         <translation>Schaftwinkel</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="56"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="56"/>
         <source>max Ramp Angle</source>
         <translation>max. Rampenwinkel</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="430"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="430"/>
         <source>Flute Length</source>
         <translation>Eintauchtiefe</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="32"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="32"/>
         <source>Tool Length</source>
         <translation>Werkzeuglänge</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="417"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="417"/>
         <source>Tooth Load</source>
         <translation>Zahnlast</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="253"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="253"/>
         <source>Flute Diameter</source>
         <translation>Schneidendurchmesser</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="298"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="298"/>
         <source>Cut Length</source>
         <translation>Schneidenlänge</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="380"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="380"/>
         <source>999</source>
         <translation>999</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="172"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="172"/>
         <source>Flutes</source>
         <translation>Schneiden</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="129"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="129"/>
         <source>Tip Diameter</source>
         <translation>Spitzendurchmesser</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="96"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="96"/>
         <source>Cut Angle</source>
         <translation>Schnittwinkel</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="233"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="233"/>
         <source>Free Length</source>
         <translation>freie Länge</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="390"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="390"/>
         <source>Helix Angle</source>
         <translation>Eintauchwinkel</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="39"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="39"/>
         <source>Collet Diameter</source>
         <translation>Aufnahme-Durchmesser</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="206"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="206"/>
         <source>Collet Length</source>
         <translation>Aufnahme-Länge</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="305"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="305"/>
         <source>Part Code</source>
         <translation>Artikel-No</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="285"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="285"/>
         <source>Shank Diameter</source>
         <translation>Schaftdurchmesser</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="83"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="83"/>
         <source>Material</source>
         <translation>Werkstoff</translation>
     </message>
     <message>
-        <location filename="../../plugPages/ToolManager/ToolEditor.ui" line="240"/>
+        <location filename="../../nbPages/ToolManager/ToolEditor.ui" line="240"/>
         <source>Coating</source>
         <translation>Beschichtung</translation>
     </message>
@@ -1585,48 +1598,64 @@
 <context>
     <name>ToolTable</name>
     <message>
+        <location filename="../LC/tooltable.cpp" line="267"/>
         <source>Z</source>
-        <translation type="vanished">Z</translation>
+        <translation>Z</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="268"/>
         <source>X</source>
-        <translation type="vanished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="270"/>
         <source>TO</source>
-        <translation type="vanished">TO</translation>
+        <translation>TO</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="282"/>
         <source>Len</source>
-        <translation type="vanished">Länge</translation>
+        <translation>Länge</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="269"/>
+        <location filename="../LC/tooltable.cpp" line="283"/>
         <source>Dia</source>
-        <translation type="vanished">Ø</translation>
+        <translation>Ø</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="265"/>
+        <location filename="../LC/tooltable.cpp" line="280"/>
         <source>Slot</source>
-        <translation type="vanished">Platz</translation>
+        <translation>Platz</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="266"/>
+        <location filename="../LC/tooltable.cpp" line="281"/>
         <source>Tool</source>
-        <translation type="vanished">Werkzeug</translation>
+        <translation>Werkzeug</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="271"/>
         <source>FA</source>
-        <translation type="vanished">VW</translation>
+        <translation>VW</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="272"/>
         <source>BA</source>
-        <translation type="vanished">RW</translation>
+        <translation>RW</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="273"/>
+        <location filename="../LC/tooltable.cpp" line="284"/>
         <source>S</source>
-        <translation type="vanished">S</translation>
+        <translation>S</translation>
     </message>
     <message>
+        <location filename="../LC/tooltable.cpp" line="274"/>
+        <location filename="../LC/tooltable.cpp" line="285"/>
         <source>Description</source>
-        <translation type="vanished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
 </context>
 <context>

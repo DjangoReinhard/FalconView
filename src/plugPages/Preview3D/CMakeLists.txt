@@ -11,10 +11,9 @@ set(TS_FILES
     )
 target_link_libraries(ppPreview3D
                       PRIVATE FVBaseLib
-                      PRIVATE FVlcLib
+                      PRIVATE FVguiLib
                       )
 use_interface_libraries(ppPreview3D
-                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

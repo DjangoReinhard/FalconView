@@ -11,10 +11,9 @@ set(TS_FILES
     )
 target_link_libraries(ppPathEditor
                       PRIVATE FVBaseLib
-                      PRIVATE FVlcLib
+                      PRIVATE FVguiLib
                       )
 use_interface_libraries(ppPathEditor
-                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

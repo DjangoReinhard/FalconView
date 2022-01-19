@@ -1,9 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include <QMainWindow>
-#include <QBasicTimer>
-#include <commandwriter.h>
 #include <applicationmode.h>
+#include <QMainWindow>
 
 class SettingsNotebook;
 class PositionStatus;
@@ -38,7 +36,6 @@ protected:
   void closeEvent(QCloseEvent *event)  override;
   void keyPressEvent(QKeyEvent* event) override;
   void keyReleaseEvent(QKeyEvent* event) override;
-  void timerEvent(QTimerEvent* event) override;
   void about();
   void addDockable(Qt::DockWidgetArea area, Dockable* dockable);
   void createActions();
@@ -109,7 +106,6 @@ private:
   QToolBar*           powerTB;
   QToolBar*           switchTB;
   int                 line;
-  QBasicTimer         timer;
 
   QList<Dockable*> dockables;
   };

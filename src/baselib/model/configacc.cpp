@@ -1,11 +1,12 @@
 #include <configacc.h>
+#include <configmgr.h>
 #include <core.h>
-#include <kernel.h>
+#include <KernelInterface.h>
 #include <QColor>
 #include <QFont>
 
 Config::Config() {
-  if (!Config::cfg) Config::cfg = Core().kernel->cfg;
+  if (!Config::cfg) Config::cfg = Core().kernel->config();
   assert(Config::cfg);
   }
 

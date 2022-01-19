@@ -12,7 +12,7 @@
 <context>
     <name>CurCodesStatus</name>
     <message>
-        <location filename="curcodesstatus.cpp" line="15"/>
+        <location filename="curcodesstatus.cpp" line="16"/>
         <source>CurCodesStatus</source>
         <translation>aktive Befehle</translation>
     </message>

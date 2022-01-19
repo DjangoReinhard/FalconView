@@ -1,6 +1,6 @@
 #include <core.h>
 #include <kernelcreator.h>
-#include <kernel.h>
+#include <KernelInterface.h>
 #include <configacc.h>
 #include <configmgr.h>
 #include <sysevent.h>
@@ -11,7 +11,6 @@
 #include <QDebug>
 
 #include <cassert>
-#include <emc.hh>
 
 
 Core::Core(QApplication& app, const QString& appName, DBHelper& dbAssist, const QString& group) {
@@ -30,7 +29,7 @@ Core::Core() {
 
 // dumb, but plugins have their own copy of statics :(
 Core::Core(void* pFromOuterAdressSpace) {
-  if (!kernel) kernel = (Kernel*)pFromOuterAdressSpace;
+  if (!kernel) kernel = (KernelInterface*)pFromOuterAdressSpace;
   assert(kernel);
   }
 
@@ -41,7 +40,7 @@ int Core::axisMask() const {
 
 
 DBConnection* Core::databaseConnection() {
-  return kernel->conn;
+  return kernel->databaseConnection();
   }
 
 
@@ -56,12 +55,12 @@ void Core::setKernelCreator(KernelCreator* kc) {
 
 
 bool Core::isSimulator() const {
-  return kernel->simulator;
+  return kernel->isSimulator();
   }
 
 
 QLocale Core::locale() const {
-  return *kernel->locale;
+  return kernel->locale();
   }
 
 
@@ -98,7 +97,7 @@ void Core::setAppMode(ApplicationMode m) {
 
 
 QString Core::languagePrefix() const {
-  return kernel->locale->name().mid(0, 2);
+  return kernel->locale().name().mid(0, 2);
   }
 
 
@@ -116,9 +115,9 @@ void Core::showAllButCenter(bool visible) {
 
 
 bool Core::showHelpAtPageChange() const {
-  return kernel->cfg->value("showHelpAtPageChange").toBool();
+  return kernel->config()->value("showHelpAtPageChange").toBool();
   }
 
-Kernel*        Core::kernel  = nullptr;
-KernelCreator* Core::kc      = nullptr;
-int            Core::checked = -1;
+KernelInterface* Core::kernel  = nullptr;
+KernelCreator*   Core::kc      = nullptr;
+int              Core::checked = -1;

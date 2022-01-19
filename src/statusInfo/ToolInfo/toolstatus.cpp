@@ -2,7 +2,7 @@
 #include <valuemanager.h>
 #include <configacc.h>
 #include <guicore.h>
-#include <tooltable.h>
+//#include <tooltable.h>
 #include <QGridLayout>
 #include <QFile>
 #include <QLabel>
@@ -51,14 +51,14 @@ QWidget* ToolStatus::createContent() {
 
 
 void ToolStatus::toolChanged(const QVariant& toolNum) {
-  const ToolEntry* te = core->toolTable().tool(toolNum.toInt());
+//  const ToolEntry* te = core->toolTable().tool(toolNum.toInt());
 
-  if (!te) return;
-  curTool->setNum(toolNum.toInt());
-  tLen->setText(tr("L: %1").arg(core->locale().toString(te->length(), 'f', 3)));
-  tRad->setText(tr("R: %1").arg(core->locale().toString(te->diameter() / 2.0, 'f', 3)));
-  tPic->setPixmap(te->icon());
-  tDesc->setText(te->description());
+//  if (!te) return;
+//  curTool->setNum(toolNum.toInt());
+//  tLen->setText(tr("L: %1").arg(core->locale().toString(te->length(), 'f', 3)));
+//  tRad->setText(tr("R: %1").arg(core->locale().toString(te->diameter() / 2.0, 'f', 3)));
+//  tPic->setPixmap(te->icon());
+//  tDesc->setText(te->description());
   }
 
 

@@ -1,15 +1,13 @@
 #ifndef KERNELCREATOR_H
 #define KERNELCREATOR_H
-
 class QApplication;
 class QString;
-class Kernel;
+class KernelInterface;
 
 
 class KernelCreator
 {
 public:
-  virtual Kernel* kernel(QApplication& app, const QString& appName, const QString& groupID);
+  virtual KernelInterface* kernel(QApplication& app, const QString& appName, const QString& groupID) = 0;
   };
-
 #endif // KERNELCREATOR_H

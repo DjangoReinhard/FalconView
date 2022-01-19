@@ -1,7 +1,7 @@
 #include "toolmodel.h"
 #include <dbconnection.h>
 #include <guicore.h>
-#include <tooltable.h>
+//#include <tooltable.h>
 #include <QFileIconProvider>
 #include <QSqlRecord>
 #include <QSqlField>
@@ -188,55 +188,55 @@ int ToolModel::maxToolNum() {
 
 
 int ToolModel::exportTools() {
-  QString   qs = QString("SELECT tools.*, category.name FROM Tools, Category WHERE tools.selected = 1 AND Category.id = tools.type");
-  QSqlQuery q(qs);
+//  QString   qs = QString("SELECT tools.*, category.name FROM Tools, Category WHERE tools.selected = 1 AND Category.id = tools.type");
+//  QSqlQuery q(qs);
 
-  if (!q.exec()) {
-     qDebug() << "failed to query selected tools" << q.lastError().text();
-     return 0;
-     }
+//  if (!q.exec()) {
+//     qDebug() << "failed to query selected tools" << q.lastError().text();
+//     return 0;
+//     }
   int count = 0;
 
-  if (core->move2Backup(core->toolTable().fileName())) {
-     QFile toolTable(core->toolTable().fileName());
+//  if (core->move2Backup(core->toolTable().fileName())) {
+//     QFile toolTable(core->toolTable().fileName());
 
-     if (toolTable.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&toolTable);
-        QSqlRecord  r;
-        QString     s;
+//     if (toolTable.open(QIODevice::WriteOnly | QIODevice::Text)) {
+//        QTextStream out(&toolTable);
+//        QSqlRecord  r;
+//        QString     s;
 
-        while (q.next()) {
-              r = q.record();
-              s = r.value("comment").toString();
+//        while (q.next()) {
+//              r = q.record();
+//              s = r.value("comment").toString();
 
-              if (s.isEmpty()) s = r.value("name").toString();
-              qDebug() << "Tool #" << r.value("Tools.num").toInt()
-                       << "Slot #" << (count + 1)
-                       << "with Len: " << r.value("Tools.lenTool").toDouble()
-                       << "and diameter: " << r.value("diaFlute").toDouble()
-                       << ", desc:" << s
-                       << "and category:" << r.value("Category.name").toString();
-              out << "T" << r.value("Tools.num").toInt()
-                  << " P" << (count + 1)
-                  << " Z" << r.value("Tools.lenTool").toDouble()
-                  << " D" << r.value("diaFlute").toDouble()
-                  << " ; " << s
-                  << " | " << r.value("Category.name").toString()
-                  << "\n";
-              ++count;
-              }
-        toolTable.flush();
-        toolTable.close();
-        revertAll();
-        qDebug() << "exported " << count << "tools";
-        QSqlQuery sql("update tools set selected = 0");
+//              if (s.isEmpty()) s = r.value("name").toString();
+//              qDebug() << "Tool #" << r.value("Tools.num").toInt()
+//                       << "Slot #" << (count + 1)
+//                       << "with Len: " << r.value("Tools.lenTool").toDouble()
+//                       << "and diameter: " << r.value("diaFlute").toDouble()
+//                       << ", desc:" << s
+//                       << "and category:" << r.value("Category.name").toString();
+//              out << "T" << r.value("Tools.num").toInt()
+//                  << " P" << (count + 1)
+//                  << " Z" << r.value("Tools.lenTool").toDouble()
+//                  << " D" << r.value("diaFlute").toDouble()
+//                  << " ; " << s
+//                  << " | " << r.value("Category.name").toString()
+//                  << "\n";
+//              ++count;
+//              }
+//        toolTable.flush();
+//        toolTable.close();
+//        revertAll();
+//        qDebug() << "exported " << count << "tools";
+//        QSqlQuery sql("update tools set selected = 0");
 
-        if (!sql.exec()) {
-           qDebug() << "failed to query selected tools" << q.lastError().text();
-           }
-        submitAll();
-        }
-     }
+//        if (!sql.exec()) {
+//           qDebug() << "failed to query selected tools" << q.lastError().text();
+//           }
+//        submitAll();
+//        }
+//     }
   return count;
   }
 

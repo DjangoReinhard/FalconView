@@ -11,10 +11,12 @@ add_library(FVBaseLib STATIC
     model/direntry.cpp
     model/dirmodel.cpp
     model/filemodel.cpp
+    model/pos9.cpp
     model/sysevent.cpp
     model/syseventmodel.cpp
     model/valuemanager.cpp
     model/valuemodel.cpp
+    util/axismask.cpp
     util/dbconnection.cpp
     util/flowlayout.cpp
     util/kernelcreator.cpp

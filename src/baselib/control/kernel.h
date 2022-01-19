@@ -1,5 +1,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
+#ifdef REDNOSE
+#include <KernelInterface.h>
 #include <QObject>
 #include <QBasicTimer>
 #include <QLocale>
@@ -9,28 +11,32 @@ class DBConnection;
 class SysEvent;
 
 
-class Kernel : public QObject
+class Kernel : public QObject , public virtual KernelInterface
 {
   Q_OBJECT
 public:
-  virtual void logSysEvent(const SysEvent& se);
+  virtual int            axisMask() const override;
+  virtual ConfigManager* config() const override;
+  virtual ConfigManager* config() override;
+  virtual DBConnection*  databaseConnection() override;
+  virtual QString        fileName4(const QString& fileID) const override;
+  virtual void           initialize(DBHelper& dbAssist) override;
+  virtual bool           isSimulator() const override;
+  virtual QLocale        locale() const override;
+  virtual void           logSysEvent(const QString& msg) override;
+  virtual void           logSysEvent(const SysEvent& se) override;
+  virtual void           processAppArgs(const QStringList& args) override;
+  virtual QLocale*       setupTranslators() override;
+  virtual QString        version() const override;
 
 protected:
   explicit Kernel(QApplication& app, const QString& appName, const QString& groupID);
   virtual ~Kernel() = default;
 
-  virtual int      axisMask() const;
-  virtual void     logSysEvent(const QString& msg);
-  virtual void     initialize(DBHelper& dbAssist);
-  virtual QString  fileName4(const QString& fileID) const;
-  virtual void     processAppArgs(const QStringList& args);
-  virtual QLocale* setupTranslators();
-  virtual QString  version() const;
-
   bool                simulator;
   QApplication&       app;
   ConfigManager*      cfg;
-  QLocale*            locale;
+  QLocale*            curLocale;
   DBConnection*       conn;  
   QString             appName;
   QString             groupID;
@@ -42,3 +48,4 @@ protected:
   friend class KernelCreator;
   };
 #endif // KERNEL_H
+#endif

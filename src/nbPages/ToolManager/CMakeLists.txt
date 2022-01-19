@@ -16,10 +16,9 @@ set(TS_FILES
     )
 target_link_libraries(nbToolManager
                       PRIVATE FVBaseLib
-                      PRIVATE FVlcLib
+                      PRIVATE FVguiLib
                       )
 use_interface_libraries(nbToolManager
-                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

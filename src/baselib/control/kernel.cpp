@@ -1,3 +1,4 @@
+#ifdef REDNOSE
 #include <kernel.h>
 #include <sysevent.h>
 #include <QApplication>
@@ -7,11 +8,10 @@
 
 
 Kernel::Kernel(QApplication& app, const QString& appName, const QString& groupID)
- : QObject(nullptr)
- , simulator(false)
+ : simulator(false)
  , app(app)
  , cfg(new ConfigManager(appName, groupID))
- , locale(nullptr)
+ , curLocale(nullptr)
  , conn(nullptr)
  , appName(appName)
  , groupID(groupID) {
@@ -20,6 +20,21 @@ Kernel::Kernel(QApplication& app, const QString& appName, const QString& groupID
 
 int Kernel::axisMask() const {
   return 0;
+  }
+
+
+ConfigManager* Kernel::config() const {
+  return cfg;
+  }
+
+
+ConfigManager* Kernel::config() {
+  return cfg;
+  }
+
+
+DBConnection*  Kernel::databaseConnection() {
+  return conn;
   }
 
 
@@ -34,7 +49,17 @@ void Kernel::initialize(DBHelper&) {
   dir.cd("i18n");
   langDir = dir.absolutePath();
   processAppArgs(app.arguments());
-  locale = setupTranslators();
+  curLocale = setupTranslators();
+  }
+
+
+bool Kernel::isSimulator() const {
+  return false;
+  }
+
+
+QLocale Kernel::locale() const {
+  return *curLocale;
   }
 
 
@@ -90,3 +115,4 @@ QLocale* Kernel::setupTranslators() {
 QString Kernel::version() const {
   return "0.1";
   }
+#endif

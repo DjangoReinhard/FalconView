@@ -32,7 +32,7 @@ public:
   virtual long    curLine() const override;
 
 public slots:
-  void toggleSub();
+//  void toggleSub();
   void setCurrentLine(const QVariant& line);
 
 protected:
@@ -43,10 +43,10 @@ protected:
   virtual bool eventFilter(QObject*, QEvent* e) override;
   virtual QWidget* createContent() override;
   virtual void patch(void* pk, void* pc, void* pv, void* pu = nullptr) override;
-  void createDecorations(OcctQtViewer* v, bool sip);
+//  void createDecorations(OcctQtViewer* v, bool sip);
 
 protected slots:
-  void genPreView(const QVariant& fileName);
+//  void genPreView(const QVariant& fileName);
   void setEditorLine(const QVariant& line);
 
 private:

@@ -11,10 +11,9 @@ set(TS_FILES
     )
 target_link_libraries(siToolInfo
                       PRIVATE FVBaseLib
-                      PRIVATE FVlcLib
+                      PRIVATE FVguiLib
                       )
 use_interface_libraries(siToolInfo
-                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

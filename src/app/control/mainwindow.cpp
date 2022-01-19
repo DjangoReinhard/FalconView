@@ -17,11 +17,11 @@
 #include <centerpage.h>
 #include <guicore.h>
 #include <multistateaction.h>
+#include <valuemanager.h>
 #include <filemanager.h>
 #include <lcproperties.h>
 #include <micon.h>
 #include <configacc.h>
-#include <emc.hh>
 #include <pluginpagefactory.h>
 #include <Preview3D/pweditor.h>
 #include <MDIEditor/mdieditor.h>
@@ -44,7 +44,6 @@
 #include <QPushButton>
 #include <QStyle>
 #include <QFileDialog>
-#include <math.h>
 #include <QImageReader>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -53,9 +52,12 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QVariant>
-#include <valuemanager.h>
+
 #include <Standard_Version.hxx>
+
+#include <math.h>
 #include <config.h>
+#include <emc.hh>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -101,6 +103,7 @@ void MainWindow::initialize() {
   qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
   setAppMode(ApplicationMode::Auto);
   restoreAll();
+  tellStates();
   }
 
 
@@ -581,6 +584,7 @@ void MainWindow::createDockables() {
      assert(snb);
      pages = GuiCore().pluggableNotebookPages();
 
+     pages.append("LCToolTable");
      for (const QString& s : pages) {
          cw = ppFactory->createNotebookPage(s);
          if (cw) snb->addPage(cw);
@@ -621,6 +625,7 @@ void MainWindow::createMainWidgets() {
      assert(snb);
      pages = GuiCore().pluggableNotebookPages();
 
+     pages.append("LCToolTable");
      for (const QString& s : pages) {
          cw = ppFactory->createNotebookPage(s);
          if (cw) snb->addPage(cw);
@@ -836,11 +841,6 @@ void MainWindow::toggleAllButCenter() {
 void MainWindow::toggleAbsolute(const QVariant& absolute) {
   qDebug() << "Mainwindow::toggleAbsolute(" << (absolute.toBool() ? "TRUE" : "FALSE") << ")";
   ValueManager().setValue("showAbsolute", absolute.toBool());
-  }
-
-
-void MainWindow::timerEvent(QTimerEvent* ) {
-//  if (e->timerId() == timer.timerId()) tellStates();
   }
 
 

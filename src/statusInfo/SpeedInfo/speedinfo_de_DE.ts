@@ -27,7 +27,7 @@
 <context>
     <name>SpeedStatus</name>
     <message>
-        <location filename="speedstatus.cpp" line="15"/>
+        <location filename="speedstatus.cpp" line="16"/>
         <source>SpeedStatus</source>
         <translation>Vorschub-Info</translation>
     </message>
