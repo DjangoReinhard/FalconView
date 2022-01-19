@@ -418,7 +418,9 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   ally3D->setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));
   ally3D->setCurSegColor(cfg->getForeground(Config::GuiElem::CurSeg));
   ally3D->setOldSegColor(cfg->getForeground(Config::GuiElem::OldSeg));
-  v3D = new OcctQtViewer();
+  bool sip = cfg->value("statusInPreview").toBool();
+
+  v3D = new OcctQtViewer(sip);
   ally3D->setOcctViewer(v3D);
 
   /** ==================================================== */

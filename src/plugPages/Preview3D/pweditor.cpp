@@ -4,12 +4,6 @@
 #include <guicore.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
-//#include <canonif.h>
-//#include <toolstatus.h>
-//#include <curcodesstatus.h>
-//#include <positionstatus.h>
-//#include <speedstatus.h>
-
 #include <QSplitter>
 #include <QFileDialog>
 #include <QLabel>
@@ -30,13 +24,10 @@
 
 PreViewEditor::PreViewEditor(QWidget* parent)
  : TestEdit()
+ , spV(nullptr)
  , frame(nullptr)
  , view3D(nullptr)
- , posStat(nullptr)
- , ccStat(nullptr)
- , toolStat(nullptr)
- , speedStat(nullptr)
- , statusInPreview(false) {
+ , previewIsCenter(false) {
   setObjectName("PreView3D");
   setWindowTitle(tr("PreView3D"));
   if (parent) setParent(parent);
@@ -45,26 +36,26 @@ PreViewEditor::PreViewEditor(QWidget* parent)
 
 QWidget* PreViewEditor::createContent() {
   qDebug() << "view3D address in plugin: " << view3D;
-  statusInPreview = cfg->value("statusInPreview").toBool();
+  previewIsCenter = cfg->value("previewIsCenter").toBool();
   TestEdit::createContent();
-  spV = new QSplitter(Qt::Vertical);
   view3D->setMinimumSize(200, 200);
   frame = findChild<QFrame*>("GCodeEditorForm");
-  spV->addWidget(view3D);
-  spV->addWidget(frame);
+  if (!previewIsCenter) {
+     spV = new QSplitter(Qt::Vertical);
+     spV->addWidget(view3D);
+     spV->addWidget(frame);
+     view3D->installEventFilter(this);
+     cfg->beginGroup("PreViewEditor");
+     spV->restoreState(cfg->value("vState").toByteArray());
+     cfg->endGroup();
+     }
+  ed->installEventFilter(this);
   ed->setWordWrapMode(QTextOption::NoWrap);
   ed->setReadOnly(true);
   pbOpen->hide();
   pbSave->hide();
-  //TODO: move!
-//  createDecorations(view3D, statusInPreview);
-  cfg->beginGroup("PreViewEditor");
-  spV->restoreState(cfg->value("vState").toByteArray());
-  cfg->endGroup();
-  view3D->installEventFilter(this);
-  ed->installEventFilter(this);
 
-  return spV;
+  return previewIsCenter ? frame : spV;
   }
 
 
@@ -113,9 +104,11 @@ void PreViewEditor::setEditorLine(const QVariant& line) {
 
 
 void PreViewEditor::closeEvent(QCloseEvent* e) {
-  cfg->beginGroup("PreViewEditor");
-  cfg->setValue("vState", spV->saveState());
-  cfg->endGroup();
+  if (spV) {
+     cfg->beginGroup("PreViewEditor");
+     cfg->setValue("vState", spV->saveState());
+     cfg->endGroup();
+     }
   TestEdit::closeEvent(e);
   }
 
@@ -197,8 +190,8 @@ bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
 //  }
 
 
-void PreViewEditor::patch(void *pk, void *pc, void *pv, void *pu) {
-  TestEdit::patch(pk, pc, pv, pu);
+void PreViewEditor::patch(void *pk, void *pc, void *pv, void *pu, bool flag) {
+  TestEdit::patch(pk, pc, pv, pu, flag);
   qDebug() << "PVE: viewer has address:" << pu;
   view3D = (OcctQtViewer*)pu;
   }

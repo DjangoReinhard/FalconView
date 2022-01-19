@@ -551,17 +551,16 @@ void MainWindow::createToolBars() {
 void MainWindow::createDockables() {
   qDebug() << "MW::createDockables() - statusInPreview:" << (statusInPreview ? "YES" : "NO");
   qDebug() << "MW::createDockables() - previewIsCenter:" << (previewIsCenter ? "YES" : "NO");
+  OcctQtViewer*  view3D = GuiCore().view3D();
+  QList<QString> pages  = GuiCore().statusInfos();
 
-  if (!statusInPreview) {
-    QList<QString> pages = GuiCore().statusInfos();
+  for (const QString& s : pages) {
+      AbstractCenterWidget* cw = ppFactory->createDockable(s, statusInPreview);
 
-    for (const QString& s : pages) {
-        AbstractCenterWidget* cw = ppFactory->createDockable(s);
-
-        if (!cw) continue;
-        addDockable(Qt::LeftDockWidgetArea, new Dockable(cw, this));
-        }
-     }
+      if (!cw) continue;
+      if (statusInPreview) view3D->addPlugin(cw);
+      else addDockable(Qt::LeftDockWidgetArea, new Dockable(cw, this));
+      }
   if (previewIsCenter) {
      PageStack* stack = new PageStack(this);
 
@@ -600,8 +599,10 @@ void MainWindow::createMainWidgets() {
            << (previewIsCenter ? "YES" : "NO");
 
   if (previewIsCenter) {
-     setCentralWidget(GuiCore().view3D());
-     // other pages are dockables!
+     OcctQtViewer* view3D = GuiCore().view3D();     // other pages are dockables!
+
+     view3D->setMinimumSize(200, 200);
+     setCentralWidget(view3D);
      }
   else {    
      PageStack* stack = new PageStack(this);

@@ -35,6 +35,11 @@
 
 class AIS_ViewCube;
 class Ally3D;
+class AbstractCenterWidget;
+class PositionStatus;
+class CurCodesStatus;
+class ToolStatus;
+class SpeedStatus;
 
 
 //! OCCT 3D View.
@@ -43,9 +48,10 @@ class OcctQtViewer : public QOpenGLWidget, public AIS_ViewController
   Q_OBJECT
 
 public:
-  OcctQtViewer(bool verbose = false, QWidget* theParent = nullptr);
+  OcctQtViewer(bool statusInPreview, bool verbose = false, QWidget* theParent = nullptr);
   virtual ~OcctQtViewer();
 
+  void addPlugin(AbstractCenterWidget* acw);
   const QString& getGlInfo();
   virtual QSize  minimumSizeHint() const override { return QSize(200, 200); }
   virtual QSize  sizeHint()        const override { return QSize(500, 400); }
@@ -62,6 +68,7 @@ protected:
   // OpenGL events
   virtual void initializeGL() override;
   virtual void paintGL() override;  
+  virtual void createDecorations();
 
   // user input events
   virtual void closeEvent(QCloseEvent* e) override;
@@ -84,15 +91,21 @@ private:
                               , const Handle(V3d_View)& theView) override;
 
 private:
-  Handle(V3d_Viewer)             myViewer;
-  Handle(V3d_View)               myView;
-  Handle(AIS_InteractiveContext) myContext;
-  Handle(AIS_Shape)              myCone;
-  Handle(AIS_ViewCube)           myViewCube;
-  Bnd_Box                        myBounds;
-  QString                        myGlInfo;
-  bool                           myIsCoreProfile;
-  bool                           verbose;
-  friend class                   Ally3D;
+  Handle(V3d_Viewer)                   myViewer;
+  Handle(V3d_View)                     myView;
+  Handle(AIS_InteractiveContext)       myContext;
+  Handle(AIS_Shape)                    myCone;
+  Handle(AIS_ViewCube)                 myViewCube;
+  QMap<QString, AbstractCenterWidget*> plugins;
+  PositionStatus*                      posStat;
+  CurCodesStatus*                      ccStat;
+  ToolStatus*                          toolStat;
+  SpeedStatus*                         speedStat;
+  Bnd_Box                              myBounds;
+  QString                              myGlInfo;
+  bool                                 myIsCoreProfile;
+  bool                                 verbose;
+  bool                                 statusInPreview;
+  friend class Ally3D;
   };
 #endif // _OcctQtViewer_HeaderFile

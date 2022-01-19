@@ -40,7 +40,7 @@ protected:
 
   virtual void     initialize(const QString& name = QString());
   virtual QString  fileName() const;
-  virtual void     patch(void* pk, void* pc, void* pv, void* pu = nullptr);
+  virtual void     patch(void* pk, void* pc, void* pv, void* pu = nullptr, bool flag = false);
   virtual QWidget* createContent() override;
 
   GuiCore*      core;

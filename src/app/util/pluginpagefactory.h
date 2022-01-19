@@ -14,7 +14,7 @@ public:
   explicit PluginPageFactory();
   virtual ~PluginPageFactory();
 
-  AbstractCenterWidget* createDockable(const   QString& name, bool horizontal = true);
+  AbstractCenterWidget* createDockable(const   QString& name, bool flag = false);
   AbstractCenterWidget* createCenterPage(const QString& name);
   AbstractCenterWidget* createNotebookPage(const QString& name);
 
@@ -22,6 +22,5 @@ private:
   GuiCore*      core;
   Config*       cfg;
   ValueManager* vm;
-//  AxisMask*     axisMask;
   };
 #endif // PLUGINPAGEFACTORY_H

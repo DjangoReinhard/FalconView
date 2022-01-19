@@ -16,9 +16,10 @@ public:
 
 protected:
   virtual void     connectSignals() override;
-  virtual QString  fileName() const override;
-  virtual void     updateStyles() override;
   virtual QWidget* createContent() override;
+  virtual QString  fileName() const override;
+  virtual void     patch(void* pk, void* pc, void* pv, void* pu = nullptr, bool flag = false) override;
+  virtual void     updateStyles() override;
 
 private:
   bool     isVertical;

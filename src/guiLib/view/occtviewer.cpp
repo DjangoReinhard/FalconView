@@ -26,9 +26,11 @@
 #include <occtviewer.h>
 
 #include <Standard_WarningsDisable.hxx>
+#include <abscenterwidget.h>
 #include <QApplication>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QGridLayout>
 #include <QDebug>
 #include <Standard_WarningsRestore.hxx>
 
@@ -69,10 +71,15 @@ Aspect_VKeyFlags qtMouseModifiers2VKeys(Qt::KeyboardModifiers theModifiers) {
 }   // end unnamed namespace
 
 
-OcctQtViewer::OcctQtViewer(bool verbose, QWidget* theParent)
+OcctQtViewer::OcctQtViewer(bool statusInPreview, bool verbose, QWidget* theParent)
  : QOpenGLWidget(theParent)
  , myIsCoreProfile(false)
- , verbose(verbose) {
+ , posStat(nullptr)
+ , ccStat(nullptr)
+ , toolStat(nullptr)
+ , speedStat(nullptr)
+ , verbose(verbose)
+ , statusInPreview(statusInPreview) {
   Handle(Aspect_DisplayConnection) aDisp   = new Aspect_DisplayConnection();
   Handle(OpenGl_GraphicDriver)     aDriver = new OpenGl_GraphicDriver(aDisp, false);
 
@@ -150,9 +157,45 @@ OcctQtViewer::~OcctQtViewer() {
   }
 
 
+void OcctQtViewer::addPlugin(AbstractCenterWidget *acw) {
+  if (!acw) return;
+  plugins[acw->objectName()] = acw;
+  }
+
+
 void OcctQtViewer::closeEvent(QCloseEvent* e) {
   qDebug() << "OcctQtViewer::closeEvent?!?";
   e->accept();
+  }
+
+
+void OcctQtViewer::createDecorations() {
+  if (!statusInPreview) return;
+  QGridLayout* gl = new QGridLayout(this);
+
+  setLayout(gl);
+
+  QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
+  QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
+
+  gl->setColumnStretch(0, 0);
+  gl->setColumnStretch(1, 1);
+  gl->setColumnStretch(2, 20);
+  gl->setColumnStretch(3, 0);
+  gl->setRowStretch(0, 0);
+  gl->setRowStretch(1, 1);
+  gl->setRowStretch(2, 20);
+  AbstractCenterWidget* acw = plugins.value("CurCodesStatus", nullptr);
+
+  if (acw) gl->addWidget(acw, 0, 0, 3, 1);
+  acw = plugins.value("ToolStatus", nullptr);
+  if (acw) gl->addWidget(acw, 0, 1, 1, 2);
+  acw = plugins.value("SpeedStatus", nullptr);
+  if (acw) gl->addWidget(acw, 0, 4, 3, 1);
+  acw = plugins.value("PositionStatus", nullptr);
+  if (acw) gl->addWidget(acw, 1, 1, 1, 1);
+  gl->addItem(hs, 1, 2);
+  gl->addItem(vs, 2, 1);
   }
 
 
@@ -230,6 +273,7 @@ void OcctQtViewer::initializeGL() {
      myView->SetWindow(aWindow, aGlCtx->RenderingContext());
      if (verbose) dumpGlInfo(true);
      }
+  if (statusInPreview) createDecorations();
   }
 
 
