@@ -188,26 +188,6 @@ void CanonIFSettings::setFeedColor(const QColor &c) {
   }
 
 
-//void CanonIFSettings::setLimitsColor(const QColor &c) {
-//  colLimits = convertColor(c);
-//  }
-
-
-//void CanonIFSettings::setCurSegColor(const QColor &c) {
-//  colCurSeg = convertColor(c);
-//  }
-
-
-//void CanonIFSettings::setOldSegColor(const QColor &c) {
-//  colOldSeg = convertColor(c);
-//  }
-
-
-//void CanonIFSettings::setWorkPieceColor(const QColor &c) {
-//  colWorkPiece = convertColor(c);
-//  }
-
-
 void CanonIFSettings::setMotionMode(CANON_MOTION_MODE mode, double) {
   canon.motionMode = mode;
   }

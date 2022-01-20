@@ -44,13 +44,11 @@ SOURCES += \
     control/falsecondition.cpp \
     control/greatercondition.cpp \
     control/guikernel.cpp \
-    control/lckernel.cpp \
     control/mainwindow.cpp \
     control/multistatetoolbutton.cpp \
     control/notcondition.cpp \
     control/orcondition.cpp \
     control/smallercondition.cpp \
-    control/testmain.cpp \
     control/truecondition.cpp \
     LC/canonif.cpp \
     LC/canonifsettings.cpp \
@@ -66,15 +64,12 @@ SOURCES += \
     model/falconviewdb.cpp \
     model/toolcategory.cpp \
     model/tool.cpp \
-    test/testDB.cpp \
-    test/testengine.cpp \
     util/guikernelcreator.cpp \
     util/multistateaction.cpp \
     util/pluginpagefactory.cpp \
     view/dockable.cpp \
     view/lctooltable.cpp \
     view/micon.cpp \
-    view/plugindialog.cpp \
 
 HEADERS += \
     control/abstractcondition.h \
@@ -84,13 +79,11 @@ HEADERS += \
     control/falsecondition.h \
     control/greatercondition.h \
     control/guikernel.h \
-    control/lckernel.h \
     control/mainwindow.h \
     control/multistatetoolbutton.h \
     control/notcondition.h \
     control/orcondition.h \
     control/smallercondition.h \
-    control/testmain.h \
     control/truecondition.h \
     LC/canonif.h \
     LC/canonifsettings.h \
@@ -113,7 +106,6 @@ HEADERS += \
     view/dockable.h \
     view/lctooltable.h \
     view/micon.h \
-    view/plugindialog.h \
 
 FORMS += \
     UI/mainwindow.ui

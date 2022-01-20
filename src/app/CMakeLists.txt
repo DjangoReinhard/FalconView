@@ -11,27 +11,22 @@ add_executable(FalconView
     control/equalcondition.cpp
     control/falsecondition.cpp
     control/greatercondition.cpp
-    control/lckernel.cpp
     control/guikernel.cpp
     control/mainwindow.cpp
     control/multistatetoolbutton.cpp
     control/notcondition.cpp
     control/orcondition.cpp
     control/smallercondition.cpp
-    control/testmain.cpp
     control/truecondition.cpp
-    LC/canonif.cpp
-    LC/canonifsettings.cpp
-    LC/commandwriter.cpp
-    LC/errorreader.cpp
-    LC/LCInter.cpp
-    LC/lcproperties.cpp
-    LC/positioncalculator.cpp
-    LC/statusreader.cpp
-    LC/stupidtoolchangerif.cpp
-    LC/toolentry.cpp
-    LC/tooltable.cpp
-    main.cpp
+    LCcomm/commandwriter.cpp
+    LCcomm/errorreader.cpp
+    LCcomm/gcodeinfo.cpp
+    LCcomm/positioncalculator.cpp
+    LCcomm/statusreader.cpp
+    LCinter/canonif.cpp
+    LCinter/canonifsettings.cpp
+    LCinter/LCInter.cpp
+    LCinter/stupidtoolchangerif.cpp
     model/falconviewdb.cpp
     model/toolcategory.cpp
     model/tool.cpp
@@ -39,9 +34,7 @@ add_executable(FalconView
     util/guikernelcreator.cpp
     util/pluginpagefactory.cpp
     view/dockable.cpp
-    view/lctooltable.cpp
     view/micon.cpp
-    view/plugindialog.cpp
     ../../FalconView.qrc
     )
 set(TS_FILES
@@ -49,7 +42,8 @@ set(TS_FILES
     )
 target_include_directories(FalconView
                            PUBLIC control
-                           PUBLIC LC
+                           PUBLIC LCcomm
+                           PUBLIC LCinter
                            PUBLIC model
                            PUBLIC util
                            PUBLIC view
@@ -59,6 +53,7 @@ target_include_directories(FalconView
 target_link_libraries(FalconView
                       PRIVATE FVBaseLib
                       PRIVATE FVguiLib
+                      PRIVATE FVlcLib
                       )
 use_interface_libraries(FalconView
                         IFlinuxCNC

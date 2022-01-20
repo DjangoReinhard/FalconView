@@ -5,9 +5,8 @@
 #include <QIcon>
 #include <QDebug>
 #include <core.h>
-#include <lcproperties.h>
-#include <tooltable.h>
-#include <toolentry.h>
+#include "tooltable.h"
+#include "toolentry.h"
 
 
 ToolTable::ToolTable(LcProperties& lcProps, const QString& fileName)
@@ -57,7 +56,7 @@ void ToolTable::processFile(QFile& file) {
      QString line    = in.readLine();
      int     lineNum = 0;
 
-     toolImageDir = lcProperties.toolImageDir();
+     toolImageDir = Core().fileName4("toolImages");
      qDebug() << "tool-image-dir: " << toolImageDir;
      while (!line.isNull()) {
            processLine(++lineNum, line);

@@ -358,6 +358,9 @@ QString GuiKernel::fileName4(const QString &fileID) const {
      qDebug() << "GK::fileName4(" << fileID << ") => " << helpFileName;
      return helpFileName;
      }
+  else if (fileID == "toolImages") {
+     return lcProps->toolImageDir();
+     }
   else if (fileID == "toolTable") {
      qDebug() << "GK::fileName4(" << fileID << ") => " << lcProps->toolTableFileName();
      return lcProps->toolTableFileName();

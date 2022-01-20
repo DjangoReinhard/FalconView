@@ -6,7 +6,7 @@
 #include <QString>
 #include <QList>
 #include <QMap>
-#include <toolentry.h>
+#include "toolentry.h"
 #if defined(toLine)
 # undef toLine
 #endif

@@ -5,7 +5,6 @@ project(BaseLib LANGUAGES CXX)
 include(FalconView)
 add_library(FVBaseLib STATIC
     control/core.cpp
-    control/kernel.cpp
     model/configacc.cpp
     model/configmgr.cpp
     model/direntry.cpp
@@ -19,7 +18,6 @@ add_library(FVBaseLib STATIC
     util/axismask.cpp
     util/dbconnection.cpp
     util/flowlayout.cpp
-    util/kernelcreator.cpp
     util/timestamp.cpp
     )
 set(TS_FILES
@@ -32,7 +30,6 @@ target_include_directories(FVBaseLib
                            PUBLIC view
                            )
 use_interface_libraries(FVBaseLib
-                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

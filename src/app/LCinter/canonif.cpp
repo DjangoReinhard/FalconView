@@ -60,7 +60,14 @@ double            CanonIF::posW() const                    { return p->canon.end
 int               CanonIF::lastSlot() const                { return p->changer.slot4ToolInSpindle(); }
 int               CanonIF::nextSlot() const                { return p->changer.nextTool(); }
 CANON_TOOL_TABLE  CanonIF::toolEntry(int ttIndex)          { return p->canonTool(ttIndex); }
-CANON_POSITION    CanonIF::g5xOffset(int i) const          { return p->g5xOffset(i); }
+CANON_POSITION    CanonIF::g5xOffset(int i) const          {
+  CANON_POSITION cp = p->g5xOffset(p->selectedOffset);
+
+  qDebug() << "CanonIF::g5xOffset(" << i << ") =>" << cp.x << "/" << cp.y << "/" << cp.z
+           << "\t" << cp.a << "/" << cp.b << "/" << cp.c
+           << "\t" << cp.u << "/" << cp.v << "/" << cp.w;
+  return cp;
+  }
 CANON_POSITION    CanonIF::g92Offset() const               { return p->canon.g92Offset; }
 double            CanonIF::xyRotation() const              { return p->canon.xy_rotation; }
 int               CanonIF::selectedOffset() const          { return p->selectedOffset; }
@@ -257,18 +264,18 @@ double GET_EXTERNAL_ANGLE_UNITS() {
   }
 
 void SET_G5X_OFFSET(int fixture, double x, double y, double z, double a, double b, double c, double u, double v, double w) {
-//  qDebug() << "NCanon: set G5x offset #" << fixture
-//           << " -> " << x << "/" << y << "/" << z
-//           << "\t" << a << "/" << b << "/" << c
-//           << "\t" << u << "/" << v << "/" << w;
+  qDebug() << "NCanon: set G5x offset #" << fixture
+           << " -> " << x << "/" << y << "/" << z
+           << "\t" << a << "/" << b << "/" << c
+           << "\t" << u << "/" << v << "/" << w;
   CanonIF().setG5xOffset(fixture, x, y, z, a, b, c, u, v, w);
   }
 
 void SET_G92_OFFSET(double x, double y, double z, double a, double b, double c, double u, double v, double w) {
-//  qDebug() << "NCanon: set G92 offset "
-//           << " -> " << x << "/" << y << "/" << z
-//           << "\t" << a << "/" << b << "/" << c
-//           << "\t" << u << "/" << v << "/" << w;
+  qDebug() << "NCanon: set G92 offset "
+           << " -> " << x << "/" << y << "/" << z
+           << "\t" << a << "/" << b << "/" << c
+           << "\t" << u << "/" << v << "/" << w;
   CanonIF().setG92Offset(x, y, z, a, b, c, u, v, w);
   }
 
@@ -1149,6 +1156,6 @@ int GET_EXTERNAL_OFFSET_APPLIED() {
   };
 
 EmcPose GET_EXTERNAL_OFFSETS(){
-//  qDebug() << "NCanon: get external offsets ...";
+  qDebug() << "NCanon: get external offsets ...";
   return EmcPose();
   }

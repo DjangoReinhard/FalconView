@@ -1,4 +1,4 @@
-#include <lcproperties.h>
+#include "lcproperties.h"
 #include <QFile>
 #include <QTextStream>
 #include <QMetaType>

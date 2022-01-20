@@ -112,11 +112,6 @@ bool GuiCore::isLatheMode() const {
   }
 
 
-//bool GuiCore::isSimulator() const {
-//  return kernel->isSimulator();
-//  }
-
-
 LcProperties& GuiCore::lcProperties() {
   return kernel->lcProperties();
   }

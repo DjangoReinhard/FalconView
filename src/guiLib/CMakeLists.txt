@@ -17,7 +17,6 @@ add_library(FVguiLib STATIC
     view/centerpage.cpp
     view/filemanager.cpp
     view/gcodeeditor.cpp
-    view/gcodeinfo.cpp
     view/helpbrowser.cpp
     view/helpcontentwidget.cpp
     view/helpdockable.cpp

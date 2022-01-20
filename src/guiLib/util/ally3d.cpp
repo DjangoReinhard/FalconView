@@ -22,11 +22,6 @@ static Quantity_Color convertColor(const QColor& c) {
   }
 
 
-//void Ally3D::setTraverseColor(const QColor &c) {
-//  colTraverse = convertColor(c);
-//  }
-
-
 void Ally3D::setFeedColor(const QColor &c) {
   colFeed = convertColor(c);
   }

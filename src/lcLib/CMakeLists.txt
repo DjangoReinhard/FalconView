@@ -1,20 +1,24 @@
 cmake_minimum_required(VERSION 3.16)
-#---------------------------   PLUGIN   --------------------------------------
-project(LCToolTable LANGUAGES CXX)
+#--------------------------------   LIB   ------------------------------------
+project(lcLib LANGUAGES CXX)
 #-----------------------------------------------------------------------------
 include(FalconView)
-add_library(nbLCToolTable MODULE
-    lctooltable.cpp
+add_library(FVlcLib STATIC
+    lcproperties.cpp
+    toolentry.cpp
+    tooltable.cpp
     )
 set(TS_FILES
-    lctooltable_de_DE.ts
+    lcLib_de_DE.ts
     )
-target_link_libraries(nbLCToolTable
-                      PRIVATE FVBaseLib
+target_include_directories(FVlcLib
+                           PUBLIC ${CMAKE_SOURCE_DIR}
+                           )
+target_link_libraries(FVlcLib
                       PRIVATE FVguiLib
-                      PRIVATE FVlcLib
+                      PRIVATE FVBaseLib
                       )
-use_interface_libraries(nbLCToolTable
+use_interface_libraries(FVlcLib
                         IFlinuxCNC
                         IFQt
                         IFOpenCASCADE

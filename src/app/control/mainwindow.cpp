@@ -626,7 +626,6 @@ void MainWindow::createMainWidgets() {
      assert(snb);
      pages = GuiCore().pluggableNotebookPages();
 
-     pages.append("LCToolTable");
      for (const QString& s : pages) {
          cw = ppFactory->createNotebookPage(s);
          if (cw) snb->addPage(cw);

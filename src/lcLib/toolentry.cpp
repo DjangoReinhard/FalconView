@@ -1,4 +1,4 @@
-#include <toolentry.h>
+#include "toolentry.h"
 #include <QDebug>
 #include <cstring>
 #include <emctool.h>
@@ -77,7 +77,7 @@ ToolEntry::ToolEntry(const ToolEntry* other)
   }
 
 
-ToolEntry::ToolEntry(int number, double length, double x, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum) 
+ToolEntry::ToolEntry(int number, double length, double x, double diameter, int quadrant, double frontAngle, double backAngle, const QString& description, int slot, int lineNum)
  : p(new PToolEntry(number, length, x, diameter, quadrant, frontAngle, backAngle, description, slot, lineNum)) {
   }
 

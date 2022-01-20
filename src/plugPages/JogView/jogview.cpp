@@ -1,7 +1,6 @@
 #include "jogview.h"
 #include <configacc.h>
 #include <valuemanager.h>
-//#include <lcproperties.h>
 #include <axismask.h>
 #include <guicore.h>
 #include <QDebug>
@@ -90,6 +89,7 @@ void JogView::connectSignals() {
   connect(vm->getModel("jogRapid"),    &ValueModel::valueChanged, ui->cbRapid, [=](const QVariant& v){ ui->cbRapid->setChecked(v.toBool()); });
   connect(vm->getModel("jogStepSize"), &ValueModel::valueChanged, this, &JogView::stepSizeChanged);
 
+//  connect(ui->cbHome, &QCheckBox::toggled, this, &JogView::homeAxis);
   connect(ui->cbSingleStep, &QCheckBox::toggled, this, &JogView::singleStep);
   connect(ui->cbRapid, &QCheckBox::toggled, this, &JogView::jogVelChanged);
   connect(ui->slJog, &QSlider::valueChanged, this, &JogView::sliderChanged);
@@ -104,20 +104,25 @@ void JogView::jog(QWidget* o, int axis, int step) {
   qDebug() << "jog:"  << axis << "dir:" << step;
   double speed = jogSpeed / 60.0;
 
-  if (ui->cbSingleStep->isChecked()) {
-     qDebug() << "step single step of size:" << stepSize << "with:" << speed;
-     core->beJogStep(axis, stepSize, step * speed);
+  if (ui->cbHome->isChecked()) {
+     core->beHomeAxis(axis);
      }
   else {
-     QToolButton* tb = static_cast<QToolButton*>(o);
-
-     if ((tb && tb->isChecked()) || !tb) {
-        qDebug() << "start jogging with speed" << speed;
-        core->beJogStart(axis, step * speed);
+     if (ui->cbSingleStep->isChecked()) {
+        qDebug() << "step single step of size:" << stepSize << "with:" << speed;
+        core->beJogStep(axis, stepSize, step * speed);
         }
      else {
-        qDebug() << "stop jogging of axis" << axis;
-        core->beJogStop(axis);
+        QToolButton* tb = static_cast<QToolButton*>(o);
+
+        if ((tb && tb->isChecked()) || !tb) {
+           qDebug() << "start jogging with speed" << speed;
+           core->beJogStart(axis, step * speed);
+           }
+        else {
+           qDebug() << "stop jogging of axis" << axis;
+           core->beJogStop(axis);
+           }
         }
      }
   }

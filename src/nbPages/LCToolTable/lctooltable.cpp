@@ -43,6 +43,7 @@ QWidget* LCToolTable::createContent() {
   for (int i=0; i < mx; ++i) table->setRowHeight(i, 60);
 
   return table;
+//  return nullptr;
   }
 
 
