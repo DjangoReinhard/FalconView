@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+   <file>SK_MDI_active.png</file>
+   <file>SK_MDI.png</file>
+   <file>MDIEditor.ui</file>
+ </qresource>
+</RCC>

@@ -5,6 +5,7 @@ project(JogView LANGUAGES CXX)
 include(FalconView)
 add_library(ppJogView MODULE
     jogview.cpp
+    JogView.qrc
     )
 set(TS_FILES
     jogview_de_DE.ts

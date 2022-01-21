@@ -89,7 +89,6 @@ void JogView::connectSignals() {
   connect(vm->getModel("jogRapid"),    &ValueModel::valueChanged, ui->cbRapid, [=](const QVariant& v){ ui->cbRapid->setChecked(v.toBool()); });
   connect(vm->getModel("jogStepSize"), &ValueModel::valueChanged, this, &JogView::stepSizeChanged);
 
-//  connect(ui->cbHome, &QCheckBox::toggled, this, &JogView::homeAxis);
   connect(ui->cbSingleStep, &QCheckBox::toggled, this, &JogView::singleStep);
   connect(ui->cbRapid, &QCheckBox::toggled, this, &JogView::jogVelChanged);
   connect(ui->slJog, &QSlider::valueChanged, this, &JogView::sliderChanged);

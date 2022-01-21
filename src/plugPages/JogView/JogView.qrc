@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+   <file>SK_Manual_active.png</file>
+   <file>SK_Manual.png</file>
+   <file>Jog.ui</file>
+ </qresource>
+</RCC>

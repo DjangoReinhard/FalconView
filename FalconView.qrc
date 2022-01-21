@@ -45,10 +45,8 @@
    <file>res/Messerkopf.jpg</file>
    <file>res/ToolDimensions.png</file>
    <file>res/ToolDimensions_de.png</file>
-   <file>res/SK_Auto_active.png</file>
    <file>res/SK_AutoPause_active.png</file>
    <file>res/SK_AutoPause.png</file>
-   <file>res/SK_Auto.png</file>
    <file>res/SK_AutoStart_active.png</file>
    <file>res/SK_AutoStart.png</file>
    <file>res/SK_AutoStop_active.png</file>
@@ -58,16 +56,8 @@
    <file>res/SK_Cool_Mist_active.png</file>
    <file>res/SK_Cool_Mist.png</file>
    <file>res/SK_DisabledIcon.png</file>
-   <file>res/SK_Edit_active.png</file>
-   <file>res/SK_Edit.png</file>
    <file>res/SK_HomeAll_active.png</file>
    <file>res/SK_HomeAll.png</file>
-   <file>res/SK_Manual_active.png</file>
-   <file>res/SK_Manual.png</file>
-   <file>res/SK_MDI_active.png</file>
-   <file>res/SK_MDI.png</file>
-   <file>res/SK_Messages.png</file>
-   <file>res/SK_Messages_active.png</file>
    <file>res/SK_NOP.png</file>
    <file>res/SK_Offsets_active.png</file>
    <file>res/SK_Offsets.png</file>
@@ -110,8 +100,6 @@
    <file>src/nbPages/FixtureManager/Fixture.ui</file>
    <file>src/nbPages/PrefsEditor/Settings.ui</file>
    <file>src/nbPages/ToolManager/ToolEditor.ui</file>
-   <file>src/plugPages/JogView/Jog.ui</file>
-   <file>src/plugPages/MDIEditor/MDIEditor.ui</file>
    <file>src/statusInfo/CurCodes/HCurCodes.ui</file>
    <file>src/statusInfo/CurCodes/VCurCodes.ui</file>
    <file>src/statusInfo/Position/PositionMain.ui</file>

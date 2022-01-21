@@ -5,6 +5,7 @@ project(SysEventView LANGUAGES CXX)
 include(FalconView)
 add_library(ppSysEventView MODULE
     syseventview.cpp
+    SysEventView.qrc
     )
 set(TS_FILES
     sysevenview_de_DE.ts

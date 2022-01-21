@@ -91,13 +91,13 @@ void MainWindow::initialize() {
   previewIsCenter = Config().value("previewIsCenter").toBool();
   ui->setupUi(this);
   setDockNestingEnabled(true);
-  createActions();
-  setupMenu();
   createValueModels();
-  createToolBars();
   createMainWidgets();
   createDockables();
 
+  createActions();
+  setupMenu();
+  createToolBars();
   createConnections();
 
   qDebug() << "MainWindow - statusInPreview:" << (statusInPreview ? "TRUE" : "FALSE");
@@ -268,6 +268,7 @@ void MainWindow::createActions() {
                             , new EqualCondition(vm.getModel("errorActive"), false)
                             , new EqualCondition(vm.getModel("singleStep"), true)
                             , this);
+  // Preview3D
   autoMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                           , QIcon(":/res/SK_Auto.png")
                           , QIcon(":/res/SK_Auto_active.png")
@@ -277,6 +278,7 @@ void MainWindow::createActions() {
                                ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Auto)
                            , this);
+  // MDIEditor
   mdiMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                          , QIcon(":/res/SK_MDI.png")
                          , QIcon(":/res/SK_MDI_active.png")
@@ -287,6 +289,7 @@ void MainWindow::createActions() {
                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::MDI)
                          , this);
+  // PathEditor
   editMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                           , QIcon(":/res/SK_Edit.png")
                           , QIcon(":/res/SK_Edit_active.png")
@@ -342,6 +345,7 @@ void MainWindow::createActions() {
                                 ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Touch)
                            , this);
+  // SysEventView
   msgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                          , QIcon(":/res/SK_Messages.png")
                          , QIcon(":/res/SK_Messages_active.png")

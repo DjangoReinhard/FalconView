@@ -5,6 +5,7 @@ project(Preview3D LANGUAGES CXX)
 include(FalconView)
 add_library(ppPreview3D MODULE
     pweditor.cpp
+    Preview3D.qrc
     )
 set(TS_FILES
     preview3D_de_DE.ts

@@ -8,7 +8,7 @@
 
 
 MDIEditor::MDIEditor(QWidget* parent)
- : AbstractCenterWidget(":/src/plugPages/MDIEditor/MDIEditor.ui", parent) {
+ : AbstractCenterWidget(":MDIEditor.ui", parent) {
   setObjectName("MDIEditor");
   setWindowTitle(tr("MDIEditor"));
   }

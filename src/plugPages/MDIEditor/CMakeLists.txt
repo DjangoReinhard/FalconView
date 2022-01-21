@@ -5,6 +5,7 @@ project(MDIEditor LANGUAGES CXX)
 include(FalconView)
 add_library(ppMDIEditor MODULE
     mdieditor.cpp
+    MDIEditor.qrc
     )
 set(TS_FILES
     mdieditor_de_DE.ts
