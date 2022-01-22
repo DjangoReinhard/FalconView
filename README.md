@@ -65,7 +65,7 @@ FalconView -ini <path to ini-file of your machine>
 ```
 You can add FalconView to ini-file from *linuxCNC*. See *linuxCNC* [online docs](https://linuxcnc.org/docs/devel/html/config/ini-config.html) for further informations.
 
-## [Extending FalconView](Extending.md)
+## [Extending FalconView](EXTENDING.md)
 
 ## Layout variants
 ### default
