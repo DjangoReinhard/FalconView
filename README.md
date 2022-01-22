@@ -55,13 +55,19 @@ Edit top-level **CMakeLists.txt** and change some settings to reflect your syste
 - ***OpenCASCADE_DIR*** is the directory, where cmake files from opencascade are.
 - ***EMC2_HOME*** base directory of your *linuxCNC* **RIP**-installation.
 
+Build ends with a copy stage, which creates a directory ***dist*** in your build-tree, which contains all binaries ready to be called without additional commandline arguments.
+So from your buildroot you can start **FalconView** with:
+```
+dist/FalconView -ini <path to your linuxCNC-ini-file>
+```
+
 **Note:** - cmake works best with a buildroot outside of the source tree.
 
 ## Application start
 **FalconView** has been created to get integrated into linuxcnc start process, so the call is:
 
 ```
-FalconView -ini <path to ini-file of your machine>
+FalconView -ini <path to your linuxCNC-ini-file>
 ```
 You can add FalconView to ini-file from *linuxCNC*. See *linuxCNC* [online docs](https://linuxcnc.org/docs/devel/html/config/ini-config.html) for further informations.
 

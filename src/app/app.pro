@@ -29,7 +29,8 @@ INCLUDEPATH += \
     $${LINUXCNC}/src/emc/tooldata \
     $${LINUXCNC}/src \
     $${OCCT}/include/opencascade \
-    ../plugPages
+    ../centerPages \
+    ../nbPages
 
 TEST_SOURCES += \
     test/testDB.cpp \

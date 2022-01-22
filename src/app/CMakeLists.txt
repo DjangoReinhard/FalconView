@@ -39,7 +39,7 @@ target_include_directories(FalconView
                            PUBLIC util
                            PUBLIC view
                            PRIVATE ../nbPages
-                           PRIVATE ../plugPages
+                           PRIVATE ../centerPages
                            )
 target_link_libraries(FalconView
                       PRIVATE FVBaseLib
