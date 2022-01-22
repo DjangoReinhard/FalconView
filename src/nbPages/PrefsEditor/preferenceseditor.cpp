@@ -21,7 +21,6 @@ PreferencesEditor::PreferencesEditor(QWidget* parent)
  , cbStatesInside(nullptr)
  , cbHelp(nullptr)
  , cbPreviewCenter(nullptr)
- , cbToolManager(nullptr)
  , count(0) {
   setWindowTitle("PreferencesEditor");
   setObjectName(tr("PreferencesEditor"));
@@ -45,7 +44,6 @@ QWidget* PreferencesEditor::createContent() {
   cbStatesInside  = findChild<QCheckBox*>("cbStatesInside");
   cbHelp          = findChild<QCheckBox*>("cbHelp");
   cbPreviewCenter = findChild<QCheckBox*>("cbPreviewCenter");
-  cbToolManager   = findChild<QCheckBox*>("cbToolManager");
   for (int i=0; i < count; ++i) {
       labels[i]      = findChild<QLineEdit*>(QString("l")      + cfg->nameOf(static_cast<Config::GuiElem>(i)));
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + cfg->nameOf(static_cast<Config::GuiElem>(i)));
@@ -74,10 +72,6 @@ void PreferencesEditor::connectSignals() {
   if (cbPreviewCenter) {
      cbPreviewCenter->setChecked(cfg->value("previewIsCenter").toBool());
      connect(cbPreviewCenter, &QCheckBox::stateChanged, this, &PreferencesEditor::previewCenterChanged);
-     }
-  if (cbToolManager) {
-     cbToolManager->setChecked(cfg->value("activateToolMgr").toBool());
-     connect(cbToolManager, &QCheckBox::stateChanged, this, &PreferencesEditor::statusToolMgrChanged);
      }
   }
 
@@ -138,7 +132,6 @@ void PreferencesEditor::setupLabels() {
       QString ss = QString("color: #%1; background: #%2;")
                           .arg(vm->getValue("cfgFg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgb(), 0, 16)
                           .arg(vm->getValue("cfgBg" + cfg->nameOf(static_cast<Config::GuiElem>(i))).value<QColor>().rgba(), 0, 16);
-//      qDebug() << cfg.nameOf(static_cast<Config::GuiElem>(i)) << " => " << ss << " <= ";
       labels[i]->setStyleSheet(ss);
       labels[i]->setFont(font);
       }
@@ -212,16 +205,6 @@ void PreferencesEditor::previewCenterChanged(const QVariant& state) {
                          , tr("for this change to take effect, "
                               "the application must be restarted."));
   cfg->setValue("previewIsCenter", state.toBool());
-  }
-
-
-void PreferencesEditor::statusToolMgrChanged(const QVariant& state) {
-  qDebug() << "PE::statusToolMgrChanged(" << (state.toBool() ? "TRUE" : "FALSE") << ")";
-  QMessageBox::information(this
-                         , tr("QMessageBox::information()")
-                         , tr("for this change to take effect, "
-                              "the application must be restarted."));
-  cfg->setValue("activateToolMgr", state.toBool());
   }
 
 

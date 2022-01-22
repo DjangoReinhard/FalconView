@@ -15,7 +15,8 @@ Die Werkzeugwege lassen sich aus unterschiedlichen Winkeln betrachten. Zum
 - **[Strg + L]** - Ansicht von links
 - **[Strg + F]** - Ansicht von vorne
 - **[Strg + B]** - Ansicht von hinten
-- **[Strg + 3]** - 3D-Ansicht
+- **[Strg + 3]** - 3D-Ansicht (Orientierung 1)
+- **[Strg + 6]** - 3D-Ansicht (Orientierung 2)
 - **[F]** ohne Zusatztaste kann verwendet werden, um das Werkstück in das
 Fenster einzupassen (Zoom)
 

@@ -10,6 +10,7 @@ add_library(nbToolManager MODULE
     category.cpp
     CategoryTreeModel.cpp
     toolcategorymodel.cpp
+    ToolManager.qrc
     )
 set(TS_FILES
     toolmanager_de_DE.ts

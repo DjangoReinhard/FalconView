@@ -1,7 +1,6 @@
 #ifndef PREFERENCESEDITOR_H
 #define PREFERENCESEDITOR_H
 #include <abscenterwidget.h>
-//#include <QVariant>
 
 QT_BEGIN_NAMESPACE
 class QLineEdit;
@@ -36,7 +35,6 @@ protected slots:
   void previewCenterChanged(const QVariant& state);
   void statusInsideChanged(const QVariant& state);
   void statusShowHelpChanged(const QVariant& state);
-  void statusToolMgrChanged(const QVariant& state);
   virtual void showEvent(QShowEvent* e) override;
 
 private:
@@ -47,7 +45,6 @@ private:
   QCheckBox*    cbStatesInside;
   QCheckBox*    cbHelp;
   QCheckBox*    cbPreviewCenter;
-  QCheckBox*    cbToolManager;
   int           count;
   };
 #endif // PREFERENCESEDITOR_H

@@ -17,10 +17,10 @@ class ViewPluginInterface
 public:
   virtual ~ViewPluginInterface() = default;
 
-  virtual void     closeEvent(QCloseEvent* e) = 0;
-  virtual void     showEvent(QShowEvent* e)   = 0;
+  virtual void     closeEvent(QCloseEvent* e) = 0;  // a
+  virtual void     showEvent(QShowEvent* e)   = 0;  // a
 
-  virtual QWidget* createContent()  = 0;
+  virtual QWidget* createContent()  = 0;            // a
   virtual void     connectSignals() = 0;
   virtual void     updateStyles()   = 0;
 //  virtual QString  windowTitle()    = 0;

@@ -253,62 +253,6 @@ void MainWindow::createActions() {
                             , new EqualCondition(vm.getModel("errorActive"), false)
                             , new EqualCondition(vm.getModel("singleStep"), true)
                             , this);
-//  // Preview3D
-//  autoMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-//                          , QIcon(":/res/SK_Auto.png")
-//                          , QIcon(":/res/SK_Auto_active.png")
-//                          , tr("Auto-mode")
-//                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-//                                            , new EqualCondition(vm.getModel("allHomed"), true)))
-//                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-//                           , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Auto)
-//                           , this);
-//  // MDIEditor
-//  mdiMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-//                         , QIcon(":/res/SK_MDI.png")
-//                         , QIcon(":/res/SK_MDI_active.png")
-//                         , tr("MDI-mode")
-//                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-//                                           , new EqualCondition(vm.getModel("allHomed"), true)))
-//                              ->addCondition(new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION))
-//                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-//                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::MDI)
-//                         , this);
-//  // PathEditor
-//  editMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-//                          , QIcon(":/res/SK_Edit.png")
-//                          , QIcon(":/res/SK_Edit_active.png")
-//                          , tr("Edit-mode")
-//                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-//                                            , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
-//                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-//                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Edit)
-//                          , this);
-//  testEditMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-//                              , QIcon(":/res/SK_TestEdit.png")
-//                              , QIcon(":/res/SK_TestEdit_active.png")
-//                              , tr("TestEdit-mode")
-//                              , new EqualCondition(vm.getModel("errorActive"), false)
-//                              , new EqualCondition(vm.getModel("appMode"), ApplicationMode::XEdit)
-//                              , this);
-//  cfgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-//                         , QIcon(":/res/SK_Settings.png")
-//                         , QIcon(":/res/SK_Settings_active.png")
-//                         , tr("Settings-mode")
-//                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-//                                           , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
-//                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-//                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Settings)
-//                         , this);
-//  jogMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-//                         , QIcon(":/res/SK_Manual.png")
-//                         , QIcon(":/res/SK_Manual_active.png")
-//                         , tr("Manual-mode")
-//                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-//                                           , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
-//                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-//                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Manual)
-//                         , this);
   wheelMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                            , QIcon(":/res/SK_Wheel.png")
                            , QIcon(":/res/SK_Wheel_active.png")
@@ -330,14 +274,6 @@ void MainWindow::createActions() {
                                 ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Touch)
                            , this);
-//  // SysEventView
-//  msgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-//                         , QIcon(":/res/SK_Messages.png")
-//                         , QIcon(":/res/SK_Messages_active.png")
-//                         , tr("SysEvents")
-//                         , new TrueCondition()
-//                         , new EqualCondition(vm.getModel("errorActive"), true)
-//                         , this);
   mist = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                       , QIcon(":/res/SK_Cool_Mist.png")
                       , QIcon(":/res/SK_Cool_Mist_active.png")
@@ -458,9 +394,6 @@ void MainWindow::createConnections() {
   connect(ui->actionrightView, &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::rightView);
   connect(ui->actionTopView,   &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::topView);
   connect(ui->actionHelp,      &QAction::triggered, this,      [=]() { GuiCore().showHelp(); });
-
-//  if (!previewIsCenter)
-//     connect(ui->actionJog_Simulator, &QAction::triggered, pw, &PreViewEditor::toggleSub);
 
   // be actions ...
   connect(startAction,  &QAction::triggered, this, &MainWindow::autoStart);
@@ -630,7 +563,6 @@ void MainWindow::createMainWidgets() {
      pages.append("TestEdit");
      for (const QString& s : pages) {
          acw = ppFactory->createCenterPage(s);
-//         cpi = reinterpret_cast<CenterPageInterface*>(acw);
 
          if (acw) {
             if (s == "MDIEditor")      mdi = static_cast<MDIEditor*>(acw);
@@ -683,11 +615,6 @@ void MainWindow::setSingleStep(bool) {
   qDebug() << "MW::setSingleStep()";
   ValueManager().setValue("singleStep", !ValueManager().getValue("singleStep").toBool());
   }
-
-
-//HelpDockable* MainWindow::helpDialog() {
-//  return dlgHelp;
-//  }
 
 
 void MainWindow::homeAxis() {
@@ -759,11 +686,7 @@ void MainWindow::stopSpindle() {
 
 
 void MainWindow::setAppMode(ApplicationMode am) {
-//  ApplicationMode oam = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
   ValueManager().setValue("appMode", am);
-//  GuiCore().setAppMode(am);
-//  qDebug() << "MW:\tsetAppMode: " << am << "\twas:" << oam;
-//  if (oam == am) this->appModeChanged(am);
   }
 
 
@@ -775,15 +698,6 @@ void MainWindow::showErrMessages() {
   setAppMode(ApplicationMode::ErrMessages);
   ValueManager().setValue("showAllButCenter", false);
   }
-
-
-//void MainWindow::showHelp() {
-//#ifdef HELP_IS_CENTER_PAGE
-//  setAppMode(ApplicationMode::Help);
-//#else
-//  if (dlgHelp) dlgHelp->showHelp();
-//#endif
-//  }
 
 
 void MainWindow::setupMenu() {
@@ -906,18 +820,10 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
          else qDebug() << "mode toolbar is NOT visible";
          [[fallthrough]];
     default:
-//         qDebug() << "MW: pressed key: " << e->key()
-//                  << "modifiers: "   << e->modifiers()
-//                  << "event-ts: " << e->timestamp();
-//         GuiCore().viewStack()->keyPressEvent(e);
          break;
     }
   }
 
 
 void MainWindow::keyReleaseEvent(QKeyEvent* e) {
-//  qDebug() << "MW: released key: " << e->key()
-//           << "modifiers: "   << e->modifiers()
-//           << "event-ts: " << e->timestamp();
-//  GuiCore().viewStack()->keyReleaseEvent(e);
   }

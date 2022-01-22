@@ -1,5 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
  <qresource prefix="/">
    <file>ToolEditor.ui</file>
+   <file>ToolDimensions_de.png</file>
+   <file>ToolDimensions.png</file>
  </qresource>
 </RCC>
