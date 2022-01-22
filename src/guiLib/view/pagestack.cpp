@@ -104,3 +104,9 @@ void PageStack::windowClosing(QCloseEvent* e) {
       t->second->closeEvent(e);
       }
   }
+
+
+QAction* PageStack::viewAction() {
+  if (!action) action = new QAction();
+  return action;
+  }

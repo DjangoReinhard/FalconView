@@ -1,19 +1,11 @@
 # FalconView
 
-**Work in progress!**
+Status: **almost done!**
 
 Controlcenter for machines controlled by **linuxCNC**.
 Subwindows like position or speed override can arranged anywhere
 around the central preview pane.
 Alternatively, the status displays can be shown in the 3D preview.
-
-## update 01.2022
-- migrated to cmake build system (tested from commandline as well as from QtCreator)
-- most main pages are plugins, that get loaded at runtime
-- general toolmanager is able to generate tooltable for linuxCNC
-- helpfile is complete for every available page and translated in english and german
-- basic functions are already tested against LinuxCNC
-- screen configuration is saved at application exit, so that it comes up as left
 
 ## Build
 
@@ -49,7 +41,7 @@ understanding and may serve as a blueprint for extensions.
 internal behaviour is not documented, or behaviour is different to documentation ...
 So I had to find my own way to get what I wanted.
 
-*sample* directory contains two cmake files:
+*sample* directory contains two cmake files **indispensable for successful build**:
 
 - FalconView.cmake
 - FindlinuxCNC.cmake
@@ -58,17 +50,32 @@ To get *cmake* find these files, you have to copy those files somewhere and tell
 
 Edit top-level **CMakeLists.txt** and change some settings to reflect your system:
 
-- *CMAKE_MODULE_PATH* to the path, where you put both files from *sample*.
-- *CMAKE_PREFIX_PATH* to the paths of Qt-toolkit and opencascade.
-- *OpenCASCADE_DIR* is the directory, where cmake files from opencascade are.
-- *EMC2_HOME* base directory of your *linuxCNC* **RIP**-installation.
+- ***CMAKE_MODULE_PATH*** to the path, **where** you put **both files from** ***sample***.
+- ***CMAKE_PREFIX_PATH*** to the paths of Qt-toolkit and opencascade.
+- ***OpenCASCADE_DIR*** is the directory, where cmake files from opencascade are.
+- ***EMC2_HOME*** base directory of your *linuxCNC* **RIP**-installation.
 
-## Screenshot
-- a vertical configuration
-[![vertical](sample/FalconView_V01s.jpg)](sample/FalconView_V01.jpg)
+**Note:** - cmake works best with a buildroot outside of the source tree.
 
-- a horizontal configuration
-[![horizontal](sample/FalconView_09s.jpg)](sample/FalconView_09.jpg)
+## Application start
+**FalconView** has been created to get integrated into linuxcnc start process, so the call is:
 
-- a configuration with inline status controls
-[![Inline](sample/FalconView_Inline03s.jpg)](sample/FalconView_03.jpg)
+```
+FalconView -ini <path to ini-file of your machine>
+```
+You can add FalconView to ini-file from *linuxCNC*. See *linuxCNC* [online docs](https://linuxcnc.org/docs/devel/html/config/ini-config.html) for further informations.
+
+## [Extending FalconView](Extending.md)
+
+## Layout variants
+### default
+Preview is a splitted page with 3D-View on top and GCode-Viewer below. Switching to other pages hides 3D-View. Status-Info windows are floatable subwindows, that can be arranged around (fixed) center view or placed at the desktop.
+
+[![default](sample/FalconView01s.jpg)](sample/FalconView01.jpg)
+### variant 1: status inside 3D-Preview
+No more floating subwindows. All status infos are shown as overlay to the 3D-View. 3D-View and GCode-Viewer are still 2 parts of the same page. So changing to another page will hide 3D-View.
+[![status inside](sample/FalconView02s.jpg)](sample/FalconView02.jpg)
+
+### variant 2: center is 3D-Preview only
+Now the formerly center pages are placed in a floating subwindow, so it can be liberately placed somewhere around the 3D-View or put somewhere on the desktop. As other floating subwindows can do.
+[![default](sample/FalconView03s.jpg)](sample/FalconView03.jpg)

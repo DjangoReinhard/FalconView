@@ -8,6 +8,7 @@
 #include <settingsnb.h>
 #include <testEdit.h>
 #include <helpview.h>
+#include <QObject>
 #include <QDir>
 #ifndef USE_PLUGINS
 # include <Position/positionstatus.h>
@@ -48,8 +49,11 @@ PluginPageFactory::~PluginPageFactory() {
   }
 
 
-AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {
-  AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(GuiCore().pluggableMainPage(name));
+AbstractCenterWidget* PluginPageFactory::createCenterPage(const QString& name) {    
+//  AbstractCenterWidget* rv = reinterpret_cast<AbstractCenterWidget*>(GuiCore().pluggableMainPage(name));
+  auto xx = GuiCore().pluggableMainPage(name);
+//  AbstractCenterWidget* rv = qobject_cast<AbstractCenterWidget*>(GuiCore().pluggableMainPage(name));
+  AbstractCenterWidget* rv = static_cast<AbstractCenterWidget*>(xx);
 
   if (rv) {
      qDebug() << "PPF: process loaded plugin for center page named: " << name;

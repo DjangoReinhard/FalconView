@@ -13,6 +13,7 @@ class GCodeViewer;
 class HelpDockable;
 class PluginPageFactory;
 class QAction;
+class QDialog;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,12 +23,10 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
-
 public:
   MainWindow(QWidget *parent = nullptr);
  ~MainWindow();
 
-//  HelpDockable* helpDialog();
   void initialize();
   void setAppMode(ApplicationMode am);
   SettingsNotebook* settingsNotebook() const { return snb; }
@@ -53,7 +52,6 @@ protected slots:
   void setSingleStep(bool singleStep);
   void hitPowerBtn();
   void showErrMessages();
-//  void showHelp();
   void toggleAllButCenter();
   void toggleAbsolute(const QVariant& absolute);
   void testTools();
@@ -75,7 +73,7 @@ private:
   SettingsNotebook*   snb;
   PreViewEditor*      pw;
   MDIEditor*          mdi;
-//  HelpDockable*       dlgHelp;
+  QDialog*            dlgAbout;
   QAction*            startAction;
   QAction*            pauseAction;
   QAction*            stopAction;

@@ -7,7 +7,7 @@
 #include <QBasicTimer>
 #include <QThread>
 
-class PluginPageInterface;
+class ViewPluginInterface;
 class LcProperties;
 class ToolTable;
 class AxisMask;
@@ -53,9 +53,9 @@ public:
   virtual void                 help4Keyword(const QString& keyWord) override;
   virtual QMainWindow*         mainWindow() override;
   virtual double               maxVelocity(int jointNum = 0) const override;
-  virtual PluginPageInterface* pluggableMainPage(const QString& pageID) const override;
+  virtual ViewPluginInterface* pluggableMainPage(const QString& pageID) const override;
   virtual QList<QString>       pluggableMainPages() const override;
-  virtual PluginPageInterface* pluggableNotebookPage(const QString& pageID) const override;
+  virtual ViewPluginInterface* pluggableNotebookPage(const QString& pageID) const override;
   virtual QList<QString>       pluggableNotebookPages() const override;
   virtual void                 setAppMode4PageID(const QString& pageID) override;
   virtual void                 setMainWindow(QMainWindow* w) override;
@@ -63,7 +63,7 @@ public:
   virtual void                 setWindowTitle(const QString& title) override;
   virtual void                 showHelp() const override;
   virtual QWidget*             stackedPage(const QString& pageName) override;
-  virtual PluginPageInterface* statusInfo(const QString& infoID) const override;
+  virtual ViewPluginInterface* statusInfo(const QString& infoID) const override;
   virtual QList<QString>       statusInfos() const override;
   virtual PageStack*           viewStack() override;
 
@@ -167,9 +167,9 @@ private:
   QString            helpFileName;
   QString            nc_files;
   QString            pluginDir;
-  QMap<QString, PluginPageInterface*> mainPages;
-  QMap<QString, PluginPageInterface*> nbPages;
-  QMap<QString, PluginPageInterface*> statInfos;
+  QMap<QString, ViewPluginInterface*> mainPages;
+  QMap<QString, ViewPluginInterface*> nbPages;
+  QMap<QString, ViewPluginInterface*> statInfos;
   friend class GuiKernelCreator;
   friend class GuiCore;
   };

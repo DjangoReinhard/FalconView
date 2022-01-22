@@ -5,19 +5,9 @@ project(FalconView LANGUAGES CXX)
 include(FalconView)
 add_executable(FalconView
     main.cpp
-    control/abstractcondition.cpp
-    control/andcondition.cpp
-    control/dynaaction.cpp
-    control/equalcondition.cpp
-    control/falsecondition.cpp
-    control/greatercondition.cpp
     control/guikernel.cpp
     control/mainwindow.cpp
     control/multistatetoolbutton.cpp
-    control/notcondition.cpp
-    control/orcondition.cpp
-    control/smallercondition.cpp
-    control/truecondition.cpp
     LCcomm/commandwriter.cpp
     LCcomm/errorreader.cpp
     LCcomm/gcodeinfo.cpp
@@ -33,6 +23,7 @@ add_executable(FalconView
     util/multistateaction.cpp
     util/guikernelcreator.cpp
     util/pluginpagefactory.cpp
+    view/aboutdialog.cpp
     view/dockable.cpp
     view/micon.cpp
     ../../FalconView.qrc

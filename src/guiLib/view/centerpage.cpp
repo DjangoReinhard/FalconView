@@ -1,5 +1,6 @@
 #include <centerpage.h>
 #include <abscenterwidget.h>
+#include <CenterPageInterface.h>
 #include <core.h>
 #include <QVBoxLayout>
 #include <QKeyEvent>
@@ -12,8 +13,8 @@ CenterPage::CenterPage(AbstractCenterWidget* cw, bool visualFrame, QWidget *pare
  : QWidget(parent)
  , frame(nullptr)
  , dcw(cw) {
-  setObjectName(QString("%1Frame").arg(cw->objectName()));
-  setWindowTitle(cw->windowTitle());
+  setObjectName(QString("%1Frame").arg(dcw->objectName()));
+  setWindowTitle(dcw->windowTitle());
   setLayout(new QVBoxLayout);
   layout()->setContentsMargins(0, 0, 0, 0);
   if (visualFrame) {
@@ -44,7 +45,10 @@ QString CenterPage::id() const {
 
 
 QAction* CenterPage::viewAction() {
-  if (dcw) return dcw->viewAction();
+//  CenterPageInterface* cpi = reinterpret_cast<CenterPageInterface*>(dcw);
+  CenterPageInterface* cpi = qobject_cast<CenterPageInterface*>(dcw);
+
+  if (cpi) return cpi->viewAction();
   return new QAction();
   }
 

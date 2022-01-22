@@ -19,7 +19,7 @@ AbstractCenterWidget::AbstractCenterWidget(const QString& fileName, QWidget* par
  , core(nullptr)
  , cfg(nullptr)
  , vm(nullptr)
- , vAction(nullptr)
+ , action(nullptr)
  , uiFileName(fileName)
  , addScrollArea(false) {
   }
@@ -32,7 +32,7 @@ AbstractCenterWidget::AbstractCenterWidget(const QString& fileName, bool adScrol
  , core(nullptr)
  , cfg(nullptr)
  , vm(nullptr)
- , vAction(nullptr)
+ , action(nullptr)
  , uiFileName(fileName)
  , addScrollArea(adScrollArea) {
   }
@@ -45,17 +45,17 @@ void AbstractCenterWidget::closeEvent(QCloseEvent* e) {
 
 QWidget* AbstractCenterWidget::createContent() {
   qDebug() << "ACW::createContent()";
-  QFile     uiDesc(fileName());
   QWidget*  rv = nullptr;
 
-  if (uiDesc.exists()) {
+  if (!fileName().isEmpty()) {
+     QFile     uiDesc(fileName());
+
+     if (!uiDesc.exists()) core->riseError(QString("invalid form-definition-file %1").arg(fileName()));
      QUiLoader loader;
-//     qDebug() << "ACW: gonna load ui-file";
      QWidget*  w = loader.load(&uiDesc, this);
 
-//     qDebug() << "ACW: loading done";
      uiDesc.close();
-     qDebug() << "ACW: resource closed.";
+//     qDebug() << "ACW: resource closed.";
      if (w) {
         if (addScrollArea) {
            QScrollArea* sa = new QScrollArea(this);
@@ -105,18 +105,18 @@ void AbstractCenterWidget::patch(void *pk, void *pc, void *pv, void*, bool) {
   cfg  = new Config(pc);
   vm   = new ValueManager(pv);
 
-  qDebug() << "page:" << objectName() << "ACW - core:" << core->kernel << "\tgiven:" << pk;
+  qDebug() << "page:" << QWidget::objectName() << "ACW - core:" << core->kernel << "\tgiven:" << pk;
   }
 
 
 QAction* AbstractCenterWidget::viewAction() {
-  if (!vAction) {
-     vAction = new QAction(this);
+  if (!action) {
+     action = new QAction(this);
 
-     vAction->setMenuRole(QAction::NoRole);
-     vAction->setText(windowTitle());
+     action->setMenuRole(QAction::NoRole);
+     action->setText(windowTitle());
      }
-  return vAction;
+  return action;
   }
 
 
@@ -128,7 +128,7 @@ void AbstractCenterWidget::showEvent(QShowEvent* e) {
 //        qDebug() << "ACW: config says YES";
         if (core) {
 //           qDebug() << "ACW: ask core for popping help";
-           core->help4Keyword(objectName());
+           core->help4Keyword(QWidget::objectName());
            }
         }
      }

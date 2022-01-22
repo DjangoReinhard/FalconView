@@ -20,7 +20,7 @@ class ToolManager : public AbstractCenterWidget
 {
   Q_OBJECT
 #ifdef USE_PLUGINS
-  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "toolManager.json")
+  Q_PLUGIN_METADATA(IID "ViewPluginInterface_iid" FILE "toolManager.json")
 #endif
 public:
   explicit ToolManager(QWidget* parent = nullptr);

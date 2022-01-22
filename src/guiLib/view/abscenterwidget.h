@@ -1,7 +1,7 @@
 #ifndef ABSCENTERWIDGET_H
 #define ABSCENTERWIDGET_H
 #include <QWidget>
-#include <PluginPageInterface.h>
+#include <ViewPluginInterface.h>
 
 QT_BEGIN_NAMESPACE
 class PageStack;
@@ -19,16 +19,14 @@ QT_END_NAMESPACE
 
 /*! loads widgets from uiFile and allows late initialization at page usage
  */
-class AbstractCenterWidget : public QWidget, public PluginPageInterface
+class AbstractCenterWidget : public QWidget, public ViewPluginInterface
 {
   Q_OBJECT
-  Q_INTERFACES(PluginPageInterface)
+  Q_INTERFACES(ViewPluginInterface)
 public:
-  QAction*     viewAction();
-
-  // called by central widget stack
-  virtual void closeEvent(QCloseEvent* e) override;
-  virtual void showEvent(QShowEvent* e) override;
+  virtual void     closeEvent(QCloseEvent* e) override;
+  virtual void     showEvent(QShowEvent* e) override;
+  virtual QAction* viewAction();
 
 signals:
   void dataChanged(AbstractCenterWidget* w, const QVariant& changed);
@@ -46,9 +44,9 @@ protected:
   GuiCore*      core;
   Config*       cfg;
   ValueManager* vm;
+  QAction*      action;
 
 private:
-  QAction*      vAction;
   QString       uiFileName;
   bool          addScrollArea;
   friend class PluginPageFactory;

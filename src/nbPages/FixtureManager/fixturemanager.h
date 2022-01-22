@@ -1,7 +1,6 @@
 #ifndef FIXTUREMANAGER_H
 #define FIXTUREMANAGER_H
 #include <abscenterwidget.h>
-#include <PluginPageInterface.h>
 
 QT_BEGIN_NAMESPACE
 class FixtureEdit;
@@ -13,7 +12,7 @@ class FixtureManager : public AbstractCenterWidget
 {
   Q_OBJECT
 #ifdef USE_PLUGINS
-  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "fixtureManager.json")
+  Q_PLUGIN_METADATA(IID "ViewPluginInterface_iid" FILE "fixtureManager.json")
 #endif
 public:
   FixtureManager(QWidget* parent = nullptr);

@@ -443,7 +443,7 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
          QString       name   = fileName.mid(5, fileName.size() - 8);
 
          if (plugin) {
-            auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
+            auto iPlugin = qobject_cast<ViewPluginInterface*>(plugin);
 
             qDebug() << name << "is status info panel";
             statInfos[name] = iPlugin;
@@ -457,7 +457,7 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
          QString       name = fileName.mid(5, fileName.size() - 8);
 
          if (plugin) {
-            auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
+            auto iPlugin = qobject_cast<ViewPluginInterface*>(plugin);
 
             qDebug() << name << "is pluggable center page";
             mainPages[name] = iPlugin;
@@ -471,7 +471,7 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
          QString       name = fileName.mid(5, fileName.size() - 8);
 
          if (plugin) {
-            auto iPlugin = qobject_cast<PluginPageInterface*>(plugin);
+            auto iPlugin = qobject_cast<ViewPluginInterface*>(plugin);
 
             qDebug() << name << "is pluggable notebook page";
             nbPages[name] = iPlugin;
@@ -564,14 +564,14 @@ QString GuiKernel::version() const {
   }
 
 
-PluginPageInterface* GuiKernel::pluggableMainPage(const QString& pageID) const {
+ViewPluginInterface* GuiKernel::pluggableMainPage(const QString& pageID) const {
   if (mainPages.contains(pageID))
      return mainPages[pageID];
   return nullptr;
   }
 
 
-PluginPageInterface* GuiKernel::pluggableNotebookPage(const QString& pageID) const {
+ViewPluginInterface* GuiKernel::pluggableNotebookPage(const QString& pageID) const {
   if (nbPages.contains(pageID))
      return nbPages[pageID];
   return nullptr;
@@ -719,7 +719,7 @@ QList<QString> GuiKernel::statusInfos() const {
   }
 
 
-PluginPageInterface* GuiKernel::statusInfo(const QString& infoID) const {
+ViewPluginInterface* GuiKernel::statusInfo(const QString& infoID) const {
   if (statInfos.contains(infoID))
      return statInfos[infoID];
   return nullptr;

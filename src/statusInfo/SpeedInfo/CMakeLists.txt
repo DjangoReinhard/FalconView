@@ -5,6 +5,7 @@ project(SpeedInfo LANGUAGES CXX)
 include(FalconView)
 add_library(siSpeedInfo MODULE
     speedstatus.cpp
+    SpeedInfo.qrc
     )
 set(TS_FILES
     speedinfo_de_DE.ts

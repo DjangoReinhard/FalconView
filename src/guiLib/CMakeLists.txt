@@ -4,6 +4,7 @@ project(guiLib LANGUAGES CXX)
 #-----------------------------------------------------------------------------
 include(FalconView)
 add_library(FVguiLib STATIC
+    control/dynaaction.cpp
     control/gcodehighlighter.cpp
     control/guicore.cpp
     control/helpengine.cpp
@@ -41,6 +42,7 @@ target_link_libraries(FVguiLib
                       PRIVATE FVBaseLib
                       )
 use_interface_libraries(FVguiLib
+                        IFlinuxCNC
                         IFQt
                         IFOpenCASCADE
                         IFStandard

@@ -5,6 +5,7 @@ project(Position LANGUAGES CXX)
 include(FalconView)
 add_library(siPosition MODULE
     positionstatus.cpp
+    Position.qrc
     )
 set(TS_FILES
     position_de_DE.ts

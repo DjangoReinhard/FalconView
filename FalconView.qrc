@@ -14,41 +14,9 @@
    <file>res/go-previous-01.png</file>
    <file>res/go-up.png</file>
    <file>res/go-up-01.png</file>
-   <file>res/X+.png</file>
-   <file>res/X-.png</file>
-   <file>res/Z+.png</file>
-   <file>res/Z-.png</file>
-   <file>res/A+.png</file>
-   <file>res/A-.png</file>
-   <file>res/B+.png</file>
-   <file>res/B-.png</file>
-   <file>res/C+.png</file>
-   <file>res/C-.png</file>
-   <file>res/U+.png</file>
-   <file>res/U-.png</file>
-   <file>res/W+.png</file>
-   <file>res/W-.png</file>
-   <file>res/Xs+.png</file>
-   <file>res/Xs-.png</file>
-   <file>res/Zs+.png</file>
-   <file>res/Zs-.png</file>
-   <file>res/As+.png</file>
-   <file>res/As-.png</file>
-   <file>res/Bs+.png</file>
-   <file>res/Bs-.png</file>
-   <file>res/Cs+.png</file>
-   <file>res/Cs-.png</file>
-   <file>res/Us+.png</file>
-   <file>res/Us-.png</file>
-   <file>res/Ws+.png</file>
-   <file>res/Ws-.png</file>
    <file>res/Messerkopf.jpg</file>
-   <file>res/ToolDimensions.png</file>
-   <file>res/ToolDimensions_de.png</file>
-   <file>res/SK_Auto_active.png</file>
    <file>res/SK_AutoPause_active.png</file>
    <file>res/SK_AutoPause.png</file>
-   <file>res/SK_Auto.png</file>
    <file>res/SK_AutoStart_active.png</file>
    <file>res/SK_AutoStart.png</file>
    <file>res/SK_AutoStop_active.png</file>
@@ -58,16 +26,8 @@
    <file>res/SK_Cool_Mist_active.png</file>
    <file>res/SK_Cool_Mist.png</file>
    <file>res/SK_DisabledIcon.png</file>
-   <file>res/SK_Edit_active.png</file>
-   <file>res/SK_Edit.png</file>
    <file>res/SK_HomeAll_active.png</file>
    <file>res/SK_HomeAll.png</file>
-   <file>res/SK_Manual_active.png</file>
-   <file>res/SK_Manual.png</file>
-   <file>res/SK_MDI_active.png</file>
-   <file>res/SK_MDI.png</file>
-   <file>res/SK_Messages.png</file>
-   <file>res/SK_Messages_active.png</file>
    <file>res/SK_NOP.png</file>
    <file>res/SK_Offsets_active.png</file>
    <file>res/SK_Offsets.png</file>
@@ -102,16 +62,9 @@
    <file>res/BottomTabButtonStyles.css</file>
    <file>res/TopTabButtonStyles.css</file>
    <file>src/app/control/mainwindow.ui</file>
-   <file>src/app/UI/mainwindow.ui</file>
-   <file>src/guiLib/UI/GCodeEditor.ui</file>
-   <file>src/guiLib/UI/HelpTitle.ui</file>
    <file>src/guiLib/view/GCodeEditor.ui</file>
    <file>src/guiLib/view/HelpTitle.ui</file>
-   <file>src/nbPages/FixtureManager/Fixture.ui</file>
-   <file>src/nbPages/PrefsEditor/Settings.ui</file>
-   <file>src/nbPages/ToolManager/ToolEditor.ui</file>
-   <file>src/plugPages/JogView/Jog.ui</file>
-   <file>src/plugPages/MDIEditor/MDIEditor.ui</file>
+<!--
    <file>src/statusInfo/CurCodes/HCurCodes.ui</file>
    <file>src/statusInfo/CurCodes/VCurCodes.ui</file>
    <file>src/statusInfo/Position/PositionMain.ui</file>
@@ -119,5 +72,6 @@
    <file>src/statusInfo/SpeedInfo/HSpeedInfo.ui</file>
    <file>src/statusInfo/SpeedInfo/VSpeedInfo.ui</file>
    <file>src/statusInfo/ToolInfo/ToolInfo.ui</file>
+-->
  </qresource>
 </RCC>

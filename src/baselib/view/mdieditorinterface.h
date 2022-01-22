@@ -1,9 +1,9 @@
 #ifndef MDIEDITORINTERFACE_H
 #define MDIEDITORINTERFACE_H
-#include <PluginPageInterface.h>
+#include <CenterPageInterface.h>
 
 
-class MDIEditorInterface : public PluginPageInterface
+class MDIEditorInterface : public CenterPageInterface
 {
 public:
   virtual ~MDIEditorInterface() = default;

@@ -12,7 +12,8 @@ The toolpaths can be viewed from different angles. These keyboard shortcuts are 
 - **[Ctrl + L]** - view from the left
 - **[Ctrl + F]** - Front view
 - **[Ctrl + B]** - View from behind
-- **[Ctrl + 3]** - 3D view
+- **[Ctrl + 3]** - 3D view (view 1)
+- **[Ctrl + 6]** - 3D view (view 2)
 - **[F]** without additional key can be used to fit the workpiece into the
 window (zoom)
 

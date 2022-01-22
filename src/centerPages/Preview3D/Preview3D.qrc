@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+   <file>SK_Auto_active.png</file>
+   <file>SK_Auto.png</file>
+ </qresource>
+</RCC>

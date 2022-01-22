@@ -1,0 +1,35 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+   <file>SK_Manual_active.png</file>
+   <file>SK_Manual.png</file>
+   <file>Jog.ui</file>
+   <file>A+.png</file>
+   <file>A-.png</file>
+   <file>As+.png</file>
+   <file>As-.png</file>
+   <file>B+.png</file>
+   <file>B-.png</file>
+   <file>Bs+.png</file>
+   <file>Bs-.png</file>
+   <file>C+.png</file>
+   <file>C-.png</file>
+   <file>Cs+.png</file>
+   <file>Cs-.png</file>
+   <file>U+.png</file>
+   <file>U-.png</file>
+   <file>Us+.png</file>
+   <file>Us-.png</file>
+   <file>W+.png</file>
+   <file>W-.png</file>
+   <file>Ws+.png</file>
+   <file>Ws-.png</file>
+   <file>X+.png</file>
+   <file>X-.png</file>
+   <file>Xs+.png</file>
+   <file>Xs-.png</file>
+   <file>Z+.png</file>
+   <file>Z-.png</file>
+   <file>Zs+.png</file>
+   <file>Zs-.png</file>
+ </qresource>
+</RCC>

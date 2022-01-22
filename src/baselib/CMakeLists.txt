@@ -5,6 +5,15 @@ project(BaseLib LANGUAGES CXX)
 include(FalconView)
 add_library(FVBaseLib STATIC
     control/core.cpp
+    control/abstractcondition.cpp
+    control/andcondition.cpp
+    control/equalcondition.cpp
+    control/falsecondition.cpp
+    control/greatercondition.cpp
+    control/notcondition.cpp
+    control/orcondition.cpp
+    control/smallercondition.cpp
+    control/truecondition.cpp
     model/configacc.cpp
     model/configmgr.cpp
     model/direntry.cpp

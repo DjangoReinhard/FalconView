@@ -153,46 +153,56 @@
 <context>
     <name>SettingsNotebook</name>
     <message>
-        <location filename="view/settingsnb.cpp" line="19"/>
+        <location filename="view/settingsnb.cpp" line="24"/>
         <source>SettingsNotebook</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="view/settingsnb.cpp" line="243"/>
+        <source>Settings-mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TestEdit</name>
     <message>
-        <location filename="view/testEdit.cpp" line="33"/>
+        <location filename="view/testEdit.cpp" line="35"/>
         <source>TestEdit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="view/testEdit.cpp" line="163"/>
+        <location filename="view/testEdit.cpp" line="164"/>
         <source>selected file is already loaded as active gcode file.Please use active editor - can&apos;t load a file in both editors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="view/testEdit.cpp" line="169"/>
+        <location filename="view/testEdit.cpp" line="181"/>
         <source>TestEdit::loadFile: %1 is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="view/testEdit.cpp" line="202"/>
+        <location filename="view/testEdit.cpp" line="209"/>
         <source>Failed to write file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="view/testEdit.cpp" line="204"/>
+        <location filename="view/testEdit.cpp" line="211"/>
         <source>Failed to create backup of file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="view/testEdit.cpp" line="224"/>
+        <location filename="view/testEdit.cpp" line="231"/>
         <source>QInputDialog::getText()</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="view/testEdit.cpp" line="225"/>
+        <location filename="view/testEdit.cpp" line="232"/>
         <source>Search text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="view/testEdit.cpp" line="277"/>
+        <source>TestEdit-mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

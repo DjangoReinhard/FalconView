@@ -5,6 +5,7 @@ project(ToolInfo LANGUAGES CXX)
 include(FalconView)
 add_library(siToolInfo MODULE
     toolstatus.cpp
+    ToolInfo.qrc
     )
 set(TS_FILES
     toolinfo_de_DE.ts

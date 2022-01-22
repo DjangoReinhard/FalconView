@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/">
+   <file>SK_Messages_active.png</file>
+   <file>SK_Messages.png</file>
+ </qresource>
+</RCC>
