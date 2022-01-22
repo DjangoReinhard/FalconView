@@ -108,8 +108,8 @@ void CurCodesStatus::connectSignals() {
 
 
 QString CurCodesStatus::fileName() const {
-  if (isVertical) return ":/src/statusInfo/CurCodes/VCurCodes.ui";
-  return ":/src/statusInfo/CurCodes/HCurCodes.ui";
+  if (isVertical) return ":VCurCodes.ui";
+  return ":HCurCodes.ui";
   }
 
 

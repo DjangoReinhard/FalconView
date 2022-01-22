@@ -4,10 +4,15 @@
 <context>
     <name>PreViewEditor</name>
     <message>
-        <location filename="pweditor.cpp" line="41"/>
+        <location filename="pweditor.cpp" line="36"/>
         <source>PreView3D</source>
         <oldsource>PreViewEditor</oldsource>
         <translation>3D-Vorschau</translation>
+    </message>
+    <message>
+        <location filename="pweditor.cpp" line="171"/>
+        <source>Auto-mode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

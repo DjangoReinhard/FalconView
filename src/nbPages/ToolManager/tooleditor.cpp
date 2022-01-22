@@ -20,7 +20,7 @@ ToolEditor::ToolEditor(const QString& langPrefix, QWidget *parent)
   model->setQuery("select id, name from Category");
 //  dumpModel();
   ui->setupUi(this);
-  QPixmap ni = QPixmap(QString(":/res/ToolDimensions_%1.png").arg(langPrefix));
+  QPixmap ni = QPixmap(QString(":ToolDimensions_%1.png").arg(langPrefix));
 
   if (!ni.isNull()) ui->helpImage->setPixmap(ni);
   setupTabOrder();

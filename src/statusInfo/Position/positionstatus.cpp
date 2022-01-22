@@ -15,7 +15,7 @@
 
 
 PositionStatus::PositionStatus(QWidget* parent)
- : AbstractCenterWidget(":/src/statusInfo/Position/Position.ui", parent)
+ : AbstractCenterWidget(":Position.ui", parent)
  , frm(new Ui::PositionMain())
  , rel(new Ui::PositionForm())
  , abs(new Ui::PositionForm())
@@ -33,7 +33,7 @@ PositionStatus::PositionStatus(QWidget* parent)
 
 
 PositionStatus::PositionStatus(QWidget* parent, QString ledOnStyle, QString ledOffStyle)
- : AbstractCenterWidget(":/src/statusInfo/Position/Position.ui", parent)
+ : AbstractCenterWidget(":Position.ui", parent)
  , frm(new Ui::PositionMain())
  , rel(new Ui::PositionForm())
  , abs(new Ui::PositionForm())

@@ -1,6 +1,10 @@
 #include "syseventview.h"
 #include <configacc.h>
 #include <valuemanager.h>
+#include <dynaaction.h>
+#include <andcondition.h>
+#include <equalcondition.h>
+#include <truecondition.h>
 #include <guicore.h>
 #include <syseventmodel.h>
 #include <QSortFilterProxyModel>
@@ -51,6 +55,10 @@ void SysEventView::showEvent(QShowEvent* e) {
   }
 
 
+void SysEventView::closeEvent(QCloseEvent* e) {
+  }
+
+
 void SysEventView::connectSignals() {
   }
 
@@ -76,4 +84,18 @@ bool SysEventView::eventFilter(QObject*, QEvent* event) {
        }
      }
   return false;
+  }
+
+
+QAction* SysEventView::viewAction() {
+  if (!action) {
+     action = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":SK_Messages.png")
+                           , QIcon(":SK_Messages_active.png")
+                           , tr("SysEvents")
+                           , new TrueCondition()
+                           , new EqualCondition(vm->getModel("errorActive"), true)
+                           , this);
+     }
+  return action;
   }

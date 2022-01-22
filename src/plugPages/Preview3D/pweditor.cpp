@@ -1,6 +1,10 @@
 #include "pweditor.h"
 #include <valuemanager.h>
 #include <configacc.h>
+#include <dynaaction.h>
+#include <andcondition.h>
+#include <equalcondition.h>
+#include <smallercondition.h>
 #include <guicore.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
@@ -134,7 +138,8 @@ bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
           case Qt::Key_L: view3D->leftView();  return true;
           case Qt::Key_B: view3D->backView();  return true;
           case Qt::Key_F: view3D->frontView(); return true;
-          case Qt::Key_3: view3D->isoView();   return true;
+          case Qt::Key_3: view3D->iso1View();  return true;
+          case Qt::Key_6: view3D->iso2View();  return true;
           }
        }
     else if (e->key() == Qt::Key_F) {
@@ -144,50 +149,6 @@ bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
     }
   return false;
   }
-
-
-//void PreViewEditor::createDecorations(OcctQtViewer *v, bool sip) {
-//  if (!sip) return;
-//  QGridLayout* gl = new QGridLayout(v);
-
-//  qDebug() << "\tTODO: need to rethink create decorations!";
-//  assert(!sip);
-//  v->setLayout(gl);
-////  ccStat    = new CurCodesStatus(":/src/UI/VCurCodes.ui");
-////  toolStat  = new ToolStatus(":/src/UI/ToolInfo.ui", statusInPreview);
-////  speedStat = new SpeedStatus(":/src/UI/VSpeedInfo.ui");
-////  posStat   = new PositionStatus(":/src/UI/Position.ui", GuiCore().axisMask());
-//  QSpacerItem* hs = new QSpacerItem(250, 30, QSizePolicy::Maximum, QSizePolicy::Ignored);
-//  QSpacerItem* vs = new QSpacerItem(20, 350, QSizePolicy::Ignored, QSizePolicy::Maximum);
-
-////  toolStat->initialize();
-////  ccStat->initialize();
-////  posStat->initialize();
-////  speedStat->initialize();
-//  gl->setColumnStretch(0, 0);
-//  gl->setColumnStretch(1, 1);
-//  gl->setColumnStretch(2, 20);
-//  gl->setColumnStretch(3, 0);
-//  gl->setRowStretch(0, 0);
-//  gl->setRowStretch(1, 1);
-//  gl->setRowStretch(2, 20);
-////  gl->addWidget(ccStat, 0, 0, 3, 1);
-////  gl->addWidget(toolStat, 0, 1, 1, 2);
-////  gl->addWidget(speedStat, 0, 4, 3, 1);
-////  gl->addWidget(posStat, 1, 1, 1, 1);
-//  gl->addItem(hs, 1, 2);
-//  gl->addItem(vs, 2, 1);
-//  }
-
-
-//void PreViewEditor::genPreView(const QVariant& fileName) {
-//  qDebug() << "PreViewEditor::genPreView" << fileName;
-//  CanonIF().toolPath().clear();
-//  ed->loadFile(fileName);
-//  fn->setText(fileName.toString());
-////  core->parseGCFile(fileName.toString());
-////  core->setAppMode(ApplicationMode::Auto);
-//  }
 
 
 void PreViewEditor::patch(void *pk, void *pc, void *pv, void *pu, bool flag) {
@@ -202,11 +163,17 @@ void PreViewEditor::updateStyles() {
   }
 
 
-//void PreViewEditor::toggleSub() {
-////  QWidget* oldSub = spV->widget(1);
-////  QWidget* old;
-
-////  if (oldSub == frame) old = spV->replaceWidget(1, jp);
-////  else                 old = spV->replaceWidget(1, frame);
-////  qDebug() << "old widget: " << old;
-//  }
+QAction* PreViewEditor::viewAction() {
+  if (!action) {
+     action = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":SK_Auto.png")
+                           , QIcon(":SK_Auto_active.png")
+                           , tr("Auto-mode")
+                           , (new AndCondition(new EqualCondition(vm->getModel("taskState"), GuiCore::taskStateOn)
+                                             , new EqualCondition(vm->getModel("allHomed"), true)))
+                                ->addCondition(new EqualCondition(vm->getModel("errorActive"), false))
+                            , new EqualCondition(vm->getModel("appMode"), ApplicationMode::Auto)
+                            , this);
+     }
+  return action;
+  }

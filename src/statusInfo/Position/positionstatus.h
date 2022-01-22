@@ -19,7 +19,7 @@ class PositionStatus : public AbstractCenterWidget
 {
   Q_OBJECT
 #ifdef USE_PLUGINS
-  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "position.json")
+  Q_PLUGIN_METADATA(IID "ViewPluginInterface_iid" FILE "position.json")
 #endif
 public:
   PositionStatus(QWidget* parent = nullptr);

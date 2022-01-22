@@ -4,6 +4,7 @@
 #include <mdieditorinterface.h>
 
 QT_BEGIN_NAMESPACE
+class QAction;
 class QLineEdit;
 class QListWidget;
 QT_END_NAMESPACE
@@ -12,8 +13,9 @@ QT_END_NAMESPACE
 class MDIEditor : public AbstractCenterWidget, public MDIEditorInterface
 {
   Q_OBJECT
-#ifdef USE_PLUGINS
   Q_INTERFACES(MDIEditorInterface)
+  Q_INTERFACES(CenterPageInterface)
+#ifdef USE_PLUGINS
   Q_PLUGIN_METADATA(IID "MDIEditorInterface_iid" FILE "mdiEditor.json")
 #endif
 public:
@@ -25,6 +27,7 @@ public:
   virtual QWidget* createContent() override;
   virtual void     connectSignals() override;
   virtual void     updateStyles() override;
+  virtual QAction* viewAction() override;
 
 protected slots:
   void currentChanged(const QModelIndex &current, const QModelIndex &previous);

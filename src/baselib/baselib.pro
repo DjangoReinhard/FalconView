@@ -63,7 +63,7 @@ HEADERS += \
     util/timestamp.h \
     view/GCodeViewerInterface.h \
     view/mdieditorinterface.h \
-    view/PluginPageInterface.h \
+    view/ViewPluginInterface.h \
 
 TRANSLATIONS += \
     baselib_de_DE.ts

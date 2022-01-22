@@ -5,6 +5,7 @@ project(PathEditor LANGUAGES CXX)
 include(FalconView)
 add_library(ppPathEditor MODULE
     patheditor.cpp
+    PathEditor.qrc
     )
 set(TS_FILES
     patheditor_de_DE.ts

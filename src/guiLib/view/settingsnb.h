@@ -1,14 +1,16 @@
 #ifndef SETTINGSNB_H
 #define SETTINGSNB_H
 #include <abscenterwidget.h>
+#include <CenterPageInterface.h>
 #include <QTabWidget>
 class QCloseEvent;
 class QVariant;
 
 
-class SettingsNotebook : public AbstractCenterWidget
+class SettingsNotebook : public AbstractCenterWidget, public CenterPageInterface
 {
   Q_OBJECT
+  Q_INTERFACES(CenterPageInterface)
 public:
   explicit SettingsNotebook(QWidget *parent = nullptr);
   virtual ~SettingsNotebook();
@@ -25,16 +27,18 @@ protected:
   bool switchTabPage(int pageIndex);
   void currentChanged(int index);
 
-  virtual void connectSignals() override;
-  virtual void updateStyles() override;
-  virtual void keyPressEvent(QKeyEvent* e) override;
-  virtual void closeEvent(QCloseEvent*) override;
-  virtual void showEvent(QShowEvent* e) override;
+  virtual void     connectSignals() override;
+  virtual void     updateStyles() override;
+  virtual void     keyPressEvent(QKeyEvent* e) override;
+  virtual void     closeEvent(QCloseEvent*) override;
+  virtual void     showEvent(QShowEvent* e) override;
+  virtual QAction* viewAction() override;
 
 protected slots:
   void enableTabs(const QVariant& enable);
 
 private:
   QTabWidget* tw;
+  QAction*    action;
   };
 #endif // SETTINGSNB_H

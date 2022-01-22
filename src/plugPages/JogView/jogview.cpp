@@ -1,6 +1,10 @@
 #include "jogview.h"
 #include <configacc.h>
 #include <valuemanager.h>
+#include <dynaaction.h>
+#include <andcondition.h>
+#include <equalcondition.h>
+#include <smallercondition.h>
 #include <axismask.h>
 #include <guicore.h>
 #include <QDebug>
@@ -19,6 +23,11 @@ JogView::JogView(QWidget* parent)
 
 
 JogView::~JogView() {
+  }
+
+
+void JogView::closeEvent(QCloseEvent* e) {
+  QWidget::closeEvent(e);
   }
 
 
@@ -363,4 +372,25 @@ void JogView::keyPressEvent(QKeyEvent* e) {
        default: AbstractCenterWidget::keyPressEvent(e); break;
        }
      }
+  }
+
+
+void JogView::showEvent(QShowEvent* e) {
+  QWidget::showEvent(e);
+  }
+
+
+QAction* JogView::viewAction() {
+  if (!action) {
+     action = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":SK_Manual.png")
+                           , QIcon(":SK_Manual_active.png")
+                           , tr("Manual-mode")
+                           , (new AndCondition(new EqualCondition(vm->getModel("taskState"), GuiCore::taskStateOn)
+                                             , new SmallerCondition(vm->getModel("execState"), GuiCore::taskWaiting4Motion)))
+                                ->addCondition(new EqualCondition(vm->getModel("errorActive"), false))
+                           , new EqualCondition(vm->getModel("appMode"), ApplicationMode::Manual)
+                           , this);
+     }
+  return action;
   }

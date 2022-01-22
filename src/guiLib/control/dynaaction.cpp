@@ -10,6 +10,7 @@ DynaAction::DynaAction(const QIcon& disIco, const QIcon& enIco, const QIcon& cIc
  , disabledIcon(disIco)
  , enabledIcon(enIco)
  , checkedIcon(cIco) {
+  setObjectName("DynaAction");
   if (cEnabled) {
      connect(cEnabled, &AbstractCondition::conditionChanged, this, &DynaAction::setEnabled);
      setEnabled(cEnabled->result());

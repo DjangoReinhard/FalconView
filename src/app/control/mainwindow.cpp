@@ -1,5 +1,6 @@
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
+#include <aboutdialog.h>
 #include <occtviewer.h>
 #include <settingsnb.h>
 #include <dbconnection.h>
@@ -65,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
  , statusInPreview(false)
  , previewIsCenter(false)
  , ui(new Ui::MainWindow)
+ , dlgAbout(nullptr)
  , startAction(nullptr)
  , pauseAction(nullptr)
  , stopAction(nullptr)
@@ -153,25 +155,8 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
 
 
 void MainWindow::about() {
-  QString glInfo = GuiCore().view3D()->getGlInfo();
-
-  if (glInfo.isEmpty()) glInfo = tr("You need to switch to 3D-preview "
-                                    "at least once to get this information.");
-  else                  glInfo.replace("\n", "</li><li>");
-  QMessageBox::about(this
-                   , tr("About FalconView")
-                   , tr("<h3>FalconView</h3><p>is an application to manage "
-                        "machines controlled by linuxCNC.</p>"
-                        "<p>FalconView uses external components:<ul>"
-                        "<li><a href=\"%1\">linuxCNC v.%2</a></li>"
-                        "<li><a href=\"%3\">Open CASCADE Technology v.%4</a></li>"
-                        "<li><a href=\"%5\">Qt Toolkit v.%6</a></li></ul></p>"
-                        "<hl/><p>GL capabilities: <ul><li>%7</li></ul></p>")
-                       .arg("https://github.com/LinuxCNC/linuxcnc", PACKAGE_VERSION)
-                       .arg("https://dev.opencascade.org/release", OCC_VERSION_STRING_EXT)
-                       .arg("https://www.qt.io/download", QLatin1String(QT_VERSION_STR))
-                       .arg(glInfo)
-                       .toStdString().c_str());
+  if (!dlgAbout) dlgAbout = new AboutDialog(this);
+  dlgAbout->show();
   }
 
 
@@ -268,62 +253,62 @@ void MainWindow::createActions() {
                             , new EqualCondition(vm.getModel("errorActive"), false)
                             , new EqualCondition(vm.getModel("singleStep"), true)
                             , this);
-  // Preview3D
-  autoMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-                          , QIcon(":/res/SK_Auto.png")
-                          , QIcon(":/res/SK_Auto_active.png")
-                          , tr("Auto-mode")
-                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                            , new EqualCondition(vm.getModel("allHomed"), true)))
-                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                           , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Auto)
-                           , this);
-  // MDIEditor
-  mdiMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-                         , QIcon(":/res/SK_MDI.png")
-                         , QIcon(":/res/SK_MDI_active.png")
-                         , tr("MDI-mode")
-                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                           , new EqualCondition(vm.getModel("allHomed"), true)))
-                              ->addCondition(new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION))
-                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::MDI)
-                         , this);
-  // PathEditor
-  editMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-                          , QIcon(":/res/SK_Edit.png")
-                          , QIcon(":/res/SK_Edit_active.png")
-                          , tr("Edit-mode")
-                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                            , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
-                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Edit)
-                          , this);
-  testEditMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-                              , QIcon(":/res/SK_TestEdit.png")
-                              , QIcon(":/res/SK_TestEdit_active.png")
-                              , tr("TestEdit-mode")
-                              , new EqualCondition(vm.getModel("errorActive"), false)
-                              , new EqualCondition(vm.getModel("appMode"), ApplicationMode::XEdit)
-                              , this);
-  cfgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-                         , QIcon(":/res/SK_Settings.png")
-                         , QIcon(":/res/SK_Settings_active.png")
-                         , tr("Settings-mode")
-                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                           , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
-                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Settings)
-                         , this);
-  jogMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-                         , QIcon(":/res/SK_Manual.png")
-                         , QIcon(":/res/SK_Manual_active.png")
-                         , tr("Manual-mode")
-                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                           , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
-                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Manual)
-                         , this);
+//  // Preview3D
+//  autoMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+//                          , QIcon(":/res/SK_Auto.png")
+//                          , QIcon(":/res/SK_Auto_active.png")
+//                          , tr("Auto-mode")
+//                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
+//                                            , new EqualCondition(vm.getModel("allHomed"), true)))
+//                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
+//                           , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Auto)
+//                           , this);
+//  // MDIEditor
+//  mdiMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+//                         , QIcon(":/res/SK_MDI.png")
+//                         , QIcon(":/res/SK_MDI_active.png")
+//                         , tr("MDI-mode")
+//                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
+//                                           , new EqualCondition(vm.getModel("allHomed"), true)))
+//                              ->addCondition(new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION))
+//                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
+//                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::MDI)
+//                         , this);
+//  // PathEditor
+//  editMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+//                          , QIcon(":/res/SK_Edit.png")
+//                          , QIcon(":/res/SK_Edit_active.png")
+//                          , tr("Edit-mode")
+//                          , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
+//                                            , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
+//                               ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
+//                          , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Edit)
+//                          , this);
+//  testEditMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+//                              , QIcon(":/res/SK_TestEdit.png")
+//                              , QIcon(":/res/SK_TestEdit_active.png")
+//                              , tr("TestEdit-mode")
+//                              , new EqualCondition(vm.getModel("errorActive"), false)
+//                              , new EqualCondition(vm.getModel("appMode"), ApplicationMode::XEdit)
+//                              , this);
+//  cfgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+//                         , QIcon(":/res/SK_Settings.png")
+//                         , QIcon(":/res/SK_Settings_active.png")
+//                         , tr("Settings-mode")
+//                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
+//                                           , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
+//                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
+//                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Settings)
+//                         , this);
+//  jogMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+//                         , QIcon(":/res/SK_Manual.png")
+//                         , QIcon(":/res/SK_Manual_active.png")
+//                         , tr("Manual-mode")
+//                         , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
+//                                           , new SmallerCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION)))
+//                              ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
+//                         , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Manual)
+//                         , this);
   wheelMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                            , QIcon(":/res/SK_Wheel.png")
                            , QIcon(":/res/SK_Wheel_active.png")
@@ -345,14 +330,14 @@ void MainWindow::createActions() {
                                 ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                            , new EqualCondition(vm.getModel("appMode"), ApplicationMode::Touch)
                            , this);
-  // SysEventView
-  msgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
-                         , QIcon(":/res/SK_Messages.png")
-                         , QIcon(":/res/SK_Messages_active.png")
-                         , tr("SysEvents")
-                         , new TrueCondition()
-                         , new EqualCondition(vm.getModel("errorActive"), true)
-                         , this);
+//  // SysEventView
+//  msgMode = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+//                         , QIcon(":/res/SK_Messages.png")
+//                         , QIcon(":/res/SK_Messages_active.png")
+//                         , tr("SysEvents")
+//                         , new TrueCondition()
+//                         , new EqualCondition(vm.getModel("errorActive"), true)
+//                         , this);
   mist = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                       , QIcon(":/res/SK_Cool_Mist.png")
                       , QIcon(":/res/SK_Cool_Mist_active.png")
@@ -422,6 +407,29 @@ void MainWindow::createActions() {
                              , QIcon(":/res/SK_PowerOff_1.png")
                              , QIcon(":/res/SK_PowerOn.png"));
   power->setShortcut(QKeySequence("CTRL+ALT+P"));
+  PageStack* stack = GuiCore().viewStack();
+  QList<QString> pl = stack->pages();
+
+  for (const QString& pn : pl) {
+      CenterPage*           cp   = stack->page(pn);
+      AbstractCenterWidget* acw  = cp->centerWidget();
+      CenterPageInterface*  cpi  = qobject_cast<CenterPageInterface*>(acw);
+      QAction*              a    = cp->viewAction();
+
+      if (cpi) {
+         qDebug() << "MW::createActions()\t-\tstack contains page:" << pn;
+
+         if (pn == "PreView3DFrame")             autoMode     = a;
+         else if (pn == "MDIEditorFrame")        mdiMode      = a;
+         else if (pn == "PathEditorFrame")       editMode     = a;
+         else if (pn == "TestEditFrame")         testEditMode = a;
+         else if (pn == "SettingsNotebookFrame") cfgMode      = a;
+         else if (pn == "JogViewFrame")          jogMode      = a;
+         else if (pn == "SysEventViewFrame")     msgMode      = a;
+         }
+      else qDebug() << "MW::createActions() - " << pn << "seems not to be a center page";
+      }
+  qDebug() << "MW::createActions() - done";
   }
 
 
@@ -443,7 +451,7 @@ void MainWindow::createConnections() {
   connect(ui->actionExit,      &QAction::triggered, this, &QWidget::close);
   connect(ui->actionAbout,     &QAction::triggered, this, &MainWindow::about);
 
-  connect(ui->action3D_View,   &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::isoView);
+  connect(ui->action3D_View,   &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::iso1View);
   connect(ui->actionFrontView, &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::frontView);
   connect(ui->actionBackView,  &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::backView);
   connect(ui->actionleftView,  &QAction::triggered, GuiCore().view3D(), &OcctQtViewer::leftView);
@@ -569,17 +577,19 @@ void MainWindow::createDockables() {
      PageStack* stack = new PageStack(this);
 
      GuiCore().setViewStack(stack);
-     AbstractCenterWidget* cw;
-     QList<QString> pages = GuiCore().pluggableMainPages();
+     AbstractCenterWidget* acw;
+     CenterPageInterface*  cpi;
+     QList<QString>        pages = GuiCore().pluggableMainPages();
 
      pages.append("FileManager"); // append statically linked pages
      pages.append("TestEdit");
      for (const QString& s : pages) {
-         cw = ppFactory->createCenterPage(s);
-         if (cw) {
-            if (s == "MDIEditor")      mdi = reinterpret_cast<MDIEditor*>(cw);
-            else if (s == "Preview3D") pw  = reinterpret_cast<PreViewEditor*>(cw);
-            stack->addPage(new CenterPage(cw, true, stack));
+         acw = ppFactory->createCenterPage(s);
+
+         if (acw) {
+            if (s == "MDIEditor")      mdi = static_cast<MDIEditor*>(acw);
+            else if (s == "Preview3D") pw  = static_cast<PreViewEditor*>(acw);
+            stack->addPage(new CenterPage(acw, true, stack));
             }
          }
      // settings-notebook is statically linked
@@ -589,8 +599,8 @@ void MainWindow::createDockables() {
 
      pages.append("LCToolTable");
      for (const QString& s : pages) {
-         cw = ppFactory->createNotebookPage(s);
-         if (cw) snb->addPage(cw);
+         acw = ppFactory->createNotebookPage(s);
+         if (acw) snb->addPage(acw);
          }
      stack->addPage(new CenterPage(snb, false, stack));
      addDockable(Qt::BottomDockWidgetArea, new Dockable(stack, this));
@@ -612,17 +622,20 @@ void MainWindow::createMainWidgets() {
      PageStack* stack = new PageStack(this);
 
      GuiCore().setViewStack(stack);
-     AbstractCenterWidget* cw;
-     QList<QString> pages = GuiCore().pluggableMainPages();
+     AbstractCenterWidget* acw;
+     CenterPageInterface*  cpi;
+     QList<QString>        pages = GuiCore().pluggableMainPages();
 
      pages.append("FileManager");  // append statically linked pages
      pages.append("TestEdit");
      for (const QString& s : pages) {
-         cw = ppFactory->createCenterPage(s);
-         if (cw) {
-            if (s == "MDIEditor")      mdi = reinterpret_cast<MDIEditor*>(cw);
-            else if (s == "Preview3D") pw  = reinterpret_cast<PreViewEditor*>(cw);
-            stack->addPage(new CenterPage(cw, true, stack));
+         acw = ppFactory->createCenterPage(s);
+//         cpi = reinterpret_cast<CenterPageInterface*>(acw);
+
+         if (acw) {
+            if (s == "MDIEditor")      mdi = static_cast<MDIEditor*>(acw);
+            else if (s == "Preview3D") pw  = static_cast<PreViewEditor*>(acw);
+            stack->addPage(new CenterPage(acw, true, stack));
             }
          }
      // settings-notebook is statically linked
@@ -631,8 +644,8 @@ void MainWindow::createMainWidgets() {
      pages = GuiCore().pluggableNotebookPages();
 
      for (const QString& s : pages) {
-         cw = ppFactory->createNotebookPage(s);
-         if (cw) snb->addPage(cw);
+         acw = ppFactory->createNotebookPage(s);
+         if (acw) snb->addPage(acw);
          }
      stack->addPage(new CenterPage(snb, false, stack));
      this->setCentralWidget(stack);
@@ -872,8 +885,9 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
          if (modeTB->isVisible()) {
             qDebug() << "mode toolbar is visible";
             switch (e->key()) {
-//              case Qt::Key_F1:  ValueManager().setValue("appMode", ApplicationMode::Help); break;
-              case Qt::Key_F1:  GuiCore().showHelp(); break;
+              case Qt::Key_F1:  if (e->modifiers() == Qt::SHIFT) about();
+                                else GuiCore().showHelp();
+                   break;
               case Qt::Key_F2:  ValueManager().setValue("appMode", ApplicationMode::Edit); break;
               case Qt::Key_F3:  ValueManager().setValue("appMode", ApplicationMode::Auto); break;
               case Qt::Key_F4:  ValueManager().setValue("appMode", ApplicationMode::MDI); break;

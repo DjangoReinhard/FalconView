@@ -14,7 +14,7 @@
 
 
 PreferencesEditor::PreferencesEditor(QWidget* parent)
- : AbstractCenterWidget(":/src/nbPages/PrefsEditor/Settings.ui", true, parent)
+ : AbstractCenterWidget(":Settings.ui", true, parent)
  , labels(nullptr)
  , bgButtons(nullptr)
  , fontButtons(nullptr)

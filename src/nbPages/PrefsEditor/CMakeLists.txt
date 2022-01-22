@@ -5,6 +5,7 @@ project(PrefsEditor LANGUAGES CXX)
 include(FalconView)
 add_library(nbPrefsEditor MODULE
     preferenceseditor.cpp
+    PrefsEditor.qrc
     )
 set(TS_FILES
     prefseditor_DE.ts

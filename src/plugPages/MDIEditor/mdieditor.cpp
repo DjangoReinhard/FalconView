@@ -1,5 +1,11 @@
 #include "mdieditor.h"
+#include <applicationmode.h>
 #include <configacc.h>
+#include <guicore.h>
+#include <dynaaction.h>
+#include <andcondition.h>
+#include <equalcondition.h>
+#include <smallercondition.h>
 #include <QListWidget>
 #include <QLineEdit>
 #include <QKeyEvent>
@@ -8,7 +14,9 @@
 
 
 MDIEditor::MDIEditor(QWidget* parent)
- : AbstractCenterWidget(":MDIEditor.ui", parent) {
+ : AbstractCenterWidget(":MDIEditor.ui", parent)
+ , history(nullptr)
+ , cmd(nullptr) {
   setObjectName("MDIEditor");
   setWindowTitle(tr("MDIEditor"));
   }
@@ -122,6 +130,24 @@ void MDIEditor::showEvent(QShowEvent* e) {
 
 
 void MDIEditor::updateStyles() {
+  }
+
+
+QAction* MDIEditor::viewAction() {
+  if (!action) {
+     action = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":SK_MDI.png")
+                           , QIcon(":SK_MDI_active.png")
+                           , tr("MDI-mode")
+                           , (new AndCondition(new EqualCondition(vm->getModel("taskState"), GuiCore::taskStateOn)
+                                             , new EqualCondition(vm->getModel("allHomed"), true)))
+                                ->addCondition(new SmallerCondition(vm->getModel("execState"), GuiCore::taskWaiting4Motion))
+                                ->addCondition(new EqualCondition(vm->getModel("errorActive"), false))
+                           , new EqualCondition(vm->getModel("appMode"), ApplicationMode::MDI)
+                           , this);
+
+     }
+  return action;
   }
 
 const QString MDIEditor::testData[] = {

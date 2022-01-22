@@ -1,9 +1,9 @@
 #ifndef GCODEVIEWERINTERFACE_H
 #define GCODEVIEWERINTERFACE_H
-#include <PluginPageInterface.h>
+#include <CenterPageInterface.h>
 
 
-class GCodeViewerInterface : public PluginPageInterface
+class GCodeViewerInterface
 {
 public:
   virtual ~GCodeViewerInterface() = default;

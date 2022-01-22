@@ -1,6 +1,8 @@
 #include <testEdit.h>
 #include <valuemanager.h>
 #include <configacc.h>
+#include <dynaaction.h>
+#include <equalcondition.h>
 #include <guicore.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
@@ -126,15 +128,15 @@ void TestEdit::showEvent(QShowEvent* e) {
 
 
 void TestEdit::closeEvent(QCloseEvent*) {
-  qDebug() << "TestEdit[" << objectName() << "] - " << fn->text();
-  cfg->beginGroup(objectName());
+  qDebug() << "TestEdit[" << QWidget::objectName() << "] - " << fn->text();
+  cfg->beginGroup(QWidget::objectName());
   cfg->setValue("fileName", fn->text());
   cfg->endGroup();
   }
 
 
 QString TestEdit::pageName() {
-  return objectName();
+  return QWidget::objectName();
   }
 
 
@@ -158,7 +160,7 @@ void TestEdit::loadFile(const QVariant& fileName) {
   if (fileName.toString().isEmpty()) return;
   QString   activeFile = vm->getValue("fileName").toString();
 
-  if (objectName() == "TestEdit" && activeFile == fileName.toString()) {
+  if (QWidget::objectName() == "TestEdit" && activeFile == fileName.toString()) {
      core->riseError(tr("selected file is already loaded as active gcode file."
                          "Please use active editor - can't load a file in both editors."));
      core->setAppMode(ApplicationMode::XEdit);
@@ -166,9 +168,9 @@ void TestEdit::loadFile(const QVariant& fileName) {
      }
   reallyLoadFile(fileName);
   // show editor again
-  qDebug() << "TestEdit[" << objectName() << "] - set appmode to XEdit(6)";
-  if (objectName() == "TestEdit")      core->setAppMode(ApplicationMode::XEdit);
-  else if (objectName() == "PathEdit") core->setAppMode(ApplicationMode::Edit);
+  qDebug() << "TestEdit[" << QWidget::objectName() << "] - set appmode to XEdit(6)";
+  if (QWidget::objectName() == "TestEdit")      core->setAppMode(ApplicationMode::XEdit);
+  else if (QWidget::objectName() == "PathEdit") core->setAppMode(ApplicationMode::Edit);
   }
 
 
@@ -256,14 +258,28 @@ void TestEdit::updateStyles() {
 
 
 void TestEdit::restoreState() {
-  qDebug() << "TE::restoreState() - I am" << objectName() << "- wt" << windowTitle();
-  cfg->beginGroup(objectName());
+  qDebug() << "TE::restoreState() - I am" << QWidget::objectName() << "- wt" << QWidget::windowTitle();
+  cfg->beginGroup(QWidget::objectName());
   QString lastFile = cfg->value("fileName").toString();
   cfg->endGroup();
   QFile ncFile(lastFile);
 
   if (ncFile.exists()) loadFile(ncFile.fileName());
   else                 qDebug() << "what a mess - no file to restore!";
+  }
+
+
+QAction* TestEdit::viewAction() {
+  if (!action) {
+     action = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":/res/SK_TestEdit.png")
+                           , QIcon(":/res/SK_TestEdit_active.png")
+                           , tr("TestEdit-mode")
+                           , new EqualCondition(vm->getModel("errorActive"), false)
+                           , new EqualCondition(vm->getModel("appMode"), ApplicationMode::XEdit)
+                           , this);
+     }
+  return action;
   }
 
 

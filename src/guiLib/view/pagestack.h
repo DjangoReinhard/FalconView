@@ -14,13 +14,14 @@ class PageStack : public AbstractCenterWidget
 public:
   PageStack(QWidget* parent = nullptr);
 
-  CenterPage*    activatePage(const QString& name);
-  QString        activePage() const;
-  CenterPage*    page(const QString& name);
-  QList<QString> pages() const;
-  void           addPage(CenterPage* page, const QString& name = QString());
-  void           dump() const;
-  void           windowClosing(QCloseEvent* e);
+  CenterPage*      activatePage(const QString& name);
+  QString          activePage() const;
+  CenterPage*      page(const QString& name);
+  QList<QString>   pages() const;
+  void             addPage(CenterPage* page, const QString& name = QString());
+  void             dump() const;
+  void             windowClosing(QCloseEvent* e);
+  virtual QAction* viewAction();
 
 protected:
   virtual QWidget* createContent() override;
@@ -30,6 +31,7 @@ protected:
 private:
   QMap<QString, CenterPage*> pagePool;
   QString                    curPage;
+  QAction*                   action;
   friend class Kernel;
   };
 #endif // PAGESTACK_H

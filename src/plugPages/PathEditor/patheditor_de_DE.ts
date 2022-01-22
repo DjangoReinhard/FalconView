@@ -7,5 +7,9 @@
         <source>PathEditor</source>
         <translation>GCode Editor</translation>
     </message>
+    <message>
+        <source>Edit-mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

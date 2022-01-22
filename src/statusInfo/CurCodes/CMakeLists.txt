@@ -5,6 +5,7 @@ project(CurCodes LANGUAGES CXX)
 include(FalconView)
 add_library(siCurCodes MODULE
     curcodesstatus.cpp
+    CurCodes.qrc
     )
 set(TS_FILES
     curcodes_de_DE.ts

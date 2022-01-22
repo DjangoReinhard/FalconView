@@ -207,8 +207,8 @@ void SpeedStatus::connectSignals() {
 
 
 QString SpeedStatus::fileName() const {
-  if (isVertical) return ":/src/statusInfo/SpeedInfo/VSpeedInfo.ui";
-  return ":/src/statusInfo/SpeedInfo/HSpeedInfo.ui";
+  if (isVertical) return ":VSpeedInfo.ui";
+  return ":HSpeedInfo.ui";
   }
 
 

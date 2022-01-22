@@ -1,6 +1,7 @@
 #ifndef TESTEDIT_H
 #define TESTEDIT_H
 #include <abscenterwidget.h>
+#include <CenterPageInterface.h>
 #include <filemanagerclient.h>
 
 QT_BEGIN_NAMESPACE
@@ -14,14 +15,16 @@ class GCodeHighlighter;
 QT_END_NAMESPACE
 
 
-class TestEdit : public AbstractCenterWidget, FileManagerClient
+class TestEdit : public AbstractCenterWidget, public CenterPageInterface, protected FileManagerClient
 {
   Q_OBJECT
+  Q_INTERFACES(CenterPageInterface)
 public:
   TestEdit(const QString& fileName = ":/src/guiLib/view/GCodeEditor.ui", QWidget* parent = nullptr);
 
   QString pageName() override;
   void    restoreState();
+  virtual QAction* viewAction() override;
 
 public slots:
   void openFile();

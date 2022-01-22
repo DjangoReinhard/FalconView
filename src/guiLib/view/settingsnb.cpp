@@ -2,6 +2,10 @@
 #include <guicore.h>
 #include <configacc.h>
 #include <valuemanager.h>
+#include <dynaaction.h>
+#include <andcondition.h>
+#include <equalcondition.h>
+#include <smallercondition.h>
 #include <QVBoxLayout>
 #include <QVariant>
 #include <QTabWidget>
@@ -14,7 +18,8 @@
 
 SettingsNotebook::SettingsNotebook(QWidget *parent)
  : AbstractCenterWidget(QString(), parent)
- , tw(nullptr) {
+ , tw(nullptr)
+ , action(nullptr) {
   setObjectName("SettingsNotebook");
   setWindowTitle(tr("SettingsNotebook"));
   }
@@ -43,7 +48,7 @@ void SettingsNotebook::addPage(AbstractCenterWidget* page) {
   connect(page, &AbstractCenterWidget::dataChanged, this, &SettingsNotebook::pageChanged);
 
   //NOTE: have to wrap tab-text with space, as Qt truncates styled texts
-  tw->addTab(page, QString("  ") + page->windowTitle() + "  ");
+  tw->addTab(page, QString("  ") + ((QWidget*)page)->windowTitle() + "  ");
   }
 
 
@@ -101,8 +106,8 @@ void SettingsNotebook::pageChanged(AbstractCenterWidget* page, const QVariant &d
             }
          }
      }
-  if (dirty.toBool()) tw->setTabText(n, QString("  *") + page->windowTitle() + "  ");
-  else                tw->setTabText(n, QString("  ") + page->windowTitle() + "  ");
+  if (dirty.toBool()) tw->setTabText(n, QString("  *") + ((QWidget*)page)->windowTitle() + "  ");
+  else                tw->setTabText(n, QString("  ") + ((QWidget*)page)->windowTitle() + "  ");
   }
 
 
@@ -120,7 +125,7 @@ void SettingsNotebook::currentChanged(int) {
 
 
 void SettingsNotebook::closeEvent(QCloseEvent* e) {
-  qDebug() << "DynWidget::closeEvent() on widget " << objectName();
+  qDebug() << "DynWidget::closeEvent() on widget " << QWidget::objectName();
   int mx = tw->count();
 
   for (int i=0; i < mx; ++i) {
@@ -191,10 +196,12 @@ void SettingsNotebook::dump() {
   for (int i=0; i < mx; ++i) {
       AbstractCenterWidget* page = static_cast<AbstractCenterWidget*>(tw->widget(i));
 
-      if (page) qDebug() << "SN: page found ->" << page->objectName() << "with title" << page->windowTitle();
-      else      qDebug() << "SN: invalid page at #" << i;
-      qDebug() << "page has min. sizeHint:\t" << page->minimumSizeHint()
-               << "\tand min height:\t"       << page->minimumHeight();
+      if (page) {
+         qDebug() << "SN: page found ->" << ((QWidget*)page)->objectName() << "with title" << ((QWidget*)page)->windowTitle();
+         qDebug() << "page has min. sizeHint:\t" << page->minimumSizeHint()
+                  << "\tand min height:\t"       << page->minimumHeight();
+         }
+      else qDebug() << "SN: invalid page at #" << i;
       }
   }
 
@@ -225,4 +232,20 @@ QString SettingsNotebook::loadStyles(QTabWidget::TabPosition tp) {
      styles.close();
      }
   return rv;
+  }
+
+
+QAction* SettingsNotebook::viewAction() {
+  if (!action) {
+     action = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":/res/SK_Settings.png")
+                           , QIcon(":/res/SK_Settings_active.png")
+                           , tr("Settings-mode")
+                           , (new AndCondition(new EqualCondition(vm->getModel("taskState"), GuiCore::taskStateOn)
+                                             , new SmallerCondition(vm->getModel("execState"), GuiCore::taskWaiting4Motion)))
+                                ->addCondition(new EqualCondition(vm->getModel("errorActive"), false))
+                           , new EqualCondition(vm->getModel("appMode"), ApplicationMode::Settings)
+                           , this);
+     }
+  return action;
   }

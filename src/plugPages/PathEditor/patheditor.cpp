@@ -1,5 +1,9 @@
 #include "patheditor.h"
 #include <valuemanager.h>
+#include <dynaaction.h>
+#include <andcondition.h>
+#include <equalcondition.h>
+#include <smallercondition.h>
 #include <guicore.h>
 #include <gcodeeditor.h>
 #include <gcodehighlighter.h>
@@ -23,6 +27,11 @@ PathEditor::PathEditor(QWidget* parent)
   }
 
 
+void PathEditor::closeEvent(QCloseEvent* e) {
+  QWidget::closeEvent(e);
+  }
+
+
 void PathEditor::connectSignals() {
   connect(vm->getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::reallyLoadFile);
   TestEdit::connectSignals();
@@ -37,6 +46,16 @@ void PathEditor::loadFile(const QVariant& fileName) {
      core->beLoadTaskPlan(fileName.toString());
      }
   else vm->setValue("fileName", fileName);
+  }
+
+
+QWidget* PathEditor::createContent() {
+  return TestEdit::createContent();
+  }
+
+
+void PathEditor::updateStyles() {
+  TestEdit::updateStyles();
   }
 
 
@@ -55,4 +74,25 @@ void PathEditor::reallyLoadFile(const QVariant& fileName) {
 void PathEditor::fileUpdated(const QString& fileName) {
   //TODO: ask backend to reload file
   qDebug() << "PathEdit: file" << fileName << "has been changed - need to trigger backend!";
+  }
+
+
+void PathEditor::showEvent(QShowEvent* e) {
+  QWidget::showEvent(e);
+  }
+
+
+QAction* PathEditor::viewAction() {
+  if (!action) {
+     action = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
+                           , QIcon(":SK_Edit.png")
+                           , QIcon(":SK_Edit_active.png")
+                           , tr("Edit-mode")
+                           , (new AndCondition(new EqualCondition(vm->getModel("taskState"), GuiCore::taskStateOn)
+                                             , new SmallerCondition(vm->getModel("execState"), GuiCore::taskWaiting4Motion)))
+                                ->addCondition(new EqualCondition(vm->getModel("errorActive"), false))
+                           , new EqualCondition(vm->getModel("appMode"), ApplicationMode::Edit)
+                           , this);
+     }
+  return action;
   }

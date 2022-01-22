@@ -101,9 +101,9 @@
         </property>
         <property name="icon">
          <iconset resource="../../../FalconView.qrc">
-          <normaloff>:/res/A-.png</normaloff>
-          <normalon>:/res/As-.png</normalon>
-          <selectedon>:/res/As-.png</selectedon>:/res/A-.png</iconset>
+          <normaloff>:A-.png</normaloff>
+          <normalon>:As-.png</normalon>
+          <selectedon>:As-.png</selectedon>:A-.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -129,9 +129,9 @@
         </property>
         <property name="icon">
          <iconset resource="../../../FalconView.qrc">
-          <normaloff>:/res/A+.png</normaloff>
-          <normalon>:/res/As+.png</normalon>
-          <selectedon>:/res/As+.png</selectedon>:/res/A+.png</iconset>
+          <normaloff>:A+.png</normaloff>
+          <normalon>:As+.png</normalon>
+          <selectedon>:As+.png</selectedon>:A+.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -170,9 +170,9 @@
         </property>
         <property name="icon">
          <iconset resource="../../../FalconView.qrc">
-          <normaloff>:/res/B-.png</normaloff>
-          <normalon>:/res/Bs-.png</normalon>
-          <selectedon>:/res/Bs-.png</selectedon>:/res/B-.png</iconset>
+          <normaloff>:B-.png</normaloff>
+          <normalon>:Bs-.png</normalon>
+          <selectedon>:Bs-.png</selectedon>:B-.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -198,9 +198,9 @@
         </property>
         <property name="icon">
          <iconset resource="../../../FalconView.qrc">
-          <normaloff>:/res/B+.png</normaloff>
-          <normalon>:/res/Bs+.png</normalon>
-          <selectedon>:/res/Bs+.png</selectedon>:/res/B+.png</iconset>
+          <normaloff>:B+.png</normaloff>
+          <normalon>:Bs+.png</normalon>
+          <selectedon>:Bs+.png</selectedon>:B+.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -239,9 +239,9 @@
         </property>
         <property name="icon">
          <iconset resource="../../../FalconView.qrc">
-          <normaloff>:/res/C-.png</normaloff>
-          <normalon>:/res/Cs-.png</normalon>
-          <selectedon>:/res/Cs-.png</selectedon>:/res/C-.png</iconset>
+          <normaloff>:C-.png</normaloff>
+          <normalon>:Cs-.png</normalon>
+          <selectedon>:Cs-.png</selectedon>:C-.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -267,9 +267,9 @@
         </property>
         <property name="icon">
          <iconset resource="../../../FalconView.qrc">
-          <normaloff>:/res/C+.png</normaloff>
-          <normalon>:/res/Cs+.png</normalon>
-          <selectedon>:/res/Cs+.png</selectedon>:/res/C+.png</iconset>
+          <normaloff>:C+.png</normaloff>
+          <normalon>:Cs+.png</normalon>
+          <selectedon>:Cs+.png</selectedon>:C+.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -330,8 +330,8 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/X+.png</normaloff>
-       <normalon>:/res/Xs+.png</normalon>:/res/X+.png</iconset>
+       <normaloff>:X+.png</normaloff>
+       <normalon>:Xs+.png</normalon>:X+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -357,9 +357,9 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/Z+.png</normaloff>
-       <normalon>:/res/Zs+.png</normalon>
-       <selectedon>:/res/Zs+.png</selectedon>:/res/Z+.png</iconset>
+       <normaloff>:Z+.png</normaloff>
+       <normalon>:Zs+.png</normalon>
+       <selectedon>:Zs+.png</selectedon>:Z+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -398,9 +398,9 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/W-.png</normaloff>
-       <normalon>:/res/Ws-.png</normalon>
-       <selectedon>:/res/Ws-.png</selectedon>:/res/W-.png</iconset>
+       <normaloff>:W-.png</normaloff>
+       <normalon>:Ws-.png</normalon>
+       <selectedon>:Ws-.png</selectedon>:W-.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -498,9 +498,9 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/W+.png</normaloff>
-       <normalon>:/res/Ws+.png</normalon>
-       <selectedon>:/res/Ws+.png</selectedon>:/res/W+.png</iconset>
+       <normaloff>:W+.png</normaloff>
+       <normalon>:Ws+.png</normalon>
+       <selectedon>:Ws+.png</selectedon>:W+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -532,10 +532,10 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/X-.png</normaloff>
-       <normalon>:/res/Xs-.png</normalon>
-       <activeon>:/res/Xs-.png</activeon>
-       <selectedon>:/res/Xs-.png</selectedon>:/res/X-.png</iconset>
+       <normaloff>:X-.png</normaloff>
+       <normalon>:Xs-.png</normalon>
+       <activeon>:Xs-.png</activeon>
+       <selectedon>:Xs-.png</selectedon>:X-.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -588,9 +588,9 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/U+.png</normaloff>
-       <normalon>:/res/Us+.png</normalon>
-       <selectedon>:/res/Us+.png</selectedon>:/res/U+.png</iconset>
+       <normaloff>:U+.png</normaloff>
+       <normalon>:Us+.png</normalon>
+       <selectedon>:Us+.png</selectedon>:U+.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -616,9 +616,9 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/U-.png</normaloff>
-       <normalon>:/res/Us-.png</normalon>
-       <selectedon>:/res/Us-.png</selectedon>:/res/U-.png</iconset>
+       <normaloff>:U-.png</normaloff>
+       <normalon>:Us-.png</normalon>
+       <selectedon>:Us-.png</selectedon>:U-.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -671,9 +671,9 @@
      </property>
      <property name="icon">
       <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/Z-.png</normaloff>
-       <normalon>:/res/Zs-.png</normalon>
-       <selectedon>:/res/Zs-.png</selectedon>:/res/Z-.png</iconset>
+       <normaloff>:Z-.png</normaloff>
+       <normalon>:Zs-.png</normalon>
+       <selectedon>:Zs-.png</selectedon>:Z-.png</iconset>
      </property>
      <property name="iconSize">
       <size>

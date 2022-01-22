@@ -62,7 +62,8 @@ public:
   void topView();
   void leftView();
   void rightView();
-  void isoView();
+  void iso1View();
+  void iso2View();
 
 protected:
   // OpenGL events

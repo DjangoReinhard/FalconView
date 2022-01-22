@@ -26,16 +26,7 @@
 #include <QMainWindow>
 
 #include <occtviewer.h>
-
-//#include <pluginpagefactory.h>
-//#include <canonif.h>
-//#include <canonifsettings.h>
-//#include <lcproperties.h>
-//#include <tooltable.h>
-//#include <LCInter.h>
-//#include <statusreader.h>
-//#include <commandwriter.h>
-//#include <emc.hh>
+#include <emc_nml.hh>
 
 #include <cassert>
 
@@ -132,7 +123,7 @@ QList<QString> GuiCore::pluggableMainPages() {
   }
 
 
-PluginPageInterface* GuiCore::pluggableMainPage(const QString& pageID) {
+ViewPluginInterface* GuiCore::pluggableMainPage(const QString& pageID) {
   return kernel->pluggableMainPage(pageID);
   }
 
@@ -142,7 +133,7 @@ QList<QString> GuiCore::pluggableNotebookPages() {
   }
 
 
-PluginPageInterface* GuiCore::pluggableNotebookPage(const QString& pageID) {
+ViewPluginInterface* GuiCore::pluggableNotebookPage(const QString& pageID) {
   return kernel->pluggableNotebookPage(pageID);
   }
 
@@ -168,56 +159,9 @@ void GuiCore::setKernelCreator(KernelCreator* kc) {
   }
 
 
-//QString GuiCore::languagePrefix() const {
-//  return kernel->locale().name().mid(0, 2);
-//  }
-
-
-//QLocale GuiCore::locale() const {
-//  return kernel->locale();
-//  }
-
-
-//bool GuiCore::move2Backup(const QString& fileName) {
-//  QString   backupPat(fileName);
-//  QFileInfo fi(fileName);
-//  QString   extension(QString(".%1").arg(fi.completeSuffix()));
-
-//  backupPat.replace(extension, ".bak%1");
-//  QFileInfo check(backupPat.arg(""));
-
-//  if (check.exists()) {
-//     QFile last(backupPat.arg(9));
-
-//     if (last.exists()) last.remove();
-//     for (int i=8; i > 0; --i) {
-//         QFile tmp(backupPat.arg(i));
-
-//         if (tmp.exists()) tmp.rename(backupPat.arg(i+1));
-//         }
-//     QFile tmp(check.absoluteFilePath());
-
-//     tmp.rename(backupPat.arg(1));
-//     }
-//  QFile file(fileName);
-
-//  return file.rename(check.absoluteFilePath());
-//  }
-
-
 void GuiCore::showHelp() const {
   kernel->showHelp();
   }
-
-
-//void GuiCore::showAllButCenter(bool visible) {
-//  ValueManager().setValue("showAllButCenter", visible);
-//  }
-
-
-//bool GuiCore::showHelpAtPageChange() const {
-//  return kernel->config()->value("showHelpAtPageChange").toBool();
-//  }
 
 
 QList<QString> GuiCore::statusInfos() {
@@ -225,7 +169,7 @@ QList<QString> GuiCore::statusInfos() {
   }
 
 
-PluginPageInterface* GuiCore::statusInfo(const QString& infoID) {
+ViewPluginInterface* GuiCore::statusInfo(const QString& infoID) {
   return kernel->statusInfo(infoID);
   }
 
@@ -381,3 +325,6 @@ void GuiCore::beSetTaskState(int state) {
 void GuiCore::beTaskPlanSynch() {
     kernel->beTaskPlanSynch();
     }
+
+const int GuiCore::taskStateOn        = EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON;
+const int GuiCore::taskWaiting4Motion = EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_WAITING_FOR_MOTION;

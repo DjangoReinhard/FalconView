@@ -15,7 +15,7 @@ class PreferencesEditor : public AbstractCenterWidget
 {
   Q_OBJECT
 #ifdef USE_PLUGINS
-  Q_PLUGIN_METADATA(IID "PluginPageInterface_iid" FILE "prefsEditor.json")
+  Q_PLUGIN_METADATA(IID "ViewPluginInterface_iid" FILE "prefsEditor.json")
 #endif
 public:
   PreferencesEditor(QWidget* parent = nullptr);

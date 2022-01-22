@@ -159,7 +159,7 @@ OcctQtViewer::~OcctQtViewer() {
 
 void OcctQtViewer::addPlugin(AbstractCenterWidget *acw) {
   if (!acw) return;
-  plugins[acw->objectName()] = acw;
+  plugins[((QWidget*)acw)->objectName()] = acw;
   }
 
 
@@ -417,7 +417,13 @@ void OcctQtViewer::rightView() {
   }
 
 
-void OcctQtViewer::isoView() {
+void OcctQtViewer::iso1View() {
   myView->SetProj(V3d_XposYnegZpos);
+  fitAll();
+  }
+
+
+void OcctQtViewer::iso2View() {
+  myView->SetProj(V3d_XnegYnegZpos);
   fitAll();
   }
