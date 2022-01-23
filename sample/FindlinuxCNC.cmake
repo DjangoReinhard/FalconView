@@ -16,6 +16,7 @@ if(linuxCNC_DIR AND IS_DIRECTORY "${linuxCNC_DIR}")
     target_include_directories(IFlinuxCNC SYSTEM BEFORE
                                INTERFACE ${linuxCNC_DIR}/include
                                INTERFACE ${linuxCNC_DIR}/src
+                               INTERFACE ${linuxCNC_DIR}/src/hal
                                INTERFACE ${linuxCNC_DIR}/src/emc/rs274ngc
                                INTERFACE ${linuxCNC_DIR}/src/emc/tooldata
                                INTERFACE /usr/include/python3.9

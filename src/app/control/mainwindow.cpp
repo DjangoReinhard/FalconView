@@ -355,12 +355,15 @@ void MainWindow::createActions() {
       if (cpi) {
          qDebug() << "MW::createActions()\t-\tstack contains page:" << pn;
 
-         if (pn == "PreView3DFrame")             autoMode     = a;
+         if (pn == "PathEditorFrame")            editMode     = a;
+         else if (pn == "PreView3DFrame")        autoMode     = a;
          else if (pn == "MDIEditorFrame")        mdiMode      = a;
-         else if (pn == "PathEditorFrame")       editMode     = a;
          else if (pn == "TestEditFrame")         testEditMode = a;
-         else if (pn == "SettingsNotebookFrame") cfgMode      = a;
+         //wheel
          else if (pn == "JogViewFrame")          jogMode      = a;
+         //touch
+         else if (pn == "SettingsNotebookFrame") cfgMode      = a;
+
          else if (pn == "SysEventViewFrame")     msgMode      = a;
          }
       else qDebug() << "MW::createActions() - " << pn << "seems not to be a center page";

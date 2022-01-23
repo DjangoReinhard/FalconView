@@ -96,6 +96,7 @@ add_custom_target(build_Finish ALL
                   COMMAND ${PROJECT_SOURCE_DIR}/scripts/buildFinish ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
                   DEPENDS FalconView
                           nbFixtureManager
+                          nbHalView
                           nbLCToolTable
                           nbPrefsEditor
                           nbToolManager

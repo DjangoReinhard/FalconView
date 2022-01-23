@@ -17,11 +17,8 @@ int main(int argc, char *argv[]) {
   try {
       QApplication a(argc, argv);
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
       // set default font for all gui elements. Needed with Qt > 6xx
       a.setFont(QFont("Noto Sans", 15));
-#endif
-
       GuiCore::setKernelCreator(new GuiKernelCreator());
       FalconViewDB dbHelper;
       GuiCore      appCore(a, "FalconView", dbHelper);
