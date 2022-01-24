@@ -536,8 +536,11 @@
    </item>
    <item row="2" column="1" colspan="4">
     <widget class="QCheckBox" name="cbHelp">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
-      <string>show Help on content change</string>
+      <string>show &amp;Help on content change</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -876,8 +879,11 @@
    </item>
    <item row="1" column="1" colspan="4">
     <widget class="QCheckBox" name="cbPreviewCenter">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
-      <string>3D-Preview is Center only</string>
+      <string>3D-&amp;Preview is Center only</string>
      </property>
     </widget>
    </item>
@@ -2074,8 +2080,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="text">
-      <string>state information inside 3D preview?</string>
+      <string>&amp;state information inside 3D preview?</string>
      </property>
     </widget>
    </item>
@@ -2084,28 +2093,8 @@
      <property name="text">
       <string>Application default Font</string>
      </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="fgAppDefault">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/editor.png</normaloff>:/res/editor.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -2116,6 +2105,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -2132,32 +2124,10 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="4">
-    <widget class="QPushButton" name="bgAppDefault">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../FalconView.qrc">
-       <normaloff>:/res/colors.png</normaloff>:/res/colors.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>lAppDefault</tabstop>
   <tabstop>lDroAbs</tabstop>
   <tabstop>lDroRel</tabstop>
   <tabstop>lDroDtg</tabstop>
@@ -2173,6 +2143,7 @@
   <tabstop>lEdLinNum</tabstop>
   <tabstop>lLineHL</tabstop>
   <tabstop>lFixTitle</tabstop>
+  <tabstop>lFixDisabledTitle</tabstop>
   <tabstop>lFixPrompt</tabstop>
   <tabstop>lFixEdit</tabstop>
   <tabstop>lRapidMove</tabstop>
@@ -2181,7 +2152,6 @@
   <tabstop>lOldSeg</tabstop>
   <tabstop>lWorkPiece</tabstop>
   <tabstop>lWorkLimit</tabstop>
-  <tabstop>cbStatesInside</tabstop>
  </tabstops>
  <resources>
   <include location="../../../FalconView.qrc"/>
