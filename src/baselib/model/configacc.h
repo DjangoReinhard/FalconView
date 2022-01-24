@@ -15,7 +15,8 @@ class Config
 public:
   // sync with ConfigManager::geToString(int i) !
   enum GuiElem {
-    ActCodes
+    AppDefault
+  , ActCodes
   , CurSeg
   , DroAbs
   , DroDtg

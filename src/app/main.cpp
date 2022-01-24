@@ -17,8 +17,6 @@ int main(int argc, char *argv[]) {
   try {
       QApplication a(argc, argv);
 
-      // set default font for all gui elements. Needed with Qt > 6xx
-      a.setFont(QFont("Noto Sans", 15));
       GuiCore::setKernelCreator(new GuiKernelCreator());
       FalconViewDB dbHelper;
       GuiCore      appCore(a, "FalconView", dbHelper);
@@ -33,8 +31,6 @@ int main(int argc, char *argv[]) {
       appCore.checkBE();
       mainWindow->show();
       int rv = a.exec();
-
-//      qDebug() << "left event loop with rv ==" << rv;
 
       return rv;
       }

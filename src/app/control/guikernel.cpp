@@ -372,6 +372,14 @@ QString GuiKernel::fileName4(const QString &fileID) const {
 void GuiKernel::initialize(DBHelper &dbAssist) {
   QDir dir(QCoreApplication::applicationDirPath());
 
+//  cfg->settings.beginGroup("MainWindow");
+  QFont df = cfg->getFont(Config::AppDefault);
+//  QVariant fv = cfg->settings.value("defaultFont", QFont("Noto Sans", 15));
+//  QFont    df = fv.value<QFont>();
+
+  app.setFont(df);
+//  cfg->settings.endGroup();
+
   dir.cd("plugins");
   pluginDir = dir.absolutePath();
   dir.cd("..");

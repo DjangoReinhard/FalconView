@@ -29,7 +29,7 @@ public:
 
 private:
   const int          lastIndex;
-  static const char* guiElemNames[];
+//  static const char* guiElemNames[];
   };
 
 #endif // CONFIGMGR_H
