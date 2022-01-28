@@ -1,5 +1,7 @@
 #include <ally3d.h>
 #include <graphicfactory.h>
+#include <graphicelement.h>
+#include <geline.h>
 #include <occtviewer.h>
 #include <valuemanager.h>
 #include <guicore.h>
@@ -24,6 +26,11 @@ static Quantity_Color convertColor(const QColor& c) {
 
 void Ally3D::setFeedColor(const QColor &c) {
   colFeed = convertColor(c);
+  }
+
+
+void Ally3D::setTraverseColor(const QColor &c) {
+  colTraverse = convertColor(c);
   }
 
 
@@ -73,63 +80,63 @@ void Ally3D::showMachineLimits() {
   std::pair<QVector3D, QVector3D> ml = GuiCore().machineLimits();
   gp_Pnt cMin(ml.first.x(), ml.first.y(), ml.first.z());
   gp_Pnt cMax(ml.second.x(), ml.second.y(), ml.second.z());
-  Handle(AIS_InteractiveContext) ctx   = v3D->context();
-  Handle(AIS_Shape)              shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                                            , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colLimits);
-  ctx->Display(shape, AIS_Shaded, 0, false);
+  Handle(AIS_InteractiveContext) ctx  = v3D->context();
+  GraphicElement*                line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                                                           , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMin.X(), cMax.Y(), cMin.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMin.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colLimits);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
   }
 
 
@@ -139,89 +146,85 @@ void Ally3D::showWorkLimits() {
   gp_Pnt  cMin = workPiece.CornerMin();
   gp_Pnt  cMax = workPiece.CornerMax();
 
-  Handle(AIS_Shape) shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                                         , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
-                                       , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
-                                       , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
-  shape = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMax.Z())
-                                       , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
-  shape->SetColor(colWorkPiece);
-  ctx->Display(shape, AIS_Shaded, 0, false);
+  GELine* line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                                    , gp_Pnt(cMax.X(), cMin.Y(), cMin.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMin.X(), cMax.Y(), cMin.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMin.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMin.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMax.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMax.X(), cMin.Y(), cMin.Z())
+                            , gp_Pnt(cMax.X(), cMin.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMin.Y(), cMax.Z())
+                            , gp_Pnt(cMin.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
+  line = facGraph->createLine(gp_Pnt(cMin.X(), cMax.Y(), cMax.Z())
+                            , gp_Pnt(cMax.X(), cMax.Y(), cMax.Z()));
+  line->setColor(colWorkPiece);
+  ctx->Display(line->shape(), AIS_Shaded, 0, false);
   }
 
 
-void Ally3D::showPath(const QMap<long, Handle(AIS_InteractiveObject)>& path) {
+void Ally3D::showPath(const QMap<long, GraphicElement*>& path) {
   if (!v3D) return;
   Handle(AIS_InteractiveContext) ctx = v3D->context();
 
-//  if (workPath.size()) workPath.clear();
   workPath = path;
   ctx->RemoveAll(false);
   gp_Pnt         cMin, cMax, p;
   Bnd_Box        bb;
   gp_Dir         axis = gp::DZ();
   gp_Ax2         aplace(gp_Pnt(0, 0, 0), axis);
-  Quantity_Color col;
-  Quantity_Color tc        = colFeed;
   TopoDS_Shape   topo_cone = BRepPrimAPI_MakeCone(aplace, 0.001, 10, 20).Shape();
 
   cone = new AIS_Shape(topo_cone);
-  for (const Handle(AIS_InteractiveObject)& anObject : qAsConst(workPath)) {
-      ctx->Display(anObject, AIS_Shaded, 0, false);
-      const Handle(AIS_ColoredShape) shape = Handle(AIS_ColoredShape)::DownCast(anObject);
+  for (GraphicElement* ge : workPath) {
+      if (!ge->shape().IsNull())
+         ctx->Display(ge->shape(), AIS_Shaded, 0, false);
 
-      if (!shape.IsNull()) {
-         shape->Color(col);
-         if (col != tc) continue;
-         bb = shape->BoundingBox();
+      if (ge->type() == GraphicElement::GELine
+       || ge->type() == GraphicElement::GEHelix) {
+         bb = ge->shape()->BoundingBox();
          p = bb.CornerMin();
          cMin.SetX(fmin(cMin.X(), p.X()));
          cMin.SetY(fmin(cMin.Y(), p.Y()));
@@ -247,16 +250,16 @@ void Ally3D::update(const QVariant& line) {
   if (!v3D) return;
   if (workPath.size() < 1) return;
   int segNum = fmax(0, line.toInt() - 2);
-  QMap<long, Handle(AIS_InteractiveObject)>::iterator curSeg = workPath.upperBound(segNum);
+  QMap<long, GraphicElement*>::iterator curSeg = workPath.upperBound(segNum);
 
   if (lastSeg.key() > segNum) lastSeg = curSeg;
 //  qDebug() << "Ally3D::update(" << segNum << ")";
   while (lastSeg != curSeg) {
-        lastSeg.value()->SetColor(colOldSeg);
+        lastSeg.value()->setColor(colOldSeg);
         lastSeg++;
         }
   lastSeg = curSeg;
-  lastSeg.value()->SetColor(colCurSeg);
+  lastSeg.value()->setColor(colCurSeg);
   v3D->view()->Invalidate();
   v3D->update();
   }
@@ -265,15 +268,48 @@ void Ally3D::update(const QVariant& line) {
 void Ally3D::highlight(const QVariant& line) {
   if (!v3D) return;
   if (workPath.size() < 1) return;
+  if (!lastSeg.value()->isNull()) {
+     GraphicElement* ge = lastSeg.value();
+
+     switch (ge->type()) {
+       case GraphicElement::GELine:
+       case GraphicElement::GEHelix:
+            ge->setColor(colFeed);
+            break;
+       case GraphicElement::GERapid:
+            ge->setColor(colTraverse);
+            break;
+       default:
+            break;
+       }
+     }
   int segNum = fmax(0, line.toInt());
-  QMap<long, Handle(AIS_InteractiveObject)>::iterator curSeg = workPath.upperBound(segNum);
+  QMap<long, GraphicElement*>::iterator curSeg = workPath.upperBound(segNum);
+  GraphicElement* ge = nullptr;
 
   if (lastSeg.key() > segNum) lastSeg = curSeg;
 //  qDebug() << "Ally3D::highlight(" << segNum << ")";
   while (lastSeg != curSeg) {
-        lastSeg.value()->SetColor(colOldSeg);
+        GraphicElement* ge = lastSeg.value();
+
+        switch (ge->type()) {
+          case GraphicElement::GELine:
+          case GraphicElement::GEHelix:
+               ge->setColor(colFeed);
+               break;
+          case GraphicElement::GERapid:
+               ge->setColor(colTraverse);
+               break;
+          default:
+               break;
+          }
         lastSeg++;
         }
   lastSeg = curSeg;
-  if (!lastSeg->IsNull()) lastSeg.value()->SetColor(colCurSeg);
+  if (!lastSeg.value()->isNull()) {
+     GraphicElement* ge = lastSeg.value();
+
+     ge->setColor(colCurSeg);
+     moveCone(ge->from().X(), ge->from().Y(), ge->from().Z());
+     }
   }

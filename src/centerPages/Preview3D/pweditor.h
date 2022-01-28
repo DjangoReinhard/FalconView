@@ -30,6 +30,8 @@ public:
 
 public slots:
   void setCurrentLine(const QVariant& line);
+  void nextEditorLine();
+  void prevEditorLine();
 
 protected:
   virtual void connectSignals() override;

@@ -35,7 +35,14 @@ void PathEditor::closeEvent(QCloseEvent* e) {
 void PathEditor::connectSignals() {
   connect(vm->getModel("fileName", " "), &ValueModel::valueChanged, this, &PathEditor::reallyLoadFile);
   TestEdit::connectSignals();
-  connect(ed, &GCodeEditor::cursorPositionChanged, this, [=](){ vm->setValue("edLine", ed->textCursor().block().blockNumber()); });
+  connect(ed, &GCodeEditor::cursorPositionChanged, this, [=](){
+    ValueModel* m = vm->getModel("edLine");
+
+    qDebug() << "PE: address of <edLine>" << m;
+
+//    vm->setValue("edLine", ed->textCursor().block().blockNumber());
+    m->setValue(ed->textCursor().block().blockNumber());
+    });
   }
 
 

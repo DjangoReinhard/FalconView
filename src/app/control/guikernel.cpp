@@ -424,6 +424,7 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   nc_files = lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX");
   canonIF->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
   canonIF->setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
+  ally3D->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
   ally3D->setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
   ally3D->setLimitsColor(cfg->getForeground(Config::GuiElem::WorkLimit));
   ally3D->setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));

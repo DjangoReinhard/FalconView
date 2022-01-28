@@ -1,6 +1,10 @@
 #define CANONIF_CPP
 #include <canonif.h>
 #include <canonifsettings.h>
+#include <graphicelement.h>
+#include <geline.h>
+#include <gehelix.h>
+#include <gerapidmove.h>
 #include <tooltable.h>
 #include <lcproperties.h>
 #include <axismask.h>
@@ -8,9 +12,6 @@
 #include <core.h>
 #include <graphicfactory.h>
 #include <graphicfactory.h>
-
-#include <AIS_Shape.hxx>
-#include <gce_MakeDir.hxx>
 
 #include <QVector3D>
 #include <QDebug>
@@ -27,8 +28,8 @@ CanonIF::CanonIF() {
   }
 
 
-void CanonIF::appendShape(int lineNum, Handle(AIS_InteractiveObject) shape) {
-  p->toolPath.insert(lineNum, shape);
+void CanonIF::appendShape(int lineNum, GraphicElement* ge) {
+  p->toolPath.insert(lineNum, ge);
   }
 
 
@@ -79,7 +80,7 @@ CANON_POSITION    CanonIF::endPoint() const                { return p->canon.end
 QString           CanonIF::parameterFilename() const       { return p->properties.parameterFileName(); }
 Quantity_Color    CanonIF::feedColor() const               { return p->colFeed; }
 Quantity_Color    CanonIF::traverseColor() const           { return p->colTraverse; }
-QMap<long, Handle(AIS_InteractiveObject)>& CanonIF::toolPath() { return p->toolPath; }
+QMap<long, GraphicElement*>& CanonIF::toolPath()           { return p->toolPath; }
 void CanonIF::changeTool(int ttIndex)       { p->changeTool(ttIndex); }
 void CanonIF::selectTool(int tool)          { p->changer.selectNextTool(tool); }
 void CanonIF::setLengthUnits(CANON_UNITS u) { p->setJobUnits(u); }
@@ -549,10 +550,10 @@ void STRAIGHT_TRAVERSE(int lineno, double x, double y, double z
   CANON_POSITION ep(x, y, z, a, b, c, u, v, w);
 
   if (lineno > 0)   {
-     Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(sp.x, sp.y, sp.z)
+     GraphicElement* ge = ci.graphicFactory().createRapidMove(gp_Pnt(sp.x, sp.y, sp.z)
                                                             , gp_Pnt(ep.x, ep.y, ep.z));
-     shape->SetColor(ci.traverseColor());
-     ci.appendShape(lineno, shape);
+     ge->setColor(ci.traverseColor());
+     ci.appendShape(lineno, ge);
      }
   ci.setEndPoint(ep);
   }
@@ -587,16 +588,16 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
 
         rotate_and_offset_pos(unused, unused, unused, a, b, c, u, v, w);
 
-        gp_Pnt sp     = gp_Pnt(lp.x, lp.y, lp.z);
-        gp_Pnt ep     = gp_Pnt(fe, se, ae);
-        gp_Pnt center = gp_Pnt(fa, sa, fmin(sp.Z(), ae));
-        Handle(AIS_Shape) shape;
+        gp_Pnt   sp     = gp_Pnt(lp.x, lp.y, lp.z);
+        gp_Pnt   ep     = gp_Pnt(fe, se, ae);
+        gp_Pnt   center = gp_Pnt(fa, sa, fmin(sp.Z(), ae));
+        GEHelix* gh     = nullptr;
         gp_Dir axis(0, 0, ep.Z() > sp.Z() ? 1 : -1);
 
-        if (rotation > 0) shape = ci.graphicFactory().createHelix(sp, ep, center, axis, true);
-        else              shape = ci.graphicFactory().createHelix(sp, ep, center, axis, false);
-        ci.appendShape(lineno, shape);
-        shape->SetColor(ci.feedColor());
+        if (rotation > 0) gh = ci.graphicFactory().createHelix(sp, ep, center, axis, true);
+        else              gh = ci.graphicFactory().createHelix(sp, ep, center, axis, false);
+        ci.appendShape(lineno, gh);
+        gh->setColor(ci.feedColor());
         ci.setEndPoint(ep.X(), ep.Y(), ep.Z(), a, b, c, u, v, w);
 
         return;
@@ -655,11 +656,11 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
   to_rotated(normal_cart);
 
   // Note that the "start" point is already rotated and offset
-  Handle(AIS_Shape) shape;
+  GraphicElement* ge = nullptr;
 
   if (rotation == 0) {
-     shape = ci.graphicFactory().createLine(gp_Pnt(lp.x, lp.y, lp.z)
-                                          , gp_Pnt(endpt.x, endpt.y, endpt.z));
+     ge = ci.graphicFactory().createLine(gp_Pnt(lp.x, lp.y, lp.z)
+                                       , gp_Pnt(endpt.x, endpt.y, endpt.z));
      }
   else {
      int fullTurn = 0;
@@ -670,11 +671,11 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
      gp_Pnt normal = to_ext_len(gp_Pnt(normal_cart.x, normal_cart.y, normal_cart.z));
      gp_Dir axis(normal.X(), normal.Y(), normal.Z());
      if (sp.X() == ep.X() && sp.Y() == ep.Y() && sp.Z() == ep.Z()) fullTurn = 1;
-     shape = ci.graphicFactory().createHelix(sp, ep, center, axis, rotation > 0,  fullTurn);
+     ge = ci.graphicFactory().createHelix(sp, ep, center, axis, rotation > 0,  fullTurn);
      }
-  if (shape) {
-     shape->SetColor(ci.feedColor());
-     ci.appendShape(lineno, shape);
+  if (ge) {
+     ge->setColor(ci.feedColor());
+     ci.appendShape(lineno, ge);
      }
   ci.setEndPoint(endpt);
   }
@@ -690,10 +691,10 @@ void STRAIGHT_FEED(int lineno, double x, double y, double z
   CANON_POSITION sp = ci.endPoint();
   CANON_POSITION ep(x, y, z, a, b, c, u, v, w);
 
-  Handle(AIS_Shape) shape = ci.graphicFactory().createLine(gp_Pnt(sp.x, sp.y, sp.z)
-                                                         , gp_Pnt(ep.x, ep.y, ep.z));
-  shape->SetColor(ci.feedColor());
-  ci.appendShape(lineno, shape);
+  GraphicElement* ge = ci.graphicFactory().createLine(gp_Pnt(sp.x, sp.y, sp.z)
+                                                    , gp_Pnt(ep.x, ep.y, ep.z));
+  ge->setColor(ci.feedColor());
+  ci.appendShape(lineno, ge);
   ci.setEndPoint(ep);
   }
 

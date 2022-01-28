@@ -5,10 +5,10 @@
 #include <axismask.h>
 #include <stupidtoolchangerif.h>
 
+#include <AIS_Shape.hxx>
+
 #include <QObject>
 #include <QColor>
-
-#include <AIS_InteractiveObject.hxx>
 
 #include <canon.hh>
 
@@ -16,6 +16,7 @@ class  ToolTable;
 class  ToolEntry;
 struct CanonConfig_t;
 class  CANON_POSITION;
+class  GraphicElement;
 #ifndef CANONIF_CPP
 #error This file is not intended for public usage!
 #endif
@@ -66,7 +67,7 @@ private:
   int                 selectedOffset;
   Quantity_Color      colTraverse;
   Quantity_Color      colFeed;
-  QMultiMap<long, Handle(AIS_InteractiveObject)> toolPath;
+  QMultiMap<long, GraphicElement*> toolPath;
   friend class CanonIF;
   };
 #endif // CANONIFSETTINGS_H

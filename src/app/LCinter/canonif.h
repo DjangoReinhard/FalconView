@@ -3,8 +3,6 @@
 #include <QObject>
 #include <QColor>
 
-#include <Standard_Handle.hxx>
-
 #include <canon.hh>
 
 #ifdef toLine
@@ -15,6 +13,7 @@ class  ToolTable;
 class  CanonIFSettings;
 struct CanonConfig_t;
 class  LcProperties;
+class  GraphicElement;
 class  GraphicFactory;
 class  AIS_InteractiveObject;
 class  Quantity_Color;
@@ -70,7 +69,7 @@ public:
   CANON_POSITION    endPoint() const;
   QString           parameterFilename() const;
   double            convert(double v);
-  void              appendShape(int lineNum, Handle(AIS_InteractiveObject) shape);
+  void              appendShape(int lineNum, GraphicElement* ge);
   Quantity_Color    feedColor() const;
   Quantity_Color    traverseColor() const;
 //  Quantity_Color    curSegColor() const;
@@ -78,7 +77,7 @@ public:
 //  Quantity_Color    oldSegColor() const;
 //  Quantity_Color    workPieceColor() const;
 
-  QMap<long, Handle(AIS_InteractiveObject)>& toolPath();
+  QMap<long, GraphicElement*>& toolPath();
   void changeTool(int ttIndex);
   void selectTool(int tool);
   void setLengthUnits(CANON_UNITS u);

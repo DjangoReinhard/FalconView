@@ -49,7 +49,9 @@ GuiCore::GuiCore(void* pFromOuterAdressSpace)
 void GuiCore::activatePage(const QString& pageName) {
   qDebug() << "Core: activate page with name >" << pageName << "<";
 
-  kernel->activatePage(QString("%1Frame").arg(pageName));
+  if (!pageName.endsWith("Frame"))
+     kernel->activatePage(QString("%1Frame").arg(pageName));
+  else kernel->activatePage(pageName);
   }
 
 

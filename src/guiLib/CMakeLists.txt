@@ -9,6 +9,10 @@ add_library(FVguiLib STATIC
     control/guicore.cpp
     control/helpengine.cpp
     util/Geom_HelixData.cpp
+    util/graphicelement.cpp
+    util/gehelix.cpp
+    util/geline.cpp
+    util/gerapidmove.cpp
     util/HHelixCurveAdaptor.cpp
     util/HelixCurveAdaptor.cpp
     util/HelixCurveAdaptor_CylinderEvaluator.cpp

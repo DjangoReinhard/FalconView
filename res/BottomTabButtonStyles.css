@@ -62,12 +62,8 @@ QTabBar QToolButton {
   margin-bottom: 4px;
   }
 QTabBar QToolButton::right-arrow {
-  /* image: url(rightarrow.png); / * the arrow mark in the tool buttons */
-  margin-left: 0px;
+  image: url(:res/next.png);
   }
 QTabBar QToolButton::left-arrow {
-  /* image: url(leftarrow.png); */
-  margin-right: 10px;
-  padding-right: 10px;
-  width: 90px;
+  image: url(:res/previous.png);
   }

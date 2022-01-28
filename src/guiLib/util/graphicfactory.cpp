@@ -2,7 +2,10 @@
 #include <cassert>
 #include <QVector3D>
 #include <QDebug>
-#include <AIS_ColoredShape.hxx>
+#include <graphicelement.h>
+#include <gerapidmove.h>
+#include <geline.h>
+#include <gehelix.h>
 #include <gp_Circ.hxx>
 #include <Geom_Line.hxx>
 #include <Geom_Circle.hxx>
@@ -21,54 +24,69 @@
 double const MIN_DELTA = 0.001;
 
 
-Handle(AIS_Shape) GraphicFactory::createLine(const gp_Pnt& from, const gp_Pnt& to) {
+GERapidMove* GraphicFactory::createRapidMove(const gp_Pnt& from, const gp_Pnt& to) {
   gp_Pnt end = gp_Pnt(to);
 
   if (from.Distance(to) <= gp::Resolution()) end.SetX(end.X() + 0.001);
-  TopoDS_Edge       edge = BRepBuilderAPI_MakeEdge(from, end);
-  Handle(AIS_Shape) rv   = new AIS_ColoredShape(edge);
+  TopoDS_Edge  edge = BRepBuilderAPI_MakeEdge(from, end);
+  GERapidMove* rv   = new GERapidMove(from, end);
 
-  rv->SetMaterial(Graphic3d_NOM_PLASTIC);
-  rv->SetTransparency(0);
-  rv->SetWidth(2);
+  rv->setShape(new AIS_Shape(edge));
 
   return rv;
   }
 
 
-Handle(AIS_Shape) GraphicFactory::createArc(const gp_Pnt& from, const gp_Pnt& to, const gp_Pnt& center, bool ccw) {
-  double r0 =center.Distance(from);
-  double r1 =center.Distance(to);
+GELine* GraphicFactory::createLine(const gp_Pnt& from, const gp_Pnt& to) {
+  gp_Pnt end = gp_Pnt(to);
 
-  qDebug() << "createArc: r1 - r0" << (r1 - r0);
-  assert(abs(r0 - r1) < MIN_DELTA);
-  gp_Dir       dir(0, 0, 1);
-  gp_Circ      rawCircle(gp_Ax2(center, dir), r0);
-  TopoDS_Edge  edge;
+  if (from.Distance(to) <= gp::Resolution()) end.SetX(end.X() + 0.001);
+  TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(from, end);
+//  Handle(AIS_Shape) rv   = new AIS_ColoredShape(edge);
+  GELine*     rv   = new GELine(from, end);
 
-  if (from.Distance(to) <= gp::Resolution()) {
-     edge = BRepBuilderAPI_MakeEdge(rawCircle);
-     }
-  else {
-     Handle(Geom_TrimmedCurve) arc = GC_MakeArcOfCircle(rawCircle, from, to, ccw);
-     edge = BRepBuilderAPI_MakeEdge(arc);
-     }
-  Handle(AIS_Shape)         rv = new AIS_ColoredShape(edge);
-
-  rv->SetMaterial(Graphic3d_NOM_PLASTIC);
-  rv->SetTransparency(0);
-  rv->SetWidth(2);
+  rv->setShape(new AIS_Shape(edge));
+//  rv->SetMaterial(Graphic3d_NOM_PLASTIC);
+//  rv->SetTransparency(0);
+//  rv->SetWidth(2);
 
   return rv;
   }
 
 
-Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
-                                            , const gp_Pnt& to
-                                            , const gp_Pnt& center
-                                            , const gp_Dir& axis
-                                            , bool          ccw
-                                            , int           fullTurns) {
+//GraphicElement* GraphicFactory::createArc(const gp_Pnt& from, const gp_Pnt& to, const gp_Pnt& center, bool ccw) {
+//  double r0 =center.Distance(from);
+//  double r1 =center.Distance(to);
+
+//  qDebug() << "createArc: r1 - r0" << (r1 - r0);
+//  assert(abs(r0 - r1) < MIN_DELTA);
+//  gp_Dir       dir(0, 0, 1);
+//  gp_Circ      rawCircle(gp_Ax2(center, dir), r0);
+//  TopoDS_Edge  edge;
+
+//  if (from.Distance(to) <= gp::Resolution()) {
+//     edge = BRepBuilderAPI_MakeEdge(rawCircle);
+//     }
+//  else {
+//     Handle(Geom_TrimmedCurve) arc = GC_MakeArcOfCircle(rawCircle, from, to, ccw);
+//     edge = BRepBuilderAPI_MakeEdge(arc);
+//     }
+//  Handle(AIS_Shape)         rv = new AIS_Shape(edge);
+
+//  rv->SetMaterial(Graphic3d_NOM_PLASTIC);
+//  rv->SetTransparency(0);
+//  rv->SetWidth(2);
+
+//  return rv;
+//  }
+
+
+GEHelix* GraphicFactory::createHelix(const gp_Pnt& from
+                                   , const gp_Pnt& to
+                                   , const gp_Pnt& center
+                                   , const gp_Dir& axis
+                                   , bool          ccw
+                                   , int           fullTurns) {
   QVector3D start(from.X(), from.Y(), from.Z());
   QVector3D end(to.X(), to.Y(), from.Z());
   QVector3D c(center.X(), center.Y(), from.Z());
@@ -98,6 +116,7 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
 //  qDebug() << "> PRE(3) - r0:" << r0 << "r1:" << r1 << "a0 >" << a0 << "< - a1:" << a1 << "arc:" << arc << "\n\n";
   Handle(Geom_BSplineCurve) aHelix;
   Geom_HelixData helDat;
+  GEHelix*       rv = nullptr;
   gp_Ax3 pos(gp_Pnt(center.X(), center.Y(), from.Z()), hAxis);
   double height     = to.Z() - from.Z();
   double turnFactor = arc / (2.0 * M_PI);
@@ -107,7 +126,7 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
   helDat.setRadius(r0);
   helDat.setPitch(pitch);
   helDat.setRangeMax(arc);
-  Handle(AIS_Shape) rv;
+  Handle(AIS_Shape) shape;
 
   if (helDat.MakeHelix(helDat, aHelix)) {
      TopoDS_Shape ts = BRepBuilderAPI_MakeEdge(aHelix);
@@ -119,8 +138,8 @@ Handle(AIS_Shape) GraphicFactory::createHelix(const gp_Pnt& from
      TopoDS_Shape rts = BRepBuilderAPI_Transform(ts, rot);
 
      rts = BRepBuilderAPI_Transform(rts, trans);
-     rv = new AIS_Shape(rts);
-     rv->SetWidth(2);
+     rv = new GEHelix(from, to, center, axis, ccw, fullTurns);
+     rv->setShape(new AIS_Shape(rts));
      }
   return rv;
   }

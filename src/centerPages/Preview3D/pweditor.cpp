@@ -142,12 +142,33 @@ bool PreViewEditor::eventFilter(QObject*, QEvent* event) {
           case Qt::Key_6: view3D->iso2View();  return true;
           }
        }
-    else if (e->key() == Qt::Key_F) {
-       view3D->fitAll();
-       return true;
+    else {
+       switch (e->key()) {
+         case Qt::Key_F:    view3D->fitAll(); return true;
+         case Qt::Key_Up:   prevEditorLine(); return true;
+         case Qt::Key_Down: nextEditorLine(); return true;
+         }
        }
     }
   return false;
+  }
+
+
+void PreViewEditor::nextEditorLine() {
+  ValueModel* m  = vm->getModel("edLine");
+  qlonglong   ln = m->getValue().toLongLong();
+
+  qDebug() << "PV: address of <edLine>" << m;
+  m->setValue(ln + 1);
+  }
+
+
+void PreViewEditor::prevEditorLine() {
+  ValueModel* m  = vm->getModel("edLine");
+  qlonglong   ln = m->getValue().toLongLong();
+
+  qDebug() << "PV: address of <edLine>" << m;
+  m->setValue(ln - 1);
   }
 
 

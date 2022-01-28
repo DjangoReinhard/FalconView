@@ -10,6 +10,7 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ";/usr/local/lib/cmake/opencascade")
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ";/usr/local/src/linuxcnc-deb11")
 set(OpenCASCADE_DIR "/usr/local/lib/cmake/opencascade" CACHE PATH "OpenCascade 7.6.0")
 set(ENV{EMC2_HOME} "/usr/local/src/linuxcnc-deb11")
+set(ENV{CMAKE_BUILD_PARALLEL_LEVEL} "4")
 ### ------ don't change settings below this line ---- ###
 find_package(Qt5 REQUIRED COMPONENTS
              Gui
