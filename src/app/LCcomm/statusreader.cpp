@@ -108,6 +108,10 @@ void StatusReader::update() {
   vm.setValue("execState",   status->task.execState);
   vm.setValue("interpState", status->task.interpState);
 
+  qDebug() << "SR:   taskState:" << status->task.state;
+  qDebug() << "SR:   execState:" << status->task.execState;
+  qDebug() << "SR: interpState:" << status->task.interpState;
+
   vm.setValue("axisMask",    status->motion.traj.axis_mask);
   vm.setValue("units",       status->task.programUnits);
 

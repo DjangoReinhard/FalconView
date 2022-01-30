@@ -1,7 +1,6 @@
 #ifndef POSITIONSTATUS_H
 #define POSITIONSTATUS_H
 #include <abscenterwidget.h>
-#include <configacc.h>
 #include <axismask.h>
 #include <QDockWidget>
 #include <QLabel>
@@ -48,7 +47,7 @@ protected:
   void updatePos();
   void setActive();
   void setStyles(Ui::PositionForm* frm, const QString& s, const QFont& f, int w);
-  void connectPos(Ui::PositionForm* frm, const QString& key, Config::GuiElem e);
+  void connectPos(Ui::PositionForm* frm, const QString& key, const QString& cfgKey);
 
 private:
   Ui::PositionMain* frm;

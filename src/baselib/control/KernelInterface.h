@@ -4,8 +4,10 @@
 #include <QVector3D>
 #include <utility>
 class ConfigManager;
+class Core;
 class DBConnection;
 class DBHelper;
+class GuiCore;
 class LcProperties;
 class OcctQtViewer;
 class PageStack;
@@ -22,9 +24,11 @@ class QWidget;
 class KernelInterface
 {
 public:
-  virtual void                 activatePage(const QString& pageName)              = 0;
   virtual ConfigManager*       config() const                                     = 0;
   virtual ConfigManager*       config()                                           = 0;
+
+protected:
+  virtual void                 activatePage(const QString& pageName)              = 0;
   virtual QString              curPage() const                                    = 0;
   virtual DBConnection*        databaseConnection()                               = 0;
   virtual QString              fileName4(const QString& fileID) const             = 0;
@@ -46,6 +50,8 @@ public:
   virtual void                 setWindowTitle(const QString& title)               = 0;
   virtual void                 showHelp() const                                   = 0;
   virtual QWidget*             stackedPage(const QString& pageName)               = 0;
+  virtual void                 startTimer(int delay)                              = 0;
+  virtual void                 stopTimer()                                        = 0;
   virtual ViewPluginInterface* statusInfo(const QString& infoID) const            = 0;
   virtual QList<QString>       statusInfos() const                                = 0;
   virtual QString              version() const                                    = 0;
@@ -93,5 +99,8 @@ public:
   virtual void                            updateView(const QVariant& pos)            = 0;
   virtual OcctQtViewer*                   view3D()                                   = 0;
   virtual void                            windowClosing(QCloseEvent* e)              = 0;
+
+  friend class Core;
+  friend class GuiCore;
   };
 #endif // KERNELINTERFACE_H

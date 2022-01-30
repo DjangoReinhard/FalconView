@@ -30,7 +30,7 @@ class QCloseEvent;
 class GuiKernel : public QObject, public KernelInterface
 {
   Q_OBJECT
-public:
+protected:
   virtual int            axisMask() const override;
   virtual ConfigManager* config() const override;
   virtual ConfigManager* config() override;
@@ -63,31 +63,33 @@ public:
   virtual void                 setWindowTitle(const QString& title) override;
   virtual void                 showHelp() const override;
   virtual QWidget*             stackedPage(const QString& pageName) override;
+  virtual void                 startTimer(int delay = 40) override;
+  virtual void                 stopTimer() override;
   virtual ViewPluginInterface* statusInfo(const QString& infoID) const override;
   virtual QList<QString>       statusInfos() const override;
   virtual PageStack*           viewStack() override;
 
-  virtual void timerEvent(QTimerEvent* e);
-  virtual void beAbortTask();
-  virtual void beEnableBlockDelete(bool enable);
-  virtual void beEnableFlood(bool enable);
-  virtual void beEnableMist(bool enable);
-  virtual void beEnableOptionalStop(bool enable);
-  virtual void beSetSpindleOverride(double rate);
-  virtual void beJogStep(int axis, double stepSize, double speed);
-  virtual void beJogStart(int axis, double speed);
-  virtual void beJogStop(int axis);
-  virtual void beHomeAxis(int jointNum);
-  virtual void beLoadTaskPlan(const QString& gcodeFile);
-  virtual void beLoadToolTable(const QString& toolTableFile);
-  virtual void beSendMDICommand(const QString& command);
-  virtual void beSetAuto(int autoMode, int line);
-  virtual void beSetFeedOverride(double rate);
-  virtual void beSetRapidOverride(double rate);
-  virtual void beSetSpindle(bool enable, int speed, int direction);
-  virtual void beSetTaskMode(int mode);
-  virtual void beSetTaskState(int state);
-  virtual void beTaskPlanSynch();
+  virtual void timerEvent(QTimerEvent* e) override;
+  virtual void beAbortTask() override;
+  virtual void beEnableBlockDelete(bool enable) override;
+  virtual void beEnableFlood(bool enable) override;
+  virtual void beEnableMist(bool enable) override;
+  virtual void beEnableOptionalStop(bool enable) override;
+  virtual void beSetSpindleOverride(double rate) override;
+  virtual void beJogStep(int axis, double stepSize, double speed) override;
+  virtual void beJogStart(int axis, double speed) override;
+  virtual void beJogStop(int axis) override;
+  virtual void beHomeAxis(int jointNum) override;
+  virtual void beLoadTaskPlan(const QString& gcodeFile) override;
+  virtual void beLoadToolTable(const QString& toolTableFile) override;
+  virtual void beSendMDICommand(const QString& command) override;
+  virtual void beSetAuto(int autoMode, int line) override;
+  virtual void beSetFeedOverride(double rate) override;
+  virtual void beSetRapidOverride(double rate) override;
+  virtual void beSetSpindle(bool enable, int speed, int direction) override;
+  virtual void beSetTaskMode(int mode) override;
+  virtual void beSetTaskState(int state) override;
+  virtual void beTaskPlanSynch() override;
 
   virtual bool                            checkBE() override;
   virtual bool                            isLatheMode() const override;
@@ -105,7 +107,7 @@ public:
   virtual OcctQtViewer*                   view3D() override;
   virtual void                            windowClosing(QCloseEvent* e) override;
 
-protected:
+//protected:
   explicit GuiKernel(int maxGCodes, int maxMCodes, QApplication& app, const QString& appName, const QString& groupID);
   virtual ~GuiKernel() = default;
 

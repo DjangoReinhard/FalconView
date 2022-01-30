@@ -80,11 +80,6 @@ QString GuiCore::curPage() const {
   }
 
 
-//DBConnection* GuiCore::databaseConnection() {
-//  return kernel->databaseConnection();
-//  }
-
-
 double GuiCore::defaultVelocity(int jointNum) const {
   return kernel->defaultVelocity(jointNum);
   }
@@ -188,6 +183,16 @@ void GuiCore::setMainWindow(QMainWindow *w) {
 
 QWidget* GuiCore::stackedPage(const QString& pageName) {
   return kernel->stackedPage(QString("%1Frame").arg(pageName));
+  }
+
+
+void GuiCore::startTimer(int delay) {
+  kernel->startTimer(delay);
+  }
+
+
+void GuiCore::stopTimer() {
+  kernel->stopTimer();
   }
 
 

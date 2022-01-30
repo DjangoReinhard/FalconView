@@ -2,12 +2,12 @@
 #define ALLY3D_H
 #include <QObject>
 #include <QMap>
-//#include <AIS_InteractiveObject.hxx>
 #include <AIS_ViewCube.hxx>
 #include <AIS_Shape.hxx>
 class OcctQtViewer;
 class GraphicElement;
 class GraphicFactory;
+class ValueModel;
 
 
 class Ally3D : public QObject
@@ -23,6 +23,7 @@ public:
   void setCurSegColor(const QColor& c);
   void setOldSegColor(const QColor& c);
   void setWorkPieceColor(const QColor& c);
+  void showPos(GraphicElement* ge);
 
 public slots:
   void showPath(const QMap<long, GraphicElement*>& path);
@@ -39,7 +40,6 @@ private:
   OcctQtViewer*     v3D;
   GraphicFactory*   facGraph;
   Bnd_Box           workPiece;
-//  Quantity_Color    lastColor;
   Quantity_Color    colTraverse;
   Quantity_Color    colFeed;
   Quantity_Color    colLimits;

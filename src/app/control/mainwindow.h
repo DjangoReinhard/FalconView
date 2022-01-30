@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 #include <applicationmode.h>
 #include <QMainWindow>
-
+//#define ADD_TEST_ACTION
 class SettingsNotebook;
 class PositionStatus;
 class PreViewEditor;
@@ -54,7 +54,9 @@ protected slots:
   void showErrMessages();
   void toggleAllButCenter();
   void toggleAbsolute(const QVariant& absolute);
+#ifdef ADD_TEST_ACTION
   void testTools();
+#endif
   void autoStart();
   void autoPause();
   void autoStop();

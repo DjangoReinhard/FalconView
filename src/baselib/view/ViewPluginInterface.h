@@ -23,8 +23,6 @@ public:
   virtual QWidget* createContent()  = 0;            // a
   virtual void     connectSignals() = 0;
   virtual void     updateStyles()   = 0;
-//  virtual QString  windowTitle()    = 0;
-//  virtual QString  objectName()     = 0;
   };
 
 QT_BEGIN_NAMESPACE

@@ -1,5 +1,6 @@
 #include <valuemanager.h>
 #include <iostream>
+#include <QDebug>
 
 
 ValueManager::ValueManager() {
@@ -31,6 +32,8 @@ ValueModel* ValueManager::getModel(const QString& name, const QVariant& defaultV
 void ValueManager::setValue(const QString& name, const QVariant& value) {
   if (!instance->models.contains(name)) {
      ValueModel* vm = new ValueModel(name, value);
+
+     qDebug() << "\nVM: new model created for >" << name << "<\n";
 
      instance->models[name] = vm;
      }

@@ -25,7 +25,7 @@ void GCodeInfo::update(int* activeGCodes
 
          v = QString("G%1").arg(dv, 0, 'F', activeGCodes[i] % 10 ? 1 : 0);
          }
-      qDebug() << "< active GCode(" << i << "):" << k << "\t" << v << "\traw:" << activeGCodes[i];
+//      qDebug() << "< active GCode(" << i << "):" << k << "\t" << v << "\traw:" << activeGCodes[i];
       vm.setValue(k, v);
       }
   mx = GuiCore().activeMCodes();
@@ -39,7 +39,7 @@ void GCodeInfo::update(int* activeGCodes
 
          v = QString("M%1").arg(dv, 0, 'F', 0);
          }
-      qDebug() << "> active MCode(" << i << "):" << k << "\t" << v << "\traw:" << activeMCodes[i];
+//      qDebug() << "> active MCode(" << i << "):" << k << "\t" << v << "\traw:" << activeMCodes[i];
       vm.setValue(k, v);
       }
   vm.setValue("fileName", fileName);

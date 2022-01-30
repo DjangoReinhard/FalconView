@@ -148,7 +148,10 @@ void MainWindow::appModeChanged(const QVariant& appMode) {
     case Settings:    GuiCore().activatePage("SettingsNotebook"); break;
     case SelectFile:  GuiCore().activatePage("FileManager"); break;
     case Touch:       GuiCore().activatePage("TouchView"); break;
-    case ErrMessages: GuiCore().activatePage("SysEventView"); break;
+    case ErrMessages:
+         ValueManager().setValue("showAllButCenter", false);
+         GuiCore().activatePage("SysEventView");
+         break;
     default: break;
     }
   }
@@ -163,6 +166,7 @@ void MainWindow::about() {
 void MainWindow::autoStart() {
   bool gcodeDirty = ValueManager().getValue("gcodeDirty").toBool();
 
+  GuiCore().startTimer();
   qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
   ApplicationMode am = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
 
@@ -194,8 +198,8 @@ void MainWindow::autoStart() {
         }
      else {
         qDebug() << "singlestep is OFF";
-        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
         GuiCore().beTaskPlanSynch();
+        GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_AUTO);
         GuiCore().beSetAuto(0, pw->curLine());
         }
      }
@@ -208,8 +212,8 @@ void MainWindow::autoStart() {
 
 void MainWindow::autoStop() {
   GuiCore().beAbortTask();
-  GuiCore().beTaskPlanSynch();
   GuiCore().beSetTaskMode(EMC_TASK_MODE_ENUM::EMC_TASK_MODE_MANUAL);
+  GuiCore().beTaskPlanSynch();
   }
 
 
@@ -226,14 +230,14 @@ void MainWindow::createActions() {
                                                 , new EqualCondition(vm.getModel("allHomed"), true)))
                                    ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                              , new OrCondition(new GreaterCondition(vm.getModel("dtg"), 0)
-                                             , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_READING))
+                                             , new GreaterCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE))
                              , this);
   pauseAction = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                              , QIcon(":/res/SK_AutoPause.png")
                              , QIcon(":/res/SK_AutoPause_active.png")
                              , tr("Pause")
                              , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                               , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_WAITING)))
+                                               , new GreaterCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE)))
                                   ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
                              , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_PAUSED)
                              , this);
@@ -242,9 +246,9 @@ void MainWindow::createActions() {
                             , QIcon(":/res/SK_AutoStop_active.png")
                             , tr("Stop")
                             , (new AndCondition(new EqualCondition(vm.getModel("taskState"), EMC_TASK_STATE_ENUM::EMC_TASK_STATE_ON)
-                                              , new EqualCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_WAITING)))
+                                              , new GreaterCondition(vm.getModel("interpState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE)))
                                  ->addCondition(new EqualCondition(vm.getModel("errorActive"), false))
-                            , new EqualCondition(vm.getModel("execState"), EMC_TASK_INTERP_ENUM::EMC_TASK_INTERP_IDLE)
+                            , new EqualCondition(vm.getModel("execState"), EMC_TASK_EXEC_ENUM::EMC_TASK_EXEC_DONE)
                             , this);
   singleStep = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                             , QIcon(":/res/SK_SingleStep.png")
@@ -320,6 +324,7 @@ void MainWindow::createActions() {
                               , this);
   sg->addAction(spindleRight);
 
+#ifdef ADD_TEST_ACTION
   tools = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                        , QIcon(":/res/SK_Tools.png")
                        , QIcon(":/res/SK_Tools_active.png")
@@ -328,6 +333,7 @@ void MainWindow::createActions() {
                                         , new EqualCondition(vm.getModel("errorActive"), false))
                        , new TrueCondition()
                        , this);
+#endif
   homeAll = new DynaAction(QIcon(":/res/SK_DisabledIcon.png")
                          , QIcon(":/res/SK_HomeAll.png")
                          , QIcon(":/res/SK_HomeAll_active.png")
@@ -421,8 +427,9 @@ void MainWindow::createConnections() {
   connect(spindleLeft,  &QAction::triggered, this, &MainWindow::startSpindleCCW);
   connect(spindleRight, &QAction::triggered, this, &MainWindow::startSpindleCW);
   connect(spindleOff,   &QAction::triggered, this, &MainWindow::stopSpindle);
-
+#ifdef ADD_TEST_ACTION
   connect(tools,        &QAction::triggered, this, &MainWindow::testTools);
+#endif
   }
 
 
@@ -484,7 +491,9 @@ void MainWindow::createToolBars() {
   switchTB->addAction(spindleLeft);
   switchTB->addAction(spindleOff);
   switchTB->addAction(spindleRight);
+#ifdef ADD_TEST_ACTION
   switchTB->addAction(tools);
+#endif
   addToolBar(Qt::RightToolBarArea, switchTB);
 
   powerTB = new QToolBar(tr("Power"), this);
@@ -648,19 +657,7 @@ void MainWindow::restoreAll() {
   restoreGeometry(cfg.value("geometry").toByteArray());
   restoreState(cfg.value("windowState").toByteArray());
   cfg.endGroup();
-
-  // there are some troubles with initialization times, so
-  // restore old files after all initialization has been finished
-//  CenterPage* df = static_cast<CenterPage*>(GuiCore().stackedPage(TestEdit::className));
-//  TestEdit* te = static_cast<TestEdit*>(df->centerWidget());
-
-//  if (te) te->restoreState();
-
-  //TODO: restore all loaded plugins
-//  df = qobject_cast<CenterPage*>(GuiCore().stackedPage(PathEditor::className));
-//  PathEditor* pe = static_cast<PathEditor*>(df->centerWidget());
-
-//  if (pe) pe->restoreState();
+  GuiCore().checkBE();
   }
 
 
@@ -697,9 +694,9 @@ void MainWindow::showErrMessages() {
   QString curPage = GuiCore().curPage();
   qDebug() << "MW::showErrMessages() ...";
 
-  ValueManager().setValue("lastPage", curPage.mid(0, curPage.size() - 5));
+//  ValueManager().setValue("lastPage", curPage.mid(0, curPage.size() - 5));
   setAppMode(ApplicationMode::ErrMessages);
-  ValueManager().setValue("showAllButCenter", false);
+//  ValueManager().setValue("showAllButCenter", false);
   }
 
 
@@ -714,7 +711,9 @@ void MainWindow::setupMenu() {
   ui->menuMode->addAction(cfgMode);
   ui->menuMode->addAction(msgMode);
   ui->actionHelp->setShortcut(QKeySequence::HelpContents);
-//  ui->menubar->setVisible(false);
+#ifndef ADD_TEST_ACTION
+  ui->menubar->setVisible(false);
+#endif
   }
 
 
@@ -734,6 +733,7 @@ void MainWindow::tellStates() const {
   }
 
 
+#ifdef ADD_TEST_ACTION
 void MainWindow::testTools() {
 //  static int       slot = 0;
 //  const ToolEntry* tool    = GuiCore().toolTable().tool4Slot(slot);
@@ -754,6 +754,7 @@ void MainWindow::testTools() {
       }
   snb->dump();
   }
+#endif
 
 
 void MainWindow::toggleAllButCenter() {
@@ -800,7 +801,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
     case Qt::Key_F11:
     case Qt::Key_F12:
          if (modeTB->isVisible()) {
-            qDebug() << "mode toolbar is visible";
+//            qDebug() << "mode toolbar is visible";
             switch (e->key()) {
               case Qt::Key_F1:  if (e->modifiers() == Qt::SHIFT) about();
                                 else GuiCore().showHelp();

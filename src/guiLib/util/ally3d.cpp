@@ -246,6 +246,32 @@ void Ally3D::showPath(const QMap<long, GraphicElement*>& path) {
   }
 
 
+void Ally3D::showPos(GraphicElement *ge) {
+  if (!ge) return;
+  ValueManager vm;
+
+  vm.setValue("relX", ge->from().X());
+  vm.setValue("relY", ge->from().Y());
+  vm.setValue("relZ", ge->from().Z());
+
+  switch (ge->type()) {
+    case GraphicElement::GELine:
+    case GraphicElement::GERapid: {
+         GELine* l = static_cast<GELine*>(ge);
+
+         vm.setValue("dtgX", l->to().X() - l->from().X());
+         vm.setValue("dtgY", l->to().Y() - l->from().Y());
+         vm.setValue("dtgZ", l->to().Z() - l->from().Z());
+         } break;
+    default:
+         vm.setValue("dtgX", 0);
+         vm.setValue("dtgY", 0);
+         vm.setValue("dtgZ", 0);
+         break;
+    }
+  }
+
+
 void Ally3D::update(const QVariant& line) {
   if (!v3D) return;
   if (workPath.size() < 1) return;
@@ -310,6 +336,7 @@ void Ally3D::highlight(const QVariant& line) {
      GraphicElement* ge = lastSeg.value();
 
      ge->setColor(colCurSeg);
+     showPos(ge);
      moveCone(ge->from().X(), ge->from().Y(), ge->from().Z());
      }
   }

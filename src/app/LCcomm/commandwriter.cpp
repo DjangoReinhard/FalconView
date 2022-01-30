@@ -168,7 +168,7 @@ void CommandWriter::setAuto(int autoMode, int line) {
 
          qDebug() << "CW::taskPlan run (line #" << line << ")";
          pr.line = line;
-         msg = QString("setAuto(run) - line: %d").arg(line);
+         msg = QString("setAuto(run) - line: %1").arg(line);
          rv = sendCommand(pr);
          } break;
     case 1: {

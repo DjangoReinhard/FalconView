@@ -647,10 +647,7 @@ void GuiKernel::setViewStack(PageStack *v) {
 
 
 void GuiKernel::setupBackend() {
-  if (statusReader && statusReader->isActive()) {
-     qDebug() << "Well, we have an active status reader ... ;)";
-     timer.start(40, this);
-     }
+  startTimer();
   if (commandWriter && commandWriter->isActive()) {
      qDebug() << "OK, ok, ok - backend seems to be available!";
      commandWriter->moveToThread(&backendCommThread);
@@ -722,6 +719,21 @@ void GuiKernel::showHelp() const {
 QWidget* GuiKernel::stackedPage(const QString &pageName) {
   return centerView->page(pageName);
   }
+
+
+void GuiKernel::startTimer(int delay) {
+  if (statusReader && statusReader->isActive()) {
+     qDebug() << "Well, we have an active status reader ... ;)";
+
+     timer.start(delay, this);
+     }
+  }
+
+
+void GuiKernel::stopTimer() {
+  timer.stop();
+  }
+
 
 QList<QString> GuiKernel::statusInfos() const {
   return statInfos.keys();

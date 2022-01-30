@@ -158,6 +158,7 @@ void PreViewEditor::nextEditorLine() {
   ValueModel* m  = vm->getModel("edLine");
   qlonglong   ln = m->getValue().toLongLong();
 
+  core->stopTimer();
   qDebug() << "PV: address of <edLine>" << m;
   m->setValue(ln + 1);
   }
@@ -167,6 +168,7 @@ void PreViewEditor::prevEditorLine() {
   ValueModel* m  = vm->getModel("edLine");
   qlonglong   ln = m->getValue().toLongLong();
 
+  core->stopTimer();
   qDebug() << "PV: address of <edLine>" << m;
   m->setValue(ln - 1);
   }

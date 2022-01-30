@@ -1,6 +1,7 @@
 #include <pagestack.h>
 #include <centerpage.h>
 #include <abscenterwidget.h>
+#include <valuemanager.h>
 #include <guicore.h>
 #include <QAction>
 #include <QStackedLayout>
@@ -46,15 +47,14 @@ CenterPage* PageStack::activatePage(const QString& name) {
      CenterPage*     w = pagePool[name];
      QStackedLayout* l = qobject_cast<QStackedLayout*>(layout());
 
-     if (l) {
+     if (l && w) {
         qDebug() << "CenterView: ok, found page [" << name << "] - gonna switch view";
         l->setCurrentWidget(w);
+        vm->setValue("lastPage", curPage);
         curPage = name;
-        if (w) {
-           GuiCore().setWindowTitle(w->name().toStdString().c_str());
+        GuiCore().setWindowTitle(w->name().toStdString().c_str());
 
-           return w;
-           }
+        return w;
         }
      }
   qDebug() << "CenterView: sorry - no page for name >" << name << "<";

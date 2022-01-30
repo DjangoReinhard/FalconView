@@ -56,10 +56,11 @@ public:
   void                 setViewStack(PageStack* v);
   void                 setWindowTitle(const QString& title);
   void                 showHelp() const;
-
+  void                 startTimer(int delay = 40);
   QWidget*             stackedPage(const QString& pageName);
   ViewPluginInterface* statusInfo(const QString& infoID);
   QList<QString>       statusInfos();
+  void                 stopTimer();
   Pos9                 toolOffset() const;
   ToolTable&           toolTable();
   ToolTable*           toolTableModel();
