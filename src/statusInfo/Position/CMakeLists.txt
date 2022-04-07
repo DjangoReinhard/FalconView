@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #------------------------------   PLUGIN   -----------------------------------
 project(Position LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(siPosition MODULE
     positionstatus.cpp
     Position.qrc

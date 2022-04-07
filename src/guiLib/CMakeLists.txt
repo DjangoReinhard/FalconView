@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #--------------------------------   LIB   ------------------------------------
 project(guiLib LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(FVguiLib STATIC
     control/dynaaction.cpp
     control/gcodehighlighter.cpp

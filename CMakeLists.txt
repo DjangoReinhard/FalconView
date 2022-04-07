@@ -4,7 +4,7 @@ project(FalconView     VERSION 0.1)
 ##############################################################################
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_MODULE_PATH /d/linux/cmake)
-include(FalconView RESULT_VARIABLE ConfigBase)
+include(Interface RESULT_VARIABLE ConfigBase)
 set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "CMake search-path")
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ";/usr/local/lib/cmake/opencascade")
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ";/usr/local/src/linuxcnc-deb11")

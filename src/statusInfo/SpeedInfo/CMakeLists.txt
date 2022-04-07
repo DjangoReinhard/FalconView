@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #------------------------------   PLUGIN   -----------------------------------
 project(SpeedInfo LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(siSpeedInfo MODULE
     speedstatus.cpp
     SpeedInfo.qrc

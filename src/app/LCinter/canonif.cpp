@@ -11,7 +11,8 @@
 #include <stupidtoolchangerif.h>
 #include <core.h>
 #include <graphicfactory.h>
-#include <graphicfactory.h>
+
+#include <iostream>
 
 #include <QVector3D>
 #include <QDebug>
@@ -565,6 +566,11 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
   CanonIF        ci;
   CANON_POSITION lp = ci.endPoint();
 
+  std::cout << "ARC - start at: " << lp.x << "/" << lp.y << "/" << lp.z << std::endl;
+  std::cout << "ARC -   end at: " << first_end << "/" << second_end << "/" << axis_end_point << std::endl;
+  std::cout << "ARC -   center: " << first_axis << "/" << second_axis << "/" << axis_end_point << std::endl;
+  std::cout << "ARC - rotation: " << rotation << std::endl;
+
   if (ci.activePlane() == CANON_PLANE_XY && ci.motionMode() == CANON_CONTINUOUS) {
      double mx, my;
      double unused = 0;
@@ -633,8 +639,8 @@ void ARC_FEED(int lineno, double first_end, double second_end, double first_axis
   end_cart    = circshift(end_cart,    shift_ind);
   center_cart = circshift(center_cart, shift_ind);
   normal_cart = circshift(normal_cart, shift_ind);
-  plane_x     = circshift(plane_x, shift_ind);
-  plane_y     = circshift(plane_y, shift_ind);
+  plane_x     = circshift(plane_x,     shift_ind);
+  plane_y     = circshift(plane_y,     shift_ind);
   // Define end point in PROGRAM units and convert to CANON
   CANON_POSITION endpt(0,0,0,a,b,c,u,v,w);
 

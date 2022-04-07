@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 #---------------------------------   HELP   ----------------------------------
 project(Help)
 #-----------------------------------------------------------------------------
-include(FalconView)
+#include(FalconView)
+include(Interface)
 set(DISTFILES
     src/filemanager.md
     src/fixturemanager.md

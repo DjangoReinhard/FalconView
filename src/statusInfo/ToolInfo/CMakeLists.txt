@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #------------------------------   PLUGIN   -----------------------------------
 project(ToolInfo LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(siToolInfo MODULE
     toolstatus.cpp
     ToolInfo.qrc

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #-------------------------   PLUGIN   ----------------------------------------
 project(MDIEditor LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(ppMDIEditor MODULE
     mdieditor.cpp
     MDIEditor.qrc

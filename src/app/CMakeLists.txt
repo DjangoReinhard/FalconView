@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #=================================   APP   ===================================
 project(FalconView LANGUAGES CXX)
 #=============================================================================
-include(FalconView)
+include(Interface)
 add_executable(FalconView
     main.cpp
     control/guikernel.cpp

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #------------------------------   PLUGIN   -----------------------------------
 project(CurCodes LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(siCurCodes MODULE
     curcodesstatus.cpp
     CurCodes.qrc

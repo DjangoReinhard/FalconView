@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #--------------------------------   LIB   ------------------------------------
 project(BaseLib LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(FVBaseLib STATIC
     control/core.cpp
     control/abstractcondition.cpp

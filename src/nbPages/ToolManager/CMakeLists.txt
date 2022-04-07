@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #---------------------------   PLUGIN   --------------------------------------
 project(ToolManager LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(nbToolManager MODULE
     toolmanager.cpp
     toolmodel.cpp

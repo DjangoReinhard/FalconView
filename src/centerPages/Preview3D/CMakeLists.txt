@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 #-------------------------   PLUGIN   ----------------------------------------
 project(Preview3D LANGUAGES CXX)
 #-----------------------------------------------------------------------------
-include(FalconView)
+include(Interface)
 add_library(ppPreview3D MODULE
     pweditor.cpp
     Preview3D.qrc
