@@ -1,0 +1,10 @@
+<map id="ToolManager::createTool" name="ToolManager::createTool">
+<area shape="rect" id="node1" title=" " alt="" coords="5,85,220,115"/>
+<area shape="rect" id="node2" href="$classToolManager.html#a5e64787d5562ca53847da9605c8dbf90" title=" " alt="" coords="283,5,478,35"/>
+<area shape="rect" id="node6" href="$classToolModel.html#a5c4204692e1b2431548afae5e91592d8" title=" " alt="" coords="268,59,493,88"/>
+<area shape="rect" id="node7" href="$classToolModel.html#aa5467496069d652d79fcea1ea9a9c197" title=" " alt="" coords="273,112,488,141"/>
+<area shape="rect" id="node8" href="$classToolEditor.html#a0a369679c3680e176c2138a764819d36" title=" " alt="" coords="290,165,471,195"/>
+<area shape="rect" id="node3" href="$classCore.html#ad10310331fb39e06a94ffb24ac8ea6d0" title=" " alt="" coords="541,5,752,35"/>
+<area shape="rect" id="node4" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="800,5,1015,35"/>
+<area shape="rect" id="node5" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="1063,5,1255,35"/>
+</map>

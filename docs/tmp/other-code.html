@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 9.0.0rc2" />
+<title>Other Codes</title>
+<link rel="stylesheet" href="..//asciidoc.css" type="text/css" />
+
+
+<link rel="stylesheet" href="..//linuxcnc.css" type="text/css" />
+<script type="text/javascript" src="..//asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>Other Codes</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="sec:set-feed-rate">1. F: Set Feed Rate</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p><em>Fx</em> - set the feed rate to <em>x</em>.  <em>x</em> is usually in machine units
+(inches or millimeters) per minute.</p></div>
+<div class="paragraph"><p>The application of the feed rate is as described in the
+<a href="machining-center.html#sub:feed-rate">Feed Rate</a> Section, unless <em>inverse time feed rate mode</em>
+or <em>feed per revolution mode</em> are in effect, in which case the feed rate
+is as described in the <a href="g-code.html#gcode:g93-g94-g95">G93 G94 G95</a> Section.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:set-spindle-speed">2. S: Set Spindle Speed</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p><em>Sx [$n]</em> - set the speed of the spindle to <em>x</em> revolutions per minute (RPM)
+with the optional $ set the spindle speed for a specific spindle. Without the $
+the command will default to spindle.0</p></div>
+<div class="paragraph"><p>The spindle(s) or selected spindle will turn at that speed when a <em>M3</em> or <em>M4</em>
+is in effect. It is OK to program an S word whether the spindle is turning or
+not. If the speed override switch is enabled and not set at 100%, the speed will
+be different from what is programmed.</p></div>
+<div class="paragraph"><p>It is OK to program S0, the spindle will not turn if that is done.</p></div>
+<div class="paragraph"><p>It is an error if:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+the S number is negative.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:select-tool">3. T: Select Tool</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p><em>Tx</em> - prepare to change to tool <em>x</em>.</p></div>
+<div class="paragraph"><p>The tool is not changed until an <em>M6</em> is programmed (see Section
+<a href="m-code.html#mcode:m6">M6</a>). The T word may appear on the same line as the
+<em>M6</em> or on a previous line. It is OK if T words appear on two or more
+lines with no tool change. Only the the most recent T word will take
+effect at the next tool change.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">When LinuxCNC is configured for a nonrandom toolchanger (see
+the entry for RANDOM_TOOLCHANGER in the <a href="../config/ini-config.html#sec:emcio-section">EMCIO Section</a>), <em>T0</em> gets special handling: no tool will be selected. This
+is useful if you want the spindle to be empty after a tool change.</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">When LinuxCNC is configured for a random toolchanger (see
+the entry for RANDOM_TOOLCHANGER in the <a href="../config/ini-config.html#sec:emcio-section">EMCIO Section</a>), <em>T0</em> does not get any special treatment: T0 is a valid
+tool like any other.  It is customary to use T0 on a random toolchanger
+machine to track an empty pocket, so that it behaves like a nonrandom
+toolchanger machine and unloads the spindle.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>It is an error if:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+a negative T number is used,
+</p>
+</li>
+<li>
+<p>
+T number is used that does not appear in the tool table file (with
+    the exception that T0 on nonrandom toolchangers <strong>is</strong> accepted,
+    as noted above).
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>On some machines, the carousel will move when a T word is programmed,
+at the same time machining is occurring. On such machines, programming
+the T word several lines before a tool change will save time. A common
+programming practice for such machines is to put the T word for the
+next tool to be used on the line after a tool change. This maximizes
+the time available for the carousel to move.</p></div>
+<div class="paragraph"><p>Rapid moves after a <em>T&lt;n&gt;</em> will not show on the AXIS preview until after
+a feed move. This is for machines that travel long distances to change
+the tool like a lathe. This can be very confusing at first. To turn
+this feature off for the current tool program a G1 without any
+move after the <em>T&lt;n&gt;</em>.</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated
+ 2021-11-20 04:12:52 CET
+</div>
+</div>
+</body>
+</html>

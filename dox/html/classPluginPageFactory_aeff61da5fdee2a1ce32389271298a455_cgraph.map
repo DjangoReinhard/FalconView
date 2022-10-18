@@ -1,0 +1,11 @@
+<map id="PluginPageFactory::createDockable" name="PluginPageFactory::createDockable">
+<area shape="rect" id="node1" title=" " alt="" coords="5,147,172,193"/>
+<area shape="rect" id="node2" href="$classAbstractCenterWidget.html#a8da02e833403de39480a0df39e36cad1" title=" " alt="" coords="220,76,399,123"/>
+<area shape="rect" id="node7" href="$classAbstractCenterWidget.html#a09abe45f693f24a9b4efaa641707a645" title=" " alt="" coords="220,147,399,193"/>
+<area shape="rect" id="node8" href="$classGuiCore.html#a13b351b0a3d802584d1555283505a152" title=" " alt="" coords="230,218,389,247"/>
+<area shape="rect" id="node3" href="$classPluginPageInterface.html#a908728df6e414e64ee3fcade51154db3" title=" " alt="" coords="467,5,633,52"/>
+<area shape="rect" id="node4" href="$classAbstractCenterWidget.html#af7feff20b616d8d8e72626a0c3a177d5" title=" " alt="" coords="461,76,639,123"/>
+<area shape="rect" id="node6" href="$classPluginPageInterface.html#a69d93f51f506e3b834d6743fb5ca57df" title=" " alt="" coords="467,147,633,193"/>
+<area shape="rect" id="node5" href="$classAbstractCenterWidget.html#a2a9f7189f04693e604838ea22dd06726" title=" " alt="" coords="701,76,880,123"/>
+<area shape="rect" id="node9" href="$classKernelInterface.html#a627dc8703130cb2ac6a81b89f5c92e46" title=" " alt="" coords="447,218,653,247"/>
+</map>

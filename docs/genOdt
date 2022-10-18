@@ -1,0 +1,16 @@
+#!/bin/bash
+project=FalconView
+extIN=md
+extOut=odt
+files=$(find src -name *.md)
+
+cd src
+for i in *.md; do
+    echo "md => odt (${i})"
+    pandoc $i -f gfm -o ../odt/${i}.odt
+done
+
+#pandoc $target -f gfm -o ${project}.pdf
+#cat $target | gfm | fixhtml -e ../htmlEntities.def > ../html/${project}.html
+#cd ..
+

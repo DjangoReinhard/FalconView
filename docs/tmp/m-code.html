@@ -1,0 +1,1373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 9.0.0rc2" />
+<title>M Codes</title>
+<link rel="stylesheet" href="..//asciidoc.css" type="text/css" />
+
+
+<link rel="stylesheet" href="..//linuxcnc.css" type="text/css" />
+<script type="text/javascript" src="..//asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>M Codes</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="cha:m-codes">1. M Code Quick Reference Table</h2>
+<div class="sectionbody">
+<div class="tableblock">
+<table rules="all"
+width="60%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="28%" />
+<col width="71%" />
+<thead>
+<tr>
+<th align="center" valign="top">Code                                </th>
+<th align="left" valign="top"> Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m0-m1">M0 M1</a></p></td>
+<td align="left" valign="top"><p class="table">Program Pause</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m2-m30">M2 M30</a></p></td>
+<td align="left" valign="top"><p class="table">Program End</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m60">M60</a></p></td>
+<td align="left" valign="top"><p class="table">Pallet Change Pause</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m3-m4-m5">M3 M4 M5</a></p></td>
+<td align="left" valign="top"><p class="table">Spindle Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m6">M6</a></p></td>
+<td align="left" valign="top"><p class="table">Tool Change</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m7-m8-m9">M7 M8 M9</a></p></td>
+<td align="left" valign="top"><p class="table">Coolant Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m19">M19</a></p></td>
+<td align="left" valign="top"><p class="table">Orient Spindle</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m48-m49">M48 M49</a></p></td>
+<td align="left" valign="top"><p class="table">Feed &amp; Spindle Overrides Enable/Disable</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m50">M50</a></p></td>
+<td align="left" valign="top"><p class="table">Feed Override Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m51">M51</a></p></td>
+<td align="left" valign="top"><p class="table">Spindle Override Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m52">M52</a></p></td>
+<td align="left" valign="top"><p class="table">Adaptive Feed Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m53">M53</a></p></td>
+<td align="left" valign="top"><p class="table">Feed Stop Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m61">M61</a></p></td>
+<td align="left" valign="top"><p class="table">Set Current Tool Number</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m62-m65">m62-m65</a></p></td>
+<td align="left" valign="top"><p class="table">Output Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m66">M66</a></p></td>
+<td align="left" valign="top"><p class="table">Input Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m67">M67</a></p></td>
+<td align="left" valign="top"><p class="table">Analog Output Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m68">M68</a></p></td>
+<td align="left" valign="top"><p class="table">Analog Output Control</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m70">M70</a></p></td>
+<td align="left" valign="top"><p class="table">Save Modal State</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m71">M71</a></p></td>
+<td align="left" valign="top"><p class="table">Invalidate Stored Modal State</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m72">M72</a></p></td>
+<td align="left" valign="top"><p class="table">Restore Modal State</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m73">M73</a></p></td>
+<td align="left" valign="top"><p class="table">Save Autorestore Modal State</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m98-m99">M98 M99</a></p></td>
+<td align="left" valign="top"><p class="table">Call and Return From Subprogram</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table"><a href="m-code.html#mcode:m100-m199">M100-M199</a></p></td>
+<td align="left" valign="top"><p class="table">User Defined M-Codes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m0-m1">2. M0, M1 Program Pause</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M0</em> - pause a running program temporarily. LinuxCNC remains in the Auto Mode
+         so MDI and other manual actions are not enabled. Pressing the resume
+         button will restart the program at the following line.
+</p>
+</li>
+<li>
+<p>
+<em>M1</em> - pause a running program temporarily if the optional stop switch is on.
+         LinuxCNC remains in the Auto Mode so MDI and other manual actions are
+         not enabled. Pressing the resume button will restart the program at the
+         following line.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">It is OK to program <em>M0</em> and <em>M1</em> in MDI mode,
+but the effect will probably not be noticeable,
+because normal behavior in MDI mode is
+to stop after each line of input anyway.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m2-m30">3. M2, M30 Program End</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M2</em> - end the program. Pressing <code>Cycle Start</code> ("R" in the Axis GUI)
+         will restart the program at the beginning of the file.
+</p>
+</li>
+<li>
+<p>
+<em>M30</em> - exchange pallet shuttles and end the program.
+          Pressing <code>Cycle Start</code> will start the program
+          at the beginning of the file.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Both of these commands have the following effects:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Change from Auto mode to MDI mode.
+</p>
+</li>
+<li>
+<p>
+Origin offsets are set to the default (like <em>G54</em>).
+</p>
+</li>
+<li>
+<p>
+Selected plane is set to XY plane (like <em>G17</em>).
+</p>
+</li>
+<li>
+<p>
+Distance mode is set to absolute mode (like <em>G90</em>).
+</p>
+</li>
+<li>
+<p>
+Feed rate mode is set to units per minute (like <em>G94</em>).
+</p>
+</li>
+<li>
+<p>
+Feed and speed overrides are set to ON (like <em>M48</em>).
+</p>
+</li>
+<li>
+<p>
+Cutter compensation is turned off (like <em>G40</em>).
+</p>
+</li>
+<li>
+<p>
+The spindle is stopped (like <em>M5</em>).
+</p>
+</li>
+<li>
+<p>
+The current motion mode is set to feed (like <em>G1</em>).
+</p>
+</li>
+<li>
+<p>
+Coolant is turned off (like <em>M9</em>).
+</p>
+</li>
+</ol></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">Lines of code after M2/M30 will not be executed. Pressing <code>Cycle Start</code>
+will start the program at the beginning of the file.</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">Using % to wrap the G code does not do the same thing as a <em>Program End</em>. See
+<a href="overview.html#gcode:file-requirements">File Requirements</a> for more information on what using
+% does not do.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m60">4. M60 Pallet Change Pause</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M60</em> - exchange pallet shuttles and then pause a running program
+          temporarily (regardless of the setting of the optional stop
+          switch). Pressing the cycle start button
+          will restart the program at the following line.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m3-m4-m5">5. M3, M4, M5 Spindle Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M3 [$n]</em> - start the selected spindle clockwise at the <em>S</em> speed.
+</p>
+</li>
+<li>
+<p>
+<em>M4 [$n]</em> - start the selected spindle counterclockwise at the <em>S</em> speed.
+</p>
+</li>
+<li>
+<p>
+<em>M5 [$n]</em> - stop the selected spindle.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Use $ to operate on specific spindles. If $ is omitted then the commands
+default to operating on spindle.0
+Use $-1 to operate on all active spindles.</p></div>
+<div class="paragraph"><p>This example will start spindles 0, 1, and 2 simultaneously at different
+speeds:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">S100 </span></span>$<span style="color: #993399">0</span>
+<span style="font-weight: bold"><span style="color: #0000FF">S200 </span></span>$<span style="color: #993399">1</span>
+<span style="font-weight: bold"><span style="color: #0000FF">S300 </span></span>$<span style="color: #993399">2</span>
+<span style="font-weight: bold"><span style="color: #0000FF">M3</span></span> $<span style="color: #993399">-1</span></tt></pre></div></div>
+<div class="paragraph"><p>This example will then reverse spindle 1 but leave the other spindles
+rotating forwards:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">M4</span></span> $<span style="color: #993399">1</span></tt></pre></div></div>
+<div class="paragraph"><p>And this will stop spindle 2 and leave the other spindles rotating:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">M5</span></span> $<span style="color: #993399">2</span></tt></pre></div></div>
+<div class="paragraph"><p>If the $ is omitted then behaviour is exactly as normal for a single
+spindle machine</p></div>
+<div class="paragraph"><p>It is OK to use <em>M3</em> or <em>M4</em> if the <a href="other-code.html#sec:set-spindle-speed">S</a>
+spindle speed is set to zero. If this is done
+(or if the speed override switch is enabled and set to zero),
+the spindle will not start turning.
+If, later, the spindle speed is set above zero
+(or the override switch is turned up),
+the spindle will start turning.
+It is OK to use <em>M3</em> or <em>M4</em> when the spindle is already
+turning or to use <em>M5</em> when the spindle is already stopped.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m6">6. M6 Tool Change</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="sect2">
+<h3 id="_manual_tool_change">6.1. Manual Tool Change</h3>
+<div class="paragraph"><p>If the HAL component hal_manualtoolchange is loaded,
+M6 will stop the spindle and prompt the user to change the tool
+based on the last <em>T-</em> number programmed.
+For more information on hal_manualtoolchange see
+the <a href="../gui/axis.html#sec:manual-tool-change">Manual Tool Change</a> section.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tool_changer">6.2. Tool Changer</h3>
+<div class="paragraph"><p>To change a tool in the spindle from the tool currently in the spindle
+to the tool most recently selected (using a T word - see Section
+<a href="other-code.html#sec:select-tool">Select Tool</a>), program <em>M6</em>.
+When the tool change is complete:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The spindle will be stopped.
+</p>
+</li>
+<li>
+<p>
+The tool that was selected (by a T word on the same line or on any
+   line after the previous tool change) will be in the spindle.
+</p>
+</li>
+<li>
+<p>
+If the selected tool was not in the spindle before the tool change,
+   the tool that was in the spindle (if there was one) will be placed
+   back into the tool changer magazine.
+</p>
+</li>
+<li>
+<p>
+If configured in the .ini file some axis positions may move when a M6
+   is issued. See the <a href="../config/ini-config.html#sec:emcio-section">EMCIO section</a> for more
+   information on tool change options.
+</p>
+</li>
+<li>
+<p>
+No other changes will be made. For example, coolant will continue to
+   flow during the tool change unless it has been turned off by an <em>M9</em>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">The tool length offset is not changed by <em>M6</em>, use <em><a href="g-code.html#gcode:g43">G43</a></em> after the
+<em>M6</em> to change the tool length offset.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The tool change may include axis motion.
+It is OK (but not useful) to program a change to the tool already in the spindle.
+It is OK if there is no tool in the selected slot;
+in that case, the spindle will be empty after the tool change.
+If slot zero was last selected,
+there will definitely be no tool in the spindle after a tool change. The tool
+changer will have to be setup to perform the tool change in hal and possibly
+classicladder.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m7-m8-m9">7. M7, M8, M9 Coolant Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M7</em> - turn mist coolant on. M7 controls iocontrol.0.coolant-mist pin.
+</p>
+</li>
+<li>
+<p>
+<em>M8</em> - turn flood coolant on. M8 controls iocontrol.0.coolant-flood pin.
+</p>
+</li>
+<li>
+<p>
+<em>M9</em> - turn both M7 and M8 off.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Connect one or both of the coolant control pins in HAL before M7 or M8 will
+control an output. M7 and M8 can be used to turn on any output via G code.</p></div>
+<div class="paragraph"><p>It is OK to use any of these commands, regardless of the current coolant
+state.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m19">8. M19 Orient Spindle</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M19 R- Q- [P-] [$-]</em>
+</p>
+</li>
+<li>
+<p>
+<em>R</em> Position to rotate to from 0, valid range is 0-360 degrees
+</p>
+</li>
+<li>
+<p>
+<em>Q</em> Number of seconds to wait until orient completes. If
+      spindle.N.is-oriented does not become true within Q timeout
+      an error occurs.
+</p>
+</li>
+<li>
+<p>
+<em>P</em> Direction to rotate to position.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>0</em> rotate for smallest angular movement (default)
+</p>
+</li>
+<li>
+<p>
+<em>1</em> always rotate clockwise (same as M3 direction)
+</p>
+</li>
+<li>
+<p>
+<em>2</em> always rotate counterclockwise (same as M4 direction)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<em>$</em> The spindle to orient (actually only determines which HAL pins
+carry the spindle position commands)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>M19 is cleared by any of M3,M4,M5.</p></div>
+<div class="paragraph"><p>Spindle orientation requires a quadrature encoder with an index to sense the
+spindle shaft position and direction of rotation.</p></div>
+<div class="paragraph"><p>INI Settings in the [RS274NGC] section.</p></div>
+<div class="paragraph"><p>ORIENT_OFFSET = 0-360 (fixed offset in degrees added to M19 R word)</p></div>
+<div class="paragraph"><p>HAL Pins</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>spindle.N.orient-angle</em> (out float)
+Desired spindle orientation for M19. Value of the M19 R word parameter
+plus the value of the [RS274NGC]ORIENT_OFFSET ini parameter.
+</p>
+</li>
+<li>
+<p>
+<em>spindle.N.orient-mode</em> (out s32)
+Desired spindle rotation mode. Reflects M19 P parameter word, Default = 0
+</p>
+</li>
+<li>
+<p>
+<em>spindle.N.orient</em> (out bit)
+Indicates start of spindle orient cycle. Set by M19. Cleared by any of
+M3,M4,M5.
+  If spindle-orient-fault is not zero during spindle-orient true, the
+M19 command fails with an error message.
+</p>
+</li>
+<li>
+<p>
+<em>spindle.N.is-oriented</em> (in bit)
+Acknowledge pin for spindle-orient. Completes orient cycle. If
+spindle-orient was true when spindle-is-oriented
+  was asserted, the spindle-orient pin is cleared and the spindle-locked
+pin is asserted. Also, the spindle-brake pin is asserted.
+</p>
+</li>
+<li>
+<p>
+<em>spindle.N.orient-fault</em> (in s32)
+  Fault code input for orient cycle. Any value other than zero will
+cause the orient cycle to abort.
+</p>
+</li>
+<li>
+<p>
+<em>spindle.N.locked</em> (out bit)
+Spindle orient complete pin. Cleared by any of M3,M4,M5.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m48-m49">9. M48, M49 Speed and Feed Override Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M48</em> - enable the spindle speed and feed rate override controls.
+</p>
+</li>
+<li>
+<p>
+<em>M49</em> - disable both controls.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>These commands also take an optional $ parameter to determine which
+spindle they operate on.</p></div>
+<div class="paragraph"><p>It is OK to enable or disable the controls when
+they are already enabled or disabled.
+See the <a href="machining-center.html#sub:feed-rate">Feed Rate</a> Section for more details.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m50">10. M50 Feed Override Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M50 &lt;P1&gt;</em> - enable the feed rate override control. The P1
+               is optional.
+</p>
+</li>
+<li>
+<p>
+<em>M50 P0</em> - disable the feed rate control.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>While disabled the feed override will have no influence,
+and the motion will be executed at programmed feed rate.
+(unless there is an adaptive feed rate override active).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m51">11. M51 Spindle Speed Override Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M51 &lt;P1&gt; &lt;$-&gt;</em>- enable the spindle speed override control for the
+                   selected spindle. The  P1 is optional.
+</p>
+</li>
+<li>
+<p>
+<em>M51 P0 &lt;$-&gt;</em>  - disable the spindle speed override control program.
+                   While disabled the spindle speed override will have
+                   no influence, and the spindle speed will have the
+                   exact program specified value of the S-word
+                   (described in <a href="other-code.html#sec:set-spindle-speed">Spindle Speed</a> Section).
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m52">12. M52 Adaptive Feed Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M52 &lt;P1&gt;</em> - use an adaptive feed. The P1 is optional.
+</p>
+</li>
+<li>
+<p>
+<em>M52 P0</em> - stop using adaptive feed.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>When adaptive feed is enabled, some external input value is used together
+with the user interface feed override value and the commanded feed rate
+to set the actual feed rate. In LinuxCNC, the HAL pin <em>motion.adaptive-feed</em>
+is used for this purpose. Values on <em>motion.adaptive-feed</em> should range
+from -1 (programmed speed in reverse) to 1 (full speed). 0 is equivalent
+to feed-hold.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">The use of negative adaptive-feed for reverse run is a new
+feature and is not very well tested as yet. The intended use is for plasma
+cutters and wire spark eroders but it is not limited to such applications.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m53">13. M53 Feed Stop Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M53 &lt;P1&gt;</em> - enable the feed stop switch. The P1 is optional.
+               Enabling the feed stop switch will allow motion to be
+               interrupted by means of the feed stop control. In LinuxCNC,
+               the HAL pin <em>motion.feed-hold</em> is used for this purpose. A <em>true</em>
+               value will cause the motion to stop when <em>M53</em> is active.
+</p>
+</li>
+<li>
+<p>
+<em>M53 P0</em> - disable the feed stop switch. The state of <em>motion.feed-hold</em>
+             will have no effect on feed when M53 is not active.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m61">14. M61 Set Current Tool</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M61 Q-</em> - change the current tool number while in MDI or Manual mode without
+             a tool change. One use is when you power up LinuxCNC with a tool
+             currently in the spindle you can set that tool number without
+             doing a tool change.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">The tool length offset is not changed by <em>M61</em>, use <em><a href="g-code.html#gcode:g43">G43</a></em> after
+the <em>M61</em> to change the tool length offset.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>It is an error if:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Q- is not 0 or greater
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m62-m65">15. M62 - M65 Digital Output Control</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M62 P-</em> - turn on digital output synchronized with motion.
+             The P- word specifies the digital output number.
+</p>
+</li>
+<li>
+<p>
+<em>M63 P-</em> - turn off digital output synchronized with motion.
+             The P- word specifies the digital output number.
+</p>
+</li>
+<li>
+<p>
+<em>M64 P-</em> - turn on digital output immediately.
+             The P- word specifies the digital output number.
+</p>
+</li>
+<li>
+<p>
+<em>M65 P-</em> - turn off digital output immediately.
+             The P- word specifies the digital output number.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The P-word ranges from 0 to a default value of 3. If needed the the
+number of I/O can be increased by using the num_dio parameter when loading
+the motion controller. See the <a href="../config/core-components.html#sec:motion">Motion Section</a> for more
+information.</p></div>
+<div class="paragraph"><p>The M62 &amp; M63 commands will be queued. Subsequent commands referring
+to the same output number will overwrite the older settings. More than
+one output change can be specified by issuing more than one M62/M63
+command.</p></div>
+<div class="paragraph"><p>The actual change of the specified outputs will happen at the
+beginning of the next motion command. If there is no subsequent motion
+command, the queued output changes won&#8217;t happen. It&#8217;s best to always
+program a motion G code (G0, G1, etc) right after the M62/63.</p></div>
+<div class="paragraph"><p>M64 &amp; M65 happen immediately as they are received by the motion
+controller. They are not synchronized with movement, and they will
+break blending.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">M62-65 will not function unless the appropriate motion.digital-out-nn pins are
+connected in your hal file to outputs.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m66">16. M66 Wait on Input</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>M66 P- | E- &lt;L-&gt;</code></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>P-</em> - specifies the digital input number from 0 to 3.
+</p>
+</li>
+<li>
+<p>
+<em>E-</em> - specifies the analog input number from 0 to 3.
+</p>
+</li>
+<li>
+<p>
+<em>L-</em> - specifies the wait mode type.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>Mode 0: IMMEDIATE</em> - no waiting, returns immediately.
+       The current value of the input is stored in parameter #5399
+</p>
+</li>
+<li>
+<p>
+<em>Mode 1: RISE</em> - waits for the selected input to perform a rise event.
+</p>
+</li>
+<li>
+<p>
+<em>Mode 2: FALL</em> - waits for the selected input to perform a fall event.
+</p>
+</li>
+<li>
+<p>
+<em>Mode 3: HIGH</em> - waits for the selected input to go to the HIGH state.
+</p>
+</li>
+<li>
+<p>
+<em>Mode 4: LOW</em> - waits for the selected input to go to the LOW state.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<em>Q-</em> - specifies the timeout in seconds for waiting. If the timeout is
+         exceeded, the wait is interrupt, and the variable #5399 will be holding
+         the value -1. The Q value is ignored if the L-word is zero (IMMEDIATE).
+         A Q value of zero is an error if the L-word is non-zero.
+</p>
+</li>
+<li>
+<p>
+Mode 0 is the only one permitted for an analog input.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">M66 Example Lines</div>
+<div class="content">
+<pre><code>M66 P0 L3 Q5 (wait up to 5 seconds for digital input 0 to turn on)</code></pre>
+</div></div>
+<div class="paragraph"><p>M66 wait on an input stops further execution of the program, until the
+selected event (or the programmed timeout) occurs.</p></div>
+<div class="paragraph"><p>It is an error to program M66 with both a P-word and an E-word (thus
+selecting both an analog and a digital input).  In LinuxCNC these
+inputs are not monitored in real time and thus should not be used for
+timing-critical applications.</p></div>
+<div class="paragraph"><p>The number of I/O can be increased by using the num_dio or num_aio parameter
+when loading the motion controller. See the <a href="../config/core-components.html#sec:motion">Motion Section</a>
+for more information.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">M66 will not function unless the appropriate motion.digital-in-nn pins or
+motion.analog-in-nn pins are connected in your hal file to an input.</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="title">Example HAL Connection</div>
+<div class="content">
+<pre><code>net signal-name motion.digital-in-00 &lt;= parport.0.pin10-in</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m67">17. M67 Analog Output,Synchronized</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>M67 E- Q-</code></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M67</em> - set an analog output synchronized with motion.
+</p>
+</li>
+<li>
+<p>
+<em>E-</em> - output number ranging from 0 to 3.
+</p>
+</li>
+<li>
+<p>
+<em>Q-</em> - is the value to set (set to 0 to turn off).
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The actual change of the specified outputs will happen at the
+beginning of the next motion command. If there is no subsequent motion
+command, the queued output changes won&#8217;t happen. It&#8217;s best to always
+program a motion G code (G0, G1, etc) right after the M67. M67 functions
+the same as M62-63.</p></div>
+<div class="paragraph"><p>The number of I/O can be increased by using the num_dio or num_aio parameter
+when loading the motion controller. See the <a href="../config/core-components.html#sec:motion">Motion Section</a> for
+more information.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">M67 will not function unless the appropriate motion.analog-out-nn pins are
+connected in your hal file to outputs.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m68">18. M68 Analog Output, Immediate</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>M68 E- Q-</code></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M68</em> - set an analog output immediately.
+</p>
+</li>
+<li>
+<p>
+<em>E-</em> - output number ranging from 0 to 3.
+</p>
+</li>
+<li>
+<p>
+<em>Q-</em> - is the value to set (set to 0 to turn off).
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>M68 output happen immediately as they are received by the motion
+controller. They are not synchronized with movement, and they will
+break blending. M68 functions the same as M64-65.</p></div>
+<div class="paragraph"><p>The number of I/O can be increased by using the num_dio or num_aio parameter
+when loading the motion controller. See the <a href="../config/core-components.html#sec:motion">Motion Section</a> for
+more information.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">M68 will not function unless the appropriate motion.analog-out-nn pins are
+connected in your hal file to outputs.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m70">19. M70 Save Modal State</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p>To explicitly save the modal state at the current call level, program
+<em>M70</em>. Once modal state has been saved with <em>M70</em>, it can be restored
+to exactly that state by executing an <em>M72</em>.</p></div>
+<div class="paragraph"><p>A pair of <em>M70</em> and <em>M72</em> instructions will typically be used to
+protect a program against inadvertent modal changes within
+subroutines.</p></div>
+<div class="paragraph" id="mcode:m70-saved-state"><p>The state saved consists of:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+current G20/G21 settings (imperial/metric)
+</p>
+</li>
+<li>
+<p>
+selected plane (G17/G18/G19 G17.1,G18.1,G19.1)
+</p>
+</li>
+<li>
+<p>
+status of cutter compensation (G40,G41,G42,G41.1,G42,1)
+</p>
+</li>
+<li>
+<p>
+distance mode - relative/absolute (G90/G91)
+</p>
+</li>
+<li>
+<p>
+feed mode (G93/G94,G95)
+</p>
+</li>
+<li>
+<p>
+current coordinate system (G54-G59.3)
+</p>
+</li>
+<li>
+<p>
+tool length compensation status (G43,G43.1,G49)
+</p>
+</li>
+<li>
+<p>
+retract mode (G98,G99)
+</p>
+</li>
+<li>
+<p>
+spindle mode (G96-css or G97-RPM)
+</p>
+</li>
+<li>
+<p>
+arc distance mode (G90.1, G91.1)
+</p>
+</li>
+<li>
+<p>
+lathe radius/diameter mode (G7,G8)
+</p>
+</li>
+<li>
+<p>
+path control mode (G61, G61.1, G64)
+</p>
+</li>
+<li>
+<p>
+current feed and speed (<em>F</em> and <em>S</em> values)
+</p>
+</li>
+<li>
+<p>
+spindle status (M3,M4,M5) - on/off and direction
+</p>
+</li>
+<li>
+<p>
+mist (M7) and flood (M8) status
+</p>
+</li>
+<li>
+<p>
+speed override (M51) and feed override (M50) settings
+</p>
+</li>
+<li>
+<p>
+adaptive feed setting (M52)
+</p>
+</li>
+<li>
+<p>
+feed hold setting (M53)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Note that in particular, the motion mode (G1 etc) is NOT restored.</p></div>
+<div class="paragraph"><p><em>current call level</em> means either:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+executing in the main program. There is a single storage location
+ for state at the main program level; if several <em>M70</em> instructions
+ are executed in turn, only the most recently saved state is restored
+ when an <em>M72</em> is executed.
+</p>
+</li>
+<li>
+<p>
+executing within a G-code subroutine. The state saved with <em>M70</em>
+ within a subroutine behaves exactly like a local named parameter - it
+ can be referred to only within this subroutine invocation with an
+ <em>M72</em> and when the subroutine exits, the parameter goes away.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>A recursive invocation of a subroutine introduces a new call level.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m71">20. M71 Invalidate Stored Modal State</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p>Modal state saved with an <em>M70</em> or by an <em>M73</em> at the current call
+level is invalidated (cannot be restored from anymore).</p></div>
+<div class="paragraph"><p>A subsequent <em>M72</em> at the same call level will fail.</p></div>
+<div class="paragraph"><p>If executed in a subroutine which protects modal state by an <em>M73</em>, a
+subsequent return or endsub will <strong>not</strong> restore modal state.</p></div>
+<div class="paragraph"><p>The usefulness of this feature is dubious. It should not be relied upon as it might
+go away.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m72">21. M72 Restore Modal State</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p><a href="m-code.html#mcode:m70-saved-state">Modal state saved with an <em>M70</em></a> code can be
+restored by executing an <em>M72</em>.</p></div>
+<div class="paragraph"><p>The handling of G20/G21 is specially treated as feeds are interpreted
+differently depending on G20/G21: if length units (mm/in) are about to
+be changed by the restore operation, 'M72 'will restore the distance
+mode first, and then all other state including feed to make sure the
+feed value is interpreted in the correct unit setting.</p></div>
+<div class="paragraph"><p>It is an error to execute an <em>M72</em> with no previous <em>M70</em> save
+operation at that level.</p></div>
+<div class="paragraph"><p>The following example demonstrates saving and explicitly restoring
+modal state around a subroutine call using <em>M70</em> and <em>M72</em>. Note that
+the <em>imperialsub</em> subroutine is not "aware" of the M7x features and can be
+used unmodified:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">O&lt;showstate&gt; sub</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">(DEBUG, imperial=</span></span><span style="color: #009900">#&lt;_imperial&gt;</span><span style="font-style: italic"><span style="color: #9A1900"> absolute=</span></span><span style="color: #009900">#&lt;_absolute&gt;</span><span style="font-style: italic"><span style="color: #9A1900"> feed=</span></span><span style="color: #009900">#&lt;_feed&gt;</span><span style="font-style: italic"><span style="color: #9A1900"> rpm=</span></span><span style="color: #009900">#&lt;_rpm&gt;</span><span style="font-style: italic"><span style="color: #9A1900">)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;showstate&gt; endsub</span></span>
+
+<span style="font-weight: bold"><span style="color: #000080">O&lt;imperialsub&gt; sub</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g20</span></span> <span style="font-style: italic"><span style="color: #9A1900">(imperial)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g91</span></span> <span style="font-style: italic"><span style="color: #9A1900">(relative mode)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">F5 </span></span><span style="font-style: italic"><span style="color: #9A1900">(low feed)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">S300 </span></span><span style="font-style: italic"><span style="color: #9A1900">(low rpm)</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">(debug, in subroutine, state now:)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">o&lt;showstate&gt; call</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;imperialsub&gt; endsub</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900">; main program</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g21</span></span> <span style="font-style: italic"><span style="color: #9A1900">(metric)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g90</span></span> <span style="font-style: italic"><span style="color: #9A1900">(absolute)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">f200 </span></span><span style="font-style: italic"><span style="color: #9A1900">(fast speed)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">S2500 </span></span><span style="font-style: italic"><span style="color: #9A1900">(high rpm)</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900">(debug, in main, state now:)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">o&lt;showstate&gt; call</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">M70</span></span> <span style="font-style: italic"><span style="color: #9A1900">(save caller state in at global level)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;imperialsub&gt; call</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">M72</span></span> <span style="font-style: italic"><span style="color: #9A1900">(explicitly restore state)</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900">(debug, back in main, state now:)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">o&lt;showstate&gt; call</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">m2</span></span></tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m73">22. M73 Save and Autorestore Modal State</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="paragraph"><p>To save modal state within a subroutine, and restore state on
+subroutine <em>endsub</em> or any <em>return</em> path, program <em>M73</em>.</p></div>
+<div class="paragraph"><p>Aborting a running program in a subroutine which has an <em>M73</em>
+operation will <strong>not</strong> restore state .</p></div>
+<div class="paragraph"><p>Also, the normal end (<em>M2</em>) of a main program which contains an <em>M73</em>
+will <strong>not</strong> restore state.</p></div>
+<div class="paragraph"><p>The suggested use is at the beginning of a O-word subroutine as in the
+following example. Using <em>M73</em> this way enables designing subroutines
+which need to modify modal state but will protect the calling program
+against inadvertent modal changes. Note the use of
+<a href="overview.html#gcode:predefined-named-parameters">predefined named parameters</a> in
+the <em>showstate</em> subroutine.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">O&lt;showstate&gt; sub</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">(DEBUG, imperial=</span></span><span style="color: #009900">#&lt;_imperial&gt;</span><span style="font-style: italic"><span style="color: #9A1900"> absolute=</span></span><span style="color: #009900">#&lt;_absolute&gt;</span><span style="font-style: italic"><span style="color: #9A1900"> feed=</span></span><span style="color: #009900">#&lt;_feed&gt;</span><span style="font-style: italic"><span style="color: #9A1900"> rpm=</span></span><span style="color: #009900">#&lt;_rpm&gt;</span><span style="font-style: italic"><span style="color: #9A1900">)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;showstate&gt; endsub</span></span>
+
+<span style="font-weight: bold"><span style="color: #000080">O&lt;imperialsub&gt; sub</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">M73</span></span> <span style="font-style: italic"><span style="color: #9A1900">(save caller state in current call context, restore on return or endsub)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g20</span></span> <span style="font-style: italic"><span style="color: #9A1900">(imperial)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g91</span></span> <span style="font-style: italic"><span style="color: #9A1900">(relative mode)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">F5 </span></span><span style="font-style: italic"><span style="color: #9A1900">(low feed)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">S300 </span></span><span style="font-style: italic"><span style="color: #9A1900">(low rpm)</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">(debug, in subroutine, state now:)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">o&lt;showstate&gt; call</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900">; note - no M72 is needed here - the following endsub or an</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">; explicit 'return' will restore caller state</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;imperialsub&gt; endsub</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900">; main program</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g21</span></span> <span style="font-style: italic"><span style="color: #9A1900">(metric)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g90</span></span> <span style="font-style: italic"><span style="color: #9A1900">(absolute)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">f200 </span></span><span style="font-style: italic"><span style="color: #9A1900">(fast speed)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">S2500 </span></span><span style="font-style: italic"><span style="color: #9A1900">(high rpm)</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">(debug, in main, state now:)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">o&lt;showstate&gt; call</span></span>
+<span style="font-weight: bold"><span style="color: #000080">o&lt;imperialsub&gt; call</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">(debug, back in main, state now:)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">o&lt;showstate&gt; call</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">m2</span></span></tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m98-m99">23. M98 and M99</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The interpreter supports Fanuc-style main- and sub-programs with the
+<em>M98</em> and <em>M99</em> M-codes.  See <a href="o-code.html#ocode:fanuc-style-programs">Fanuc-Style Programs</a>.</p></div>
+<div class="sect2">
+<h3 id="_selectively_restoring_modal_state">23.1. Selectively Restoring Modal State</h3>
+<div class="paragraph"><p>Executing an <em>M72</em> or returning from a subroutine which contains an
+<em>M73</em> will restore <a href="m-code.html#mcode:m70-saved-state"><strong>all</strong> modal state saved</a>.</p></div>
+<div class="paragraph"><p>If only some aspects of modal state should be preserved, an
+alternative is the usage of <a href="overview.html#gcode:predefined-named-parameters">predefined named parameters</a>, local parameters and conditional
+statements. The idea is to remember the modes to be restored at the
+beginning of the subroutine, and restore these before exiting. Here is
+an example, based on snippet of <em>nc_files/tool-length-probe.ngc</em>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">O&lt;measure&gt; sub</span></span>   <span style="font-style: italic"><span style="color: #9A1900">(measure reference tool)</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">;</span></span>
+<span style="color: #009900">#&lt;absolute&gt;</span> <span style="font-weight: bold"><span style="color: #000000">=</span></span> <span style="color: #009900">#&lt;_absolute&gt;</span>  <span style="font-style: italic"><span style="color: #9A1900">(remember in local variable if G90 was set)</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g30</span></span> <span style="font-style: italic"><span style="color: #9A1900">(above switch)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g38.2</span></span> <span style="color: #FF6600">z</span><span style="color: #993399">0</span> <span style="font-weight: bold"><span style="color: #0000FF">f15 </span></span><span style="font-style: italic"><span style="color: #9A1900">(measure)</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">g91</span></span> <span style="font-weight: bold"><span style="color: #0000FF">g0</span></span><span style="color: #FF6600">z</span><span style="color: #993399">.2</span> <span style="font-style: italic"><span style="color: #9A1900">(off the switch)</span></span>
+<span style="color: #009900">#1000</span><span style="font-weight: bold"><span style="color: #000000">=</span></span><span style="color: #009900">#5063</span> <span style="font-style: italic"><span style="color: #9A1900">(save reference tool length)</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">(print,reference length is #1000)</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">;</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;restore_abs&gt; if</span></span> <span style="font-weight: bold"><span style="color: #000000">[</span></span><span style="color: #009900">#&lt;absolute&gt;</span><span style="font-weight: bold"><span style="color: #000000">]</span></span>
+    <span style="font-weight: bold"><span style="color: #0000FF">g90</span></span> <span style="font-style: italic"><span style="color: #9A1900">(restore G90 only if it was set on entry:)</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;restore_abs&gt; endif</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">;</span></span>
+<span style="font-weight: bold"><span style="color: #000080">O&lt;measure&gt; endsub</span></span></tt></pre></div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mcode:m100-m199">24. M100 - M199 User Defined Commands</h2>
+<div class="sectionbody">
+<div class="paragraph"><p></p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>M1-- &lt;P- Q-&gt;</code></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>M1--</em> - an integer in the range of 100 - 199.
+</p>
+</li>
+<li>
+<p>
+<em>P-</em> - a number passed to the file as the first parameter.
+</p>
+</li>
+<li>
+<p>
+<em>Q-</em> - a number passed to the file as the second parameter.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">After creating a new <em>M1nn</em> file you must restart the GUI so it is aware
+of the new file, otherwise you will get an <em>Unknown m code</em> error.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The external program named <em>M100</em> through <em>M199</em> (no extension and a capitol M)
+is executed with the optional P and Q values as its two arguments.
+Execution of the G code file pauses until the external program exits.
+Any valid executable file can be used. The file must be located in the search
+path specified in the ini file configuration. See the
+<a href="../config/ini-config.html#sec:display-section">Display Section</a> for more information on search paths.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">Do not use a word processor to create or edit the files. A word processor
+will leave unseen codes that will cause problems and may prevent a bash or
+python file from working. Use a text editor like Gedit in Ubuntu or Notepad++
+in other operating systems to create or edit the files.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The error <em>Unknown M code used</em> denotes one of the following</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The specified User Defined Command does not exist
+</p>
+</li>
+<li>
+<p>
+The file is not an executable file
+</p>
+</li>
+<li>
+<p>
+The file name has an extension
+</p>
+</li>
+<li>
+<p>
+The file name does not follow this format M1nn where nn = 00 through 99
+</p>
+</li>
+<li>
+<p>
+The file name used a lower case M
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>For example to open and close a collet closer that is controlled by a
+parallel port pin using a bash script file using M101 and M102. Create two
+files named M101 and M102. Set them as executable files (typically
+right click/properties/permissions) before running LinuxCNC. Make sure the
+parallel port pin is not connected to anything in a HAL file.</p></div>
+<div class="listingblock">
+<div class="title">M101 Example File</div>
+<div class="content">
+<pre><code>#!/bin/bash
+# file to turn on parport pin 14 to open the collet closer
+halcmd setp parport.0.pin-14-out True
+exit 0</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">M102 Example File</div>
+<div class="content">
+<pre><code>#!/bin/bash
+# file to turn off parport pin 14 to open the collet closer
+halcmd setp parport.0.pin-14-out False
+exit 0</code></pre>
+</div></div>
+<div class="paragraph"><p>To pass a variable to a M1nn file you use the P and Q option like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>M100 P123.456 Q321.654</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">M100 Example file</div>
+<div class="content">
+<pre><code>#!/bin/bash
+voltage=$1
+feedrate=$2
+halcmd setp thc.voltage $voltage
+halcmd setp thc.feedrate $feedrate
+exit 0</code></pre>
+</div></div>
+<div class="paragraph"><p>To display a graphic message and stop until the message window is closed
+use a graphic display program like Eye of Gnome to display the graphic
+file. When you close it the program will resume.</p></div>
+<div class="listingblock">
+<div class="title">M110 Example file</div>
+<div class="content">
+<pre><code>#!/bin/bash
+eog /home/john/linuxcnc/nc_files/message.png
+exit 0</code></pre>
+</div></div>
+<div class="paragraph"><p>To display a graphic message and continue processing the G code file
+suffix an ampersand to the command.</p></div>
+<div class="listingblock">
+<div class="title">M110 Example display and keep going</div>
+<div class="content">
+<pre><code>#!/bin/bash
+eog /home/john/linuxcnc/nc_files/message.png &amp;
+exit 0</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated
+ 2021-11-20 04:12:52 CET
+</div>
+</div>
+</body>
+</html>

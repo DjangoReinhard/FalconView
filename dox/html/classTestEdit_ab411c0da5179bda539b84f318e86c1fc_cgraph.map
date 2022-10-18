@@ -1,0 +1,13 @@
+<map id="TestEdit::reallyLoadFile" name="TestEdit::reallyLoadFile">
+<area shape="rect" id="node1" title=" " alt="" coords="5,87,195,116"/>
+<area shape="rect" id="node2" href="$classGCodeEditor.html#a78e65f852b27b2980168561966c65a76" title=" " alt="" coords="243,60,424,89"/>
+<area shape="rect" id="node7" href="$classGuiCore.html#ab31ba8adb79f692a4a3a8dc193efffcb" title=" " alt="" coords="472,112,623,141"/>
+<area shape="rect" id="node3" href="$classCore.html#ab8ee0d53ad81162dc3e5f65ea45f6ead" title=" " alt="" coords="484,59,611,88"/>
+<area shape="rect" id="node4" href="$classKernelInterface.html#a2ff95677f749126176d05c5a54966780" title=" " alt="" coords="672,5,900,35"/>
+<area shape="rect" id="node5" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="689,59,883,88"/>
+<area shape="rect" id="node6" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="949,59,1124,88"/>
+<area shape="rect" id="node8" href="$classKernelInterface.html#a27e25c884cd5ef57f3a658830e123231" title=" " alt="" coords="671,219,901,248"/>
+<area shape="rect" id="node9" href="$classSysEvent.html#a1ed0720f3748491f3fd2f15ca565bbdf" title=" " alt="" coords="709,272,863,301"/>
+<area shape="rect" id="node10" href="$classSysEvent.html#ad65f34e4f68f36a5adffc17ed95e3326" title=" " alt="" coords="722,112,850,141"/>
+<area shape="rect" id="node11" href="$classSysEvent.html#a05881e39a8ca837d322031ba1f876780" title=" " alt="" coords="720,165,852,195"/>
+</map>

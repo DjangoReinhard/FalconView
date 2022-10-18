@@ -1,0 +1,8 @@
+<map id="HelpView::createContent" name="HelpView::createContent">
+<area shape="rect" id="node1" title=" " alt="" coords="5,85,204,115"/>
+<area shape="rect" id="node2" href="$classHelpEngine.html#a8f9ac5befc7cef94cf8500e62dde333b" title=" " alt="" coords="258,5,475,35"/>
+<area shape="rect" id="node3" href="$classCore.html#ac060135ddaf239c5ef3ca34d958d6f94" title=" " alt="" coords="297,59,436,88"/>
+<area shape="rect" id="node5" href="$classHelpEngine.html#af988303fe71336a39e4e99e51828432f" title=" " alt="" coords="254,112,479,141"/>
+<area shape="rect" id="node6" href="$classHelpBrowser.html#a204a10c3164cf485b0fd1aaaa95e7bc3" title=" " alt="" coords="252,165,481,195"/>
+<area shape="rect" id="node4" href="$classKernelInterface.html#a8fb2cd3470537e4da81ef2df7088774c" title=" " alt="" coords="529,59,740,88"/>
+</map>

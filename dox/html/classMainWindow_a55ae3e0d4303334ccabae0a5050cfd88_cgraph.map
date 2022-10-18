@@ -1,0 +1,11 @@
+<map id="MainWindow::keyPressEvent" name="MainWindow::keyPressEvent">
+<area shape="rect" id="node1" title=" " alt="" coords="5,57,236,87"/>
+<area shape="rect" id="node2" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="860,5,1055,35"/>
+<area shape="rect" id="node4" href="$classMainWindow.html#a89b1d19a0762c7bf6209494b50894b5c" title=" " alt="" coords="284,57,539,87"/>
+<area shape="rect" id="node8" href="$classGuiCore.html#aec3a36ed54e4eea69bc6c4e3be90a3fe" title=" " alt="" coords="330,137,493,167"/>
+<area shape="rect" id="node3" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="1115,5,1289,35"/>
+<area shape="rect" id="node5" href="$classGuiCore.html#a8f0e7d61a005db27dbcf6f750f4504b2" title=" " alt="" coords="618,111,769,140"/>
+<area shape="rect" id="node7" href="$classMainWindow.html#a0686ce487fc5ef58ec3db659fe465063" title=" " alt="" coords="587,57,800,87"/>
+<area shape="rect" id="node6" href="$classKernelInterface.html#a50ba816c2b31d862836f271deaa32eda" title=" " alt="" coords="848,111,1067,140"/>
+<area shape="rect" id="node9" href="$classKernelInterface.html#a4fdaffe464db31fc47267b0b37991bf6" title=" " alt="" coords="588,164,799,193"/>
+</map>

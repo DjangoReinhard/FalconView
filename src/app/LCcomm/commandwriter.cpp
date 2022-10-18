@@ -1,4 +1,30 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       commandwriter.cpp
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    30.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #include <commandwriter.h>
+#include <abstractcommandwriter.h>
 #include <valuemanager.h>
 #include <valuemodel.h>
 #include <sysevent.h>
@@ -12,54 +38,14 @@
 #include <QDebug>
 
 
-CommandWriter::CommandWriter(QObject *parent)
- : QObject(parent) {
-  cCmd = new RCS_CMD_CHANNEL(emcFormat, "emcCommand", "xemc", EMC2_DEFAULT_NMLFILE);
-  if (!cCmd || !cCmd->valid()) {
-     delete cCmd;
-     cCmd = NULL;
-     }
-  cStat = new RCS_STAT_CHANNEL(emcFormat, "emcStatus", "xemc", EMC2_DEFAULT_NMLFILE);
-  if (!cStat || !cStat->valid()) {
-     delete cCmd;
-     delete cStat;
-     cCmd  = NULL;
-     cStat = NULL;
-     }
-  else {
-     status = static_cast<EMC_STAT*>(cStat->get_address());
-     }
+CommandWriter::CommandWriter(AbstractCommandWriter* realWriter, QObject *parent)
+ : QObject(parent)
+ , acw(realWriter) {
   }
 
 
 bool CommandWriter::isActive() {
-  return cCmd && cCmd->valid() && cStat && cStat->valid();
-  }
-
-
-int CommandWriter::sendCommand(RCS_CMD_MSG& msg) {
-  if (!cCmd  || !cCmd->valid())  return -1;
-  if (!cStat || !cStat->valid()) return -2;
-  if (cCmd->write(&msg))         return -3;
-  double end = 0;
-
-  while (end < EMC_COMMAND_TIMEOUT) {
-        cStat->peek();
-        end += EMC_COMMAND_DELAY;
-
-        if ((status->echo_serial_number - msg.serial_number) >= 0) return 0;
-        sleep(EMC_COMMAND_DELAY);
-        }
-  return 0;
-  }
-
-
-void CommandWriter::sleep(double seconds) {
-  struct timeval tv;
-
-  tv.tv_sec  = seconds;
-  tv.tv_usec = seconds * 1000000;
-  select (0, NULL, NULL, NULL, &tv);
+  return acw && acw->isActive();
   }
 
 
@@ -374,5 +360,7 @@ void CommandWriter::taskPlanSynch() {
                                                    , QString("task plan synch")));
   }
 
-const int    CommandWriter::EMC_COMMAND_TIMEOUT = 5.0;  // how long to wait until timeout
-const double CommandWriter::EMC_COMMAND_DELAY   = 0.01; // seconds to sleep between checks
+
+int CommandWriter::sendCommand(RCS_CMD_MSG &msg) {
+  return acw->sendCommand(msg);
+  }

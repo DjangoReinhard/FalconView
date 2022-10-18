@@ -5,19 +5,26 @@ project(FalconView LANGUAGES CXX)
 include(Interface)
 add_executable(FalconView
     main.cpp
+    control/abstractstatusreader.cpp
     control/guikernel.cpp
     control/mainwindow.cpp
     control/multistatetoolbutton.cpp
+    control/statusupdater.cpp
+    LCcomm/abstractcommandwriter.cpp
     LCcomm/commandwriter.cpp
+    LCcomm/commandNMLwriter.cpp
+    LCcomm/commandNetWriter.cpp
     LCcomm/errorreader.cpp
     LCcomm/gcodeinfo.cpp
     LCcomm/positioncalculator.cpp
-    LCcomm/statusreader.cpp
+    LCcomm/statusNetReader.cpp
+    LCcomm/statusNMLreader.cpp
     LCinter/canonif.cpp
     LCinter/canonifsettings.cpp
     LCinter/LCInter.cpp
     LCinter/stupidtoolchangerif.cpp
     model/falconviewdb.cpp
+    model/LCStatus.cpp
     model/toolcategory.cpp
     model/tool.cpp
     util/multistateaction.cpp

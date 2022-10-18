@@ -1,0 +1,23 @@
+<map id="DynCenterWidget" name="DynCenterWidget">
+<area shape="rect" id="node1" title=" " alt="" coords="144,432,307,461"/>
+<area shape="rect" id="node3" href="$classCenterView.html" title=" " alt="" coords="379,5,493,35"/>
+<area shape="rect" id="node4" href="$classCurCodesStatus.html" title=" " alt="" coords="361,59,511,88"/>
+<area shape="rect" id="node5" href="$classFileManager.html" title=" " alt="" coords="377,112,495,141"/>
+<area shape="rect" id="node6" href="$classFixtureEdit.html" title=" " alt="" coords="383,165,489,195"/>
+<area shape="rect" id="node7" href="$classFixtureManager.html" title=" " alt="" coords="363,219,509,248"/>
+<area shape="rect" id="node8" href="$classHelpView.html" title=" " alt="" coords="388,272,484,301"/>
+<area shape="rect" id="node9" href="$classJogView.html" title=" " alt="" coords="393,325,479,355"/>
+<area shape="rect" id="node10" href="$classLCToolTable.html" title=" " alt="" coords="379,379,493,408"/>
+<area shape="rect" id="node11" href="$classMDIEditor.html" title=" " alt="" coords="386,432,486,461"/>
+<area shape="rect" id="node12" href="$classPositionStatus.html" title=" " alt="" coords="369,485,503,515"/>
+<area shape="rect" id="node13" href="$classPreferencesEditor.html" title=" " alt="" coords="355,539,517,568"/>
+<area shape="rect" id="node14" href="$classSettingsNotebook.html" title=" " alt="" coords="355,592,517,621"/>
+<area shape="rect" id="node15" href="$classSpeedStatus.html" title=" " alt="" coords="375,645,497,675"/>
+<area shape="rect" id="node16" href="$classSysEventView.html" title=" " alt="" coords="370,699,502,728"/>
+<area shape="rect" id="node17" href="$classTestEdit.html" title=" " alt="" coords="395,752,477,781"/>
+<area shape="rect" id="node20" href="$classToolManager.html" title=" " alt="" coords="374,805,498,835"/>
+<area shape="rect" id="node21" href="$classToolStatus.html" title=" " alt="" coords="385,859,487,888"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,432,96,461"/>
+<area shape="rect" id="node18" href="$classPathEditor.html" title=" " alt="" coords="579,725,683,755"/>
+<area shape="rect" id="node19" href="$classPreViewEditor.html" title=" " alt="" coords="565,779,697,808"/>
+</map>

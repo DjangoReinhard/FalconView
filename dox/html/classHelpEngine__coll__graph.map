@@ -1,0 +1,8 @@
+<map id="HelpEngine" name="HelpEngine">
+<area shape="rect" id="node1" title=" " alt="" coords="151,179,263,208"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,84,92,113"/>
+<area shape="rect" id="node3" href="$classHelpKeywordWidget.html" title=" " alt="" coords="117,84,298,113"/>
+<area shape="rect" id="node4" title=" " alt="" coords="149,5,266,35"/>
+<area shape="rect" id="node5" href="$classHelpContentWidget.html" title=" " alt="" coords="322,84,498,113"/>
+<area shape="rect" id="node6" title=" " alt="" coords="349,5,471,35"/>
+</map>

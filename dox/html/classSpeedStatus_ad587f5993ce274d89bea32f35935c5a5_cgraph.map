@@ -1,0 +1,9 @@
+<map id="SpeedStatus::speedChanged" name="SpeedStatus::speedChanged">
+<area shape="rect" id="node1" title=" " alt="" coords="5,77,237,106"/>
+<area shape="rect" id="node2" href="$classGuiCore.html#a38108db7b119146c60b39cef7a6e633c" title=" " alt="" coords="285,19,533,49"/>
+<area shape="rect" id="node4" href="$classGuiCore.html#abce1547dcb7541bfd447552215648429" title=" " alt="" coords="332,77,487,106"/>
+<area shape="rect" id="node6" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="312,130,507,159"/>
+<area shape="rect" id="node3" href="$classKernelInterface.html#a7572f78fbe5b61ae0a60c5c446589265" title=" " alt="" coords="581,5,816,52"/>
+<area shape="rect" id="node5" href="$classKernelInterface.html#a60a11b889b28422c02ea0aceeea4f0a6" title=" " alt="" coords="597,77,800,106"/>
+<area shape="rect" id="node7" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="611,130,786,159"/>
+</map>

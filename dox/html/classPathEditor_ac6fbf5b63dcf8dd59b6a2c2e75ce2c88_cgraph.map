@@ -1,0 +1,31 @@
+<map id="PathEditor::connectSignals" name="PathEditor::connectSignals">
+<area shape="rect" id="node1" title=" " alt="" coords="5,312,220,341"/>
+<area shape="rect" id="node2" href="$classTestEdit.html#abb5fccbd20dec48fa5d5ff4cbd01eaf5" title=" " alt="" coords="273,219,470,248"/>
+<area shape="rect" id="node4" href="$classValueManager.html#a280f82d18a2090610fd378bc57c04a56" title=" " alt="" coords="523,59,721,88"/>
+<area shape="rect" id="node12" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="1330,535,1525,564"/>
+<area shape="rect" id="node26" href="$classPathEditor.html#a30a8b034822e81c400157166512c458b" title=" " alt="" coords="268,392,475,421"/>
+<area shape="rect" id="node3" href="$classTestEdit.html#ab0f568ebc7627ccd3bc28c44f8e885d8" title=" " alt="" coords="531,325,713,355"/>
+<area shape="rect" id="node5" href="$classValueManager.html#ad73161eaea72fce03036d1fc519cdcff" title=" " alt="" coords="525,112,719,141"/>
+<area shape="rect" id="node7" href="$classConfig.html#af0a470a2816e6a2c8251c335f6c76533" title=" " alt="" coords="555,165,689,195"/>
+<area shape="rect" id="node9" href="$classTestEdit.html#ae93ada3526e513eb312124c2ee171539" title=" " alt="" coords="547,219,697,248"/>
+<area shape="rect" id="node17" href="$classTestEdit.html#a2bf9b1387bb9be7cbd5aa6a4a1cecbde" title=" " alt="" coords="548,272,696,301"/>
+<area shape="rect" id="node6" href="$classValueModel.html#a2001b180c153c91104bf54b8a302b67f" title=" " alt="" coords="790,5,966,35"/>
+<area shape="rect" id="node8" href="$classConfigManager.html#a615c9de241c515f3c39188c4fef14773" title=" " alt="" coords="769,59,987,88"/>
+<area shape="rect" id="node10" href="$classCenterPage.html#a35997a094fa37fb30affb2c6f85f6023" title=" " alt="" coords="773,219,983,248"/>
+<area shape="rect" id="node11" href="$classCore.html#a1ff41e900b39ed353d21882dbd1acbf2" title=" " alt="" coords="801,485,955,515"/>
+<area shape="rect" id="node14" href="$classFileManager.html#a41a9287c069d795dd014119789791016" title=" " alt="" coords="787,112,969,141"/>
+<area shape="rect" id="node15" href="$classGuiCore.html#a3770d915772b63635b2d139675c77dac" title=" " alt="" coords="787,165,969,195"/>
+<area shape="rect" id="node13" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="1589,535,1764,564"/>
+<area shape="rect" id="node16" href="$classKernelInterface.html#a5bae0a4b50e12b707a9486aa4f57f3b0" title=" " alt="" coords="1035,140,1265,169"/>
+<area shape="rect" id="node18" href="$classTestEdit.html#a98fad8da76e2ba4c367b3a06ca8ff98a" title=" " alt="" coords="793,325,963,355"/>
+<area shape="rect" id="node19" href="$classCore.html#afc34413e901eda2e2f116ee50cca5b4f" title=" " alt="" coords="795,272,961,301"/>
+<area shape="rect" id="node20" href="$classGuiCore.html#ab31ba8adb79f692a4a3a8dc193efffcb" title=" " alt="" coords="803,379,953,408"/>
+<area shape="rect" id="node21" href="$classKernelInterface.html#a2ff95677f749126176d05c5a54966780" title=" " alt="" coords="1313,417,1541,447"/>
+<area shape="rect" id="node22" href="$classKernelInterface.html#a27e25c884cd5ef57f3a658830e123231" title=" " alt="" coords="1035,404,1265,433"/>
+<area shape="rect" id="node23" href="$classSysEvent.html#a1ed0720f3748491f3fd2f15ca565bbdf" title=" " alt="" coords="1073,193,1227,223"/>
+<area shape="rect" id="node24" href="$classSysEvent.html#ad65f34e4f68f36a5adffc17ed95e3326" title=" " alt="" coords="1086,247,1214,276"/>
+<area shape="rect" id="node25" href="$classSysEvent.html#a05881e39a8ca837d322031ba1f876780" title=" " alt="" coords="1084,300,1216,329"/>
+<area shape="rect" id="node27" href="$classTestEdit.html#ab411c0da5179bda539b84f318e86c1fc" title=" " alt="" coords="527,392,717,421"/>
+<area shape="rect" id="node28" href="$classGCodeEditor.html#a78e65f852b27b2980168561966c65a76" title=" " alt="" coords="787,432,969,461"/>
+<area shape="rect" id="node29" href="$classCore.html#ab8ee0d53ad81162dc3e5f65ea45f6ead" title=" " alt="" coords="1087,508,1213,537"/>
+</map>

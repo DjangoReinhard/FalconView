@@ -1,0 +1,14 @@
+<map id="LCInterface" name="LCInterface">
+<area shape="rect" id="node1" title="The outer shell to linuxCNC interpreter." alt="" coords="156,573,260,603"/>
+<area shape="rect" id="node2" title=" " alt="" coords="147,479,227,508"/>
+<area shape="rect" id="node3" href="$classLCInterfaceP.html" title=" " alt="" coords="251,479,365,508"/>
+<area shape="rect" id="node4" href="$classToolTable.html" title="The ToolTable class parse and hold tooltable of linuxcnc." alt="" coords="521,195,612,224"/>
+<area shape="rect" id="node10" href="$classCanonIFSettings.html" title=" " alt="" coords="237,289,379,319"/>
+<area shape="rect" id="node5" title=" " alt="" coords="429,100,603,129"/>
+<area shape="rect" id="node6" href="$classLcProperties.html" title="The LcProperties class process ini&#45;files from linuxcnc." alt="" coords="11,100,123,129"/>
+<area shape="rect" id="node7" href="$classToolEntry.html" title="The ToolEntry class entry of linuxcnc tooltable file." alt="" coords="627,100,717,129"/>
+<area shape="rect" id="node8" href="$classPToolEntry.html" title=" " alt="" coords="622,5,722,35"/>
+<area shape="rect" id="node9" href="$classCanonIF.html" title="The data&#45;storage counterpart of linuxcnc interpreter. linuxcnc interpreter uses capitalized c&#45;functio..." alt="" coords="266,384,350,413"/>
+<area shape="rect" id="node11" href="$classGraphicFactory.html" title=" " alt="" coords="167,195,297,224"/>
+<area shape="rect" id="node12" href="$classStupidToolChangerIF.html" title="The StupidToolChangerIF class &#45; dumb model of a tool changer as required by lc." alt="" coords="322,195,497,224"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="SettingsEditor::changeBackgroundColor" name="SettingsEditor::changeBackgroundColor">
+<area shape="rect" id="node1" title=" " alt="" coords="5,23,301,70"/>
+<area shape="rect" id="node2" href="$classConfig.html#a91d98545615d70501902906f9f683540" title=" " alt="" coords="349,32,552,61"/>
+<area shape="rect" id="node3" href="$classCore.html#a38810dafa44019ce6b4db71569dfefe4" title=" " alt="" coords="684,5,788,35"/>
+<area shape="rect" id="node4" href="$classConfigManager.html#a588e5276a94a29ca8bcbf5391c3b5820" title=" " alt="" coords="600,59,872,88"/>
+<area shape="rect" id="node5" href="$classConfigManager.html#a615c9de241c515f3c39188c4fef14773" title=" " alt="" coords="920,32,1157,61"/>
+<area shape="rect" id="node6" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="931,85,1146,115"/>
+<area shape="rect" id="node7" href="$classValueManager.html#a210aacf76ba03543f2f81ef35372d3d9" title=" " alt="" coords="1205,59,1445,88"/>
+<area shape="rect" id="node8" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="1229,112,1421,141"/>
+</map>

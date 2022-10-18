@@ -1,3 +1,28 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       positioncalculator.cpp
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    19.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #include <emc_nml.hh>
 #include <insulatePose.h>
 #include <positioncalculator.h>
@@ -53,22 +78,20 @@ double PositionCalculator::convertUnit(double value, int unit) {
   }
 
 
-void PositionCalculator::update(EmcPose* actPos, EmcPose*, EmcPose* dtg, int units, EmcPose* g5x, EmcPose* g92, double rotXY, EmcPose* toolOffset) {
-  double x = actPos->tran.x - g5x->tran.x - toolOffset->tran.x;
-  double y = actPos->tran.y - g5x->tran.y - toolOffset->tran.y;
-  double z = actPos->tran.z - g5x->tran.z - toolOffset->tran.z;
-  double a = actPos->a      - g5x->a      - toolOffset->a;
-  double b = actPos->b      - g5x->b      - toolOffset->b;
-  double c = actPos->c      - g5x->c      - toolOffset->c;
-  double u = actPos->u      - g5x->u      - toolOffset->u;
-  double v = actPos->v      - g5x->v      - toolOffset->v;
-  double w = actPos->w      - g5x->w      - toolOffset->w;
+void PositionCalculator::update(volatile const double* actPos, volatile const double*, volatile const double* dtg, int units, volatile const double* g5x, volatile const double* g92, double rotXY, volatile const double* toolOffset) {
+  double x = actPos[0] - g5x[0] - toolOffset[0];
+  double y = actPos[1] - g5x[1] - toolOffset[1];
+  double z = actPos[2] - g5x[2] - toolOffset[2];
+  double a = actPos[3] - g5x[3] - toolOffset[3];
+  double b = actPos[4] - g5x[4] - toolOffset[4];
+  double c = actPos[5] - g5x[5] - toolOffset[5];
+  double u = actPos[6] - g5x[6] - toolOffset[6];
+  double v = actPos[7] - g5x[7] - toolOffset[7];
+  double w = actPos[8] - g5x[8] - toolOffset[8];
 
-
-//  qDebug() << "act. Pos: " << actPos->tran.x << "/" << actPos->tran.y << "/" << actPos->tran.z
-//           << "rel. Pos: " << relPos->tran.x << "/" << relPos->tran.y << "/" << relPos->tran.z
-//           << "dtg.: " << dtg->tran.x << "/" << dtg->tran.y << "/" << dtg->tran.z;
-
+//  qDebug() << "act. Pos: " << actPos[0] << "/" << actPos[1] << "/" << actPos[2]
+//           << "rel. Pos: " << relPos[0] << "/" << relPos[1] << "/" << relPos[2]
+//           << "dtg.: " << dtg[0] << "/" << dtg[1] << "/" << dtg[2];
 
   if (rotXY != 0) {
      double ang = rotXY * M_PI / 180.0;
@@ -78,29 +101,28 @@ void PositionCalculator::update(EmcPose* actPos, EmcPose*, EmcPose* dtg, int uni
      x = xr;
      y = yr;
      }
-  x = convertUnit(x - g92->tran.x, units);
-  y = convertUnit(y - g92->tran.y, units);
-  z = convertUnit(z - g92->tran.z, units);
-  a = convertUnit(a - g92->a, units);
-  b = convertUnit(b - g92->b, units);
-  c = convertUnit(c - g92->c, units);
-  u = convertUnit(u - g92->u, units);
-  v = convertUnit(v - g92->v, units);
-  w = convertUnit(w - g92->w, units);
-
+  x = convertUnit(x - g92[0], units);
+  y = convertUnit(y - g92[1], units);
+  z = convertUnit(z - g92[2], units);
+  a = convertUnit(a - g92[3], units);
+  b = convertUnit(b - g92[4], units);
+  c = convertUnit(c - g92[5], units);
+  u = convertUnit(u - g92[6], units);
+  v = convertUnit(v - g92[7], units);
+  w = convertUnit(w - g92[8], units);
   QVector3D cp(x, y, z);
-//  qDebug() << "posCalc: " << x << "/" << y << "/" << z;
 
-  vm.setValue("absX", convertUnit(actPos->tran.x, units));
-  vm.setValue("absY", convertUnit(actPos->tran.y, units));
-  vm.setValue("absZ", convertUnit(actPos->tran.z, units));
-  vm.setValue("absA", convertUnit(actPos->a, units));
-  vm.setValue("absB", convertUnit(actPos->b, units));
-  vm.setValue("absC", convertUnit(actPos->c, units));
-  vm.setValue("absU", convertUnit(actPos->u, units));
-  vm.setValue("absV", convertUnit(actPos->v, units));
-  vm.setValue("absW", convertUnit(actPos->w, units));
+  //  qDebug() << "posCalc: " << x << "/" << y << "/" << z;
   vm.setValue("conePos", cp);
+  vm.setValue("absX", convertUnit(actPos[0], units));
+  vm.setValue("absY", convertUnit(actPos[1], units));
+  vm.setValue("absZ", convertUnit(actPos[2], units));
+  vm.setValue("absA", convertUnit(actPos[3], units));
+  vm.setValue("absB", convertUnit(actPos[4], units));
+  vm.setValue("absC", convertUnit(actPos[5], units));
+  vm.setValue("absU", convertUnit(actPos[6], units));
+  vm.setValue("absV", convertUnit(actPos[7], units));
+  vm.setValue("absW", convertUnit(actPos[8], units));
   vm.setValue("relX", x);
   vm.setValue("relY", y);
   vm.setValue("relZ", z);
@@ -110,13 +132,13 @@ void PositionCalculator::update(EmcPose* actPos, EmcPose*, EmcPose* dtg, int uni
   vm.setValue("relU", u);
   vm.setValue("relV", v);
   vm.setValue("relW", w);
-  vm.setValue("dtgX", convertUnit(dtg->tran.x, units));
-  vm.setValue("dtgY", convertUnit(dtg->tran.y, units));
-  vm.setValue("dtgZ", convertUnit(dtg->tran.z, units));
-  vm.setValue("dtgA", convertUnit(dtg->a, units));
-  vm.setValue("dtgB", convertUnit(dtg->b, units));
-  vm.setValue("dtgC", convertUnit(dtg->c, units));
-  vm.setValue("dtgU", convertUnit(dtg->u, units));
-  vm.setValue("dtgV", convertUnit(dtg->v, units));
-  vm.setValue("dtgW", convertUnit(dtg->w, units));
+  vm.setValue("dtgX", convertUnit(dtg[0], units));
+  vm.setValue("dtgY", convertUnit(dtg[1], units));
+  vm.setValue("dtgZ", convertUnit(dtg[2], units));
+  vm.setValue("dtgA", convertUnit(dtg[3], units));
+  vm.setValue("dtgB", convertUnit(dtg[4], units));
+  vm.setValue("dtgC", convertUnit(dtg[5], units));
+  vm.setValue("dtgU", convertUnit(dtg[6], units));
+  vm.setValue("dtgV", convertUnit(dtg[7], units));
+  vm.setValue("dtgW", convertUnit(dtg[8], units));
   }

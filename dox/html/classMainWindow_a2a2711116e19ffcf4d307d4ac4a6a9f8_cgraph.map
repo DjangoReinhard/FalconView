@@ -1,0 +1,7 @@
+<map id="MainWindow::startSpindleCW" name="MainWindow::startSpindleCW">
+<area shape="rect" id="node1" title=" " alt="" coords="5,32,240,61"/>
+<area shape="rect" id="node2" href="$classGuiCore.html#ab45fa7be469b1ba5b4942f314a29707f" title=" " alt="" coords="292,5,479,35"/>
+<area shape="rect" id="node4" href="$classValueManager.html#ad73161eaea72fce03036d1fc519cdcff" title=" " alt="" coords="288,59,483,88"/>
+<area shape="rect" id="node3" href="$classKernelInterface.html#a9e1317775105a932cdb50f367d12e7db" title=" " alt="" coords="531,5,765,35"/>
+<area shape="rect" id="node5" href="$classValueModel.html#a2001b180c153c91104bf54b8a302b67f" title=" " alt="" coords="560,59,736,88"/>
+</map>

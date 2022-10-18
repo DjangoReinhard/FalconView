@@ -1,3 +1,28 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       gcodeinfo.cpp
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    30.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #include <gcodeinfo.h>
 #include <guicore.h>
 #include <QString>
@@ -10,9 +35,9 @@ GCodeInfo::GCodeInfo() {
   }
 
 
-void GCodeInfo::update(int* activeGCodes
-                     , int* activeMCodes
-                     , const QString& fileName
+void GCodeInfo::update(volatile const int* activeGCodes
+                     , volatile const int* activeMCodes
+                     , volatile const char* fileName
                      , int curLine) {
   int mx = GuiCore().activeGCodes();
 
@@ -42,6 +67,6 @@ void GCodeInfo::update(int* activeGCodes
 //      qDebug() << "> active MCode(" << i << "):" << k << "\t" << v << "\traw:" << activeMCodes[i];
       vm.setValue(k, v);
       }
-  vm.setValue("fileName", fileName);
+  vm.setValue("fileName", QString((const char*)fileName));
   vm.setValue("curLine", curLine + 1);
   }

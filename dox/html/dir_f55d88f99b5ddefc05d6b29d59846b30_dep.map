@@ -1,0 +1,9 @@
+<map id="src/plugPages/FixtureManager" name="src/plugPages/FixtureManager">
+<area shape="rect" id="node1" href="dir_f55d88f99b5ddefc05d6b29d59846b30.html" title="FixtureManager" alt="" coords="27,55,173,103"/>
+<area shape="rect" id="node2" href="dir_8522b11d37d0909cfb04517ce76dbd67.html" title="lcLib" alt="" coords="27,151,99,199"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000018_000012.html" title="6" alt="" coords="81,128,92,146"/>
+<area shape="rect" id="node3" href="dir_aa23dad29f6e4cc8afb180bed3038ecf.html" title="baselib" alt="" coords="59,247,138,295"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000018_000007.html" title="5" alt="" coords="110,222,120,239"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000012_000007.html" title="47" alt="" coords="81,218,102,235"/>
+<area shape="rect" id="clust1" href="dir_6c54884f8f52492cb03d5a3036478390.html" title="plugPages" alt="" coords="16,16,184,113"/>
+</map>

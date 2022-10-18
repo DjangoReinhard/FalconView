@@ -7,6 +7,7 @@ add_library(FVBaseLib STATIC
     control/core.cpp
     control/abstractcondition.cpp
     control/andcondition.cpp
+    control/authenticator.cpp
     control/equalcondition.cpp
     control/falsecondition.cpp
     control/greatercondition.cpp
@@ -16,9 +17,11 @@ add_library(FVBaseLib STATIC
     control/truecondition.cpp
     model/configacc.cpp
     model/configmgr.cpp
+    model/credentials.cpp
     model/direntry.cpp
     model/dirmodel.cpp
     model/filemodel.cpp
+    model/httprequest.cpp
     model/pos9.cpp
     model/sysevent.cpp
     model/syseventmodel.cpp

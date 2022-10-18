@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 ##################################   TOP   ###################################
 project(FalconView     VERSION 0.1)
 ##############################################################################
-set(CMAKE_VERBOSE_MAKEFILE OFF)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_MODULE_PATH /d/linux/cmake)
 include(Interface RESULT_VARIABLE ConfigBase)
 set(CMAKE_PREFIX_PATH "/opt/qt5.15/5.15.2/gcc_64" CACHE PATH "CMake search-path")
@@ -18,6 +18,7 @@ find_package(Qt5 REQUIRED COMPONENTS
              Core
              Sql
              UiTools
+             Network
              Xml
              LinguistTools
              )
@@ -39,6 +40,7 @@ target_link_libraries(IFQt
                       INTERFACE Qt${QT_VERSION_MAJOR}::GuiPrivate
                       INTERFACE Qt${QT_VERSION_MAJOR}::Widgets
                       INTERFACE Qt${QT_VERSION_MAJOR}::Core
+                      INTERFACE Qt${QT_VERSION_MAJOR}::Network
                       INTERFACE Qt${QT_VERSION_MAJOR}::Sql
                       INTERFACE Qt${QT_VERSION_MAJOR}::UiTools
                       INTERFACE Qt${QT_VERSION_MAJOR}::Xml

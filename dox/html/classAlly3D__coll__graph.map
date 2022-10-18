@@ -1,0 +1,24 @@
+<map id="Ally3D" name="Ally3D">
+<area shape="rect" id="node1" title=" " alt="" coords="425,668,495,697"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,289,85,319"/>
+<area shape="rect" id="node19" href="$classAxisMask.html" title=" " alt="" coords="67,384,157,413"/>
+<area shape="rect" id="node3" href="$classGraphicFactory.html" title=" " alt="" coords="543,573,673,603"/>
+<area shape="rect" id="node4" href="$classOcctQtViewer.html" title="OCCT 3D View." alt="" coords="401,573,519,603"/>
+<area shape="rect" id="node5" title=" " alt="" coords="211,479,354,508"/>
+<area shape="rect" id="node6" title=" " alt="" coords="379,479,541,508"/>
+<area shape="rect" id="node7" href="$classPositionStatus.html" title=" " alt="" coords="61,479,187,508"/>
+<area shape="rect" id="node8" href="$classAbstractCenterWidget.html" title=" " alt="" coords="591,384,769,413"/>
+<area shape="rect" id="node20" href="$classToolStatus.html" title=" " alt="" coords="566,479,663,508"/>
+<area shape="rect" id="node21" href="$classSpeedStatus.html" title=" " alt="" coords="688,479,803,508"/>
+<area shape="rect" id="node22" href="$classCurCodesStatus.html" title=" " alt="" coords="827,479,967,508"/>
+<area shape="rect" id="node9" title=" " alt="" coords="367,289,451,319"/>
+<area shape="rect" id="node10" href="$classPluginPageInterface.html" title=" " alt="" coords="475,289,642,319"/>
+<area shape="rect" id="node11" href="$classConfig.html" title=" " alt="" coords="733,289,803,319"/>
+<area shape="rect" id="node12" href="$classConfigManager.html" title=" " alt="" coords="718,195,850,224"/>
+<area shape="rect" id="node13" href="$classValueManager.html" title=" " alt="" coords="623,100,748,129"/>
+<area shape="rect" id="node14" href="$classValueManager_1_1ValueHolder.html" title=" " alt="" coords="575,5,796,35"/>
+<area shape="rect" id="node15" href="$classGuiCore.html" title=" " alt="" coords="844,289,927,319"/>
+<area shape="rect" id="node16" href="$classCore.html" title=" " alt="" coords="874,195,931,224"/>
+<area shape="rect" id="node17" href="$classKernelCreator.html" title=" " alt="" coords="788,100,911,129"/>
+<area shape="rect" id="node18" href="$classKernelInterface.html" title=" " alt="" coords="935,100,1065,129"/>
+</map>

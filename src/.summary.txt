@@ -1,0 +1,3 @@
+project    FalconView
+subproject main application
+purpose    ui frontend for linuxCNC

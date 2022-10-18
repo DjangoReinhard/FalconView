@@ -1,9 +1,32 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       positioncalculator.h
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    19.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #ifndef POSITIONCALCULATOR_H
 #define POSITIONCALCULATOR_H
 #include <QObject>
 #include <valuemanager.h>
-//#include <canon.hh>
-class EmcPose;
 
 
 class PositionCalculator : public QObject
@@ -12,14 +35,14 @@ class PositionCalculator : public QObject
 public:
   explicit PositionCalculator(QObject* parent = nullptr);
 
-  void update(EmcPose* absPos
-            , EmcPose* relPos
-            , EmcPose* dtg
+  void update(volatile const double* absPos
+            , volatile const double* relPos
+            , volatile const double* dtg
             , int units
-            , EmcPose* g5x
-            , EmcPose* g92
+            , volatile const double* g5x
+            , volatile const double* g92
             , double rotXY
-            , EmcPose* toolOffset);
+            , volatile const double* toolOffset);
 
 protected:
   double convertUnit(double value, int unit);

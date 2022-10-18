@@ -1,0 +1,9 @@
+<map id="SpeedStatus::fastFeedChanged" name="SpeedStatus::fastFeedChanged">
+<area shape="rect" id="node1" title=" " alt="" coords="5,77,256,106"/>
+<area shape="rect" id="node2" href="$classGuiCore.html#a74457e78f4d6037b11701328bba5f64d" title=" " alt="" coords="304,19,540,49"/>
+<area shape="rect" id="node4" href="$classGuiCore.html#abce1547dcb7541bfd447552215648429" title=" " alt="" coords="345,77,499,106"/>
+<area shape="rect" id="node6" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="325,130,519,159"/>
+<area shape="rect" id="node3" href="$classKernelInterface.html#ac91d72958fdd3c51ada9a6e7971b62ab" title=" " alt="" coords="588,5,811,52"/>
+<area shape="rect" id="node5" href="$classKernelInterface.html#a60a11b889b28422c02ea0aceeea4f0a6" title=" " alt="" coords="598,77,801,106"/>
+<area shape="rect" id="node7" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="612,130,787,159"/>
+</map>

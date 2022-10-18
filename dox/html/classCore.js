@@ -1,0 +1,25 @@
+var classCore =
+[
+    [ "Core", "classCore.html#a14e63188e0aa7c4a6f72d5501384d1f9", null ],
+    [ "Core", "classCore.html#a09a6a29a4c15506eb0656dd7aca3777a", null ],
+    [ "~Core", "classCore.html#a3259aa546be9c7e12da440ad570f7b39", null ],
+    [ "Core", "classCore.html#a1f8da585b558b716c416aa9d1f82b077", null ],
+    [ "axisMask", "classCore.html#a7771f9f4d447cb575204c834e487be33", null ],
+    [ "databaseConnection", "classCore.html#aa9ea45db27b6be7483b3e1a71cb81452", null ],
+    [ "fileName4", "classCore.html#ac060135ddaf239c5ef3ca34d958d6f94", null ],
+    [ "isSimulator", "classCore.html#aecb7365c2a2f8d5d053008ef93630015", null ],
+    [ "languagePrefix", "classCore.html#a03434b3f00abb5040ebe824d2bf83333", null ],
+    [ "locale", "classCore.html#a82e165dd5ea5b0ab61d0353fa14675dc", null ],
+    [ "move2Backup", "classCore.html#afc34413e901eda2e2f116ee50cca5b4f", null ],
+    [ "riseError", "classCore.html#ab8ee0d53ad81162dc3e5f65ea45f6ead", null ],
+    [ "setAppMode", "classCore.html#a1ff41e900b39ed353d21882dbd1acbf2", null ],
+    [ "setKernelCreator", "classCore.html#afc68d4931e7b5f372846d5c179ef5d10", null ],
+    [ "showAllButCenter", "classCore.html#ad10310331fb39e06a94ffb24ac8ea6d0", null ],
+    [ "showHelpAtPageChange", "classCore.html#a5146ab87c4aad557b8b1bc930c2e86b6", null ],
+    [ "AbstractCenterWidget", "classCore.html#a59fd38dc5d0a9217d773badf91d3cc20", null ],
+    [ "Config", "classCore.html#ac3da7e21a05bf8852638db7e4dd1b81a", null ],
+    [ "PluginPageFactory", "classCore.html#a89d4f1373b63892c2f33c1457da9f7e5", null ],
+    [ "checked", "classCore.html#ab128e642d453334bee7c1f0097fe7aa0", null ],
+    [ "kc", "classCore.html#a53de5d0a21b77d5c965ffb44f74b86e9", null ],
+    [ "kernel", "classCore.html#a46c3596721cfb3d69e2d46a2fb747014", null ]
+];

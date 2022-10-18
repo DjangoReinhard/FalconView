@@ -1,0 +1,30 @@
+<map id="PreViewEditor" name="PreViewEditor">
+<area shape="rect" id="node1" title=" " alt="" coords="1947,185,2071,215"/>
+<area shape="rect" id="node2" href="$classTestEdit.html" title=" " alt="" coords="1475,377,1554,407"/>
+<area shape="rect" id="node3" href="$classAbstractCenterWidget.html" title=" " alt="" coords="1024,223,1203,252"/>
+<area shape="rect" id="node23" href="$classPositionStatus.html" title=" " alt="" coords="1452,57,1577,87"/>
+<area shape="rect" id="node26" href="$classToolStatus.html" title=" " alt="" coords="1466,271,1563,300"/>
+<area shape="rect" id="node27" href="$classSpeedStatus.html" title=" " alt="" coords="1457,324,1572,353"/>
+<area shape="rect" id="node28" href="$classCurCodesStatus.html" title=" " alt="" coords="1445,217,1585,247"/>
+<area shape="rect" id="node4" title=" " alt="" coords="815,233,899,263"/>
+<area shape="rect" id="node5" href="$classPluginPageInterface.html" title=" " alt="" coords="773,12,940,41"/>
+<area shape="rect" id="node19" href="$classGCodeViewerInterface.html" title=" " alt="" coords="1227,5,1409,35"/>
+<area shape="rect" id="node6" href="$classConfig.html" title=" " alt="" coords="822,129,891,159"/>
+<area shape="rect" id="node7" href="$classConfigManager.html" title=" " alt="" coords="568,129,700,159"/>
+<area shape="rect" id="node8" href="$classValueManager.html" title=" " alt="" coords="343,168,468,197"/>
+<area shape="rect" id="node9" href="$classValueManager_1_1ValueHolder.html" title=" " alt="" coords="5,168,227,197"/>
+<area shape="rect" id="node10" href="$classGuiCore.html" title=" " alt="" coords="815,287,898,316"/>
+<area shape="rect" id="node11" href="$classCore.html" title=" " alt="" coords="605,287,663,316"/>
+<area shape="rect" id="node12" href="$classKernelCreator.html" title=" " alt="" coords="344,247,467,276"/>
+<area shape="rect" id="node13" href="$classKernelInterface.html" title=" " alt="" coords="340,300,471,329"/>
+<area shape="rect" id="node14" href="$classFileManagerClient.html" title=" " alt="" coords="1036,399,1191,428"/>
+<area shape="rect" id="node15" href="$classGCodeEditor.html" title=" " alt="" coords="1056,452,1171,481"/>
+<area shape="rect" id="node16" title=" " alt="" coords="793,452,921,481"/>
+<area shape="rect" id="node17" href="$classGCodeHighlighter.html" title=" " alt="" coords="1038,345,1189,375"/>
+<area shape="rect" id="node18" title=" " alt="" coords="776,345,937,375"/>
+<area shape="rect" id="node20" href="$classOcctQtViewer.html" title="OCCT 3D View." alt="" coords="1721,185,1840,215"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1443,111,1586,140"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1433,164,1596,193"/>
+<area shape="rect" id="node24" href="$classAxisMask.html" title=" " alt="" coords="1068,68,1159,97"/>
+<area shape="rect" id="node25" title=" " alt="" coords="817,72,897,101"/>
+</map>

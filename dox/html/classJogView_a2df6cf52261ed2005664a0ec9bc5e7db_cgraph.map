@@ -1,0 +1,9 @@
+<map id="JogView::jog" name="JogView::jog">
+<area shape="rect" id="node1" title=" " alt="" coords="5,59,119,88"/>
+<area shape="rect" id="node2" href="$classGuiCore.html#afbb1d5a688e25f01d47442da6b8c237a" title=" " alt="" coords="167,5,333,35"/>
+<area shape="rect" id="node4" href="$classGuiCore.html#ace5a5e60581698f2ad6e8d5369c0f929" title=" " alt="" coords="167,59,333,88"/>
+<area shape="rect" id="node6" href="$classGuiCore.html#a1e849466075ffa457c198dca46e158f0" title=" " alt="" coords="167,112,333,141"/>
+<area shape="rect" id="node3" href="$classKernelInterface.html#afd3c810943e53e2366a85ec6c08f28e0" title=" " alt="" coords="381,5,596,35"/>
+<area shape="rect" id="node5" href="$classKernelInterface.html#a8b3ab5495dac0567efe40e138be7457e" title=" " alt="" coords="381,59,596,88"/>
+<area shape="rect" id="node7" href="$classKernelInterface.html#ae8e8b9fdce787798bfedf19a25892f18" title=" " alt="" coords="381,112,596,141"/>
+</map>

@@ -1,0 +1,22 @@
+<map id="OcctQtViewer" name="OcctQtViewer">
+<area shape="rect" id="node1" title="OCCT 3D View." alt="" coords="415,573,533,603"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,479,148,508"/>
+<area shape="rect" id="node3" title=" " alt="" coords="173,479,335,508"/>
+<area shape="rect" id="node4" href="$classPositionStatus.html" title=" " alt="" coords="786,479,911,508"/>
+<area shape="rect" id="node5" href="$classAbstractCenterWidget.html" title=" " alt="" coords="454,384,633,413"/>
+<area shape="rect" id="node18" href="$classToolStatus.html" title=" " alt="" coords="360,479,457,508"/>
+<area shape="rect" id="node19" href="$classSpeedStatus.html" title=" " alt="" coords="482,479,597,508"/>
+<area shape="rect" id="node20" href="$classCurCodesStatus.html" title=" " alt="" coords="621,479,761,508"/>
+<area shape="rect" id="node6" title=" " alt="" coords="231,289,315,319"/>
+<area shape="rect" id="node7" href="$classPluginPageInterface.html" title=" " alt="" coords="339,289,505,319"/>
+<area shape="rect" id="node8" href="$classConfig.html" title=" " alt="" coords="597,289,666,319"/>
+<area shape="rect" id="node9" href="$classConfigManager.html" title=" " alt="" coords="581,195,713,224"/>
+<area shape="rect" id="node10" href="$classValueManager.html" title=" " alt="" coords="486,100,611,129"/>
+<area shape="rect" id="node11" href="$classValueManager_1_1ValueHolder.html" title=" " alt="" coords="438,5,659,35"/>
+<area shape="rect" id="node12" href="$classGuiCore.html" title=" " alt="" coords="698,289,781,319"/>
+<area shape="rect" id="node13" href="$classCore.html" title=" " alt="" coords="737,195,795,224"/>
+<area shape="rect" id="node14" href="$classKernelCreator.html" title=" " alt="" coords="651,100,774,129"/>
+<area shape="rect" id="node15" href="$classKernelInterface.html" title=" " alt="" coords="798,100,929,129"/>
+<area shape="rect" id="node16" href="$classAxisMask.html" title=" " alt="" coords="803,384,894,413"/>
+<area shape="rect" id="node17" title=" " alt="" coords="809,289,889,319"/>
+</map>

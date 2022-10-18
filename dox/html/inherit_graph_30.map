@@ -1,0 +1,29 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classKernelInterface.html" title=" " alt="" coords="5,139,136,168"/>
+<area shape="rect" id="node2" href="$classGuiKernel.html" title=" " alt="" coords="213,139,308,168"/>
+<area shape="rect" id="node3" title=" " alt="" coords="31,565,111,595"/>
+<area shape="rect" id="node4" href="$classAbstractCondition.html" title=" " alt="" coords="186,192,335,221"/>
+<area shape="rect" id="node13" href="$classAlly3D.html" title=" " alt="" coords="225,245,296,275"/>
+<area shape="rect" id="node14" href="$classAxisMask.html" title=" " alt="" coords="215,299,306,328"/>
+<area shape="rect" id="node15" href="$classCommandWriter.html" title=" " alt="" coords="191,352,330,381"/>
+<area shape="rect" id="node16" href="$classErrorReader.html" title=" " alt="" coords="205,405,316,435"/>
+<area shape="rect" id="node17" href="$classHelpEngine.html" title=" " alt="" coords="207,459,314,488"/>
+<area shape="rect" id="node18" href="$classLCInterface.html" title="The outer shell to linuxCNC interpreter." alt="" coords="209,512,313,541"/>
+<area shape="rect" id="node19" href="$classPos9.html" title=" " alt="" coords="231,565,290,595"/>
+<area shape="rect" id="node20" href="$classPositionCalculator.html" title=" " alt="" coords="184,619,337,648"/>
+<area shape="rect" id="node21" href="$classStatusReader.html" title=" " alt="" coords="201,672,321,701"/>
+<area shape="rect" id="node22" href="$classSysEvent.html" title=" " alt="" coords="215,725,306,755"/>
+<area shape="rect" id="node23" href="$classTestDB.html" title=" " alt="" coords="223,779,298,808"/>
+<area shape="rect" id="node24" href="$classTestEngine.html" title=" " alt="" coords="209,832,312,861"/>
+<area shape="rect" id="node25" href="$classTool.html" title=" " alt="" coords="235,885,287,915"/>
+<area shape="rect" id="node26" href="$classToolCategory.html" title=" " alt="" coords="202,939,319,968"/>
+<area shape="rect" id="node27" href="$classValueModel.html" title=" " alt="" coords="207,992,314,1021"/>
+<area shape="rect" id="node5" href="$classAndCondition.html" title=" " alt="" coords="399,5,519,35"/>
+<area shape="rect" id="node6" href="$classEqualCondition.html" title=" " alt="" coords="392,59,525,88"/>
+<area shape="rect" id="node7" href="$classFalseCondition.html" title=" " alt="" coords="393,112,524,141"/>
+<area shape="rect" id="node8" href="$classGreaterCondition.html" title=" " alt="" coords="387,165,531,195"/>
+<area shape="rect" id="node9" href="$classNotCondition.html" title=" " alt="" coords="401,219,517,248"/>
+<area shape="rect" id="node10" href="$classOrCondition.html" title=" " alt="" coords="405,272,513,301"/>
+<area shape="rect" id="node11" href="$classSmallerCondition.html" title=" " alt="" coords="385,325,532,355"/>
+<area shape="rect" id="node12" href="$classTrueCondition.html" title=" " alt="" coords="397,379,520,408"/>
+</map>

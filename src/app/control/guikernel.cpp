@@ -1,7 +1,32 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       guikernel.cpp
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    30.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #include <guikernel.h>
 #include <applicationmode.h>
+#include <authenticator.h>
 #include <dbhelper.h>
-#include <dbconnection.h>
 #include <configacc.h>
 #include <pagestack.h>
 #include <centerpage.h>
@@ -9,13 +34,19 @@
 #include <pluginpagefactory.h>
 #include <canonif.h>
 #include <configmgr.h>
+#include <LCStatus.h>
 #include <tooltable.h>
 #include <axismask.h>
 #include <pos9.h>
 #include <lcproperties.h>
 #include <LCInter.h>
-#include <statusreader.h>
+#include <LCStatus.h>
+#include <statusNMLreader.h>
+#include <statusNetReader.h>
+#include <statusupdater.h>
 #include <commandwriter.h>
+#include <commandNMLwriter.h>
+#include <commandNetWriter.h>
 #include <syseventmodel.h>
 #include <ally3d.h>
 
@@ -29,14 +60,17 @@
 #include <QVector3D>
 
 #include <occtviewer.h>
-
 #include <emc.hh>
+
+#define WANT_BENCH
 
 
 GuiKernel::GuiKernel(int maxGCodes, int maxMCodes, QApplication& app, const QString& appName, const QString& groupID)
  : maxGCodes(maxGCodes)
  , maxMCodes(maxMCodes)
+ , useNML(true)
  , checked(-1)
+ , portMulticast(4321)
  , simulator(false)
  , app(app)
  , cfg(new ConfigManager(appName, groupID))
@@ -188,11 +222,15 @@ DBConnection*  GuiKernel::databaseConnection() {
   }
 
 
-DBConnection* GuiKernel::createDatabase(DBHelper& dbAssist) {
+DBConnection* GuiKernel::createDatabase(DBHelperInterface& dbAssist) {
   DBConnection* conn = dbAssist.createDatabase(dbAssist.dbConnection()->dbName());
 
-  dbAssist.createSampleData(*conn);
+  for (auto dbh : dbAssistants)
+      dbh->createDatabase(dbAssist.dbConnection()->dbName());
 
+  dbAssist.createSampleData(*conn);
+  for (auto dbh : dbAssistants)
+      dbh->createSampleData(*conn);
   return conn;
   }
 
@@ -369,17 +407,11 @@ QString GuiKernel::fileName4(const QString &fileID) const {
   }
 
 
-void GuiKernel::initialize(DBHelper &dbAssist) {
+void GuiKernel::initialize(DBHelperInterface &dbAssist) {
   QDir dir(QCoreApplication::applicationDirPath());
-
-//  cfg->settings.beginGroup("MainWindow");
   QFont df = cfg->getFont(Config::AppDefault);
-//  QVariant fv = cfg->settings.value("defaultFont", QFont("Noto Sans", 15));
-//  QFont    df = fv.value<QFont>();
 
   app.setFont(df);
-//  cfg->settings.endGroup();
-
   dir.cd("plugins");
   pluginDir = dir.absolutePath();
   dir.cd("..");
@@ -390,38 +422,16 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   langDir = dir.absolutePath();
   processAppArgs(app.arguments());
   curLocale = setupTranslators();
-  /** ==================================================== */
+  dir.cd("..");
+  /** ===================== LC =========================== */
   lcProps = new LcProperties(fileName4("ini"));
-  tt = new ToolTable(*lcProps, lcProps->toolTableFileName());
+  tt      = new ToolTable(*lcProps, lcProps->toolTableFileName());
   canonIF = new CanonIF(*lcProps, *tt);
-  lcIF = new LCInterface(*canonIF, *lcProps, *tt); /* create linuxcnc interpreter */
-  mAxis = new AxisMask(lcProps->value("KINS", "KINEMATICS").toString());
+  lcIF    = new LCInterface(*canonIF, *lcProps, *tt); /* create linuxcnc interpreter */
+  mAxis   = new AxisMask(lcProps->value("KINS", "KINEMATICS").toString());
   if (!mAxis->activeAxis()) mAxis->setup(lcProps->value("TRAJ", "COORDINATES").toString());
-  lcIF->setupToolTable();
-  tt->setLatheMode(isLatheMode());
-  /** ==================================================== */
-
-  QString   dbName = cfg->value("database").toString();
-  QFileInfo db(dbName);
-  const QString& hf = lcProps->value("HAL", "HALFILE").toString();
-
-  if (hf.contains("sim")) simulator = true;
-  if (!db.exists() || db.size() < 1) {
-     if (dbAssist.connect(db.absoluteFilePath())) {
-        conn = createDatabase(dbAssist);
-        cfg->setValue("database", conn->dbName());
-        cfg->setValue("dbType", conn->dbType());
-        }
-     else throw std::system_error(-2, std::system_category(), "could not create database");
-     }
-  else {
-     dbAssist.connect(db.absoluteFilePath());
-     conn = dbAssist.dbConnection();
-     if (!conn) throw std::system_error(-2, std::system_category(), "could not access database");
-     }
-  sysEvents = new SysEventModel(*conn, this);
-  sysEvents->setTable("SysEvents");
   nc_files = lcProperties().getPath("DISPLAY", "PROGRAM_PREFIX");
+  /** --------------------- LC --------------------------- */
   canonIF->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
   canonIF->setFeedColor(cfg->getForeground(Config::GuiElem::WorkMove));
   ally3D->setTraverseColor(cfg->getForeground(Config::GuiElem::RapidMove));
@@ -430,17 +440,77 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
   ally3D->setWorkPieceColor(cfg->getForeground(Config::GuiElem::WorkPiece));
   ally3D->setCurSegColor(cfg->getForeground(Config::GuiElem::CurSeg));
   ally3D->setOldSegColor(cfg->getForeground(Config::GuiElem::OldSeg));
+  loadPlugins();
+  /** ===================== DB =========================== */
+  dir.mkdir("db");
+  dir.cd("db");
+  QString   dbName = cfg->value("database", QString(dir.absolutePath() + "/FalconView.db")).toString();
+  QFileInfo db(dbName);
+  const QString& hf = lcProps->value("HAL", "HALFILE").toString();
+
+  if (hf.contains("sim")) simulator = true;
+  if (!db.exists() || db.size() < 1) {
+     qDebug() << "database:" << db.absoluteFilePath() << "does NOT exist!";
+     if (dbAssist.connect(db.absoluteFilePath())) {
+        conn = createDatabase(dbAssist);
+        cfg->setValue("database", conn->dbName());
+        cfg->setValue("dbType", conn->dbType());
+        }
+     else {
+        qDebug() << "failed to create Database:" << db.absoluteFilePath();
+        throw std::system_error(-2, std::system_category(), "could not create database");
+        }
+     }
+  else {
+     dbAssist.connect(db.absoluteFilePath());
+     conn = dbAssist.dbConnection();
+     if (!conn) throw std::system_error(-2, std::system_category(), "could not access database");
+     }
+  sysEvents = new SysEventModel(*conn, this);
+  sysEvents->setTable("SysEvents");
+  /** ===================== LC =========================== */
+  lcIF->setupToolTable();
+  tt->setLatheMode(isLatheMode());
+  AbstractCommandWriter* acw;
+
+  if (useNML) {
+     statusReader = new StatusNmlReader();
+     acw          = new CommandNMLWriter();
+     }
+  else {
+     QHostAddress  addr(cfg->value("LCHost").toString());
+     int           port = cfg->value("LCPort").toInt();
+     Authenticator auth(this);
+
+     auth.setup(CommandNetWriter::LCCommandUrl
+              , cfg->value("LCUser", "lcstandard").toString()
+              , cfg->value("LCAuth", "not set").toString());
+     statusReader = new StatusNetReader(portMulticast);
+     acw          = new CommandNetWriter(auth, addr, port);
+     }
+  statusUpdater = new StatusUpdater(positionCalculator, gcodeInfo, this);
+  commandWriter = new CommandWriter(acw);
+  /** --------------------- LC --------------------------- */
+  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged
+        , this, &GuiKernel::processGCodeFile);
+  connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged
+        , this, &GuiKernel::updateView);  
+  setupBackend();
+  }
+
+
+bool GuiKernel::isLatheMode() const {
+  return lcProps->value("DISPLAY", "LATHE").isValid()
+      && lcProps->value("DISPLAY", "LATHE").toBool();
+  }
+
+
+void GuiKernel::loadPlugins() {
+  QDir pluginsDir(fileName4("plugins"));
   bool sip = cfg->value("statusInPreview").toBool();
 
   v3D = new OcctQtViewer(sip);
   ally3D->setOcctViewer(v3D);
-
-  /** ==================================================== */
-  statusReader  = new StatusReader(positionCalculator, gcodeInfo);
-  commandWriter = new CommandWriter();
-  /** ==================================================== */
-
-  QDir pluginsDir(fileName4("plugins"));
   const auto entryList = pluginsDir.entryList(QDir::Files);
 
   for (const QString& fileName : entryList) {
@@ -453,52 +523,54 @@ void GuiKernel::initialize(DBHelper &dbAssist) {
 
          if (plugin) {
             auto iPlugin = qobject_cast<ViewPluginInterface*>(plugin);
+            auto dPlugin = qobject_cast<DBHelperInterface*>(plugin);
 
             qDebug() << name << "is status info panel";
             statInfos[name] = iPlugin;
+            if (dPlugin) {
+               qDebug() << name << "is db-helper";
+               dbAssistants.append(dPlugin);
+               }
             }
          else qDebug() << fileName << "NOT a valid plugin: " << loader.errorString();
          }
       else if (fileName.startsWith("libpp")) {
          QPluginLoader loader(path);
-
          QObject*      plugin = loader.instance();
-         QString       name = fileName.mid(5, fileName.size() - 8);
+         QString       name   = fileName.mid(5, fileName.size() - 8);
 
          if (plugin) {
             auto iPlugin = qobject_cast<ViewPluginInterface*>(plugin);
+            auto dPlugin = qobject_cast<DBHelperInterface*>(plugin);
 
             qDebug() << name << "is pluggable center page";
             mainPages[name] = iPlugin;
+            if (dPlugin) {
+               qDebug() << name << "is db-helper";
+               dbAssistants.append(dPlugin);
+               }
             }
          else qDebug() << fileName << "is NOT a valid plugin:\t" << loader.errorString();
          }
       else if (fileName.startsWith("libnb")) {
          QPluginLoader loader(path);
-
          QObject*      plugin = loader.instance();
          QString       name = fileName.mid(5, fileName.size() - 8);
 
          if (plugin) {
             auto iPlugin = qobject_cast<ViewPluginInterface*>(plugin);
+            auto dPlugin = qobject_cast<DBHelperInterface*>(plugin);
 
             qDebug() << name << "is pluggable notebook page";
             nbPages[name] = iPlugin;
+            if (dPlugin) {
+               qDebug() << name << "is db-helper";
+               dbAssistants.append(dPlugin);
+               }
             }
          else qDebug() << fileName << "is NOT a valid plugin:\t" << loader.errorString();
          }
       }
-  connect(ValueManager().getModel("fileName", " "), &ValueModel::valueChanged
-        , this, &GuiKernel::processGCodeFile);
-  connect(ValueManager().getModel("conePos", QVector3D()), &ValueModel::valueChanged
-        , this, &GuiKernel::updateView);  
-  setupBackend();
-  }
-
-
-bool GuiKernel::isLatheMode() const {
-  return lcProps->value("DISPLAY", "LATHE").isValid()
-      && lcProps->value("DISPLAY", "LATHE").toBool();
   }
 
 
@@ -624,6 +696,14 @@ void GuiKernel::processAppArgs(const QStringList &args) {
       else if (args[i] == "-plugins" && mx > (i+1)) {
          pluginDir = args[++i];
          }
+      else if (args[i] == "-port" && mx > (i+1)) {
+         bool ok = false;
+         int tmp = args[++i].toInt(&ok);
+
+         if (ok) portMulticast = tmp;
+         }
+      else if (args[i] == "-net")
+         useNML = false;
       }
   QFileInfo iniFI(iniFileName);
 
@@ -646,8 +726,16 @@ void GuiKernel::setViewStack(PageStack *v) {
   }
 
 
+void GuiKernel::updateStatus(const LCStatus& status) {
+  statusUpdater->update(status);
+  }
+
+
 void GuiKernel::setupBackend() {
-  startTimer();
+//  startTimer();
+  if (!useNML && statusReader->isActive()) {
+     connect(statusReader, &AbstractStatusReader::statusChanged, this, &GuiKernel::updateStatus);
+     }
   if (commandWriter && commandWriter->isActive()) {
      qDebug() << "OK, ok, ok - backend seems to be available!";
      commandWriter->moveToThread(&backendCommThread);
@@ -674,7 +762,7 @@ void GuiKernel::setupBackend() {
      connect(this, &GuiKernel::setTaskState, commandWriter, &CommandWriter::setTaskState);
      connect(this, &GuiKernel::taskPlanSynch, commandWriter, &CommandWriter::taskPlanSynch);
 
-     connect(commandWriter, SIGNAL(systemEvent(SysEvent)), this, SLOT(riseError(SysEvent)));
+     connect(commandWriter, SIGNAL(systemEvent(SysEvent)), this, SLOT(logSysEvent(SysEvent)));
      backendCommThread.start();
      }
   else {
@@ -710,6 +798,7 @@ void GuiKernel::setWindowTitle(const QString &title) {
                          + title);
      }
   }
+
 
 void GuiKernel::showHelp() const {
   if (help) help->showHelp();
@@ -749,8 +838,12 @@ ViewPluginInterface* GuiKernel::statusInfo(const QString& infoID) const {
 
 void GuiKernel::timerEvent(QTimerEvent *e) {
   if (e->timerId() == timer.timerId()) {
+#ifdef WANT_BENCH
+     std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+#endif
      try {
-         statusReader->update();
+//         statusReader->read();
+         statusUpdater->update(statusReader->status());
          }
      catch (SysEvent* e) {
          ValueManager().setValue("errorActive", true);
@@ -759,6 +852,12 @@ void GuiKernel::timerEvent(QTimerEvent *e) {
                              , SysEvent::toString(e->type())
                              , e->what());
          }
+#ifdef WANT_BENCH
+     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+     std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+
+     std::cerr << "update took " << time_span.count() * 1000 << " milli-seconds" << std::endl;
+#endif
      }
   else QObject::timerEvent(e);
   }

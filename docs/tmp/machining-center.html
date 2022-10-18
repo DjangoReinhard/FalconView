@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 9.0.0rc2" />
+<title>CNC Machine Overview</title>
+<link rel="stylesheet" href="..//asciidoc.css" type="text/css" />
+
+
+<link rel="stylesheet" href="..//linuxcnc.css" type="text/css" />
+<script type="text/javascript" src="..//asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>CNC Machine Overview</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph" id="cha:cnc-machine-overview"><p>This section gives a brief description of how a CNC machine is viewed
+from the input and output ends of the Interpreter.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mechanical_components">1. Mechanical Components</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A CNC machine has many mechanical components that may be controlled or
+may affect the way in which control is exercised. This section
+describes the subset of those components that interact with the
+Interpreter. Mechanical components that do not interact directly with
+the Interpreter, such as the jog buttons, are not described here, even
+if they affect control.</p></div>
+<div class="sect2">
+<h3 id="_axes">1.1. Axes</h3>
+<div class="paragraph"><p>Any CNC machine has one or more Axes. Different types of CNC machines
+have different combinations. For instance, a <em>4-axis milling machine</em>
+may have XYZA or XYZB axes. A lathe typically has XZ axes. A
+foam-cutting machine may have XYUV axes. In LinuxCNC, the case of a XYYZ
+<em>gantry</em> machine with two motors for one axis is better handled by
+kinematics rather than by a second linear axis. <span class="footnote"><br />[If the
+motion of mechanical components is not independent, as with
+hexapod machines, the RS274/NGC language and the canonical machining
+functions will still be usable, as long as the lower levels of control
+know how to control the actual mechanisms to produce the same relative
+motion of tool and workpiece as would be produced by independent axes.
+This is called <em>kinematics</em>.]<br /></span></p></div>
+<div class="paragraph"><div class="title">Primary Linear Axes </div><p>The X, Y, and Z axes produce linear motion in three mutually
+orthogonal directions.</p></div>
+<div class="paragraph"><div class="title">Secondary Linear Axes </div><p>The U, V, and W axes produce linear motion in three mutually
+orthogonal directions. Typically, X and U are parallel, Y and V are
+parallel, and Z and W are parallel.</p></div>
+<div class="paragraph"><div class="title">Rotational Axes </div><p>The A, B and C axes produce angular motion (rotation). Typically, A
+rotates around a line parallel to X, B rotates around a line parallel
+to Y, and C rotates around a line parallel to Z.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_spindle">1.2. Spindle </h3>
+<div class="paragraph"><p>A CNC machine typically has a spindle which holds one cutting tool,
+probe, or the material in the case of a lathe. The spindle may or may
+not be controlled by the CNC software.
+LinuxCNC offers support for up to 8 spindles, which can be individually
+controlled and can run simultaneously at different speeds and in different
+directions.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_coolant">1.3. Coolant </h3>
+<div class="paragraph"><p>If a CNC machine has components to provide mist coolant and/or flood
+coolant they can be controlled by G codes.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_feed_and_speed_override">1.4. Feed and Speed Override</h3>
+<div class="paragraph"><p>A CNC machine can have separate feed and speed override controls,
+which let the operator specify that the actual feed rate or spindle
+speed used in machining at some percentage of the programmed rate.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_block_delete_switch">1.5. Block Delete Switch</h3>
+<div class="paragraph"><p>A CNC machine can have a block delete switch. See the
+<a href="machining-center.html#sub:block-delete-switch">Block Delete</a> Section.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_optional_program_stop_switch">1.6. Optional Program Stop Switch</h3>
+<div class="paragraph"><p>A CNC machine can have an optional program stop switch. See the
+<a href="machining-center.html#sub:optional-program-stop">Optional Program Stop</a> Section.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_control_and_data_components">2. Control and Data Components</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_linear_axes">2.1. Linear Axes</h3>
+<div class="paragraph"><p>The X, Y, and Z axes form a standard right-handed coordinate system of
+orthogonal linear axes. Positions of the three linear motion mechanisms
+are expressed using coordinates on these axes.</p></div>
+<div class="paragraph"><p>The U, V and W axes also form a standard right-handed coordinate
+system. X and U are parallel, Y and V are parallel, and Z and W are
+parallel (when A, B, and C are rotated to zero).</p></div>
+</div>
+<div class="sect2">
+<h3 id="_rotational_axes">2.2. Rotational Axes</h3>
+<div class="paragraph"><p>The rotational axes are measured in degrees as wrapped linear axes in
+which the direction of positive rotation is counterclockwise when
+viewed from the positive end of the corresponding X, Y, or Z-axis. By
+<em>wrapped linear axis</em>, we mean one on which the angular position
+increases without limit (goes towards plus infinity) as the axis turns
+counterclockwise and deceases without limit (goes towards minus
+infinity) as the axis turns clockwise. Wrapped linear axes are used
+regardless of whether or not there is a mechanical limit on rotation.</p></div>
+<div class="paragraph"><p>Clockwise or counterclockwise is from the point of view of the
+workpiece. If the workpiece is fastened to a turntable which turns on a
+rotational axis, a counterclockwise turn from the point of view of the
+workpiece is accomplished by turning the turntable in a direction that
+(for most common machine configurations) looks clockwise from the point
+of view of someone standing next to the machine. <span class="footnote"><br />[If the
+parallelism requirement is violated, the system builder will
+have to say how to distinguish clockwise from counterclockwise.]<br /></span></p></div>
+</div>
+<div class="sect2">
+<h3 id="_controlled_point">2.3. Controlled Point</h3>
+<div class="paragraph"><p>The controlled point is the point whose position and rate of motion
+are controlled. When the tool length offset is zero (the default
+value), this is a point on the spindle axis (often called the gauge
+point) that is some fixed distance beyond the end of the spindle,
+usually near the end of a tool holder that fits into the spindle. The
+location of the controlled point can be moved out along the spindle
+axis by specifying some positive amount for the tool length offset.
+This amount is normally the length of the cutting tool in use, so that
+the controlled point is at the end of the cutting tool. On a lathe,
+tool length offsets can be specified for X and Z axes, and the
+controlled point is either at the tool tip or slightly outside it
+(where the perpendicular, axis-aligned lines touched by the <em>front</em> and
+<em>side</em> of the tool intersect).</p></div>
+</div>
+<div class="sect2">
+<h3 id="_coordinated_linear_motion">2.4. Coordinated Linear Motion</h3>
+<div class="paragraph"><p>To drive a tool along a specified path, a machining center must often
+coordinate the motion of several axes. We use the term <em>coordinated
+linear motion</em> to describe the situation in which, nominally, each axis
+moves at constant speed and all axes move from their starting positions
+to their end positions at the same time. If only the X, Y, and Z axes
+(or any one or two of them) move, this produces motion in a straight
+line, hence the word <em>linear</em> in the term. In actual motions, it is
+often not possible to maintain constant speed because acceleration or
+deceleration is required at the beginning and/or end of the motion. It
+is feasible, however, to control the axes so that, at all times, each
+axis has completed the same fraction of its required motion as the
+other axes. This moves the tool along same path, and we also call this
+kind of motion coordinated linear motion.</p></div>
+<div class="paragraph"><p>Coordinated linear motion can be performed either at the prevailing
+feed rate, or at traverse rate, or it may be synchronized to the
+spindle rotation. If physical limits on axis speed make the desired
+rate unobtainable, all axes are slowed to maintain the desired path.</p></div>
+<div class="paragraph"><p><a id="sub:feed-rate"></a></p></div>
+</div>
+<div class="sect2">
+<h3 id="_feed_rate">2.5. Feed Rate</h3>
+<div class="paragraph"><p>The rate at which the controlled point moves is nominally a steady
+rate which may be set by the user. In the Interpreter, the feed
+rate is interpreted as follows (unless <em>inverse time feed</em> or <em>feed
+per revolution</em> modes are being used, in which case see Section
+<a href="g-code.html#gcode:g93-g94-g95">G93-G94-G95-Mode</a>).</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+If any of XYZ are moving, F is in units per minute in the XYZ
+   cartesian system, and all other axes (ABCUVW) move so as to start and
+   stop in coordinated fashion.
+</p>
+</li>
+<li>
+<p>
+Otherwise, if any of UVW are moving, F is in units per minute in the
+   UVW cartesian system, and all other axes (ABC) move so as to start and
+   stop in coordinated fashion.
+</p>
+</li>
+<li>
+<p>
+Otherwise, the move is pure rotary motion and the F word is in rotary
+   units in the ABC <em>pseudo-cartesian</em> system.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="_coolant_2">2.6. Coolant </h3>
+<div class="paragraph"><p>Flood coolant and mist coolant may each be turned on independently.
+The RS274/NGC language turns them off together see Section
+<a href="m-code.html#mcode:m7-m8-m9">M7 M8 M9</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_dwell">2.7. Dwell </h3>
+<div class="paragraph"><p>A machining center may be commanded to dwell (i.e., keep all axes
+unmoving) for a specific amount of time. The most common use of dwell
+is to break and clear chips, so the spindle is usually turning during a
+dwell. Regardless of the Path Control Mode (see Section
+<a href="machining-center.html#sec:path-control-mode">Path Control</a>) the machine will stop exactly at the end of
+the previous programmed move, as though it was in exact path mode.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_units">2.8. Units </h3>
+<div class="paragraph"><p>Units used for distances along the X, Y, and Z axes may be measured in
+millimeters or inches. Units for all other quantities involved in
+machine control cannot be changed. Different quantities use different
+specific units. Spindle speed is measured in revolutions per minute.
+The positions of rotational axes are measured in degrees. Feed rates
+are expressed in current length units per minute, or degrees per
+minute, or length units per spindle revolution, as described in Section
+<a href="g-code.html#gcode:g93-g94-g95">G93 G94 G95</a>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_current_position">2.9. Current Position</h3>
+<div class="paragraph"><p>The controlled point is always at some location called the <em>current
+position</em>, and the controller always knows where that is. The numbers
+representing the current position must be adjusted in the absence of
+any axis motion if any of several events take place:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Length units are changed.
+</p>
+</li>
+<li>
+<p>
+Tool length offset is changed.
+</p>
+</li>
+<li>
+<p>
+Coordinate system offsets are changed.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="_selected_plane">2.10. Selected Plane</h3>
+<div class="paragraph"><p>There is always a <em>selected plane</em>, which must be the XY-plane, the
+YZ-plane, or the XZ-plane of the machining center. The Z-axis is, of
+course, perpendicular to the XY-plane, the X-axis to the YZ-plane, and
+the Y-axis to the XZ-plane.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tool_carousel">2.11. Tool Carousel</h3>
+<div class="paragraph"><p>Zero or one tool is assigned to each slot in the tool carousel.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tool_change">2.12. Tool Change</h3>
+<div class="paragraph"><p>A machining center may be commanded to change tools.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_pallet_shuttle">2.13. Pallet Shuttle</h3>
+<div class="paragraph"><p>The two pallets may be exchanged by command.</p></div>
+<div class="paragraph"><p><a id="sec:path-control-mode"></a></p></div>
+</div>
+<div class="sect2">
+<h3 id="_path_control_mode">2.14. Path Control Mode</h3>
+<div class="paragraph"><p>The machining center may be put into any one of three path control
+modes: (1) exact stop mode, (2) exact path mode, or (3) continuous mode
+with optional tolerance. In exact stop mode, the machine stops briefly
+at the end of each programmed move. In exact path mode, the machine
+follows the programmed path as exactly as possible, slowing or stopping
+if necessary at sharp corners of the path. In continuous mode, sharp
+corners of the path may be rounded slightly so that the feed rate may
+be kept up (but by no more than the tolerance, if specified). See
+Sections <a href="g-code.html#gcode:g61">G61</a> and <a href="g-code.html#gcode:g64">G64</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interpreter_interaction_with_switches">3. Interpreter Interaction with Switches</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The Interpreter interacts with several switches. This section
+describes the interactions in more detail. In no case does the
+Interpreter know what the setting of any of these switches is.</p></div>
+<div class="sect2">
+<h3 id="_feed_and_speed_override_switches">3.1. Feed and Speed Override Switches</h3>
+<div class="paragraph"><p>The Interpreter will interpret RS274/NGC commands which enable <em>M48</em>
+or disable <em>M49</em> the feed and speed override switches. For certain
+moves, such as the
+traverse out of the end of a thread during a threading cycle, the
+switches are disabled automatically.</p></div>
+<div class="paragraph"><p>LinuxCNC reacts to the speed and feed override settings when these
+switches are enabled.</p></div>
+<div class="paragraph"><p>See the <a href="m-code.html#mcode:m48-m49">M48 M49 Override</a> section for more
+information.</p></div>
+</div>
+<div class="sect2">
+<h3 id="sub:block-delete-switch">3.2. Block Delete Switch</h3>
+<div class="paragraph"><p>If the block delete switch is on, lines of G code which start
+with a slash (the block delete character) are not interpreted. If the
+switch is off, such lines are interpreted. Normally the block delete
+switch should be set before starting the NGC program.</p></div>
+</div>
+<div class="sect2">
+<h3 id="sub:optional-program-stop">3.3. Optional Program Stop Switch</h3>
+<div class="paragraph"><p>If this switch is on and an M1 code is encountered, program execution
+is paused.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tool_table">4. Tool Table</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A tool table is required to use the Interpreter. The file tells which
+tools are in which tool changer slots and what the size and type of
+each tool is. The name of the tool table is defined in the ini file:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[EMCIO]
+
+# tool table file
+TOOL_TABLE = tooltable.tbl</code></pre>
+</div></div>
+<div class="paragraph"><p>The default filename probably looks something like the above, but
+you may prefer to give your machine its own tool table, using the
+same name as your ini file, but with a tbl extension:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>TOOL_TABLE = acme_300.tbl</code></pre>
+</div></div>
+<div class="paragraph"><p>or</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>TOOL_TABLE = EMC-AXIS-SIM.tbl</code></pre>
+</div></div>
+<div class="paragraph"><p>For more information on the specifics of the tool table format,
+see the <a href="tool-compensation.html#sec:tool-table">Tool Table Format</a> Section.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameters">5. Parameters</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In the RS274/NGC language view, a machining center maintains an array
+of numerical parameters defined by a system definition
+(RS274NGC_MAX_PARAMETERS). Many of them have specific uses especially
+in defining coordinate systems. The number of numerical parameters can
+increase as development adds support for new parameters. The parameter
+array persists over time, even if the machining center is powered down.
+LinuxCNC uses a parameter file to ensure persistence and gives the
+Interpreter the responsibility for maintaining the file. The
+Interpreter reads the file when it starts up, and writes the file when
+it exits.</p></div>
+<div class="paragraph"><p>All parameters are available for use in G code programs.</p></div>
+<div class="paragraph"><p>The format of a parameter file is shown in the following table.
+The file consists of any number of
+header lines, followed by one blank line, followed by any number of
+lines of data. The Interpreter skips over the header lines. It is
+important that there be exactly one blank line (with no spaces or tabs,
+even) before the data. The header line shown in the following table
+describes the data columns, so it is
+suggested (but not required) that that line always be included in the
+header.</p></div>
+<div class="paragraph"><p>The Interpreter reads only the first two columns of the table. The
+third column, <em>Comment</em>, is not read by the Interpreter.</p></div>
+<div class="paragraph"><p>Each line of the file contains the index number of a parameter in the
+first column and the value to which that parameter should be set in the
+second column. The value is represented as a double-precision floating
+point number inside the Interpreter, but a decimal point is not
+required in the file. All of the parameters shown in the following table
+are required parameters and must be
+included in any parameter file, except that any parameter representing
+a rotational axis value for an unused axis may be omitted. An error
+will be signaled if any required parameter is missing. A parameter
+file may include any other parameter, as long as its number is in the
+range 1 to 5400. The parameter numbers must be arranged in ascending
+order. An error will be signaled if not. Any parameter included in the
+file read by the Interpreter will be included in the file it writes as
+it exits. The original file is saved as a backup file when the new file
+is written. Comments are not preserved when the file is written.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="75%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 1. Parameter File Format</caption>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="center" valign="top">Parameter Number </th>
+<th align="center" valign="top"> Parameter Value </th>
+<th align="left" valign="top"> Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" valign="top"><p class="table">5161</p></td>
+<td align="center" valign="top"><p class="table">0.0</p></td>
+<td align="left" valign="top"><p class="table">G28 Home X</p></td>
+</tr>
+<tr>
+<td align="center" valign="top"><p class="table">5162</p></td>
+<td align="center" valign="top"><p class="table">0.0</p></td>
+<td align="left" valign="top"><p class="table">G28 Home Y</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>See the <a href="overview.html#gcode:parameters">Parameters</a> section for more information.</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated
+ 2021-11-20 04:12:52 CET
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<map id="PluginPageFactory::createNotebookPage" name="PluginPageFactory::createNotebookPage">
+<area shape="rect" id="node1" title=" " alt="" coords="5,149,179,196"/>
+<area shape="rect" id="node2" href="$classAbstractCenterWidget.html#a8da02e833403de39480a0df39e36cad1" title=" " alt="" coords="271,77,450,124"/>
+<area shape="rect" id="node7" href="$classAbstractCenterWidget.html#a09abe45f693f24a9b4efaa641707a645" title=" " alt="" coords="271,149,450,196"/>
+<area shape="rect" id="node8" href="$classGuiCore.html#a165b1c53a88ec4814954c00a5f6c05b7" title=" " alt="" coords="227,222,495,251"/>
+<area shape="rect" id="node3" href="$classPluginPageInterface.html#a908728df6e414e64ee3fcade51154db3" title=" " alt="" coords="564,5,731,52"/>
+<area shape="rect" id="node4" href="$classAbstractCenterWidget.html#af7feff20b616d8d8e72626a0c3a177d5" title=" " alt="" coords="558,76,737,123"/>
+<area shape="rect" id="node6" href="$classPluginPageInterface.html#a69d93f51f506e3b834d6743fb5ca57df" title=" " alt="" coords="564,147,731,193"/>
+<area shape="rect" id="node5" href="$classAbstractCenterWidget.html#a2a9f7189f04693e604838ea22dd06726" title=" " alt="" coords="800,76,979,123"/>
+<area shape="rect" id="node9" href="$classKernelInterface.html#a3536d1920cf2ecdea41258b8b97dbb23" title=" " alt="" coords="543,217,752,264"/>
+</map>

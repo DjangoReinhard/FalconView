@@ -1,3 +1,28 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       preferenceseditor.cpp
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    22.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #include "preferenceseditor.h"
 #include <configacc.h>
 #include <valuemanager.h>
@@ -10,6 +35,7 @@
 #include <QMessageBox>
 #include <QColorDialog>
 #include <QFontDialog>
+#include <QSpinBox>
 #include <QDebug>
 
 
@@ -24,7 +50,6 @@ PreferencesEditor::PreferencesEditor(QWidget* parent)
  , count(0) {
   setWindowTitle("PreferencesEditor");
   setObjectName(tr("PreferencesEditor"));
-
   }
 
 
@@ -39,11 +64,13 @@ QWidget* PreferencesEditor::createContent() {
   labels      = new QLineEdit*[count];
   bgButtons   = new QPushButton*[count];
   fgButtons   = new QPushButton*[count];
-  fontButtons = new QPushButton*[count];
+  fontButtons = new QPushButton*[count];  
 
   cbStatesInside  = findChild<QCheckBox*>("cbStatesInside");
   cbHelp          = findChild<QCheckBox*>("cbHelp");
   cbPreviewCenter = findChild<QCheckBox*>("cbPreviewCenter");
+  edNetAddress    = findChild<QLineEdit*>("edNetAddress");
+  spPort          = findChild<QSpinBox*>("spPort");
   for (int i=0; i < count; ++i) {
       labels[i]      = findChild<QLineEdit*>(QString("l")      + cfg->nameOf(static_cast<Config::GuiElem>(i)));
       bgButtons[i]   = findChild<QPushButton*>(QString("bg")   + cfg->nameOf(static_cast<Config::GuiElem>(i)));
@@ -61,10 +88,15 @@ void PreferencesEditor::connectSignals() {
       if (fgButtons[i])   connect(fgButtons[i],   &QPushButton::pressed, this, [=](){ changeForegroundColor(i); });
       if (fontButtons[i]) connect(fontButtons[i], &QPushButton::pressed, this, [=](){ changeFont(i); });
       }
+
   if (cbStatesInside) {
      cbStatesInside->setChecked(cfg->value("statusInPreview").toBool());
      connect(cbStatesInside, &QCheckBox::stateChanged, this, &PreferencesEditor::statusInsideChanged);
      }
+  if (edNetAddress)
+     connect(edNetAddress, &QLineEdit::textChanged, this, &PreferencesEditor::addressChanged);
+  if (spPort)
+     connect(spPort, &QSpinBox::valueChanged, this, &PreferencesEditor::portChanged);
   if (cbHelp) {
      cbHelp->setChecked(cfg->value("showHelpAtPageChange").toBool());
      connect(cbHelp, &QCheckBox::stateChanged, this, &PreferencesEditor::statusShowHelpChanged);
@@ -73,6 +105,16 @@ void PreferencesEditor::connectSignals() {
      cbPreviewCenter->setChecked(cfg->value("previewIsCenter").toBool());
      connect(cbPreviewCenter, &QCheckBox::stateChanged, this, &PreferencesEditor::previewCenterChanged);
      }
+  }
+
+
+void PreferencesEditor::addressChanged(const QString& addr) {
+  cfg->setValue("NetAddress", addr);
+  }
+
+
+void PreferencesEditor::portChanged(int port) {
+  cfg->setValue("NetPort", port);
   }
 
 

@@ -1,0 +1,25 @@
+<map id="PluginPageInterface" name="PluginPageInterface">
+<area shape="rect" id="node1" title=" " alt="" coords="5,432,172,461"/>
+<area shape="rect" id="node2" href="$classAbstractCenterWidget.html" title=" " alt="" coords="222,432,401,461"/>
+<area shape="rect" id="node22" href="$classGCodeViewerInterface.html" title=" " alt="" coords="220,697,403,727"/>
+<area shape="rect" id="node23" href="$classMDIEditorInterface.html" title=" " alt="" coords="234,192,389,221"/>
+<area shape="rect" id="node3" href="$classCurCodesStatus.html" title=" " alt="" coords="456,59,596,88"/>
+<area shape="rect" id="node4" href="$classFileManager.html" title=" " alt="" coords="470,112,582,141"/>
+<area shape="rect" id="node5" href="$classFixtureEdit.html" title=" " alt="" coords="477,165,575,195"/>
+<area shape="rect" id="node6" href="$classFixtureManager.html" title=" " alt="" coords="459,219,593,248"/>
+<area shape="rect" id="node7" href="$classHelpView.html" title=" " alt="" coords="481,272,571,301"/>
+<area shape="rect" id="node8" href="$classJogView.html" title=" " alt="" coords="485,325,567,355"/>
+<area shape="rect" id="node9" href="$classLCToolTable.html" title=" " alt="" coords="470,379,582,408"/>
+<area shape="rect" id="node10" href="$classMDIEditor.html" title=" " alt="" coords="479,5,573,35"/>
+<area shape="rect" id="node11" href="$classPageStack.html" title=" " alt="" coords="476,432,576,461"/>
+<area shape="rect" id="node12" href="$classPositionStatus.html" title=" " alt="" coords="463,485,589,515"/>
+<area shape="rect" id="node13" href="$classPreferencesEditor.html" title=" " alt="" coords="451,539,601,568"/>
+<area shape="rect" id="node14" href="$classSettingsNotebook.html" title=" " alt="" coords="451,592,601,621"/>
+<area shape="rect" id="node15" href="$classSpeedStatus.html" title=" " alt="" coords="469,645,583,675"/>
+<area shape="rect" id="node16" href="$classSysEventView.html" title=" " alt="" coords="463,699,589,728"/>
+<area shape="rect" id="node17" href="$classTestEdit.html" title=" " alt="" coords="487,752,565,781"/>
+<area shape="rect" id="node20" href="$classToolManager.html" title=" " alt="" coords="469,805,583,835"/>
+<area shape="rect" id="node21" href="$classToolStatus.html" title=" " alt="" coords="477,859,575,888"/>
+<area shape="rect" id="node18" href="$classPathEditor.html" title=" " alt="" coords="663,752,760,781"/>
+<area shape="rect" id="node19" href="$classPreViewEditor.html" title=" " alt="" coords="649,857,773,887"/>
+</map>

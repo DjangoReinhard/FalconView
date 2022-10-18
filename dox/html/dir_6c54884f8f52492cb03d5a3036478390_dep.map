@@ -1,0 +1,22 @@
+<map id="src/plugPages" name="src/plugPages">
+<area shape="rect" id="node1" href="dir_aa23dad29f6e4cc8afb180bed3038ecf.html" title="baselib" alt="" coords="289,257,364,305"/>
+<area shape="rect" id="node2" href="dir_f260c9342675fd957f2cbb66f56ce047.html" title="guiLib" alt="" coords="260,161,332,209"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000013_000008.html" title="33" alt="" coords="312,229,331,246"/>
+<area shape="rect" id="node4" href="dir_dad7b4db674ec8afa1368ce78df7437b.html" title="JogView" alt="" coords="37,65,120,113"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000022_000008.html" title="3" alt="" coords="273,233,282,250"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000022_000013.html" title="2" alt="" coords="241,151,250,168"/>
+<area shape="rect" id="node5" href="dir_cdcabc2b10b793e54304910ffb69b7fd.html" title="MDIEditor" alt="" coords="144,65,237,113"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000023_000008.html" title="2" alt="" coords="283,230,292,248"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000023_000013.html" title="1" alt="" coords="258,134,267,152"/>
+<area shape="rect" id="node6" href="dir_aac33269ee52c7b4a5aebaa972af6a3a.html" title="PathEditor" alt="" coords="262,65,359,113"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000024_000008.html" title="1" alt="" coords="343,233,353,251"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000024_000013.html" title="4" alt="" coords="306,136,315,153"/>
+<area shape="rect" id="node7" href="dir_41e5eb68799ca3a15a23a4bc5e9c378a.html" title="Preview3D" alt="" coords="384,65,485,113"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000025_000008.html" title="3" alt="" coords="351,237,361,254"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000025_000013.html" title="5" alt="" coords="345,149,354,167"/>
+<area shape="rect" id="node8" href="dir_6ed90988a7706dd77931d743d739a049.html" title="SysEventView" alt="" coords="509,65,635,113"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000026_000008.html" title="3" alt="" coords="371,244,381,261"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000026_000013.html" title="2" alt="" coords="347,170,356,187"/>
+<area shape="rect" id="clust2" href="dir_6c54884f8f52492cb03d5a3036478390.html" alt="" coords="27,55,768,124"/>
+<area shape="rect" id="clust1" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html" title="src" alt="" coords="16,16,779,316"/>
+</map>

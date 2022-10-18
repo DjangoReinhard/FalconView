@@ -1,0 +1,8 @@
+<map id="ToolManager::showEvent" name="ToolManager::showEvent">
+<area shape="rect" id="node1" title=" " alt="" coords="5,32,208,61"/>
+<area shape="rect" id="node2" href="$classAbstractCenterWidget.html#a1c93c2dc97d76cfeda384f7b2ad5164d" title=" " alt="" coords="256,23,435,70"/>
+<area shape="rect" id="node3" href="$classGuiCore.html#a8d5540186181dd3d277758b829b6bfd7" title=" " alt="" coords="483,5,676,35"/>
+<area shape="rect" id="node5" href="$classConfig.html#a6fcb4d93fc7aca75db518cdfd336dc49" title=" " alt="" coords="521,59,637,88"/>
+<area shape="rect" id="node4" href="$classKernelInterface.html#a6bf965e34305c3d2c0206358a3c1e03e" title=" " alt="" coords="724,5,965,35"/>
+<area shape="rect" id="node6" href="$classConfigManager.html#a5e4e6cc7885e4013131a6a230cb324b8" title=" " alt="" coords="755,59,934,88"/>
+</map>

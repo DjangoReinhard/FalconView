@@ -1,3 +1,28 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       guikernel.h
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    30.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #ifndef GUIKERNEL_H
 #define GUIKERNEL_H
 #include <kernel.h>
@@ -14,10 +39,12 @@ class AxisMask;
 class SysEventModel;
 class OcctQtViewer;
 class HelpDockable;
+class LCStatus;
 class Ally3D;
 class PageStack;
 class QMainWindow;
-class StatusReader;
+class AbstractStatusReader;
+class StatusUpdater;
 class CommandWriter;
 class CanonIF;
 class LCInterface;
@@ -34,15 +61,16 @@ protected:
   virtual int            axisMask() const override;
   virtual ConfigManager* config() const override;
   virtual ConfigManager* config() override;
-  virtual DBConnection*  createDatabase(DBHelper& dbAssist);
+  virtual DBConnection*  createDatabase(DBHelperInterface& dbAssist);
   virtual DBConnection*  databaseConnection() override;
   virtual QString        fileName4(const QString& fileID) const override;
-  virtual void           initialize(DBHelper& dbAssist) override;
+  virtual void           initialize(DBHelperInterface& dbAssist) override;
   virtual QLocale        locale() const override;
   virtual void           logSysEvent(const QString& msg) override;
   virtual void           logSysEvent(const SysEvent& se) override;
   virtual QLocale*       setupTranslators() override;
   virtual QString        version() const override;
+  virtual void           loadPlugins();
 
   virtual void                 activatePage(const QString& pageName) override;
   virtual int                  activeGCodes() const override;
@@ -63,10 +91,11 @@ protected:
   virtual void                 setWindowTitle(const QString& title) override;
   virtual void                 showHelp() const override;
   virtual QWidget*             stackedPage(const QString& pageName) override;
-  virtual void                 startTimer(int delay = 40) override;
+  virtual void                 startTimer(int delay = 400) override;
   virtual void                 stopTimer() override;
   virtual ViewPluginInterface* statusInfo(const QString& infoID) const override;
   virtual QList<QString>       statusInfos() const override;
+  virtual void                 updateStatus(const LCStatus& status);
   virtual PageStack*           viewStack() override;
 
   virtual void timerEvent(QTimerEvent* e) override;
@@ -137,38 +166,43 @@ signals:
   void taskPlanSynch();
 
 private:
-  const int          maxGCodes;
-  const int          maxMCodes;
-  int                checked;
-  bool               simulator;
-  QApplication&      app;
-  ConfigManager*     cfg;
-  QLocale*           curLocale;
-  DBConnection*      conn;
-  QString            appName;
-  QString            groupID;
-  QString            langDir;
-  QBasicTimer        timer;
-  LcProperties*      lcProps;
-  ToolTable*         tt;
-  LCInterface*       lcIF;
-  AxisMask*          mAxis;
-  OcctQtViewer*      v3D;
-  PageStack*         centerView;
-  QMainWindow*       wMain;
-  HelpDockable*      help;
-  Ally3D*            ally3D;
-  GCodeInfo          gcodeInfo;
-  PositionCalculator positionCalculator;
-  StatusReader*      statusReader;
-  CommandWriter*     commandWriter;
-  QThread            backendCommThread;
-  SysEventModel*     sysEvents;
-  CanonIF*           canonIF;
-  QString            iniFileName;
-  QString            helpFileName;
-  QString            nc_files;
-  QString            pluginDir;
+  const int             maxGCodes;
+  const int             maxMCodes;
+  int                   checked;
+  int                   portMulticast;
+  bool                  simulator;
+  bool                  useNML;
+  QApplication&         app;
+  ConfigManager*        cfg;
+  QLocale*              curLocale;
+  DBConnection*         conn;
+  QString               appName;
+  QString               groupID;
+  QString               langDir;
+  QBasicTimer           timer;
+  LcProperties*         lcProps;
+  ToolTable*            tt;
+  LCInterface*          lcIF;
+  AxisMask*             mAxis;
+  OcctQtViewer*         v3D;
+  PageStack*            centerView;
+  QMainWindow*          wMain;
+  HelpDockable*         help;
+  Ally3D*               ally3D;
+  GCodeInfo             gcodeInfo;
+  PositionCalculator    positionCalculator;
+  AbstractStatusReader* statusReader;
+  StatusUpdater*        statusUpdater;
+  CommandWriter*        commandWriter;
+  QThread               backendCommThread;
+  QThread               backendStatThread;
+  SysEventModel*        sysEvents;
+  CanonIF*              canonIF;
+  QString               iniFileName;
+  QString               helpFileName;
+  QString               nc_files;
+  QString               pluginDir;
+  QList<DBHelperInterface*>      dbAssistants;
   QMap<QString, ViewPluginInterface*> mainPages;
   QMap<QString, ViewPluginInterface*> nbPages;
   QMap<QString, ViewPluginInterface*> statInfos;

@@ -1,0 +1,10 @@
+<map id="Ally3D::showPath" name="Ally3D::showPath">
+<area shape="rect" id="node1" title=" " alt="" coords="5,109,155,139"/>
+<area shape="rect" id="node2" href="$classOcctQtViewer.html#a65fe7198df4cd412ccf26486e357cfee" title=" " alt="" coords="233,5,391,35"/>
+<area shape="rect" id="node3" href="$classAlly3D.html#a307a92b7ddea7d27f08ffdf034f6c657" title=" " alt="" coords="501,163,631,192"/>
+<area shape="rect" id="node4" href="$classOcctQtViewer.html#a61698fd5ea4c8a7b50c55e79c58b0960" title=" " alt="" coords="211,109,413,139"/>
+<area shape="rect" id="node5" href="$classAlly3D.html#ae447b4eddb93e56046c2c93093e05be8" title=" " alt="" coords="203,216,421,245"/>
+<area shape="rect" id="node8" href="$classAlly3D.html#ae3e0d17a8c7370b1fa442dcd2f6a3c93" title=" " alt="" coords="215,163,409,192"/>
+<area shape="rect" id="node6" href="$classGuiCore.html#a47c886bee528c9eea27b2cf85591838f" title=" " alt="" coords="469,216,663,245"/>
+<area shape="rect" id="node7" href="$classKernelInterface.html#a851b9b3605be48c1f68cd4f306cb0942" title=" " alt="" coords="711,207,909,254"/>
+</map>

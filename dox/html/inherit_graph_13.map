@@ -1,0 +1,31 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classFileManagerClient.html" title=" " alt="" coords="234,59,389,88"/>
+<area shape="rect" id="node2" href="$classTestEdit.html" title=" " alt="" coords="487,59,565,88"/>
+<area shape="rect" id="node3" href="$classPathEditor.html" title=" " alt="" coords="663,59,760,88"/>
+<area shape="rect" id="node4" href="$classPreViewEditor.html" title=" " alt="" coords="649,5,773,35"/>
+<area shape="rect" id="node5" href="$classPluginPageInterface.html" title=" " alt="" coords="5,112,172,141"/>
+<area shape="rect" id="node6" href="$classAbstractCenterWidget.html" title=" " alt="" coords="222,459,401,488"/>
+<area shape="rect" id="node23" href="$classGCodeViewerInterface.html" title=" " alt="" coords="220,5,403,35"/>
+<area shape="rect" id="node24" href="$classMDIEditorInterface.html" title=" " alt="" coords="234,112,389,141"/>
+<area shape="rect" id="node7" href="$classCurCodesStatus.html" title=" " alt="" coords="456,592,596,621"/>
+<area shape="rect" id="node8" href="$classFileManager.html" title=" " alt="" coords="470,645,582,675"/>
+<area shape="rect" id="node9" href="$classFixtureEdit.html" title=" " alt="" coords="477,699,575,728"/>
+<area shape="rect" id="node10" href="$classFixtureManager.html" title=" " alt="" coords="459,752,593,781"/>
+<area shape="rect" id="node11" href="$classHelpView.html" title=" " alt="" coords="481,805,571,835"/>
+<area shape="rect" id="node12" href="$classJogView.html" title=" " alt="" coords="485,859,567,888"/>
+<area shape="rect" id="node13" href="$classLCToolTable.html" title=" " alt="" coords="470,912,582,941"/>
+<area shape="rect" id="node14" href="$classMDIEditor.html" title=" " alt="" coords="479,112,573,141"/>
+<area shape="rect" id="node15" href="$classPageStack.html" title=" " alt="" coords="476,165,576,195"/>
+<area shape="rect" id="node16" href="$classPositionStatus.html" title=" " alt="" coords="463,219,589,248"/>
+<area shape="rect" id="node17" href="$classPreferencesEditor.html" title=" " alt="" coords="451,272,601,301"/>
+<area shape="rect" id="node18" href="$classSettingsNotebook.html" title=" " alt="" coords="451,325,601,355"/>
+<area shape="rect" id="node19" href="$classSpeedStatus.html" title=" " alt="" coords="469,379,583,408"/>
+<area shape="rect" id="node20" href="$classSysEventView.html" title=" " alt="" coords="463,432,589,461"/>
+<area shape="rect" id="node21" href="$classToolManager.html" title=" " alt="" coords="469,485,583,515"/>
+<area shape="rect" id="node22" href="$classToolStatus.html" title=" " alt="" coords="477,539,575,568"/>
+<area shape="rect" id="node25" title=" " alt="" coords="47,565,131,595"/>
+<area shape="rect" id="node26" href="$classCenterPage.html" title=" " alt="" coords="257,512,365,541"/>
+<area shape="rect" id="node27" href="$classHelpTitleBar.html" title=" " alt="" coords="256,565,367,595"/>
+<area shape="rect" id="node28" href="$classLineNumberArea.html" title=" " alt="" coords="239,619,383,648"/>
+<area shape="rect" id="node29" href="$classToolEditor.html" title=" " alt="" coords="264,672,359,701"/>
+</map>

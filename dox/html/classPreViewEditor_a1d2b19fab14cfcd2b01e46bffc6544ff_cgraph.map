@@ -1,0 +1,32 @@
+<map id="PreViewEditor::connectSignals" name="PreViewEditor::connectSignals">
+<area shape="rect" id="node1" title=" " alt="" coords="5,308,248,337"/>
+<area shape="rect" id="node2" href="$classTestEdit.html#abb5fccbd20dec48fa5d5ff4cbd01eaf5" title=" " alt="" coords="316,165,513,195"/>
+<area shape="rect" id="node4" href="$classValueManager.html#a280f82d18a2090610fd378bc57c04a56" title=" " alt="" coords="581,5,780,35"/>
+<area shape="rect" id="node26" href="$classTestEdit.html#ab411c0da5179bda539b84f318e86c1fc" title=" " alt="" coords="320,308,509,337"/>
+<area shape="rect" id="node29" href="$classPreViewEditor.html#a7fcae6de6917ee0703dbeabf55e484b7" title=" " alt="" coords="296,361,533,391"/>
+<area shape="rect" id="node30" href="$classPreViewEditor.html#a4b45716c3ed6176d856e9f2158f3c565" title=" " alt="" coords="301,415,528,444"/>
+<area shape="rect" id="node3" href="$classTestEdit.html#ab0f568ebc7627ccd3bc28c44f8e885d8" title=" " alt="" coords="589,59,772,88"/>
+<area shape="rect" id="node5" href="$classValueManager.html#ad73161eaea72fce03036d1fc519cdcff" title=" " alt="" coords="583,112,778,141"/>
+<area shape="rect" id="node7" href="$classConfig.html#af0a470a2816e6a2c8251c335f6c76533" title=" " alt="" coords="614,165,747,195"/>
+<area shape="rect" id="node9" href="$classTestEdit.html#ae93ada3526e513eb312124c2ee171539" title=" " alt="" coords="605,219,756,248"/>
+<area shape="rect" id="node17" href="$classTestEdit.html#a2bf9b1387bb9be7cbd5aa6a4a1cecbde" title=" " alt="" coords="607,332,755,361"/>
+<area shape="rect" id="node6" href="$classValueModel.html#a2001b180c153c91104bf54b8a302b67f" title=" " alt="" coords="849,5,1025,35"/>
+<area shape="rect" id="node8" href="$classConfigManager.html#a615c9de241c515f3c39188c4fef14773" title=" " alt="" coords="828,59,1045,88"/>
+<area shape="rect" id="node10" href="$classCenterPage.html#a35997a094fa37fb30affb2c6f85f6023" title=" " alt="" coords="831,112,1042,141"/>
+<area shape="rect" id="node11" href="$classCore.html#a1ff41e900b39ed353d21882dbd1acbf2" title=" " alt="" coords="859,165,1014,195"/>
+<area shape="rect" id="node14" href="$classFileManager.html#a41a9287c069d795dd014119789791016" title=" " alt="" coords="845,219,1028,248"/>
+<area shape="rect" id="node15" href="$classGuiCore.html#a3770d915772b63635b2d139675c77dac" title=" " alt="" coords="845,272,1028,301"/>
+<area shape="rect" id="node12" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="1111,379,1306,408"/>
+<area shape="rect" id="node13" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="1372,379,1547,408"/>
+<area shape="rect" id="node16" href="$classKernelInterface.html#a5bae0a4b50e12b707a9486aa4f57f3b0" title=" " alt="" coords="1093,272,1324,301"/>
+<area shape="rect" id="node18" href="$classTestEdit.html#a98fad8da76e2ba4c367b3a06ca8ff98a" title=" " alt="" coords="852,325,1021,355"/>
+<area shape="rect" id="node19" href="$classCore.html#afc34413e901eda2e2f116ee50cca5b4f" title=" " alt="" coords="853,379,1020,408"/>
+<area shape="rect" id="node20" href="$classGuiCore.html#ab31ba8adb79f692a4a3a8dc193efffcb" title=" " alt="" coords="861,485,1012,515"/>
+<area shape="rect" id="node21" href="$classKernelInterface.html#a2ff95677f749126176d05c5a54966780" title=" " alt="" coords="1095,432,1323,461"/>
+<area shape="rect" id="node22" href="$classKernelInterface.html#a27e25c884cd5ef57f3a658830e123231" title=" " alt="" coords="1093,485,1324,515"/>
+<area shape="rect" id="node23" href="$classSysEvent.html#a1ed0720f3748491f3fd2f15ca565bbdf" title=" " alt="" coords="1132,539,1285,568"/>
+<area shape="rect" id="node24" href="$classSysEvent.html#ad65f34e4f68f36a5adffc17ed95e3326" title=" " alt="" coords="1145,592,1273,621"/>
+<area shape="rect" id="node25" href="$classSysEvent.html#a05881e39a8ca837d322031ba1f876780" title=" " alt="" coords="1143,645,1275,675"/>
+<area shape="rect" id="node27" href="$classGCodeEditor.html#a78e65f852b27b2980168561966c65a76" title=" " alt="" coords="590,399,771,428"/>
+<area shape="rect" id="node28" href="$classCore.html#ab8ee0d53ad81162dc3e5f65ea45f6ead" title=" " alt="" coords="873,432,1000,461"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="CanonIF" name="CanonIF">
+<area shape="rect" id="node1" title="The data&#45;storage counterpart of linuxcnc interpreter. linuxcnc interpreter uses capitalized c&#45;functio..." alt="" coords="269,384,353,413"/>
+<area shape="rect" id="node2" href="$classCanonIFSettings.html" title=" " alt="" coords="239,289,382,319"/>
+<area shape="rect" id="node3" href="$classGraphicFactory.html" title=" " alt="" coords="5,195,136,224"/>
+<area shape="rect" id="node4" href="$classStupidToolChangerIF.html" title="The StupidToolChangerIF class &#45; dumb model of a tool changer as required by lc." alt="" coords="161,195,335,224"/>
+<area shape="rect" id="node5" href="$classToolTable.html" title="The ToolTable class parse and hold tooltable of linuxcnc." alt="" coords="360,195,451,224"/>
+<area shape="rect" id="node6" title=" " alt="" coords="137,100,311,129"/>
+<area shape="rect" id="node7" href="$classLcProperties.html" title="The LcProperties class process ini&#45;files from linuxcnc." alt="" coords="485,100,597,129"/>
+<area shape="rect" id="node8" href="$classToolEntry.html" title="The ToolEntry class entry of linuxcnc tooltable file." alt="" coords="335,100,425,129"/>
+<area shape="rect" id="node9" href="$classPToolEntry.html" title=" " alt="" coords="330,5,430,35"/>
+</map>

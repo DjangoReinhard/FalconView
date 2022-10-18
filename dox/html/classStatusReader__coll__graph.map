@@ -1,0 +1,9 @@
+<map id="StatusReader" name="StatusReader">
+<area shape="rect" id="node1" title=" " alt="" coords="185,289,314,319"/>
+<area shape="rect" id="node2" title=" " alt="" coords="41,100,127,129"/>
+<area shape="rect" id="node3" href="$classErrorReader.html" title=" " alt="" coords="25,195,143,224"/>
+<area shape="rect" id="node6" href="$classPositionCalculator.html" title=" " alt="" coords="167,195,331,224"/>
+<area shape="rect" id="node4" href="$classValueManager.html" title=" " alt="" coords="311,100,449,129"/>
+<area shape="rect" id="node7" href="$classGCodeInfo.html" title=" " alt="" coords="435,195,541,224"/>
+<area shape="rect" id="node5" href="$classValueManager_1_1ValueHolder.html" title=" " alt="" coords="259,5,501,35"/>
+</map>

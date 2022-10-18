@@ -1,0 +1,7 @@
+<map id="GuiCore::showHelp" name="GuiCore::showHelp">
+<area shape="rect" id="node1" title=" " alt="" coords="5,32,177,61"/>
+<area shape="rect" id="node2" href="$classCore.html#a1ff41e900b39ed353d21882dbd1acbf2" title=" " alt="" coords="225,32,393,61"/>
+<area shape="rect" id="node3" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="441,32,656,61"/>
+<area shape="rect" id="node4" href="$classValueManager.html#a210aacf76ba03543f2f81ef35372d3d9" title=" " alt="" coords="704,5,944,35"/>
+<area shape="rect" id="node5" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="728,59,920,88"/>
+</map>

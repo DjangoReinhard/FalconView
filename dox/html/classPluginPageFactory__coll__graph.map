@@ -1,0 +1,11 @@
+<map id="PluginPageFactory" name="PluginPageFactory">
+<area shape="rect" id="node1" title=" " alt="" coords="135,384,294,413"/>
+<area shape="rect" id="node2" href="$classConfig.html" title=" " alt="" coords="180,289,249,319"/>
+<area shape="rect" id="node3" href="$classConfigManager.html" title=" " alt="" coords="149,195,281,224"/>
+<area shape="rect" id="node4" href="$classValueManager.html" title=" " alt="" coords="53,100,179,129"/>
+<area shape="rect" id="node5" href="$classValueManager_1_1ValueHolder.html" title=" " alt="" coords="5,5,227,35"/>
+<area shape="rect" id="node6" href="$classGuiCore.html" title=" " alt="" coords="283,289,365,319"/>
+<area shape="rect" id="node7" href="$classCore.html" title=" " alt="" coords="305,195,362,224"/>
+<area shape="rect" id="node8" href="$classKernelCreator.html" title=" " alt="" coords="205,100,328,129"/>
+<area shape="rect" id="node9" href="$classKernelInterface.html" title=" " alt="" coords="352,100,483,129"/>
+</map>

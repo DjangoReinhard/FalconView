@@ -1,3 +1,28 @@
+/* 
+ * **************************************************************************
+ * 
+ *  file:       GuiKernelInterface.h
+ *  project:    FalconView
+ *  subproject: main application
+ *  purpose:    ui frontend for linuxCNC                          
+ *  created:    22.1.2022 by Django Reinhard
+ *  copyright:  (c) 2022 Django Reinhard -  all rights reserved
+ * 
+ *  This program is free software: you can redistribute it and/or modify 
+ *  it under the terms of the GNU General Public License as published by 
+ *  the Free Software Foundation, either version 2 of the License, or 
+ *  (at your option) any later version. 
+ *   
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ *  GNU General Public License for more details. 
+ *   
+ *  You should have received a copy of the GNU General Public License 
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * **************************************************************************
+ */
 #ifndef GUIKERNELINTERFACE_H
 #define GUIKERNELINTERFACE_H
 #include <KernelInterface.h>
@@ -26,7 +51,7 @@ public:
   virtual DBConnection*        databaseConnection()                               = 0;
   virtual QString              fileName4(const QString& fileID) const             = 0;
   virtual void                 help4Keyword(const QString& keyWord)               = 0;
-  virtual void                 initialize(DBHelper& dbAssist)                     = 0;
+  virtual void                 initialize(DBHelperInterface& dbAssist)                     = 0;
   virtual QLocale              locale() const                                     = 0;
   virtual void                 logSysEvent(const QString& msg)                    = 0;
   virtual void                 logSysEvent(const SysEvent& se)                    = 0;

@@ -1,0 +1,8 @@
+<map id="ToolModel" name="ToolModel">
+<area shape="rect" id="node1" title=" " alt="" coords="72,273,168,303"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,179,147,208"/>
+<area shape="rect" id="node3" href="$classGuiCore.html" title=" " alt="" coords="171,179,253,208"/>
+<area shape="rect" id="node4" href="$classCore.html" title=" " alt="" coords="183,100,241,129"/>
+<area shape="rect" id="node5" href="$classKernelCreator.html" title=" " alt="" coords="76,5,199,35"/>
+<area shape="rect" id="node6" href="$classKernelInterface.html" title=" " alt="" coords="223,5,353,35"/>
+</map>

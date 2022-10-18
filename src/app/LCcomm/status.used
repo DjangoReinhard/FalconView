@@ -1,0 +1,170 @@
+char      EStop;
+char      Flood;
+char      Mist;
+char      atmReady;
+char      toolInSpindle;
+char      j0Enabled;
+char      j0Homed;
+char      j1Enabled;
+char      j1Homed;
+char      j2Enabled;
+char      j2Homed;
+char      j3Enabled;
+char      j3Homed;
+char      j4Enabled;
+char      j4Homed;
+char      j5Enabled;
+char      j5Homed;
+char      j6Enabled;
+char      j6Homed;
+char      j7Enabled;
+char      j7Homed;
+char      j8Enabled;
+char      j8Homed;
+char      sp0Dir;
+char      sp0Enabled;
+char      sp0Homed;
+char      sp0Increasing;
+char      sp0OvrEnabled;
+char      sp0AFEnabled;
+char      sp0FOEnabledd;
+char      ExecState;
+char      InterpState;
+char      TaskMode;
+char      ProgUnits;
+char      TaskState;
+char[255] TaskFile;
+short     AxisMask;
+long      MotionLine;
+double    sp0NomSpeed;
+double    sp0ActSpeed;
+double    sp0Scale;
+double    NomVelocity;
+double    ActVelocity;
+double    Dtg;
+double    MaxVelocity;
+double    ScaledMaxVel;
+double    RapidScale;
+double    FeedScale;
+double    XYRotation;
+double[9] TrajPosition;
+double[9] TrajActPos;
+double[9] G5xOffset;
+double[9] G92Offset;
+double[9] ToolOffset;
+int[10]   activeGCodes;
+int[17]   activeMCodes;
+
+ , EStop(status->io.aux.estop)
+ , Flood(status->io.coolant.flood)
+ , Mist(status->io.coolant.mist)
+ , atmReady(status->io.tool.pocketPrepped)
+ , toolInSpindle(status->io.tool.toolInSpindle)
+ , j0Enabled(status->motion.joint[0].enabled)
+ , j0Homed(status->motion.joint[0].homed ? true : false)
+ , j1Enabled(status->motion.joint[1].enabled)
+ , j1Homed(status->motion.joint[1].homed ? true : false)
+ , j2Enabled(status->motion.joint[2].enabled)
+ , j2Homed(status->motion.joint[2].homed ? true : false)
+ , j3Enabled(status->motion.joint[3].enabled)
+ , j3Homed(status->motion.joint[3].homed ? true : false)
+ , j4Enabled(status->motion.joint[4].enabled)
+ , j4Homed(status->motion.joint[4].homed ? true : false)
+ , j5Enabled(status->motion.joint[5].enabled)
+ , j5Homed(status->motion.joint[5].homed ? true : false)
+ , j6Enabled(status->motion.joint[6].enabled)
+ , j6Homed(status->motion.joint[6].homed ? true : false)
+ , j7Enabled(status->motion.joint[7].enabled)
+ , j7Homed(status->motion.joint[7].homed ? true : false)
+ , j8Enabled(status->motion.joint[8].enabled)
+ , j8Homed(status->motion.joint[8].homed ? true : false)
+ , sp0Dir(status->motion.spindle[0].direction)
+ , sp0Enabled(status->motion.spindle[0].enabled)
+ , sp0Homed(status->motion.spindle[0].homed)
+ , sp0Increasing(status->motion.spindle[0].increasing)
+ , sp0OvrEnabled(status->motion.spindle[0].spindle_override_enabled)
+ , sp0AFEnabled(status->motion.traj.adaptive_feed_enabled)
+ , sp0FOEnabledd(status->motion.traj.feed_override_enabled)
+ , ExecState(status->task.execState)
+ , InterpState(status->task.interpState)
+ , TaskMode(status->task.mode)
+ , ProgUnits(status->task.programUnits)
+ , TaskState(status->task.state)
+ , TaskFile(status->task.file)
+ , AxisMask(status->motion.traj.axis_mask)
+ , MotionLine(status->task.motionLine)
+ , sp0NomSpeed(status->motion.spindle[0].speed)
+ , sp0ActSpeed(status->motion.spindle[0].speed * status->motion.spindle[0].spindle_scale)
+ , sp0Scale(status->motion.spindle[0].spindle_scale)
+ , NomVelocity(status->motion.traj.current_vel * 60)
+ , ActVelocity(status->motion.traj.current_vel * 60 * status->motion.traj.scale)
+ , Dtg(status->motion.traj.dtg)
+ , MaxVelocity(status->motion.traj.maxVelocity * 60)
+ , ScaledMaxVel(status->motion.traj.maxVelocity * 60 * status->motion.traj.rapid_scale)
+ , RapidScale(status->motion.traj.rapid_scale)
+ , FeedScale(status->motion.traj.scale)
+ , XYRotation(status->task.rotation_xy)
+ , TrajPosition(status->motion.traj.position)
+ , TrajActPos(status->motion.traj.actualPosition)
+ , G5xOffset(status->task.g5x_offset)
+ , G92Offset(status->task.g92_offset)
+ , ToolOffset(status->task.toolOffset)
+ , activeGCodes(status->task.activeGCodes)
+ , activeMCodes(status->task.activeMCodes)
+
+EStop = status->io.aux.estop;
+Flood = status->io.coolant.flood;
+Mist = status->io.coolant.mist;
+atmReady = status->io.tool.pocketPrepped;
+toolInSpindle = status->io.tool.toolInSpindle;
+j0Enabled = status->motion.joint[0].enabled;
+j0Homed = status->motion.joint[0].homed ? true : false;
+j1Enabled = status->motion.joint[1].enabled;
+j1Homed = status->motion.joint[1].homed ? true : false;
+j2Enabled = status->motion.joint[2].enabled;
+j2Homed = status->motion.joint[2].homed ? true : false;
+j3Enabled = status->motion.joint[3].enabled;
+j3Homed = status->motion.joint[3].homed ? true : false;
+j4Enabled = status->motion.joint[4].enabled;
+j4Homed = status->motion.joint[4].homed ? true : false;
+j5Enabled = status->motion.joint[5].enabled;
+j5Homed = status->motion.joint[5].homed ? true : false;
+j6Enabled = status->motion.joint[6].enabled;
+j6Homed = status->motion.joint[6].homed ? true : false;
+j7Enabled = status->motion.joint[7].enabled;
+j7Homed = status->motion.joint[7].homed ? true : false;
+j8Enabled = status->motion.joint[8].enabled;
+j8Homed = status->motion.joint[8].homed ? true : false;
+sp0Dir = status->motion.spindle[0].direction;
+sp0Enabled = status->motion.spindle[0].enabled;
+sp0Homed = status->motion.spindle[0].homed;
+sp0Increasing = status->motion.spindle[0].increasing;
+sp0OvrEnabled = status->motion.spindle[0].spindle_override_enabled;
+sp0AFEnabled = status->motion.traj.adaptive_feed_enabled;
+sp0FOEnabledd = status->motion.traj.feed_override_enabled;
+ExecState = status->task.execState;
+InterpState = status->task.interpState;
+TaskMode = status->task.mode;
+ProgUnits = status->task.programUnits;
+TaskState = status->task.state;
+TaskFile = status->task.file;
+AxisMask = status->motion.traj.axis_mask;
+MotionLine = status->task.motionLine;
+sp0NomSpeed = status->motion.spindle[0].speed;
+sp0ActSpeed = status->motion.spindle[0].speed * status->motion.spindle[0].spindle_scale;
+sp0Scale = status->motion.spindle[0].spindle_scale;
+NomVelocity = status->motion.traj.current_vel * 60;
+ActVelocity = status->motion.traj.current_vel * 60 * status->motion.traj.scale;
+Dtg = status->motion.traj.dtg;
+MaxVelocity = status->motion.traj.maxVelocity * 60;
+ScaledMaxVel = status->motion.traj.maxVelocity * 60 * status->motion.traj.rapid_scale;
+RapidScale = status->motion.traj.rapid_scale;
+FeedScale = status->motion.traj.scale;
+XYRotation = status->task.rotation_xy;
+TrajPosition = status->motion.traj.position;
+TrajActPos = status->motion.traj.actualPosition;
+G5xOffset = status->task.g5x_offset;
+G92Offset = status->task.g92_offset;
+ToolOffset = status->task.toolOffset;
+activeGCodes = status->task.activeGCodes;
+activeMCodes = status->task.activeMCodes;
