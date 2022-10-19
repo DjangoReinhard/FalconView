@@ -71,7 +71,7 @@ void StatusUpdater::createModels() {
   }
 
 
-void StatusUpdater::update(const LCStatus& status) {
+void StatusUpdater::update(volatile const LCStatus& status) {
   vm.setValue("taskMode",    static_cast<EMC_TASK_MODE_ENUM>(status.taskMode));
   vm.setValue("taskState",   static_cast<EMC_TASK_STATE_ENUM>(status.taskState));
   vm.setValue("execState",   static_cast<EMC_TASK_EXEC_ENUM>(status.execState));

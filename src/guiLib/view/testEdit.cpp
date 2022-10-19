@@ -180,6 +180,7 @@ void TestEdit::fileSelected(const QString& filePath) {
 
 
 void TestEdit::loadFile(const QVariant& fileName) {
+  if (fileName.isNull() || !fileName.isValid()) return;
   qDebug() << "TestEdit::loadFile" << fileName;
 
   if (fileName.toString().isEmpty()) return;

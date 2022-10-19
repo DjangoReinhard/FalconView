@@ -191,7 +191,7 @@ void MainWindow::about() {
 void MainWindow::autoStart() {
   bool gcodeDirty = ValueManager().getValue("gcodeDirty").toBool();
 
-  GuiCore().startTimer();
+//  GuiCore().startTimer();
   qDebug() << "MW: autostart requested - nc-file is" << (gcodeDirty ? "dirty" : "OK");
   ApplicationMode am = static_cast<ApplicationMode>(ValueManager().getValue("appMode").toInt());
 

@@ -13,7 +13,8 @@ class StatusUpdater : public QObject
 public:
   explicit StatusUpdater(PositionCalculator& pc, GCodeInfo& gi, QObject *parent = nullptr);
 
-  void update(const LCStatus& status);
+public slots:
+  void update(volatile const LCStatus& status);
 
 private:
   void createModels();

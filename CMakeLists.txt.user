@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 5.0.0, 2022-10-10T05:39:35. -->
+<!-- Written by QtCreator 5.0.0, 2022-10-18T06:44:04. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -317,7 +317,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">FalconView (PUBLIC)</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey"></value>
-    <value type="QString" key="RunConfiguration.Arguments">-oni /usr/local/src/linuxcnc-deb11/configs/sim/axis/lathe_multispindle/lathe.ini -ini /home/django/linuxcnc/configs/FM45/AFM45.ini -ni /usr/local/src/linuxcnc-deb11/configs/sim/axis/axis_9axis.ini -net</value>
+    <value type="QString" key="RunConfiguration.Arguments">-oni /usr/local/src/linuxcnc-deb11/configs/sim/axis/lathe_multispindle/lathe.ini -ini /home/django/linuxcnc/configs/FM45/AFM45.ini -ni /usr/local/src/linuxcnc-deb11/configs/sim/axis/axis_9axis.ini -nit</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>

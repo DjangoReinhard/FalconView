@@ -38,7 +38,7 @@ GCodeInfo::GCodeInfo() {
 void GCodeInfo::update(volatile const int* activeGCodes
                      , volatile const int* activeMCodes
                      , volatile const char* fileName
-                     , int curLine) {
+                     , volatile int curLine) {
   int mx = GuiCore().activeGCodes();
 
   for (int i=1; i < mx; ++i) {

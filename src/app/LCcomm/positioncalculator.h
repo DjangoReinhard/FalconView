@@ -41,7 +41,7 @@ public:
             , int units
             , volatile const double* g5x
             , volatile const double* g92
-            , double rotXY
+            , volatile double rotXY
             , volatile const double* toolOffset);
 
 protected:

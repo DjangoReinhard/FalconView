@@ -589,9 +589,6 @@ void GuiKernel::logSysEvent(const SysEvent& se) {
 
 
 double GuiKernel::defaultVelocity(int jointNum) const {
-//  QString groupID = QString("JOINT_%1").arg(jointNum);
-
-//  return lcProperties().value(groupID, "HOME_SEARCH_VEL").toDouble() + 60;
   double v = lcProperties().value("TRAJ", "DEFAULT_LINEAR_VELOCITY").toDouble();
 
   qDebug() << "GuiKernel::default vel: " << v;
@@ -601,9 +598,6 @@ double GuiKernel::defaultVelocity(int jointNum) const {
 
 
 double GuiKernel::maxVelocity(int jointNum) const {
-//  QString groupID = QString("JOINT_%1").arg(jointNum);
-
-//  return lcProperties().value(groupID, "MAX_VELOCITY").toDouble() + 60;
   return lcProperties().value("TRAJ", "MAX_LINEAR_VELOCITY").toDouble() * 60;
   }
 
@@ -726,15 +720,12 @@ void GuiKernel::setViewStack(PageStack *v) {
   }
 
 
-void GuiKernel::updateStatus(const LCStatus& status) {
-  statusUpdater->update(status);
-  }
-
-
 void GuiKernel::setupBackend() {
-//  startTimer();
   if (!useNML && statusReader->isActive()) {
-     connect(statusReader, &AbstractStatusReader::statusChanged, this, &GuiKernel::updateStatus);
+     connect(statusReader, &AbstractStatusReader::statusChanged, statusUpdater, &StatusUpdater::update);
+     }
+  else if (useNML && statusReader->isActive()) {
+     startTimer();
      }
   if (commandWriter && commandWriter->isActive()) {
      qDebug() << "OK, ok, ok - backend seems to be available!";
@@ -842,7 +833,7 @@ void GuiKernel::timerEvent(QTimerEvent *e) {
      std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 #endif
      try {
-//         statusReader->read();
+         statusReader->read();
          statusUpdater->update(statusReader->status());
          }
      catch (SysEvent* e) {

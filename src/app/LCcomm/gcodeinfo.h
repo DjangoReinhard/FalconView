@@ -37,7 +37,7 @@ public:
   void update(volatile const int* activeGCodes
             , volatile const int* activeMCodes
             , volatile const char* fileName
-            , int  curLine);
+            , volatile int  curLine);
 
 protected:
   ValueManager vm;

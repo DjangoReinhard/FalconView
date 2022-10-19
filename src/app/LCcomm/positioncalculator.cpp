@@ -78,7 +78,7 @@ double PositionCalculator::convertUnit(double value, int unit) {
   }
 
 
-void PositionCalculator::update(volatile const double* actPos, volatile const double*, volatile const double* dtg, int units, volatile const double* g5x, volatile const double* g92, double rotXY, volatile const double* toolOffset) {
+void PositionCalculator::update(volatile const double* actPos, volatile const double*, volatile const double* dtg, int units, volatile const double* g5x, volatile const double* g92, volatile double rotXY, volatile const double* toolOffset) {
   double x = actPos[0] - g5x[0] - toolOffset[0];
   double y = actPos[1] - g5x[1] - toolOffset[1];
   double z = actPos[2] - g5x[2] - toolOffset[2];

@@ -5,6 +5,7 @@
 *~
 *.qm
 *.pro.user
+*.txt.user
 lc
 docs/html
 *.qch

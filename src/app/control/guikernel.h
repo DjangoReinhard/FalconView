@@ -57,6 +57,10 @@ class QCloseEvent;
 class GuiKernel : public QObject, public KernelInterface
 {
   Q_OBJECT
+public slots:
+  virtual void           logSysEvent(const QString& msg) override;
+  virtual void           logSysEvent(const SysEvent& se) override;
+
 protected:
   virtual int            axisMask() const override;
   virtual ConfigManager* config() const override;
@@ -66,8 +70,6 @@ protected:
   virtual QString        fileName4(const QString& fileID) const override;
   virtual void           initialize(DBHelperInterface& dbAssist) override;
   virtual QLocale        locale() const override;
-  virtual void           logSysEvent(const QString& msg) override;
-  virtual void           logSysEvent(const SysEvent& se) override;
   virtual QLocale*       setupTranslators() override;
   virtual QString        version() const override;
   virtual void           loadPlugins();
@@ -91,11 +93,10 @@ protected:
   virtual void                 setWindowTitle(const QString& title) override;
   virtual void                 showHelp() const override;
   virtual QWidget*             stackedPage(const QString& pageName) override;
-  virtual void                 startTimer(int delay = 400) override;
+  virtual void                 startTimer(int delay = 100) override;
   virtual void                 stopTimer() override;
   virtual ViewPluginInterface* statusInfo(const QString& infoID) const override;
   virtual QList<QString>       statusInfos() const override;
-  virtual void                 updateStatus(const LCStatus& status);
   virtual PageStack*           viewStack() override;
 
   virtual void timerEvent(QTimerEvent* e) override;
