@@ -4,8 +4,7 @@
 *.swp
 *~
 *.qm
-*.pro.user
-*.txt.user
+*.user
 lc
 docs/html
 *.qch
