@@ -675,7 +675,7 @@ void MainWindow::floodToggle() {
 
 void MainWindow::restoreAll() {
   // application window
-  resize(QSize(1920, 1000));
+  resize(QSize(1350, 800));
   Config cfg;
 
   cfg.beginGroup("MainWindow");
