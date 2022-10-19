@@ -1,7 +1,5 @@
 # FalconView
 
-Status: **almost done!**
-
 Controlcenter for machines controlled by **linuxCNC**.
 Subwindows like position or speed override can arranged anywhere
 around the central preview pane.
@@ -61,15 +59,34 @@ So from your buildroot you can start **FalconView** with:
 dist/FalconView -ini <path to your linuxCNC-ini-file>
 ```
 
-**Note:** - cmake works best with a buildroot outside of the source tree.
+#### Note:
+```
+cmake works best with a buildroot outside of the source tree.
+```
 
 ## Application start
+### Integrated
 **FalconView** has been created to get integrated into linuxcnc start process, so the call is:
 
 ```
 FalconView -ini <path to your linuxCNC-ini-file>
 ```
 You can add FalconView to ini-file from *linuxCNC*. See *linuxCNC* [online docs](https://linuxcnc.org/docs/devel/html/config/ini-config.html) for further informations.
+
+### manual start
+**FalconView** could be started manually too:
+```
+FalconView V0.1
+
+please specify the path to INI-file of your linuxCNC machine.
+
+supported options:
+        -ini            <mandatory>     path to INI-file of linuxCNC
+        -help           [optional]      path to FalconView helpfile
+        -plugins        [optional]      path to plugin-directory
+        -i18n           [optional]      path to translation files
+```
+When you start FalconView from the dist directory, you only have to specify the path to your linuxcnc ini-file. All other requirements are found relatively to the applcations executable.
 
 ## [Extending FalconView](EXTENDING.md)
 
