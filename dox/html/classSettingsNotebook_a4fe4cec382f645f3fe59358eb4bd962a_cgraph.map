@@ -1,8 +1,0 @@
-<map id="SettingsNotebook::showEvent" name="SettingsNotebook::showEvent">
-<area shape="rect" id="node1" title=" " alt="" coords="5,33,241,63"/>
-<area shape="rect" id="node2" href="$classGuiCore.html#a8d5540186181dd3d277758b829b6bfd7" title=" " alt="" coords="516,5,709,35"/>
-<area shape="rect" id="node4" href="$classAbstractCenterWidget.html#a1c93c2dc97d76cfeda384f7b2ad5164d" title=" " alt="" coords="289,25,468,71"/>
-<area shape="rect" id="node5" href="$classConfig.html#a6fcb4d93fc7aca75db518cdfd336dc49" title=" " alt="" coords="555,63,671,92"/>
-<area shape="rect" id="node3" href="$classKernelInterface.html#a6bf965e34305c3d2c0206358a3c1e03e" title=" " alt="" coords="757,5,999,35"/>
-<area shape="rect" id="node6" href="$classConfigManager.html#a5e4e6cc7885e4013131a6a230cb324b8" title=" " alt="" coords="789,63,967,92"/>
-</map>

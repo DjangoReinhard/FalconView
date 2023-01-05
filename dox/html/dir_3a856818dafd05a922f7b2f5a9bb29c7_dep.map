@@ -1,9 +1,0 @@
-<map id="src/nbPages/FixtureManager" name="src/nbPages/FixtureManager">
-<area shape="rect" id="node1" href="dir_3a856818dafd05a922f7b2f5a9bb29c7.html" title="FixtureManager" alt="" coords="27,55,162,103"/>
-<area shape="rect" id="node2" href="dir_aa23dad29f6e4cc8afb180bed3038ecf.html" title="baselib" alt="" coords="56,247,131,295"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000018_000008.html" title="8" alt="" coords="90,219,99,236"/>
-<area shape="rect" id="node3" href="dir_f260c9342675fd957f2cbb66f56ce047.html" title="guiLib" alt="" coords="95,151,167,199"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000018_000013.html" title="4" alt="" coords="119,122,128,139"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000013_000008.html" title="33" alt="" coords="108,224,126,242"/>
-<area shape="rect" id="clust1" href="dir_3bb5bd2e26cf86fc46b9913676a990e9.html" title="nbPages" alt="" coords="16,16,173,113"/>
-</map>

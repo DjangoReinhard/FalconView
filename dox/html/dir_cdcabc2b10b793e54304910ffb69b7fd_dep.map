@@ -1,9 +1,0 @@
-<map id="src/plugPages/MDIEditor" name="src/plugPages/MDIEditor">
-<area shape="rect" id="node1" href="dir_cdcabc2b10b793e54304910ffb69b7fd.html" title="MDIEditor" alt="" coords="27,55,120,103"/>
-<area shape="rect" id="node2" href="dir_aa23dad29f6e4cc8afb180bed3038ecf.html" title="baselib" alt="" coords="35,247,109,295"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000023_000008.html" title="2" alt="" coords="68,219,78,236"/>
-<area shape="rect" id="node3" href="dir_f260c9342675fd957f2cbb66f56ce047.html" title="guiLib" alt="" coords="73,151,145,199"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000023_000013.html" title="1" alt="" coords="97,122,107,139"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000013_000008.html" title="33" alt="" coords="86,224,105,242"/>
-<area shape="rect" id="clust1" href="dir_6c54884f8f52492cb03d5a3036478390.html" title="plugPages" alt="" coords="16,16,131,113"/>
-</map>

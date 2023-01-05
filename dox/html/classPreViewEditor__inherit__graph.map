@@ -1,9 +1,0 @@
-<map id="PreViewEditor" name="PreViewEditor">
-<area shape="rect" id="node1" title=" " alt="" coords="261,237,385,267"/>
-<area shape="rect" id="node2" href="$classTestEdit.html" title=" " alt="" coords="206,160,285,189"/>
-<area shape="rect" id="node3" href="$classAbstractCenterWidget.html" title=" " alt="" coords="5,83,184,112"/>
-<area shape="rect" id="node4" title=" " alt="" coords="53,5,137,35"/>
-<area shape="rect" id="node5" href="$classPluginPageInterface.html" title=" " alt="" coords="238,5,405,35"/>
-<area shape="rect" id="node7" href="$classGCodeViewerInterface.html" title=" " alt="" coords="309,160,491,189"/>
-<area shape="rect" id="node6" href="$classFileManagerClient.html" title=" " alt="" coords="208,83,363,112"/>
-</map>

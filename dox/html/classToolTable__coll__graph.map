@@ -1,7 +1,0 @@
-<map id="ToolTable" name="ToolTable">
-<area shape="rect" id="node1" title="The ToolTable class parse and hold tooltable of linuxcnc." alt="" coords="215,195,306,224"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,100,180,129"/>
-<area shape="rect" id="node3" href="$classLcProperties.html" title="The LcProperties class process ini&#45;files from linuxcnc." alt="" coords="205,100,317,129"/>
-<area shape="rect" id="node4" href="$classToolEntry.html" title="The ToolEntry class entry of linuxcnc tooltable file." alt="" coords="341,100,431,129"/>
-<area shape="rect" id="node5" href="$classPToolEntry.html" title=" " alt="" coords="336,5,436,35"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="CanonIF::changeTool" name="CanonIF::changeTool">
-<area shape="rect" id="node1" title=" " alt="" coords="5,91,180,120"/>
-<area shape="rect" id="node2" href="$classCanonIFSettings.html#afce2c7c32e083a6627bc34f221cbb1b3" title=" " alt="" coords="228,91,461,120"/>
-<area shape="rect" id="node3" href="$classToolTable.html#af6d3e651791ecd17646a5213d48438d1" title=" " alt="" coords="523,5,671,35"/>
-<area shape="rect" id="node4" href="$classToolTable.html#a3aab3d5aa593b6c0981ffc6fa5364940" title=" " alt="" coords="510,59,683,88"/>
-<area shape="rect" id="node5" href="$classStupidToolChangerIF.html#acf399394fbc8e42b6c8c378af5a70594" title=" " alt="" coords="509,113,684,159"/>
-<area shape="rect" id="node6" href="$classToolEntry.html#abc8452a9be17d25f57e80aaad4b45e22" title=" " alt="" coords="517,184,676,213"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="Config::setForeground" name="Config::setForeground">
-<area shape="rect" id="node1" title=" " alt="" coords="5,32,204,61"/>
-<area shape="rect" id="node2" href="$classConfigManager.html#ad84a452b87e5191f2e83a7cdd5287023" title=" " alt="" coords="252,32,520,61"/>
-<area shape="rect" id="node3" href="$classConfigManager.html#a615c9de241c515f3c39188c4fef14773" title=" " alt="" coords="568,5,805,35"/>
-<area shape="rect" id="node4" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="579,59,794,88"/>
-<area shape="rect" id="node5" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="853,59,1045,88"/>
-</map>

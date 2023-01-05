@@ -1,9 +1,0 @@
-<map id="SysEventView::createContent" name="SysEventView::createContent">
-<area shape="rect" id="node1" title=" " alt="" coords="5,85,239,115"/>
-<area shape="rect" id="node2" href="$classConfig.html#a204bb7c83b9a99aa44b61a6c4d461672" title=" " alt="" coords="313,5,474,35"/>
-<area shape="rect" id="node3" href="$classCore.html#aa9ea45db27b6be7483b3e1a71cb81452" title=" " alt="" coords="287,59,500,88"/>
-<area shape="rect" id="node5" href="$classConfig.html#a50e29487f260cb5136d06b36311c3837" title=" " alt="" coords="319,112,467,141"/>
-<area shape="rect" id="node6" href="$classConfig.html#a6fcb4d93fc7aca75db518cdfd336dc49" title=" " alt="" coords="335,165,451,195"/>
-<area shape="rect" id="node4" href="$classKernelInterface.html#af473c1dce1262e7abdfd23e9fae5b636" title=" " alt="" coords="548,50,752,97"/>
-<area shape="rect" id="node7" href="$classConfigManager.html#a5e4e6cc7885e4013131a6a230cb324b8" title=" " alt="" coords="561,165,739,195"/>
-</map>

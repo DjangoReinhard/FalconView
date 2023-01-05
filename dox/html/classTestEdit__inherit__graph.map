@@ -1,9 +1,0 @@
-<map id="TestEdit" name="TestEdit">
-<area shape="rect" id="node1" title=" " alt="" coords="192,160,275,189"/>
-<area shape="rect" id="node6" href="$classPathEditor.html" title=" " alt="" coords="111,237,215,267"/>
-<area shape="rect" id="node7" href="$classPreViewEditor.html" title=" " alt="" coords="239,237,371,267"/>
-<area shape="rect" id="node2" href="$classAbstractCenterWidget.html" title=" " alt="" coords="31,83,230,112"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,5,96,35"/>
-<area shape="rect" id="node4" href="$classPluginPageInterface.html" title=" " alt="" coords="121,5,303,35"/>
-<area shape="rect" id="node5" href="$classFileManagerClient.html" title=" " alt="" coords="254,83,418,112"/>
-</map>

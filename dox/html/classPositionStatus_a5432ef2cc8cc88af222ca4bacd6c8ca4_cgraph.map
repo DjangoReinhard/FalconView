@@ -1,7 +1,0 @@
-<map id="PositionStatus::connectPos" name="PositionStatus::connectPos">
-<area shape="rect" id="node1" title=" " alt="" coords="5,59,223,88"/>
-<area shape="rect" id="node2" href="$classValueManager.html#a280f82d18a2090610fd378bc57c04a56" title=" " alt="" coords="271,5,469,35"/>
-<area shape="rect" id="node3" href="$classConfig.html#af0a470a2816e6a2c8251c335f6c76533" title=" " alt="" coords="303,59,437,88"/>
-<area shape="rect" id="node5" href="$classNumLabel.html#a8049b6fada70b55fda1fab1a0a22115c" title=" " alt="" coords="287,112,453,141"/>
-<area shape="rect" id="node4" href="$classConfigManager.html#a615c9de241c515f3c39188c4fef14773" title=" " alt="" coords="517,59,735,88"/>
-</map>

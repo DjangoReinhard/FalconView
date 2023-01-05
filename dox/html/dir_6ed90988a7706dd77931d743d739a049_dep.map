@@ -1,9 +1,0 @@
-<map id="src/plugPages/SysEventView" name="src/plugPages/SysEventView">
-<area shape="rect" id="node1" href="dir_6ed90988a7706dd77931d743d739a049.html" title="SysEventView" alt="" coords="27,55,152,103"/>
-<area shape="rect" id="node2" href="dir_aa23dad29f6e4cc8afb180bed3038ecf.html" title="baselib" alt="" coords="51,247,125,295"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000026_000008.html" title="3" alt="" coords="84,219,94,236"/>
-<area shape="rect" id="node3" href="dir_f260c9342675fd957f2cbb66f56ce047.html" title="guiLib" alt="" coords="89,151,161,199"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000026_000013.html" title="2" alt="" coords="113,122,123,139"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000013_000008.html" title="33" alt="" coords="102,224,121,242"/>
-<area shape="rect" id="clust1" href="dir_6c54884f8f52492cb03d5a3036478390.html" title="plugPages" alt="" coords="16,16,163,113"/>
-</map>

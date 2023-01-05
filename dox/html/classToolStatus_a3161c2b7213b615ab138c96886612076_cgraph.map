@@ -1,9 +1,0 @@
-<map id="ToolStatus::connectSignals" name="ToolStatus::connectSignals">
-<area shape="rect" id="node1" title=" " alt="" coords="5,85,220,115"/>
-<area shape="rect" id="node2" href="$classValueManager.html#a280f82d18a2090610fd378bc57c04a56" title=" " alt="" coords="268,5,467,35"/>
-<area shape="rect" id="node3" href="$classValueManager.html#ad73161eaea72fce03036d1fc519cdcff" title=" " alt="" coords="270,59,465,88"/>
-<area shape="rect" id="node5" href="$classConfig.html#af0a470a2816e6a2c8251c335f6c76533" title=" " alt="" coords="301,112,434,141"/>
-<area shape="rect" id="node7" href="$classToolStatus.html#abef9add2e72f138faf75aef8b2aac87a" title=" " alt="" coords="269,165,466,195"/>
-<area shape="rect" id="node4" href="$classValueModel.html#a2001b180c153c91104bf54b8a302b67f" title=" " alt="" coords="535,59,711,88"/>
-<area shape="rect" id="node6" href="$classConfigManager.html#a615c9de241c515f3c39188c4fef14773" title=" " alt="" coords="515,112,732,141"/>
-</map>

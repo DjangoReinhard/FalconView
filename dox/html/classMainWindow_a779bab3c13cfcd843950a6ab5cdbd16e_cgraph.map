@@ -1,9 +1,0 @@
-<map id="MainWindow::autoStop" name="MainWindow::autoStop">
-<area shape="rect" id="node1" title=" " alt="" coords="5,59,192,88"/>
-<area shape="rect" id="node2" href="$classGuiCore.html#a0126f5e4df2a2839bda1b54c82db7be3" title=" " alt="" coords="260,5,439,35"/>
-<area shape="rect" id="node4" href="$classGuiCore.html#a16aad30335c66022ed1b8c14a3b4dea4" title=" " alt="" coords="247,59,452,88"/>
-<area shape="rect" id="node6" href="$classGuiCore.html#a64cb77baba554e8dcbde73c6ef77f3cf" title=" " alt="" coords="240,116,459,145"/>
-<area shape="rect" id="node3" href="$classKernelInterface.html#a89ace4dfbd8a8f5f5cb490c156f94068" title=" " alt="" coords="520,5,747,35"/>
-<area shape="rect" id="node5" href="$classKernelInterface.html#a1773c9741601db2785a55d0df682aec0" title=" " alt="" coords="507,59,760,88"/>
-<area shape="rect" id="node7" href="$classKernelInterface.html#afc777139f265c85e62c8d281d46dd0e1" title=" " alt="" coords="522,113,745,159"/>
-</map>

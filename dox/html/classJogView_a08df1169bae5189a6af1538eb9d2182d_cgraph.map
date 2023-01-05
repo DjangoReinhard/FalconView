@@ -1,8 +1,0 @@
-<map id="JogView::jogVelChanged" name="JogView::jogVelChanged">
-<area shape="rect" id="node1" title=" " alt="" coords="5,32,207,61"/>
-<area shape="rect" id="node2" href="$classCore.html#a82e165dd5ea5b0ab61d0353fa14675dc" title=" " alt="" coords="542,5,650,35"/>
-<area shape="rect" id="node4" href="$classJogView.html#a7d6c1df4a26feaea47934ae343b0d289" title=" " alt="" coords="255,57,451,87"/>
-<area shape="rect" id="node3" href="$classKernelInterface.html#a2fa6cca680506c0d13ec58ac5f7af037" title=" " alt="" coords="741,5,923,35"/>
-<area shape="rect" id="node5" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="499,59,693,88"/>
-<area shape="rect" id="node6" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="745,59,919,88"/>
-</map>

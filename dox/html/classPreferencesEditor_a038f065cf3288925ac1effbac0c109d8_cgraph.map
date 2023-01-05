@@ -1,8 +1,0 @@
-<map id="PreferencesEditor::showEvent" name="PreferencesEditor::showEvent">
-<area shape="rect" id="node1" title=" " alt="" coords="5,23,164,70"/>
-<area shape="rect" id="node2" href="$classAbstractCenterWidget.html#a1c93c2dc97d76cfeda384f7b2ad5164d" title=" " alt="" coords="212,23,391,70"/>
-<area shape="rect" id="node3" href="$classGuiCore.html#a8d5540186181dd3d277758b829b6bfd7" title=" " alt="" coords="439,5,632,35"/>
-<area shape="rect" id="node5" href="$classConfig.html#a6fcb4d93fc7aca75db518cdfd336dc49" title=" " alt="" coords="477,59,593,88"/>
-<area shape="rect" id="node4" href="$classKernelInterface.html#a6bf965e34305c3d2c0206358a3c1e03e" title=" " alt="" coords="680,5,921,35"/>
-<area shape="rect" id="node6" href="$classConfigManager.html#a5e4e6cc7885e4013131a6a230cb324b8" title=" " alt="" coords="711,59,890,88"/>
-</map>

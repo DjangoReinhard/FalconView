@@ -1,8 +1,0 @@
-<map id="HelpDockable::showHelp" name="HelpDockable::showHelp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,59,209,88"/>
-<area shape="rect" id="node2" href="$classConfig.html#a50e29487f260cb5136d06b36311c3837" title=" " alt="" coords="276,5,424,35"/>
-<area shape="rect" id="node3" href="$classHelpView.html#af5ba6f7ccfb2288fd33f5cca69eb1b03" title=" " alt="" coords="257,59,443,88"/>
-<area shape="rect" id="node5" href="$classConfig.html#a6fcb4d93fc7aca75db518cdfd336dc49" title=" " alt="" coords="513,111,629,140"/>
-<area shape="rect" id="node4" href="$classConfig.html#a204bb7c83b9a99aa44b61a6c4d461672" title=" " alt="" coords="491,57,652,87"/>
-<area shape="rect" id="node6" href="$classConfigManager.html#a5e4e6cc7885e4013131a6a230cb324b8" title=" " alt="" coords="700,111,879,140"/>
-</map>

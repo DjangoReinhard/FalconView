@@ -1,9 +1,0 @@
-<map id="PathEditor::loadFile" name="PathEditor::loadFile">
-<area shape="rect" id="node1" title=" " alt="" coords="5,59,168,88"/>
-<area shape="rect" id="node2" href="$classGuiCore.html#af3141117654da5767ddf9bb326810a04" title=" " alt="" coords="216,5,427,35"/>
-<area shape="rect" id="node4" href="$classGuiCore.html#abce1547dcb7541bfd447552215648429" title=" " alt="" coords="244,59,399,88"/>
-<area shape="rect" id="node6" href="$classValueManager.html#a87a33ffe05f809d79220aac208c2c94f" title=" " alt="" coords="224,112,419,141"/>
-<area shape="rect" id="node3" href="$classKernelInterface.html#aa3b259980849102d40724dd94b9d7b46" title=" " alt="" coords="475,5,733,35"/>
-<area shape="rect" id="node5" href="$classKernelInterface.html#a60a11b889b28422c02ea0aceeea4f0a6" title=" " alt="" coords="503,59,705,88"/>
-<area shape="rect" id="node7" href="$classValueModel.html#a8cabedc4208728b964e10e064f1e2c8e" title=" " alt="" coords="517,112,691,141"/>
-</map>

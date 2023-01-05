@@ -1,9 +1,0 @@
-<map id="CanonIF::IFSettings" name="CanonIF::IFSettings">
-<area shape="rect" id="node1" title=" " alt="" coords="244,195,419,224"/>
-<area shape="rect" id="node2" href="$classGraphicFactory.html" title=" " alt="" coords="5,100,148,129"/>
-<area shape="rect" id="node3" href="$classStupidToolChangerIF.html" title="The StupidToolChangerIF class &#45; dumb model of a tool changer as required by lc." alt="" coords="172,100,357,129"/>
-<area shape="rect" id="node4" href="$classToolTable.html" title="The ToolTable class parse and hold tooltable of linuxcnc." alt="" coords="381,100,476,129"/>
-<area shape="rect" id="node5" title=" " alt="" coords="120,5,311,35"/>
-<area shape="rect" id="node6" href="$classLcProperties.html" title="The LcProperties class process ini&#45;files from linuxcnc." alt="" coords="494,5,614,35"/>
-<area shape="rect" id="node7" href="$classToolEntry.html" title="The ToolEntry class entry of linuxcnc tooltable file." alt="" coords="335,5,429,35"/>
-</map>

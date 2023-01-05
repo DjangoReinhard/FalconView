@@ -1,7 +1,0 @@
-<map id="KernelInterface::activeMCodes" name="KernelInterface::activeMCodes">
-<area shape="rect" id="node1" title=" " alt="" coords="901,5,1141,35"/>
-<area shape="rect" id="node2" href="$classGuiCore.html#ad62eb593783599a52ba61ff16d34a896" title=" " alt="" coords="661,5,853,35"/>
-<area shape="rect" id="node3" href="$classGCodeInfo.html#ac495bfcadc41e94c8aaf9331c6462b25" title=" " alt="" coords="457,5,613,35"/>
-<area shape="rect" id="node4" href="$classStatusReader.html#aac85903815aeba73dab26defdd88e158" title=" " alt="" coords="232,5,409,35"/>
-<area shape="rect" id="node5" href="$classGuiKernel.html#a9c64b8e954f3b9aac6c69548f581457e" title=" " alt="" coords="5,5,184,35"/>
-</map>

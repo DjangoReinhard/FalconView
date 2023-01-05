@@ -1,8 +1,0 @@
-<map id="DynDockable::init" name="DynDockable::init">
-<area shape="rect" id="node1" title=" " alt="" coords="5,117,167,146"/>
-<area shape="rect" id="node2" href="$classAbstractCenterWidget.html#acd01f89b4683a70ea6d66ea334cab56c" title=" " alt="" coords="215,76,413,123"/>
-<area shape="rect" id="node6" href="$classDynDockable.html#a6b888c860b7d274909b3eb992bfbb380" title=" " alt="" coords="223,147,405,177"/>
-<area shape="rect" id="node3" href="$classPluginPageInterface.html#a908728df6e414e64ee3fcade51154db3" title=" " alt="" coords="469,5,652,52"/>
-<area shape="rect" id="node4" href="$classAbstractCenterWidget.html#af7feff20b616d8d8e72626a0c3a177d5" title=" " alt="" coords="461,76,660,123"/>
-<area shape="rect" id="node5" href="$classPluginPageInterface.html#a69d93f51f506e3b834d6743fb5ca57df" title=" " alt="" coords="469,147,652,193"/>
-</map>

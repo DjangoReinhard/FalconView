@@ -1,7 +1,0 @@
-<map id="PluginDialog::populateTreeWidget" name="PluginDialog::populateTreeWidget">
-<area shape="rect" id="node1" title=" " alt="" coords="5,37,223,84"/>
-<area shape="rect" id="node2" href="$classGuiCore.html#ac85c5935807b3d11a295fd4b679ab5ef" title=" " alt="" coords="271,17,513,46"/>
-<area shape="rect" id="node4" href="$classGuiCore.html#a684dbea4ab0a93d21c35a98b32deb2e1" title=" " alt="" coords="309,73,475,102"/>
-<area shape="rect" id="node3" href="$classKernelInterface.html#af5ca0246ac3db023cd911e89513e940b" title=" " alt="" coords="564,5,773,52"/>
-<area shape="rect" id="node5" href="$classKernelInterface.html#a8c82725ff6bc101666dd95981430e01f" title=" " alt="" coords="561,77,776,106"/>
-</map>
